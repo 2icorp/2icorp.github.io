@@ -14,15 +14,17 @@
     </main>
 
     <!-- Utterances 댓글 기능 추가 -->
+    {% if page.url != "/" %}
   <section class="comments">
     <script src="https://utteranc.es/client.js"
             repo="2icorp/2icorp.github.io"
             issue-term="pathname"
-            theme="github-dark"
+            theme="github-light"
             crossorigin="anonymous"
             async>
     </script>
   </section>
+  {% endif %}
 
     {%- include footer.html -%}
 
