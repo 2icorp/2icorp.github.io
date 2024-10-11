@@ -25,7 +25,7 @@ platforms :mingw, :x64_mingw, :mswin, :jruby do
   gem "tzinfo-data"
 end
 
-gem "beautiful-jekyll"
+#gem "beautiful-jekyll"
 
 gem 'sass-embedded', '~> 1.54'  # Ruby 3.1.4 호환 버전
 

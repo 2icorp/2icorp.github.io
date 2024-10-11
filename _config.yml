@@ -32,8 +32,8 @@ twitter_username: hjguyhan
 github_username:  hyojunguy
 
 # Build settings
-#theme: minima
-theme: beautiful-jekyll
+theme: minima
+#theme: beautiful-jekyll
 plugins:
   - jekyll-feed
   - jekyll-seo-tag
