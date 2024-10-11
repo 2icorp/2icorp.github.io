@@ -25,6 +25,8 @@ platforms :mingw, :x64_mingw, :mswin, :jruby do
   gem "tzinfo-data"
 end
 
+gem 'sass-embedded', '~> 1.54'  # Ruby 3.1.4 호환 버전
+
 # Performance-booster for watching directories on Windows
 gem "wdm", "~> 0.1", :platforms => [:mingw, :x64_mingw, :mswin]
 
