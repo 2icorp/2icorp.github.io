@@ -21,13 +21,15 @@
 title: 2i Tech Blog
 email: hyojunghan@2icorp.site
 description: >- # this means to ignore newlines until "baseurl:"
-  Write an awesome description for your new site here. You can edit this
-  line in _config.yml. It will appear in your document head meta (for
-  Google search results) and in your feed.xml site description.
+  2i Co., Ltd. is committed to researching the commercialization of an influencer video generation platform, focusing on images, video, and sound. 
+  This blog serves as a space to share insights on our research journey, 
+  the latest technology trends, research and development achievements, 
+  and information about our services and products. 
+  If you're interested in collaboration, please feel free to reach out.
 baseurl: "" # the subpath of your site, e.g. /blog
 url: "" # the base hostname & protocol for your site, e.g. http://example.com
-twitter_username: jekyllrb
-github_username:  jekyll
+twitter_username: hjguyhan
+github_username:  hyojunguy
 
 # Build settings
 theme: minima
