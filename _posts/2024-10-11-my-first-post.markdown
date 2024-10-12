@@ -21,3 +21,4 @@ title:  "Welcome to 2i Tech Blog"
   {% endfor %}
 </ul>
 
+
