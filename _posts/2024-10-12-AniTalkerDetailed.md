@@ -30,6 +30,9 @@ AniTalker의 데이터 처리 파이프라인은 **VoxCeleb**, **HDTF**, **VFHQ*
 2. **하드웨어 설정**: 4개의 A100 GPU에서 약 50시간 동안 1차 모션 표현 학습을 진행했으며, 120시간 동안 EMA를 사용해 학습을 안정화했어요.
 
 ### C. **Model Details**
+
+![AniTalker Framework](/assets/images/posts/AniTalkerFramework.png)
+
 #### C.1 **Identity and Motion Encoder**
 AniTalker는 **정체성 인코더**와 **모션 인코더**로 나뉘며, 정체성 인코더는 **Metric Learning** 손실을 통해 정체성을 학습하고, 모션 인코더는 **상호 정보 손실**을 통해 모션을 학습해요. 모션 표현의 차원 축소를 위해 **Linear Motion Decomposition(LMD)** 방법이 사용됐어요.
 
