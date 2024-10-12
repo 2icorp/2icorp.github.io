@@ -1,6 +1,6 @@
 ---
 layout: default
-title:  "AniTalker 논문 리뷰"
+title:  "AniTalker 논문 부록 리뷰"
 ---
 
 # AniTalker Review 상세 정리
