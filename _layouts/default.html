@@ -76,6 +76,10 @@
 
     <main class="page-content" aria-label="Content">
       <div class="wrapper">
+        <p><strong>Date:</strong> {{ page.date | date: "%B %-d, %Y" }}</p>
+        <p><strong>Categories:</strong> {{ page.categories | join: ", " }}</p>
+        <p><strong>Tags:</strong> {{ page.tags | join: ", " }}</p>
+        <p><strong>Author:</strong> {{ page.author }}</p>
         {{ content }}
       </div>
     </main>
