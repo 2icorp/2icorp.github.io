@@ -100,7 +100,7 @@ pod 'FBSDKLoginKit', '~> 17.0'  # Facebook 로그인 기능을 사용할 경우
 
 `ios/{YourApp}/Info.plist` 파일에 다음을 추가하여 Facebook SDK를 설정합니다:
 
-```xml
+```text
 <key>CFBundleURLTypes</key>
 <array>
   <dict>
@@ -265,7 +265,7 @@ import { Params } from "react-native-fbsdk-next/src/FBAppEventsLogger";
 export const logPurchaseSafely = (
   purchaseAmount: number,
   currencyCode: string,
-  parameters?: Params,
+  parameters
 ) => {
   try {
     AppEventsLogger.logPurchase(purchaseAmount, currencyCode, parameters);
