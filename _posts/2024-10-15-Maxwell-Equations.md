@@ -1,7 +1,7 @@
 ---
 layout: default
 title: 맥스웰 방정식
-date: 2024-10-14
+date: 2024-10-15
 categories: [과학, 물리학]
 tags: [파동]
 author: 한효정
