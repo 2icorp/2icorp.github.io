@@ -64,6 +64,11 @@
       padding-top: 20px;
       border-top: 1px solid #ddd;
     }
+
+    .meta-info {
+      text-align: right;
+    }
+    
   </style>
 </head>
 
@@ -76,11 +81,15 @@
 
     <main class="page-content" aria-label="Content">
       <div class="wrapper">
-        <p><strong>Date:</strong> {{ page.date | date: "%B %-d, %Y" }}</p>
-        <p><strong>Categories:</strong> {{ page.categories | join: ", " }}</p>
-        <p><strong>Tags:</strong> {{ page.tags | join: ", " }}</p>
-        <p><strong>Author:</strong> {{ page.author }}</p>
         {{ content }}
+        {% if page.url != "/" %}
+          <div class="meta-info">
+            <p><strong>Date:</strong> {{ page.date | date: "%B %-d, %Y" }}</p>
+            <p><strong>Categories:</strong> {{ page.categories | join: ", " }}</p>
+            <p><strong>Tags:</strong> {{ page.tags | join: ", " }}</p>
+            <p><strong>Author:</strong> {{ page.author }}</p>
+          </div>
+        {% endif %}
       </div>
     </main>
 
