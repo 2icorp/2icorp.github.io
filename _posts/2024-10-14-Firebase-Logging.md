@@ -40,16 +40,68 @@ apply plugin: 'com.google.gms.google-services'
 
 ### 1.3 iOS 설정
 
-iOS에서는 Firebase 설정을 위해 `CocoaPods`를 사용해야 합니다. `ios/Podfile`에 다음을 추가하세요:
+iOS에서는 Firebase 설정을 위해 `CocoaPods`를 사용해야 합니다.
+
+광고 식별자가 필요하지 않으므로, Firebase Analytics에서 광고 ID를 비활성화하여 사용자의 개인 정보를 더욱 보호하고, 불필요한 데이터 수집을 방지하고자 합니다.
+또한, Firebase SDK와의 패키지 충돌 문제를 방지하기 위해 Firebase SDK 버전과 충돌되는 다른 패키지의 버전을 명시적으로 설정하였습니다.
+iOS 설정에서 Firebase와 expo-face-detector 라이브러리 간의 GoogleUtilities 버전 충돌을 방지하기 위해, expo-face-detector 대신 @react-native-ml-kit/face-detection 라이브러리를 사용하는 것을 권장합니다.
+이 과정에서 GoogleUtilities 라이브러리의 버전을 명시적으로 설정하여 문제를 해결할 수 있습니다.
+
+`ios/Podfile`에 추가된 설정은 다음과 같습니다:
 
 ```ruby
-pod 'RNFBAnalytics', :path => '../node_modules/@react-native-firebase/analytics'
+$RNFirebaseAnalyticsWithoutAdIdSupport = true
+$FirebaseSDKVersion = '10.29.0'
+
+use_modular_headers!
+
+# Firebase 설정
+pod 'Firebase/Auth', $FirebaseSDKVersion
+pod 'Firebase/Core', $FirebaseSDKVersion
+pod 'FirebaseAnalytics', $FirebaseSDKVersion
+pod 'GoogleSignIn', '~> 7.0.0'
+
+# Google Utilities
+pod 'GoogleUtilities/Network', '~> 7.11'
+pod 'GoogleUtilities', '~> 7.13.0'
 ```
 
 그 후 `pod install`을 실행합니다:
 
 ```bash
 cd ios/ && pod install
+```
+
+### 1.4 Firebase 초기화 작업 (AppDelegate.mm)
+
+iOS 프로젝트에서 Firebase를 초기화하려면 AppDelegate.mm 파일에서 다음 코드를 추가하여 Firebase가 초기화되지 않았을 경우만 초기화가 실행되도록 설정할 수 있습니다.
+
+```objective-c
+#import <Firebase.h>
+
+if ([FIRApp defaultApp] == nil) {
+[FIRApp configure];
+}
+```
+
+### 1.5 Firebase DebugView 설정 (AppDelegate.mm)
+
+Firebase DebugView는 디버그 모드에서 실시간으로 이벤트를 추적할 수 있게 해주는 도구입니다. 이를 활성화하기 위해서는 AppDelegate.mm에서 다음과 같은 코드를 추가하여 -FIRDebugEnabled 플래그를 설정합니다.
+
+```objective-c
+NSArray *args = [[NSProcessInfo processInfo] arguments];
+NSMutableArray *newArgs = [args mutableCopy];
+[newArgs addObject:@"-FIRDebugEnabled"];
+[[NSProcessInfo processInfo] setValue:newArgs forKey:@"arguments"];
+```
+
+DebugView 끄기
+
+디버그 모드를 비활성화하려면 -FIRDebugEnabled 대신 -FIRDebugDisabled로 변경하고 빌드를 새로 해주면 됩니다.
+
+```objective-c
+// FIRDebugEnabled 대신 FIRDebugDisabled로 변경
+[newArgs addObject:@"-FIRDebugDisabled"];
 ```
 
 ## 2. Firebase Analytics 로그 이벤트 정의
@@ -162,7 +214,22 @@ await analytics().logEvent('purchase', {
 await analytics().setUserProperty('favorite_language', 'english');
 ```
 
-## 6. 결론
+## 6. 코호트 분석과 리텐션 분석 코드 예시
+
+코호트 및 리텐션 분석을 위해 설치 또는 앱 열기 시점에서 로그를 남기고 분석할 수 있습니다.
+
+```javascript
+const isFirstLaunch = await AsyncStorage.getItem("is_first_open");
+
+if (isFirstLaunch === null) {
+    await logEvent("app_install", { platform: Platform.OS });
+    await AsyncStorage.setItem("is_first_open", "false");
+} else {
+    await logEvent("app_open", { platform: Platform.OS });
+}
+```
+
+## 7. 결론
 
 Firebase Analytics를 통해 코호트 분석을 하려면, **사용자 행동을 적절히 추적**하고, **이벤트 로그를 명확하게 정의**하는 것이 중요합니다. 이를 통해 전환율, 유지율 등을 분석하고, 앱의 성과를 극대화할 수 있습니다. 특히 커스텀 파라미터와 유저 속성 설정을 활용하면 더 깊이 있는 분석이 가능합니다.
 
