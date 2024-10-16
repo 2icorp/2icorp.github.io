@@ -1,6 +1,10 @@
 ---
 layout: default
 title:  "Firebase Analytics를 활용한 코호트 분석을 위한 로그 설정 방법"
+date: 2024-10-15
+categories: [Analytics, Firebase, React Native]
+tags: [Firebase Analytics, Cohort Analysis, User Retention, React Native Firebase]
+author: 이태용
 ---
 
 # Firebase Analytics를 활용한 코호트 분석을 위한 로그 설정 방법

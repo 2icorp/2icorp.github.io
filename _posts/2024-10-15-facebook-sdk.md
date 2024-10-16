@@ -1,6 +1,10 @@
 ---
 layout: default
 title:  "React Native로 Facebook SDK 설치 및 로깅 구현하기"
+date: 2024-10-15
+categories: [Facebook SDK, React Native]
+tags: [Facebook SDK, Bare Workflow, React Native, Mobile App Tracking]
+author: 이태용
 ---
 
 # React Native로 Facebook SDK 설치 및 로깅 구현하기
