@@ -22,6 +22,15 @@
 
   <!-- MathJax Script (Remove async to ensure proper loading) -->
   <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/simple-jekyll-search@latest/dest/simple-jekyll-search.min.js"></script>
+
+  <script>
+    SimpleJekyllSearch({
+      searchInput: document.getElementById('search-input'),
+      resultsContainer: document.getElementById('results-container'),
+      json: '/search.json'
+    });
+  </script>
 
   <!-- Custom CSS for Professional Look -->
   <style>
@@ -68,6 +77,16 @@
     .meta-info {
       text-align: right;
     }
+
+    #results-container {
+      list-style: none;
+      padding: 0;
+    }
+    
+    #results-container li {
+      margin: 10px 0;
+    }
+    
     
   </style>
 </head>
@@ -78,6 +97,14 @@
   <body>
 
     {%- include header.html -%}
+
+    {% if page.url == "/" %}
+
+      <input type="text" id="search-input" placeholder="Search...">
+      <ul id="results-container"></ul>
+      
+    {% endif %}
+
 
     <main class="page-content" aria-label="Content">
       <div class="wrapper">

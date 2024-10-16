@@ -57,3 +57,17 @@ plugins:
 #   - vendor/cache/
 #   - vendor/gems/
 #   - vendor/ruby/
+# _config.yml
+defaults:
+  - scope:
+      path: ""
+      type: "posts"
+    values:
+      layout: post
+      sitemap: true
+
+collections:
+  posts:
+    output: true
+
+permalink: /:categories/:title/
