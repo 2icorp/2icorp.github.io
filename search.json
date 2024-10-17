@@ -1,6 +1,3 @@
----
-layout: none
----
 [
   {% for post in site.posts %}
     {
@@ -8,7 +5,7 @@ layout: none
       "url"         : "{{ post.url | relative_url }}",
       "date"        : "{{ post.date | date: '%B %d, %Y' }}",
       "categories"  : "{{ post.categories | join: ', ' }}",
-      "content"     : "{{ post.content | strip_html | truncate: 400 }}"
+      "content"     : "{{ post.content | strip_html | normalize_whitespace | jsonify | truncate: 400 }}"
     }{% if forloop.last == false %},{% endif %}
   {% endfor %}
 ]

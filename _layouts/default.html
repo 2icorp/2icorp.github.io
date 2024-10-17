@@ -24,6 +24,8 @@
   <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/simple-jekyll-search@latest/dest/simple-jekyll-search.min.js"></script>
 
+
+
   <script>
     SimpleJekyllSearch({
       searchInput: document.getElementById('search-input'),
@@ -31,6 +33,7 @@
       json: '/search.json'
     });
   </script>
+
 
   <!-- Custom CSS for Professional Look -->
   <style>
@@ -144,6 +147,11 @@
 </style>
 
   {% endif %}
+
+  <script type="module">
+    import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+    mermaid.initialize({ startOnLoad: true });
+ </script>
 
     {%- include footer.html -%}
 

@@ -31,6 +31,10 @@ url: "" # the base hostname & protocol for your site, e.g. http://example.com
 twitter_username: hjguyhan
 github_username:  hyojunguy
 
+kramdown:
+  parse_block_html: true
+
+
 # Build settings
 theme: minima
 #theme: beautiful-jekyll
