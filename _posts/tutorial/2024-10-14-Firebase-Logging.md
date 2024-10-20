@@ -1,7 +1,7 @@
 ---
 layout: default
 title: "Firebase Analytics 설치 및 설정 가이드: 사용자 행동 추적과 코호트 분석을 통한 데이터 기반 의사결정 심층 분석"
-date: 2024-10-19
+date: 2024-10-14
 categories: [Analytics, Firebase, React Native]
 tags: [Firebase Analytics, Cohort Analysis, User Retention, Mobile Analytics]
 author: 이태용
