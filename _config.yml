@@ -41,6 +41,8 @@ theme: minima
 plugins:
   - jekyll-feed
   - jekyll-seo-tag
+  #- jekyll-archives
+  #- jekyll-paginate
 #  - jekyll-sitemap
 # Exclude from processing.
 # The following items will not be processed, by default.
@@ -62,6 +64,16 @@ plugins:
 #   - vendor/gems/
 #   - vendor/ruby/
 # _config.yml
+#jekyll-archives:
+#  enabled:
+#    - categories
+#  layouts:
+#    category: archive
+#    tag: archive
+#  permalinks:
+#    category: /categories/:name/
+#    tag: /tags/:name/
+
 defaults:
   - scope:
       path: ""
@@ -72,6 +84,6 @@ defaults:
 
 collections:
   posts:
-    output: true
+    output: false
 
 permalink: /:categories/:title/

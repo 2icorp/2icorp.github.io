@@ -1,5 +1,5 @@
 ---
-layout: default
+layout: post
 title: "아시아 셀프 포토 문화의 진화와 차별화 전략"
 date: 2024-10-21
 categories: AI, Machine Learning
