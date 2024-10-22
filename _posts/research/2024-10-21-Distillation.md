@@ -1,9 +1,10 @@
 ---
-layout: post
+layout: default
 title: "Knowledge Distillation: Pytorch 예제로 이해하는 Teacher-Student 학습"
 date: 2024-10-21
 categories: AI, Machine Learning
 tags: [Pytorch, Knowledge Distillation, Machine Learning]
+author: 한효정
 ---
 
 # Knowledge Distillation: Pytorch 예제로 이해하는 Teacher-Student 학습
