@@ -1,10 +1,20 @@
 ---
-layout: default
 title: "지식의 시대를 넘어: 이제는 문제 해결 능력이 중요하다"
-date: 2024-10-22 09:00:00 +0900
-categories: [AI, 창의성, 문제 해결]
-tags: [AI, 창의성, 문제 정의, 지식, 알고리즘, 문제 해결]
-author: 한효정
+last_modified_at: 2024-10-22
+categories:
+  - AI
+  - 창의성
+  - 문제 해결
+tags:
+  - AI
+  - 창의성
+  - 문제 정의
+  - 지식
+  - 알고리즘
+  - 문제 해결
+excerpt: ""
+use_math: true
+classes: wide
 ---
 
 # 지식의 시대를 넘어: 이제는 문제 해결 능력이 중요하다

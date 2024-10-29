@@ -1,9 +1,12 @@
 ---
-layout: default
-title:  "이메일 답변 자동화 시스템 구축"
+title: "이메일 답변 자동화 시스템 구축"
+last_modified_at: 2024-10-12
+categories:
+  - 튜토리얼
+excerpt: ""
+use_math: true
+classes: wide
 ---
-
-# Gmail과 Slack API, GPT-4 Mini API를 이용한 이메일 답변 자동화 시스템 구축
 
 이 포스트에서는 Gmail에서 특정 조건의 이메일을 읽고, Slack에 자동으로 알림을 전송하며, GPT-4 Mini API를 사용하여 자동으로 답변을 생성하는 프로그램을 Python으로 구현하는 방법을 다룹니다. 이메일 관리와 자동화는 많은 기업이 필요한 작업 중 하나입니다. 특히, 고객 문의가 빈번한 서비스의 경우 자동화된 답변 시스템은 큰 도움이 될 수 있습니다.
 

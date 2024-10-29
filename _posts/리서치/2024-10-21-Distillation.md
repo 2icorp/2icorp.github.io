@@ -1,13 +1,20 @@
 ---
-layout: default
 title: "Knowledge Distillation: Pytorch 예제로 이해하는 Teacher-Student 학습"
-date: 2024-10-21
-categories: AI, Machine Learning
-tags: [Pytorch, Knowledge Distillation, Machine Learning]
-author: 한효정
+last_modified_at: 2024-10-21
+categories:
+  - AI
+  - Machine Learning
+tags:
+  - Pytorch
+  - Knowledge Distillation
+  - Teacher-Student Model
+  - Machine Learning
+  - Model Compression
+excerpt: ""
+use_math: true
+classes: wide
 ---
 
-# Knowledge Distillation: Pytorch 예제로 이해하는 Teacher-Student 학습
 
 **Knowledge Distillation**은 대규모 모델이 가지고 있는 복잡한 지식을 작은 모델에 전달하는 과정입니다. 이 글에서는 distillation의 개념을 심플한 파이토치(Pytorch) 예제를 통해 설명하겠습니다.
 
@@ -146,13 +153,3 @@ torch.save(student_model.state_dict(), 'student_model.pth')
 
 ---
 
-
-## 최신 글
-<ul>
-  {% for post in site.posts %}
-    <li>
-      <a href="{{ post.url }}">{{ post.title }}</a>
-      <span>{{ post.date | date: "%B %d, %Y" }}</span>
-    </li>
-  {% endfor %}
-</ul>

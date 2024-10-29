@@ -1,10 +1,14 @@
 ---
-layout: default
-title: 맥스웰 방정식
-date: 2024-10-15
-categories: [과학, 물리학]
-tags: [파동]
-author: 한효정
+title: "맥스웰 방정식"
+last_modified_at: 2024-10-15
+categories:
+  - 과학
+  - 물리
+tags:
+  - 파동
+excerpt: ""
+use_math: true
+classes: wide
 ---
 
 **맥스웰 방정식(Maxwell's Equations)**은 전자기 현상을 설명하는 네 개의 주요 방정식으로, 전기장과 자기장, 그리고 이들이 상호작용하여 전자기파를 생성하는 과정을 수학적으로 설명합니다. 이 방정식은 제임스 클러크 맥스웰(James Clerk Maxwell)에 의해 19세기에 정리되었으며, 전자기학의 근본적인 이론을 제공합니다. 맥스웰 방정식은 전자기파의 본질을 설명하고, 빛이 전자기파의 한 형태임을 밝혀냅니다.
@@ -14,7 +18,9 @@ author: 한효정
 
 #### 수식:
 $$
+\begin{equation}
 \nabla \cdot \mathbf{E} = \frac{\rho}{\varepsilon_0}
+\end{equation}
 $$
 
 - \(\mathbf{E}\): 전기장 벡터
@@ -29,7 +35,9 @@ $$
 
 #### 수식:
 $$
+\begin{equation}
 \nabla \cdot \mathbf{B} = 0
+\end{equation}
 $$
 
 - \(\mathbf{B}\): 자기장 벡터
@@ -43,7 +51,9 @@ $$
 
 #### 수식:
 $$
+\begin{equation}
 \nabla \times \mathbf{E} = -\frac{\partial \mathbf{B}}{\partial t}
+\end{equation}
 $$
 
 - \(\mathbf{E}\): 전기장 벡터
@@ -59,7 +69,9 @@ $$
 
 #### 수식:
 $$
+\begin{equation}
 \nabla \times \mathbf{B} = \mu_0 \mathbf{J} + \mu_0 \varepsilon_0 \frac{\partial \mathbf{E}}{\partial t}
+\end{equation}
 $$
 
 - \(\mathbf{B}\): 자기장 벡터
@@ -92,13 +104,3 @@ $$
 
 **맥스웰 방정식**은 전기와 자기가 하나로 연결된 전자기 현상을 설명하는 핵심 이론입니다. 이 방정식은 빛과 같은 전자기파의 존재를 수학적으로 설명하고, 현대 물리학, 통신 기술, 전자기학의 기초가 되었습니다.
 
-
-## 최신 글
-<ul>
-  {% for post in site.posts %}
-    <li>
-      <a href="{{ post.url }}">{{ post.title }}</a>
-      <span>{{ post.date | date: "%B %d, %Y" }}</span>
-    </li>
-  {% endfor %}
-</ul>

@@ -1,6 +1,18 @@
 ---
-layout: default
-title:  "Metric Learning에 대한 고찰"
+title: "Metric Learning과 ArcFace 정리"
+last_modified_at: 2024-10-12
+categories:
+  - Machine Learning
+  - Face Recognition
+tags:
+  - Metric Learning
+  - ArcFace
+  - Face Recognition
+  - Triplet Structure
+  - Data Similarity
+excerpt: ""
+use_math: true
+classes: wide
 ---
 
 # Metric Learning과 ArcFace 정리

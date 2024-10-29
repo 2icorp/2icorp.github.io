@@ -1,15 +1,20 @@
 ---
-layout: default
-title: 정약용의 「오학론」 - 앎의 다섯 가지 경지
-date: 2024-10-14
-categories: [Philosophy, Korean History]
-tags: [정약용, 오학론]
-author: 한효정
+title: "정약용의 「오학론」 - 앎의 다섯 가지 경지"
+last_modified_at: 2024-10-16
+categories:
+  - Philosophy
+  - Korean History
+tags:
+  - 정약용
+  - 오학론
+  - 실학
+  - Knowledge
+  - Joseon Dynasty
+excerpt: ""
+use_math: true
+classes: wide
 ---
 
----
-
-## 정약용의 「오학론」: 앎의 다섯 가지 경지
 
 ### 1. 서론: 정약용과 실학의 지평
 조선 후기의 대표적인 실학자 **정약용(1762-1836)**은 한국 철학사에서 중요한 위치를 차지하는 인물입니다. 그는 정치, 경제, 법률, 사회 등 다방면에 걸쳐 개혁을 제안하며 실학사상을 구체화했습니다. 그의 저작 중 하나인 「오학론(五學論)」은 ‘앎’의 다섯 가지 경지를 설명하며, 학문의 본질과 지식의 궁극적 의미를 성찰한 대표적인 글입니다.
@@ -42,12 +47,3 @@ author: 한효정
 
 ---
 
-## 최신 글
-<ul>
-  {% for post in site.posts %}
-    <li>
-      <a href="{{ post.url }}">{{ post.title }}</a>
-      <span>{{ post.date | date: "%B %d, %Y" }}</span>
-    </li>
-  {% endfor %}
-</ul>

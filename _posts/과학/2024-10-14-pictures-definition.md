@@ -1,13 +1,18 @@
 ---
-layout: default
 title: "빛이 사진으로 변환되는 과정"
-date: 2024-10-14
-categories: [Photography, Science]
-tags: [Photography, Light, Image Formation, Camera]
-author: 한효정
+last_modified_at: 2024-10-14
+categories:
+  - Photography
+  - Science
+tags:
+  - Photography
+  - Light
+  - Image Formation
+  - Camera
+excerpt: ""
+use_math: true
+classes: wide
 ---
-
-# 빛이 사진으로 변환되는 과정
 
 빛은 사진을 만드는 가장 근본적인 요소입니다. 이 글에서는 빛이 어떻게 사진으로 변환되는지에 대해 광학적 원리와 카메라의 작동 방식에 대해 자세히 설명하겠습니다. 
 
@@ -60,12 +65,3 @@ author: 한효정
 
 ---
 
-## 최신 글
-<ul>
-  {% for post in site.posts %}
-    <li>
-      <a href="{{ post.url }}">{{ post.title }}</a>
-      <span>{{ post.date | date: "%B %d, %Y" }}</span>
-    </li>
-  {% endfor %}
-</ul>

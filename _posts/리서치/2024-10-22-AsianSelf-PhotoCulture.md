@@ -1,12 +1,18 @@
 ---
-layout: post
 title: "아시아 셀프 포토 문화의 진화와 차별화 전략"
-date: 2024-10-21
-categories: research
-tags: [Instant Photo, Photo Booth, AI, Personalization, Selfie Culture]
-author: 한효정
+last_modified_at: 2024-10-21
+categories:
+  - Research
+tags:
+  - Instant Photo
+  - Photo Booth
+  - AI
+  - Personalization
+  - Selfie Culture
+excerpt: ""
+use_math: true
+classes: wide
 ---
-
 
 ## 일본 즉석 사진 스티커 시장을 만들다.
 일본의 즉석 사진 스티커 시장, 흔히 **"프리클럽 (プリクラ)"**이라고 불리는 이 시장은 1990년대에 처음 도입되어 빠르게 큰 인기를 끌었으며, 현재까지도 **문화적 아이콘**으로 자리 잡고 있습니다. 일본의 즉석 사진 스티커 시장은 처음에는 단순히 재미와 추억을 기록하는 수단으로 시작되었으나, 시간이 지나면서 기술 발전과 함께 점점 더 **진화**하고 있습니다.
@@ -232,12 +238,3 @@ author: 한효정
 
 이러한 기능들은 모두 **혼자 찍는 사진**뿐 아니라 **친구나 가족과 함께 찍는 사진**에서도 흥미로운 요소를 추가할 수 있습니다. AI가 포즈를 제안하고 가이드하는 방식은 사용자의 촬영 경험을 더욱 풍부하게 만들며, 결과적으로 소중한 순간을 더 창의적으로 기록할 수 있게 도와줍니다.
 
-## 최신 글
-<ul>
-  {% for post in site.posts %}
-    <li>
-      <a href="{{ post.url }}">{{ post.title }}</a>
-      <span>{{ post.date | date: "%B %d, %Y" }}</span>
-    </li>
-  {% endfor %}
-</ul>

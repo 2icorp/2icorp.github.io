@@ -1,13 +1,20 @@
 ---
-layout: default
-title: 진정한 앎이란?
-date: 2024-10-16
-categories: [철학, 학문적 성찰]
-tags: [정약용, 오학론, 딥러닝, 비판적 사고, 학문]
-author: 한효정
+title: "진정한 앎이란?"
+last_modified_at: 2024-10-16
+categories:
+  - 철학
+  - 학문적 성찰
+tags:
+  - 정약용
+  - 오학론
+  - 딥러닝
+  - 비판적 사고
+  - 학문
+excerpt: ""
+use_math: true
+classes: wide
 ---
 
-# 진정한 앎이란?
 
 ## 정보의 홍수 속에서 우리는 진정으로 ‘안다’고 할 수 있는가? 정약용의 「오학론」을 현대 학문과 산업에 적용한 비판적 고찰
 
@@ -76,13 +83,3 @@ author: 한효정
 --- 
 
 **카테고리**: 철학, 학문적 성찰, 지식 관리, 딥러닝
-
-## 최신 글
-<ul>
-  {% for post in site.posts %}
-    <li>
-      <a href="{{ post.url }}">{{ post.title }}</a>
-      <span>{{ post.date | date: "%B %d, %Y" }}</span>
-    </li>
-  {% endfor %}
-</ul>

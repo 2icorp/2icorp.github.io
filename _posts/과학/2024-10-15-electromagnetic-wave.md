@@ -1,10 +1,14 @@
 ---
-layout: default
-title: 전자기파란?
-date: 2024-10-15
-categories: [과학, 물리학]
-tags: [파동]
-author: 한효정
+title: "전자기파란?"
+last_modified_at: 2024-10-15
+categories:
+  - 과학
+  - 물리학
+tags:
+  - 파동
+excerpt: ""
+use_math: true
+classes: wide
 ---
 
 전자기파(전자기파동)는 전기장과 자기장이 서로 상호작용하면서 공간을 통해 전파되는 파동입니다. 전자기파는 매우 중요한 자연현상으로, 빛을 포함한 다양한 형태의 에너지를 전달합니다. 전자기파는 물리학과 기술 발전에 큰 영향을 미쳤고, 현대 통신, 에너지 전송, 의학 등 여러 분야에서 광범위하게 활용되고 있습니다. 전자기파에 대해 더 깊이 살펴보겠습니다.
@@ -104,13 +108,3 @@ author: 한효정
  형태로 존재합니다. 전자기파는 매질 없이도 전파될 수 있어, 우주 공간에서도 이동이 가능하며, 통신, 의료, 산업, 과학 등 여러 분야에서 중요한 역할을 하고 있습니다.
 
 ---
-
-## 최신 글
-<ul>
-  {% for post in site.posts %}
-    <li>
-      <a href="{{ post.url }}">{{ post.title }}</a>
-      <span>{{ post.date | date: "%B %d, %Y" }}</span>
-    </li>
-  {% endfor %}
-</ul>

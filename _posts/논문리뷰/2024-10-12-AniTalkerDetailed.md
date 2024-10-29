@@ -10,10 +10,6 @@ use_math: true
 classes: wide
 ---
 
-# AniTalker Review 상세 정리
-
----
-
 **제목:** AniTalker: Identity-Decoupled Facial Motion Encoding을 통한 생동감 있는 다양한 얼굴 애니메이션 생성  
 **저자:** Tao Liu, Feilong Chen, Shuai Fan, Chenpeng Du, Qi Chen, Xie Chen, Kai Yu
 

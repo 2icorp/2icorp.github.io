@@ -1,14 +1,21 @@
 ---
-layout: default
-title: "Cross Attention 리뷰"
-date: 2024-10-17
-categories: [AI, Deep Learning]
+title: "Cross Attention Review"
+last_modified_at: 2024-10-17
+categories:
+  - 리서치
+tags:
+  - AI
+  - Stable Diffusion
+  - Deep Learning
+excerpt: ""
+use_math: true
+classes: wide
 ---
 
-# Cross Attention Review
-
-
 **Stable Diffusion**에서 텍스트와 이미지를 연결하는 핵심 요소는 **Cross Attention** 메커니즘입니다. 이 메커니즘은 **텍스트 정보**와 **이미지의 잠재 공간(latent space)** 사이의 연관성을 학습하여, 주어진 텍스트 설명에 맞는 이미지를 생성하는 역할을 합니다.
+
+<center><img src='{{"/asserts/img/posts/CrossAttention/cross-attention-3d.svg" | relative_url}}' width="50%"></center>
+<br>
 
 ### Cross Attention의 역할:
 - **텍스트**는 언어 모델을 통해 임베딩 벡터로 변환됩니다.
@@ -131,12 +138,3 @@ Stable Diffusion에서는 이러한 Cross Attention 메커니즘을 통해 텍�
 
 이를 통해 **"파란 하늘이 있는 바다"**와 같은 텍스트를 주면, Cross Attention은 이 텍스트의 중요한 요소(파란 하늘, 바다)를 이미지 생성 과정에 반영하여, 결과적으로 그에 맞는 이미지를 생성할 수 있습니다.
 
-## 최신 글
-<ul>
-  {% for post in site.posts %}
-    <li>
-      <a href="{{ post.url }}">{{ post.title }}</a>
-      <span>{{ post.date | date: "%B %d, %Y" }}</span>
-    </li>
-  {% endfor %}
-</ul>

@@ -1,7 +1,20 @@
 ---
-layout: default
-title:  "인코더와 디코더의 에너지 함수 해석"
+title: "인코더와 디코더의 에너지 함수 해석"
+last_modified_at: 2024-10-14
+categories:
+  - Machine Learning
+  - Neural Networks
+tags:
+  - Encoder-Decoder
+  - Energy Function
+  - Data Compression
+  - Deep Learning
+  - Energy Minimization
+excerpt: ""
+use_math: true
+classes: wide
 ---
+
 
 # 인코더와 디코더의 에너지 함수 해석
 

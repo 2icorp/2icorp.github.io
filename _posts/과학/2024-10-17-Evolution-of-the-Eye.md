@@ -1,10 +1,18 @@
 ---
-layout: default
-title: 왜 눈은 가시광선을 보기 위해 진화했을까?
-date: 2024-10-17
-categories: [과학, 물리학, 생물학]
-tags: [evolution of the eye, visible light, physics, biology]
-author: 한효정
+title: "왜 눈은 가시광선을 보기 위해 진화했을까?"
+last_modified_at: 2024-10-17
+categories:
+  - 과학
+  - 물리학
+  - 생물학
+tags:
+  - evolution of the eye
+  - visible light
+  - physics
+  - biology
+excerpt: ""
+use_math: true
+classes: wide
 ---
 
 ### 왜 눈은 가시광선을 보기 위해 진화했을까? 진화, 물리학, 생물학에 대한 심층 탐구
@@ -60,13 +68,3 @@ author: 한효정
 결국 가시광선에 맞춰 시각이 진화한 것은 임의적인 결과가 아닙니다. 이는 지구의 대기 조건, 태양의 방사 스펙트럼, 그리고 에너지와 생물학적 안전 사이의 균형에 의해 결정된 결과입니다. 가시광선은 전자기 스펙트럼에서 적절한 에너지를 제공하면서도 조직을 손상시키지 않는 "적정선"을 차지하고 있습니다. 이러한 균형이 대부분의 종에서 눈이 가시광선을 감지하는 방향으로 진화하게 된 이유입니다.
 
 ---
-
-## 최신 글
-<ul>
-  {% for post in site.posts %}
-    <li>
-      <a href="{{ post.url }}">{{ post.title }}</a>
-      <span>{{ post.date | date: "%B %d, %Y" }}</span>
-    </li>
-  {% endfor %}
-</ul>
