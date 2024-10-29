@@ -2,6 +2,7 @@
 title: "사진의 물리학과 AI - 빛 에너지의 순간적 포착과 재창조"
 last_modified_at: 2024-10-18
 categories:
+  - 철학
   - 과학
   - 기술
 tags:
