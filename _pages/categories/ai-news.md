@@ -1,7 +1,7 @@
 ---
-title: "AI소식"
-permalink: /categories/AI소식/
+title: "AI뉴스"
+permalink: /categories/AI뉴스/
 layout: category
 author_profile: true
-taxonomy: AI소식
+taxonomy: AI뉴스
 ---
