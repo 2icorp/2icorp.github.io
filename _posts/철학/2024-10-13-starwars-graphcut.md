@@ -1,7 +1,20 @@
 ---
-layout: default
-title:  "스타워즈의 포스와 그래프 컷 에너지 함수에 대해서"
+title: "스타워즈의 포스와 그래프 컷 에너지 함수에 대해서"
+last_modified_at: 2024-10-13
+categories:
+  - Computer Vision
+  - Energy Functions
+tags:
+  - Graph Cuts
+  - Energy Functions
+  - Star Wars
+  - The Force
+  - Balance
+excerpt: ""
+use_math: true
+classes: wide
 ---
+
 
 ## 스타워즈의 포스와 그래프 컷 에너지 함수에 대해서
 

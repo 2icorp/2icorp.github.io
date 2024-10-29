@@ -1,12 +1,18 @@
 ---
-layout: default
 title: "Attention 리뷰"
-date: 2024-10-17
-categories: [AI, Deep Learning]
----
-
-# Attention Review
-
+last_modified_at: 2024-10-27
+categories:
+  - AI
+  - Deep Learning
+tags:
+  - Attention Mechanism
+  - Natural Language Processing
+  - Computer Vision
+  - Deep Learning
+  - Information Focus
+excerpt: ""
+use_math: true
+classes: wide
 ---
 
 ### 어텐션 메커니즘 (Attention Mechanism) 상세 설명

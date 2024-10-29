@@ -1,14 +1,20 @@
 ---
-title: "에너지 관점으로 학문을 바라보기"
-last_modified_at: 2024-10-14
+title: "스타워즈의 포스와 그래프 컷 에너지 함수에 대해서"
+last_modified_at: 2024-10-13
 categories:
-  - 철학
+  - Computer Vision
+  - Energy Functions
 tags:
-  - Energy
-excerpt: "에너지 함수"
+  - Graph Cuts
+  - Energy Functions
+  - Star Wars
+  - Force
+  - Balance
+excerpt: ""
 use_math: true
 classes: wide
 ---
+
 
 ### 사상과 가설의 원동력
 

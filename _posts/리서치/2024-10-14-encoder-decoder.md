@@ -1,9 +1,19 @@
 ---
-layout: default
-title:  "Encoder와 Decoder 구조의 철학과 응용"
+title: "Encoder와 Decoder 구조의 철학과 응용"
+last_modified_at: 2024-10-29
+categories:
+  - Machine Learning
+  - Neural Networks
+tags:
+  - Encoder
+  - Decoder
+  - Neural Networks
+  - Data Efficiency
+  - Applications
+excerpt: ""
+use_math: true
+classes: wide
 ---
-
-# Encoder와 Decoder 구조의 철학과 응용: 신경망에서의 데이터 처리 효율성
 
 신경망에서 Encoder와 Decoder를 구분하여 설계하는 것은 데이터의 효율적인 표현, 복원, 그리고 다양한 작업을 보다 효과적으로 수행하기 위한 중요한 구조적 접근 방식입니다. 이 글에서는 이러한 구조의 철학적 배경과 다양한 응용 가능성에 대해 설명하겠습니다.
 

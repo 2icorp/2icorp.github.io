@@ -1,7 +1,20 @@
 ---
-layout: default
-title:  "얼굴 나이, 성별, 피부색 분류 모델 비교"
+title: "얼굴 나이, 성별, 피부색 분류 모델 비교"
+last_modified_at: 2024-10-13
+categories:
+  - Machine Learning
+  - Facial Recognition
+tags:
+  - Age Classification
+  - Gender Classification
+  - Skin Tone Classification
+  - Deep Learning Models
+  - Facial Analysis
+excerpt: ""
+use_math: true
+classes: wide
 ---
+
 
 # 얼굴 나이, 성별, 피부색 분류 모델 비교
 
