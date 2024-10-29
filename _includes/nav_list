@@ -34,24 +34,6 @@
       </li>
       <li>
         <span class="nav__sub-title" v-on:click='togglec()'><a href="/categories/논문리뷰">📝 논문리뷰 ({{ site.categories['논문리뷰'].size }})</a></span>
-        {% assign fav_tags = "Computer Vision/CV/Computer Vision, 3D Vision/3DV/3D Vision, Audio and Speech Processing/ASP/Audio & Speech, NLP/NLP/NLP, Reinforcement Learning/RL/RL" | split: ", " %}
-        {% for fav_tag in fav_tags %}
-          {% assign sep = fav_tag | split: "/" %}
-          <ul v-show="flag_c">
-            {% for tag in site.tags %}
-              {% if tag[0] == sep[0] %}
-                {% assign cnt = 0 %}
-                {% for page in tag[1] %}
-                  {% if page.url contains "%EB%85%BC%EB%AC%B8%EB%A6%AC%EB%B7%B0" %}
-                    {% assign cnt = cnt | plus: 1 %}
-                  {% endif %}
-                {% endfor %}
-                <li><a href="/categories/논문리뷰/{{sep[1]}}" class="">{{sep[2]}} ({{cnt}})</a></li>
-              {% endif %}
-            {% endfor %}
-          </ul>
-        {% endfor %}
-
         <span class="nav__sub-title" v-on:click='togglec()'><a href="/categories/튜토리얼">💻 튜토리얼 ({{ site.categories['튜토리얼'].size }})</a></span>
         <span class="nav__sub-title" v-on:click='togglec()'><a href="/categories/리서치">📒 리서치 ({{ site.categories['리서치'].size }})</a></span>
         <span class="nav__sub-title" v-on:click='togglec()'><a href="/categories/AI뉴스">🔥 AI소식 ({{ site.categories['AI뉴스'].size }})</a></span>
