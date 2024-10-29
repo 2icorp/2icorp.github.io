@@ -13,8 +13,6 @@ use_math: true
 classes: wide
 ---
 
-# Firebase Analytics 설치 및 설정 가이드: 사용자 행동 추적과 코호트 분석을 통한 데이터 기반 의사결정 심층 분석
-
 ## 1. Firebase Analytics 선택의 근거
 
 현재 모바일 앱 시장에는 다양한 분석 도구들이 존재합니다. Google Analytics, Amplitude, Facebook Analytics 등 각각의 도구들은 저마다의 특징과 장점을 가지고 있습니다. 이러한 상황에서 Firebase Analytics를 선택해야 하는 이유를 자세히 살펴보겠습니다.

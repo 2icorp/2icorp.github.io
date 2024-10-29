@@ -2,6 +2,7 @@
 title: "스타워즈의 포스와 그래프 컷 에너지 함수에 대해서"
 last_modified_at: 2024-10-13
 categories:
+  - 철학
   - Computer Vision
   - Energy Functions
 tags:

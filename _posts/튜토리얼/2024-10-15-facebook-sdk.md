@@ -13,8 +13,6 @@ use_math: true
 classes: wide
 ---
 
-# React Native로 Facebook SDK 설치 및 로깅 구현하기
-
 Expo 앱 개발에서 Facebook SDK를 위해 React Native로 전환한 후 Facebook SDK 설치부터 로깅까지의 과정을 단계별로 설명합니다. 이 글은 Facebook SDK를 설치하고 사용자의 활동을 추적할 수 있는 로깅 기능을 설정하는 방법을 다룹니다.
 
 ## Facebook SDK가 필요한 이유

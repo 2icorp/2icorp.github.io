@@ -16,8 +16,6 @@ use_math: true
 classes: wide
 ---
 
-# AWS Route 53과 Vercel을 이용한 도메인 리다이렉션 가이드
-
 AWS Route 53에서 구매한 도메인을 Vercel에서 운영 중인 사이트로 리다이렉션하는 방법을 단계별로 살펴보겠습니다. 이 가이드는 DNS 설정부터 리다이렉션 규칙 설정, SEO 최적화, 보안 설정까지 전 과정을 다룹니다.
 
 ## DNS 개념 이해하기

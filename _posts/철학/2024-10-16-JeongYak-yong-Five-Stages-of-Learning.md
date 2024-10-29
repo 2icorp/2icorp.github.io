@@ -2,6 +2,7 @@
 title: "정약용의 「오학론」 - 앎의 다섯 가지 경지"
 last_modified_at: 2024-10-16
 categories:
+  - 철학
   - Philosophy
   - Korean History
 tags:
