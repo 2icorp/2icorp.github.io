@@ -156,6 +156,11 @@ footer:
 include:
   - .htaccess
   - _pages
+  - "*.svg"
+  - "*.webp"
+  - "*.ico"
+  - "*.png"
+  - "*.jpg"
 exclude:
   - "*.sublime-project"
   - "*.sublime-workspace"
@@ -186,6 +191,11 @@ exclude:
 keep_files:
   - .git
   - .svn
+  - .svg
+  - .webp
+  - .ico
+  - .png
+  - .jpg
 encoding: "utf-8"
 markdown_ext: "markdown,mkdown,mkdn,mkd,md"
 
@@ -290,3 +300,8 @@ defaults:
       comments: # true
       share: false
       related: true
+  - scope:
+      path: "assets/images"  
+      type: "static"
+    values:
+      image: true
