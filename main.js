@@ -146,3 +146,21 @@
     inputs.forEach(function (i) { i.addEventListener("change", update); });
   }
 })();
+
+// Papers board — category filter (guarded; only runs on papers.html)
+(function () {
+  "use strict";
+  var filters = document.querySelectorAll(".pfilter");
+  if (!filters.length) return;
+  var cards = document.querySelectorAll(".pcard");
+  filters.forEach(function (btn) {
+    btn.addEventListener("click", function () {
+      var cat = btn.getAttribute("data-cat");
+      filters.forEach(function (b) { b.classList.toggle("is-on", b === btn); });
+      cards.forEach(function (c) {
+        var show = cat === "all" || c.getAttribute("data-cat") === cat;
+        c.classList.toggle("is-hidden", !show);
+      });
+    });
+  });
+})();
