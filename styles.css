@@ -389,3 +389,56 @@ section[id] { scroll-margin-top: 80px; }
 .vprocess { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 1.4rem; align-items: center; }
 .vprocess span { font-family: var(--mono); font-size: var(--text-xs); letter-spacing: 0.04em; color: var(--ink); background: var(--paper-2); border: 1px solid var(--line); border-radius: 999px; padding: 0.4rem 0.8rem; }
 .vprocess i { color: var(--signal); font-style: normal; }
+
+/* ============ MOTION LAYER (v4) — compositor-only, reduced-motion safe ============ */
+/* scroll progress: on-brand gauge fill across the top */
+.scrollgauge { position: fixed; top: 0; left: 0; height: 2px; width: 100%; z-index: 60; pointer-events: none; background: transparent; }
+.scrollgauge__fill { height: 100%; width: 0; background: linear-gradient(90deg, var(--steel), var(--signal)); box-shadow: 0 0 8px oklch(68% 0.175 55 / 0.55); }
+
+/* staggered reveal of grouped children */
+.reveal.stagger.in > * { animation: riseIn 0.66s var(--ease) both; }
+.reveal.stagger.in > *:nth-child(1) { animation-delay: 0.03s; }
+.reveal.stagger.in > *:nth-child(2) { animation-delay: 0.10s; }
+.reveal.stagger.in > *:nth-child(3) { animation-delay: 0.17s; }
+.reveal.stagger.in > *:nth-child(4) { animation-delay: 0.24s; }
+.reveal.stagger.in > *:nth-child(5) { animation-delay: 0.31s; }
+@keyframes riseIn { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: none; } }
+
+/* result-metric ticker (literal motion, editorial proof band) */
+.ticker { overflow: hidden; border-block: 1px solid var(--line); background: var(--panel); padding: 0.72rem 0; -webkit-mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent); mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent); }
+.ticker__track { display: inline-flex; white-space: nowrap; will-change: transform; animation: tickmove 38s linear infinite; }
+.ticker:hover .ticker__track { animation-play-state: paused; }
+.ticker__item { font-family: var(--mono); font-size: 0.82rem; letter-spacing: 0.01em; color: var(--ink-soft); padding: 0 1.5rem; display: inline-flex; align-items: center; gap: 0.75rem; }
+.ticker__item::before { content: "◆"; color: var(--signal); font-size: 0.55rem; }
+.ticker__item b { color: var(--ink); font-weight: 600; }
+@keyframes tickmove { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+/* method 3-gate: sequential reveal so the gauge "fills" left to right */
+.gates3.in .g3 { animation: gateIn 0.6s var(--ease) both; }
+.gates3.in .g3:nth-child(1) { animation-delay: 0.05s; }
+.gates3.in .g3:nth-child(2) { animation-delay: 0.30s; }
+.gates3.in .g3:nth-child(3) { animation-delay: 0.55s; }
+@keyframes gateIn { from { opacity: 0; transform: translateY(13px) scale(0.986); } to { opacity: 1; transform: none; } }
+
+/* primary CTA: subtle light sweep */
+.btn--signal { position: relative; overflow: hidden; }
+.btn--signal::after { content: ""; position: absolute; top: 0; left: -65%; width: 42%; height: 100%; background: linear-gradient(100deg, transparent, oklch(100% 0 0 / 0.5), transparent); transform: skewX(-18deg); animation: sweep 5s var(--ease) 1.4s infinite; }
+@keyframes sweep { 0% { left: -65%; } 16%, 100% { left: 135%; } }
+
+/* before → after result "lands" when its case scrolls in */
+.case.in .ba__a { animation: landpop 0.5s var(--ease) both; }
+.case.in .ba__row:nth-child(3) .ba__a { animation-delay: 0.08s; }
+@keyframes landpop { 0% { opacity: 0; transform: translateX(7px); } 60% { transform: translateX(-1px); } 100% { opacity: 1; transform: none; } }
+
+/* live pulse on the stakes gauge value (subtle attention) */
+.case__stkm-v::after { content: ""; display: inline-block; width: 5px; height: 5px; border-radius: 50%; background: var(--signal); margin-left: 0.4rem; vertical-align: middle; animation: livedot 2.4s var(--ease) infinite; }
+@keyframes livedot { 0%, 100% { opacity: 0.35; } 50% { opacity: 1; } }
+
+[data-count] { font-variant-numeric: tabular-nums; }
+
+@media (prefers-reduced-motion: reduce) {
+  .ticker__track { animation: none; }
+  .btn--signal::after { display: none; }
+  .reveal.stagger.in > *, .gates3.in .g3, .case.in .ba__a { animation: none; }
+  .case__stkm-v::after { animation: none; opacity: 0.7; }
+}
