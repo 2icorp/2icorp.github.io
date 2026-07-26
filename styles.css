@@ -287,3 +287,63 @@ section[id] { scroll-margin-top: 80px; }
 .foot__inner { display: flex; justify-content: space-between; gap: 1.5rem; flex-wrap: wrap; align-items: center; }
 .foot__mono { font-family: var(--mono); font-size: var(--text-xs); color: var(--ink-faint); letter-spacing: 0.06em; }
 .foot__links { display: flex; gap: 1.4rem; font-size: 0.9rem; color: var(--ink-soft); }
+
+/* ============ CASE STUDIES (사례집) ============ */
+.cases-hero { padding-top: clamp(2.5rem, 1rem + 6vw, 5rem); padding-bottom: clamp(2rem,1rem+3vw,3.5rem); }
+.cases-hero h1 { font-size: clamp(2.2rem, 1.2rem + 4vw, 4.2rem); }
+.cases-hero p { margin-top: 1.2rem; max-width: 56ch; color: var(--ink-soft); font-size: 1.1rem; }
+.disclaimer { margin-top: 1.5rem; display: inline-flex; gap: 0.6rem; align-items: flex-start; font-family: var(--mono); font-size: var(--text-xs); letter-spacing: 0.02em; color: var(--ink-faint); background: var(--panel); border: 1px solid var(--line); border-left: 2px solid var(--signal); border-radius: var(--radius); padding: 0.8rem 1rem; max-width: 60ch; line-height: 1.7; }
+
+.case-list { display: grid; gap: 1.3rem; }
+.case { background: var(--panel); border: 1px solid var(--line); border-radius: 5px; overflow: hidden; }
+.case__bar { display: flex; align-items: center; gap: 1rem; padding: 1.2rem clamp(1.2rem,0.6rem+1.5vw,2rem); border-bottom: 1px solid var(--line-soft); background: linear-gradient(180deg, oklch(99% 0.004 85), var(--panel)); }
+.case__no { font-family: var(--mono); font-size: 1.5rem; font-weight: 600; color: var(--signal); min-width: 2.4rem; }
+.case__cat { font-family: var(--mono); font-size: var(--text-xs); letter-spacing: 0.12em; text-transform: uppercase; color: var(--steel); }
+.case__title { font-weight: 850; font-size: var(--text-h3); letter-spacing: -0.02em; line-height: 1.15; }
+.case__ind { margin-left: auto; font-family: var(--mono); font-size: var(--text-xs); color: var(--ink-faint); white-space: nowrap; }
+@media (max-width: 700px) { .case__ind { display: none; } }
+
+.case__body { padding: clamp(1.2rem,0.6rem+1.5vw,2rem); display: grid; grid-template-columns: 1.1fr 0.9fr; gap: clamp(1.5rem,1rem+2vw,3rem); }
+@media (max-width: 780px) { .case__body { grid-template-columns: 1fr; gap: 1.4rem; } }
+.case__block h4 { font-family: var(--mono); font-size: var(--text-xs); letter-spacing: 0.14em; text-transform: uppercase; color: var(--signal-deep); margin: 0 0 0.55rem; font-weight: 600; }
+.case__pain { color: var(--ink-soft); font-size: 0.98rem; }
+.case__steps { list-style: none; margin: 0; padding: 0; display: grid; gap: 0.7rem; }
+.case__steps li { display: grid; grid-template-columns: auto 1fr; gap: 0.7rem; align-items: baseline; }
+.case__steps b { font-family: var(--mono); font-size: var(--text-xs); letter-spacing: 0.08em; color: var(--steel); text-transform: uppercase; border: 1px solid var(--line); border-radius: 999px; padding: 0.12rem 0.55rem; white-space: nowrap; }
+.case__steps span { font-size: 0.95rem; color: var(--ink); }
+.case__side { border-left: 2px solid var(--line); padding-left: 1.3rem; display: grid; gap: 1.1rem; align-content: start; }
+@media (max-width: 780px) { .case__side { border-left: none; border-top: 1px solid var(--line); padding-left: 0; padding-top: 1.2rem; } }
+.case__tech { font-size: 0.92rem; color: var(--ink-soft); }
+.case__out { list-style: none; margin: 0; padding: 0; display: grid; gap: 0.5rem; }
+.case__out li { display: flex; gap: 0.55rem; font-size: 0.92rem; color: var(--ink); }
+.case__out li::before { content: "▹"; color: var(--signal); }
+.case__facts { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+.chip { font-family: var(--mono); font-size: var(--text-xs); letter-spacing: 0.03em; color: var(--ink-soft); background: var(--paper-2); border: 1px solid var(--line); border-radius: 999px; padding: 0.3rem 0.7rem; }
+.chip--v { color: var(--signal-deep); border-color: oklch(80% 0.08 60); background: oklch(97% 0.02 60); }
+
+/* case teaser strip on home */
+.case-teaser { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--line); border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; }
+@media (max-width: 760px) { .case-teaser { grid-template-columns: 1fr; } }
+.case-teaser a { background: var(--panel); padding: 1.5rem 1.4rem; display: flex; flex-direction: column; gap: 0.5rem; transition: background var(--dur) var(--ease); }
+.case-teaser a:hover { background: var(--paper); }
+.case-teaser .c { font-family: var(--mono); font-size: var(--text-xs); letter-spacing: 0.1em; color: var(--signal-deep); text-transform: uppercase; }
+.case-teaser .t { font-weight: 800; font-size: 1.05rem; }
+.case-teaser .d { color: var(--ink-soft); font-size: 0.9rem; }
+
+/* ============ ROBOT/AUTOMATION ERA ============ */
+.auto-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: var(--line); border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; }
+@media (max-width: 900px) { .auto-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 560px) { .auto-grid { grid-template-columns: 1fr; } }
+.auto-cell { background: var(--panel); padding: 1.6rem 1.4rem; display: flex; flex-direction: column; gap: 0.5rem; transition: background var(--dur) var(--ease); }
+.auto-cell:hover { background: var(--paper); }
+.auto-need { font-family: var(--mono); font-size: var(--text-xs); letter-spacing: 0.08em; color: var(--ink-faint); text-transform: uppercase; }
+.auto-h { font-weight: 850; font-size: 1.15rem; letter-spacing: -0.02em; }
+.auto-2i { font-size: 0.92rem; color: var(--ink-soft); border-top: 2px solid var(--signal); padding-top: 0.7rem; margin-top: 0.3rem; }
+.auto-foot { margin-top: 1.6rem; max-width: 62ch; color: var(--ink-soft); font-size: 1.02rem; }
+
+/* brochure download chip + voucher process */
+.chip--dl { display: inline-flex; align-items: center; margin-top: 0.4rem; color: var(--paper); background: var(--ink); border-color: var(--ink); font-weight: 600; transition: transform var(--dur) var(--ease), background var(--dur); }
+.chip--dl:hover { transform: translateY(-1px); background: var(--signal-deep); border-color: var(--signal-deep); }
+.vprocess { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 1.4rem; align-items: center; }
+.vprocess span { font-family: var(--mono); font-size: var(--text-xs); letter-spacing: 0.04em; color: var(--ink); background: var(--paper-2); border: 1px solid var(--line); border-radius: 999px; padding: 0.4rem 0.8rem; }
+.vprocess i { color: var(--signal); font-style: normal; }
