@@ -1,0 +1,380 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>사례집 — 2i AX 컨설팅</title>
+<meta name="description" content="중소·중견 제조·유통을 위한 AX 시나리오 사례 10선. 진단 → PoC → 구축으로 무엇을 어떻게 자동화하는지, 기초 기술부터 홈페이지 마케팅까지.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23111827'/%3E%3Ctext x='16' y='22' font-family='monospace' font-size='16' font-weight='700' fill='%23e08a2b' text-anchor='middle'%3E2i%3C/text%3E%3C/svg%3E">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<header class="nav">
+  <div class="wrap nav__inner">
+    <a class="brand" href="/"><span class="brand__mark">2i</span><span class="brand__tag">AX Consulting</span></a>
+    <nav class="nav__links" aria-label="주요 메뉴">
+      <a href="/#service">서비스</a>
+      <a href="cases.html">사례집</a>
+      <a href="/#voucher">정부 바우처</a>
+      <a href="/#contact">상담</a>
+      <a class="nav__cta btn btn--signal" href="/#contact">상담 신청</a>
+    </nav>
+  </div>
+</header>
+<main>
+  <section class="wrap cases-hero">
+    <span class="eyebrow">사례집 · 시나리오 10선</span>
+    <h1>무엇을, 어떻게<br>자동화하는가.</h1>
+    <p>기초 데이터 정리부터 완전 자동화, 그리고 홈페이지·마케팅까지. 2i는 문서 인식(OCR)·비전 검사·수요예측·검색증강(RAG)·맞춤 AI 에이전트·RF 신호 지문 분석·영상 자동 생성에 이르는 폭넓은 자체 소프트웨어 역량을 보유합니다. 아래는 그 역량을 중소·중견 현장 문제에 진단 → PoC → 구축으로 적용하는 방식입니다.</p>
+    <p class="disclaimer">ⓘ 아래는 <b>시나리오형 역량 사례(예시)</b>입니다. 2i는 재시작 단계로, 특정 실존 고객의 완료 실적이 아니라 "이렇게 진행됩니다"를 보여주는 대표 예시이며 수치는 기대 효과입니다. 실제 진행 시 귀사 데이터로 다시 진단합니다.</p>
+  </section>
+  <section class="section" style="padding-top:1rem">
+    <div class="wrap case-list">
+      <article class="case reveal">
+        <div class="case__bar">
+          <span class="case__no">01</span>
+          <div>
+            <div class="case__cat">기초 데이터</div>
+            <h3 class="case__title">엑셀 수십 개 흩어진 데이터, 대시보드로 통합</h3>
+          </div>
+          <span class="case__ind">제조(정밀부품)</span>
+        </div>
+        <div class="case__body">
+          <div>
+            <div class="case__block" style="margin-bottom:1.4rem">
+              <h4>핵심 문제</h4>
+              <p class="case__pain">A 정밀부품(가상)은 수주·생산·재고·품질 데이터가 부서별 엑셀 수십 개와 담당자 개인 PC에 흩어져 있어, 경영진이 오늘의 생산 현황이나 재고 수준을 확인하려면 각 담당자에게 취합을 요청하고 반나절 넘게 기다려야 한다. 데이터가 표준화돼 있지 않아 부서마다 같은 지표를 다르게 계산하는 경우도 있고, 담당자가 휴가나 퇴사를 하면 그 데이터의 위치와 갱신 방식을 아는 사람이 사라져 업무 연속성 자체가 흔들린다.</p>
+            </div>
+            <div class="case__block">
+              <h4>접근 — 진단 · PoC · 구축</h4>
+              <ul class="case__steps"><li><b>진단(2주)</b><span>A 정밀부품(가상)의 영업·생산·품질·자재 부서가 각각 관리하는 엑셀과 사내 시스템을 전수 조사해 데이터 소재·갱신주기·담당자·병목 구간을 맵핑한다. 이 과정에서 경영진이 실제로 매일 확인하고 싶어하는 지표(수주 현황, 생산 실적, 재고 수준, 품질 불량률 등)를 우선순위 3~5개로 좁힌다.</span></li><li><b>PoC(4주)</b><span>우선순위 지표 중 1~2개를 골라 자동 수집·정제 파이프라인을 소규모로 구축하고, 실시간 대시보드 프로토타입을 만들어 현업 담당자와 경영진에게 직접 보여준다. 실제 업무 흐름에서 써보게 하며 갱신 주기, 화면 구성, 예외 데이터 처리 방식을 조정한다.</span></li><li><b>구축(6주)</b><span>PoC에서 검증된 방식을 나머지 데이터 소스까지 확장하고, 경영진용 요약 뷰와 현장 담당자용 상세 뷰를 분리한 대시보드를 완성한다. 담당자 교체 시에도 운영이 끊기지 않도록 데이터 흐름 문서와 운영 매뉴얼을 함께 남긴다.</span></li></ul>
+            </div>
+          </div>
+          <aside class="case__side">
+            <div class="case__block"><h4>사용 기술</h4><p class="case__tech">엑셀·스프레드시트·사내 시스템에 흩어진 정형 데이터를 자동 수집해 표준 스키마로 정제하는 데이터 수집·정제 파이프라인(ETL)과, 경영진·현장 각각의 관점에 맞춘 통합 대시보드를 함께 구축하는 2i의 데이터 엔지니어링 역량을 활용한다.</p></div>
+            <div class="case__block"><h4>기대 효과 (예시)</h4><ul class="case__out"><li>현황 파악 소요시간이 수작업 취합 기준 반나절에서 대시보드 조회 수준으로 단축될 것으로 기대</li><li>핵심 데이터가 개인 엑셀이 아닌 공용 파이프라인에 모여, 담당자 부재·교체 시에도 업무 연속성이 확보될 것으로 기대</li><li>생산·품질 지표를 상시 모니터링하게 되어 이상 징후를 더 이른 시점에 포착할 수 있을 것으로 기대</li></ul></div>
+            <div class="case__facts">
+              <span class="chip">진단 2주 + PoC 4주 + 구축 6주 (총 약 12주)</span>
+              <span class="chip">진단→구축</span>
+              <span class="chip chip--v">바우처 · 정부 AX 바우처의 &#x27;데이터 기반 구축&#x27; 유형에 부합하며, 진단→PoC→구축 단계별 산출물(현황 맵·프로토타입·운영 대시보드)이 명확해 중간 점검 보고와 정산에 적합하다.</span>
+            </div>
+            <a class="chip chip--dl" href="brochures/2i-brochure-01-엑셀-수십-개-흩어진-데이터-대시보드로-통합.pdf" download>브로셔 PDF ↓</a>
+          </aside>
+        </div>
+      </article>
+      <article class="case reveal">
+        <div class="case__bar">
+          <span class="case__no">02</span>
+          <div>
+            <div class="case__cat">문서 자동화</div>
+            <h3 class="case__title">수기입력 견적·발주 문서AI로 자동화</h3>
+          </div>
+          <span class="case__ind">중부권 도매·유통업체(가상 예시)</span>
+        </div>
+        <div class="case__body">
+          <div>
+            <div class="case__block" style="margin-bottom:1.4rem">
+              <h4>핵심 문제</h4>
+              <p class="case__pain">중부권 도매·유통사 예시에서는 거래처마다 팩스, PDF, 사진 등 제각각의 형식으로 견적서·발주서·세금계산서를 보내오고, 담당자가 매번 눈으로 확인하며 ERP에 수기로 옮겨 적는다. 품목명·수량·단가가 조금만 어긋나도 재확인과 재입력이 반복되며, 물량이 몰리는 월말·분기말에는 이런 수작업 지연이 발주 처리 전체를 늦추는 병목이 된다.</p>
+            </div>
+            <div class="case__block">
+              <h4>접근 — 진단 · PoC · 구축</h4>
+              <ul class="case__steps"><li><b>진단</b><span>실제 거래문서 표본(견적서·발주서·세금계산서 각 유형)을 수집해 문서 포맷 다양성, 담당자별 수기입력 소요시간, 오류가 반복되는 지점을 함께 확인하고 자동화 우선순위를 정한다.</span></li><li><b>PoC</b><span>PaddleOCR-VL급 문서 파싱 모델로 문서 유형 하나를 골라 품목명·수량·단가·공급가액 등 항목 추출과 자동 분류·검증 로직을 소규모로 시범 적용해 인식 정확도와 예외 케이스 처리 방식을 확인한다.</span></li><li><b>구축</b><span>검증된 파싱·분류 로직을 나머지 문서 유형까지 확장하고, 검수자가 신뢰도 낮은 항목만 골라 확인하는 반자동 검증 화면과 기존 ERP 연동 흐름을 구축해 운영에 넘긴다.</span></li></ul>
+            </div>
+          </div>
+          <aside class="case__side">
+            <div class="case__block"><h4>사용 기술</h4><p class="case__tech">문서 OCR(PaddleOCR-VL급 레이아웃 인식 문서 파싱)로 표·항목 구조를 추출하고, 품목 코드·단가 등을 사전 정의 규칙과 대조해 자동 분류·이상치 검증하는 파이프라인을 구성한다.</p></div>
+            <div class="case__block"><h4>기대 효과 (예시)</h4><ul class="case__out"><li>수작업 대비 문서 1건당 처리시간 약 60~70% 단축 기대(예시)</li><li>오탈자·오입력에 따른 재확인·재작업 건수 감소 기대(예시)</li><li>월말·분기말 발주 집중 시기의 처리 지연 완화 기대(예시)</li></ul></div>
+            <div class="case__facts">
+              <span class="chip">진단 2주 + PoC 4주 + 구축 6주(예시, 문서 유형 수에 따라 변동)</span>
+              <span class="chip">진단→PoC→구축 3단계 완결형</span>
+              <span class="chip chip--v">바우처 · 문서 인식·분류 자동화는 정부 AX 바우처의 업무프로세스 자동화 과제 요건과 부합해 신청 적합도가 높다고 판단된다.</span>
+            </div>
+            <a class="chip chip--dl" href="brochures/2i-brochure-02-수기입력-견적-발주-문서AI로-자동화.pdf" download>브로셔 PDF ↓</a>
+          </aside>
+        </div>
+      </article>
+      <article class="case reveal">
+        <div class="case__bar">
+          <span class="case__no">03</span>
+          <div>
+            <div class="case__cat">제조 비전 AI</div>
+            <h3 class="case__title">육안검사 편차를 비전AI로 상시 균일화</h3>
+          </div>
+          <span class="case__ind">정밀 사출성형 부품 제조 중소기업(가상 업종 예시)</span>
+        </div>
+        <div class="case__body">
+          <div>
+            <div class="case__block" style="margin-bottom:1.4rem">
+              <h4>핵심 문제</h4>
+              <p class="case__pain">이 회사는 사출성형 부품의 최종 품질검사를 검사원의 육안 판단에 의존하고 있어, 같은 불량이라도 검사원의 숙련도와 피로도, 조명 조건에 따라 판정이 달라진다. 그 결과 표면 기포·플래시 등 불량 유출률이 날짜·교대조마다 들쭉날쭉하고, 어떤 기준으로 불량을 걸러내는지가 사람마다 암묵적으로만 존재해 신규 인력 교육과 재현 가능한 품질 관리가 어렵다.</p>
+            </div>
+            <div class="case__block">
+              <h4>접근 — 진단 · PoC · 구축</h4>
+              <ul class="case__steps"><li><b>진단</b><span>생산라인 현장 워크스루로 검사 공정을 관찰하고, 검사원별 판정 기준 편차와 반복되는 불량 유형(예: 사출 표면 기포·플래시·이물혼입·치수 불량)을 분류한다. 조명·카메라 설치 가능 여부, 라인 속도, 기존 데이터(사진 기록 유무) 등 PoC 실행 가능 조건을 함께 점검하고, 검사원 인터뷰로 &#x27;무엇을 불량으로 보는가&#x27;의 판정 기준을 문서화한다.</span></li><li><b>PoC</b><span>진단에서 좁힌 1~2개 불량 유형을 대상으로 소규모 샘플(수백~수천 장 수준)을 촬영·라벨링하고, 객체탐지 또는 이상탐지 기반 비전 모델을 학습시킨다. 실제 라인 검사를 대체하지 않고 병행 관찰(섀도 모드)로 돌려 기존 육안검사 결과와 비교하고, 정확도·오탐율·놓친 불량 사례를 정리한 결과 리포트를 제공한다.</span></li><li><b>구축</b><span>PoC 결과가 유효하면 대상 불량 유형과 라인을 확장하고, 검사 데스크 화면이나 알림 형태로 현장에 붙이는 본 도입 설계를 별도 단계로 제안한다. 이 사례에서는 진단→PoC까지를 다루며, 구축은 PoC 검증 이후 판단할 후속 단계로 명시한다.</span></li></ul>
+            </div>
+          </div>
+          <aside class="case__side">
+            <div class="case__block"><h4>사용 기술</h4><p class="case__tech">제품 표면·외관 이미지를 입력으로 하는 결함 탐지 컴퓨터비전 모델(객체탐지 또는 이상탐지 방식) 구축 역량과, 소규모 데이터셋으로도 검증 가능한 경량 학습·추론 파이프라인 구성 역량을 활용한다.</p></div>
+            <div class="case__block"><h4>기대 효과 (예시)</h4><ul class="case__out"><li>대상 불량 유형에 한해 검사원 간 판정 편차(같은 제품을 다르게 판정하는 비율) 축소 기대</li><li>반복적이고 육안 식별이 쉬운 불량 유형은 1차 스크리닝 소요시간이 수작업 대비 약 30~50% 단축될 것으로 기대(예시)</li><li>교대 근무·야간 등 컨디션이 흔들리는 구간에서도 판정 기준의 일관성이 상대적으로 높게 유지될 것으로 기대</li></ul></div>
+            <div class="case__facts">
+              <span class="chip">진단 2주 + PoC 6주(총 약 8주)</span>
+              <span class="chip">진단→PoC</span>
+              <span class="chip chip--v">바우처 · 정부 AX 바우처의 &#x27;AI 도입 진단 및 PoC&#x27; 트랙에 부합한다 — 전체 라인 전환이 아니라 좁힌 불량 유형·소규모 데이터로 먼저 검증해 본 도입 여부를 판단하는 저위험 구조이기 때문이다.</span>
+            </div>
+            <a class="chip chip--dl" href="brochures/2i-brochure-03-육안검사-편차를-비전AI로-상시-균일화.pdf" download>브로셔 PDF ↓</a>
+          </aside>
+        </div>
+      </article>
+      <article class="case reveal">
+        <div class="case__bar">
+          <span class="case__no">04</span>
+          <div>
+            <div class="case__cat">수요예측</div>
+            <h3 class="case__title">감이 아닌 데이터로 잡는 재고, 결품과 과잉을 동시에 줄인다</h3>
+          </div>
+          <span class="case__ind">유통·물류 (예시)</span>
+        </div>
+        <div class="case__body">
+          <div>
+            <div class="case__block" style="margin-bottom:1.4rem">
+              <h4>핵심 문제</h4>
+              <p class="case__pain">중부권 식품 유통사(예시)는 SKU별 발주량을 담당자 개인의 경험과 감으로 결정해왔다. 그 결과 잘 팔리는 제품은 결품이 반복되어 판매 기회를 놓치고, 반대로 시즌이 지난 제품은 창고에 쌓여 악성재고로 남는 일이 동시에 벌어진다. 담당자가 바뀌면 그동안 쌓인 감각이 그대로 사라진다는 점도 구조적 리스크다.</p>
+            </div>
+            <div class="case__block">
+              <h4>접근 — 진단 · PoC · 구축</h4>
+              <ul class="case__steps"><li><b>진단</b><span>2주간 데이터 진단: POS/발주 이력, SKU별 회전율, 결품·재고소진 로그를 수집해 결품 빈도가 높은 SKU군과 악성재고로 굳어진 SKU군을 분리하고, 담당자가 재고를 잡는 실제 의사결정 기준(감·경험치)을 인터뷰로 확인해 예측모델 도입 대상 SKU 우선순위를 정한다.</span></li><li><b>PoC</b><span>핵심 SKU 20~30종을 대상으로 판매이력+시즌지수+프로모션·날씨 등 외부신호를 결합한 수요예측 모델을 만들고, 기존 발주 방식과 병행 운영하며 예측치 대비 실제 판매 오차와 결품·과잉재고 개선폭을 4주간 비교 검증한다.</span></li><li><b>구축</b><span>PoC에서 검증된 모델을 전 SKU로 확장하고, 담당자가 매일 확인하는 발주 권고 리스트(제안 발주량+근거)를 대시보드로 제공하며, 실제 판매 결과가 쌓일 때마다 모델이 재학습되도록 운영 루틴을 구축한다.</span></li></ul>
+            </div>
+          </div>
+          <aside class="case__side">
+            <div class="case__block"><h4>사용 기술</h4><p class="case__tech">판매·시즌성·프로모션·날씨 등 외부 신호를 결합한 시계열 수요예측 모델과, 예측치를 발주 권고안(SKU별 제안 수량+근거)으로 자동 변환하는 규칙 기반 로직을 결합한다.</p></div>
+            <div class="case__block"><h4>기대 효과 (예시)</h4><ul class="case__out"><li>결품 발생 건수 약 30~40% 감소 기대(핵심 SKU 기준)</li><li>악성재고(장기 미회전) 비중 약 20% 내외 축소 기대</li><li>발주 담당자의 수기 판단 시간 절감 및 발주 근거 문서화로 인수인계 부담 완화 기대</li></ul></div>
+            <div class="case__facts">
+              <span class="chip">진단 2주 + PoC 4주 + 구축 6주</span>
+              <span class="chip">진단→PoC→구축</span>
+              <span class="chip chip--v">바우처 · 진단(현황분석)과 PoC(모델 검증) 단계가 명확히 분리되어 정부 AX 바우처의 단계별 지원 요건(진단→실증→확산)에 부합한다.</span>
+            </div>
+            <a class="chip chip--dl" href="brochures/2i-brochure-04-감이-아닌-데이터로-잡는-재고-결품과-과잉을-동시에-줄인다.pdf" download>브로셔 PDF ↓</a>
+          </aside>
+        </div>
+      </article>
+      <article class="case reveal">
+        <div class="case__bar">
+          <span class="case__no">05</span>
+          <div>
+            <div class="case__cat">AI 에이전트</div>
+            <h3 class="case__title">반복문의는 AI에게, 상담은 사람에게</h3>
+          </div>
+          <span class="case__ind">서비스·유통업 중소기업(가상, 생활용품 온라인 판매사 예시)</span>
+        </div>
+        <div class="case__body">
+          <div>
+            <div class="case__block" style="margin-bottom:1.4rem">
+              <h4>핵심 문제</h4>
+              <p class="case__pain">서비스·유통업 중소기업은 주문상태·배송·환불·재고 같은 반복적이고 정형화된 문의가 상담 채널의 절반 이상을 차지하는 경우가 많다. 소수 인력으로 이를 전부 응대하다 보면 정작 클레임 조정이나 신규 고객 대응처럼 판단이 필요한 중요 문의가 대기열에 밀려 응대 품질과 고객 만족도가 함께 떨어진다. 야간·주말에는 문의가 아예 방치돼 다음 영업일까지 고객이 기다려야 하는 경우도 흔하다.</p>
+            </div>
+            <div class="case__block">
+              <h4>접근 — 진단 · PoC · 구축</h4>
+              <ul class="case__steps"><li><b>진단(2주)</b><span>고객센터 문의 로그 최소 4주치를 유형별로 분류해 주문상태·배송·환불·재고 문의가 전체 상담량에서 차지하는 비중과 평균 처리시간을 정량화한다. 동시에 주문관리시스템(OMS)·재고관리시스템·CS 티켓 도구의 API 연동 가능 범위를 점검해 자동응대로 넘길 수 있는 문의 유형과, 반드시 사람이 판단해야 하는 예외 케이스(고가 환불, 감정적 클레임 등)를 나눈 경계선을 확정한다.</span></li><li><b>PoC(4주)</b><span>AI 에이전트 스튜디오로 주문상태 조회·배송 추적·기본 환불 규정 안내 3개 시나리오만 우선 구축해 소규모 채널(카카오톡 채널 또는 웹챗 일부 트래픽)에 제한 노출한다. 상담원이 AI 응답을 사후 검수하며 정답률·이관률(사람에게 넘어간 비율)·고객 만족도를 측정하고, 오응답 패턴을 모아 프롬프트와 연동 로직을 반복 보정한다.</span></li><li><b>구축(6주)</b><span>PoC에서 검증된 시나리오를 전체 채널로 확장하고, 재고 문의·간단 교환 접수 등 시나리오를 추가한다. AI가 처리 불가로 판단한 문의는 대화 맥락과 함께 상담원에게 자동 이관되도록 핸드오프 체계를 만들고, 응대 품질을 상시 점검할 수 있도록 오답 로그·이관 사유 대시보드를 함께 구축해 운영팀이 스스로 튜닝할 수 있게 넘긴다.</span></li></ul>
+            </div>
+          </div>
+          <aside class="case__side">
+            <div class="case__block"><h4>사용 기술</h4><p class="case__tech">맞춤 AI 상담 에이전트 스튜디오를 활용해 주문관리·재고관리·CS 시스템과 연동된 자동 응대 흐름을 구축하고, AI가 처리 가능한 범위와 사람에게 넘겨야 할 범위를 규칙으로 명확히 나눠 핸드오프 체계를 함께 설계한다.</p></div>
+            <div class="case__block"><h4>기대 효과 (예시)</h4><ul class="case__out"><li>단순 반복 문의(주문상태·배송·기본 환불 규정 안내) 응대시간이 수작업 대비 약 60~70% 단축될 것으로 기대</li><li>상담 인력이 반복 문의에서 벗어나 고관여·고클레임 상담에 집중할 수 있어, 동일 인력으로 처리 가능한 고난도 문의량이 늘어날 것으로 기대</li><li>24시간 1차 응대가 가능해져 영업시간 외 문의의 초기 대기시간이 크게 줄어들 것으로 기대(단, 최종 처리는 담당자 확인 후 완료)</li></ul></div>
+            <div class="case__facts">
+              <span class="chip">진단 2주 + PoC 4주 + 구축 6주(총 약 3개월 예시)</span>
+              <span class="chip">진단→PoC→구축</span>
+              <span class="chip chip--v">바우처 · 단순반복 업무 자동화를 통한 인력 재배치 효과가 뚜렷해 정부 AX 바우처의 &#x27;업무 효율화·디지털 전환&#x27; 취지에 부합한다.</span>
+            </div>
+            <a class="chip chip--dl" href="brochures/2i-brochure-05-반복문의는-AI에게-상담은-사람에게.pdf" download>브로셔 PDF ↓</a>
+          </aside>
+        </div>
+      </article>
+      <article class="case reveal">
+        <div class="case__bar">
+          <span class="case__no">06</span>
+          <div>
+            <div class="case__cat">신호 지문·통신</div>
+            <h3 class="case__title">무선망 간섭원 실시간 식별 체계</h3>
+          </div>
+          <span class="case__ind">무선 센서망·AGV·RFID 설비를 운영하는 중부권 정밀부품 제조사(가상, B 정밀공업)</span>
+        </div>
+        <div class="case__body">
+          <div>
+            <div class="case__block" style="margin-bottom:1.4rem">
+              <h4>핵심 문제</h4>
+              <p class="case__pain">공장 내 무선 센서망과 AGV, 물류 RFID가 원인 불명의 전파 간섭으로 수시로 끊겨 라인이 멈추는데, 전자레인지·인접 설비·외부 불법 전파 중 무엇이 원인인지 특정하지 못해 매번 임시 조치로 넘어간다. 동시에 설비 이상 징후는 담당자의 육안·청음 점검에 의존하다 보니 초기 신호를 놓치고 갑작스런 고장으로 이어져 생산 손실이 반복된다.</p>
+            </div>
+            <div class="case__block">
+              <h4>접근 — 진단 · PoC · 구축</h4>
+              <ul class="case__steps"><li><b>진단</b><span>무선망 장애·설비 정지 이력을 구간별로 정리하고, 실제 RF 스펙트럼을 현장에서 수집해 어떤 시간대·주파수 대역에서 간섭이 반복되는지 1차 패턴을 확인한다. 간섭 의심 설비(전자레인지·용접기·인접 무선장비)를 후보군으로 좁혀 PoC 범위를 정의한다.</span></li><li><b>PoC</b><span>sigprint 엔진을 현장 게이트웨이에 시범 설치해 CFAR 검출로 이상 신호를 실시간 포착하고, 후보 간섭원의 파형을 시그니처 DB에 등록해 robust-hash 매칭으로 실제 원인을 특정한다. 동일 엔진으로 핵심 설비 1~2대의 음향·진동 신호도 함께 채집해 이상 시그니처 탐지 확장 가능성을 검증한다.</span></li><li><b>구축</b><span>검증된 시그니처 DB와 판정 로직을 현장 운영 체계에 편입해 간섭 발생 시 원인 후보를 자동 알림으로 띄우고, 설비 이상 징후 모니터링을 상시 라인으로 확대한다. 담당자용 대시보드와 대응 매뉴얼을 함께 구축해 재발 시 판단 시간을 줄인다.</span></li></ul>
+            </div>
+          </div>
+          <aside class="case__side">
+            <div class="case__block"><h4>사용 기술</h4><p class="case__tech">학습 데이터 없이 CFAR 검출과 robust-hash 지문 매칭 방식으로 RF 스펙트럼의 간섭원·파형 시그니처를 판정하는 sigprint 엔진을 사용하며, 엔진 사양상 밀리초 단위의 빠른 처리와 약한 신호 환경에서의 동작을 목표로 설계되어 있다(실제 성능은 현장 검증 필요). 동일 지문 매칭 방식을 설비 음향·진동 신호로 확장해 별도 대규모 라벨링 없이 이상 시그니처 탐지 적용을 검토할 수 있다.</p></div>
+            <div class="case__block"><h4>기대 효과 (예시)</h4><ul class="case__out"><li>간섭원 특정 시간이 수작업 대비 크게 단축될 것으로 기대(예시)</li><li>무선망 단절로 인한 라인 정지 빈도 감소를 기대(예시)</li><li>설비 이상 징후를 사전에 포착해 돌발 고장 대응 시간을 앞당길 것으로 기대(예시)</li></ul></div>
+            <div class="case__facts">
+              <span class="chip">진단 2주 + PoC 6주 + 구축 8주(예시)</span>
+              <span class="chip">진단→PoC→구축</span>
+              <span class="chip chip--v">바우처 · 센서·통신 인프라가 이미 갖춰진 스마트팩토리 현장에 신규 학습 데이터 구축 없이 적용을 검토할 수 있어, 정부 AX 바우처의 단기 진단-PoC 트랙에 적합하다.</span>
+            </div>
+            <a class="chip chip--dl" href="brochures/2i-brochure-06-무선망-간섭원-실시간-식별-체계.pdf" download>브로셔 PDF ↓</a>
+          </aside>
+        </div>
+      </article>
+      <article class="case reveal">
+        <div class="case__bar">
+          <span class="case__no">07</span>
+          <div>
+            <div class="case__cat">지식 자산화</div>
+            <h3 class="case__title">베테랑 노하우, 질문 한 번에 자산화</h3>
+          </div>
+          <span class="case__ind">제조·전문서비스</span>
+        </div>
+        <div class="case__body">
+          <div>
+            <div class="case__block" style="margin-bottom:1.4rem">
+              <h4>핵심 문제</h4>
+              <p class="case__pain">A 정밀부품(가상) 같은 중소 제조사에서는 20년 이상 근무한 베테랑 담당자 한두 명이 설비 이상 대응법, 도면 변경 이력, 거래처별 특이사항 같은 핵심 노하우를 사실상 혼자 기억하고 있는 경우가 많다. 매뉴얼이 있어도 버전이 뒤섞여 있거나 스캔본으로만 남아 있어 실제로는 그 담당자에게 직접 물어보는 방식으로 업무가 돌아간다. 이 담당자가 휴가나 퇴사로 자리를 비우면 후임자는 같은 문제를 처음부터 다시 겪으며 시간을 허비하고, 조직은 지식이 어디에 있는지조차 모르는 상태에 놓인다.</p>
+            </div>
+            <div class="case__block">
+              <h4>접근 — 진단 · PoC · 구축</h4>
+              <ul class="case__steps"><li><b>진단</b><span>베테랑 담당자 1~2명 심층 인터뷰와 현장 동행으로 암묵지 항목을 목록화하고, 흩어진 매뉴얼·도면·설비 이력·수정 이력 문서를 전수 조사해 형식(PDF·한글·스캔본·엑셀)과 중복·누락 상태를 파악한다. 이 단계에서 RAG로 자산화할 우선순위 문서군(예: 설비 트러블슈팅 이력, 도면 개정 로그)을 확정한다.</span></li><li><b>PoC</b><span>우선순위 문서군 한두 개(예: 특정 라인의 설비 매뉴얼과 최근 3년 트러블슈팅 이력)만으로 소규모 RAG 파일럿을 구축한다. 실제 현장 질문 20~30개로 답변 정확도와 근거 문서 인용 여부를 검증하고, 담당자가 직접 사용해보며 표현 방식·용어집 보완점을 피드백받는다.</span></li><li><b>구축</b><span>PoC에서 검증된 구조를 전체 문서군으로 확장하고, 사내 채팅 인터페이스(질문-답변+원문 인용)와 부서별 접근권한, 신규 문서 업로드 시 자동 반영되는 갱신 파이프라인을 구성한다. 신규 입사자 온보딩과 교대 인수인계 체크리스트에 어시스턴트 활용을 결합한다.</span></li></ul>
+            </div>
+          </div>
+          <aside class="case__side">
+            <div class="case__block"><h4>사용 기술</h4><p class="case__tech">사내 문서 임베딩 기반 RAG(검색증강생성) 시스템으로 매뉴얼·도면·이력 문서를 벡터 검색 가능한 형태로 색인하고, 자연어 질의에 대해 원문 근거를 함께 제시하는 답변 생성 구조를 구성한다. OCR·문서 파싱으로 스캔본·비정형 문서를 텍스트화하는 전처리 파이프라인을 포함한다.</p></div>
+            <div class="case__block"><h4>기대 효과 (예시)</h4><ul class="case__out"><li>신규 담당자가 유사 설비 이슈를 검색할 때 매뉴얼·이력 탐색 시간이 수작업 대비 약 50~70% 단축될 것으로 기대</li><li>퇴사·휴직 등 핵심 인력 공백 시에도 과거 조치 이력과 근거 문서를 바로 확인할 수 있어 업무 연속성 확보에 기여할 것으로 기대</li><li>구두로만 전해지던 노하우가 검색 가능한 문서 자산으로 축적되어 반복 문의·재작업이 줄어들 것으로 기대</li></ul></div>
+            <div class="case__facts">
+              <span class="chip">진단 2주 + PoC 4주 + 구축 6~8주 (총 약 3개월 예상)</span>
+              <span class="chip">진단→PoC→구축 (3단계 전 과정 수행)</span>
+              <span class="chip chip--v">바우처 · 기존 문서 자산을 활용해 검색 가능한 지식 시스템으로 전환하는 과제로, 정부 AX 바우처의 진단-실증(PoC)-구축 단계별 지원 요건과 정합성이 높다.</span>
+            </div>
+            <a class="chip chip--dl" href="brochures/2i-brochure-07-베테랑-노하우-질문-한-번에-자산화.pdf" download>브로셔 PDF ↓</a>
+          </aside>
+        </div>
+      </article>
+      <article class="case reveal">
+        <div class="case__bar">
+          <span class="case__no">08</span>
+          <div>
+            <div class="case__cat">영업 자동화</div>
+            <h3 class="case__title">영업 신호 자동 포착, 제안 타이밍 사수</h3>
+          </div>
+          <span class="case__ind">중부권 산업자재·기계부품 도매상사(가상, B2B 제조·유통)</span>
+        </div>
+        <div class="case__body">
+          <div>
+            <div class="case__block" style="margin-bottom:1.4rem">
+              <h4>핵심 문제</h4>
+              <p class="case__pain">영업 담당자가 매일 아침 업계 뉴스, 나라장터 입찰공고, 주요 거래처의 증설·인사·실적 동향을 개인적으로 검색해 확인하다 보니 정작 먼저 연락해야 할 골든타임을 놓치는 일이 반복된다. 확인한 정보도 담당자 개인의 브라우저 히스토리나 메모에만 남고 CRM이나 팀 내 공유 채널로 이어지지 않아, 후속 대응이 사람의 기억과 감에 의존하고 담당자가 바뀌면 그대로 소실된다.</p>
+            </div>
+            <div class="case__block">
+              <h4>접근 — 진단 · PoC · 구축</h4>
+              <ul class="case__steps"><li><b>진단</b><span>영업 조직의 정보 수집 경로(뉴스·입찰공고·거래처 공시 확인 루틴)와 CRM 입력 실태를 인터뷰 및 워크섀도잉으로 파악하고, 신호를 포착해도 실제 행동(연락·제안)으로 이어지지 않고 끊기는 지점을 식별한다.</span></li><li><b>PoC</b><span>핵심 거래처 20~30개사와 업종 키워드를 기준으로 뉴스·나라장터 공고를 자동 수집·필터링해 슬랙 알림과 CRM 메모로 연결하는 파일럿을 4주간 운영하고, 영업팀 피드백을 받아 오탐·누락을 줄이는 방향으로 필터 기준을 조정한다.</span></li><li><b>구축</b><span>PoC에서 검증된 필터·알림 로직을 CRM 커스텀 필드와 연동해 신호가 리드·거래처 타임라인에 자동 기록되도록 구축하고, 신호 중요도 스코어링과 담당자 자동 배정 규칙을 추가해 운영 단계로 전환한다.</span></li></ul>
+            </div>
+          </div>
+          <aside class="case__side">
+            <div class="case__block"><h4>사용 기술</h4><p class="case__tech">뉴스·공공데이터(나라장터 등) API 연동과 기업명·업종 키워드 매칭 기반 필터링, 수집된 정보의 요약·중요도 분류를 위한 LLM 활용, CRM(예: 세일즈포스 또는 자체 CRM) Webhook 연동을 조합한다.</p></div>
+            <div class="case__block"><h4>기대 효과 (예시)</h4><ul class="case__out"><li>영업 담당자의 일일 정보 탐색 시간이 수작업 대비 약 60~70% 단축될 것으로 기대(예시)</li><li>입찰공고 등록이나 거래처 동향 발생 후 최초 접촉까지 걸리는 시간이 평균 며칠 단위에서 당일 대응 수준으로 단축될 것으로 기대(예시)</li><li>핵심 거래처 동향이 CRM에 자동 축적되면서 담당자 교체 시에도 이력 단절로 인한 제안 기회 손실이 줄어들 것으로 기대(예시)</li></ul></div>
+            <div class="case__facts">
+              <span class="chip">진단 2주 + PoC 4주 + 구축 6주</span>
+              <span class="chip">진단→PoC→구축</span>
+              <span class="chip chip--v">바우처 · 정부 AX 바우처의 영업·마케팅 지능화 과제 요건에 부합하며, PoC 단계의 신호 정확도(오탐·누락률) 리포트를 바우처 중간 산출물 및 성과 근거로 활용할 수 있다.</span>
+            </div>
+            <a class="chip chip--dl" href="brochures/2i-brochure-08-영업-신호-자동-포착-제안-타이밍-사수.pdf" download>브로셔 PDF ↓</a>
+          </aside>
+        </div>
+      </article>
+      <article class="case reveal">
+        <div class="case__bar">
+          <span class="case__no">09</span>
+          <div>
+            <div class="case__cat">마케팅 영상</div>
+            <h3 class="case__title">제품정보만으로 뽑는 자동 홍보영상</h3>
+          </div>
+          <span class="case__ind">소비재·제조 — 중부권 생활용품 제조사(예시)</span>
+        </div>
+        <div class="case__body">
+          <div>
+            <div class="case__block" style="margin-bottom:1.4rem">
+              <h4>핵심 문제</h4>
+              <p class="case__pain">제품력은 있지만 영상 촬영·편집 예산과 전담 인력이 없어 온라인 채널 노출이 약하다. 신제품이 나와도 홍보 콘텐츠가 못 따라가 판매 골든타임을 놓치고, 외주 영상 제작은 건당 비용과 리드타임이 부담스러워 시도 자체를 포기하는 경우가 많다.</p>
+            </div>
+            <div class="case__block">
+              <h4>접근 — 진단 · PoC · 구축</h4>
+              <ul class="case__steps"><li><b>진단</b><span>보유 소재를 점검하고 채널별 필요 영상 포맷을 정리한다.</span></li><li><b>PoC</b><span>제품 텍스트와 이미지만으로 숏폼 영상 시안을 자동 생성하는 파이프라인을 시범 구축한다.</span></li><li><b>구축</b><span>검증된 파이프라인을 신제품 등록 프로세스에 연동해 채널별 규격 영상을 일괄 산출한다.</span></li></ul>
+            </div>
+          </div>
+          <aside class="case__side">
+            <div class="case__block"><h4>사용 기술</h4><p class="case__tech">제품 텍스트·이미지 기반 자동 영상 생성 파이프라인, 채널별 규격 변환 및 브랜드 템플릿 적용</p></div>
+            <div class="case__block"><h4>기대 효과 (예시)</h4><ul class="case__out"><li>외주 대비 제작 소요시간 약 80% 단축 기대</li><li>SNS 숏폼 노출 빈도 확대 기대</li><li>신제품 출시 대응력 개선 기대</li></ul></div>
+            <div class="case__facts">
+              <span class="chip">진단 1주 + PoC 3주</span>
+              <span class="chip">PoC→구축</span>
+              <span class="chip chip--v">바우처 · 마케팅 콘텐츠 자동화 도입 목적의 AX 바우처에 적합하다.</span>
+            </div>
+            <a class="chip chip--dl" href="brochures/2i-brochure-09-제품정보만으로-뽑는-자동-홍보영상.pdf" download>브로셔 PDF ↓</a>
+          </aside>
+        </div>
+      </article>
+      <article class="case reveal">
+        <div class="case__bar">
+          <span class="case__no">10</span>
+          <div>
+            <div class="case__cat">홈페이지·마케팅 원스톱</div>
+            <h3 class="case__title">홈페이지부터 마케팅까지 원스톱 대행</h3>
+          </div>
+          <span class="case__ind">온라인 존재감이 약한 전 업종 중소기업 (가상 예시)</span>
+        </div>
+        <div class="case__body">
+          <div>
+            <div class="case__block" style="margin-bottom:1.4rem">
+              <h4>핵심 문제</h4>
+              <p class="case__pain">제품과 기술은 좋은데 홈페이지가 없거나 몇 년째 방치돼 있고, 콘텐츠·홍보 영상을 만들 예산도 인력도 없어 온라인에서 사실상 존재하지 않는 회사처럼 보인다. 거래처가 검색해도 나오는 게 없으니 신뢰를 얻기 어렵고, 마케팅은 늘 &#x27;나중에 할 일&#x27;로 밀린다.</p>
+            </div>
+            <div class="case__block">
+              <h4>접근 — 진단 · PoC · 구축</h4>
+              <ul class="case__steps"><li><b>진단</b><span>회사의 강점·타겟 고객·경쟁사를 정리해 한 줄 포지셔닝과 필요한 페이지 구조, 확보할 검색 키워드를 정한다. 무료로 시작 가능한 GitHub Pages 등 저비용 배포 경로와 리드(문의) 수집 방식을 함께 설계한다.</span></li><li><b>구축</b><span>브랜드 톤에 맞춘 반응형 랜딩 페이지를 제작·배포하고(도메인 없이 무료 호스팅부터 시작 가능), 기본 SEO와 문의 폼을 붙인다. 이어서 블로그 콘텐츠 골격과 제품 홍보 숏폼 영상을 자동 생성 파이프라인으로 만들어 초기 콘텐츠까지 채워 넘긴다.</span></li></ul>
+            </div>
+          </div>
+          <aside class="case__side">
+            <div class="case__block"><h4>사용 기술</h4><p class="case__tech">브랜드 랜딩 페이지 제작(디자인 토큰 기반 반응형 프론트엔드)·기본 SEO·리드 폼 연동에, 블로그 콘텐츠 생성과 홍보 영상 자동 생성 파이프라인을 결합한 원스톱 역량을 활용한다. 2i가 자사 사이트를 이 방식 그대로 무료 GitHub Pages로 구축했다.</p></div>
+            <div class="case__block"><h4>기대 효과 (예시)</h4><ul class="case__out"><li>도메인·초기 비용 부담 없이 검색에 노출되는 브랜드 랜딩을 단기간에 확보할 것으로 기대(예시)</li><li>문의 폼·자가진단 등 전환 장치가 붙어 방문이 실제 상담 리드로 이어지기 시작할 것으로 기대(예시)</li><li>블로그·홍보 영상 초기 콘텐츠가 채워져 온라인 신뢰도와 재방문 여지가 생길 것으로 기대(예시)</li></ul></div>
+            <div class="case__facts">
+              <span class="chip">진단 1주 + 구축 3~4주 (콘텐츠 범위에 따라 변동, 예시)</span>
+              <span class="chip">진단→구축</span>
+              <span class="chip chip--v">바우처 · 디지털 마케팅·온라인 판로 개척 성격이라 지역·업종별 소상공인·중소기업 마케팅 지원사업과 연계하기 좋다.</span>
+            </div>
+            <a class="chip chip--dl" href="brochures/2i-brochure-10-홈페이지부터-마케팅까지-원스톱-대행.pdf" download>브로셔 PDF ↓</a>
+          </aside>
+        </div>
+      </article>
+    </div>
+  </section>
+  <section class="section section--alt">
+    <div class="wrap">
+      <div class="cta">
+        <h2>이 중 하나가 우리 회사 이야기 같다면.</h2>
+        <p>무료 자가진단으로 시작하거나, 30분 상담으로 귀사에 맞는 시작점을 함께 찾습니다.</p>
+        <div class="cta__row"><a class="btn btn--signal" href="/#diagnose">자가진단 →</a><a class="btn btn--ghost" href="/#contact">상담 신청</a></div>
+      </div>
+    </div>
+  </section>
+</main>
+<footer class="foot">
+  <div class="wrap foot__inner">
+    <div class="brand"><span class="brand__mark">2i</span><span class="brand__tag">AX Consulting</span></div>
+    <nav class="foot__links"><a href="/">홈</a><a href="/#service">서비스</a><a href="https://www.2icorp.site" target="_blank" rel="noopener">블로그</a></nav>
+  </div>
+</footer>
+<script>
+document.querySelectorAll('.case').forEach(function(el,i){el.id='case-'+(i+1);});
+var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}})},{threshold:0.1});
+if(matchMedia('(prefers-reduced-motion: reduce)').matches){document.querySelectorAll('.reveal').forEach(function(el){el.classList.add('in');});}else{document.querySelectorAll('.reveal').forEach(function(el){io.observe(el);});}
+</script>
+</body>
+</html>
