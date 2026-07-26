@@ -164,3 +164,27 @@
     });
   });
 })();
+
+// Lead form -> clean mailto (works with no backend; footer/about also list the address)
+(function () {
+  "use strict";
+  var form = document.getElementById("leadForm");
+  if (!form) return;
+  form.addEventListener("submit", function (e) {
+    e.preventDefault();
+    var g = function (n) { var el = form.elements[n]; return el ? el.value.trim() : ""; };
+    var subject = "[2i 상담 신청] " + (g("company") || "문의");
+    var body = [
+      "이름: " + g("name"),
+      "회사: " + g("company"),
+      "업종: " + g("industry"),
+      "연락처: " + g("contact"),
+      "관심 단계: " + g("stage"),
+      "",
+      "상황:",
+      g("message")
+    ].join("\n");
+    window.location.href = "mailto:contact@2icorp.site?subject=" +
+      encodeURIComponent(subject) + "&body=" + encodeURIComponent(body);
+  });
+})();
