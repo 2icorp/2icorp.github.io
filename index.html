@@ -28,7 +28,7 @@
       <a href="#method">방식</a>
       <a href="cases.html">사례</a>
       <a href="papers.html">논문·실험</a>
-      <a href="#diagnose">자가진단</a>
+      <a href="about.html">회사소개</a>
       <a href="#voucher">정부 바우처</a>
       <a class="nav__lang" href="/en/">EN</a>
       <a class="nav__cta btn btn--signal" href="#contact">상담 신청</a>
@@ -366,8 +366,8 @@
       <div class="cta reveal">
         <h2>다음 한 걸음, 같이 정합시다.</h2>
         <p>무엇을 팔려는 상담이 아니라, 당신 회사에 지금 AI가 맞는지부터 함께 봅니다. 30분이면 방향이 잡힙니다.</p>
-        <!-- Lead form: swap action with your Formspree/Google Form endpoint -->
-        <form class="form" action="https://formspree.io/f/your-form-id" method="POST">
+        <!-- 상담 폼: 이메일 클라이언트로 전송(백엔드 불필요). Formspree 등 연동 시 action 교체 가능. -->
+        <form class="form" id="leadForm" action="mailto:contact@2icorp.site" method="POST" enctype="text/plain">
           <label>이름<input name="name" required placeholder="한금지"></label>
           <label>회사<input name="company" required placeholder="○○ 제조"></label>
           <label>업종<select name="industry"><option>제조</option><option>유통</option><option>물류</option><option>기타</option></select></label>
@@ -386,6 +386,7 @@
             <button class="btn btn--signal" type="submit">상담 신청 보내기 <span class="arrow">→</span></button>
           </div>
         </form>
+        <p class="foot__legal" style="margin-top:1rem">메일 앱이 열리지 않으면 <a href="mailto:contact@2icorp.site">contact@2icorp.site</a> 로 보내주세요.</p>
       </div>
     </div>
   </section>
@@ -397,11 +398,14 @@
     <div>
       <div class="brand"><span class="brand__mark">2i</span><span class="brand__tag">AX 컨설팅</span></div>
       <div class="foot__mono" style="margin-top:0.6rem">중소·중견 제조·유통을 위한 AI 전환</div>
+      <div class="foot__legal">상호 <b>2i</b> · 대표 한금지 · 문의 <a href="mailto:contact@2icorp.site">contact@2icorp.site</a></div>
     </div>
     <nav class="foot__links" aria-label="하단 메뉴">
+      <a href="about.html">회사소개</a>
       <a href="#method">방식</a>
       <a href="papers.html">논문·실험</a>
       <a href="#voucher">정부 바우처</a>
+      <a href="privacy.html">개인정보처리방침</a>
       <a href="https://github.com/2icorp" target="_blank" rel="noopener">GitHub</a>
       <a href="/en/">EN</a>
     </nav>
