@@ -383,6 +383,22 @@ section[id] { scroll-margin-top: 80px; }
 .auto-2i { font-size: 0.92rem; color: var(--ink-soft); border-top: 2px solid var(--signal); padding-top: 0.7rem; margin-top: 0.3rem; }
 .auto-foot { margin-top: 1.6rem; max-width: 62ch; color: var(--ink-soft); font-size: 1.02rem; }
 
+/* ============ RF SIGNAL INTELLIGENCE CAPABILITY ============ */
+.rf-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--line); border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; }
+@media (max-width: 900px) { .rf-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 560px) { .rf-grid { grid-template-columns: 1fr; } }
+.rf-cell { background: var(--panel); padding: 1.6rem 1.4rem; display: flex; flex-direction: column; gap: 0.4rem; transition: background var(--dur) var(--ease); }
+.rf-cell:hover { background: var(--paper); }
+.rf-cell--lead { grid-column: span 2; background: oklch(97% 0.02 60); }
+@media (max-width: 900px) { .rf-cell--lead { grid-column: 1 / -1; } }
+.rf-metric { font-family: var(--mono); font-weight: 600; font-size: clamp(2rem, 1rem + 3vw, 3rem); color: var(--signal-deep); line-height: 1; }
+.rf-unit { font-family: var(--mono); font-size: var(--text-xs); letter-spacing: 0.08em; color: var(--ink-faint); text-transform: uppercase; }
+.rf-name { font-weight: 850; font-size: 1.05rem; letter-spacing: -0.02em; margin-top: 0.2rem; }
+.rf-desc { font-size: 0.9rem; color: var(--ink-soft); }
+.rf-cell--lead .rf-desc { max-width: 52ch; }
+.rf-cell--pending { background: var(--paper-2); }
+.rf-cell--pending .rf-desc { color: var(--ink-faint); font-style: italic; }
+
 /* brochure download chip + voucher process */
 .chip--dl { display: inline-flex; align-items: center; margin-top: 0.4rem; color: var(--paper); background: var(--ink); border-color: var(--ink); font-weight: 600; transition: transform var(--dur) var(--ease), background var(--dur); }
 .chip--dl:hover { transform: translateY(-1px); background: var(--signal-deep); border-color: var(--signal-deep); }
