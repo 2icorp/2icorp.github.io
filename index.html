@@ -14,7 +14,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="styles.css?v=7">
+<link rel="stylesheet" href="styles.css?v=8">
 </head>
 <body>
 
@@ -375,7 +375,7 @@
           <span class="rf-metric">0.945</span>
           <span class="rf-unit">AUROC</span>
           <span class="rf-name">미지 신호원 오픈셋 식별</span>
-          <span class="rf-desc">다중 패킷 융합으로 미지 신호원 거부율 100%. 상업 검증선(AUROC 0.85)은 신호원 20개 규모에서 이미 넘겼습니다.</span>
+          <span class="rf-desc">고전 다중 패킷 융합으로 미지 신호원 거부율 100%. 상업 검증선(AUROC 0.85)은 신호원 20개 규모에서 이미 넘겼습니다.</span>
           <span class="chip chip--v">공개 데이터 실측 · WiSig, K=50</span>
         </div>
         <div class="rf-cell">
@@ -394,10 +394,17 @@
           <span class="rf-name">9단계 수신기 파이프라인</span>
           <span class="rf-desc">물리 기반 신호 처리 9단계 중 7단계를 정량 실측으로 검증했습니다.</span>
         </div>
+        <div class="rf-cell rf-cell--lead">
+          <span class="rf-metric">0.9994</span>
+          <span class="rf-unit">AUROC</span>
+          <span class="rf-name">학습형 지문 백본(ECAPA-TDNN)</span>
+          <span class="rf-desc">다중 패킷 융합 기준 미지 신호원 거부 AUROC 0.9994로 고전 융합(0.945)을 상회합니다. 이 수치는 다중패킷 융합 기준이며, 단일 패킷 임베딩 단독 성능은 아직 개선 여지가 있습니다.</span>
+          <span class="chip chip--v">공개 데이터 실측 · WiSig cross-receiver, 연구검증</span>
+        </div>
         <div class="rf-cell rf-cell--pending">
           <span class="rf-name">다음 단계</span>
-          <span class="rf-desc">학습형 지문 백본·재밍 강건성: 실험 진행 중.</span>
-          <!-- TODO(update-after-experiments): ECAPA 학습형 지문 0.96+ 목표 / anti-jam 강건성 곡선 / 데이터-스케일 결과 -->
+          <span class="rf-desc">재밍·적대환경(anti-jam) 강건성: 실험 진행 중.</span>
+          <!-- TODO(update-after-experiments): anti-jam 강건성 곡선 / 데이터-스케일 결과 -->
         </div>
       </div>
 
