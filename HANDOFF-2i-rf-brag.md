@@ -101,3 +101,52 @@ AUROC 0.945를 기록했습니다.`
 다시 돌리면 `site-new/`에서 복사해온 파일로 덮어쓴다. `site-new/index.html`과 `cases.json`
 케이스 06에 위 내용을 이식하지 않으면, 다음 정본 재생성 때 이번 RF 역량 섹션과 케이스 06 한 줄이
 사라진다.
+
+---
+
+## 3. 후속 추가 (2026-07-27, 같은 세션) — index.html `#applications` 섹션
+
+`#capability` 섹션 바로 뒤(창업자 섹션 앞)에 "활용 분야 · 버티컬 확장" 섹션을 추가했다.
+같은 이유로 `site-new/index.html`에도 이식 필요.
+
+### 배치
+`</section>`(capability 닫힘) 직후, `<!-- FOUNDER -->` 직전. 클래스는 `section`(plain) —
+capability도 plain이라 두 섹션이 이어지고, 바로 다음 founder가 `section--alt`라 거기서
+배경이 갈린다.
+
+### 콘텐츠 요지 (전문은 이 클론의 `index.html` `id="applications"` 참조)
+- 리드 문장: "하나의 RF 신호지능 엔진이 산업을 가로질러 확장됩니다. 아래는 성숙도를 정직하게
+  표시한 적용 지도입니다."
+- 성숙도 태그 3종(범례 `.mlegend`): `mtag--demo`(실증) · `mtag--extend`(확장) · `mtag--research`(연구).
+  새 색 토큰 추가 없음 — 기존 `--signal`/`--ok`/`--steel`을 `color-mix(in oklab, var(--X) N%,
+  transparent)`로 재사용(papers.html `.pcard__cat` 패턴과 동일 기법).
+- `.topfit-grid`(TOP 6 하이라이트, `.auto-grid`/`.rf-grid` 3열 패턴 재사용): 미등록 IoT 기기 탐지(확장) ·
+  드론 RF 탐지·식별(연구) · 병원 무선 간섭 모니터링(확장) · 비접촉 바이탈 센싱(연구) ·
+  사설5G 헬스 모니터링(확장) · 차량 키포브 보안(연구).
+- `.vert-groups` 5개 `.vgroup`(생활·스마트홈 IoT / 의료·헬스케어 / 산업·제조 / 보안·방위(일반 역량) /
+  기타 유망): 각 항목이 `.vitem`(제목+설명+태그) 행. 사례06 코어 엔진 항목만 `실증` 태그(나머지는
+  `확장` 또는 `연구`) — 날조 수치 없음, 전부 정성 서술.
+- ⚠️ **보안·방위 항목은 "미지 신호원 식별·스펙트럼 상황인식"·"드론 RF 탐지·식별"만, 기관명·
+  무기체계·특정 군 프로그램 언급 0.** 초안에 "특정 기관·무기체계와 무관한"이라는 방어적 문구를
+  넣었다가 그 문구 자체가 `무기체계` 단어를 포함해 게이트에 걸림 → 문구를 완전히 제거하고
+  "스펙트럼 감시용 범용 역량으로 확장합니다"로 대체. **이식 시 이 표현을 그대로 쓸 것** —
+  "무관하다"고 방어적으로 설명하려 하면 그 설명 자체가 금지어를 담게 되는 함정이 있다.
+- 마무리 한 줄 + TODO 주석: `<!-- TODO(update-after-experiments): 버티컬별 파일럿 진행 시 태그를
+  실증으로 갱신 / 정량 지표 확보 시 목표 수치 대체 -->` + "이 지도는 영업 약속이 아니라 정직한
+  로드맵입니다. '확장'·'연구' 태그가 붙은 항목은 귀사 데이터로 실증하는 PoC 단계부터
+  시작합니다."
+
+### styles.css 추가분
+`/* ============ APPLICATIONS / VERTICAL EXPANSION MAP ============ */` 블록(`.mtag*`,
+`.mlegend`, `.topfit-grid`/`.topfit*`, `.vert-groups`/`.vgroup*`/`.vitem*`) — `.rf-cell--pending`
+규칙 직후, "brochure download chip" 주석 직전에 위치. 새 oklch 색상 토큰 없음, 전부 기존
+`--steel`/`--ok`/`--signal`/`--signal-deep`/`--ink-*`/`--line*` 재사용.
+
+캐시버스트 `styles.css?v=6` → `?v=7`도 6개 페이지 전부에 같이 올렸다.
+
+### 게이트/배포
+- 신원 게이트: 0. em/en-dash: 0. 군사/기관 게이트(국방/방산/ADD/한화/SEI/EW/전자전/SIGINT/
+  무기체계/무기/counter-drone/weapon): 0 (위 함정 수정 후).
+- 커밋 `80d4cf8`(ax-relaunch, author `2i`) → 병합 `e477772`(main, author `2i`) → 라이브 확인
+  완료(`curl https://2icorp.github.io/` → `id="applications"` 존재, 14개 `vitem__t`, 신원/군사
+  키워드 0, dash 0).
