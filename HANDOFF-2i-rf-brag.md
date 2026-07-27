@@ -150,3 +150,55 @@ capability도 plain이라 두 섹션이 이어지고, 바로 다음 founder가 `
 - 커밋 `80d4cf8`(ax-relaunch, author `2i`) → 병합 `e477772`(main, author `2i`) → 라이브 확인
   완료(`curl https://2icorp.github.io/` → `id="applications"` 존재, 14개 `vitem__t`, 신원/군사
   키워드 0, dash 0).
+
+---
+
+## 4. 후속 추가 (2026-07-27, 같은 세션) — 학습형 지문 백본 실측값 반영 (X2 완료, D3 진행 중)
+
+`#capability` 섹션의 "다음 단계 · 실험 진행 중" 플레이스홀더 셀 중 **학습형 지문 백본** 부분만
+실측 완료로 교체했다. **재밍/적대환경(anti-jam) 강건성은 아직 진행 중**이라 별도 pending 셀로
+분리 유지했다 — 이식 시 이 둘을 다시 합치지 말 것.
+
+### 변경 (index.html `#capability` 그리드)
+
+기존 마지막 셀(`rf-cell rf-cell--pending`, "학습형 지문 백본·재밍 강건성: 실험 진행 중.")을
+**두 개 셀로 분리**했다:
+
+1. **새 실증 셀**(`rf-cell rf-cell--lead`, `.rf-grid` 안에 추가):
+   ```html
+   <div class="rf-cell rf-cell--lead">
+     <span class="rf-metric">0.9994</span>
+     <span class="rf-unit">AUROC</span>
+     <span class="rf-name">학습형 지문 백본(ECAPA-TDNN)</span>
+     <span class="rf-desc">다중 패킷 융합 기준 미지 신호원 거부 AUROC 0.9994로 고전 융합(0.945)을 상회합니다. 이 수치는 다중패킷 융합 기준이며, 단일 패킷 임베딩 단독 성능은 아직 개선 여지가 있습니다.</span>
+     <span class="chip chip--v">공개 데이터 실측 · WiSig cross-receiver, 연구검증</span>
+   </div>
+   ```
+   정직 캐비엇("단일 패킷 임베딩 단독 성능은 아직 개선 여지가 있습니다")은 **삭제하지 말 것** —
+   다중패킷 융합 수치를 단일패킷 성능인 것처럼 읽히게 하면 안 된다.
+2. **남은 pending 셀**(anti-jam만, 학습형 지문 백본 언급 제거):
+   ```html
+   <div class="rf-cell rf-cell--pending">
+     <span class="rf-name">다음 단계</span>
+     <span class="rf-desc">재밍·적대환경(anti-jam) 강건성: 실험 진행 중.</span>
+     <!-- TODO(update-after-experiments): anti-jam 강건성 곡선 / 데이터-스케일 결과 -->
+   </div>
+   ```
+
+첫 번째 실증 셀(0.945, 고전 융합)의 설명도 명확화했다: "다중 패킷 융합으로" → **"고전 다중 패킷
+융합으로"** — 새 0.9994(학습형 융합) 셀과 나란히 있을 때 두 수치가 같은 방법인 것처럼 헷갈리지
+않게. **두 AUROC는 서로 다른 방법이다**: 0.945 = 고전 융합(실증), 0.9994 = 학습형 융합(실증).
+둘 다 실측이고 목표 수치가 아니다 — 헷갈리지 말 것.
+
+그리드는 이제 `rf-cell--lead`가 2개(0.945, 0.9994)라 3열 그리드 합계가 9(2+1+1+1+1+2+1)로
+정확히 3행 채움 — 빈 슬롯 없음.
+
+### styles.css
+변경 없음(기존 `.rf-cell--lead`/`.rf-metric`/`.rf-cell--pending` 클래스 재사용). 캐시버스트만
+`?v=7` → `?v=8`.
+
+### 게이트/배포
+- 신원 게이트: 0. em/en-dash: 0. 군사/기관 게이트: 0.
+- 커밋 `9a8d6f6`(ax-relaunch, author `2i`) → 병합 `50b1738`(main, author `2i`) → GitHub Pages
+  build "built" 확인 → 라이브 확인 완료(`curl https://2icorp.github.io/` → `rf-metric">0.9994`
+  존재, "재밍" pending 문구 존재, 신원/군사 키워드 0, dash 0).
