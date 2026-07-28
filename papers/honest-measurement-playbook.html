@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>수치를 못 믿게 만드는 다섯 가지 실수, 그리고 우리가 쓰는 방어 장치 · 2i</title>
+<meta name="description" content="사전선언 게이트, 셔플 대조, 오탐률 고정, 누수 차단, 음성 결과 공개. 이 게시판의 모든 실험 노트에 공통으로 걸려 있는 다섯 가지 측정 규율을 한 장으로 정리했습니다. AI 도입 검증에 그대로 가져다 쓰셔도 됩니다.">
+<meta property="og:title" content="수치를 못 믿게 만드는 다섯 가지 실수, 그리고 우리가 쓰는 방어 장치 · 2i">
+<meta property="og:description" content="사전선언 게이트, 셔플 대조, 오탐률 고정, 누수 차단, 음성 결과 공개. 이 게시판의 모든 실험 노트에 공통으로 걸려 있는 다섯 가지 측정 규율을 한 장으로 정리했습니다. AI 도입 검증에 그대로 가져다 쓰셔도 됩니다.">
+<meta property="og:type" content="article">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23111827'/%3E%3Ctext x='16' y='22' font-family='monospace' font-size='16' font-weight='700' fill='%23e08a2b' text-anchor='middle'%3E2i%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../styles.css?v=10">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js" onload="renderMathInElement(document.body,{delimiters:[{left:'$$',right:'$$',display:true},{left:'$',right:'$',display:false},{left:'\\[',right:'\\]',display:true},{left:'\\(',right:'\\)',display:false}]})"></script>
+</head>
+<body>
+
+<header class="nav">
+  <div class="wrap nav__inner">
+    <a class="brand" href="../" aria-label="2i 홈">
+      <span class="brand__mark">2i</span>
+      <span class="brand__tag">AX 컨설팅</span>
+    </a>
+    <button class="nav__burger" type="button" aria-expanded="false" aria-controls="navLinks" aria-label="메뉴 열기"><span></span><span></span><span></span></button>
+    <nav class="nav__links" id="navLinks" aria-label="주요 메뉴">
+      <a href="../index.html#method">방식</a>
+      <a href="../cases.html">사례</a>
+      <a href="../index.html#ideas">아이디어 30</a>
+      <a href="../papers.html">논문·실험</a>
+      <a href="../about.html">회사소개</a>
+      <a href="../index.html#voucher">정부 바우처</a>
+      <a class="nav__lang" href="../en/">EN</a>
+      <a class="nav__cta btn btn--signal" href="../index.html#contact">상담 신청</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <article class="article wrap">
+    <a class="article__back" href="../papers.html">← 논문·실험 게시판</a>
+    <div class="article__head">
+      <div class="pcard__meta"><span class="pcard__cat">방법</span><span class="pcard__date">2026.07.28</span><span class="pcard__rt">약 6분</span></div>
+      <h1 class="article__title">수치를 못 믿게 만드는 다섯 가지 실수, 그리고 우리가 쓰는 방어 장치</h1>
+      <p class="article__excerpt">사전선언 게이트, 셔플 대조, 오탐률 고정, 누수 차단, 음성 결과 공개. 이 게시판의 모든 실험 노트에 공통으로 걸려 있는 다섯 가지 측정 규율을 한 장으로 정리했습니다. AI 도입 검증에 그대로 가져다 쓰셔도 됩니다.</p>
+      <div class="pcard__tags"><span>#측정방법론</span><span>#게이지방식</span><span>#PoC검증</span><span>#실험설계</span></div>
+      
+    </div>
+    <div class="article__body prose">
+<h2 id="_1">왜 이 문서인가</h2>
+<p>AI PoC가 실패하는 가장 흔한 경로는 기술이 아니라 <strong>측정</strong>입니다. 좋아 보이는 숫자를 만든
+방법이 틀리면, 파일럿에서 숫자가 무너지고 신뢰도 같이 무너집니다. 이 게시판의 실험 노트
+전부에 공통으로 걸려 있는 다섯 가지 방어 장치를 공개합니다. 귀사가 다른 업체의 PoC 결과를
+검증할 때 체크리스트로 쓰셔도 됩니다.</p>
+<h2 id="_2">다섯 가지 방어 장치</h2>
+<p><strong>1. 사전선언 게이트.</strong> 통과·실패 기준을 실험 전에 문서로 박고, 결과를 본 뒤 옮기지
+않습니다. 저희 미지 신호원 실험은 이 규칙 때문에 유행 기법(극값이론 보정)을 "탈락"으로
+공개했습니다. 기준을 사후에 옮긴 실험은 실험이 아니라 마케팅입니다.</p>
+<p><strong>2. 셔플 대조.</strong> 라벨을 무작위로 섞어 다시 돌립니다. 섞어도 성능이 나오면 그 성능은
+신호가 아니라 통계 장난입니다. RF 지문 실험의 AUROC 0.80은 셔플 시 0.49로 떨어지는 것을
+확인하고서야 보고했습니다.</p>
+<p><strong>3. 오탐률 고정 비교.</strong> 탐지기 두 개의 검출률은 오탐률을 맞춘 상태에서만 비교합니다.
+임계값만 낮추면 검출률은 누구나 올립니다. 간섭탐지·레이더탐지 노트의 모든 비교가 이
+조건(FAR-matched)입니다.</p>
+<p><strong>4. 누수 차단.</strong> 판정 임계값은 "정상" 데이터로만 보정합니다. 잡아야 할 대상(미등록 기기,
+미지 신호)의 데이터로 임계를 튜닝하면 현장에 없는 정보를 쓴 것입니다. 시험 문제를 미리
+보고 푼 점수는 점수가 아닙니다.</p>
+<p><strong>5. 음성 결과 공개.</strong> 안 된 것을 됐다고 하지 않고, 안 된 것도 게시판에 올립니다. 교차
+수신기에서 지문이 무너진다는 것, 엣지 처리량이 목표의 0.19배라는 것, 고급 기법이 단순
+기법을 못 이겼다는 것. 이 숫자들이 있어야 "지금 팔 수 있는 것"과 "더 개발해야 하는 것"의
+경계가 정직해집니다.</p>
+<h2 id="_3">게이지 방식과의 연결</h2>
+<p>저희 컨설팅의 3게이트(측정·실증·이관)는 이 규율의 사업 버전입니다. 측정 게이트에서 위
+다섯 장치를 걸고, 통과한 것만 실증 예산을 씁니다. AI 도입의 가장 큰 불안("돈만 쓰고 안
+되면?")은 장비나 모델이 아니라 이 절차가 제거합니다.</p>
+    </div>
+    <div class="article__cta">
+      <p>이 방법을 당신 현장의 숫자로 다시 재보고 싶다면.</p>
+      <a class="btn btn--signal" href="../index.html#contact">30분 진단 상담 <span class="arrow">→</span></a>
+      <a class="btn btn--ghost" href="../papers.html">다른 기록 보기</a>
+    </div>
+  </article>
+</main>
+
+<footer class="foot">
+  <div class="wrap foot__inner">
+    <div>
+      <div class="brand"><span class="brand__mark">2i</span><span class="brand__tag">AX 컨설팅</span></div>
+      <div class="foot__mono" style="margin-top:0.6rem">중소·중견 제조·유통을 위한 AI 전환</div>
+    </div>
+    <nav class="foot__links" aria-label="하단 메뉴">
+      <a href="../index.html#method">방식</a>
+      <a href="../papers.html">논문·실험</a>
+      <a href="../index.html#voucher">정부 바우처</a>
+      <a href="https://github.com/2icorp" target="_blank" rel="noopener">GitHub</a>
+      <a href="../en/">EN</a>
+    </nav>
+  </div>
+</footer>
+
+<script src="../main.js"></script>
+</body>
+</html>

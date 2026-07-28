@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>간섭탐지는 &#x27;몇 % 잡았다&#x27;가 아니라 &#x27;오탐 몇 %에서 잡았다&#x27;로 말해야 합니다 · 2i</title>
+<meta name="description" content="공장·병원 무선 간섭탐지의 자체벤치: 오탐률을 먼저 고정하고 그 조건에서 검출률 98.0%를 실측. 합성 벤치임을 명시하고, 오탐률 고정이 왜 상용 간섭탐지의 유일하게 정직한 화법인지 정리했습니다.">
+<meta property="og:title" content="간섭탐지는 &#x27;몇 % 잡았다&#x27;가 아니라 &#x27;오탐 몇 %에서 잡았다&#x27;로 말해야 합니다 · 2i">
+<meta property="og:description" content="공장·병원 무선 간섭탐지의 자체벤치: 오탐률을 먼저 고정하고 그 조건에서 검출률 98.0%를 실측. 합성 벤치임을 명시하고, 오탐률 고정이 왜 상용 간섭탐지의 유일하게 정직한 화법인지 정리했습니다.">
+<meta property="og:type" content="article">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23111827'/%3E%3Ctext x='16' y='22' font-family='monospace' font-size='16' font-weight='700' fill='%23e08a2b' text-anchor='middle'%3E2i%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../styles.css?v=10">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js" onload="renderMathInElement(document.body,{delimiters:[{left:'$$',right:'$$',display:true},{left:'$',right:'$',display:false},{left:'\\[',right:'\\]',display:true},{left:'\\(',right:'\\)',display:false}]})"></script>
+</head>
+<body>
+
+<header class="nav">
+  <div class="wrap nav__inner">
+    <a class="brand" href="../" aria-label="2i 홈">
+      <span class="brand__mark">2i</span>
+      <span class="brand__tag">AX 컨설팅</span>
+    </a>
+    <button class="nav__burger" type="button" aria-expanded="false" aria-controls="navLinks" aria-label="메뉴 열기"><span></span><span></span><span></span></button>
+    <nav class="nav__links" id="navLinks" aria-label="주요 메뉴">
+      <a href="../index.html#method">방식</a>
+      <a href="../cases.html">사례</a>
+      <a href="../index.html#ideas">아이디어 30</a>
+      <a href="../papers.html">논문·실험</a>
+      <a href="../about.html">회사소개</a>
+      <a href="../index.html#voucher">정부 바우처</a>
+      <a class="nav__lang" href="../en/">EN</a>
+      <a class="nav__cta btn btn--signal" href="../index.html#contact">상담 신청</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <article class="article wrap">
+    <a class="article__back" href="../papers.html">← 논문·실험 게시판</a>
+    <div class="article__head">
+      <div class="pcard__meta"><span class="pcard__cat">실험 노트</span><span class="pcard__date">2026.07.28</span><span class="pcard__rt">약 5분</span></div>
+      <h1 class="article__title">간섭탐지는 &#x27;몇 % 잡았다&#x27;가 아니라 &#x27;오탐 몇 %에서 잡았다&#x27;로 말해야 합니다</h1>
+      <p class="article__excerpt">공장·병원 무선 간섭탐지의 자체벤치: 오탐률을 먼저 고정하고 그 조건에서 검출률 98.0%를 실측. 합성 벤치임을 명시하고, 오탐률 고정이 왜 상용 간섭탐지의 유일하게 정직한 화법인지 정리했습니다.</p>
+      <div class="pcard__tags"><span>#간섭탐지</span><span>#스펙트럼감시</span><span>#무선품질</span><span>#자체벤치</span></div>
+      
+    </div>
+    <div class="article__body prose">
+<h2 id="_1">무엇을 재는가</h2>
+<p>공장 무선망·병원 환자모니터 곁의 간섭(재밍, 비인가 송신, 장비 오동작)을 탐지하는 문제입니다.
+이 분야에서 "검출률 99%" 같은 숫자는 그 자체로는 무의미합니다. 임계값을 낮추면 누구나 검출률을
+올릴 수 있고, 대가는 <strong>오탐</strong>이기 때문입니다. 오탐이 잦은 경보 시스템은 현장에서 꺼집니다.
+그래서 저희는 항상 오탐률을 먼저 고정하고 그 조건의 검출률만 보고합니다.</p>
+<h2 id="_2">결과 (자체벤치, 합성 신호 명시)</h2>
+<p>7종 간섭 유형(CW·처프·펄스 등)을 물리 모델로 합성해 SNR 스윕으로 실측했습니다.</p>
+<table>
+<thead>
+<tr>
+<th>지표</th>
+<th>값</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>검출률 (Pd)</td>
+<td><strong>98.0%</strong></td>
+</tr>
+<tr>
+<td>오탐률 (고정 조건)</td>
+<td>5.3%</td>
+</tr>
+</tbody>
+</table>
+<p>이 수치는 <strong>합성 벤치</strong>입니다. 현장 전파 환경(다중경로·정상 트래픽과의 혼재)은 이보다
+어렵고, 그래서 저희 사이트의 모든 간섭탐지 수치에는 "귀사 현장 데이터로 재측정" 라벨이
+붙습니다.</p>
+<h2 id="_3">방법 (요약)</h2>
+<p>에너지 탐지(Urkowitz)와 스펙트럴 커토시스(Nita-Gary) 계열의 고전 탐지기를 기본으로,
+임계값은 무간섭 구간 통계에서 목표 오탐률에 맞춰 역산합니다(CFAR 사상). 판정 기준은 실험
+전에 고정하고 사후에 옮기지 않았습니다.</p>
+<h2 id="_4">정직한 한계와 다음 단계</h2>
+<p>합성에서 현장으로 가면 수치는 내려갑니다. 그 갭을 좁히는 순서가 저희 파일럿 설계입니다:
+현장 무간섭 기간의 베이스라인 수집, 오탐률 재보정, 그 다음에 검출률 측정. 간섭원의
+<strong>위치추정</strong> 확장은 별도 시뮬레이션 노트로 공개했습니다.</p>
+    </div>
+    <div class="article__cta">
+      <p>이 방법을 당신 현장의 숫자로 다시 재보고 싶다면.</p>
+      <a class="btn btn--signal" href="../index.html#contact">30분 진단 상담 <span class="arrow">→</span></a>
+      <a class="btn btn--ghost" href="../papers.html">다른 기록 보기</a>
+    </div>
+  </article>
+</main>
+
+<footer class="foot">
+  <div class="wrap foot__inner">
+    <div>
+      <div class="brand"><span class="brand__mark">2i</span><span class="brand__tag">AX 컨설팅</span></div>
+      <div class="foot__mono" style="margin-top:0.6rem">중소·중견 제조·유통을 위한 AI 전환</div>
+    </div>
+    <nav class="foot__links" aria-label="하단 메뉴">
+      <a href="../index.html#method">방식</a>
+      <a href="../papers.html">논문·실험</a>
+      <a href="../index.html#voucher">정부 바우처</a>
+      <a href="https://github.com/2icorp" target="_blank" rel="noopener">GitHub</a>
+      <a href="../en/">EN</a>
+    </nav>
+  </div>
+</footer>
+
+<script src="../main.js"></script>
+</body>
+</html>
