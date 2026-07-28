@@ -858,3 +858,77 @@ section[id] { scroll-margin-top: 80px; }
 .idea__case { font-family: var(--mono); font-size: var(--text-xs); color: var(--signal-deep); }
 .idea__case:hover { text-decoration: underline; }
 .idea__case:focus-visible { outline: 2px solid var(--signal); outline-offset: 2px; }
+
+/* ============ COMMS PAGE (통신·신호 지능) ============ */
+/* hero: layered traveling waveform (transform-only marquee, reduced-motion safe) */
+.chero { position: relative; overflow: hidden; padding-top: clamp(3rem, 1rem + 6vw, 6rem); }
+.chero__wave { position: absolute; inset: auto 0 0 0; height: 220px; opacity: 0.6; pointer-events: none; }
+.chero__wave svg { width: 200%; height: 100%; display: block; }
+.chero__w1, .chero__w2 { will-change: transform; }
+.chero__w1 { animation: waveSlide 16s linear infinite; }
+.chero__w2 { animation: waveSlide 26s linear infinite reverse; }
+@keyframes waveSlide { from { transform: translateX(0); } to { transform: translateX(-1200px); } }
+.chero__h1 { font-size: clamp(1.9rem, 1.1rem + 3.4vw, 3.4rem); font-weight: 850; margin-top: 0.9rem; }
+.chero__lede { margin-top: 1.3rem; max-width: 52ch; color: var(--ink-soft); font-size: 1.1rem; }
+.chero__stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.9rem; margin: 2.4rem 0 1rem; }
+@media (max-width: 900px) { .chero__stats { grid-template-columns: repeat(2, 1fr); } }
+.cstat { border: 1px solid var(--line); border-radius: var(--radius); background: var(--panel); padding: 1rem 1.1rem; transition: transform var(--dur) var(--ease), box-shadow var(--dur) var(--ease); }
+.cstat:hover { transform: translateY(-3px); box-shadow: 0 18px 34px -24px oklch(24% 0.02 255 / 0.5); }
+.cstat__n { display: block; font-family: var(--mono); font-size: 1.7rem; font-weight: 600; color: var(--signal); letter-spacing: -0.01em; }
+.cstat__n small { font-size: 0.9rem; color: var(--ink-faint); }
+.cstat__l { display: block; margin-top: 0.3rem; font-size: 0.8rem; color: var(--ink-soft); line-height: 1.45; }
+
+/* 9-stage pipeline: center rail + alternating instrument cards */
+.pipe__list { list-style: none; margin: 3rem 0 1.4rem; padding: 0; position: relative; }
+.pipe__list::before { content: ""; position: absolute; top: 0; bottom: 0; left: 24px; width: 2px; background: var(--line); }
+/* flowing signal overlay on the rail: transform-only loop inside a masked strip */
+.pipe__list::after {
+  content: ""; position: absolute; top: -120px; bottom: 0; left: 23.5px; width: 3px; border-radius: 2px;
+  background: repeating-linear-gradient(180deg, transparent 0 34px, var(--signal) 34px 58px);
+  opacity: 0.55; animation: railFlow 2.6s linear infinite; will-change: transform;
+  mask-image: linear-gradient(180deg, transparent, #000 8%, #000 92%, transparent);
+  -webkit-mask-image: linear-gradient(180deg, transparent, #000 8%, #000 92%, transparent);
+}
+@keyframes railFlow { from { transform: translateY(0); } to { transform: translateY(120px); } }
+.pstage { position: relative; padding: 0 0 1.6rem 64px; }
+.pstage::before { /* stage lamp on the rail */
+  content: ""; position: absolute; left: 17px; top: 26px; width: 16px; height: 16px; border-radius: 50%;
+  background: var(--paper); border: 2px solid var(--line);
+  transition: border-color 0.45s var(--ease), box-shadow 0.45s var(--ease), transform 0.45s var(--ease);
+}
+.pstage.is-live::before { border-color: var(--signal); box-shadow: 0 0 0 5px oklch(72% 0.16 65 / 0.18); transform: scale(1.12); }
+.pstage__card {
+  border: 1px solid var(--line); border-radius: 7px; background: var(--paper); padding: 1.4rem 1.5rem;
+  transition: transform var(--dur) var(--ease), box-shadow var(--dur) var(--ease), border-color var(--dur) var(--ease);
+}
+.pstage__card:hover { transform: translateY(-4px); border-color: oklch(72% 0.16 65 / 0.55); box-shadow: 0 26px 44px -30px oklch(24% 0.03 255 / 0.55); }
+.pstage__card--hero { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+.pstage__card--hero .pstage__d { color: oklch(88% 0.01 85); }
+.pstage__no { font-family: var(--mono); font-size: 0.8rem; letter-spacing: 0.18em; color: var(--signal); font-weight: 600; }
+.pstage__t { margin-top: 0.35rem; font-size: 1.22rem; font-weight: 800; }
+.pstage__t small { font-family: var(--mono); font-size: 0.68rem; letter-spacing: 0.14em; color: var(--ink-faint); font-weight: 500; margin-left: 0.5rem; }
+.pstage__card--hero .pstage__t small { color: oklch(70% 0.02 85); }
+.pstage__d { margin-top: 0.55rem; color: var(--ink-soft); font-size: 0.95rem; line-height: 1.62; max-width: 62ch; }
+.pstage__chips { margin-top: 0.85rem; display: flex; flex-wrap: wrap; gap: 0.45rem; }
+.pchip { font-family: var(--mono); font-size: 0.7rem; letter-spacing: 0.04em; border: 1px solid var(--line); border-radius: 999px; padding: 0.28rem 0.66rem; color: var(--ink-soft); background: var(--panel); }
+.pstage__card--hero .pchip { background: transparent; border-color: oklch(50% 0.02 255); color: oklch(88% 0.01 85); }
+.pchip.badge-v { border-color: oklch(72% 0.16 65 / 0.7); color: var(--signal); font-weight: 600; }
+.pstage__kpis { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.8rem; margin-top: 1rem; }
+@media (max-width: 720px) { .pstage__kpis { grid-template-columns: 1fr; } }
+.pkpi { border: 1px solid oklch(50% 0.02 255); border-radius: var(--radius); padding: 0.75rem 0.85rem; }
+.pkpi__n { display: block; font-family: var(--mono); font-size: 1.35rem; font-weight: 600; color: var(--signal); }
+.pkpi__l { display: block; margin-top: 0.2rem; font-size: 0.74rem; color: oklch(80% 0.01 85); line-height: 1.4; }
+
+/* desktop: cards alternate around a centered rail */
+@media (min-width: 1000px) {
+  .pipe__list::before { left: 50%; transform: translateX(-50%); }
+  .pipe__list::after { left: calc(50% - 1.5px); }
+  .pstage { width: 50%; padding: 0 3.2rem 2rem 0; }
+  .pstage::before { left: auto; right: -9px; }
+  .pstage:nth-child(even) { margin-left: 50%; padding: 0 0 2rem 3.2rem; }
+  .pstage:nth-child(even)::before { right: auto; left: -7px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .chero__w1, .chero__w2, .pipe__list::after { animation: none; }
+  .cstat, .pstage__card { transition: none; }
+}

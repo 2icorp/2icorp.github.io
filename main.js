@@ -229,3 +229,21 @@
       encodeURIComponent(subject) + "&body=" + encodeURIComponent(body);
   });
 })();
+
+// Comms page - pipeline stage lamps light up as the signal "reaches" them
+(function () {
+  "use strict";
+  var stages = document.querySelectorAll(".pstage");
+  if (!stages.length) return;
+  var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  if (reduce || !("IntersectionObserver" in window)) {
+    stages.forEach(function (s) { s.classList.add("is-live"); });
+    return;
+  }
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) {
+      if (e.isIntersecting) { e.target.classList.add("is-live"); io.unobserve(e.target); }
+    });
+  }, { threshold: 0.5, rootMargin: "0px 0px -18% 0px" });
+  stages.forEach(function (s) { io.observe(s); });
+})();
