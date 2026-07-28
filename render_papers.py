@@ -78,7 +78,9 @@ def head(title, desc, rel, extra=""):
     <nav class="nav__links" id="navLinks" aria-label="주요 메뉴">
       <a href="{rel}index.html#method">방식</a>
       <a href="{rel}cases.html">사례</a>
+      <a href="{rel}comms.html">통신</a>
       <a href="{rel}index.html#ideas">아이디어 30</a>
+      <a href="{rel}index.html#studio">영상</a>
       <a href="{rel}papers.html">논문·실험</a>
       <a href="{rel}about.html">회사소개</a>
       <a href="{rel}index.html#voucher">정부 바우처</a>
@@ -99,6 +101,7 @@ def foot(rel):
     </div>
     <nav class="foot__links" aria-label="하단 메뉴">
       <a href="{rel}index.html#method">방식</a>
+      <a href="{rel}comms.html">통신</a>
       <a href="{rel}papers.html">논문·실험</a>
       <a href="{rel}index.html#voucher">정부 바우처</a>
       <a href="https://github.com/2icorp" target="_blank" rel="noopener">GitHub</a>
