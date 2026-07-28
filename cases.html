@@ -9,7 +9,7 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="styles.css?v=8">
+<link rel="stylesheet" href="styles.css?v=9">
 </head>
 <body>
 <header class="nav">
@@ -240,7 +240,7 @@
         <div class="case__grid">
           <div class="case__main">
             <div class="case__row"><span class="case__k">통찰</span><p>간섭원 식별의 통념은 &#x27;학습 데이터를 잔뜩 모아 분류 모델을 훈련한다&#x27;지만, 현장엔 그런 라벨 데이터가 없습니다. 학습 없이 신호의 &#x27;지문(occupancy 패턴)&#x27;을 실시간으로 대조하면, 데이터 구축 없이 원인을 지목할 수 있습니다.</p></div>
-            <div class="case__row"><span class="case__k">2i의 방식</span><p>CFAR 검출로 이상 신호를 실시간 포착하고, 후보 간섭원의 파형을 시그니처 DB에 등록해 robust-hash 지문 매칭으로 원인을 특정하는 sigprint 엔진을 씁니다. 밀리초 단위 처리·약신호 환경 동작을 목표로 설계했습니다. 동일 지문 방식을 설비 음향·진동 이상탐지로도 확장할 수 있습니다. 같은 엔진은 공개 데이터 실측(WiSig)에서 본 적 없는 신호원을 거절하는 오픈셋 식별 AUROC 0.945를 기록했습니다.</p></div>
+            <div class="case__row"><span class="case__k">2i의 방식</span><p>CFAR 검출로 이상 신호를 실시간 포착하고, 후보 간섭원의 파형을 시그니처 DB에 등록해 robust-hash 지문 매칭으로 원인을 특정하는 sigprint 엔진을 씁니다. 밀리초 단위 처리·약신호 환경 동작을 목표로 설계했습니다. 동일 지문 방식을 설비 음향·진동 이상탐지로도 확장할 수 있습니다. 같은 엔진은 동일-세션 다중패킷 융합(circular) 조건의 자체벤치 실측(WiSig)에서 본 적 없는 신호원을 거절하는 오픈셋 식별 AUROC 0.945를 기록했습니다. 이 수치는 연구 조건이며, cross-day·1:N-attacker 같은 실제 제품 조건에서는 TAR@FAR 1e-3이 0.22~0.43 수준으로 낮아진다는 점을 함께 밝힙니다.</p></div>
             <ol class="case__gates"><li class="gate"><b class="gate__name">측정 게이트</b><span class="gate__what">무선망 장애·설비 정지 이력을 구간별로 정리하고 현장 RF 스펙트럼을 수집해 간섭이 반복되는 시간대·대역의 1차 패턴을 확인, 간섭 의심 설비를 후보군으로 좁힙니다.</span></li><li class="gate"><b class="gate__name">실증 게이트</b><span class="gate__what">sigprint 엔진을 현장 게이트웨이에 시범 설치해 CFAR로 이상 신호를 포착하고 후보 파형을 시그니처 DB에 등록, robust-hash 매칭으로 실제 원인을 특정합니다. 핵심 설비 음향·진동도 함께 채집해 확장성을 검증합니다.</span></li><li class="gate"><b class="gate__name">이관 게이트</b><span class="gate__what">검증된 시그니처 DB와 판정 로직을 운영 체계에 편입해 간섭 발생 시 원인 후보를 자동 알림으로 띄우고, 담당자용 대시보드·대응 매뉴얼을 함께 넘깁니다.</span></li></ol>
           </div>
           <aside class="case__side">
