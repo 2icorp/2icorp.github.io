@@ -14,7 +14,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="styles.css?v=8">
+<link rel="stylesheet" href="styles.css?v=9">
 </head>
 <body>
 
@@ -374,9 +374,9 @@
         <div class="rf-cell rf-cell--lead">
           <span class="rf-metric">0.945</span>
           <span class="rf-unit">AUROC</span>
-          <span class="rf-name">미지 신호원 오픈셋 식별</span>
-          <span class="rf-desc">고전 다중 패킷 융합으로 미지 신호원 거부율 100%. 상업 검증선(AUROC 0.85)은 신호원 20개 규모에서 이미 넘겼습니다.</span>
-          <span class="chip chip--v">공개 데이터 실측 · WiSig, K=50</span>
+          <span class="rf-name">미지 신호원 오픈셋 식별 (동일-세션 다중패킷 융합)</span>
+          <span class="rf-desc">동일 세션에서 여러 패킷을 모아 판단하는 고전 융합(circular) 조건의 자체벤치 실측치입니다. 신호원 20개 규모에서 미지 신호원 거부율 100%를 기록했지만, 이 조건은 상업 제품 조건이 아니라 연구 조건입니다.</span>
+          <span class="chip chip--v">자체벤치 실측 · WiSig, 동일-세션 K=50, circular</span>
         </div>
         <div class="rf-cell">
           <span class="rf-name">실시간 Rust 엔진</span>
@@ -384,7 +384,7 @@
         </div>
         <div class="rf-cell">
           <span class="rf-name">간섭 · 이상신호 실시간 탐지</span>
-          <span class="rf-desc">CFAR 검출 + robust-hash 지문 매칭. 사례 06 무선 간섭 진단의 코어 엔진입니다.</span>
+          <span class="rf-desc">CFAR 검출 + 학습형 판정으로 지정한 오탐율(false-alarm rate)을 고정한 채 이상 신호를 잡아냅니다. robust-hash 지문 매칭과 함께 사례 06 무선 간섭 진단의 코어 엔진입니다.</span>
         </div>
         <div class="rf-cell">
           <span class="rf-name">변조 자동분류(AMC)</span>
@@ -397,9 +397,16 @@
         <div class="rf-cell rf-cell--lead">
           <span class="rf-metric">0.9994</span>
           <span class="rf-unit">AUROC</span>
-          <span class="rf-name">학습형 지문 백본(ECAPA-TDNN)</span>
-          <span class="rf-desc">다중 패킷 융합 기준 미지 신호원 거부 AUROC 0.9994로 고전 융합(0.945)을 상회합니다. 이 수치는 다중패킷 융합 기준이며, 단일 패킷 임베딩 단독 성능은 아직 개선 여지가 있습니다.</span>
-          <span class="chip chip--v">공개 데이터 실측 · WiSig cross-receiver, 연구검증</span>
+          <span class="rf-name">학습형 지문 백본(ECAPA-TDNN, 동일-세션 다중패킷 융합)</span>
+          <span class="rf-desc">동일-세션 다중패킷 융합 조건의 자체벤치 실측으로 고전 융합(0.945)을 상회합니다. 이 조건 역시 상업 제품 조건이 아니라 연구 조건이며, 단일 패킷 임베딩 단독 성능은 아직 개선 여지가 있습니다.</span>
+          <span class="chip chip--v">자체벤치 실측 · WiSig, 동일-세션, 연구검증</span>
+        </div>
+        <div class="rf-cell rf-cell--lead">
+          <span class="rf-metric">0.22 / 0.43</span>
+          <span class="rf-unit">TAR@FAR 1e-3 (K=50 / K=100)</span>
+          <span class="rf-name">엄격 조건(cross-day · 1:N-attacker) 실측 · 진짜 제품 조건</span>
+          <span class="rf-desc">실제 제품 조건에 가까운 cross-day·1:N-attacker·held-out 프로토콜로 다시 재면 TAR@FAR 1e-3이 K=50에서 0.22, K=100에서 0.43으로 낮아집니다. 단일 패킷(K=1) AUROC는 약 0.70입니다. &#x27;본 적 없는 신호원을 거절&#x27;하는 open-set 능력 자체는 실재하지만, 제품급 cross-receiver·cross-day 인증은 아직 검증 중인 과제이며 해결됐다고 말하지 않습니다.</span>
+          <span class="chip chip--v">자체벤치 실측 · WiSig, cross-day·1:N-attacker·held-out</span>
         </div>
         <div class="rf-cell rf-cell--pending">
           <span class="rf-name">다음 단계</span>
@@ -408,7 +415,45 @@
         </div>
       </div>
 
-      <p class="auto-foot reveal">왜 자랑할 만한가: 닫힌 목록 안에서 맞히는 정확도는 쉽습니다. 2i 엔진은 <b>본 적 없는 신호를 거절</b>하는 지표를 정면으로 측정했고, 딥러닝 없이도 상업 검증선을 넘었으며, 폐쇄망·GPU 미보유 현장에도 그대로 들어갑니다.</p>
+      <p class="auto-foot reveal">정직하게 말하면: 닫힌 목록 안에서 맞히는 정확도보다 <b>본 적 없는 신호를 거절</b>하는 능력을 재는 게 어렵고, 그 지표를 자체벤치로 정면 측정했습니다. 다만 위 0.945·0.9994는 동일-세션 다중패킷 융합 조건이고, 실제 제품 조건(cross-day·1:N-attacker)에서는 TAR@FAR 1e-3이 0.22~0.43 수준으로 낮아집니다. 폐쇄망·GPU 미보유 현장에서 그대로 구동되는 엣지 배치는 변하지 않는 강점이지만, 제품급 인증 성능은 아직 검증 중이라는 점을 그대로 알립니다.</p>
+    </div>
+  </section>
+
+  <!-- NEWLY VALIDATED CAPABILITIES: AUDIO / VIBRATION / WIFI-CSI / DRONE -->
+  <section class="section" id="new-capabilities">
+    <div class="wrap">
+      <div class="section__head reveal">
+        <span class="eyebrow">확장 검증 · 다른 신호로 옮긴 같은 방법</span>
+        <h2>같은 지문·거절 방법론을 오디오·진동·WiFi·드론 신호로 옮겨 실측했습니다.</h2>
+        <p>전부 공개 데이터로 실측한 결과이며, 완성된 인증 제품이 아니라 <b>무료 진단 → 유료 파일럿·PoC → 모듈 공급</b> 순서로 제공합니다. 성숙도가 다른 항목을 있는 그대로 표시합니다.</p>
+      </div>
+
+      <div class="rf-grid reveal stagger">
+        <div class="rf-cell rf-cell--lead">
+          <span class="rf-metric">95%</span>
+          <span class="rf-unit">Top-1 · 10초 클립</span>
+          <span class="rf-name">오디오 콘텐츠 식별(Content-ID)</span>
+          <span class="rf-desc">피크쌍(peak-pair) 지문 매칭으로 실제 음악(GTZAN 999곡) 10초 클립 Top-1 95%를 기록했습니다. 0dB 잡음에서도 91.5%, -5dB에서도 72.5%를 유지하고 MP3 32~128kbps 전 구간에서 성능이 평탄합니다. ACRCloud·Audible Magic이 쓰는 것과 같은 계열의 접근으로, 이번 실측 중 상용 수준에 가장 근접한 항목입니다. 라이선스 가능한 엔진·API 형태의 유료 파일럿으로 제공합니다.</span>
+          <span class="chip chip--v">공개 데이터 실측 · GTZAN 999곡</span>
+        </div>
+        <div class="rf-cell">
+          <span class="rf-name">설비 음향·진동 예지보전</span>
+          <span class="rf-desc">실제 베어링 고장 데이터(CWRU)로 검증했습니다. 0dB 잡음 조건 정확도 85%(단순 베이스라인 52%)로 잡음에 강건합니다. 귀사 설비 데이터로 재측정하는 PoC 단계부터 시작합니다.</span>
+        </div>
+        <div class="rf-cell">
+          <span class="rf-metric">0.99</span>
+          <span class="rf-unit">AUROC</span>
+          <span class="rf-name">WiFi-CSI 재실·낙상 감지</span>
+          <span class="rf-desc">실제 CSI 데이터(UT-HAR)로 검증한 낙상 대 비낙상 판별 AUROC 0.99입니다. 카메라 없이 무선 신호만으로 재실·낙상을 구분하며, 임상·현장 검증은 아직 남아 있습니다.</span>
+          <span class="chip chip--v">공개 데이터 실측 · UT-HAR</span>
+        </div>
+        <div class="rf-cell">
+          <span class="rf-name">드론 RF 오픈셋 탐지</span>
+          <span class="rf-desc">공개 데이터(DroneRF, CC-BY-4.0) 기준 저융합(K=1) 조건에서 고전 기법이 딥러닝보다 미지 드론 거부에서 앞섰습니다(0.42 대 0.07). 절대 수치는 아직 낮아 연구 단계로 표시합니다.</span>
+        </div>
+      </div>
+
+      <p class="auto-foot reveal">정직한 순서: 오디오 Content-ID는 라이선스·API로 바로 파일럿이 가능한 수준입니다. 예지보전·WiFi-CSI는 공개 데이터로는 검증됐지만 귀사 데이터로 재측정하는 PoC가 필요하고, 드론 RF는 아직 연구 단계입니다. 넷 다 완성된 인증 제품이라 주장하지 않고, 무료 진단 상담으로 적합성부터 확인합니다.</p>
     </div>
   </section>
 
