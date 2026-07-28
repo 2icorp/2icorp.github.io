@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>레이더 신호 탐지, 트래픽이 섞이면 무너지는가: 오탐률 고정 판정법 · 2i</title>
+<meta name="description" content="규격 레이더 파형 36종 테스트 매트릭스에서 무트래픽 36/36 통과, WiFi 트래픽 혼재 시 27/36으로 하락하는 것을 오탐률 고정 조건에서 실측. 실패 9건의 원인 귀속과 처방 검증 설계까지, 판정 기준을 사전에 못박는 방법론을 공개합니다.">
+<meta property="og:title" content="레이더 신호 탐지, 트래픽이 섞이면 무너지는가: 오탐률 고정 판정법 · 2i">
+<meta property="og:description" content="규격 레이더 파형 36종 테스트 매트릭스에서 무트래픽 36/36 통과, WiFi 트래픽 혼재 시 27/36으로 하락하는 것을 오탐률 고정 조건에서 실측. 실패 9건의 원인 귀속과 처방 검증 설계까지, 판정 기준을 사전에 못박는 방법론을 공개합니다.">
+<meta property="og:type" content="article">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23111827'/%3E%3Ctext x='16' y='22' font-family='monospace' font-size='16' font-weight='700' fill='%23e08a2b' text-anchor='middle'%3E2i%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../styles.css?v=10">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js" onload="renderMathInElement(document.body,{delimiters:[{left:'$$',right:'$$',display:true},{left:'$',right:'$',display:false},{left:'\\[',right:'\\]',display:true},{left:'\\(',right:'\\)',display:false}]})"></script>
+</head>
+<body>
+
+<header class="nav">
+  <div class="wrap nav__inner">
+    <a class="brand" href="../" aria-label="2i 홈">
+      <span class="brand__mark">2i</span>
+      <span class="brand__tag">AX 컨설팅</span>
+    </a>
+    <button class="nav__burger" type="button" aria-expanded="false" aria-controls="navLinks" aria-label="메뉴 열기"><span></span><span></span><span></span></button>
+    <nav class="nav__links" id="navLinks" aria-label="주요 메뉴">
+      <a href="../index.html#method">방식</a>
+      <a href="../cases.html">사례</a>
+      <a href="../index.html#ideas">아이디어 30</a>
+      <a href="../papers.html">논문·실험</a>
+      <a href="../about.html">회사소개</a>
+      <a href="../index.html#voucher">정부 바우처</a>
+      <a class="nav__lang" href="../en/">EN</a>
+      <a class="nav__cta btn btn--signal" href="../index.html#contact">상담 신청</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <article class="article wrap">
+    <a class="article__back" href="../papers.html">← 논문·실험 게시판</a>
+    <div class="article__head">
+      <div class="pcard__meta"><span class="pcard__cat">방법</span><span class="pcard__date">2026.07.28</span><span class="pcard__rt">약 6분</span></div>
+      <h1 class="article__title">레이더 신호 탐지, 트래픽이 섞이면 무너지는가: 오탐률 고정 판정법</h1>
+      <p class="article__excerpt">규격 레이더 파형 36종 테스트 매트릭스에서 무트래픽 36/36 통과, WiFi 트래픽 혼재 시 27/36으로 하락하는 것을 오탐률 고정 조건에서 실측. 실패 9건의 원인 귀속과 처방 검증 설계까지, 판정 기준을 사전에 못박는 방법론을 공개합니다.</p>
+      <div class="pcard__tags"><span>#스펙트럼감시</span><span>#DFS</span><span>#탐지방법론</span><span>#자체벤치</span></div>
+      
+    </div>
+    <div class="article__body prose">
+<h2 id="_1">무엇을 재는가</h2>
+<p>5GHz 대역 장비는 기상·군용 레이더를 감지하면 채널을 비켜줘야 합니다(DFS). 탐지기 인증
+벤치는 조용한 환경에서 하지만, 실제 현장에는 WiFi 트래픽이 흐릅니다. 트래픽이 섞였을 때
+탐지가 얼마나 버티는지를 파형 유형별 매트릭스로 실측했습니다.</p>
+<h2 id="_2">결과 (오탐률 고정, 사전선언 판정)</h2>
+<table>
+<thead>
+<tr>
+<th>조건</th>
+<th>통과</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>무트래픽</td>
+<td><strong>36/36</strong></td>
+</tr>
+<tr>
+<td>WiFi 트래픽 혼재</td>
+<td>27/36</td>
+</tr>
+</tbody>
+</table>
+<p>실패 9건은 전부 트래픽 혼재 조건에서 나왔고, 원인을 특정 파형군(펄스 수가 적거나 호핑하는
+유형)의 펄스 검출 오염으로 귀속했습니다. 중요한 것은 절차입니다. 통과 기준(달성 오탐률 상한
+포함)을 실험 전에 고정했고, 처방 실험에는 무작위 대조군(같은 폭의 무작위 대역 제거, 셔플
+검증)을 함께 설계해 "고쳐졌다"는 주장 자체를 반증 가능하게 만들었습니다.</p>
+<h2 id="_3">방법 (요약)</h2>
+<p>규격 파라미터에서 유도한 레이더 파형 36종 매트릭스 + 실측 수준의 WiFi 트래픽 모델(점유율
+0.4~0.85, SNR 0~15dB)을 혼재시켜, 오탐률을 고정한 상태(FAR-matched)에서만 통과·실패를
+판정합니다. 오탐률이 다른 두 탐지기의 검출률 비교는 무의미하기 때문입니다.</p>
+<h2 id="_4">정직한 한계와 다음 단계</h2>
+<p>처방(잡음 바닥 재추정, 대역 선택 제거, 펄스열 디인터리빙)의 효과 검증은 대조군 게이트를
+걸어 진행 중입니다. 대조군이 처방 효과의 절반 이상을 재현하면 그 기전 주장은 기각한다고
+먼저 적어 두었습니다. 규격 원문 대조(펄스폭 밴드의 독립 근거)가 남은 차단 요인입니다.</p>
+    </div>
+    <div class="article__cta">
+      <p>이 방법을 당신 현장의 숫자로 다시 재보고 싶다면.</p>
+      <a class="btn btn--signal" href="../index.html#contact">30분 진단 상담 <span class="arrow">→</span></a>
+      <a class="btn btn--ghost" href="../papers.html">다른 기록 보기</a>
+    </div>
+  </article>
+</main>
+
+<footer class="foot">
+  <div class="wrap foot__inner">
+    <div>
+      <div class="brand"><span class="brand__mark">2i</span><span class="brand__tag">AX 컨설팅</span></div>
+      <div class="foot__mono" style="margin-top:0.6rem">중소·중견 제조·유통을 위한 AI 전환</div>
+    </div>
+    <nav class="foot__links" aria-label="하단 메뉴">
+      <a href="../index.html#method">방식</a>
+      <a href="../papers.html">논문·실험</a>
+      <a href="../index.html#voucher">정부 바우처</a>
+      <a href="https://github.com/2icorp" target="_blank" rel="noopener">GitHub</a>
+      <a href="../en/">EN</a>
+    </nav>
+  </div>
+</footer>
+
+<script src="../main.js"></script>
+</body>
+</html>

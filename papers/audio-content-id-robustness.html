@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>음원 식별 API, 잡음·압축·속도변경에서 얼마나 버티나 실측했습니다 · 2i</title>
+<meta name="description" content="999트랙 카탈로그에서 피크쌍 해싱 음원 식별을 자체벤치로 실측. 클린 95%, 강한 잡음(SNR -5dB)에서도 top-1 72.5%. 방송 모니터링·저작권 감시가 실제로 묻는 조건을 먼저 재봤습니다.">
+<meta property="og:title" content="음원 식별 API, 잡음·압축·속도변경에서 얼마나 버티나 실측했습니다 · 2i">
+<meta property="og:description" content="999트랙 카탈로그에서 피크쌍 해싱 음원 식별을 자체벤치로 실측. 클린 95%, 강한 잡음(SNR -5dB)에서도 top-1 72.5%. 방송 모니터링·저작권 감시가 실제로 묻는 조건을 먼저 재봤습니다.">
+<meta property="og:type" content="article">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23111827'/%3E%3Ctext x='16' y='22' font-family='monospace' font-size='16' font-weight='700' fill='%23e08a2b' text-anchor='middle'%3E2i%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../styles.css?v=10">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js" onload="renderMathInElement(document.body,{delimiters:[{left:'$$',right:'$$',display:true},{left:'$',right:'$',display:false},{left:'\\[',right:'\\]',display:true},{left:'\\(',right:'\\)',display:false}]})"></script>
+</head>
+<body>
+
+<header class="nav">
+  <div class="wrap nav__inner">
+    <a class="brand" href="../" aria-label="2i 홈">
+      <span class="brand__mark">2i</span>
+      <span class="brand__tag">AX 컨설팅</span>
+    </a>
+    <button class="nav__burger" type="button" aria-expanded="false" aria-controls="navLinks" aria-label="메뉴 열기"><span></span><span></span><span></span></button>
+    <nav class="nav__links" id="navLinks" aria-label="주요 메뉴">
+      <a href="../index.html#method">방식</a>
+      <a href="../cases.html">사례</a>
+      <a href="../index.html#ideas">아이디어 30</a>
+      <a href="../papers.html">논문·실험</a>
+      <a href="../about.html">회사소개</a>
+      <a href="../index.html#voucher">정부 바우처</a>
+      <a class="nav__lang" href="../en/">EN</a>
+      <a class="nav__cta btn btn--signal" href="../index.html#contact">상담 신청</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <article class="article wrap">
+    <a class="article__back" href="../papers.html">← 논문·실험 게시판</a>
+    <div class="article__head">
+      <div class="pcard__meta"><span class="pcard__cat">실험 노트</span><span class="pcard__date">2026.07.28</span><span class="pcard__rt">약 5분</span></div>
+      <h1 class="article__title">음원 식별 API, 잡음·압축·속도변경에서 얼마나 버티나 실측했습니다</h1>
+      <p class="article__excerpt">999트랙 카탈로그에서 피크쌍 해싱 음원 식별을 자체벤치로 실측. 클린 95%, 강한 잡음(SNR -5dB)에서도 top-1 72.5%. 방송 모니터링·저작권 감시가 실제로 묻는 조건을 먼저 재봤습니다.</p>
+      <div class="pcard__tags"><span>#오디오</span><span>#콘텐츠ID</span><span>#저작권모니터링</span><span>#자체벤치</span></div>
+      
+    </div>
+    <div class="article__body prose">
+<h2 id="_1">무엇을 재는가</h2>
+<p>방송·매장·스트림에서 흘러나오는 소리 몇 초를 듣고 "이 음원이 우리 카탈로그의 어느 곡인지"를
+맞히는 문제입니다. 저작권 모니터링, 방송 광고 검증, 매장 음악 정산이 전부 이 능력 위에
+서 있습니다. 핵심은 깨끗한 스튜디오 음질이 아니라 <strong>현장 조건</strong>입니다. 방송 압축, 매장 소음,
+재생 속도 미세 변경(피치 유지 시간 신축)에서 버텨야 팔 수 있는 기술입니다.</p>
+<h2 id="_2">결과 (자체벤치 실측)</h2>
+<p>공개 데이터 999트랙을 카탈로그로 등록하고, 무작위 지점에서 자른 짧은 스니펫(3·5·10초)에
+실제 mp3 인코드·디코드, 가산 잡음, ffmpeg 속도변경을 걸어 질의했습니다.</p>
+<table>
+<thead>
+<tr>
+<th>질의 조건</th>
+<th>top-1 식별률</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>클린</td>
+<td>95%</td>
+</tr>
+<tr>
+<td>mp3 압축 왕복</td>
+<td>전 구간 유지</td>
+</tr>
+<tr>
+<td>강한 잡음 (SNR -5dB)</td>
+<td>72.5%</td>
+</tr>
+</tbody>
+</table>
+<p>비교 기준(나이브 스펙트로그램 코사인 매칭)은 같은 조건에서 크게 무너졌습니다. 시간 정렬
+일관성 투표가 있는 피크쌍 해싱과의 차이가 곧 상용성의 차이였습니다.</p>
+<h2 id="_3">방법 (요약)</h2>
+<p>스펙트로그램에서 국소 최대 피크를 뽑고, 앵커-타깃 피크쌍(주파수 2개 + 시간차)을 해시로
+만들어 역색인에 넣습니다. 질의 스니펫의 해시들이 같은 곡의 같은 시간 오프셋으로 몰리는지
+투표로 판정합니다(Wang 2003 계열). 압축·속도변경은 시뮬레이션이 아니라 실제 ffmpeg
+인코드·디코드로 걸었습니다.</p>
+<h2 id="_4">정직한 한계와 다음 단계</h2>
+<p>수치는 999트랙 카탈로그 자체벤치입니다. 상용 규모(수만·수십만 트랙)에서 정확도·지연·메모리가
+어떻게 변하는지가 바이어의 다음 질문이라, 8,000트랙 규모 확장 실측을 진행하고 있습니다.
+현장 파일럿은 귀사(방송사·유통사) 카탈로그로 다시 재는 것을 전제로 합니다.</p>
+    </div>
+    <div class="article__cta">
+      <p>이 방법을 당신 현장의 숫자로 다시 재보고 싶다면.</p>
+      <a class="btn btn--signal" href="../index.html#contact">30분 진단 상담 <span class="arrow">→</span></a>
+      <a class="btn btn--ghost" href="../papers.html">다른 기록 보기</a>
+    </div>
+  </article>
+</main>
+
+<footer class="foot">
+  <div class="wrap foot__inner">
+    <div>
+      <div class="brand"><span class="brand__mark">2i</span><span class="brand__tag">AX 컨설팅</span></div>
+      <div class="foot__mono" style="margin-top:0.6rem">중소·중견 제조·유통을 위한 AI 전환</div>
+    </div>
+    <nav class="foot__links" aria-label="하단 메뉴">
+      <a href="../index.html#method">방식</a>
+      <a href="../papers.html">논문·실험</a>
+      <a href="../index.html#voucher">정부 바우처</a>
+      <a href="https://github.com/2icorp" target="_blank" rel="noopener">GitHub</a>
+      <a href="../en/">EN</a>
+    </nav>
+  </div>
+</footer>
+
+<script src="../main.js"></script>
+</body>
+</html>
