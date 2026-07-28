@@ -279,6 +279,116 @@ def article_html(p):
 </main>
 """ + foot("../")
 
+
+# ---------- EN board (English chrome; articles are Korean write-ups) ----------
+
+EN_HEAD = """<!doctype html>
+<html lang="en">
+<head>
+<script>(function(){try{var t=localStorage.getItem("theme");if(!t&&window.matchMedia&&matchMedia("(prefers-color-scheme: dark)").matches)t="dark";if(t)document.documentElement.setAttribute("data-theme",t);}catch(e){}})();</script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Papers &amp; Experiments · 2i AX Consulting</title>
+<meta name="description" content="Methods 2i validated in the field and papers we read, kept as a public lab notebook. Research notes are currently published in Korean.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23111827'/%3E%3Ctext x='16' y='22' font-family='monospace' font-size='16' font-weight='700' fill='%23e08a2b' text-anchor='middle'%3E2i%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../styles.css?v=12">
+</head>
+<body>
+
+<header class="nav">
+  <div class="wrap nav__inner">
+    <a class="brand" href="index.html" aria-label="2i home">
+      <span class="brand__mark">2i</span>
+      <span class="brand__tag">AX Consulting</span>
+    </a>
+    <button class="nav__burger" type="button" aria-expanded="false" aria-controls="navLinks" aria-label="Open menu"><span></span><span></span><span></span></button>
+    <nav class="nav__links" id="navLinks" aria-label="Primary">
+      <a href="cases.html">Cases</a>
+      <a href="comms.html">Telecom</a>
+      <a href="papers.html" aria-current="page">Papers</a>
+      <a href="about.html">About</a>
+      <button class="nav__theme" type="button" aria-label="Toggle theme" title="Toggle theme"><svg class="ic-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg><svg class="ic-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg></button>
+      <a class="nav__lang" href="/papers.html">KO</a>
+      <a class="nav__cta btn btn--signal" href="index.html#contact">Get in touch</a>
+    </nav>
+  </div>
+</header>
+"""
+
+EN_FOOT = """
+<footer class="foot">
+  <div class="wrap foot__inner">
+    <div>
+      <div class="brand"><span class="brand__mark">2i</span><span class="brand__tag">AX Consulting</span></div>
+      <div class="foot__mono" style="margin-top:0.6rem">AI transformation for mid-market manufacturing and distribution</div>
+    </div>
+    <nav class="foot__links" aria-label="Footer">
+      <a href="about.html">About</a>
+      <a href="index.html#method">Method</a>
+      <a href="index.html#ideas">30 Ideas</a>
+      <a href="papers.html">Papers</a>
+      <a href="index.html#voucher">Voucher</a>
+      <a href="privacy.html">Privacy</a>
+      <a href="https://github.com/2icorp" target="_blank" rel="noopener">GitHub</a>
+      <a href="/papers.html">한국어</a>
+    </nav>
+  </div>
+</footer>
+
+<script src="../main.js"></script>
+</body>
+</html>"""
+
+def en_card_html(p):
+    meta = [f'<span class="pcard__cat">{html.escape(p["cat_label_en"])}</span>',
+            f'<span class="pcard__date">{kdate(p["date"])}</span>',
+            f'<span class="pcard__rt">~{p["reading_time"]} min</span>',
+            '<span class="pcard__cat">KO</span>']
+    tags = "".join(f'<span>#{html.escape(t)}</span>' for t in p["tags"])
+    exc = f'<p class="pcard__excerpt">{html.escape(p["excerpt"])}</p>' if p["excerpt"] else ""
+    return f"""      <a class="pcard reveal" href="../papers/{p['slug']}.html" data-cat="{html.escape(p['cat'])}">
+        <div class="pcard__meta">{''.join(meta)}</div>
+        <h3 class="pcard__title">{html.escape(p['title'])}</h3>
+        {exc}
+        <div class="pcard__tags">{tags}<span class="pcard__go">Read (KO) →</span></div>
+      </a>"""
+
+CAT_LABEL_EN = {
+    "research": "Research", "experiment": "Lab note", "paper": "Paper review",
+    "paper-review": "Paper review", "method": "Method", "tutorial": "Tutorial",
+    "news": "Trends", "case": "Field note",
+}
+
+def en_board_html(papers):
+    for p in papers:
+        p["cat_label_en"] = CAT_LABEL_EN.get(p["cat"], p["cat"])
+    if papers:
+        body = '<div class="pboard">\n' + "\n".join(en_card_html(p) for p in papers) + "\n    </div>"
+    else:
+        body = '<div class="pempty"><p>First entries are on the way.</p></div>'
+    return EN_HEAD + f"""
+<main>
+  <section class="section pboard-hero">
+    <div class="wrap">
+      <span class="eyebrow">Papers · Lab notes</span>
+      <h1 class="pboard-hero__h1">We only publish what we <span class="u accent">measured</span>.</h1>
+      <p class="pboard-hero__lede">Methods 2i actually ran and verified in the field, and the papers behind those judgment calls, kept as a public lab notebook.</p>
+      <p class="pboard-hero__lede" style="margin-top:0.6rem;font-family:var(--mono);font-size:var(--text-sm)">// Research notes are currently written in Korean. Titles below open the Korean originals.</p>
+    </div>
+  </section>
+  <section class="section section--alt" style="padding-top:0">
+    <div class="wrap">
+    {body}
+    </div>
+  </section>
+</main>
+""" + EN_FOOT
+
 # ---------- main ----------
 
 def main():
@@ -291,6 +401,9 @@ def main():
     papers.sort(key=lambda p: p["date"], reverse=True)
 
     BOARD.write_text(board_html(papers), encoding="utf-8")
+    en_dir = SITE / "en"
+    if en_dir.is_dir():
+        (en_dir / "papers.html").write_text(en_board_html(papers), encoding="utf-8")
     for p in papers:
         (OUT_DIR / f"{p['slug']}.html").write_text(article_html(p), encoding="utf-8")
 
