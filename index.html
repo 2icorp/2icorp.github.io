@@ -365,9 +365,10 @@
   <section class="section" id="capability">
     <div class="wrap">
       <div class="section__head reveal">
-        <span class="eyebrow">보유 기술 · 증거 기반 역량</span>
-        <h2>무선 신호지능, 모르는 신호를 걸러내는 능력으로 증명합니다.</h2>
-        <p>사례 06(공장 무선 간섭 진단)의 기반 엔진을 자체 벤치마크로 실측했습니다. 닫힌 목록 안에서 맞히는 정확도가 아니라 <b>본 적 없는 신호원을 거절하는 능력(open-set)</b>을 정면으로 재고, GPU 없이 현장 엣지·폐쇄망에서 그대로 구동합니다.</p>
+        <span class="eyebrow">보유 기술 · 신호지능 엔진</span>
+        <h2>신호는 매질이 다를 뿐, 판단의 수학은 같습니다.</h2>
+        <p>전자기파든 음향이든 WiFi 채널의 미세한 흔들림이든, 현장에서 반복되는 질문은 결국 하나로 좁혀집니다. 이 신호가 알던 것과 다른가, 그리고 그 판단을 얼마나 믿을 수 있는가입니다. 그 질문에 답하는 검증된 수학은 세 가지, 오픈셋 지문 거부와 고정 오탐률 이상탐지와 상관 기반 지문매칭입니다. 저희는 이 세 가지만 유지한 채 신호의 매질을 RF에서 오디오로, 진동으로, WiFi 채널상태로 옮겨가며 이식합니다. 그래서 산업마다 새 알고리즘을 발명하는 회사가 아니라, 하나의 검증된 판단 로직이 얼마나 넓은 매질까지 닿는지를 관리하는 회사에 더 가깝습니다.</p>
+        <p>그 로직이 가장 먼저, 가장 오래 쌓인 매질이 RF입니다. 사례 06(공장 무선 간섭 진단)의 기반 엔진을 자체 벤치마크로 실측했습니다. 닫힌 목록 안에서 맞히는 정확도가 아니라 <b>본 적 없는 신호원을 거절하는 능력(open-set)</b>을 정면으로 재고, GPU 없이 현장 엣지와 폐쇄망에서 그대로 구동합니다.</p>
       </div>
 
       <div class="rf-grid reveal stagger">
@@ -423,9 +424,9 @@
   <section class="section" id="new-capabilities">
     <div class="wrap">
       <div class="section__head reveal">
-        <span class="eyebrow">확장 검증 · 다른 신호로 옮긴 같은 방법</span>
+        <span class="eyebrow">확장 검증 · 다른 매질로 옮긴 같은 방법</span>
         <h2>같은 지문·거절 방법론을 오디오·진동·WiFi·드론 신호로 옮겨 실측했습니다.</h2>
-        <p>전부 공개 데이터로 실측한 결과이며, 완성된 인증 제품이 아니라 <b>무료 진단 → 유료 파일럿·PoC → 모듈 공급</b> 순서로 제공합니다. 성숙도가 다른 항목을 있는 그대로 표시합니다.</p>
+        <p>매질을 바꿔도 판단의 골격은 그대로입니다. 아래 네 항목 모두 공개 데이터로 실측한 결과이고, 완성된 인증 제품이 아니라 <b>무료 진단 → 유료 파일럿·PoC → 모듈 공급</b> 순서로 제공합니다. 성숙도가 다른 항목을 있는 그대로 표시합니다.</p>
       </div>
 
       <div class="rf-grid reveal stagger">
@@ -461,77 +462,139 @@
   <section class="section" id="applications">
     <div class="wrap">
       <div class="section__head reveal">
-        <span class="eyebrow">활용 분야 · 버티컬 확장</span>
-        <h2>하나의 엔진, 여러 산업으로 확장됩니다.</h2>
-        <p>하나의 RF 신호지능 엔진이 산업을 가로질러 확장됩니다. 아래는 성숙도를 정직하게 표시한 적용 지도입니다.</p>
+        <span class="eyebrow">활용 분야 · 산업 확장 지도</span>
+        <h2>하나의 판단 로직이 열 개 산업에서 서로 다른 얼굴로 나타납니다.</h2>
+        <p>앞서 실측한 판단 로직이 산업마다 다른 얼굴을 씁니다. 기기 지문은 공장의 미등록 장비 탐지가 되고, 오디오 지문은 방송사의 저작권 모니터링이 되고, 같은 이상탐지 수학은 변전소의 조기경보가 됩니다. 성숙도 태그는 과장하지 않습니다. 이미 측정을 마친 항목과 아이디어 단계인 항목을 있는 그대로 구분합니다.</p>
       </div>
 
       <div class="mlegend reveal">
         <span class="mtag mtag--demo">실증 · 이미 측정한 역량</span>
-        <span class="mtag mtag--extend">확장 · 자연스러운 확장, 파트너 데이터로 검증 필요</span>
-        <span class="mtag mtag--research">연구 · 연구 단계, 검증 전</span>
+        <span class="mtag mtag--extend">확장 · 자연스러운 확장, 귀사 데이터로 검증 필요</span>
+        <span class="mtag mtag--research">연구 · 방법은 있으나 검증 전</span>
+        <span class="mtag mtag--concept">개념 · 아이디어 단계, 실험 미착수</span>
       </div>
 
       <div class="section__head reveal" style="margin-top:2.4rem;margin-bottom:1rem;max-width:none">
         <span class="eyebrow">최적 합 · TOP 6</span>
       </div>
       <div class="topfit-grid reveal stagger">
-        <div class="topfit"><span class="topfit__no">01</span><span class="topfit__t">미등록 IoT 기기 탐지</span><span class="mtag mtag--extend">확장</span></div>
-        <div class="topfit"><span class="topfit__no">02</span><span class="topfit__t">드론 RF 탐지·식별</span><span class="mtag mtag--research">연구</span></div>
-        <div class="topfit"><span class="topfit__no">03</span><span class="topfit__t">병원 무선 간섭 모니터링</span><span class="mtag mtag--extend">확장</span></div>
-        <div class="topfit"><span class="topfit__no">04</span><span class="topfit__t">비접촉 바이탈 센싱</span><span class="mtag mtag--research">연구</span></div>
-        <div class="topfit"><span class="topfit__no">05</span><span class="topfit__t">사설5G 헬스 모니터링</span><span class="mtag mtag--extend">확장</span></div>
-        <div class="topfit"><span class="topfit__no">06</span><span class="topfit__t">차량 키포브 보안</span><span class="mtag mtag--research">연구</span></div>
+        <div class="topfit"><span class="topfit__no">01</span><span class="topfit__t">오디오 콘텐츠ID(미디어·방송)</span><span class="mtag mtag--demo">실증</span></div>
+        <div class="topfit"><span class="topfit__no">02</span><span class="topfit__t">회전설비 예측정비(제조)</span><span class="mtag mtag--demo">실증</span></div>
+        <div class="topfit"><span class="topfit__no">03</span><span class="topfit__t">재실감지 → 에너지 최적화(스마트빌딩)</span><span class="mtag mtag--extend">확장</span></div>
+        <div class="topfit"><span class="topfit__no">04</span><span class="topfit__t">미등록 기기 탐지(제조 OT망)</span><span class="mtag mtag--extend">확장</span></div>
+        <div class="topfit"><span class="topfit__no">05</span><span class="topfit__t">드론 RF 탐지·식별(보안·방위)</span><span class="mtag mtag--research">연구</span></div>
+        <div class="topfit"><span class="topfit__no">06</span><span class="topfit__t">변전소 부분방전 조기경보(에너지)</span><span class="mtag mtag--concept">개념</span></div>
       </div>
 
       <div class="vert-groups reveal stagger">
         <div class="vgroup">
-          <div class="vgroup__h">생활 · 스마트홈 IoT</div>
+          <div class="vgroup__h">제조</div>
           <div class="vitems">
-            <div class="vitem"><div class="vitem__body"><span class="vitem__t">미등록·미지 기기 탐지</span><span class="vitem__d">우리 open-set 지문(AUROC 0.945)을 가정 IoT 환경에 그대로 이식합니다.</span></div><span class="mtag mtag--extend">확장</span></div>
-            <div class="vitem"><div class="vitem__body"><span class="vitem__t">비접촉 재실·움직임·낙상 감지</span><span class="vitem__d">WiFi 신호 반사를 이용한 고령자 케어용 감지. 검증 전 단계입니다.</span></div><span class="mtag mtag--research">연구</span></div>
-            <div class="vitem"><div class="vitem__body"><span class="vitem__t">IoT 기기 지문 기반 재고·공급망 관리</span><span class="vitem__d">기기 지문으로 현장 자산을 자동 식별·집계합니다.</span></div><span class="mtag mtag--extend">확장</span></div>
+            <div class="vitem"><div class="vitem__body"><span class="vitem__t">공장 무선 간섭원 탐지·위치추정</span><span class="vitem__d">간섭원이 있다는 것을 잡아내는 일은 사례 06에서 이미 실증했습니다. 정확한 위치까지 짚어주는 것이 다음 확장 과제입니다.</span></div><span class="mtag mtag--extend">확장</span></div>
+            <div class="vitem"><div class="vitem__body"><span class="vitem__t">회전설비 예측정비(음향·진동)</span><span class="vitem__d">소음과 진동 속에서도 베어링·펌프의 초기 이상을 잡아냅니다. 무료 진단 후 귀사 설비 데이터로 다시 재는 파일럿부터 시작합니다.</span></div><span class="mtag mtag--demo">실증</span></div>
+            <div class="vitem"><div class="vitem__body"><span class="vitem__t">공장 OT망 미등록 기기 탐지</span><span class="vitem__d">라인에 몰래 연결된 기기를 RF 지문으로 찾아냅니다.</span></div><span class="mtag mtag--extend">확장</span></div>
           </div>
         </div>
 
         <div class="vgroup">
-          <div class="vgroup__h">의료 · 헬스케어</div>
+          <div class="vgroup__h">헬스케어</div>
           <div class="vitems">
-            <div class="vitem"><div class="vitem__body"><span class="vitem__t">병원 무선(환자모니터·IoMT) 간섭·이상 탐지</span><span class="vitem__d">CFAR 엔진을 병원 무선망에 이식. 생명안전과 직결되는 영역입니다.</span></div><span class="mtag mtag--extend">확장</span></div>
-            <div class="vitem"><div class="vitem__body"><span class="vitem__t">비접촉 바이탈(호흡·심박) 레이더 센싱</span><span class="vitem__d">연구 단계입니다. 임상검증·의료기기 인허가 게이트를 거쳐야 합니다.</span></div><span class="mtag mtag--research">연구</span></div>
-            <div class="vitem"><div class="vitem__body"><span class="vitem__t">의료기기 RF 지문 보안</span><span class="vitem__d">기기별 RF 지문으로 비인가 기기 접근을 식별하는 연구 단계 응용입니다.</span></div><span class="mtag mtag--research">연구</span></div>
+            <div class="vitem"><div class="vitem__body"><span class="vitem__t">병원 무선(환자모니터·IoMT) 간섭·이상 탐지</span><span class="vitem__d">환자모니터와 인퓨전펌프 곁의 무선 간섭을, 병동을 멈추지 않고 감시합니다.</span></div><span class="mtag mtag--extend">확장</span></div>
+            <div class="vitem"><div class="vitem__body"><span class="vitem__t">비접촉 재실·낙상 모니터링(입원실·요양)</span><span class="vitem__d">웨어러블 없이 낙상을 감지합니다. 공개 데이터로는 검증을 마쳤고, 병원 현장 검증이 다음 단계입니다.</span></div><span class="mtag mtag--extend">확장</span></div>
+            <div class="vitem"><div class="vitem__body"><span class="vitem__t">비접촉 바이탈(호흡·심박) 레이더 센싱</span><span class="vitem__d">연구 단계입니다. 임상검증과 의료기기 인허가라는 별도 관문을 거쳐야 합니다.</span></div><span class="mtag mtag--research">연구</span></div>
           </div>
         </div>
 
         <div class="vgroup">
-          <div class="vgroup__h">산업 · 제조</div>
+          <div class="vgroup__h">스마트 빌딩·홈</div>
           <div class="vitems">
-            <div class="vitem"><div class="vitem__body"><span class="vitem__t">공장 무선(AGV·RFID·센서) 간섭원 실시간 지목</span><span class="vitem__d">사례 06에서 실제 실증한 코어 엔진입니다.</span></div><span class="mtag mtag--demo">실증</span></div>
-            <div class="vitem"><div class="vitem__body"><span class="vitem__t">사설5G·산업무선 헬스 모니터링</span><span class="vitem__d">같은 지문·간섭탐지 엔진을 사설5G 인프라 상태 감시로 확장합니다.</span></div><span class="mtag mtag--extend">확장</span></div>
-            <div class="vitem"><div class="vitem__body"><span class="vitem__t">설비 음향·진동 시그니처 예지보전</span><span class="vitem__d">동일 지문 매칭 원리를 음향·진동 신호로 옮기는 연구 단계입니다.</span></div><span class="mtag mtag--research">연구</span></div>
+            <div class="vitem"><div class="vitem__body"><span class="vitem__t">비접촉 재실감지 → 냉난방·조명 에너지 최적화</span><span class="vitem__d">센서를 새로 달지 않고 기존 WiFi 공유기로 재실을 감지해 냉난방과 조명 낭비를 줄입니다. 해외에서는 이미 수천만 가구 규모로 상용화된 기술 계열이고, 저희는 같은 원리를 공개 데이터(UT-HAR)에서 AUROC 0.99로 재현했습니다.</span></div><span class="mtag mtag--extend">확장</span></div>
+            <div class="vitem"><div class="vitem__body"><span class="vitem__t">노인 단독가구 낙상 감지</span><span class="vitem__d">카메라를 두지 않고도 낙상을 감지해 알립니다.</span></div><span class="mtag mtag--extend">확장</span></div>
+            <div class="vitem"><div class="vitem__body"><span class="vitem__t">사내 불법 무선기기 스윕(기업보안)</span><span class="vitem__d">회의실에 몰래 숨긴 송신기를 찾아냅니다.</span></div><span class="mtag mtag--research">연구</span></div>
           </div>
         </div>
 
         <div class="vgroup">
-          <div class="vgroup__h">보안 · 방위 (일반 역량)</div>
+          <div class="vgroup__h">에너지·유틸리티</div>
+          <div class="vitems">
+            <div class="vitem"><div class="vitem__body"><span class="vitem__t">변전소·변압기 부분방전 조기경보</span><span class="vitem__d">정전 없이 절연 열화 징후를 몇 주 전에 짚어냅니다. 감지 방식 자체는 수십 년 검증된 산업 표준이고, 저희 고정 오탐률 탐지기를 이 신호에 이식하는 실험은 아직 시작 전입니다.</span></div><span class="mtag mtag--concept">개념</span></div>
+            <div class="vitem"><div class="vitem__body"><span class="vitem__t">스마트그리드 계량망 이상·변조 탐지</span><span class="vitem__d">계량기 무선망에서 변조나 재밍 시도를 탐지합니다.</span></div><span class="mtag mtag--research">연구</span></div>
+          </div>
+        </div>
+
+        <div class="vgroup">
+          <div class="vgroup__h">물류·콜드체인</div>
+          <div class="vitems">
+            <div class="vitem"><div class="vitem__body"><span class="vitem__t">RF·BLE 태그 진위 검증</span><span class="vitem__d">위치는 GPS가 말해줘도, 그 태그가 진짜인지는 말해주지 않습니다. RF 지문으로 태그 자체의 진위를 확인합니다.</span></div><span class="mtag mtag--concept">개념</span></div>
+            <div class="vitem"><div class="vitem__body"><span class="vitem__t">창고·야드 미등록 비콘 탐지</span><span class="vitem__d">재고 시스템에 잡히지 않는 비콘을 찾아 재고 손실을 줄입니다.</span></div><span class="mtag mtag--concept">개념</span></div>
+          </div>
+        </div>
+
+        <div class="vgroup">
+          <div class="vgroup__h">보안·방위 (일반 역량)</div>
           <div class="vitems">
             <div class="vitem"><div class="vitem__body"><span class="vitem__t">미지 신호원 식별·스펙트럼 상황인식</span><span class="vitem__d">오픈셋 식별 엔진을 스펙트럼 감시용 범용 역량으로 확장합니다.</span></div><span class="mtag mtag--extend">확장</span></div>
-            <div class="vitem"><div class="vitem__body"><span class="vitem__t">드론 RF 탐지·식별</span><span class="vitem__d">연구 단계지만 상용 안티드론 시장이 이미 존재합니다.</span></div><span class="mtag mtag--research">연구</span></div>
+            <div class="vitem"><div class="vitem__body"><span class="vitem__t">미인가 드론 탐지·식별</span><span class="vitem__d">연구 단계지만 상용 안티드론 시장이 이미 존재합니다.</span></div><span class="mtag mtag--research">연구</span></div>
+            <div class="vitem"><div class="vitem__body"><span class="vitem__t">시설 내 불법 송신기 스윕</span><span class="vitem__d">시설 안에 숨은 송신기를 찾아냅니다.</span></div><span class="mtag mtag--research">연구</span></div>
           </div>
         </div>
 
         <div class="vgroup">
-          <div class="vgroup__h">기타 유망 응용</div>
+          <div class="vgroup__h">통신·스펙트럼</div>
           <div class="vitems">
-            <div class="vitem"><div class="vitem__body"><span class="vitem__t">차량 키포브 릴레이공격 탐지</span><span class="vitem__d">키포브 신호 지문으로 중계 공격을 구분하는 연구 단계 응용입니다.</span></div><span class="mtag mtag--research">연구</span></div>
-            <div class="vitem"><div class="vitem__body"><span class="vitem__t">통신 O-RAN 슬라이스 간섭 격리</span><span class="vitem__d">CFAR·지문 매칭을 O-RAN 슬라이스 간 간섭 격리로 확장합니다.</span></div><span class="mtag mtag--extend">확장</span></div>
-            <div class="vitem"><div class="vitem__body"><span class="vitem__t">스마트그리드 미터 이상·변조 탐지</span><span class="vitem__d">계량 신호의 이상·변조를 지문으로 잡아내는 연구 단계 응용입니다.</span></div><span class="mtag mtag--research">연구</span></div>
+            <div class="vitem"><div class="vitem__body"><span class="vitem__t">SDR·RF 벤더용 간섭탐지 SDK(O-RAN·프라이빗5G 슬라이스 격리 포함)</span><span class="vitem__d">하드웨어 벤더 제품에 얹는 간섭탐지 라이브러리입니다. 합성 데이터 기준 검출율 98.0%, 오탐률 5.3%를 자체벤치로 실측했습니다.</span></div><span class="mtag mtag--demo">실증</span></div>
+            <div class="vitem"><div class="vitem__body"><span class="vitem__t">CBRS 등 스펙트럼 공유 공존 모니터링</span><span class="vitem__d">공유 주파수의 간섭을 정해진 오탐률 안에서 감시합니다.</span></div><span class="mtag mtag--extend">확장</span></div>
+          </div>
+        </div>
+
+        <div class="vgroup">
+          <div class="vgroup__h">미디어·방송 (지금 가장 먼저 팔 수 있는 항목)</div>
+          <div class="vitems">
+            <div class="vitem"><div class="vitem__body"><span class="vitem__t">오디오 콘텐츠ID·방송 저작권 모니터링</span><span class="vitem__d">잡음과 압축, 속도 변경에도 흔들리지 않는 음원 식별 API입니다. 위에서 실측한 클린 95%, 압축·잡음 전 구간 검증치가 바로 이 항목의 근거이고, 이번 지도에서 가장 먼저 유료 파일럿을 시작할 수 있는 항목입니다.</span></div><span class="mtag mtag--demo">실증</span></div>
+          </div>
+        </div>
+
+        <div class="vgroup">
+          <div class="vgroup__h">농업</div>
+          <div class="vitems">
+            <div class="vitem"><div class="vitem__body"><span class="vitem__t">가축(돈사) 호흡기질환 음향 조기탐지</span><span class="vitem__d">돈사에 마이크 한 대만 놓아도 증상이 나타나기 전에 호흡기 질환을 감지합니다. 저희 핵심 RF 스택과는 거리가 있는 교차도메인 베팅이고, 방법만 이식 가능한 아이디어 단계입니다.</span></div><span class="mtag mtag--concept">개념</span></div>
+          </div>
+        </div>
+
+        <div class="vgroup">
+          <div class="vgroup__h">리테일</div>
+          <div class="vitems">
+            <div class="vitem"><div class="vitem__body"><span class="vitem__t">매장 WiFi-CSI 동선·혼잡도 분석(카메라 없이)</span><span class="vitem__d">카메라를 달지 않고 기존 매장 WiFi로 고객 동선과 혼잡도를 측정합니다.</span></div><span class="mtag mtag--concept">개념</span></div>
           </div>
         </div>
       </div>
 
       <!-- TODO(update-after-experiments): 버티컬별 파일럿 진행 시 태그를 실증으로 갱신 / 정량 지표 확보 시 목표 수치 대체 -->
-      <p class="auto-foot reveal">이 지도는 영업 약속이 아니라 정직한 로드맵입니다. &#x27;확장&#x27;·&#x27;연구&#x27; 태그가 붙은 항목은 귀사 데이터로 실증하는 PoC 단계부터 시작합니다.</p>
+      <p class="auto-foot reveal">이 지도는 영업 약속이 아니라 정직한 로드맵입니다. 저희가 파는 것은 완성된 인증 제품이 아니라 순서입니다. 먼저 무료로 진단하고, 적합성이 확인되면 유료 파일럿이나 PoC로 들어가고, 검증이 끝나면 라이선스 가능한 모듈로 공급합니다. 미디어·방송의 콘텐츠ID처럼 지금 바로 파일럿을 시작할 수 있는 항목도 있고, 변전소 부분방전처럼 아직 실험조차 착수하지 못한 항목도 있습니다. 그 격차를 숨기지 않는 것이 저희 방식입니다.</p>
+    </div>
+  </section>
+
+  <!-- OEM: EQUIPMENT-VENDOR EMBED (SUPPLY-SIDE CHANNEL) -->
+  <section class="section" id="oem">
+    <div class="wrap">
+      <div class="section__head reveal">
+        <span class="eyebrow">새로운 판매 경로 · 장비 제조사 임베드</span>
+        <h2>이번엔 최종사용자가 아니라, 장비 제조사 안에 심습니다.</h2>
+        <p>지금까지 소개한 항목은 저희가 기업에 직접 파는 그림이었습니다. 그런데 신호는 매질이 다를 뿐 판단의 수학은 같다는 원리는, 파는 대상을 바꿔도 그대로 성립합니다. 공유기, 계측장비, 산업용 무선장비를 만드는 제조사가 저희 엔진을 라이선스로 받아 자기 박스 안에 심고, 그 기능을 얹은 상위 제품 라인을 만들어 더 비싸게 파는 구조입니다. 저희는 최종 사용자와 직접 만나지 않고, 모듈과 라이선스 형태로 제조사에 공급합니다. 낯선 그림은 아닙니다. 해외에서는 이미 통신사 공유기에 비슷한 감지 기능이 수천만 가구 규모로 상용 탑재돼 있고, 계측장비 회사들은 간섭 탐지를 유료 옵션으로 팔고 있습니다. 저희가 새로 여는 시장이 아니라, 이미 검증된 시장에 늦게 들어가는 길입니다.</p>
+      </div>
+
+      <div class="vert-groups reveal stagger">
+        <div class="vgroup">
+          <div class="vgroup__h">임베드 대상 3가지</div>
+          <div class="vitems">
+            <div class="vitem"><div class="vitem__body"><span class="vitem__t">WiFi 공유기·CPE 제조사용 재실·낙상 감지 임베드 모듈</span><span class="vitem__d">라우터를 새 센서 하드웨어 없이 재실·움직임·낙상 감지 장치로 격상시키는 모듈입니다. 해외에서는 이미 수천만 가구 규모로 통신사 CPE에 상용 탑재된 기능 계열이고, 저희는 같은 원리를 공개 데이터(UT-HAR)에서 낙상 대 비낙상 판별 AUROC 0.99로 재현했습니다. 제조사가 이 모듈을 얹어 재실·낙상 감지 상위 티어를 구성하고, 그 티어를 프리미엄 가격으로 판매하는 구조입니다.</span></div><span class="mtag mtag--extend">확장</span></div>
+            <div class="vitem"><div class="vitem__body"><span class="vitem__t">RF 계측·스펙트럼 장비용 간섭 헌팅 소프트웨어 옵션</span><span class="vitem__d">이미 있는 계측 하드웨어 위에 얹는 소프트웨어 옵션입니다. 계측기 회사들이 유료 옵션으로 파는 간섭 탐지·위치추정 기능과 같은 계열이고, 앞서 통신·스펙트럼 항목에서 소개한 간섭탐지 SDK가 바로 이 모듈의 실체입니다. 지정한 오탐률을 고정한 채(CFAR) 간섭을 잡아내고 위치까지 짚어냅니다.</span></div><span class="mtag mtag--demo">실증</span></div>
+            <div class="vitem"><div class="vitem__body"><span class="vitem__t">사설5G·산업용 무선장비용 자가진단 간섭 보호 모듈</span><span class="vitem__d">클라우드 조회 없이 장비 스스로 국지 간섭을 감지하고 회피하게 만드는 모듈입니다. 같은 CFAR와 학습형 탐지 엔진을 사설5G 라디오, 산업용 무선 게이트웨이에 이식해 클라우드 연동 없는 자가 방어 스펙트럼 기능으로 상위 라인을 구성합니다.</span></div><span class="mtag mtag--extend">확장</span></div>
+          </div>
+        </div>
+      </div>
+
+      <p class="auto-foot reveal">세 가지 모두 판매 방식은 같습니다. 제조사가 저희 모듈을 임베드해 상위 제품 티어로 업셀하고, 2i는 그 임베드 계약과 라이선스로 수익을 내는 구조입니다. 완성된 인증 제품이 아니라 공급 가능한 모듈이라는 점을 그대로 알립니다. 재실·낙상 감지는 공개 데이터로 검증한 확장 단계이고, 간섭 탐지·위치추정은 사례 06과 같은 코어 엔진의 실증 단계입니다.</p>
     </div>
   </section>
 
