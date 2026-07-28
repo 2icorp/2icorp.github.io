@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>엣지에서 정말 돌아가나: 처리량 예산을 실측으로 귀속하는 법 · 2i</title>
+<meta name="description" content="저가 엣지 보드에서 신호처리 파이프라인 처리량을 단계별로 실측해 초당 7.6M 샘플, 목표 대비 0.19배라는 불편한 숫자와 병목 위치를 공개합니다. 데모가 아니라 배포를 팔려면 이 숫자부터 재야 합니다.">
+<meta property="og:title" content="엣지에서 정말 돌아가나: 처리량 예산을 실측으로 귀속하는 법 · 2i">
+<meta property="og:description" content="저가 엣지 보드에서 신호처리 파이프라인 처리량을 단계별로 실측해 초당 7.6M 샘플, 목표 대비 0.19배라는 불편한 숫자와 병목 위치를 공개합니다. 데모가 아니라 배포를 팔려면 이 숫자부터 재야 합니다.">
+<meta property="og:type" content="article">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23111827'/%3E%3Ctext x='16' y='22' font-family='monospace' font-size='16' font-weight='700' fill='%23e08a2b' text-anchor='middle'%3E2i%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../styles.css?v=10">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js" onload="renderMathInElement(document.body,{delimiters:[{left:'$$',right:'$$',display:true},{left:'$',right:'$',display:false},{left:'\\[',right:'\\]',display:true},{left:'\\(',right:'\\)',display:false}]})"></script>
+</head>
+<body>
+
+<header class="nav">
+  <div class="wrap nav__inner">
+    <a class="brand" href="../" aria-label="2i 홈">
+      <span class="brand__mark">2i</span>
+      <span class="brand__tag">AX 컨설팅</span>
+    </a>
+    <button class="nav__burger" type="button" aria-expanded="false" aria-controls="navLinks" aria-label="메뉴 열기"><span></span><span></span><span></span></button>
+    <nav class="nav__links" id="navLinks" aria-label="주요 메뉴">
+      <a href="../index.html#method">방식</a>
+      <a href="../cases.html">사례</a>
+      <a href="../index.html#ideas">아이디어 30</a>
+      <a href="../papers.html">논문·실험</a>
+      <a href="../about.html">회사소개</a>
+      <a href="../index.html#voucher">정부 바우처</a>
+      <a class="nav__lang" href="../en/">EN</a>
+      <a class="nav__cta btn btn--signal" href="../index.html#contact">상담 신청</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <article class="article wrap">
+    <a class="article__back" href="../papers.html">← 논문·실험 게시판</a>
+    <div class="article__head">
+      <div class="pcard__meta"><span class="pcard__cat">방법</span><span class="pcard__date">2026.07.28</span><span class="pcard__rt">약 5분</span></div>
+      <h1 class="article__title">엣지에서 정말 돌아가나: 처리량 예산을 실측으로 귀속하는 법</h1>
+      <p class="article__excerpt">저가 엣지 보드에서 신호처리 파이프라인 처리량을 단계별로 실측해 초당 7.6M 샘플, 목표 대비 0.19배라는 불편한 숫자와 병목 위치를 공개합니다. 데모가 아니라 배포를 팔려면 이 숫자부터 재야 합니다.</p>
+      <div class="pcard__tags"><span>#엣지컴퓨팅</span><span>#성능실측</span><span>#배포설계</span><span>#자체벤치</span></div>
+      
+    </div>
+    <div class="article__body prose">
+<h2 id="_1">무엇을 재는가</h2>
+<p>간섭탐지·설비감시를 "엣지에서 돈다"고 말하려면, 실제 보드에서 파이프라인 전체의 처리량을
+재고 병목이 어느 단계에 있는지 귀속해야 합니다. GPU 서버 데모와 현장 배포 사이의 간극이
+바로 여기서 드러납니다.</p>
+<h2 id="_2">결과 (불편한 숫자 그대로)</h2>
+<table>
+<thead>
+<tr>
+<th>항목</th>
+<th>값</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>엣지 실측 처리량</td>
+<td>초당 7.589M 샘플</td>
+</tr>
+<tr>
+<td>목표(실시간 광대역) 대비</td>
+<td><strong>0.19배</strong></td>
+</tr>
+</tbody>
+</table>
+<p>즉 현재 파이프라인은 목표 대역폭의 실시간 처리에 5배 모자랍니다. 이 숫자를 숨기면 파일럿
+현장에서 터집니다. 단계별 프로파일링으로 병목을 특정 변환 단계에 귀속했고, 채널 분할
+처리(폴리페이즈 채널라이저로 대역을 쪼개 필요한 채널만 정밀 처리)라는 해결 방향까지
+설계에 반영했습니다.</p>
+<h2 id="_3">방법 (요약)</h2>
+<p>파이프라인을 단계(전처리·변환·특징·판정)로 나눠 각 단계의 샘플 처리량을 독립 실측하고,
+전체 처리량의 병목 기여를 계산합니다. "평균 CPU 사용률" 같은 간접 지표가 아니라 단계별
+샘플/초를 직접 잽니다. 측정 코드는 파이프라인과 같은 저장소에서 버전 관리됩니다.</p>
+<h2 id="_4">왜 이게 자랑거리인가</h2>
+<p>기술 회사의 신뢰는 좋은 숫자가 아니라 <strong>숫자를 다루는 태도</strong>에서 나옵니다. 0.19배는 나쁜
+숫자지만, 이 숫자가 있어야 "어떤 현장에는 지금 팔 수 있고(협대역·저속), 어떤 현장에는
+채널 분할 후에 팔 수 있다(광대역 실시간)"는 정직한 견적이 나옵니다. 저희 파일럿 제안서의
+처리량 조항은 전부 이런 실측에서 나온 값입니다.</p>
+    </div>
+    <div class="article__cta">
+      <p>이 방법을 당신 현장의 숫자로 다시 재보고 싶다면.</p>
+      <a class="btn btn--signal" href="../index.html#contact">30분 진단 상담 <span class="arrow">→</span></a>
+      <a class="btn btn--ghost" href="../papers.html">다른 기록 보기</a>
+    </div>
+  </article>
+</main>
+
+<footer class="foot">
+  <div class="wrap foot__inner">
+    <div>
+      <div class="brand"><span class="brand__mark">2i</span><span class="brand__tag">AX 컨설팅</span></div>
+      <div class="foot__mono" style="margin-top:0.6rem">중소·중견 제조·유통을 위한 AI 전환</div>
+    </div>
+    <nav class="foot__links" aria-label="하단 메뉴">
+      <a href="../index.html#method">방식</a>
+      <a href="../papers.html">논문·실험</a>
+      <a href="../index.html#voucher">정부 바우처</a>
+      <a href="https://github.com/2icorp" target="_blank" rel="noopener">GitHub</a>
+      <a href="../en/">EN</a>
+    </nav>
+  </div>
+</footer>
+
+<script src="../main.js"></script>
+</body>
+</html>

@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>모르는 신호를 &#x27;모른다&#x27;고 말하는 기계: 복잡한 방법이 항상 이기지 않았습니다 · 2i</title>
+<meta name="description" content="미지 신호원 거부(open-set) 실측 A/B. 극값이론 기반 고급 보정이 실측 무선 데이터에서 단순 거리 기반을 이기지 못했습니다. 병목은 점수 계산이 아니라 특징 공간이라는 결론과, 그걸 알아낸 실험 설계를 공개합니다.">
+<meta property="og:title" content="모르는 신호를 &#x27;모른다&#x27;고 말하는 기계: 복잡한 방법이 항상 이기지 않았습니다 · 2i">
+<meta property="og:description" content="미지 신호원 거부(open-set) 실측 A/B. 극값이론 기반 고급 보정이 실측 무선 데이터에서 단순 거리 기반을 이기지 못했습니다. 병목은 점수 계산이 아니라 특징 공간이라는 결론과, 그걸 알아낸 실험 설계를 공개합니다.">
+<meta property="og:type" content="article">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23111827'/%3E%3Ctext x='16' y='22' font-family='monospace' font-size='16' font-weight='700' fill='%23e08a2b' text-anchor='middle'%3E2i%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../styles.css?v=10">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js" onload="renderMathInElement(document.body,{delimiters:[{left:'$$',right:'$$',display:true},{left:'$',right:'$',display:false},{left:'\\[',right:'\\]',display:true},{left:'\\(',right:'\\)',display:false}]})"></script>
+</head>
+<body>
+
+<header class="nav">
+  <div class="wrap nav__inner">
+    <a class="brand" href="../" aria-label="2i 홈">
+      <span class="brand__mark">2i</span>
+      <span class="brand__tag">AX 컨설팅</span>
+    </a>
+    <button class="nav__burger" type="button" aria-expanded="false" aria-controls="navLinks" aria-label="메뉴 열기"><span></span><span></span><span></span></button>
+    <nav class="nav__links" id="navLinks" aria-label="주요 메뉴">
+      <a href="../index.html#method">방식</a>
+      <a href="../cases.html">사례</a>
+      <a href="../index.html#ideas">아이디어 30</a>
+      <a href="../papers.html">논문·실험</a>
+      <a href="../about.html">회사소개</a>
+      <a href="../index.html#voucher">정부 바우처</a>
+      <a class="nav__lang" href="../en/">EN</a>
+      <a class="nav__cta btn btn--signal" href="../index.html#contact">상담 신청</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <article class="article wrap">
+    <a class="article__back" href="../papers.html">← 논문·실험 게시판</a>
+    <div class="article__head">
+      <div class="pcard__meta"><span class="pcard__cat">실험 노트</span><span class="pcard__date">2026.07.28</span><span class="pcard__rt">약 5분</span></div>
+      <h1 class="article__title">모르는 신호를 &#x27;모른다&#x27;고 말하는 기계: 복잡한 방법이 항상 이기지 않았습니다</h1>
+      <p class="article__excerpt">미지 신호원 거부(open-set) 실측 A/B. 극값이론 기반 고급 보정이 실측 무선 데이터에서 단순 거리 기반을 이기지 못했습니다. 병목은 점수 계산이 아니라 특징 공간이라는 결론과, 그걸 알아낸 실험 설계를 공개합니다.</p>
+      <div class="pcard__tags"><span>#openset</span><span>#스펙트럼감시</span><span>#이상탐지</span><span>#자체벤치</span></div>
+      
+    </div>
+    <div class="article__body prose">
+<h2 id="_1">무엇을 재는가</h2>
+<p>배포된 분류기는 학습 때 본 적 없는 입력을 반드시 만납니다. 스펙트럼 감시라면 새로운
+전파원, 설비 감시라면 처음 보는 고장 유형입니다. 이때 아무 클래스나 자신 있게 찍는 대신
+"모르는 신호"라고 거부하는 능력(open-set rejection)을 실측했습니다. 특히 문헌에서 유행하는
+극값이론(EVT) 꼬리 보정이 실데이터에서 실제로 값을 하는지가 질문이었습니다.</p>
+<h2 id="leave-one-class-out-ab">결과 (leave-one-class-out 실측 A/B)</h2>
+<table>
+<thead>
+<tr>
+<th>테스트베드</th>
+<th>최고 성능</th>
+<th>EVT 보정</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>실측 무선 캡처 (11클래스)</td>
+<td>단순 softmax 0.612</td>
+<td>0.595 (탈락)</td>
+</tr>
+<tr>
+<td>실 분류기 + 합성 간섭 (8클래스)</td>
+<td>Mahalanobis 0.967</td>
+<td>0.967 (동률)</td>
+</tr>
+</tbody>
+</table>
+<p>판정 규칙(EVT가 두 지표 모두에서 이겨야 채택)은 실험 전에 선언했고, 결과가 나온 뒤 옮기지
+않았습니다. 결과: <strong>어느 쪽에서도 EVT 도입이 정당화되지 않았습니다.</strong> 쉬운 문제에서는 단순
+Mahalanobis 거리와 수학적으로 사실상 같아지고(단조 변환), 어려운 문제에서는 더 단순한
+방법조차 못 이겼습니다.</p>
+<h2 id="_2">방법 (요약)</h2>
+<p>클래스 하나를 통째로 빼고 학습한 뒤 그 클래스를 미지 입력으로 던지는 leave-one-class-out
+프로토콜입니다. 스코어러 4종(softmax·energy·Mahalanobis·EVT)을 동일 분류기 출력에 후처리로
+걸어 AUROC와 오탐 1% 고정 검출률로 비교했습니다. EVT 꼬리는 기지 클래스 보정 분할에서만
+적합했습니다(미지 데이터로 튜닝하면 누수입니다).</p>
+<h2 id="_3">왜 이게 자랑거리인가</h2>
+<p>"고급 기법 도입 안 함"이 결과인 실험을 공개하는 이유는, 이것이 저희 게이지 방식의
+실체이기 때문입니다. 병목은 점수 계산의 정교함이 아니라 <strong>특징 공간에서 클래스가 겹치는
+정도</strong>였습니다. 값비싼 방법을 먼저 팔지 않고, 값을 하는지 먼저 재는 것. 그 순서가 고객의
+PoC 예산을 지킵니다.</p>
+    </div>
+    <div class="article__cta">
+      <p>이 방법을 당신 현장의 숫자로 다시 재보고 싶다면.</p>
+      <a class="btn btn--signal" href="../index.html#contact">30분 진단 상담 <span class="arrow">→</span></a>
+      <a class="btn btn--ghost" href="../papers.html">다른 기록 보기</a>
+    </div>
+  </article>
+</main>
+
+<footer class="foot">
+  <div class="wrap foot__inner">
+    <div>
+      <div class="brand"><span class="brand__mark">2i</span><span class="brand__tag">AX 컨설팅</span></div>
+      <div class="foot__mono" style="margin-top:0.6rem">중소·중견 제조·유통을 위한 AI 전환</div>
+    </div>
+    <nav class="foot__links" aria-label="하단 메뉴">
+      <a href="../index.html#method">방식</a>
+      <a href="../papers.html">논문·실험</a>
+      <a href="../index.html#voucher">정부 바우처</a>
+      <a href="https://github.com/2icorp" target="_blank" rel="noopener">GitHub</a>
+      <a href="../en/">EN</a>
+    </nav>
+  </div>
+</footer>
+
+<script src="../main.js"></script>
+</body>
+</html>
