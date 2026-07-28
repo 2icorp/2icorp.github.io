@@ -14,7 +14,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="styles.css?v=5">
+<link rel="stylesheet" href="styles.css?v=10">
 </head>
 <body>
 
@@ -24,9 +24,11 @@
       <span class="brand__mark">2i</span>
       <span class="brand__tag">AX 컨설팅</span>
     </a>
-    <nav class="nav__links" aria-label="주요 메뉴">
+    <button class="nav__burger" type="button" aria-expanded="false" aria-controls="navLinks" aria-label="메뉴 열기"><span></span><span></span><span></span></button>
+    <nav class="nav__links" id="navLinks" aria-label="주요 메뉴">
       <a href="index.html#method">방식</a>
       <a href="cases.html">사례</a>
+      <a href="index.html#ideas">아이디어 30</a>
       <a href="papers.html">논문·실험</a>
       <a href="about.html">회사소개</a>
       <a href="index.html#voucher">정부 바우처</a>
@@ -66,7 +68,7 @@
       <div class="about__body">
         <h2>무엇을 하는 회사인가</h2>
         <p>중소·중견 기업의 문제는 작고 비표준적이라, 큰 SI 업체가 잘 맡지 않습니다. 2i는 정확히 그 빈자리를 위해 존재합니다. 현장의 진짜 병목을 숫자로 재고, 값싼 방법이 먼저 통과하게 두고, 정말 필요할 때만 비싼 기술을 부릅니다.</p>
-        <h2>일하는 방식 — 게이지</h2>
+        <h2>일하는 방식 · 게이지</h2>
         <p>모든 프로젝트는 세 개의 게이트를 지납니다. <b>측정</b>(2~3주 진단으로 무엇이 문제인지 숫자로), <b>실증</b>(현장 데이터로 효과 확인), <b>이관</b>(귀사 팀이 직접 운영). 각 게이트를 통과할 때만 다음 단계의 예산을 씁니다. AI 도입의 가장 큰 불안, '돈만 쓰고 안 되면?'을 구조로 제거합니다.</p>
         <h2>사업 영역</h2>
         <ul>

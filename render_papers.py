@@ -26,7 +26,8 @@ except Exception:
     sys.exit("markdown required: pip install markdown")
 
 ROOT = Path(__file__).resolve().parent
-SITE = ROOT / "site-new"
+# workspace layout keeps sources in site-new/; the deploy clone is flat
+SITE = ROOT / "site-new" if (ROOT / "site-new").is_dir() else ROOT
 SRC = SITE / "papers-src"
 OUT_DIR = SITE / "papers"
 BOARD = SITE / "papers.html"
@@ -63,7 +64,7 @@ def head(title, desc, rel, extra=""):
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="{rel}styles.css?v=5">{extra}
+<link rel="stylesheet" href="{rel}styles.css?v=10">{extra}
 </head>
 <body>
 
@@ -73,10 +74,13 @@ def head(title, desc, rel, extra=""):
       <span class="brand__mark">2i</span>
       <span class="brand__tag">AX 컨설팅</span>
     </a>
-    <nav class="nav__links" aria-label="주요 메뉴">
+    <button class="nav__burger" type="button" aria-expanded="false" aria-controls="navLinks" aria-label="메뉴 열기"><span></span><span></span><span></span></button>
+    <nav class="nav__links" id="navLinks" aria-label="주요 메뉴">
       <a href="{rel}index.html#method">방식</a>
       <a href="{rel}cases.html">사례</a>
+      <a href="{rel}index.html#ideas">아이디어 30</a>
       <a href="{rel}papers.html">논문·실험</a>
+      <a href="{rel}about.html">회사소개</a>
       <a href="{rel}index.html#voucher">정부 바우처</a>
       <a class="nav__lang" href="{rel}en/">EN</a>
       <a class="nav__cta btn btn--signal" href="{rel}index.html#contact">상담 신청</a>
@@ -279,7 +283,7 @@ def article_html(p):
 def main():
     SRC.mkdir(parents=True, exist_ok=True)
     OUT_DIR.mkdir(parents=True, exist_ok=True)
-    files = sorted(SRC.glob("*.md"))
+    files = sorted(f for f in SRC.glob("*.md") if f.stem.lower() != "readme")
     papers = [parse(f) for f in files]
     # only published (front matter published: false => skip)
     papers = [p for p in papers if p]
