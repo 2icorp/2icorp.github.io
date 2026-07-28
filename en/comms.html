@@ -1,0 +1,440 @@
+<!doctype html>
+<html lang="en">
+<head>
+<script>(function(){try{var t=localStorage.getItem("theme");if(!t&&window.matchMedia&&matchMedia("(prefers-color-scheme: dark)").matches)t="dark";if(t)document.documentElement.setAttribute("data-theme",t);}catch(e){}})();</script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Telecom &amp; Signal Intelligence · 2i AX Consulting</title>
+<meta name="description" content="RF, acoustic, vibration, and WiFi-channel signal intelligence: the full picture of 2i's telecom technology, verified end to end across a 9-stage receiver pipeline and real benchmarks, on one page.">
+<meta property="og:title" content="Telecom &amp; Signal Intelligence · 2i AX Consulting">
+<meta property="og:description" content="A 9-stage receiver pipeline, capability by stage, and real benchmarks. The medium changes; the math behind the judgment doesn't.">
+<meta property="og:type" content="article">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23111827'/%3E%3Ctext x='16' y='22' font-family='monospace' font-size='16' font-weight='700' fill='%23e08a2b' text-anchor='middle'%3E2i%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../styles.css?v=11">
+</head>
+<body>
+
+<header class="nav">
+  <div class="wrap nav__inner">
+    <a class="brand" href="index.html" aria-label="2i home">
+      <span class="brand__mark">2i</span>
+      <span class="brand__tag">AX Consulting</span>
+    </a>
+    <button class="nav__burger" type="button" aria-expanded="false" aria-controls="navLinks" aria-label="Open menu"><span></span><span></span><span></span></button>
+    <nav class="nav__links" id="navLinks" aria-label="Primary menu">
+      <a href="index.html#method">Method</a>
+      <a href="cases.html">Cases</a>
+      <a href="comms.html" aria-current="page">Telecom</a>
+      <a href="index.html#ideas">30 Ideas</a>
+      <a href="../papers.html">Papers</a>
+      <a href="about.html">About</a>
+      <a href="index.html#voucher">Voucher</a>
+      <button class="nav__theme" type="button" aria-label="Toggle theme" title="Toggle theme"><svg class="ic-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg><svg class="ic-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg></button>
+      <a class="nav__lang" href="/comms.html">KO</a>
+      <a class="nav__cta btn btn--signal" href="index.html#contact">Get in touch</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <!-- HERO: signal intelligence -->
+  <section class="section chero" id="top">
+    <div class="chero__wave" aria-hidden="true">
+      <svg viewBox="0 0 1200 220" preserveAspectRatio="none" focusable="false" aria-hidden="true">
+        <g class="chero__w1">
+          <path d="M0,110 C40,60 80,60 120,110 C160,160 200,160 240,110 C280,40 320,40 360,110 C400,180 440,180 480,110 C520,70 560,70 600,110 C640,150 680,150 720,110 C760,50 800,50 840,110 C880,170 920,170 960,110 C1000,80 1040,80 1080,110 C1120,140 1160,140 1200,110" fill="none" stroke="var(--signal)" stroke-width="2" opacity="0.5"/>
+          <path d="M1200,110 C1240,60 1280,60 1320,110 C1360,160 1400,160 1440,110 C1480,40 1520,40 1560,110 C1600,180 1640,180 1680,110 C1720,70 1760,70 1800,110 C1840,150 1880,150 1920,110 C1960,50 2000,50 2040,110 C2080,170 2120,170 2160,110 C2200,80 2240,80 2280,110 C2320,140 2360,140 2400,110" fill="none" stroke="var(--signal)" stroke-width="2" opacity="0.5"/>
+        </g>
+        <g class="chero__w2">
+          <path d="M0,110 C60,95 120,95 180,110 C240,125 300,125 360,110 C420,88 480,88 540,110 C600,132 660,132 720,110 C780,98 840,98 900,110 C960,122 1020,122 1080,110 C1140,102 1170,102 1200,110" fill="none" stroke="var(--ink-faint)" stroke-width="1.4" opacity="0.55"/>
+          <path d="M1200,110 C1260,95 1320,95 1380,110 C1440,125 1500,125 1560,110 C1620,88 1680,88 1740,110 C1800,132 1860,132 1920,110 C1980,98 2040,98 2100,110 C2160,122 2220,122 2280,110 C2340,102 2370,102 2400,110" fill="none" stroke="var(--ink-faint)" stroke-width="1.4" opacity="0.55"/>
+        </g>
+      </svg>
+    </div>
+    <div class="wrap">
+      <span class="eyebrow">Telecom · Signal Intelligence · RF SIGNAL INTELLIGENCE</span>
+      <h1 class="chero__h1">At every stage a radio wave passes through,<br><span class="u accent">measured technology</span> is already standing there.</h1>
+      <p class="chero__lede">Nine stages carry a radio wave from the antenna to a decision. 2i built this pipeline ourselves, and benchmarked every single stage on our own test rig. Every number below comes from public datasets or our own benchmarks, and once deployed on site we re-measure it on your data.</p>
+      <div class="chero__stats reveal stagger">
+        <div class="cstat"><span class="cstat__n">98.0<small>%</small></span><span class="cstat__l">Interference detection rate (fixed false-alarm rate, synthetic benchmark)</span></div>
+        <div class="cstat"><span class="cstat__n">95<small>%</small></span><span class="cstat__l">Audio ID top-1 accuracy (999-track benchmark)</span></div>
+        <div class="cstat"><span class="cstat__n">1.000</span><span class="cstat__l">WiFi occupancy-separation AUROC (real CSI)</span></div>
+        <div class="cstat"><span class="cstat__n">36<small>/36</small></span><span class="cstat__l">Radar waveform detections (no-traffic, fixed FAR)</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 9-STAGE PIPELINE FLOW -->
+  <section class="section section--alt pipe" id="pipeline">
+    <div class="wrap">
+      <div class="section__head reveal">
+        <span class="eyebrow">9-Stage Receiver · RECEIVER PIPELINE</span>
+        <h2>From antenna to decision, all nine stages are our own code.</h2>
+        <p>The receiver isn't a black box. We built every one of the nine stages that turn an RF signal into a digital decision in our own Rust engine, and verified seven of them with quantitative benchmarks. You don't have to click anything. Scroll down and each stage's technology lights up in the order the signal actually flows through it.</p>
+      </div>
+
+      <ol class="pipe__list">
+        <li class="pstage reveal" data-n="01">
+          <div class="pstage__card">
+            <span class="pstage__no">01</span>
+            <h3 class="pstage__t">Signal Capture <small>RF / ADC</small></h3>
+            <p class="pstage__d">We combine four real public datasets (RF fingerprinting, modulation, WiFi channel, drone) with a bank of seven physics-modeled synthetic signals. Dual verification against both real and synthetic data is the default here.</p>
+            <div class="pstage__chips"><span class="pchip">4 real datasets</span><span class="pchip">7 synthetic signal types</span></div>
+          </div>
+        </li>
+        <li class="pstage reveal" data-n="02">
+          <div class="pstage__card">
+            <span class="pstage__no">02</span>
+            <h3 class="pstage__t">Impairments &amp; Channel Model <small>IMPAIRMENTS</small></h3>
+            <p class="pstage__d">IQ imbalance, carrier frequency offset, multipath fading. We reproduce, with a physical model, the exact factors that break signals in the field, so performance is measured under rough real-world conditions instead of a clean lab bench.</p>
+            <div class="pstage__chips"><span class="pchip">IQ imbalance</span><span class="pchip">CFO</span><span class="pchip">Multipath</span></div>
+          </div>
+        </li>
+        <li class="pstage reveal" data-n="03">
+          <div class="pstage__card">
+            <span class="pstage__no">03</span>
+            <h3 class="pstage__t">Synchronization <small>SYNC</small></h3>
+            <p class="pstage__d">If you don't know where the frame starts, every calculation that follows collapses. We built standard preamble synchronization (Schmidl-Cox) ourselves to lock down timing and frequency.</p>
+            <div class="pstage__chips"><span class="pchip">Schmidl-Cox</span><span class="pchip">Timing &amp; frequency sync</span></div>
+          </div>
+        </li>
+        <li class="pstage reveal" data-n="04">
+          <div class="pstage__card">
+            <span class="pstage__no">04</span>
+            <h3 class="pstage__t">Channel Estimation &amp; Equalization <small>EQUALIZE</small></h3>
+            <p class="pstage__d">We invert the path the wave traveled through (the channel) to undo the distortion. We implemented LS/MMSE estimation and ZF/MMSE equalization, and verified both quantitatively.</p>
+            <div class="pstage__chips"><span class="pchip">LS/MMSE estimation</span><span class="pchip">ZF/MMSE equalization</span><span class="pchip badge-v">Quantitatively verified</span></div>
+          </div>
+        </li>
+        <li class="pstage reveal" data-n="05">
+          <div class="pstage__card">
+            <span class="pstage__no">05</span>
+            <h3 class="pstage__t">Channelizer <small>CHANNELIZE</small></h3>
+            <p class="pstage__d">Running full-precision processing across an entire wide band is more than edge hardware can carry. A polyphase filterbank splits the band so we only run precision processing on channels that are actually occupied. This is exactly the fix for the bottleneck we found in our edge-throughput benchmarks.</p>
+            <div class="pstage__chips"><span class="pchip">Polyphase M-channel</span><span class="pchip">Occupancy detection</span><span class="pchip badge-v">Quantitatively verified</span></div>
+          </div>
+        </li>
+        <li class="pstage reveal" data-n="06">
+          <div class="pstage__card pstage__card--hero">
+            <span class="pstage__no">06</span>
+            <h3 class="pstage__t">Signal Intelligence <small>SIGNAL INTELLIGENCE</small></h3>
+            <p class="pstage__d">This is the heart of the pipeline. One backbone decides what the signal is (modulation classification), whether it's normal (interference &amp; anomaly detection), and who sent it (device fingerprinting).</p>
+            <div class="pstage__kpis">
+              <div class="pkpi"><span class="pkpi__n">0.99</span><span class="pkpi__l">Modulation classification accuracy (4-class synthetic, 5dB)</span></div>
+              <div class="pkpi"><span class="pkpi__n">98.0%</span><span class="pkpi__l">Interference detection rate (fixed false-alarm rate)</span></div>
+              <div class="pkpi"><span class="pkpi__n">0.80</span><span class="pkpi__l">Device-fingerprinting AUROC (same-receiver benchmark)</span></div>
+            </div>
+            <div class="pstage__chips"><span class="pchip">Cumulant-based AMC</span><span class="pchip">CFAR interference detection</span><span class="pchip">RF fingerprint open-set</span><span class="pchip badge-v">Benchmark-verified</span></div>
+          </div>
+        </li>
+        <li class="pstage reveal" data-n="07">
+          <div class="pstage__card">
+            <span class="pstage__no">07</span>
+            <h3 class="pstage__t">Calibration &amp; Confidence <small>CALIBRATE</small></h3>
+            <p class="pstage__d">How much you can trust a decision matters as much as the decision itself. We built probability calibration (temperature scaling), distribution-free calibration (conformal prediction), and an open-set gate that rejects signals it's never seen before.</p>
+            <div class="pstage__chips"><span class="pchip">Conformal</span><span class="pchip">ECE calibration</span><span class="pchip">Open-set rejection</span><span class="pchip badge-v">Quantitatively verified</span></div>
+          </div>
+        </li>
+        <li class="pstage reveal" data-n="08">
+          <div class="pstage__card">
+            <span class="pstage__no">08</span>
+            <h3 class="pstage__t">Link Quality &amp; Mitigation <small>MITIGATE</small></h3>
+            <p class="pstage__d">It doesn't stop at detection, it acts. A BER measurement harness, narrowband-interference cancellation with an adaptive filter (NLMS-ALE), and anti-jam self-diagnosis all belong to this stage.</p>
+            <div class="pstage__chips"><span class="pchip">BER harness</span><span class="pchip">NLMS-ALE</span><span class="pchip">Anti-jam</span></div>
+          </div>
+        </li>
+        <li class="pstage reveal" data-n="09">
+          <div class="pstage__card">
+            <span class="pstage__no">09</span>
+            <h3 class="pstage__t">Application &amp; Control <small>APPLY</small></h3>
+            <p class="pstage__d">This is where a decision takes on an industry's face. We built a process-isolated application (dApp) structure and a control loop (RIC), measured latency too, and every application on the vertical-expansion map below starts right here.</p>
+            <div class="pstage__chips"><span class="pchip">dApp isolation structure</span><span class="pchip">RIC control</span><span class="pchip">Latency measured</span></div>
+          </div>
+        </li>
+      </ol>
+
+      <p class="auto-foot reveal">We verified seven of the nine stages with quantitative benchmarks (stages 1 and 2 are data/model foundations, so they carry no separate metric of their own). The lab notes behind every number, method and limitations included, are public on our <a href="../papers.html">papers &amp; experiments board</a>.</p>
+    </div>
+  </section>
+
+  <!-- CAPABILITY: RF SIGNAL INTELLIGENCE -->
+  <section class="section" id="capability">
+    <div class="wrap">
+      <div class="section__head reveal">
+        <span class="eyebrow">Capability Deep-Dive · Axis 3, Signal Intelligence Engine</span>
+        <h2>The medium changes. The math behind the judgment doesn't.</h2>
+        <p>Whether it's an electromagnetic wave, sound, or the faint flicker of a WiFi channel, the question that keeps coming up on site always narrows down to one thing: is this signal different from what we already know, and how much can we trust that judgment? Three proven pieces of math answer that question: open-set fingerprint rejection, fixed-false-alarm-rate anomaly detection, and correlation-based fingerprint matching. We keep exactly these three and port them across media, from RF to audio, to vibration, to WiFi channel state. So we're less a company that invents a new algorithm for every industry, and more a company that manages how far one proven decision logic can reach across media.</p>
+        <p>RF is the medium where that logic accumulated first, and longest. We benchmarked the engine behind Case 06 (factory wireless interference diagnosis) on our own test suite. Instead of accuracy against a closed list, we measure head-on <b>the ability to reject a signal source it has never seen (open-set)</b>, and it runs as-is on edge hardware and closed networks in the field, with no GPU.</p>
+      </div>
+
+      <div class="rf-grid reveal stagger">
+        <div class="rf-cell rf-cell--lead">
+          <span class="rf-metric">0.945</span>
+          <span class="rf-unit">AUROC</span>
+          <span class="rf-name">Unknown-source open-set identification (same-session, multi-packet fusion)</span>
+          <span class="rf-desc">This is our own benchmark result under a classical fusion (circular) condition that pools multiple packets from the same session before deciding. At a scale of 20 signal sources, we recorded a 100% rejection rate for unknown sources, but this is a research condition, not a commercial-product condition.</span>
+          <span class="chip chip--v">Own benchmark · WiSig, same-session K=50, circular</span>
+        </div>
+        <div class="rf-cell">
+          <span class="rf-name">Real-time Rust engine</span>
+          <span class="rf-desc">A native C-ABI implementation that runs on the edge with no GPU. On-prem, closed-network deployment is the default.</span>
+        </div>
+        <div class="rf-cell">
+          <span class="rf-name">Real-time interference &amp; anomaly detection</span>
+          <span class="rf-desc">CFAR detection plus a learned classifier catches anomalous signals while holding a specified false-alarm rate fixed. Together with robust-hash fingerprint matching, this is the core engine behind Case 06's wireless interference diagnosis.</span>
+        </div>
+        <div class="rf-cell">
+          <span class="rf-name">Automatic modulation classification (AMC)</span>
+          <span class="rf-desc">Classical, training-free classification based on cumulants. 0.99 accuracy on a synthetic 4-class benchmark (at 5dB).</span>
+        </div>
+        <div class="rf-cell">
+          <span class="rf-name">9-stage receiver pipeline</span>
+          <span class="rf-desc">We verified 7 of the 9 stages of physics-based signal processing with quantitative benchmarks.</span>
+        </div>
+        <div class="rf-cell rf-cell--lead">
+          <span class="rf-metric">0.9994</span>
+          <span class="rf-unit">AUROC</span>
+          <span class="rf-name">Learned fingerprinting backbone (ECAPA-TDNN, same-session multi-packet fusion)</span>
+          <span class="rf-desc">Our own benchmark under the same-session, multi-packet fusion condition, which outperforms classical fusion (0.945). This condition is likewise a research condition, not a commercial-product condition, and single-packet embedding performance on its own still has room to improve.</span>
+          <span class="chip chip--v">Own benchmark · WiSig, same-session, research-verified</span>
+        </div>
+        <div class="rf-cell rf-cell--lead">
+          <span class="rf-metric">0.22 / 0.43</span>
+          <span class="rf-unit">TAR@FAR 1e-3 (K=50 / K=100)</span>
+          <span class="rf-name">Strict-condition (cross-day · 1:N attacker) benchmark &middot; real product conditions</span>
+          <span class="rf-desc">Re-measured under a cross-day, 1:N-attacker, held-out protocol closer to actual product conditions, TAR@FAR at 1e-3 drops to 0.22 at K=50 and 0.43 at K=100. Single-packet (K=1) AUROC is around 0.70. The open-set ability to &#x27;reject a signal source it has never seen&#x27; is real, but product-grade cross-receiver, cross-day authentication is still an open problem under verification, and we don't claim it's solved.</span>
+          <span class="chip chip--v">Own benchmark · WiSig, cross-day · 1:N-attacker · held-out</span>
+        </div>
+        <div class="rf-cell rf-cell--pending">
+          <span class="rf-name">Next up</span>
+          <span class="rf-desc">Jamming / adversarial (anti-jam) robustness: experiments in progress.</span>
+          <!-- TODO(update-after-experiments): anti-jam 강건성 곡선 / 데이터-스케일 결과 -->
+        </div>
+      </div>
+
+      <p class="auto-foot reveal">Honestly: measuring the ability to reject a signal it has never seen is harder than accuracy against a closed list, and we measured that metric head-on with our own benchmark. But the 0.945 and 0.9994 figures above are under a same-session, multi-packet fusion condition, and under real product conditions (cross-day, 1:N-attacker), TAR@FAR at 1e-3 drops to a range of 0.22 to 0.43. Edge deployment that runs as-is in closed networks with no GPU is a strength that doesn't change, but we're telling you plainly that product-grade authentication performance is still under verification.</p>
+    </div>
+  </section>
+
+  <!-- NEWLY VALIDATED CAPABILITIES: AUDIO / VIBRATION / WIFI-CSI / DRONE -->
+  <section class="section" id="new-capabilities">
+    <div class="wrap">
+      <div class="section__head reveal">
+        <span class="eyebrow">Extended Verification · The Same Method, Ported to Other Media</span>
+        <h2>We ported the same fingerprinting-and-rejection method to audio, vibration, WiFi, and drone signals, and benchmarked it.</h2>
+        <p>The skeleton of the judgment stays the same even when the medium changes. All four items below are benchmarked on public data, and none is a finished, certified product. We offer them in order: free diagnosis, then a paid pilot or PoC, then module supply. We label items at different maturity levels exactly as they are.</p>
+      </div>
+
+      <div class="rf-grid reveal stagger">
+        <div class="rf-cell rf-cell--lead">
+          <span class="rf-metric">95%</span>
+          <span class="rf-unit">Top-1 · 10-second clip</span>
+          <span class="rf-name">Audio content identification (Content-ID)</span>
+          <span class="rf-desc">Using peak-pair fingerprint matching, we recorded 95% Top-1 accuracy on 10-second clips of real music (999 GTZAN tracks). Accuracy holds at 91.5% under 0dB noise and 72.5% at -5dB, and stays flat across the full MP3 32-128kbps range. It's the same family of approach used by ACRCloud and Audible Magic, and it's the item closest to commercial-grade in this round of benchmarking. We offer it as a paid pilot in the form of a licensable engine/API.</span>
+          <span class="chip chip--v">Public-data benchmark · 999 GTZAN tracks</span>
+        </div>
+        <div class="rf-cell">
+          <span class="rf-name">Equipment acoustic/vibration predictive maintenance</span>
+          <span class="rf-desc">Verified on real bearing-fault data (CWRU). 85% accuracy under 0dB noise (versus a 52% simple baseline) shows it holds up under noise. We start with a PoC stage that re-measures on your own equipment data.</span>
+        </div>
+        <div class="rf-cell">
+          <span class="rf-metric">0.99</span>
+          <span class="rf-unit">AUROC</span>
+          <span class="rf-name">WiFi-CSI occupancy &amp; fall detection</span>
+          <span class="rf-desc">0.99 AUROC for fall versus non-fall classification, verified on real CSI data (UT-HAR). It tells occupancy and falls apart from wireless signals alone, with no camera, and clinical and field validation is still ahead.</span>
+          <span class="chip chip--v">Public-data benchmark · UT-HAR</span>
+        </div>
+        <div class="rf-cell">
+          <span class="rf-name">Drone RF open-set detection</span>
+          <span class="rf-desc">On public data (DroneRF, CC-BY-4.0) under a low-fusion (K=1) condition, the classical method beat deep learning at rejecting unknown drones (0.42 versus 0.07). The absolute numbers are still low, so we label this a research stage.</span>
+        </div>
+      </div>
+
+      <p class="auto-foot reveal">The honest order: audio Content-ID is ready for a pilot right away via license or API. Predictive maintenance and WiFi-CSI are verified on public data but need a PoC that re-measures on your own data, and drone RF is still at the research stage. We don't claim any of the four is a finished, certified product. We start with a free diagnostic consultation to confirm fit.</p>
+    </div>
+  </section>
+
+  <!-- APPLICATIONS: VERTICAL EXPANSION MAP -->
+  <section class="section" id="applications">
+    <div class="wrap">
+      <div class="section__head reveal">
+        <span class="eyebrow">Applications · Vertical Expansion Map</span>
+        <h2>One decision logic, ten different faces across industries.</h2>
+        <p>The decision logic we benchmarked above wears a different face in every industry. Device fingerprinting becomes unregistered-equipment detection on a factory floor; audio fingerprinting becomes copyright monitoring for a broadcaster; the same anomaly-detection math becomes an early-warning system at a substation. The maturity tags don't oversell: we draw a clear line between what we've already measured and what's still just an idea.</p>
+      </div>
+
+      <div class="mlegend reveal">
+        <span class="mtag mtag--demo">Proven · capability we've already measured</span>
+        <span class="mtag mtag--extend">Extension · a natural extension, needs verification on your data</span>
+        <span class="mtag mtag--research">Research · method exists, not yet verified</span>
+        <span class="mtag mtag--concept">Concept · idea stage, experiments not started</span>
+      </div>
+
+      <div class="section__head reveal" style="margin-top:2.4rem;margin-bottom:1rem;max-width:none">
+        <span class="eyebrow">Best Fit · TOP 6</span>
+      </div>
+      <div class="topfit-grid reveal stagger">
+        <div class="topfit"><span class="topfit__no">01</span><span class="topfit__t">Audio content ID (media &amp; broadcast)</span><span class="mtag mtag--demo">Proven</span></div>
+        <div class="topfit"><span class="topfit__no">02</span><span class="topfit__t">Rotating-equipment predictive maintenance (manufacturing)</span><span class="mtag mtag--demo">Proven</span></div>
+        <div class="topfit"><span class="topfit__no">03</span><span class="topfit__t">Occupancy detection &rarr; energy optimization (smart building)</span><span class="mtag mtag--extend">Extension</span></div>
+        <div class="topfit"><span class="topfit__no">04</span><span class="topfit__t">Unregistered-device detection (manufacturing OT network)</span><span class="mtag mtag--extend">Extension</span></div>
+        <div class="topfit"><span class="topfit__no">05</span><span class="topfit__t">Drone RF detection &amp; identification (security &amp; defense)</span><span class="mtag mtag--research">Research</span></div>
+        <div class="topfit"><span class="topfit__no">06</span><span class="topfit__t">Substation partial-discharge early warning (energy)</span><span class="mtag mtag--concept">Concept</span></div>
+      </div>
+
+      <div class="vert-groups reveal stagger">
+        <div class="vgroup">
+          <div class="vgroup__h">Manufacturing</div>
+          <div class="vitems">
+            <div class="vitem"><div class="vitem__body"><span class="vitem__t">Factory wireless interference-source detection &amp; localization</span><span class="vitem__d">Catching the fact that an interference source exists is already proven in Case 06. Pinpointing its exact location is the next extension.</span></div><span class="mtag mtag--extend">Extension</span></div>
+            <div class="vitem"><div class="vitem__body"><span class="vitem__t">Rotating-equipment predictive maintenance (acoustic/vibration)</span><span class="vitem__d">Catches early bearing and pump anomalies even amid noise and vibration. We start with a free diagnosis, then a pilot that re-measures on your own equipment data.</span></div><span class="mtag mtag--demo">Proven</span></div>
+            <div class="vitem"><div class="vitem__body"><span class="vitem__t">Unregistered-device detection on the factory OT network</span><span class="vitem__d">Finds devices quietly connected to the line, using an RF fingerprint.</span></div><span class="mtag mtag--extend">Extension</span></div>
+          </div>
+        </div>
+
+        <div class="vgroup">
+          <div class="vgroup__h">Healthcare</div>
+          <div class="vitems">
+            <div class="vitem"><div class="vitem__body"><span class="vitem__t">Hospital wireless (patient monitor / IoMT) interference &amp; anomaly detection</span><span class="vitem__d">Monitors wireless interference near patient monitors and infusion pumps without stopping the ward.</span></div><span class="mtag mtag--extend">Extension</span></div>
+            <div class="vitem"><div class="vitem__body"><span class="vitem__t">Contactless occupancy &amp; fall monitoring (inpatient rooms, care facilities)</span><span class="vitem__d">Detects falls with no wearable. Verified on public data, with hospital field validation as the next step.</span></div><span class="mtag mtag--extend">Extension</span></div>
+            <div class="vitem"><div class="vitem__body"><span class="vitem__t">Contactless vital-sign (respiration/heart rate) radar sensing</span><span class="vitem__d">Still at the research stage. It has to clear two separate gates: clinical validation and medical-device approval.</span></div><span class="mtag mtag--research">Research</span></div>
+          </div>
+        </div>
+
+        <div class="vgroup">
+          <div class="vgroup__h">Smart Building &amp; Home</div>
+          <div class="vitems">
+            <div class="vitem"><div class="vitem__body"><span class="vitem__t">Contactless occupancy detection &rarr; HVAC/lighting energy optimization</span><span class="vitem__d">Detects occupancy with an existing WiFi router, no new sensor hardware, to cut HVAC and lighting waste. This tech family is already commercialized abroad at tens of millions of households, and we reproduced the same principle at 0.99 AUROC on public data (UT-HAR).</span></div><span class="mtag mtag--extend">Extension</span></div>
+            <div class="vitem"><div class="vitem__body"><span class="vitem__t">Fall detection for elderly single-person households</span><span class="vitem__d">Detects and alerts on falls with no camera in the home.</span></div><span class="mtag mtag--extend">Extension</span></div>
+            <div class="vitem"><div class="vitem__body"><span class="vitem__t">In-office illicit wireless device sweep (corporate security)</span><span class="vitem__d">Finds transmitters hidden in a conference room.</span></div><span class="mtag mtag--research">Research</span></div>
+          </div>
+        </div>
+
+        <div class="vgroup">
+          <div class="vgroup__h">Energy &amp; Utilities</div>
+          <div class="vitems">
+            <div class="vitem"><div class="vitem__body"><span class="vitem__t">Substation/transformer partial-discharge early warning</span><span class="vitem__d">Flags insulation-degradation signs weeks ahead, with no power outage. The detection method itself is a decades-proven industry standard; porting our fixed-false-alarm-rate detector to this signal is an experiment we haven't started yet.</span></div><span class="mtag mtag--concept">Concept</span></div>
+            <div class="vitem"><div class="vitem__body"><span class="vitem__t">Smart-grid metering-network anomaly &amp; tampering detection</span><span class="vitem__d">Detects tampering or jamming attempts on a meter's wireless network.</span></div><span class="mtag mtag--research">Research</span></div>
+          </div>
+        </div>
+
+        <div class="vgroup">
+          <div class="vgroup__h">Logistics &amp; Cold Chain</div>
+          <div class="vitems">
+            <div class="vitem"><div class="vitem__body"><span class="vitem__t">RF/BLE tag authenticity verification</span><span class="vitem__d">GPS tells you where a tag is, but not whether it's genuine. We verify the tag's own authenticity with an RF fingerprint.</span></div><span class="mtag mtag--concept">Concept</span></div>
+            <div class="vitem"><div class="vitem__body"><span class="vitem__t">Unregistered-beacon detection in warehouses &amp; yards</span><span class="vitem__d">Finds beacons the inventory system doesn't track, to cut inventory shrinkage.</span></div><span class="mtag mtag--concept">Concept</span></div>
+          </div>
+        </div>
+
+        <div class="vgroup">
+          <div class="vgroup__h">Security &amp; Defense (general capability)</div>
+          <div class="vitems">
+            <div class="vitem"><div class="vitem__body"><span class="vitem__t">Unknown-source identification &amp; spectrum situational awareness</span><span class="vitem__d">Extends the open-set identification engine into a general-purpose capability for spectrum monitoring.</span></div><span class="mtag mtag--extend">Extension</span></div>
+            <div class="vitem"><div class="vitem__body"><span class="vitem__t">Unauthorized drone detection &amp; identification</span><span class="vitem__d">Still at the research stage, though a commercial anti-drone market already exists.</span></div><span class="mtag mtag--research">Research</span></div>
+            <div class="vitem"><div class="vitem__body"><span class="vitem__t">In-facility illicit transmitter sweep</span><span class="vitem__d">Finds transmitters hidden inside a facility.</span></div><span class="mtag mtag--research">Research</span></div>
+          </div>
+        </div>
+
+        <div class="vgroup">
+          <div class="vgroup__h">Telecom &amp; Spectrum</div>
+          <div class="vitems">
+            <div class="vitem"><div class="vitem__body"><span class="vitem__t">Interference-detection SDK for SDR/RF vendors (including O-RAN &amp; private-5G slice isolation)</span><span class="vitem__d">An interference-detection library that sits on top of hardware vendor products. We benchmarked a 98.0% detection rate and 5.3% false-alarm rate on synthetic data, on our own test suite.</span></div><span class="mtag mtag--demo">Proven</span></div>
+            <div class="vitem"><div class="vitem__body"><span class="vitem__t">Coexistence monitoring for shared spectrum such as CBRS</span><span class="vitem__d">Monitors interference on shared frequencies within a set false-alarm rate.</span></div><span class="mtag mtag--extend">Extension</span></div>
+          </div>
+        </div>
+
+        <div class="vgroup">
+          <div class="vgroup__h">Media &amp; Broadcast (the item we can sell first, right now)</div>
+          <div class="vitems">
+            <div class="vitem"><div class="vitem__body"><span class="vitem__t">Audio content ID &amp; broadcast copyright monitoring</span><span class="vitem__d">An audio identification API that holds up under noise, compression, and speed changes. The 95% clean accuracy and full-range compression/noise numbers benchmarked above are exactly the evidence behind this item, and it's the one on this map ready for a paid pilot first.</span></div><span class="mtag mtag--demo">Proven</span></div>
+          </div>
+        </div>
+
+        <div class="vgroup">
+          <div class="vgroup__h">Agriculture</div>
+          <div class="vitems">
+            <div class="vitem"><div class="vitem__body"><span class="vitem__t">Livestock (pig barn) respiratory-disease early acoustic detection</span><span class="vitem__d">A single microphone in a pig barn can detect respiratory disease before symptoms appear. This is a cross-domain bet at some distance from our core RF stack, and it's at the idea stage: only the method is portable so far.</span></div><span class="mtag mtag--concept">Concept</span></div>
+          </div>
+        </div>
+
+        <div class="vgroup">
+          <div class="vgroup__h">Retail</div>
+          <div class="vitems">
+            <div class="vitem"><div class="vitem__body"><span class="vitem__t">In-store WiFi-CSI foot-traffic &amp; congestion analysis (no camera)</span><span class="vitem__d">Measures customer foot traffic and congestion using the store's existing WiFi, with no camera.</span></div><span class="mtag mtag--concept">Concept</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- TODO(update-after-experiments): 버티컬별 파일럿 진행 시 태그를 실증으로 갱신 / 정량 지표 확보 시 목표 수치 대체 -->
+      <p class="auto-foot reveal">This map is an honest roadmap, not a sales promise. What we sell isn't a finished, certified product. It's an order of operations. We diagnose for free first; once fit is confirmed, we move into a paid pilot or PoC; and once verification is done, we supply it as a licensable module. Some items, like media &amp; broadcast's content ID, are ready for a pilot right now. Others, like substation partial discharge, haven't even started experiments yet. Not hiding that gap is how we work.</p>
+    </div>
+  </section>
+
+  <!-- OEM: EQUIPMENT-VENDOR EMBED (SUPPLY-SIDE CHANNEL) -->
+  <section class="section" id="oem">
+    <div class="wrap">
+      <div class="section__head reveal">
+        <span class="eyebrow">A New Sales Channel · Embedding in Equipment Vendors</span>
+        <h2>This time we embed inside the equipment vendor, not the end user.</h2>
+        <p>Everything covered so far was a picture of us selling directly to companies. But the principle that the medium changes while the math behind the judgment doesn't holds just as well when we change who we sell to. A manufacturer of routers, test equipment, or industrial wireless gear licenses our engine, embeds it in their own box, and builds a premium product line around that feature to sell at a higher price. We never meet the end user directly. We supply the manufacturer in the form of a module and a license. It isn't an unfamiliar picture. Similar detection features are already shipping commercially on carrier CPE abroad, at tens of millions of households, and test-equipment companies already sell interference detection as a paid option. We're not opening a new market; we're arriving late into one that's already proven.</p>
+      </div>
+
+      <div class="vert-groups reveal stagger">
+        <div class="vgroup">
+          <div class="vgroup__h">3 Embed Targets</div>
+          <div class="vitems">
+            <div class="vitem"><div class="vitem__body"><span class="vitem__t">Occupancy &amp; fall-detection embed module for WiFi router/CPE manufacturers</span><span class="vitem__d">A module that upgrades a router into an occupancy, motion, and fall-detection device with no new sensor hardware. This feature family is already commercially deployed on carrier CPE abroad, at tens of millions of households, and we reproduced the same principle at 0.99 AUROC for fall versus non-fall classification on public data (UT-HAR). Manufacturers add this module to build a premium occupancy/fall-detection tier and sell it at a premium price.</span></div><span class="mtag mtag--extend">Extension</span></div>
+            <div class="vitem"><div class="vitem__body"><span class="vitem__t">Interference-hunting software option for RF test &amp; spectrum equipment</span><span class="vitem__d">A software option that sits on top of test equipment vendors already have. It's the same family as the interference detection and localization features test-equipment companies already sell as a paid option, and the interference-detection SDK introduced earlier under telecom &amp; spectrum is exactly what this module is. It catches interference while holding a specified false-alarm rate fixed (CFAR), and pinpoints its location too.</span></div><span class="mtag mtag--demo">Proven</span></div>
+            <div class="vitem"><div class="vitem__body"><span class="vitem__t">Self-diagnostic interference-protection module for private-5G &amp; industrial wireless gear</span><span class="vitem__d">A module that lets the equipment itself detect and avoid local interference, with no cloud lookup. We port the same CFAR and learned detection engine into private-5G radios and industrial wireless gateways, building a premium line with self-defending spectrum features that need no cloud connection.</span></div><span class="mtag mtag--extend">Extension</span></div>
+          </div>
+        </div>
+      </div>
+
+      <p class="auto-foot reveal">All three follow the same sales model: the manufacturer embeds our module and upsells a premium product tier, and 2i earns revenue from that embed contract and license. We're plain about it: these are supply-ready modules, not finished, certified products. Occupancy &amp; fall detection is an extension stage verified on public data; interference detection &amp; localization is a proven stage on the same core engine as Case 06.</p>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="section section--alt" id="cta">
+    <div class="wrap">
+      <div class="section__head reveal">
+        <span class="eyebrow">Next Step</span>
+        <h2>We'll re-measure it with the signal from your own site.</h2>
+        <p>Every number above is a benchmark on public data or our own test suite. Our approach is an order of operations, not a promise. We confirm fit with a free diagnosis, re-measure on your data in a paid pilot, and supply as a module only what's been verified.</p>
+      </div>
+      <div class="hero__cta reveal">
+        <a class="btn btn--signal" href="index.html#contact">30-min diagnostic call <span class="arrow">&rarr;</span></a>
+        <a class="btn" href="../papers.html">See all lab notes</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="foot">
+  <div class="wrap foot__inner">
+    <div>
+      <div class="brand"><span class="brand__mark">2i</span><span class="brand__tag">AX Consulting</span></div>
+      <div class="foot__mono" style="margin-top:0.6rem">AI transformation for mid-market manufacturing &amp; distribution</div>
+      <div class="foot__legal">2i &middot; Principal Geumji Han &middot; Contact <a href="mailto:contact@2icorp.site">contact@2icorp.site</a></div>
+    </div>
+    <nav class="foot__links" aria-label="Footer menu">
+      <a href="about.html">About</a>
+      <a href="index.html#method">Method</a>
+      <a href="comms.html">Telecom</a>
+      <a href="../papers.html">Papers</a>
+      <a href="index.html#voucher">Voucher</a>
+      <a href="privacy.html">Privacy</a>
+      <a href="https://github.com/2icorp" target="_blank" rel="noopener">GitHub</a>
+      <a href="/comms.html">한국어</a>
+    </nav>
+  </div>
+</footer>
+
+<script src="../main.js"></script>
+</body>
+</html>
