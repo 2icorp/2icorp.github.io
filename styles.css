@@ -985,3 +985,61 @@ section[id] { scroll-margin-top: 80px; }
 
 /* legend chips carry full sentences (esp. EN) - let them wrap */
 .mlegend .mtag { white-space: normal; line-height: 1.45; }
+
+/* ============ NAV v2: pages-only + current page marker ============ */
+.brand { white-space: nowrap; }
+.brand__tag { white-space: nowrap; }
+.nav__links a[aria-current="page"] { color: var(--ink); }
+@media (min-width: 1001px) {
+  .nav__links a[aria-current="page"] { position: relative; }
+  .nav__links a[aria-current="page"]::after {
+    content: ""; position: absolute; left: 0; right: 0; bottom: -6px;
+    height: 2px; background: var(--signal); border-radius: 1px;
+  }
+}
+
+/* ============ HERO 3D SIGNAL SURFACE ============ */
+.hero { overflow: hidden; }
+.hero > .wrap { position: relative; z-index: 1; }
+.hero3d {
+  position: absolute; inset: 0; z-index: 0;
+  width: 100%; height: 100%;
+  pointer-events: none;
+  opacity: 0.62;
+  -webkit-mask-image: linear-gradient(100deg, transparent 4%, #000 46%);
+  mask-image: linear-gradient(100deg, transparent 4%, #000 46%);
+}
+:root[data-theme="dark"] .hero3d { opacity: 0.85; }
+@media (max-width: 900px) {
+  .hero3d {
+    opacity: 0.3;
+    -webkit-mask-image: linear-gradient(180deg, transparent 18%, #000 70%);
+    mask-image: linear-gradient(180deg, transparent 18%, #000 70%);
+  }
+  :root[data-theme="dark"] .hero3d { opacity: 0.5; }
+}
+
+/* ============ SECTION QUICK NAV (on-this-page strip) ============ */
+.secnav-band { border-block: 1px solid var(--line-soft); background: var(--panel); }
+.secnav {
+  display: flex; align-items: center; gap: 0.4rem;
+  overflow-x: auto; -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  padding-block: 0.65rem;
+}
+.secnav::-webkit-scrollbar { display: none; }
+.secnav__label {
+  font-family: var(--mono); font-size: var(--text-xs); letter-spacing: 0.12em;
+  text-transform: uppercase; color: var(--ink-faint); white-space: nowrap;
+  padding-right: 0.5rem; border-right: 1px solid var(--line);
+  margin-right: 0.35rem; flex: none;
+}
+.secnav a {
+  font-family: var(--mono); font-size: var(--text-sm); color: var(--ink-soft);
+  white-space: nowrap; padding: 0.35rem 0.8rem; border-radius: 999px;
+  border: 1px solid transparent;
+  transition: color var(--dur) var(--ease), border-color var(--dur) var(--ease), background var(--dur) var(--ease);
+  flex: none;
+}
+.secnav a:hover { color: var(--ink); border-color: var(--line); background: var(--paper); }
+.secnav a:focus-visible { outline: 2px solid var(--signal); outline-offset: 2px; }

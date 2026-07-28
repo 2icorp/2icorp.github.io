@@ -65,7 +65,7 @@ def head(title, desc, rel, extra=""):
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="{rel}styles.css?v=11">{extra}
+<link rel="stylesheet" href="{rel}styles.css?v=12">{extra}
 </head>
 <body>
 
@@ -77,14 +77,10 @@ def head(title, desc, rel, extra=""):
     </a>
     <button class="nav__burger" type="button" aria-expanded="false" aria-controls="navLinks" aria-label="메뉴 열기"><span></span><span></span><span></span></button>
     <nav class="nav__links" id="navLinks" aria-label="주요 메뉴">
-      <a href="{rel}index.html#method">방식</a>
       <a href="{rel}cases.html">사례</a>
-      <a href="{rel}comms.html">통신</a>
-      <a href="{rel}index.html#ideas">아이디어 30</a>
-      <a href="{rel}index.html#studio">영상</a>
-      <a href="{rel}papers.html">논문·실험</a>
+      <a href="{rel}comms.html">통신 기술</a>
+      <a href="{rel}papers.html" aria-current="page">논문·실험</a>
       <a href="{rel}about.html">회사소개</a>
-      <a href="{rel}index.html#voucher">정부 바우처</a>
       <button class="nav__theme" type="button" aria-label="테마 전환" title="테마 전환"><svg class="ic-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg><svg class="ic-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg></button>
       <a class="nav__lang" href="{rel}en/">EN</a>
       <a class="nav__cta btn btn--signal" href="{rel}index.html#contact">상담 신청</a>
