@@ -1,4 +1,4 @@
-// 2i landing — progressive enhancement, no deps. Compositor-only motion, reduced-motion safe.
+// 2i landing - progressive enhancement, no deps. Compositor-only motion, reduced-motion safe.
 (function () {
   "use strict";
   var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -147,7 +147,48 @@
   }
 })();
 
-// Papers board — category filter (guarded; only runs on papers.html)
+// Mobile nav burger (guarded; runs on every page with the burger button)
+(function () {
+  "use strict";
+  var nav = document.querySelector(".nav");
+  var burger = document.querySelector(".nav__burger");
+  if (!nav || !burger) return;
+  function close() {
+    nav.classList.remove("nav--open");
+    burger.setAttribute("aria-expanded", "false");
+    burger.setAttribute("aria-label", "메뉴 열기");
+  }
+  burger.addEventListener("click", function () {
+    var open = nav.classList.toggle("nav--open");
+    burger.setAttribute("aria-expanded", open ? "true" : "false");
+    burger.setAttribute("aria-label", open ? "메뉴 닫기" : "메뉴 열기");
+  });
+  nav.querySelectorAll(".nav__links a").forEach(function (a) {
+    a.addEventListener("click", close);
+  });
+  document.addEventListener("keydown", function (e) {
+    if (e.key === "Escape" && nav.classList.contains("nav--open")) { close(); burger.focus(); }
+  });
+})();
+
+// AX ideas board - category filter (guarded; only runs on index.html)
+(function () {
+  "use strict";
+  var chips = document.querySelectorAll(".ifilter");
+  if (!chips.length) return;
+  var items = document.querySelectorAll(".idea");
+  chips.forEach(function (btn) {
+    btn.addEventListener("click", function () {
+      var cat = btn.getAttribute("data-icat");
+      chips.forEach(function (b) { b.classList.toggle("is-on", b === btn); });
+      items.forEach(function (it) {
+        it.classList.toggle("is-hidden", cat !== "all" && it.getAttribute("data-icat") !== cat);
+      });
+    });
+  });
+})();
+
+// Papers board - category filter (guarded; only runs on papers.html)
 (function () {
   "use strict";
   var filters = document.querySelectorAll(".pfilter");
