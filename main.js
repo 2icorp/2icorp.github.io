@@ -247,3 +247,22 @@
   }, { threshold: 0.5, rootMargin: "0px 0px -18% 0px" });
   stages.forEach(function (s) { io.observe(s); });
 })();
+
+// Theme toggle (persists to localStorage; head stamp script applies before paint)
+(function () {
+  "use strict";
+  var btns = document.querySelectorAll(".nav__theme");
+  if (!btns.length) return;
+  function current() {
+    var t = document.documentElement.getAttribute("data-theme");
+    if (t) return t;
+    return (window.matchMedia && matchMedia("(prefers-color-scheme: dark)").matches) ? "dark" : "light";
+  }
+  function set(t) {
+    document.documentElement.setAttribute("data-theme", t);
+    try { localStorage.setItem("theme", t); } catch (e) {}
+  }
+  btns.forEach(function (b) {
+    b.addEventListener("click", function () { set(current() === "dark" ? "light" : "dark"); });
+  });
+})();
