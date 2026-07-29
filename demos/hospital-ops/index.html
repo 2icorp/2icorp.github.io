@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>2i Case 14 · 병원 운영 폐루프 데모</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="hdr">
+  <div class="hdr-left">
+    <span class="brand">2i</span>
+    <div>
+      <h1>병원 운영 폐루프 에이전트 <span class="sub">Case 14 라이브 리플레이</span></h1>
+      <p class="tagline">관찰 → 패치 → 실행 → 검증 → 롤백. 에이전트가 같은 병원 모델을 반복 수정하며 5개 운영 게이트를 실측으로 통과시키는 과정 전체를 재생합니다.</p>
+    </div>
+  </div>
+  <div class="hdr-right">
+    <div class="stat"><span class="stat-label">기준 게이트 점수</span><span class="stat-val" id="stat-base">-</span></div>
+    <div class="arrow">→</div>
+    <div class="stat"><span class="stat-label">최종</span><span class="stat-val good" id="stat-final">-</span></div>
+    <div class="pill" id="stat-status">-</div>
+  </div>
+</header>
+
+<main class="layout">
+  <section class="floor-panel">
+    <div class="panel-head">
+      <h2 id="floor-title">평면도 · 혼잡 노출</h2>
+      <div class="legend">
+        <span class="legend-item"><i class="sw" style="background:rgb(46,160,67)"></i>여유</span>
+        <span class="legend-item"><i class="sw" style="background:rgb(232,168,46)"></i>혼잡</span>
+        <span class="legend-item"><i class="sw" style="background:rgb(206,66,52)"></i>과밀</span>
+      </div>
+    </div>
+    <div id="floor-svg" class="floor-svg" aria-live="polite"></div>
+  </section>
+
+  <aside class="side">
+    <section class="gates-panel">
+      <div class="panel-head"><h2>운영 게이트 (실측)</h2></div>
+      <div id="gates" class="gates"></div>
+    </section>
+    <section class="patch-panel">
+      <div class="panel-head"><h2>이번 반복의 패치</h2><span id="patch-status" class="patch-status"></span></div>
+      <div id="patch" class="patch-body"></div>
+    </section>
+  </aside>
+</main>
+
+<section class="timeline-panel">
+  <div class="panel-head">
+    <h2>반복 타임라인</h2>
+    <div class="controls">
+      <button id="btn-prev" aria-label="이전 반복">◀</button>
+      <button id="btn-play">▶ 재생</button>
+      <button id="btn-next" aria-label="다음 반복">▶</button>
+    </div>
+  </div>
+  <div id="spark" class="spark"></div>
+  <div id="steps" class="steps"></div>
+</section>
+
+<footer class="ftr">
+  <p id="disclaimer"></p>
+  <p>패치 원장·체크포인트·수렴 수치는 전부 코드가 시뮬레이션 실행에서 수확한 값입니다. 모델 자기보고 없음.</p>
+</footer>
+
+<script src="data/run_data.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

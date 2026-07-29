@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>2i Case 12 · 건축 blockout 폐루프 데모</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="hdr">
+  <div class="hdr-left">
+    <span class="brand">2i</span>
+    <div>
+      <h1>건축 blockout 폐루프 에이전트 <span class="sub">Case 12 라이브 리플레이</span></h1>
+      <p class="tagline">요구 스펙에서 뽑은 급조 초안을, 에이전트가 평면을 보고 실면적·일조·피난·간섭·모듈 게이트를 하나씩 실측으로 통과시키며 고쳐 나갑니다. 전체 재생성 없이 표적 패치만 사용합니다.</p>
+    </div>
+  </div>
+  <div class="hdr-right">
+    <div class="stat"><span class="stat-label">기준 게이트 점수</span><span class="stat-val" id="stat-base">-</span></div>
+    <div class="arrow">→</div>
+    <div class="stat"><span class="stat-label">최종</span><span class="stat-val good" id="stat-final">-</span></div>
+    <div class="pill" id="stat-status">-</div>
+  </div>
+</header>
+
+<main class="layout">
+  <section class="floor-panel">
+    <div class="panel-head">
+      <h2 id="plan-title">평면도</h2>
+      <div class="legend">
+        <span class="legend-item"><i class="sw" style="background:#e7eef7"></i>업무</span>
+        <span class="legend-item"><i class="sw" style="background:#efe8f3"></i>회의</span>
+        <span class="legend-item"><i class="sw" style="background:#d9d9d4"></i>코어</span>
+        <span class="legend-item"><i class="sw" style="background:#cf3b2e"></i>위반</span>
+      </div>
+    </div>
+    <div id="plan-svg" class="floor-svg" aria-live="polite"></div>
+    <div id="violations" class="violations"></div>
+  </section>
+
+  <aside class="side">
+    <section class="gates-panel">
+      <div class="panel-head"><h2>설계 게이트 (기하 실측)</h2></div>
+      <div id="gates" class="gates"></div>
+    </section>
+    <section class="patch-panel">
+      <div class="panel-head"><h2>이번 반복의 패치</h2><span id="patch-status" class="patch-status"></span></div>
+      <div id="patch" class="patch-body"></div>
+    </section>
+  </aside>
+</main>
+
+<section class="timeline-panel">
+  <div class="panel-head">
+    <h2>반복 타임라인</h2>
+    <div class="controls">
+      <button id="btn-prev" aria-label="이전 반복">◀</button>
+      <button id="btn-play">▶ 재생</button>
+      <button id="btn-next" aria-label="다음 반복">▶</button>
+    </div>
+  </div>
+  <div id="spark" class="spark"></div>
+  <div id="steps" class="steps"></div>
+</section>
+
+<footer class="ftr">
+  <p id="disclaimer"></p>
+  <p>모든 게이트 수치는 코드가 모델 기하에서 직접 계산합니다. 실 id와 용도는 전 반복에서 보존되므로 결과는 CAD·BIM 도구에서 계속 편집할 수 있습니다.</p>
+</footer>
+
+<script src="data/run_data.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

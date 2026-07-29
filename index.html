@@ -1,7 +1,6 @@
 <!doctype html>
 <html lang="ko">
 <head>
-<script>(function(){try{var t=localStorage.getItem("theme");if(!t&&window.matchMedia&&matchMedia("(prefers-color-scheme: dark)").matches)t="dark";if(t)document.documentElement.setAttribute("data-theme",t);}catch(e){}})();</script>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>2i AX 컨설팅 | 중소·중견 제조·유통</title>
@@ -15,7 +14,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="styles.css?v=14">
+<link rel="stylesheet" href="styles.css?v=10">
 </head>
 <body>
 
@@ -27,15 +26,16 @@
     </a>
     <button class="nav__burger" type="button" aria-expanded="false" aria-controls="navLinks" aria-label="메뉴 열기"><span></span><span></span><span></span></button>
     <nav class="nav__links" id="navLinks" aria-label="주요 메뉴">
+      <a href="#method">방식</a>
       <a href="cases.html">사례</a>
-      <a href="comms.html">통신 기술</a>
-      <a href="cloud.html">클라우드 기술</a>
-      <a href="finance.html">금융 기술</a>
+      <a href="comms.html">통신</a>
+      <a href="#ideas">아이디어 30</a>
+      <a href="#studio">영상</a>
       <a href="papers.html">논문·실험</a>
       <a href="about.html">회사소개</a>
-      <button class="nav__theme" type="button" aria-label="테마 전환" title="테마 전환"><svg class="ic-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg><svg class="ic-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg></button>
+      <a href="#voucher">정부 바우처</a>
       <a class="nav__lang" href="/en/">EN</a>
-      <a class="nav__cta btn btn--signal" href="index.html#contact">상담 신청</a>
+      <a class="nav__cta btn btn--signal" href="#contact">상담 신청</a>
     </nav>
   </div>
 </header>
@@ -44,7 +44,6 @@
 
   <!-- HERO -->
   <section class="hero" id="top">
-    <canvas id="hero3d" class="hero3d" aria-hidden="true"></canvas>
     <div class="wrap hero__grid">
       <div>
         <span class="eyebrow">중소·중견 제조 · 유통 · 물류</span>
@@ -90,21 +89,6 @@
       </aside>
     </div>
   </section>
-
-  <!-- SECTION QUICK NAV -->
-  <div class="secnav-band">
-    <nav class="secnav wrap" aria-label="홈 섹션 바로가기">
-      <span class="secnav__label">On this page</span>
-      <a href="#method">방식·게이트</a>
-      <a href="#cases">사례 10선</a>
-      <a href="#ideas">아이디어 35</a>
-      <a href="#studio">영상 스튜디오</a>
-      <a href="#stack">기술 4축</a>
-      <a href="#diagnose">자가진단</a>
-      <a href="#voucher">정부 바우처</a>
-      <a href="#contact">상담</a>
-    </nav>
-  </div>
 
   <!-- RESULT TICKER -->
   <div class="ticker" aria-hidden="true">
@@ -243,13 +227,13 @@
   <section class="section section--alt" id="ideas">
     <div class="wrap">
       <div class="section__head reveal">
-        <span class="eyebrow">AX 전환 아이디어 · 35선</span>
-        <h2>"우리 회사엔 뭘 해줄 수 있는데요?" 35개의 답으로 대신합니다.</h2>
-        <p>2i가 실제 보유한 도구와 사례에서 추린 35가지 적용 아이디어입니다. 업종이 달라도 구조는 같습니다. 눈에 걸리는 항목 하나가 진단 상담의 출발점이 됩니다. 태그는 과장하지 않습니다. <b>실증</b>은 이미 만들어 본 것, <b>확장</b>은 보유 기술로 바로 조립 가능한 것, <b>개념</b>은 함께 검증할 아이디어입니다.</p>
+        <span class="eyebrow">AX 전환 아이디어 · 30선</span>
+        <h2>"우리 회사엔 뭘 해줄 수 있는데요?" 30개의 답으로 대신합니다.</h2>
+        <p>2i가 실제 보유한 도구와 사례에서 추린 30가지 적용 아이디어입니다. 업종이 달라도 구조는 같습니다. 눈에 걸리는 항목 하나가 진단 상담의 출발점이 됩니다. 태그는 과장하지 않습니다. <b>실증</b>은 이미 만들어 본 것, <b>확장</b>은 보유 기술로 바로 조립 가능한 것, <b>개념</b>은 함께 검증할 아이디어입니다.</p>
       </div>
 
       <div class="ifilters reveal" role="tablist" aria-label="아이디어 분류 필터">
-        <button class="ifilter is-on" data-icat="all">전체 <b>35</b></button>
+        <button class="ifilter is-on" data-icat="all">전체 <b>30</b></button>
         <button class="ifilter" data-icat="data">경영·데이터 <b>4</b></button>
         <button class="ifilter" data-icat="doc">문서·업무 <b>5</b></button>
         <button class="ifilter" data-icat="vision">비전·이미지 <b>5</b></button>
@@ -258,7 +242,6 @@
         <button class="ifilter" data-icat="marketing">마케팅·콘텐츠 <b>3</b></button>
         <button class="ifilter" data-icat="signal">신호·센싱 <b>2</b></button>
         <button class="ifilter" data-icat="cloud">클라우드·인프라 <b>2</b></button>
-        <button class="ifilter" data-icat="platform">O2O·플랫폼 <b>5</b></button>
       </div>
 
       <div class="ideas-grid reveal">
@@ -449,37 +432,6 @@
           <p class="idea__d">서버 난립을 정리하고 AI를 얹을 준비가 된 인프라로.</p>
           <div class="idea__meta"><span class="mtag mtag--extend">확장</span></div>
         </div>
-
-        <div class="idea" data-icat="platform">
-          <div class="idea__top"><span class="idea__no">31</span><span class="idea__cat">O2O·플랫폼</span></div>
-          <span class="idea__t">가맹점주 AI 상담·온보딩 자동화</span>
-          <p class="idea__d">입점 서류 검증부터 정산·광고 반복 문의까지, 플랫폼의 사장님 지원을 에이전트로.</p>
-          <div class="idea__meta"><span class="mtag mtag--demo">실증</span><a class="idea__case" href="cases.html#case-5">사례 05 →</a></div>
-        </div>
-        <div class="idea" data-icat="platform">
-          <div class="idea__top"><span class="idea__no">32</span><span class="idea__cat">O2O·플랫폼</span></div>
-          <span class="idea__t">리뷰·VOC 대규모 분석과 어뷰징 탐지</span>
-          <p class="idea__d">수십만 리뷰에서 개선 신호를 추출하고, 조작·어뷰징 패턴은 이상탐지로 걸러냅니다.</p>
-          <div class="idea__meta"><span class="mtag mtag--extend">확장</span><a class="idea__case" href="finance.html#models">금융 기술 →</a></div>
-        </div>
-        <div class="idea" data-icat="platform">
-          <div class="idea__top"><span class="idea__no">33</span><span class="idea__cat">O2O·플랫폼</span></div>
-          <span class="idea__t">가맹점 정산 대사 자동화</span>
-          <p class="idea__d">수수료·프로모션이 얽힌 정산을 자동 대조하고 브레이크만 사람에게 올립니다.</p>
-          <div class="idea__meta"><span class="mtag mtag--extend">확장</span></div>
-        </div>
-        <div class="idea" data-icat="platform">
-          <div class="idea__top"><span class="idea__no">34</span><span class="idea__cat">O2O·플랫폼</span></div>
-          <span class="idea__t">쿠폰·프로모션 업리프트 타겟팅</span>
-          <p class="idea__d">"어차피 살 사람"이 아니라 쿠폰으로 마음이 바뀌는 고객만 골라 비용을 아낍니다.</p>
-          <div class="idea__meta"><span class="mtag mtag--demo">실무 경험</span><a class="idea__case" href="finance.html#models">금융 기술 →</a></div>
-        </div>
-        <div class="idea" data-icat="platform">
-          <div class="idea__top"><span class="idea__no">35</span><span class="idea__cat">O2O·플랫폼</span></div>
-          <span class="idea__t">시즌 프로모션 숏폼 영상 당일 제작</span>
-          <p class="idea__d">이번 주 이슈로 릴스·쇼츠 광고를 당일 납품하는 콘텐츠 파이프라인.</p>
-          <div class="idea__meta"><span class="mtag mtag--demo">실증</span><a class="idea__case" href="#studio">데모 보기 →</a></div>
-        </div>
       </div>
 
       <p class="auto-foot reveal">30개 중 무엇이 우리 회사에 맞는지 모르겠다면, 그게 정상입니다. 그 우선순위를 숫자로 정해주는 것이 <a href="#method" style="text-decoration:underline">진단 스프린트</a>의 일입니다.</p>
@@ -634,7 +586,7 @@
       <div class="section__head reveal">
         <span class="eyebrow">보유 기술 · 4축</span>
         <h2>무선 신호만 하는 회사가 아닙니다. 네 개의 축이 한 팀입니다.</h2>
-        <p>2i의 기술은 신호 지능 하나가 아니라 네 축으로 구성됩니다. 현장의 과제는 대부분 이 축들의 조합으로 풀립니다. 위의 사례 10선과 아이디어 35선이 전부 이 네 축 위에서 만들어졌고, 아래 신호 지능 실측 벤치는 그중 한 축의 깊이를 보여주는 단면입니다.</p>
+        <p>2i의 기술은 신호 지능 하나가 아니라 네 축으로 구성됩니다. 현장의 과제는 대부분 이 축들의 조합으로 풀립니다. 위의 사례 10선과 아이디어 30선이 전부 이 네 축 위에서 만들어졌고, 아래 신호 지능 실측 벤치는 그중 한 축의 깊이를 보여주는 단면입니다.</p>
       </div>
       <div class="pillar-grid reveal stagger">
         <div class="pillar">
@@ -746,9 +698,8 @@
       <div class="cta reveal">
         <h2>다음 한 걸음, 같이 정합시다.</h2>
         <p>무엇을 팔려는 상담이 아니라, 당신 회사에 지금 AI가 맞는지부터 함께 봅니다. 30분이면 방향이 잡힙니다.</p>
-        <!-- 상담 폼: data-formspree-id 를 채우면 Formspree 백엔드(방문자 메일앱 불필요)로 전송,
-             비우면 메일앱 prefill 폴백. 활성화: formspree.io 무료 폼 생성 후 아이디만 붙여넣기. -->
-        <form class="form" id="leadForm" data-formspree-id="" action="mailto:contact@2icorp.site" method="POST" enctype="text/plain">
+        <!-- 상담 폼: 이메일 클라이언트로 전송(백엔드 불필요). Formspree 등 연동 시 action 교체 가능. -->
+        <form class="form" id="leadForm" action="mailto:contact@2icorp.site" method="POST" enctype="text/plain">
           <label>이름<input name="name" required placeholder="한금지"></label>
           <label>회사<input name="company" required placeholder="○○ 제조"></label>
           <label>업종<select name="industry"><option>제조</option><option>유통</option><option>물류</option><option>기타</option></select></label>
@@ -766,7 +717,6 @@
           <div class="cta__row full">
             <button class="btn btn--signal" type="submit">상담 신청 보내기 <span class="arrow">→</span></button>
           </div>
-          <p class="form__status full" role="status" aria-live="polite"></p>
         </form>
         <p class="foot__legal" style="margin-top:1rem">메일 앱이 열리지 않으면 <a href="mailto:contact@2icorp.site">contact@2icorp.site</a> 로 보내주세요.</p>
       </div>
@@ -786,7 +736,7 @@
       <a href="about.html">회사소개</a>
       <a href="#method">방식</a>
       <a href="comms.html">통신</a>
-      <a href="#ideas">아이디어 35</a>
+      <a href="#ideas">아이디어 30</a>
       <a href="papers.html">논문·실험</a>
       <a href="#voucher">정부 바우처</a>
       <a href="privacy.html">개인정보처리방침</a>
@@ -797,6 +747,5 @@
 </footer>
 
 <script src="main.js"></script>
-<script src="hero3d.js" defer></script>
 </body>
 </html>

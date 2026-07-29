@@ -206,67 +206,27 @@
   });
 })();
 
-// Lead form -> Formspree (AJAX, no visitor mail client needed) with mailto fallback.
-// Set data-formspree-id on the form (or data-formspree-id on #leadFormEn) to activate
-// the backend path. With no id it falls back to a prefilled mailto (device mail app).
+// Lead form -> clean mailto (works with no backend; footer/about also list the address)
 (function () {
   "use strict";
-  var forms = document.querySelectorAll("#leadForm, #leadFormEn");
-  if (!forms.length) return;
-  forms.forEach(function (form) {
-    var en = form.id === "leadFormEn";
-    var status = form.querySelector(".form__status");
-    var setStatus = function (msg, ok) {
-      if (!status) return;
-      status.textContent = msg;
-      status.className = "form__status" + (ok === true ? " is-ok" : ok === false ? " is-err" : "");
-    };
-    var g = function (n) { var el = form.elements[n]; return el ? String(el.value).trim() : ""; };
-    var buildMailto = function () {
-      var subject = (en ? "[2i inquiry] " : "[2i 상담 신청] ") + (g("company") || (en ? "inquiry" : "문의"));
-      var body = [
-        (en ? "Name: " : "이름: ") + g("name"),
-        (en ? "Company: " : "회사: ") + g("company"),
-        (en ? "Industry: " : "업종: ") + g("industry"),
-        (en ? "Contact: " : "연락처: ") + g("contact"),
-        (en ? "Interest: " : "관심 단계: ") + g("stage"),
-        "",
-        (en ? "Notes:" : "상황:"),
-        g("message")
-      ].join("\n");
-      return "mailto:contact@2icorp.site?subject=" +
-        encodeURIComponent(subject) + "&body=" + encodeURIComponent(body);
-    };
-    form.addEventListener("submit", function (e) {
-      e.preventDefault();
-      var id = (form.dataset.formspreeId || "").trim();
-      if (!id) {
-        // No backend configured yet: prefilled mailto (best effort on this device).
-        window.location.href = buildMailto();
-        return;
-      }
-      var btn = form.querySelector("button[type=submit]");
-      if (btn) btn.disabled = true;
-      setStatus(en ? "Sending..." : "보내는 중...", null);
-      var data = new FormData(form);
-      fetch("https://formspree.io/f/" + id, {
-        method: "POST", body: data, headers: { "Accept": "application/json" }
-      }).then(function (r) {
-        if (r.ok) {
-          form.reset();
-          setStatus(en ? "Received. We'll reply within 1 business day." :
-            "접수되었습니다. 1영업일 내 답신드립니다.", true);
-        } else {
-          setStatus(en ? "Send failed. Opening your mail app instead." :
-            "전송 실패. 메일 앱으로 대신 엽니다.", false);
-          window.location.href = buildMailto();
-        }
-      }).catch(function () {
-        setStatus(en ? "Network issue. Opening your mail app instead." :
-          "네트워크 문제. 메일 앱으로 대신 엽니다.", false);
-        window.location.href = buildMailto();
-      }).finally(function () { if (btn) btn.disabled = false; });
-    });
+  var form = document.getElementById("leadForm");
+  if (!form) return;
+  form.addEventListener("submit", function (e) {
+    e.preventDefault();
+    var g = function (n) { var el = form.elements[n]; return el ? el.value.trim() : ""; };
+    var subject = "[2i 상담 신청] " + (g("company") || "문의");
+    var body = [
+      "이름: " + g("name"),
+      "회사: " + g("company"),
+      "업종: " + g("industry"),
+      "연락처: " + g("contact"),
+      "관심 단계: " + g("stage"),
+      "",
+      "상황:",
+      g("message")
+    ].join("\n");
+    window.location.href = "mailto:contact@2icorp.site?subject=" +
+      encodeURIComponent(subject) + "&body=" + encodeURIComponent(body);
   });
 })();
 
@@ -286,40 +246,4 @@
     });
   }, { threshold: 0.5, rootMargin: "0px 0px -18% 0px" });
   stages.forEach(function (s) { io.observe(s); });
-})();
-
-// Theme toggle (persists to localStorage; head stamp script applies before paint)
-(function () {
-  "use strict";
-  var btns = document.querySelectorAll(".nav__theme");
-  if (!btns.length) return;
-  function current() {
-    var t = document.documentElement.getAttribute("data-theme");
-    if (t) return t;
-    return (window.matchMedia && matchMedia("(prefers-color-scheme: dark)").matches) ? "dark" : "light";
-  }
-  function set(t) {
-    document.documentElement.setAttribute("data-theme", t);
-    try { localStorage.setItem("theme", t); } catch (e) {}
-  }
-  btns.forEach(function (b) {
-    b.addEventListener("click", function () { set(current() === "dark" ? "light" : "dark"); });
-  });
-})();
-
-// Cases board - category filter (guarded; only runs on cases.html)
-(function () {
-  "use strict";
-  var chips = document.querySelectorAll(".cfilter");
-  if (!chips.length) return;
-  var items = document.querySelectorAll(".case");
-  chips.forEach(function (btn) {
-    btn.addEventListener("click", function () {
-      var cat = btn.getAttribute("data-ccat");
-      chips.forEach(function (b) { b.classList.toggle("is-on", b === btn); });
-      items.forEach(function (it) {
-        it.classList.toggle("is-hidden", cat !== "all" && it.getAttribute("data-ccat") !== cat);
-      });
-    });
-  });
 })();

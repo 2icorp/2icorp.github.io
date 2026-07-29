@@ -1,7 +1,7 @@
 # 논문·실험 게시판 — 발행 방법
 
 이 폴더(`papers-src/`)에 마크다운 파일 하나를 넣고 렌더러를 돌리면, 게시판(`papers.html`)과
-읽기 페이지(`papers/<slug>.html`)가 자동으로 만들어집니다. 표준 정적 블로그의 `_posts`
+읽기 페이지(`papers/<slug>.html`)가 자동으로 만들어집니다. the local stack 기술 블로그의 `_posts`
 프론트매터 형식을 그대로 씁니다. 그래서 nightly-paper 등에서 나온 마크다운을 손대지 않고
 바로 떨어뜨릴 수 있습니다.
 

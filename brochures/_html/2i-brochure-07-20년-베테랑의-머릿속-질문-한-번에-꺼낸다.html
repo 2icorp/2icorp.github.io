@@ -1,0 +1,109 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+@page { size: A4; margin: 15mm 14mm 16mm; }
+* { box-sizing: border-box; }
+:root{
+  --ink:#1b2230; --soft:#4a5568; --faint:#78849a; --line:#e3e7ee; --panel:#f7f8fb;
+  --signal:#d9821f; --signal-deep:#b5661a; --steel:#3f5c88;
+  --sans:"Pretendard Variable",Pretendard,-apple-system,system-ui,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+}
+html,body{margin:0;font-family:var(--sans);color:var(--ink);line-height:1.6;font-size:10.5pt;}
+h1,h2,h3{margin:0;letter-spacing:-0.02em;line-height:1.15;}
+.mono{font-family:var(--mono);}
+.eyebrow{font-family:var(--mono);font-size:7.5pt;letter-spacing:0.16em;text-transform:uppercase;color:var(--steel);}
+.cover{border-bottom:2px solid var(--ink);padding-bottom:14px;margin-bottom:16px;}
+.cover__top{display:flex;justify-content:space-between;align-items:baseline;}
+.brand{font-weight:800;font-size:16pt;letter-spacing:-0.03em;}
+.brand b{font-family:var(--mono);color:var(--signal);}
+.brand small{font-family:var(--mono);font-size:7pt;letter-spacing:0.14em;color:var(--faint);text-transform:uppercase;margin-left:6px;}
+.doclabel{font-family:var(--mono);font-size:7.5pt;letter-spacing:0.12em;color:var(--faint);text-transform:uppercase;}
+.cover h1{font-size:22pt;font-weight:850;margin:15px 0 8px;}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px;}
+.chip{font-family:var(--mono);font-size:7.5pt;border:1px solid var(--line);border-radius:20px;padding:3px 9px;color:var(--soft);}
+.chip--c{color:var(--signal-deep);border-color:#efc999;background:#fdf5ea;}
+.chip--v{color:var(--steel);}
+.stakes-box{margin-top:12px;border:1px solid var(--line);border-left:3px solid var(--signal);border-radius:3px;padding:8px 12px;background:#fdf7ef;display:flex;justify-content:space-between;align-items:baseline;gap:12px;}
+.stakes-box .l{font-family:var(--mono);font-size:8pt;color:var(--faint);text-transform:uppercase;letter-spacing:0.04em;}
+.stakes-box .v{font-family:var(--mono);font-weight:600;font-size:13pt;color:var(--signal-deep);white-space:nowrap;}
+.sec{margin-top:15px;break-inside:avoid;}
+.sec h2{font-size:11.5pt;font-weight:800;display:flex;align-items:center;gap:8px;margin-bottom:7px;}
+.sec h2::before{content:"";width:14px;height:2px;background:var(--signal);display:inline-block;}
+.lead{color:var(--soft);}
+.steps{display:grid;gap:8px;margin-top:4px;}
+.step{border:1px solid var(--line);border-left:3px solid var(--steel);border-radius:3px;padding:9px 12px;background:var(--panel);break-inside:avoid;}
+.step b{font-family:var(--mono);font-size:8pt;letter-spacing:0.06em;color:var(--steel);text-transform:uppercase;}
+.step p{margin:3px 0 0;font-size:9.7pt;}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+.card{border:1px solid var(--line);border-radius:3px;padding:10px 12px;background:#fff;}
+.card h3{font-size:9.5pt;color:var(--signal-deep);font-family:var(--mono);letter-spacing:0.04em;text-transform:uppercase;margin-bottom:5px;}
+.card p, .card li{font-size:9.6pt;}
+.deliv{list-style:none;margin:0;padding:0;display:grid;gap:4px;}
+.deliv li{padding-left:15px;position:relative;}
+.deliv li::before{content:"■";position:absolute;left:0;color:var(--steel);font-size:7pt;top:3px;}
+.ba{width:100%;border-collapse:collapse;margin-top:4px;font-size:9.4pt;}
+.ba caption{font-family:var(--mono);font-size:7.5pt;color:var(--faint);text-align:left;padding:0 0 5px;letter-spacing:0.03em;}
+.ba th{font-family:var(--mono);font-size:7.5pt;letter-spacing:0.04em;text-transform:uppercase;color:var(--faint);text-align:left;padding:5px 8px;border-bottom:1px solid var(--line);font-weight:500;}
+.ba td{padding:6px 8px;border-bottom:1px solid var(--line);vertical-align:baseline;}
+.ba .m{color:var(--soft);}
+.ba .b{font-family:var(--mono);font-size:8.6pt;color:var(--faint);text-decoration:line-through;}
+.ba .arw{color:var(--signal);text-align:center;}
+.ba .a{font-family:var(--mono);font-size:8.6pt;font-weight:600;color:var(--signal-deep);}
+.sowhat{border:1px solid var(--line);border-radius:3px;padding:10px 12px;background:var(--panel);font-size:9.8pt;margin-top:4px;}
+.proof-line{margin-top:7px;font-family:var(--mono);font-size:8.6pt;color:var(--steel);}
+.proof-line b{color:var(--ink);}
+.faq{display:grid;gap:8px;}
+.faq div{break-inside:avoid;}
+.faq q{display:block;font-weight:700;font-size:9.8pt;}
+.faq p{margin:2px 0 0;font-size:9.5pt;color:var(--soft);}
+.foot{margin-top:18px;border-top:1px solid var(--line);padding-top:12px;display:flex;justify-content:space-between;align-items:flex-end;gap:14px;}
+.cta{background:var(--ink);color:#fff;border-radius:4px;padding:11px 14px;font-size:9.5pt;flex:1;}
+.cta b{color:var(--signal);}
+.disc{font-family:var(--mono);font-size:6.8pt;color:var(--faint);line-height:1.5;max-width:50%;}
+</style></head><body>
+<div class="cover">
+  <div class="cover__top">
+    <div class="brand"><b>2i</b><small>AX 컨설팅</small></div>
+    <div class="doclabel">Case Brief · No.07 · 2i 게이지 방식</div>
+  </div>
+  <div class="eyebrow" style="margin-top:14px">지식 자산화 (RAG)</div>
+  <h1>20년 베테랑의 머릿속, 질문 한 번에 꺼낸다</h1>
+  <div class="chips">
+    <span class="chip">제조 · 전문서비스</span>
+    <span class="chip chip--v">약 12~14주 (측정 2 + 실증 4 + 이관 6~8)</span>
+    <span class="chip chip--c">정부 바우처 적합</span>
+  </div>
+  <div class="stakes-box"><span class="l">문제의 대가 · 핵심 노하우 보관 위치</span><span class="v">베테랑 1~2명의 기억</span></div>
+</div>
+
+<div class="sec"><h2>문제의 대가</h2><p class="lead">중소 제조사에서는 20년 넘게 근무한 베테랑 한두 명이 설비 이상 대응법·도면 변경 이력·거래처 특이사항을 사실상 혼자 기억합니다. 매뉴얼이 있어도 버전이 뒤섞이거나 스캔본으로만 남아, 실제로는 그 사람에게 직접 물어봐야 업무가 돌아갑니다. 그가 자리를 비우면 후임은 같은 문제를 처음부터 다시 겪습니다.</p></div>
+
+<div class="sec"><h2>통찰</h2><p class="lead">지식 자산화의 함정은 &#x27;모든 문서를 다 넣는&#x27; 것입니다. 정답은 가장 자주 물어보는 문서군(설비 트러블슈팅 이력·도면 개정 로그) 하나부터 시작해, 답변에 반드시 원문 근거를 붙여 &#x27;믿을 수 있는&#x27; 검색을 만드는 것입니다.</p></div>
+
+<div class="sec"><h2>2i의 방식</h2><p class="lead">매뉴얼·도면·이력 문서를 벡터 검색 가능한 형태로 색인하고, 자연어 질문에 원문 근거를 함께 제시하는 RAG(검색증강생성)를 구성합니다. 스캔본·비정형 문서는 OCR·파싱으로 텍스트화. 베테랑을 대체하는 게 아니라, 그의 답을 언제든 꺼낼 수 있는 사내 어시스턴트로 복제합니다.</p></div>
+
+<div class="sec"><h2>게이지 방식으로 진행합니다 · 측정 → 실증 → 이관</h2><div class="steps"><div class="step"><b>측정 게이트</b><p>베테랑 심층 인터뷰·현장 동행으로 암묵지를 목록화하고, 흩어진 매뉴얼·도면·이력 문서의 형식·중복·누락을 전수 조사해 우선 자산화 문서군을 확정합니다.</p></div><div class="step"><b>실증 게이트</b><p>우선 문서군 한두 개로 소규모 RAG를 만들고, 실제 현장 질문 20~30개로 답변 정확도와 근거 인용 여부를 검증, 담당자 피드백으로 용어집을 보완합니다.</p></div><div class="step"><b>이관 게이트</b><p>검증 구조를 전체 문서군으로 확장하고, 사내 채팅 인터페이스·부서별 권한·신규 문서 자동 반영 파이프라인을 붙여 온보딩·인수인계 체크리스트에 결합합니다.</p></div></div></div>
+
+<div class="sec two">
+  <div class="card"><h3>사용 기술</h3><p>FastAPI RAG 챗봇: 사내 문서 임베딩 색인, 원문 근거 인용 답변. LLM 키 없으면 TF-IDF 검색 폴백. OCR·문서 파싱 전처리 포함.</p></div>
+  <div class="card"><h3>표준 산출물</h3><ul class="deliv"><li>AX 진단 보고서</li><li>현장 KPI baseline 계측</li><li>과제 우선순위 로드맵</li><li>작동하는 PoC</li><li>before/after 측정 리포트</li><li>본도입 판단 근거</li><li>운영 시스템</li><li>사내 이관 교육</li><li>운영 매뉴얼·문서</li></ul></div>
+</div>
+
+<div class="sec"><h2>목표 델타</h2><table class="ba"><caption>목표 지표 · 실제 수치는 귀사 데이터로 재측정</caption><tr><th>지표</th><th>현재</th><th></th><th>목표</th></tr><tr><td class="m">설비 이슈 검색시간</td><td class="b">매뉴얼·이력 수작업 탐색</td><td class="arw">→</td><td class="a">50~70% 단축 (목표)</td></tr><tr><td class="m">핵심 인력 공백 시</td><td class="b">업무 중단</td><td class="arw">→</td><td class="a">이력·근거 즉시 조회 (목표)</td></tr></table><div class="proof-line">‹/› 작동하는 증거: <b>github.com/2icorp/2i-case-07-knowledge-rag</b> · 합성 데이터로 실제 실행되는 레퍼런스 구현</div></div>
+
+<div class="sec"><h2>그래서 무엇이 열리나</h2><div class="sowhat">구두로만 전해지던 노하우가 검색 가능한 자산으로 축적돼, 퇴사·휴직이 지식 실종으로 이어지지 않고 신규 인력이 빠르게 제 몫을 하게 됩니다.</div></div>
+
+<div class="sec two">
+  <div class="card"><h3>정부 바우처 활용</h3><p>기존 문서 자산을 검색 가능한 지식 시스템으로 전환하는 과제로, 정부 AX 바우처의 진단-실증(PoC)-구축 단계별 지원 요건과 정합성이 높음. 지원 규모·요건은 연도별 공고에 따르며, 복잡한 신청·행정은 2i가 함께 처리합니다.</p></div>
+  <div class="card"><h3>왜 2i인가</h3><p>대형 SI가 안 건드리는 중소·중견의 소규모·비정형 과제를, 진단부터 이관까지 한 사람이 책임지고 봅니다. 화려한 제안서 대신 측정된 진단과 검증된 PoC로 신뢰를 먼저 만듭니다.</p></div>
+</div>
+
+<div class="sec"><h2>자주 묻는 질문</h2><div class="faq"><div><q>Q. 데이터가 정리돼 있지 않아도 되나요?</q><p>네. 측정 게이트가 바로 흩어진 데이터와 현장을 정리해 무엇부터 할지 정하는 단계입니다. 준비가 안 됐다는 것 자체가 출발점입니다.</p></div><div><q>Q. 기간과 비용은 어느 정도인가요?</q><p>이 사례 기준 약 12~14주 (측정 2 + 실증 4 + 이관 6~8) 정도이며, 범위와 데이터 상태에 따라 조정됩니다. 상당 부분을 정부 AX 바우처로 충당해 실부담을 크게 낮출 수 있습니다.</p></div><div><q>Q. 하다가 안 되면 어떻게 되나요?</q><p>그래서 실증 게이트가 있습니다. 큰돈을 걸기 전에 될지 안 될지를 작은 실증으로 먼저 확인하고, 목표 델타에 못 미치면 확장하지 않습니다.</p></div><div><q>Q. 사람 일자리를 없애는 건가요?</q><p>아닙니다. 사람을 대체하는 게 아니라, 반복 업무를 걷어내 사람이 판단과 관계에 집중하도록 속도와 정확도를 보완하는 방식입니다.</p></div></div></div>
+
+<div class="foot">
+  <div class="cta">먼저 <b>무료 자가진단</b> 또는 30분 상담으로 시작하세요. 귀사에 맞는 시작점을 함께 찾습니다. &nbsp;·&nbsp; <b>2i</b> AX 컨설팅</div>
+  <div class="disc">본 브로셔는 2i의 역량을 보여주는 시나리오형 예시입니다. 특정 실존 고객의 완료 실적이 아니며, 목표 수치는 업계 통상 기대치입니다. 실제 진행 시 귀사 데이터로 다시 측정합니다.</div>
+</div>
+</body></html>

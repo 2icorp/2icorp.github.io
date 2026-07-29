@@ -1,7 +1,6 @@
 <!doctype html>
 <html lang="ko">
 <head>
-<script>(function(){try{var t=localStorage.getItem("theme");if(!t&&window.matchMedia&&matchMedia("(prefers-color-scheme: dark)").matches)t="dark";if(t)document.documentElement.setAttribute("data-theme",t);}catch(e){}})();</script>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>논문·실험 · 2i AX 컨설팅</title>
@@ -15,7 +14,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="styles.css?v=14">
+<link rel="stylesheet" href="styles.css?v=10">
 </head>
 <body>
 
@@ -27,13 +26,14 @@
     </a>
     <button class="nav__burger" type="button" aria-expanded="false" aria-controls="navLinks" aria-label="메뉴 열기"><span></span><span></span><span></span></button>
     <nav class="nav__links" id="navLinks" aria-label="주요 메뉴">
+      <a href="index.html#method">방식</a>
       <a href="cases.html">사례</a>
-      <a href="comms.html">통신 기술</a>
-      <a href="cloud.html">클라우드 기술</a>
-      <a href="finance.html">금융 기술</a>
-      <a href="papers.html" aria-current="page">논문·실험</a>
+      <a href="comms.html">통신</a>
+      <a href="index.html#ideas">아이디어 30</a>
+      <a href="index.html#studio">영상</a>
+      <a href="papers.html">논문·실험</a>
       <a href="about.html">회사소개</a>
-      <button class="nav__theme" type="button" aria-label="테마 전환" title="테마 전환"><svg class="ic-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg><svg class="ic-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg></button>
+      <a href="index.html#voucher">정부 바우처</a>
       <a class="nav__lang" href="en/">EN</a>
       <a class="nav__cta btn btn--signal" href="index.html#contact">상담 신청</a>
     </nav>
@@ -42,7 +42,6 @@
 
 <main>
   <section class="section pboard-hero">
-    <canvas class="hero3d" data-mode="wave" aria-hidden="true"></canvas>
     <div class="wrap">
       <span class="eyebrow">논문 · 실험 기록</span>
       <h1 class="pboard-hero__h1">현장에서 <span class="u accent">측정한 것</span>만 기록합니다.</h1>
@@ -51,139 +50,90 @@
   </section>
   <section class="section section--alt" style="padding-top:0">
     <div class="wrap">
-    <div class="pfilters" role="tablist" aria-label="분류 필터"><button class="pfilter is-on" data-cat="all">전체 <b>21</b></button><button class="pfilter" data-cat="method">방법 <b>5</b></button><button class="pfilter" data-cat="benchmark">benchmark <b>3</b></button><button class="pfilter" data-cat="signal">signal <b>3</b></button><button class="pfilter" data-cat="research">리서치 <b>3</b></button><button class="pfilter" data-cat="industrial">industrial <b>2</b></button><button class="pfilter" data-cat="media">media <b>2</b></button><button class="pfilter" data-cat="sensing">sensing <b>2</b></button><button class="pfilter" data-cat="whitepaper">whitepaper <b>1</b></button></div>
+    <div class="pfilters" role="tablist" aria-label="분류 필터"><button class="pfilter is-on" data-cat="all">전체 <b>13</b></button><button class="pfilter" data-cat="experiment">실험 노트 <b>8</b></button><button class="pfilter" data-cat="method">방법 <b>5</b></button></div>
     <div class="pboard">
-      <a class="pcard reveal" href="papers/classical-dsp-gbm-vs-deep-learning-signal-tasks.html" data-cat="benchmark">
-        <div class="pcard__meta"><span class="pcard__cat">benchmark</span><span class="pcard__date">2026.07.29</span><span class="pcard__rt">약 10분</span><span class="pcard__pdf">PDF</span></div>
-        <h3 class="pcard__title">고전 DSP+GBM 대 딥러닝: 신호 과제 결정 지도</h3>
-        <p class="pcard__excerpt">변조분류·간섭탐지·드론오픈셋·채널추정·RF지문·신호분리 6개 과제를 같은 데이터·같은 지표로 공정 비교했습니다. 딥러닝이 전부를 이기지 않았고, 고전이 전부를 이기지도 않았습니다. 어디서 무엇이 이기는지를 숫자와 한계까지 공개합니다.</p>
-        <div class="pcard__tags"><span>#신호처리</span><span>#GBM</span><span>#딥러닝</span><span>#변조분류</span><span>#간섭탐지</span><span>#벤치마크</span><span class="pcard__go">읽기 →</span></div>
+      <a class="pcard reveal" href="papers/audio-content-id-robustness.html" data-cat="experiment">
+        <div class="pcard__meta"><span class="pcard__cat">실험 노트</span><span class="pcard__date">2026.07.28</span><span class="pcard__rt">약 5분</span></div>
+        <h3 class="pcard__title">음원 식별 API, 잡음·압축·속도변경에서 얼마나 버티나 실측했습니다</h3>
+        <p class="pcard__excerpt">999트랙 카탈로그에서 피크쌍 해싱 음원 식별을 자체벤치로 실측. 클린 95%, 강한 잡음(SNR -5dB)에서도 top-1 72.5%. 방송 모니터링·저작권 감시가 실제로 묻는 조건을 먼저 재봤습니다.</p>
+        <div class="pcard__tags"><span>#오디오</span><span>#콘텐츠ID</span><span>#저작권모니터링</span><span>#자체벤치</span><span class="pcard__go">읽기 →</span></div>
       </a>
-      <a class="pcard reveal" href="papers/fixed-false-alarm-rate-industrial-detection.html" data-cat="industrial">
-        <div class="pcard__meta"><span class="pcard__cat">industrial</span><span class="pcard__date">2026.07.29</span><span class="pcard__rt">약 8분</span><span class="pcard__pdf">PDF</span></div>
-        <h3 class="pcard__title">고정 오탐률 산업 이상·간섭 탐지</h3>
-        <p class="pcard__excerpt">산업 무선 모니터링의 진짜 계약은 탐지율이 아니라 오탐 예산입니다. CFAR 탐지기가 목표 오탐률을 실제로 지키는지, 간섭 유형분류와 위치추정은 어디까지 되는지를 합성 데이터로 실측하고 한계까지 공개합니다.</p>
-        <div class="pcard__tags"><span>#CFAR</span><span>#고정오탐률</span><span>#간섭탐지</span><span>#이상탐지</span><span>#산업모니터링</span><span class="pcard__go">읽기 →</span></div>
+      <a class="pcard reveal" href="papers/bearing-pdm-noise-robustness.html" data-cat="experiment">
+        <div class="pcard__meta"><span class="pcard__cat">실험 노트</span><span class="pcard__date">2026.07.28</span><span class="pcard__rt">약 5분</span></div>
+        <h3 class="pcard__title">베어링 이상, 소음 속에서 잡기: 물리 특징이 나이브 접근을 33%p 이겼습니다</h3>
+        <p class="pcard__excerpt">공개 베어링 진동 데이터(CWRU)에서 예측정비 파이프라인을 실측. 공장 소음 수준(SNR 0dB)에서 엔벨로프 스펙트럼 물리 특징 85.1% vs 나이브 스펙트럼 52.0%. 잡음이 셀수록 물리가 이깁니다.</p>
+        <div class="pcard__tags"><span>#예측정비</span><span>#진동분석</span><span>#제조AX</span><span>#자체벤치</span><span class="pcard__go">읽기 →</span></div>
       </a>
-      <a class="pcard reveal" href="papers/openset-rf-fingerprint-verification.html" data-cat="signal">
-        <div class="pcard__meta"><span class="pcard__cat">signal</span><span class="pcard__date">2026.07.29</span><span class="pcard__rt">약 9분</span><span class="pcard__pdf">PDF</span></div>
-        <h3 class="pcard__title">오픈셋 RF 지문 검증: 분리성은 실재하나 하드 인증 동작점은 아직 멀다</h3>
-        <p class="pcard__excerpt">공개 데이터 세 종(WiSig, INRIA, WIDEFT)으로 실측한 오픈셋 RF 지문 검증. AUROC 0.87까지 분리는 되지만, 접근제어가 실제로 요구하는 낮은 오탐률 지점(TAR@FAR)에서는 2~3%로 붕괴합니다. 라이선스가 다른 두 데이터셋에서 같은 격차가 재현된, 정직한 경계 연구입니다.</p>
-        <div class="pcard__tags"><span>#RF지문</span><span>#RFFI</span><span>#오픈셋</span><span>#기기인증</span><span>#검증</span><span class="pcard__go">읽기 →</span></div>
+      <a class="pcard reveal" href="papers/edge-budget-attribution.html" data-cat="method">
+        <div class="pcard__meta"><span class="pcard__cat">방법</span><span class="pcard__date">2026.07.28</span><span class="pcard__rt">약 5분</span></div>
+        <h3 class="pcard__title">엣지에서 정말 돌아가나: 처리량 예산을 실측으로 귀속하는 법</h3>
+        <p class="pcard__excerpt">저가 엣지 보드에서 신호처리 파이프라인 처리량을 단계별로 실측해 초당 7.6M 샘플, 목표 대비 0.19배라는 불편한 숫자와 병목 위치를 공개합니다. 데모가 아니라 배포를 팔려면 이 숫자부터 재야 합니다.</p>
+        <div class="pcard__tags"><span>#엣지컴퓨팅</span><span>#성능실측</span><span>#배포설계</span><span>#자체벤치</span><span class="pcard__go">읽기 →</span></div>
       </a>
-      <a class="pcard reveal" href="papers/tabular-boosting-vs-deep-learning-signal-features.html" data-cat="benchmark">
-        <div class="pcard__meta"><span class="pcard__cat">benchmark</span><span class="pcard__date">2026.07.29</span><span class="pcard__rt">약 8분</span><span class="pcard__pdf">PDF</span></div>
-        <h3 class="pcard__title">신호 특징 위에서 테이블러 부스팅이 딥러닝을 이기는 조건</h3>
-        <p class="pcard__excerpt">GBM·TabPFN·딥러닝을 같은 물리 특징, 같은 분할 위에서 붙였습니다. 539개 학습 표본에서 LightGBM 0.855 대 원시 IQ 딥러닝 0.681. 표본을 2,000개로 늘리면 격차는 36.0%p에서 21.3%p로 좁혀지지만, 교차점이 실제로 존재하는지는 이 실험 범위에서 확인하지 못했습니다.</p>
-        <div class="pcard__tags"><span>#테이블러</span><span>#GBM</span><span>#LightGBM</span><span>#딥러닝</span><span>#변조분류</span><span class="pcard__go">읽기 →</span></div>
+      <a class="pcard reveal" href="papers/honest-measurement-playbook.html" data-cat="method">
+        <div class="pcard__meta"><span class="pcard__cat">방법</span><span class="pcard__date">2026.07.28</span><span class="pcard__rt">약 6분</span></div>
+        <h3 class="pcard__title">수치를 못 믿게 만드는 다섯 가지 실수, 그리고 우리가 쓰는 방어 장치</h3>
+        <p class="pcard__excerpt">사전선언 게이트, 셔플 대조, 오탐률 고정, 누수 차단, 음성 결과 공개. 이 게시판의 모든 실험 노트에 공통으로 걸려 있는 다섯 가지 측정 규율을 한 장으로 정리했습니다. AI 도입 검증에 그대로 가져다 쓰셔도 됩니다.</p>
+        <div class="pcard__tags"><span>#측정방법론</span><span>#게이지방식</span><span>#PoC검증</span><span>#실험설계</span><span class="pcard__go">읽기 →</span></div>
       </a>
-      <a class="pcard reveal" href="papers/audio-content-fingerprinting-at-scale.html" data-cat="media">
-        <div class="pcard__meta"><span class="pcard__cat">media</span><span class="pcard__date">2026.07.29</span><span class="pcard__rt">약 8분</span><span class="pcard__pdf">PDF</span></div>
-        <h3 class="pcard__title">오디오 콘텐츠ID, 8천곡 규모로 키워도 정확도가 안 무너졌습니다 - 대신 메모리가 무너지는 지점을 찾았습니다</h3>
-        <p class="pcard__excerpt">방송 저작권 모니터링에 쓰이는 피크쌍 해싱 음원식별을 999곡에서 7,996곡까지 실측으로 키웠습니다. 정확도는 99%대를 유지했지만, 인메모리 인덱스를 100만곡으로 외삽하면 약 868GB - 진짜 병목은 알고리즘이 아니라 인덱스 구조였습니다.</p>
-        <div class="pcard__tags"><span>#오디오지문</span><span>#저작권모니터링</span><span>#콘텐츠ID</span><span>#방송</span><span class="pcard__go">읽기 →</span></div>
+      <a class="pcard reveal" href="papers/interference-detection-fixed-far.html" data-cat="experiment">
+        <div class="pcard__meta"><span class="pcard__cat">실험 노트</span><span class="pcard__date">2026.07.28</span><span class="pcard__rt">약 5분</span></div>
+        <h3 class="pcard__title">간섭탐지는 &#x27;몇 % 잡았다&#x27;가 아니라 &#x27;오탐 몇 %에서 잡았다&#x27;로 말해야 합니다</h3>
+        <p class="pcard__excerpt">공장·병원 무선 간섭탐지의 자체벤치: 오탐률을 먼저 고정하고 그 조건에서 검출률 98.0%를 실측. 합성 벤치임을 명시하고, 오탐률 고정이 왜 상용 간섭탐지의 유일하게 정직한 화법인지 정리했습니다.</p>
+        <div class="pcard__tags"><span>#간섭탐지</span><span>#스펙트럼감시</span><span>#무선품질</span><span>#자체벤치</span><span class="pcard__go">읽기 →</span></div>
       </a>
-      <a class="pcard reveal" href="papers/backtest-discipline-overfit.html" data-cat="method">
-        <div class="pcard__meta"><span class="pcard__cat">방법</span><span class="pcard__date">2026.07.29</span><span class="pcard__rt">약 9분</span><span class="pcard__pdf">PDF</span></div>
-        <h3 class="pcard__title">백테스트 규율: 성과를 부풀리는 세 가지 함정</h3>
-        <p class="pcard__excerpt">룩어헤드 편향, 생존편향, 다중검정을 합성 시계열 위에서 각각 통제 실험으로 분리해 실측했습니다. 21배까지 벌어지는 착시부터 시도 횟수를 세지 않은 유의성 검정의 오판까지, 백테스트 성과가 부풀려지는 구조를 숫자로 보여줍니다.</p>
-        <div class="pcard__tags"><span>#백테스트</span><span>#과최적화</span><span>#정량투자</span><span>#방법론</span><span>#데이터규율</span><span class="pcard__go">읽기 →</span></div>
+      <a class="pcard reveal" href="papers/interference-localization-sim.html" data-cat="method">
+        <div class="pcard__meta"><span class="pcard__cat">방법</span><span class="pcard__date">2026.07.28</span><span class="pcard__rt">약 6분</span></div>
+        <h3 class="pcard__title">간섭원 위치추정: 센서 몇 개면 몇 미터까지 짚을 수 있나 (시뮬레이션 노트)</h3>
+        <p class="pcard__excerpt">60x40m 공장 홀 모델에서 RSS·TDoA 위치추정을 500회 몬테카를로로 실측. 앵커 6개 + 30ns 동기 TDoA면 중앙값 오차 약 7m. 센서 배치가 나쁘면 3배 나빠지고, 협대역 재머는 TDoA가 원리적으로 실패한다는 것까지 확인했습니다.</p>
+        <div class="pcard__tags"><span>#간섭탐지</span><span>#위치추정</span><span>#공장무선</span><span>#시뮬레이션</span><span class="pcard__go">읽기 →</span></div>
       </a>
-      <a class="pcard reveal" href="papers/calibrated-confidence-signal-risk-score.html" data-cat="method">
-        <div class="pcard__meta"><span class="pcard__cat">방법</span><span class="pcard__date">2026.07.29</span><span class="pcard__rt">약 8분</span><span class="pcard__pdf">PDF</span></div>
-        <h3 class="pcard__title">신호 판단의 캘리브레이션된 리스크-스코어: 하드 임계 대신 신뢰할 수 있는 확률로</h3>
-        <p class="pcard__excerpt">오픈셋 RF 인증이 하드 게이트로는 NO-GO였던 뒤, 정직한 형태는 리스크-스코어 융합입니다. DroneRF(CC BY 4.0) 실측으로 확인한 것은 원시 확률의 기대보정오차(ECE)가 0.045 수준이었고, Platt·온도·isotonic 보정이 이를 절반 가까이 줄이면서도 판별력(AUROC)은 그대로 보존했다는 사실입니다.</p>
-        <div class="pcard__tags"><span>#캘리브레이션</span><span>#ECE</span><span>#리스크스코어</span><span>#신뢰도</span><span>#신호판단</span><span class="pcard__go">읽기 →</span></div>
+      <a class="pcard reveal" href="papers/one-shot-device-enrollment.html" data-cat="experiment">
+        <div class="pcard__meta"><span class="pcard__cat">실험 노트</span><span class="pcard__date">2026.07.28</span><span class="pcard__rt">약 5분</span></div>
+        <h3 class="pcard__title">한 번 등록으로 기기 식별: 원샷 등록에서 딥러닝이 고전을 실제로 이긴 지점</h3>
+        <p class="pcard__excerpt">등록 샘플이 단 1개뿐인 극한 조건(K=1)의 무선 기기 식별 자체벤치. 임베딩 학습 기반 0.696~0.739 vs 고전 특징 0.549. 저희가 딥러닝을 파는 유일한 기준인 &#x27;고전을 실측으로 이겼을 때&#x27;를 통과한 사례입니다.</p>
+        <div class="pcard__tags"><span>#RF지문</span><span>#원샷학습</span><span>#기기인증</span><span>#자체벤치</span><span class="pcard__go">읽기 →</span></div>
       </a>
-      <a class="pcard reveal" href="papers/classical-predictive-maintenance-acoustic-vibration.html" data-cat="industrial">
-        <div class="pcard__meta"><span class="pcard__cat">industrial</span><span class="pcard__date">2026.07.29</span><span class="pcard__rt">약 8분</span><span class="pcard__pdf">PDF</span></div>
-        <h3 class="pcard__title">고전 특징 기반 설비 예측정비: 진동은 실측, 음향은 합성으로 검증했습니다</h3>
-        <p class="pcard__excerpt">회전설비 결함 진단을 딥러닝 없이 물리 기반 고전 특징 + GBM으로 실측. 진동(CWRU 공개 데이터)은 저SNR에서 정확도 63.6% vs 베이스라인 18.6%, 음향은 합성 데이터로 같은 패턴을 재현하되 실측 검증(MIMII)이 남았음을 명시합니다.</p>
-        <div class="pcard__tags"><span>#예측정비</span><span>#베어링</span><span>#음향진단</span><span>#진동분석</span><span>#고정오탐률</span><span class="pcard__go">읽기 →</span></div>
+      <a class="pcard reveal" href="papers/openset-unknown-rejection.html" data-cat="experiment">
+        <div class="pcard__meta"><span class="pcard__cat">실험 노트</span><span class="pcard__date">2026.07.28</span><span class="pcard__rt">약 5분</span></div>
+        <h3 class="pcard__title">모르는 신호를 &#x27;모른다&#x27;고 말하는 기계: 복잡한 방법이 항상 이기지 않았습니다</h3>
+        <p class="pcard__excerpt">미지 신호원 거부(open-set) 실측 A/B. 극값이론 기반 고급 보정이 실측 무선 데이터에서 단순 거리 기반을 이기지 못했습니다. 병목은 점수 계산이 아니라 특징 공간이라는 결론과, 그걸 알아낸 실험 설계를 공개합니다.</p>
+        <div class="pcard__tags"><span>#openset</span><span>#스펙트럼감시</span><span>#이상탐지</span><span>#자체벤치</span><span class="pcard__go">읽기 →</span></div>
       </a>
-      <a class="pcard reveal" href="papers/device-free-wifi-csi-sensing.html" data-cat="sensing">
-        <div class="pcard__meta"><span class="pcard__cat">sensing</span><span class="pcard__date">2026.07.29</span><span class="pcard__rt">약 8분</span><span class="pcard__pdf">PDF</span></div>
-        <h3 class="pcard__title">장비 없는 WiFi-CSI 재실·낙상 감지: 실측 공개 데이터 검증</h3>
-        <p class="pcard__excerpt">카메라도 웨어러블도 없이, 기존 WiFi 링크의 채널 정보만으로 재실과 낙상을 구분할 수 있는지 두 공개 데이터셋에서 검증했습니다. 7종 활동 분류 95.2%, 낙상 탐지 AUROC 0.990, 재실 판별은 빈 방 대비 걷기 52배 신호 차이로 AUROC 1.000. 방을 옮기면 재보정이 필요하다는 한계까지 그대로 적었습니다.</p>
-        <div class="pcard__tags"><span>#WiFi-CSI</span><span>#재실감지</span><span>#낙상감지</span><span>#비접촉센싱</span><span class="pcard__go">읽기 →</span></div>
+      <a class="pcard reveal" href="papers/radar-detection-traffic-robustness.html" data-cat="method">
+        <div class="pcard__meta"><span class="pcard__cat">방법</span><span class="pcard__date">2026.07.28</span><span class="pcard__rt">약 6분</span></div>
+        <h3 class="pcard__title">레이더 신호 탐지, 트래픽이 섞이면 무너지는가: 오탐률 고정 판정법</h3>
+        <p class="pcard__excerpt">규격 레이더 파형 36종 테스트 매트릭스에서 무트래픽 36/36 통과, WiFi 트래픽 혼재 시 27/36으로 하락하는 것을 오탐률 고정 조건에서 실측. 실패 9건의 원인 귀속과 처방 검증 설계까지, 판정 기준을 사전에 못박는 방법론을 공개합니다.</p>
+        <div class="pcard__tags"><span>#스펙트럼감시</span><span>#DFS</span><span>#탐지방법론</span><span>#자체벤치</span><span class="pcard__go">읽기 →</span></div>
       </a>
-      <a class="pcard reveal" href="papers/drone-rf-detection-open-set-reality.html" data-cat="signal">
-        <div class="pcard__meta"><span class="pcard__cat">signal</span><span class="pcard__date">2026.07.29</span><span class="pcard__rt">약 8분</span><span class="pcard__pdf">PDF</span></div>
-        <h3 class="pcard__title">드론 RF 탐지의 오픈셋 현실: 낮은 융합 수에서 고전이 이긴다</h3>
-        <p class="pcard__excerpt">공개 데이터셋 DroneRF(CC BY 4.0)로 실측한 드론 오픈셋 거부. 단일 관측(K=1)에서 고전 DSP+GBM의 미지 드론 거부율이 딥러닝 대비 5.7배 높았습니다. 두 방법이 비슷해지는 것은 관측 수십 개를 누적해야 하는 K=20 이상뿐입니다.</p>
-        <div class="pcard__tags"><span>#드론탐지</span><span>#안티드론</span><span>#오픈셋</span><span>#RF</span><span>#보안</span><span class="pcard__go">읽기 →</span></div>
+      <a class="pcard reveal" href="papers/rf-fingerprint-asset-inventory.html" data-cat="experiment">
+        <div class="pcard__meta"><span class="pcard__cat">실험 노트</span><span class="pcard__date">2026.07.28</span><span class="pcard__rt">약 6분</span></div>
+        <h3 class="pcard__title">공장 무선망의 미등록 기기, RF 지문으로 얼마나 잡히나: 정직한 갭 리포트</h3>
+        <p class="pcard__excerpt">150대 실측 송신기 데이터(WiSig)로 &#x27;등록 기기 N대 + 미등록 침입 기기&#x27; 시나리오를 실측. 같은 수신기 조건 AUROC 0.80은 진짜 신호지만, 오탐 1% 조건 검출률 22%는 판매 기준에 못 미칩니다. 어디까지 되고 어디부터 안 되는지를 그대로 공개합니다.</p>
+        <div class="pcard__tags"><span>#RF지문</span><span>#OT보안</span><span>#자산인벤토리</span><span>#자체벤치</span><span class="pcard__go">읽기 →</span></div>
       </a>
-      <a class="pcard reveal" href="papers/edge-signal-processing-budget-attribution.html" data-cat="method">
-        <div class="pcard__meta"><span class="pcard__cat">방법</span><span class="pcard__date">2026.07.29</span><span class="pcard__rt">약 7분</span><span class="pcard__pdf">PDF</span></div>
-        <h3 class="pcard__title">엣지 신호처리 예산 귀속</h3>
-        <p class="pcard__excerpt">저가 엣지 코어 하나에서 40 MSPS를 처리하겠다는 약속, 실제로 어느 나노초 예산 위에 서 있을까요. 12단계 고전 RF 수신기 프론트엔드를 스테이지별로 실측해 병목을 귀속시키고, 최적화만으로는 목표에 닿지 못한다는 것을 숫자로 보여드립니다.</p>
-        <div class="pcard__tags"><span>#엣지컴퓨팅</span><span>#실시간처리</span><span>#신호처리</span><span>#프로파일링</span><span>#최적화</span><span class="pcard__go">읽기 →</span></div>
+      <a class="pcard reveal" href="papers/wifi-csi-presence-real-data.html" data-cat="experiment">
+        <div class="pcard__meta"><span class="pcard__cat">실험 노트</span><span class="pcard__date">2026.07.28</span><span class="pcard__rt">약 6분</span></div>
+        <h3 class="pcard__title">카메라·센서 추가 없이, 기존 WiFi로 재실·움직임 감지: 실측 노트</h3>
+        <p class="pcard__excerpt">공개 실측 WiFi 채널데이터(OPERAnet, 퍼블릭 도메인)로 재실·모션 감지 체인을 검증. 빈 방 대비 걷기 52배, 앉기·서기 13배의 모션 신호, 10초 윈도우 분리도 AUROC 1.000. 단일 방 결과라는 한계까지 그대로 적었습니다.</p>
+        <div class="pcard__tags"><span>#WiFiCSI</span><span>#재실감지</span><span>#스마트빌딩</span><span>#자체벤치</span><span class="pcard__go">읽기 →</span></div>
       </a>
-      <a class="pcard reveal" href="papers/gbm-vs-dl-factor-returns.html" data-cat="research">
-        <div class="pcard__meta"><span class="pcard__cat">리서치</span><span class="pcard__date">2026.07.29</span><span class="pcard__rt">약 8분</span><span class="pcard__pdf">PDF</span></div>
-        <h3 class="pcard__title">팩터 수익 예측: 부스팅 vs 딥러닝</h3>
-        <p class="pcard__excerpt">Fama-French 일간 팩터 데이터로 그래디언트 부스팅과 얕은 신경망을 시간순 분할로 맞세웠습니다. 훈련 60일에서는 신경망 R2가 -2.6까지 무너지고 부스팅은 -0.07로 훨씬 완만했지만, 훈련 데이터가 4천~8천일로 늘면 그 우위가 뒤집힙니다.</p>
-        <div class="pcard__tags"><span>#finance</span><span>#factors</span><span>#gbm</span><span>#tabular</span><span class="pcard__go">읽기 →</span></div>
+      <a class="pcard reveal" href="papers/anomaly-detection-rules-first.html" data-cat="experiment">
+        <div class="pcard__meta"><span class="pcard__cat">실험 노트</span><span class="pcard__date">2026.07.26</span><span class="pcard__rt">약 6분</span></div>
+        <h3 class="pcard__title">이상탐지, 우리는 규칙 기반으로 먼저 갑니다</h3>
+        <p class="pcard__excerpt">제조 현장의 불량·설비 이상을 잡을 때 딥러닝부터 꺼내지 않는 이유. 측정 게이트에서 규칙 기반이 먼저 통과해야 하는 근거를 실험 노트로 정리했습니다.</p>
+        <div class="pcard__tags"><span>#이상탐지</span><span>#제조AX</span><span>#게이지방식</span><span>#PoC</span><span class="pcard__go">읽기 →</span></div>
       </a>
-      <a class="pcard reveal" href="papers/int8-quantization-signal-models-qat-vs-ptq.html" data-cat="method">
-        <div class="pcard__meta"><span class="pcard__cat">방법</span><span class="pcard__date">2026.07.29</span><span class="pcard__rt">약 7분</span><span class="pcard__pdf">PDF</span></div>
-        <h3 class="pcard__title">신호 모델 엣지 배치: INT8 QAT 대 PTQ</h3>
-        <p class="pcard__excerpt">작은 변조분류 CNN 하나로 INT8 양자화의 두 경로를 실측했습니다. 학습 후 양자화(PTQ)는 정확도를 31%p 무너뜨렸고, 양자화 인식 학습(QAT)은 그 손실의 94.5%를 되찾았습니다. 크기·지연 이득은 두 경로가 동일했습니다.</p>
-        <div class="pcard__tags"><span>#양자화</span><span>#INT8</span><span>#엣지배치</span><span>#QAT</span><span>#온프렘</span><span class="pcard__go">읽기 →</span></div>
-      </a>
-      <a class="pcard reveal" href="papers/measurable-signal-intelligence-whitepaper.html" data-cat="whitepaper">
-        <div class="pcard__meta"><span class="pcard__cat">whitepaper</span><span class="pcard__date">2026.07.29</span><span class="pcard__rt">약 20분</span><span class="pcard__pdf">PDF</span></div>
-        <h3 class="pcard__title">측정 가능한 신호·AI 지능 (백서 v4)</h3>
-        <p class="pcard__excerpt">오디오 지문식별, WiFi-CSI 재실·낙상 감지, RF 지문 검증, 설비 예지보전, 엣지 양자화, 엣지 VLM 온프렘 배치, 대규모 에이전트 검색, 금융 백테스트 규율까지 20편의 논문을 하나의 측정 로직으로 묶은 2i의 플래그십 백서 v4입니다. 같은 4비트 정밀도가 런타임만 바꿔도 디코드 속도가 190배 갈린다는 새 실측을 닫힌 결론으로 담았습니다.</p>
-        <div class="pcard__tags"><span>#백서</span><span>#신호지능</span><span>#측정규율</span><span>#AX전략</span><span>#게이지방식</span><span>#엣지VLM</span><span class="pcard__go">읽기 →</span></div>
-      </a>
-      <a class="pcard reveal" href="papers/probe-point-fingerprint-ablation.html" data-cat="signal">
-        <div class="pcard__meta"><span class="pcard__cat">signal</span><span class="pcard__date">2026.07.29</span><span class="pcard__rt">약 8분</span><span class="pcard__pdf">PDF</span></div>
-        <h3 class="pcard__title">RF 지문은 수신 체인 어디서 살고 죽는가</h3>
-        <p class="pcard__excerpt">수신 체인 7개 지점(P0 원시 IQ부터 P7 복조 심볼까지)마다 지문 식별 모델을 독립 훈련해 실측했습니다. 통념과 반대로 지문은 체인 앞단에서 가장 강했고, 동기화 단계를 지날수록 지워져 마지막 지점에서는 검증 성능이 우연 수준(EER 0.499)까지 떨어졌습니다.</p>
-        <div class="pcard__tags"><span>#RF지문</span><span>#수신체인</span><span>#절제연구</span><span>#프로브포인트</span><span class="pcard__go">읽기 →</span></div>
-      </a>
-      <a class="pcard reveal" href="papers/regime-detection-fixed-false-alarm.html" data-cat="research">
-        <div class="pcard__meta"><span class="pcard__cat">리서치</span><span class="pcard__date">2026.07.29</span><span class="pcard__rt">약 8분</span><span class="pcard__pdf">PDF</span></div>
-        <h3 class="pcard__title">고정 오탐률 레짐 탐지: 시장 국면 경보를 CFAR 규율로</h3>
-        <p class="pcard__excerpt">레이더 신호탐지의 CFAR(고정 오탐률) 규율을 시장 국면 경보에 옮겨와 합성 마르코프 전환 실험으로 실측했습니다. 나이브 임계값은 목표 10%에서 4.53%로 빗나갔지만, CFAR 방식은 세 목표 수준 모두에서 0.02퍼센트포인트 안팎의 오차로 정확히 보정됩니다.</p>
-        <div class="pcard__tags"><span>#레짐탐지</span><span>#CFAR</span><span>#오탐률</span><span>#캘리브레이션</span><span>#신호탐지</span><span class="pcard__go">읽기 →</span></div>
-      </a>
-      <a class="pcard reveal" href="papers/reproducible-openset-evaluation-protocol.html" data-cat="method">
-        <div class="pcard__meta"><span class="pcard__cat">방법</span><span class="pcard__date">2026.07.29</span><span class="pcard__rt">약 8분</span><span class="pcard__pdf">PDF</span></div>
-        <h3 class="pcard__title">재현 가능한 오픈셋 평가 프로토콜: 왜 closed-set 정확도로 인증을 주장하면 안 되는가</h3>
-        <p class="pcard__excerpt">같은 RF 지문 모델이 낙관적 프로토콜에서는 AUROC 0.9994를, 등록 목록에 없는 기기가 임의로 사칭을 시도하는 최악조건·장치분리 프로토콜에서는 TAR@FAR=1e-3 0.2235를 냅니다. 숫자를 믿을 수 있는지는 모델이 아니라 평가 프로토콜이 정한다는 것을 실측으로 보이는 방법론 논문입니다.</p>
-        <div class="pcard__tags"><span>#평가프로토콜</span><span>#오픈셋</span><span>#검증</span><span>#재현성</span><span class="pcard__go">읽기 →</span></div>
-      </a>
-      <a class="pcard reveal" href="papers/sharded-index-million-song-content-id.html" data-cat="media">
-        <div class="pcard__meta"><span class="pcard__cat">media</span><span class="pcard__date">2026.07.29</span><span class="pcard__rt">약 8분</span><span class="pcard__pdf">PDF</span></div>
-        <h3 class="pcard__title">100만곡 규모 오디오 콘텐츠ID를 위한 샤딩 인덱스</h3>
-        <p class="pcard__excerpt">오디오 콘텐츠ID 인덱스를 100만곡으로 키우면 인메모리 딕셔너리 하나로는 약 868GB가 필요합니다. 같은 해시 테이블을 해시 키 기준으로 쪼개 정확도를 그대로 지키면서 노드 한 대가 짊어질 메모리를 실측으로 묶어봤습니다.</p>
-        <div class="pcard__tags"><span>#오디오지문</span><span>#샤딩인덱스</span><span>#스케일링</span><span>#콘텐츠ID</span><span>#LSH</span><span class="pcard__go">읽기 →</span></div>
-      </a>
-      <a class="pcard reveal" href="papers/skill-retrieval-at-scale.html" data-cat="research">
-        <div class="pcard__meta"><span class="pcard__cat">리서치</span><span class="pcard__date">2026.07.29</span><span class="pcard__rt">약 9분</span><span class="pcard__pdf">PDF</span></div>
-        <h3 class="pcard__title">대규모 스킬 코퍼스 라우팅: BM25 대 하이브리드 검색</h3>
-        <p class="pcard__excerpt">도구가 1000개를 넘는 에이전트에서 검색 단계가 곧 정확도의 상한선입니다. 완전히 공개된 합성 코퍼스로 BM25, 유사-의미 검색, 하이브리드 RRF를 같은 질의로 실측하고, 하이브리드가 항상 이기지는 않는다는 결과까지 그대로 공개합니다.</p>
-        <div class="pcard__tags"><span>#retrieval</span><span>#routing</span><span>#bm25</span><span>#rrf</span><span class="pcard__go">읽기 →</span></div>
-      </a>
-      <a class="pcard reveal" href="papers/streaming-vlm-quantization-consumer-silicon.html" data-cat="benchmark">
-        <div class="pcard__meta"><span class="pcard__cat">benchmark</span><span class="pcard__date">2026.07.29</span><span class="pcard__rt">약 10분</span><span class="pcard__pdf">PDF</span></div>
-        <h3 class="pcard__title">엣지 실리콘에서 스트리밍 VLM 양자화</h3>
-        <p class="pcard__excerpt">같은 4비트 정밀도인데 런타임만 바꾸자 디코드 속도가 190배 빨라졌습니다. 4B급 스트리밍 VLM(microsoft/Mage-VL)을 소비자용 Apple 실리콘 Mac에서 실측해, 양자화만으로는 부족하고 융합커널 런타임이 있어야 작고도 빠른 조합이 나온다는 것을 데이터로 닫았습니다.</p>
-        <div class="pcard__tags"><span>#vlm</span><span>#quantization</span><span>#edge</span><span>#apple-silicon</span><span>#mlx</span><span class="pcard__go">읽기 →</span></div>
-      </a>
-      <a class="pcard reveal" href="papers/wifi-csi-cross-environment-calibration.html" data-cat="sensing">
-        <div class="pcard__meta"><span class="pcard__cat">sensing</span><span class="pcard__date">2026.07.29</span><span class="pcard__rt">약 8분</span><span class="pcard__pdf">PDF</span></div>
-        <h3 class="pcard__title">WiFi-CSI 환경 이동과 소량 보정</h3>
-        <p class="pcard__excerpt">환경이 바뀌면 WiFi-CSI 센싱 정확도는 실측으로 55%까지 무너졌습니다. 클래스당 50개(약 350개) 목표 도메인 라벨을 더하는 것만으로 그 격차의 80%를 되찾았습니다.</p>
-        <div class="pcard__tags"><span>#WiFi-CSI</span><span>#도메인적응</span><span>#소량학습</span><span>#보정</span><span>#재실감지</span><span class="pcard__go">읽기 →</span></div>
+      <a class="pcard reveal" href="papers/gauge-method-ax-as-process.html" data-cat="method">
+        <div class="pcard__meta"><span class="pcard__cat">방법</span><span class="pcard__date">2026.07.25</span><span class="pcard__rt">약 7분</span></div>
+        <h3 class="pcard__title">AX를 감이 아니라 공정으로: 2i 게이지 방식</h3>
+        <p class="pcard__excerpt">AI 전환이 실패하는 가장 흔한 이유는 기술이 아니라 순서입니다. 측정 게이트, 실증 게이트, 이관 게이트로 위험을 단계마다 끊어내는 2i의 작업 방식을 정리합니다.</p>
+        <div class="pcard__tags"><span>#AX전략</span><span>#게이지방식</span><span>#진단</span><span>#PoC</span><span>#정부바우처</span><span class="pcard__go">읽기 →</span></div>
       </a>
     </div>
     </div>
   </section>
 </main>
-<script src="hero3d.js" defer></script>
 
 <footer class="foot">
   <div class="wrap foot__inner">
