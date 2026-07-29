@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<script>(function(){try{var t=localStorage.getItem("theme");if(!t&&window.matchMedia&&matchMedia("(prefers-color-scheme: dark)").matches)t="dark";if(t)document.documentElement.setAttribute("data-theme",t);}catch(e){}})();</script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>RF 지문은 수신 체인 어디서 살고 죽는가 · 2i</title>
+<meta name="description" content="수신 체인 7개 지점(P0 원시 IQ부터 P7 복조 심볼까지)마다 지문 식별 모델을 독립 훈련해 실측했습니다. 통념과 반대로 지문은 체인 앞단에서 가장 강했고, 동기화 단계를 지날수록 지워져 마지막 지점에서는 검증 성능이 우연 수준(EER 0.499)까지 떨어졌습니다.">
+<meta property="og:title" content="RF 지문은 수신 체인 어디서 살고 죽는가 · 2i">
+<meta property="og:description" content="수신 체인 7개 지점(P0 원시 IQ부터 P7 복조 심볼까지)마다 지문 식별 모델을 독립 훈련해 실측했습니다. 통념과 반대로 지문은 체인 앞단에서 가장 강했고, 동기화 단계를 지날수록 지워져 마지막 지점에서는 검증 성능이 우연 수준(EER 0.499)까지 떨어졌습니다.">
+<meta property="og:type" content="article">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23111827'/%3E%3Ctext x='16' y='22' font-family='monospace' font-size='16' font-weight='700' fill='%23e08a2b' text-anchor='middle'%3E2i%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../styles.css?v=14">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js" onload="renderMathInElement(document.body,{delimiters:[{left:'$$',right:'$$',display:true},{left:'$',right:'$',display:false},{left:'\\[',right:'\\]',display:true},{left:'\\(',right:'\\)',display:false}]})"></script>
+</head>
+<body>
+
+<header class="nav">
+  <div class="wrap nav__inner">
+    <a class="brand" href="../" aria-label="2i 홈">
+      <span class="brand__mark">2i</span>
+      <span class="brand__tag">AX 컨설팅</span>
+    </a>
+    <button class="nav__burger" type="button" aria-expanded="false" aria-controls="navLinks" aria-label="메뉴 열기"><span></span><span></span><span></span></button>
+    <nav class="nav__links" id="navLinks" aria-label="주요 메뉴">
+      <a href="../cases.html">사례</a>
+      <a href="../comms.html">통신 기술</a>
+      <a href="../cloud.html">클라우드 기술</a>
+      <a href="../finance.html">금융 기술</a>
+      <a href="../papers.html" aria-current="page">논문·실험</a>
+      <a href="../about.html">회사소개</a>
+      <button class="nav__theme" type="button" aria-label="테마 전환" title="테마 전환"><svg class="ic-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg><svg class="ic-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg></button>
+      <a class="nav__lang" href="../en/">EN</a>
+      <a class="nav__cta btn btn--signal" href="../index.html#contact">상담 신청</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <article class="article wrap">
+    <a class="article__back" href="../papers.html">← 논문·실험 게시판</a>
+    <div class="article__head">
+      <div class="pcard__meta"><span class="pcard__cat">signal</span><span class="pcard__date">2026.07.29</span><span class="pcard__rt">약 8분</span></div>
+      <h1 class="article__title">RF 지문은 수신 체인 어디서 살고 죽는가</h1>
+      <p class="article__excerpt">수신 체인 7개 지점(P0 원시 IQ부터 P7 복조 심볼까지)마다 지문 식별 모델을 독립 훈련해 실측했습니다. 통념과 반대로 지문은 체인 앞단에서 가장 강했고, 동기화 단계를 지날수록 지워져 마지막 지점에서는 검증 성능이 우연 수준(EER 0.499)까지 떨어졌습니다.</p>
+      <div class="pcard__tags"><span>#RF지문</span><span>#수신체인</span><span>#절제연구</span><span>#프로브포인트</span></div>
+      <a class="btn btn--ghost article__pdf" href="/papers/pdf/probe-point-fingerprint-ablation-ko.pdf" target="_blank" rel="noopener">PDF 원문 (국문) <span class="arrow">↓</span></a>
+      <a class="btn btn--ghost article__pdf" href="/papers/pdf/probe-point-fingerprint-ablation-en.pdf" target="_blank" rel="noopener">PDF (English) <span class="arrow">↓</span></a>
+    </div>
+    <div class="article__body prose">
+<h2 id="_1">무엇을 재는가</h2>
+<p>RF 지문(무선기기 하드웨어 임퍼펙션 기반 개체 식별)을 실제 수신기 소프트웨어에 넣을
+때 흔히 아무 문제 없이 넘기는 질문이 하나 있습니다. 수신 체인의 표준 처리 단계
+- 자동이득제어(AGC), 반송파 주파수 오프셋(CFO) 보정, 심볼 동기, 반송파 위상 복구 -
+를 다 통과한 신호에서 지문을 뽑아도 되는가, 오히려 잡음이 정리돼 더 나은가 하는
+질문입니다. 통신 성능 관점에서는 이 단계들을 다 거친 신호가 언제나 더 "깨끗"하므로,
+지문도 그 정제된 신호에서 뽑는 편이 자연스럽다는 직관이 널리 퍼져 있습니다.</p>
+<p>우리는 이 직관을 프로브 포인트 절제 실험(probe-point ablation)으로 직접 검증했습니다.
+수신 체인을 7개 지점(P0 원시 IQ, P1 AGC 이후, P2 코스 CFO 보정 이후, P3 정합필터
+이후, P4 심볼 동기 이후, P5 반송파 위상 복구 이후, P7 최종 복조 심볼 - 등화기 단계인
+P6은 이번 데이터 생성 파이프라인에서 생략됨)로 나누어, 각 지점의 신호마다 독립적으로
+같은 구조의 소형 1D-CNN을 훈련하고 같은 지표로 비교했습니다. 데이터는 합성 장비군
+데이터셋(가상 송신기 10대, 가상 수신기 2대, 송신기당 패킷 60개, 복수 채널조건, 고정
+시드)이고, 8대는 등록(known) 송신기, 2대는 비등록(unknown) 송신기로 두어 분류
+정확도뿐 아니라 검증(등록/비등록 구분) 성능도 함께 측정했습니다.</p>
+<h2 id="-">결과 - 지문은 체인 뒤로 갈수록 지워졌습니다</h2>
+<p>결과는 통념과 정반대였습니다. 검증 관점의 핵심 지표인 등가오류율(EER)은 체인 맨
+앞단인 P0(원시 IQ)에서 0.307, P1(AGC 이후)에서 0.306으로 가장 낮았습니다(낮을수록
+좋음, 우연 수준은 0.5). 신호가 CFO 보정(P2, EER 0.330), 정합필터(P3, EER 0.410)를
+지나면서 EER은 점점 나빠졌고, 심볼 동기(P4, EER 0.489)와 반송파 위상 복구(P5, EER
+0.493)를 지난 뒤에는 이미 우연에 근접했습니다. 최종 복조 심볼 단계인 P7에서는 EER이
+0.499에 도달했는데, 이는 검증 관점에서 우연(0.5)과 통계적으로 구별되지 않는 수준입니다.
+분류 정확도(8-way, 우연 0.125)도 같은 패턴을 보였습니다 - P0/P1에서 0.39 근방이던
+정확도가 P4/P5/P7에서는 0.13-0.17까지 떨어졌습니다.</p>
+<p>이 하락이 특정 가상 수신기의 특성을 외운 결과(과적합)가 아니라는 점도 확인했습니다.
+학습에 쓴 수신기(rx0)에서의 정확도와, 학습에 전혀 등장하지 않은 다른 수신기(rx1)에서의
+정확도 차이(gap)가 모든 지점에서 -0.008~0.030으로 작게 유지됐습니다. 즉 이 사다리는
+수신기별 노이즈가 아니라 진짜 지문 정보가 체인을 지나며 소멸하는 현상을 보여줍니다.
+다만 흥미로운 예외가 하나 있었습니다. 비등록 송신기의 오픈셋 배제 지표(unknown mean
+maxcos)는 체인 뒤로 갈수록 오히려 더 나아지는 것처럼 보였는데, 자세히 보면 이는
+등록 8-class 자체가 서로 구분되지 않을 정도로 뭉쳐버린 부작용이었습니다 - 판별력이
+무너진 상태에서 "덜 가까워 보이는 것"을 배제력 향상으로 오독하기 쉬운 함정입니다.</p>
+<p>물리적으로는 당연한 결과입니다. 우리가 합성한 지문은 IQ 불균형, PA 비선형성, CFO,
+위상잡음 계열의 임퍼펙션인데, 수신 체인의 CFO 보정과 심볼/위상 복구는 정의상 정확히
+이 임퍼펙션들을 추정해서 지우는 과정입니다. 통신 목적(비트오류율 최소화)과 지문의
+정의(개체 고유의 재현 가능한 편차)가 근본적으로 충돌할 수 있다는 뜻입니다.</p>
+<h2 id="-_1">실제 하드웨어 선행연구와는 반대 방향 - 왜 그런가</h2>
+<p>흥미로운 점은 실제 하드웨어를 대상으로 한 선행연구가 정반대 방향을 보고했다는
+것입니다. 그 연구는 동기화(timing/carrier recovery) 이후 지점이 오픈셋 판정에 더
+유리하다고 밝혔습니다. 우리는 이 차이를 "누가 맞다"로 단정하지 않고, 그럴듯한 물리적
+이유를 짚었습니다. 실제 하드웨어의 지문은 동기화가 교정하지 못하는 성분(PA 메모리
+효과 등)을 포함하면서, 동시에 동기화가 채널 잡음이라는 방해 요인을 제거해 순효과가
+양(+)이 됐을 가능성이 있습니다. 반면 우리의 합성 지문은 동기화가 정의상 완벽하게
+교정할 수 있는 성분에 편중돼 있고, 채널 방해 요인 자체도 이미 작아서(전 지점 gap
+0.03 미만) 순효과가 음(−)이 된 것으로 보입니다. 이는 우리의 시뮬레이션이 실제
+하드웨어보다 "너무 교정 가능하게" 설계됐을 가능성을 인정해야 한다는 뜻이기도 합니다.</p>
+<h2 id="_2">함의와 한계</h2>
+<p>실천적 함의는 명확합니다. 적어도 CFO/위상잡음 계열 임퍼펙션을 다루는 지문
+검증 스택이라면, 취득 지점을 AGC 통과 직후, 동기화 체인 이전으로 당기는 것이
+안전한 기본 선택입니다. 다만 절대 식별성 자체는 약합니다 - 최고 지점인 P0도 8-way
+분류 정확도가 0.4 미만입니다. 이는 합성 장비군의 임퍼펙션 편차가 보수적으로
+설계됐거나 모델·창 길이가 부족했을 가능성을 시사하며, 이 결과를 실전 인증 시스템의
+성능 추정치로 바로 쓸 수는 없습니다. 이 논문은 절대값보다 지점 간 상대 순서를,
+그리고 실측치와 그 한계를 함께 공개합니다. 후속 과제는 두 가지입니다 - 합성
+임퍼펙션의 다양성을 넓히고 동기화에 견디는 성분을 추가해 이 사다리를 다시 측정하는
+것, 그리고 실제 공중전파 데이터로 같은 절차를 적용해 시뮬레이션-실측 간극을 직접
+재는 것입니다.</p>
+    </div>
+    <div class="article__cta">
+      <p>이 방법을 당신 현장의 숫자로 다시 재보고 싶다면.</p>
+      <a class="btn btn--signal" href="../index.html#contact">30분 진단 상담 <span class="arrow">→</span></a>
+      <a class="btn btn--ghost" href="../papers.html">다른 기록 보기</a>
+    </div>
+  </article>
+</main>
+
+<footer class="foot">
+  <div class="wrap foot__inner">
+    <div>
+      <div class="brand"><span class="brand__mark">2i</span><span class="brand__tag">AX 컨설팅</span></div>
+      <div class="foot__mono" style="margin-top:0.6rem">중소·중견 제조·유통을 위한 AI 전환</div>
+    </div>
+    <nav class="foot__links" aria-label="하단 메뉴">
+      <a href="../index.html#method">방식</a>
+      <a href="../comms.html">통신</a>
+      <a href="../papers.html">논문·실험</a>
+      <a href="../index.html#voucher">정부 바우처</a>
+      <a href="https://github.com/2icorp" target="_blank" rel="noopener">GitHub</a>
+      <a href="../en/">EN</a>
+    </nav>
+  </div>
+</footer>
+
+<script src="../main.js"></script>
+</body>
+</html>
