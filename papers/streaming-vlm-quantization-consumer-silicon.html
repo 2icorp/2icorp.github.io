@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<script>(function(){try{var t=localStorage.getItem("theme");if(!t&&window.matchMedia&&matchMedia("(prefers-color-scheme: dark)").matches)t="dark";if(t)document.documentElement.setAttribute("data-theme",t);}catch(e){}})();</script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>엣지 실리콘에서 스트리밍 VLM 양자화 · 2i</title>
+<meta name="description" content="4B급 스트리밍 VLM(microsoft/Mage-VL)을 데이터센터가 아니라 소비자용 Apple 실리콘 Mac에 직접 올려 측정했습니다. 양자화는 디바이스 메모리를 56% 줄였지만 같은 조건에서 디코드 속도는 오히려 96%까지 느려졌습니다.">
+<meta property="og:title" content="엣지 실리콘에서 스트리밍 VLM 양자화 · 2i">
+<meta property="og:description" content="4B급 스트리밍 VLM(microsoft/Mage-VL)을 데이터센터가 아니라 소비자용 Apple 실리콘 Mac에 직접 올려 측정했습니다. 양자화는 디바이스 메모리를 56% 줄였지만 같은 조건에서 디코드 속도는 오히려 96%까지 느려졌습니다.">
+<meta property="og:type" content="article">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23111827'/%3E%3Ctext x='16' y='22' font-family='monospace' font-size='16' font-weight='700' fill='%23e08a2b' text-anchor='middle'%3E2i%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../styles.css?v=14">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js" onload="renderMathInElement(document.body,{delimiters:[{left:'$$',right:'$$',display:true},{left:'$',right:'$',display:false},{left:'\\[',right:'\\]',display:true},{left:'\\(',right:'\\)',display:false}]})"></script>
+</head>
+<body>
+
+<header class="nav">
+  <div class="wrap nav__inner">
+    <a class="brand" href="../" aria-label="2i 홈">
+      <span class="brand__mark">2i</span>
+      <span class="brand__tag">AX 컨설팅</span>
+    </a>
+    <button class="nav__burger" type="button" aria-expanded="false" aria-controls="navLinks" aria-label="메뉴 열기"><span></span><span></span><span></span></button>
+    <nav class="nav__links" id="navLinks" aria-label="주요 메뉴">
+      <a href="../cases.html">사례</a>
+      <a href="../comms.html">통신 기술</a>
+      <a href="../cloud.html">클라우드 기술</a>
+      <a href="../finance.html">금융 기술</a>
+      <a href="../papers.html" aria-current="page">논문·실험</a>
+      <a href="../about.html">회사소개</a>
+      <button class="nav__theme" type="button" aria-label="테마 전환" title="테마 전환"><svg class="ic-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg><svg class="ic-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg></button>
+      <a class="nav__lang" href="../en/">EN</a>
+      <a class="nav__cta btn btn--signal" href="../index.html#contact">상담 신청</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <article class="article wrap">
+    <a class="article__back" href="../papers.html">← 논문·실험 게시판</a>
+    <div class="article__head">
+      <div class="pcard__meta"><span class="pcard__cat">benchmark</span><span class="pcard__date">2026.07.29</span><span class="pcard__rt">약 8분</span></div>
+      <h1 class="article__title">엣지 실리콘에서 스트리밍 VLM 양자화</h1>
+      <p class="article__excerpt">4B급 스트리밍 VLM(microsoft/Mage-VL)을 데이터센터가 아니라 소비자용 Apple 실리콘 Mac에 직접 올려 측정했습니다. 양자화는 디바이스 메모리를 56% 줄였지만 같은 조건에서 디코드 속도는 오히려 96%까지 느려졌습니다.</p>
+      <div class="pcard__tags"><span>#vlm</span><span>#quantization</span><span>#edge</span><span>#apple-silicon</span><span>#mlx</span></div>
+      <a class="btn btn--ghost article__pdf" href="/papers/pdf/streaming-vlm-quantization-consumer-silicon-ko.pdf" target="_blank" rel="noopener">PDF 원문 (국문) <span class="arrow">↓</span></a>
+      <a class="btn btn--ghost article__pdf" href="/papers/pdf/streaming-vlm-quantization-consumer-silicon-en.pdf" target="_blank" rel="noopener">PDF (English) <span class="arrow">↓</span></a>
+    </div>
+    <div class="article__body prose">
+<h2 id="_1">무엇을 재는가</h2>
+<p>SOTA 수준의 4B급 스트리밍 비전-언어모델(VLM)을 데이터센터 GPU가 아니라
+소비자용 Apple 실리콘 Mac 한 대에 올리면 무엇이 벌어질까요. 대상은
+Apache-2.0 라이선스로 공개된 <code>microsoft/Mage-VL</code>입니다. 이 라이선스가
+핵심입니다. 연구 데모가 아니라 상업적으로 패키징해 고객사에 실제로
+배치할 수 있는 모델이라는 뜻이고, 그래서 "이걸 저가 하드웨어에 올리면
+무엇을 얻고 무엇을 내주는가"라는 질문이 사업적으로도 의미를 가집니다.
+Mage-VL은 자체 시각 인코더 Mage-ViT(4B급)와 <code>Qwen3-4B-Instruct-2507</code>
+언어 백본을 결합한 구조로, 실제 로드해 확인한 파라미터 수는
+4.742B였습니다. 스트리밍 입력에서 능동적으로 주목할 순간을 트리거하는
+"StreamMind" 이벤트 게이트(1.07GB)와, 비디오 프레임 처리를 가속하는
+DCVC-RT 신경 비디오 코덱(C++/CUDA 확장)도 함께 딸려 있습니다.</p>
+<p>Apple M4 Pro(통합 메모리 48GB) 위에서 <code>transformers</code> 5.12 + <code>torch</code>
+2.12 + Metal(MPS) 스택으로 bf16, INT8, INT4 세 가지 정밀도의 이미지
+이해 추론을 실제로 돌렸습니다. 양자화는 <code>optimum-quanto</code>의 weight-only
+경로로 언어모델 서브모듈에만 적용했고, 시각 인코더는 세 경로 모두
+bf16으로 고정했습니다. 테스트 입력은 우리가 직접 만든 합성(synthetic)
+768×512 "역 전광판" 이미지입니다. 제목 "CENTRAL STATION - DEPARTURES"
+아래 세 줄("14:05/PLATFORM 2/ON TIME" 등)과 기차 픽토그램, 빨간 STOP
+표지판까지 정답을 우리가 정확히 알고 있는 장면을 만들어, 모델이 실제로
+화면을 읽었는지 정성적으로 대조했습니다. 실사진이 아니라는 점을 숨기지
+않습니다.</p>
+<h2 id="-">정직한 발견 - 메모리는 줄었는데 속도도 줄었습니다</h2>
+<p>가장 먼저 확인한 것은 좋은 소식입니다. 4.7B급 스트리밍 VLM이 데이터센터
+GPU 없이 소비자용 Mac에서 로컬로 실제로 동작하고, 이미지/프레임 이해
+결과도 정확했습니다. 그리고 양자화는 기대대로 메모리를 줄였습니다.
+디바이스 메모리는 bf16 9.49GB에서 INT8 5.86GB(38% 감소), INT4
+4.15GB(56% 감소)로 확실히 내려갔고, 온디스크 크기도 9.8GB에서 커뮤니티
+MLX 4비트 체크포인트 기준 2.9GB까지 줄어드는 여지를 보였습니다. 세
+정밀도 모두에서 답변 품질은 합성 테스트 이미지의 핵심 내용(전광판
+제목·시각·플랫폼·상태 정보)을 정확히 유지했습니다.</p>
+<p>여기까지는 흔히 기대하는 "양자화하면 더 작고 더 빠르다"는 그림입니다.
+하지만 이 실험의 진짜 발견은 그 기대의 뒷반쪽을 정면으로 뒤집습니다.
+같은 조건에서 디코드 처리량은 bf16 13.01 tok/s에서 INT8 2.31 tok/s,
+INT4 0.47 tok/s로 오히려 느려졌습니다. INT4는 bf16 대비 96% 느립니다.
+첫 토큰까지 걸리는 시간(TTFT)도 흥미로운 비대칭을 보였는데, INT8은
+1.77초로 bf16(2.94초)보다 오히려 짧았지만 INT4는 9.91초로 bf16보다도
+훨씬 길어졌습니다.</p>
+<p>이 역전의 원인은 하드웨어가 아니라 커널입니다. <code>optimum-quanto</code>의
+weight-only 양자화는 가중치를 저비트로 저장하지만, 실제 행렬곱을 할
+때는 그 값을 다시 bf16으로 즉석에서 역양자화한 뒤 계산합니다. Apple
+Metal(MPS)에는 이 저비트 표현을 직접 받아 계산하는 융합 저비트 행렬곱
+커널이 없어서, 메모리 대역폭은 줄어들지만 매 순전파마다 역양자화라는
+추가 비용이 붙습니다. 디코드는 토큰 하나마다 전체 가중치를 다시 통과하는
+구조라 이 비용이 128번 반복 청구되고, 프리필은 419개 토큰을 한 배치로
+처리해 오버헤드가 덜 누적됩니다. 그래서 결론은 이렇습니다. 메모리와
+속도는 서로 다른 축이고, 엣지 양자화가 실제 속도 이득까지 내려면 저비트
+표현을 직접 계산하는 융합 커널을 가진 런타임(MLX, <code>llama.cpp</code>/GGUF
+계열)이 필요합니다. 우리가 시도한 커뮤니티 MLX INT4 체크포인트가 정확히
+그 후보였지만, <code>mlx-vlm</code> 메인라인이 아직 커스텀 아키텍처 <code>mage_vl</code>을
+등록하지 않아("Model type mage_vl not supported") 로드조차 되지 않았고,
+그래서 온디스크 크기 2.9GB만 확인했을 뿐 속도는 측정하지 못했습니다.</p>
+<p>스코프도 정직하게 밝힙니다. 스트리밍 비디오의 빠른 경로(DCVC-RT 신경
+코덱)는 CUDA <code>.cu</code> 확장에 묶여 있어 Apple Metal에서 애초에 시도하지
+않았습니다. 이는 모델의 결함이 아니라 이식성의 경계이며, "작고도 빠른"
+조합을 얻으려면 <code>mlx-vlm</code>에 <code>mage_vl</code> 아키텍처를 포팅하는 작업이 다음
+과제로 남습니다. 품질 판정도 합성 이미지 한 장, 단일 프롬프트에 대한
+정성적 대조라는 점, 그리고 저자들이 8×B200 데이터센터에서 보고한 수치
+(시각 토큰 75% 이상 절감, 최대 3.5배 속도 향상, Food-101/ImageNet/
+SoccerNet/OVO-Bench 벤치마크)는 우리 실측과 조건이 전혀 달라 직접
+비교하지 않는다는 점도 논문 본문의 한계 절에 명시했습니다.</p>
+<h2 id="_2">왜 이게 중요한가</h2>
+<p>매장 운영이나 순찰·검사 현장처럼 카메라가 이미 있고 데이터센터 GPU는
+둘 수 없는 온프렘 배치 현장에서, 이 실측 레시피, 즉 양자화를 적용하고
+융합 커널 런타임을 선택하고 이미지/프레임과 스트리밍의 스코프를 명확히
+나누는 작업이 SOTA급 VLM을 저렴하고 주권을 지킬 수 있는 온프렘 하드웨어
+위에 올리는 실제 경로입니다. 2i는 이 모델을 파는 것이 아니라, 이렇게
+측정하고 검증한 패키징 엔지니어링을 팝니다.</p>
+    </div>
+    <div class="article__cta">
+      <p>이 방법을 당신 현장의 숫자로 다시 재보고 싶다면.</p>
+      <a class="btn btn--signal" href="../index.html#contact">30분 진단 상담 <span class="arrow">→</span></a>
+      <a class="btn btn--ghost" href="../papers.html">다른 기록 보기</a>
+    </div>
+  </article>
+</main>
+
+<footer class="foot">
+  <div class="wrap foot__inner">
+    <div>
+      <div class="brand"><span class="brand__mark">2i</span><span class="brand__tag">AX 컨설팅</span></div>
+      <div class="foot__mono" style="margin-top:0.6rem">중소·중견 제조·유통을 위한 AI 전환</div>
+    </div>
+    <nav class="foot__links" aria-label="하단 메뉴">
+      <a href="../index.html#method">방식</a>
+      <a href="../comms.html">통신</a>
+      <a href="../papers.html">논문·실험</a>
+      <a href="../index.html#voucher">정부 바우처</a>
+      <a href="https://github.com/2icorp" target="_blank" rel="noopener">GitHub</a>
+      <a href="../en/">EN</a>
+    </nav>
+  </div>
+</footer>
+
+<script src="../main.js"></script>
+</body>
+</html>
