@@ -266,3 +266,20 @@
     b.addEventListener("click", function () { set(current() === "dark" ? "light" : "dark"); });
   });
 })();
+
+// Cases board - category filter (guarded; only runs on cases.html)
+(function () {
+  "use strict";
+  var chips = document.querySelectorAll(".cfilter");
+  if (!chips.length) return;
+  var items = document.querySelectorAll(".case");
+  chips.forEach(function (btn) {
+    btn.addEventListener("click", function () {
+      var cat = btn.getAttribute("data-ccat");
+      chips.forEach(function (b) { b.classList.toggle("is-on", b === btn); });
+      items.forEach(function (it) {
+        it.classList.toggle("is-hidden", cat !== "all" && it.getAttribute("data-ccat") !== cat);
+      });
+    });
+  });
+})();

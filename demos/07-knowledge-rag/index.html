@@ -1,0 +1,324 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<script>(function(){try{var t=localStorage.getItem("theme");if(!t&&window.matchMedia&&matchMedia("(prefers-color-scheme: dark)").matches)t="dark";if(t)document.documentElement.setAttribute("data-theme",t);}catch(e){}})();</script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>사내 지식 검색(RAG 컨셉) 데모 | 2i</title>
+<meta name="description" content="사내 문서 6종에서 단어 겹침 스코어링으로 관련 조항을 찾아 근거와 함께 답을 구성하는 사내 지식 검색 인터랙티브 데모입니다.">
+<link rel="stylesheet" href="../../styles.css?v=14">
+<style>
+  body{ background:var(--paper); }
+  .dtop{ position:sticky; top:0; z-index:40; background:var(--paper); border-bottom:1px solid var(--line-soft); }
+  .dtop__inner{ max-width:1080px; margin:0 auto; padding:0.85rem 1.25rem; display:flex; align-items:center; justify-content:space-between; gap:1rem; }
+  .dtop__brand{ display:inline-flex; align-items:baseline; gap:0.5rem; text-decoration:none; }
+  .dtop__brand b{ font-family:var(--mono); color:var(--signal); font-weight:700; font-size:1.05rem; }
+  .dtop__brand span{ font-family:var(--mono); font-size:0.7rem; letter-spacing:0.14em; color:var(--ink-faint); text-transform:uppercase; }
+  .dtop__nav{ display:flex; gap:1.1rem; align-items:center; }
+  .dtop__nav a{ font-size:0.86rem; color:var(--ink-soft); text-decoration:none; white-space:nowrap; transition:color 0.15s ease; }
+  .dtop__nav a:hover{ color:var(--ink); }
+  .dtop__nav a:focus-visible{ outline:2px solid var(--signal); outline-offset:3px; }
+  .dhonest{ background:var(--panel); border-bottom:1px solid var(--line-soft); }
+  .dhonest__inner{ max-width:1080px; margin:0 auto; padding:0.55rem 1.25rem; font-family:var(--mono); font-size:0.74rem; color:var(--ink-faint); }
+  .dwrap{ max-width:1080px; margin:0 auto; padding:2rem 1.25rem 3.5rem; }
+  .dhead h1{ font-size:1.7rem; line-height:1.25; color:var(--ink); margin:0 0 0.5rem; }
+  .dhead p{ color:var(--ink-soft); max-width:64ch; font-size:0.96rem; }
+  .tagline{ display:inline-block; margin-top:0.9rem; font-family:var(--mono); font-size:0.78rem; color:var(--steel); background:var(--panel); border:1px solid var(--line); padding:0.4rem 0.8rem; border-radius:999px; }
+
+  .searchrow{ display:flex; gap:0.6rem; margin-top:1.6rem; }
+  .searchrow input{ flex:1; font-family:var(--sans); font-size:1rem; padding:0.75rem 1.05rem; border-radius:12px; border:1px solid var(--line); background:var(--panel); color:var(--ink); }
+  .searchrow input:focus, .searchrow input:focus-visible{ outline:2px solid var(--signal); outline-offset:2px; border-color:var(--signal); }
+  .searchrow button{ font-family:var(--sans); font-weight:700; font-size:0.92rem; padding:0.7rem 1.3rem; border-radius:12px; border:1px solid var(--signal); background:var(--signal); color:oklch(22% 0.03 60); cursor:pointer; transition:filter 0.15s ease, transform 0.1s ease; }
+  .searchrow button:hover{ filter:brightness(1.04); }
+  .searchrow button:active{ transform:scale(0.97); }
+  .searchrow button:focus-visible{ outline:2px solid var(--steel); outline-offset:2px; }
+  .searchrow button:disabled{ opacity:0.4; cursor:not-allowed; }
+
+  .chips{ display:flex; flex-wrap:wrap; gap:0.5rem; margin-top:0.8rem; }
+  .chip{ font-family:var(--sans); font-size:0.78rem; padding:0.4rem 0.75rem; border-radius:999px; border:1px solid var(--line); background:var(--panel); color:var(--ink-soft); cursor:pointer; transition:border-color 0.15s ease, color 0.15s ease; }
+  .chip:hover{ border-color:var(--steel); color:var(--ink); }
+  .chip:focus-visible{ outline:2px solid var(--signal); outline-offset:2px; }
+
+  .resultmeta{ margin-top:1.4rem; font-family:var(--mono); font-size:0.78rem; color:var(--ink-faint); min-height:1.2rem; }
+  .resultmeta b{ color:var(--steel); }
+
+  .answercard{ margin-top:0.9rem; background:var(--panel); border:1px solid var(--signal); border-radius:14px; padding:1.1rem 1.3rem; }
+  .answercard__label{ font-family:var(--mono); font-size:0.68rem; letter-spacing:0.1em; color:var(--signal-deep); text-transform:uppercase; margin-bottom:0.5rem; }
+  .answercard__text{ font-size:1rem; line-height:1.65; color:var(--ink); }
+
+  .sources{ margin-top:1.3rem; display:flex; flex-direction:column; gap:0.9rem; }
+  .source{ background:var(--panel); border:1px solid var(--line); border-radius:12px; padding:1rem 1.15rem; }
+  .source__head{ display:flex; align-items:center; justify-content:space-between; gap:0.6rem; margin-bottom:0.5rem; flex-wrap:wrap; }
+  .source__doc{ font-weight:700; color:var(--ink); font-size:0.94rem; }
+  .source__clause{ font-family:var(--mono); font-size:0.72rem; color:var(--steel); background:oklch(50% 0.072 240 / 0.1); padding:0.15rem 0.55rem; border-radius:999px; }
+  .source__score{ font-family:var(--mono); font-size:0.7rem; color:var(--ink-faint); }
+  .source__excerpt{ font-size:0.88rem; line-height:1.6; color:var(--ink-soft); }
+  .source__excerpt mark{ background:oklch(68% 0.175 55 / 0.3); color:var(--ink); border-radius:3px; padding:0 0.1em; }
+
+  .empty{ margin-top:1.4rem; padding:2rem; text-align:center; color:var(--ink-faint); background:var(--panel); border:1px dashed var(--line); border-radius:12px; font-size:0.9rem; }
+
+  .kblist{ margin-top:2.2rem; padding-top:1.4rem; border-top:1px solid var(--line-soft); }
+  .kblist__title{ font-family:var(--mono); font-size:0.72rem; letter-spacing:0.08em; color:var(--ink-faint); text-transform:uppercase; margin-bottom:0.7rem; }
+  .kbgrid{ display:grid; grid-template-columns:repeat(auto-fill, minmax(160px, 1fr)); gap:0.6rem; }
+  .kbgrid div{ background:var(--panel); border:1px solid var(--line-soft); border-radius:8px; padding:0.5rem 0.7rem; font-size:0.8rem; color:var(--ink-soft); }
+
+  .dfoot{ max-width:1080px; margin:0 auto; padding:1.6rem 1.25rem 2.5rem; font-family:var(--mono); font-size:0.75rem; color:var(--ink-faint); border-top:1px solid var(--line-soft); text-align:center; }
+</style>
+</head>
+<body>
+
+<div class="dtop">
+  <div class="dtop__inner">
+    <a class="dtop__brand" href="/"><b>2i</b><span>데모 · 사내 지식 검색</span></a>
+    <nav class="dtop__nav">
+      <a href="../../cases.html#case-7">사례 보기</a>
+      <a href="https://github.com/2icorp/2i-case-07-knowledge-rag" target="_blank" rel="noopener">소스코드</a>
+    </nav>
+  </div>
+</div>
+<div class="dhonest"><div class="dhonest__inner">브라우저에서 도는 샘플 데이터 인터랙티브 데모입니다. 실제 파이프라인 구현은 소스코드 저장소에 있습니다.</div></div>
+
+<main class="dwrap">
+  <div class="dhead">
+    <h1>사내 지식 검색(RAG 컨셉)</h1>
+    <p>휴가규정·구매품의·안전수칙·장비점검·출장비·품질기준 6종의 사내 문서에서 질문과 겹치는 단어를 실제로 채점해, 관련 조항을 찾아 근거와 함께 보여줍니다.</p>
+    <span class="tagline">신입도 3초, 규정집을 뒤적이지 않고 바로 답을 찾습니다</span>
+  </div>
+
+  <div class="searchrow">
+    <input type="text" id="qInput" placeholder="예: 연차는 며칠 쓸 수 있나요" aria-label="사내 규정 질문 입력">
+    <button id="qBtn" type="button">검색</button>
+  </div>
+  <div class="chips" id="chips"></div>
+
+  <div class="resultmeta" id="resultMeta">&nbsp;</div>
+  <div id="resultArea"></div>
+
+  <div class="kblist">
+    <div class="kblist__title">검색 대상 문서 6종</div>
+    <div class="kbgrid" id="kbGrid"></div>
+  </div>
+</main>
+
+<footer class="dfoot">© 2i · contact@2icorp.site</footer>
+
+<script>
+(function(){
+  "use strict";
+
+  var DOCS = [
+    {
+      id: "leave", title: "휴가규정",
+      clauses: [
+        { no:"제1조(목적)", text:"이 규정은 임직원의 휴가 부여 기준과 절차를 정함을 목적으로 한다." },
+        { no:"제2조(연차휴가)", text:"입사 1년 이상 근속한 직원은 매년 15일의 연차휴가를 부여받으며, 3년마다 1일씩 가산하여 최대 25일까지 사용할 수 있다." },
+        { no:"제3조(신청절차)", text:"휴가는 사용 예정일 3일 전까지 팀장 승인을 받아 그룹웨어로 신청해야 하며, 긴급 상황은 사후 승인이 가능하다." },
+        { no:"제4조(반차)", text:"반차는 오전 반차와 오후 반차로 나뉘며, 각 4시간 단위로 사용한다." }
+      ]
+    },
+    {
+      id: "purchase", title: "구매품의",
+      clauses: [
+        { no:"제1조(목적)", text:"이 규정은 물품 및 설비 구매 시 품의 절차와 결재 권한을 정한다." },
+        { no:"제2조(구매한도)", text:"100만원 미만은 팀장 전결, 100만원 이상 500만원 미만은 본부장 결재, 500만원 이상은 대표이사 결재를 받아야 한다." },
+        { no:"제3조(견적서)", text:"200만원 이상 구매 건은 반드시 2개 이상 업체의 견적서를 첨부해야 한다." },
+        { no:"제4조(긴급구매)", text:"설비 고장 등 긴급 구매는 사후 3일 이내 품의서를 소급 제출할 수 있다." }
+      ]
+    },
+    {
+      id: "safety", title: "안전수칙",
+      clauses: [
+        { no:"제1조(목적)", text:"이 수칙은 현장 작업 중 발생할 수 있는 안전사고를 예방하기 위해 제정한다." },
+        { no:"제2조(보호구)", text:"생산 현장 출입 시 안전모, 안전화, 보호안경을 반드시 착용해야 하며 미착용 시 출입이 제한된다." },
+        { no:"제3조(위험구역)", text:"지게차 운행구역과 고전압 설비 주변은 별도 표시선 안쪽으로 진입을 금지한다." },
+        { no:"제4조(사고보고)", text:"경미한 사고라도 발생 즉시 현장 관리자에게 구두 보고 후 24시간 이내 사고보고서를 제출해야 한다." }
+      ]
+    },
+    {
+      id: "equip", title: "장비점검",
+      clauses: [
+        { no:"제1조(목적)", text:"이 지침은 생산설비의 정기점검 주기와 절차를 규정한다." },
+        { no:"제2조(점검주기)", text:"주요 설비는 매주 1회 일상점검을, 매월 1회 정기점검을, 매년 1회 정밀점검을 실시한다." },
+        { no:"제3조(점검기록)", text:"점검 결과는 점검일지에 기록하고 이상 발견 시 즉시 유지보수팀에 통보해야 한다." },
+        { no:"제4조(정지기준)", text:"진동, 소음, 온도 중 하나라도 기준치를 20% 이상 초과하면 즉시 가동을 중지한다." }
+      ]
+    },
+    {
+      id: "travel", title: "출장비",
+      clauses: [
+        { no:"제1조(목적)", text:"이 규정은 국내외 출장 시 발생하는 비용의 지급 기준을 정한다." },
+        { no:"제2조(국내출장)", text:"국내 출장은 일 5만원의 식대와 실비 교통비, 숙박비를 지급하며 사전 출장신청서 승인이 필요하다." },
+        { no:"제3조(해외출장)", text:"해외 출장은 직급별 일비 기준표에 따라 지급하며, 항공권은 이코노미석을 원칙으로 한다." },
+        { no:"제4조(정산)", text:"출장 종료 후 5영업일 이내 영수증을 첨부하여 정산해야 하며, 기한 초과 시 익월 정산으로 이월된다." }
+      ]
+    },
+    {
+      id: "quality", title: "품질기준",
+      clauses: [
+        { no:"제1조(목적)", text:"이 기준은 출하 제품의 품질 검사 기준과 불량 처리 절차를 정한다." },
+        { no:"제2조(검사항목)", text:"전수검사 대상 품목은 치수, 외관, 기능시험 3개 항목을 모두 통과해야 출하할 수 있다." },
+        { no:"제3조(불량처리)", text:"불량률이 3%를 초과하는 로트는 전량 재검사하며, 원인 분석 보고서를 작성해야 한다." },
+        { no:"제4조(보관)", text:"검사 합격품은 습도 60% 이하의 창고에서 보관하며 선입선출 원칙을 적용한다." }
+      ]
+    }
+  ];
+
+  var CHIPS = [
+    "연차는 며칠 쓸 수 있나요",
+    "구매 품의는 얼마부터 결재를 받아야 하나요",
+    "안전모는 꼭 써야 하나요",
+    "불량률이 얼마를 넘으면 재검사하나요"
+  ];
+
+  var qInput = document.getElementById("qInput");
+  var qBtn = document.getElementById("qBtn");
+  var chipsEl = document.getElementById("chips");
+  var resultMeta = document.getElementById("resultMeta");
+  var resultArea = document.getElementById("resultArea");
+  var kbGrid = document.getElementById("kbGrid");
+
+  var STOP = { "무엇":1, "어떻게":1, "얼마나":1, "합니까":1, "됩니까":1, "인가요":1, "있나요":1, "하나요":1 };
+
+  function tokenize(str){
+    return String(str || "")
+      .replace(/[.,!?()~"'"·%]/g, " ")
+      .split(/\s+/)
+      .filter(function(t){ return t.length >= 2 && !STOP[t]; });
+  }
+
+  function escapeHtml(str){
+    return String(str).replace(/[&<>]/g, function(c){
+      return c === "&" ? "&amp;" : c === "<" ? "&lt;" : "&gt;";
+    });
+  }
+
+  function escapeRegex(str){
+    return str.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+  }
+
+  function highlight(text, tokens){
+    if (!tokens.length) return escapeHtml(text);
+    var sorted = tokens.slice().sort(function(a, b){ return b.length - a.length; });
+    var pattern = new RegExp("(" + sorted.map(escapeRegex).join("|") + ")", "g");
+    var safe = escapeHtml(text);
+    return safe.replace(pattern, function(m){ return "<mark>" + m + "</mark>"; });
+  }
+
+  function scoreClause(queryTokens, clauseText){
+    var matched = [];
+    queryTokens.forEach(function(qt){
+      if (clauseText.indexOf(qt) !== -1 && matched.indexOf(qt) === -1) matched.push(qt);
+    });
+    return matched;
+  }
+
+  function search(query){
+    var qTokens = tokenize(query);
+    var perDoc = [];
+
+    DOCS.forEach(function(doc){
+      var bestClause = null;
+      var bestMatched = [];
+      doc.clauses.forEach(function(clause){
+        var matched = scoreClause(qTokens, clause.text);
+        if (matched.length > bestMatched.length) {
+          bestMatched = matched;
+          bestClause = clause;
+        }
+      });
+      if (bestClause && bestMatched.length > 0) {
+        perDoc.push({
+          doc: doc,
+          clause: bestClause,
+          matched: bestMatched,
+          score: qTokens.length ? bestMatched.length / qTokens.length : 0
+        });
+      }
+    });
+
+    perDoc.sort(function(a, b){ return b.matched.length - a.matched.length; });
+    return perDoc.slice(0, 2);
+  }
+
+  function runSearch(query){
+    query = query.trim();
+    if (!query) return;
+
+    qBtn.disabled = true;
+    resultMeta.textContent = "검색 중…";
+    resultArea.innerHTML = "";
+
+    var t0 = performance.now();
+    window.setTimeout(function(){
+      var top = search(query);
+      var elapsedMs = performance.now() - t0;
+
+      if (!top.length) {
+        resultMeta.innerHTML = "";
+        resultArea.innerHTML = '<div class="empty">일치하는 규정을 찾지 못했습니다. 다른 단어로 다시 질문해 보세요.</div>';
+        qBtn.disabled = false;
+        return;
+      }
+
+      resultMeta.innerHTML = '문서 6종 중 <b>' + top.length + '건</b> 관련 조항 발견 · 응답 시간 <b>' + (elapsedMs / 1000).toFixed(2) + '초</b>';
+
+      var answerText = top.map(function(r){
+        return r.doc.title + " " + r.clause.no + "에 따르면, " + r.clause.text;
+      }).join(" 또한, ");
+
+      var sourcesHtml = top.map(function(r){
+        return '<div class="source">' +
+          '<div class="source__head">' +
+            '<span class="source__doc">' + escapeHtml(r.doc.title) + ' · ' + escapeHtml(r.clause.no) + '</span>' +
+            '<span class="source__score">일치 단어 ' + r.matched.length + '개</span>' +
+          '</div>' +
+          '<div class="source__excerpt">' + highlight(r.clause.text, r.matched) + '</div>' +
+        '</div>';
+      }).join("");
+
+      resultArea.innerHTML =
+        '<div class="answercard">' +
+          '<div class="answercard__label">답변 (문서 발췌 조합)</div>' +
+          '<div class="answercard__text">' + escapeHtml(answerText) + '</div>' +
+        '</div>' +
+        '<div class="sources">' + sourcesHtml + '</div>';
+
+      qBtn.disabled = false;
+    }, 220 + Math.random() * 200);
+  }
+
+  qBtn.addEventListener("click", function(){ runSearch(qInput.value); });
+  qInput.addEventListener("keydown", function(e){
+    if (e.key === "Enter") { e.preventDefault(); qBtn.click(); }
+  });
+
+  function renderChips(){
+    chipsEl.innerHTML = "";
+    CHIPS.forEach(function(text){
+      var b = document.createElement("button");
+      b.type = "button";
+      b.className = "chip";
+      b.textContent = text;
+      b.addEventListener("click", function(){
+        qInput.value = text;
+        runSearch(text);
+      });
+      chipsEl.appendChild(b);
+    });
+  }
+
+  function renderKbGrid(){
+    kbGrid.innerHTML = "";
+    DOCS.forEach(function(doc){
+      var d = document.createElement("div");
+      d.textContent = doc.title + " (" + doc.clauses.length + "개 조항)";
+      kbGrid.appendChild(d);
+    });
+  }
+
+  renderChips();
+  renderKbGrid();
+})();
+</script>
+</body>
+</html>

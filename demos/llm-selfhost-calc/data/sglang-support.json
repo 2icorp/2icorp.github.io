@@ -1,0 +1,142 @@
+{
+  "_note": "SGLang 서빙 준비도 판정 근거. arch_support = 모델의 HF config.json architectures[] 대표 문자열 → SGLang 지원 등급 매핑(전수 아님 · 매칭되면 高신뢰, 미매칭이라고 완전 미지원은 아님). SGLang은 vLLM과 달리 python 모델 파일 레지스트리(sglang/srt/models) 기반이라, 레지스트리에 있으면 native. DeepSeek/MLA + DP-attention은 SGLang의 대표 강점 경로. 하이브리드 Mamba-2(NemotronH/GraniteMoeHybrid)와 신규 MoE는 vLLM보다 뒤늦게 들어와 partial로 본다. hardware = SGLang은 NVIDIA(CUDA)·AMD(ROCm)에서 돌고 Apple/NPU는 미지원. quant_methods = --quantization 플래그로 받는 체크포인트 양자화 포맷. 이 파일은 SGLang 릴리스마다 갱신한다(version 핀). 출처: SGLang supported_models 문서 + 릴리스 노트(2026-07). 모든 등급은 계획용 근사 · 실측 벤치 권장.",
+  "_updated": "2026-07-25",
+  "version": "0.5.16",
+  "docs": "https://docs.sglang.ai/supported_models.html",
+  "image": "lmsysorg/sglang:v0.5.16",
+  "default_port": 30000,
+  "hardware": {
+    "supported_kinds": ["gpu", "amd"],
+    "unsupported_kinds": ["apple", "npu"],
+    "note": "SGLang은 NVIDIA(CUDA)·AMD(ROCm) 가속기에서 동작합니다. Apple Silicon·NPU(Furiosa/Rebellions/Gaudi/Trainium)는 미지원 · 이 경우 vLLM(Apple: llama.cpp/MLX, NPU: 벤더 런타임)을 사용하세요."
+  },
+  "arch_support": {
+    "InklingForConditionalGeneration": {"tier": "native", "caveats": ["Day-0 지원 · NVIDIA는 BF16+NVFP4 체크포인트, AMD는 BF16만 · MI35X는 --attention-backend triton --moe-runner-backend aiter 필요"]},
+    "LlamaForCausalLM": {"tier": "native"},
+    "Llama4ForConditionalGeneration": {"tier": "native", "caveats": ["멀티모달 Llama 4 · 비전 경로 포함"]},
+    "MistralForCausalLM": {"tier": "native"},
+    "MixtralForCausalLM": {"tier": "native"},
+    "Qwen2ForCausalLM": {"tier": "native"},
+    "Qwen2MoeForCausalLM": {"tier": "native"},
+    "Qwen3ForCausalLM": {"tier": "native"},
+    "Qwen3MoeForCausalLM": {"tier": "native"},
+    "Qwen2VLForConditionalGeneration": {"tier": "native", "caveats": ["비전-언어 멀티모달 서빙 경로"]},
+    "Qwen3VLForConditionalGeneration": {"tier": "native", "caveats": ["비전 타워 포함 멀티모달 · SGLang 멀티모달 경로"]},
+    "Gemma2ForCausalLM": {"tier": "native"},
+    "Gemma3ForCausalLM": {"tier": "native", "caveats": ["슬라이딩 윈도우 어텐션"]},
+    "Gemma3ForConditionalGeneration": {"tier": "native", "caveats": ["슬라이딩 윈도우 · 멀티모달"]},
+    "Gemma4ForCausalLM": {"tier": "native", "caveats": ["슬라이딩 윈도우 어텐션 · Gemma 4는 신규, 최신 SGLang 빌드 권장"]},
+    "Gemma4ForConditionalGeneration": {"tier": "native", "caveats": ["슬라이딩 윈도우 · 멀티모달 · Gemma 4는 신규, 최신 빌드 권장"]},
+    "Phi3ForCausalLM": {"tier": "native"},
+    "PhiMoEForCausalLM": {"tier": "native"},
+    "DeepseekV2ForCausalLM": {"tier": "native", "caveats": ["MLA 압축 KV + DP-attention · SGLang 대표 최적화 경로"]},
+    "DeepseekV3ForCausalLM": {"tier": "native", "caveats": ["MLA + DP-attention 최적화 · SGLang 강점"]},
+    "DeepseekV4ForCausalLM": {"tier": "native", "min_ver": "0.5.12", "caveats": ["DeepSeek V4 · 압축 KV/희소 인덱서 경로 · 텐서/전문가/컨텍스트 병렬 + 분리서빙 포함 풀스택은 v0.5.12부터"]},
+    "GlmForCausalLM": {"tier": "native"},
+    "Glm4ForCausalLM": {"tier": "native"},
+    "Glm4MoeForCausalLM": {"tier": "native", "caveats": ["GLM MoE · DSA 희소 어텐션 경로는 최신 빌드 권장"]},
+    "GptOssForCausalLM": {"tier": "native", "caveats": ["MXFP4 MoE 기본 · Blackwell 계열 GPU 권장, --quantization mxfp4 자동 감지"]},
+    "MiniMaxText01ForCausalLM": {"tier": "partial", "caveats": ["MiniMax · 비교적 신규, 최신 SGLang 빌드 + 실측 권장"]},
+    "MiniMaxM2ForCausalLM": {"tier": "partial", "caveats": ["MiniMax M2 · 신규 아키텍처, 최신 SGLang 빌드 + 실측 권장"]},
+    "NemotronForCausalLM": {"tier": "native"},
+    "NemotronHForCausalLM": {"tier": "partial", "min_ver": "0.5.14", "caveats": ["하이브리드 Mamba-2/어텐션 · DP-attention+MTP 포함 하이브리드 경로는 v0.5.14부터, 실측 권장"]},
+    "GraniteForCausalLM": {"tier": "native"},
+    "GraniteMoeForCausalLM": {"tier": "native"},
+    "GraniteMoeHybridForCausalLM": {"tier": "partial", "min_ver": "0.5.14", "caveats": ["하이브리드 Mamba-2/MoE · SGLang 하이브리드 지원은 상대적으로 신규(v0.5.14 전후), 실측 권장"]},
+    "Cohere2ForCausalLM": {"tier": "native"},
+    "CohereForCausalLM": {"tier": "native"},
+    "InternLM2ForCausalLM": {"tier": "native"},
+    "ExaoneForCausalLM": {"tier": "native"},
+    "Exaone4ForCausalLM": {"tier": "native"},
+    "OlmoForCausalLM": {"tier": "native"},
+    "Olmo2ForCausalLM": {"tier": "native"},
+    "StableLmForCausalLM": {"tier": "native"}
+  },
+  "versions": [
+    {
+      "version": "0.5",
+      "latest_patch": "0.5.16",
+      "released": "2026-07",
+      "docs": "https://docs.sglang.ai/supported_models.html",
+      "highlights": [
+        {"ko": "DSpark 신뢰도기반 스펙 디코딩(고정 draft 길이 대신 draft confidence로 verify window 크기 결정, DeepSeek-V4-Pro TP8 B300서 383.7 tok/s @accept~5) v0.5.16 · Inkling(975B 멀티모달 MoE, sliding-window+full+Mamba2 혼합 attention) Day-0 지원 v0.5.16", "en": "DSpark confidence-driven speculative decoding (verify window sized from draft confidence instead of fixed length; 383.7 tok/s @accept~5 on DeepSeek-V4-Pro TP8 B300) in v0.5.16 · Inkling (975B multimodal MoE mixing sliding-window/full/Mamba2 attention) Day-0 support in v0.5.16"},
+        {"ko": "DeepSeek V4 풀 인퍼런스 스택(텐서/전문가/컨텍스트 병렬 + 분리서빙, DeepGemm·FlashMLA 커널) v0.5.12 · GLM-5.2 NVFP4 Blackwell 튜닝(B300/GB300) v0.5.15", "en": "DeepSeek V4 full inference stack (tensor/expert/context parallel + disaggregation, DeepGemm/FlashMLA kernels) in v0.5.12 · GLM-5.2 NVFP4 tuned for Blackwell (B300/GB300) in v0.5.15"},
+        {"ko": "UnifiedRadixTree가 SWA/Mamba/DSA 모델 기본 캐시로 전환 + GLM-5.2 prefill CP에서 KV/indexer 캐시 레이어 분할로 랭크당 메모리 ~74%↓ v0.5.16", "en": "UnifiedRadixTree becomes the default cache for SWA/Mamba/DSA models + GLM-5.2 prefill-CP KV/indexer cache layer split cuts per-rank memory ~74% v0.5.16"}
+      ],
+      "notable_flags": ["--tool-call-parser", "--reasoning-parser", "--enable-dp-attention", "--quantization mxfp4"]
+    },
+    {
+      "version": "0.4",
+      "latest_patch": "0.4.9",
+      "released": "2026-01",
+      "docs": "https://docs.sglang.ai/supported_models.html",
+      "highlights": [
+        {"ko": "DeepSeek V3 MLA + DP-attention 대표 경로 확립 · Qwen2.5/Qwen3 등록", "en": "Established DeepSeek V3 MLA + DP-attention flagship path · Qwen2.5/Qwen3 registered"},
+        {"ko": "초기 함수호출 파서(qwen25·llama3) · 구조화 출력(xgrammar)", "en": "Initial function-call parsers (qwen25, llama3) · structured outputs (xgrammar)"},
+        {"ko": "AWQ/GPTQ Marlin · 스펙 디코딩(EAGLE) 지원", "en": "AWQ/GPTQ Marlin · speculative decoding (EAGLE)"}
+      ],
+      "notable_flags": ["--tool-call-parser qwen25", "--grammar-backend xgrammar", "--speculative-algorithm EAGLE"]
+    },
+    {
+      "version": "0.3",
+      "latest_patch": "0.3.6",
+      "released": "2025-09",
+      "docs": "https://docs.sglang.ai/supported_models.html",
+      "highlights": [
+        {"ko": "오버랩 스케줄러 기본 활성화로 처리량 1.1배 · 어텐션/MLA 데이터 병렬화로 디코딩 처리량 1.5배", "en": "Overlap scheduler enabled by default for 1.1x throughput · data parallelism across attention/MLA for 1.5x decoding throughput"},
+        {"ko": "xgrammar 백엔드 구조화 출력(JSON/문법 제약 디코딩) 도입", "en": "xgrammar backend for grammar-guided structured output (JSON/constrained decoding) introduced"},
+        {"ko": "캐시 인지 로드밸런싱으로 캐시 히트율 4배 · Prometheus 메트릭 · torch 2.5.1 네이티브 텐서 병렬", "en": "Cache-aware load balancing for 4x cache hit rate · Prometheus metrics · torch 2.5.1 native tensor parallelism"}
+      ],
+      "notable_flags": ["--enable-overlap-schedule", "--grammar-backend xgrammar", "--enable-dp-attention"]
+    }
+  ],
+  "tool_calling": {
+    "_note": "SGLang 툴 콜링은 --tool-call-parser <parser>, thinking 모델은 --reasoning-parser <parser>를 함께 줍니다. parser 이름은 vLLM과 다릅니다(SGLang은 qwen25·deepseekv3·gpt-oss 식 표기). 릴리스마다 추가 · 최신 문서 확인.",
+    "_default": {"tool_parser": null, "reasoning_parser": null, "note": {"ko": "이 아키텍처의 SGLang 네이티브 툴 파서는 미확인 · chat_template와 SGLang 문서에서 --tool-call-parser 값을 확인하세요.", "en": "No confirmed SGLang native tool parser for this architecture · check the chat_template and SGLang docs for --tool-call-parser."}},
+    "LlamaForCausalLM": {"tool_parser": "llama3", "reasoning_parser": null},
+    "Llama4ForConditionalGeneration": {"tool_parser": "llama3", "reasoning_parser": null},
+    "MistralForCausalLM": {"tool_parser": "mistral", "reasoning_parser": null},
+    "MixtralForCausalLM": {"tool_parser": "mistral", "reasoning_parser": null},
+    "Qwen2ForCausalLM": {"tool_parser": "qwen25", "reasoning_parser": null},
+    "Qwen2MoeForCausalLM": {"tool_parser": "qwen25", "reasoning_parser": null},
+    "Qwen3ForCausalLM": {"tool_parser": "qwen25", "reasoning_parser": "qwen3", "note": {"ko": "Qwen3 · 툴 qwen25 파서 재사용 · thinking은 --reasoning-parser qwen3.", "en": "Qwen3 · reuses the qwen25 tool parser · thinking uses --reasoning-parser qwen3."}},
+    "Qwen3MoeForCausalLM": {"tool_parser": "qwen25", "reasoning_parser": "qwen3", "note": {"ko": "코더 변형은 --tool-call-parser qwen3_coder.", "en": "Coder variants use --tool-call-parser qwen3_coder."}},
+    "Qwen2VLForConditionalGeneration": {"tool_parser": "qwen25", "reasoning_parser": null},
+    "Qwen3VLForConditionalGeneration": {"tool_parser": "qwen25", "reasoning_parser": "qwen3"},
+    "DeepseekV2ForCausalLM": {"tool_parser": "deepseekv3", "reasoning_parser": "deepseek-r1"},
+    "DeepseekV3ForCausalLM": {"tool_parser": "deepseekv3", "reasoning_parser": "deepseek-r1", "note": {"ko": "DeepSeek · 툴 deepseekv3 · reasoning deepseek-r1(SGLang 표기, 하이픈).", "en": "DeepSeek · tool deepseekv3 · reasoning deepseek-r1 (SGLang spelling, hyphen)."}},
+    "DeepseekV4ForCausalLM": {"tool_parser": "deepseekv3", "reasoning_parser": "deepseek-r1"},
+    "Glm4MoeForCausalLM": {"tool_parser": "glm45", "reasoning_parser": "glm45", "note": {"ko": "GLM MoE · --tool-call-parser glm45 · --reasoning-parser glm45.", "en": "GLM MoE · --tool-call-parser glm45 · --reasoning-parser glm45."}},
+    "GlmForCausalLM": {"tool_parser": "glm45", "reasoning_parser": "glm45"},
+    "Glm4ForCausalLM": {"tool_parser": "glm45", "reasoning_parser": "glm45"},
+    "GptOssForCausalLM": {"tool_parser": "gpt-oss", "reasoning_parser": "gpt-oss", "note": {"ko": "gpt-oss(Harmony) · --tool-call-parser gpt-oss · --reasoning-parser gpt-oss.", "en": "gpt-oss (Harmony) · --tool-call-parser gpt-oss · --reasoning-parser gpt-oss."}},
+    "MiniMaxText01ForCausalLM": {"tool_parser": "pythonic", "reasoning_parser": null, "note": {"ko": "MiniMax는 SGLang 전용 파서 미확인 · pythonic/커스텀 템플릿, 실측 권장.", "en": "MiniMax has no confirmed SGLang parser · pythonic / custom template, testing recommended."}},
+    "MiniMaxM2ForCausalLM": {"tool_parser": "pythonic", "reasoning_parser": null, "note": {"ko": "MiniMax M2 · SGLang 파서 미확인, 실측 권장.", "en": "MiniMax M2 · no confirmed SGLang parser, testing recommended."}},
+    "NemotronHForCausalLM": {"tool_parser": "llama3", "reasoning_parser": null, "note": {"ko": "Nemotron H · llama3 템플릿 시도, 실측 권장.", "en": "Nemotron H · try the llama3 template, testing recommended."}},
+    "GraniteMoeHybridForCausalLM": {"tool_parser": "pythonic", "reasoning_parser": null, "note": {"ko": "Granite 하이브리드 · SGLang 전용 파서 미확인, pythonic/커스텀.", "en": "Granite hybrid · no confirmed SGLang parser, pythonic / custom."}},
+    "Gemma3ForCausalLM": {"tool_parser": "pythonic", "reasoning_parser": null, "note": {"ko": "Gemma는 네이티브 파서 없음 · pythonic/커스텀 chat_template.", "en": "Gemma has no native parser · pythonic / custom chat_template."}},
+    "Gemma4ForCausalLM": {"tool_parser": "pythonic", "reasoning_parser": null},
+    "Gemma4ForConditionalGeneration": {"tool_parser": "pythonic", "reasoning_parser": null}
+  },
+  "quant_methods": {
+    "fp8": "FP8 W8A8. Hopper/Blackwell 네이티브. --quantization fp8.",
+    "blockwise_int8": "블록와이즈 INT8. --quantization blockwise_int8.",
+    "w8a8_int8": "W8A8 INT8 (SmoothQuant 계열). --quantization w8a8_int8.",
+    "awq": "AWQ 4-bit. awq_marlin 커널로 가속. --quantization awq.",
+    "gptq": "GPTQ 4/8-bit. gptq_marlin 커널. --quantization gptq.",
+    "modelopt_fp4": "NVFP4 (TensorRT-Model-Optimizer). Blackwell FP4 텐서코어 필요. --quantization modelopt_fp4.",
+    "mxfp4": "MXFP4 (OCP microscaling). gpt-oss 기본 · SGLang이 자동 감지. Blackwell 계열 권장."
+  },
+  "quant_hardware_hint": {
+    "modelopt_fp4": ["b200", "b300", "gb200", "gb300", "rtx-pro-6000"],
+    "mxfp4": ["b200", "b300", "gb200", "gb300", "rtx-pro-6000"],
+    "fp8": ["h100-80", "h200", "b200", "b300", "gb200", "gb300", "mi300x", "mi325x", "mi355x", "rtx-pro-6000"]
+  },
+  "tier_help": {
+    "native": "SGLang 모델 레지스트리에 전용 구현이 있어 최고 속도로 바로 서빙됩니다(RadixAttention·연속 배칭). DeepSeek/MLA 계열은 DP-attention으로 특히 강합니다.",
+    "partial": "SGLang이 지원하지만 비교적 신규 경로(하이브리드 Mamba·신규 MoE)라 최신 빌드가 필요하고 성능/정확도는 실측 권장입니다.",
+    "unsupported": "SGLang 모델 레지스트리에 아직 없는 아키텍처입니다. Transformers 폴백 백엔드로 시도하거나 지원 PR/실측이 필요합니다.",
+    "unknown": "config.json에서 architectures를 읽지 못해 판정할 수 없습니다. 모델 카드를 직접 확인하세요.",
+    "incompatible": "선택한 하드웨어에서 SGLang이 동작하지 않습니다(Apple/NPU). vLLM 등 다른 런타임을 사용하세요."
+  }
+}

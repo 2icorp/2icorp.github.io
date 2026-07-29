@@ -1,0 +1,208 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<script>(function(){try{var t=localStorage.getItem("theme");if(!t&&window.matchMedia&&matchMedia("(prefers-color-scheme: dark)").matches)t="dark";if(t)document.documentElement.setAttribute("data-theme",t);}catch(e){}})();</script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>이슈 연동 광고 영상 스튜디오 데모 | 2i</title>
+<meta name="description" content="이번 주 이슈를 당일 납품 영상으로 바꾸는 4단계 파이프라인과 실제 산출 영상 3편을 보여주는 인터랙티브 데모.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23111827'/%3E%3Ctext x='16' y='22' font-family='monospace' font-size='16' font-weight='700' fill='%23e08a2b' text-anchor='middle'%3E2i%3C/text%3E%3C/svg%3E">
+<link rel="stylesheet" href="../../styles.css?v=14">
+<style>
+  .dtop { position: sticky; top: 0; z-index: 40; background: var(--nav-bg); backdrop-filter: blur(8px); border-bottom: 1px solid var(--line); }
+  .dtop__inner { display: flex; align-items: center; justify-content: space-between; height: 60px; flex-wrap: wrap; gap: 0.5rem; }
+  .dtop__brand { display: flex; align-items: baseline; gap: 0.6rem; color: var(--ink); font-weight: 700; }
+  .dtop__brand b { font-family: var(--mono); background: var(--ink); color: var(--panel); padding: 0.15rem 0.4rem; border-radius: 3px; font-size: 0.85rem; }
+  .dtop__label { font-size: var(--text-sm); color: var(--ink-soft); font-weight: 500; }
+  .dtop__links { display: flex; gap: 1.2rem; font-size: var(--text-sm); }
+  .dtop__links a { color: var(--ink-soft); border-bottom: 1px solid transparent; }
+  .dtop__links a:hover { color: var(--ink); border-color: var(--line); }
+
+  .honest { font-family: var(--mono); font-size: var(--text-xs); color: var(--ink-faint); background: var(--paper-2); border: 1px solid var(--line); border-radius: var(--radius); padding: 0.6rem 0.9rem; margin: 1.2rem auto 0; letter-spacing: 0.01em; }
+
+  .dhero { padding: 2.4rem 0 1rem; }
+  .dhero h1 { font-size: clamp(1.5rem, 1.1rem + 1.6vw, 2.2rem); margin: 0.5rem 0 0.6rem; }
+  .dhero p { color: var(--ink-soft); max-width: 66ch; }
+
+  .timeline { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.7rem; margin: 1.6rem 0 1rem; }
+  .tstep { text-align: left; background: var(--panel); border: 1px solid var(--line); border-radius: var(--radius); padding: 0.85rem 0.9rem; cursor: pointer; transition: border-color var(--dur), transform var(--dur); font-family: var(--sans); }
+  .tstep:hover { transform: translateY(-2px); border-color: var(--steel-soft); }
+  .tstep:focus-visible { outline: 2px solid var(--signal); outline-offset: 2px; }
+  .tstep.active { border-color: var(--signal-deep); background: color-mix(in oklch, var(--signal) 8%, var(--panel)); }
+  .tstep__no { font-family: var(--mono); font-size: var(--text-xs); color: var(--ink-faint); }
+  .tstep.active .tstep__no { color: var(--signal-deep); }
+  .tstep__title { font-weight: 700; margin-top: 0.3rem; font-size: 0.96rem; }
+  .tstep__dur { font-family: var(--mono); font-size: var(--text-xs); color: var(--ink-soft); margin-top: 0.25rem; }
+
+  .desc-card { background: var(--panel); border: 1px solid var(--line); border-radius: var(--radius); padding: 1.1rem 1.3rem; margin-bottom: 1.4rem; min-height: 92px; }
+  .desc-card__title { font-weight: 700; margin-bottom: 0.4rem; }
+  .desc-card__body { color: var(--ink-soft); font-size: var(--text-sm); line-height: 1.7; }
+
+  .prog { margin: 0 0 2.2rem; }
+  .prog__label { display: flex; justify-content: space-between; font-family: var(--mono); font-size: var(--text-xs); color: var(--ink-faint); margin-bottom: 0.4rem; }
+  .prog__track { position: relative; height: 22px; border-radius: 999px; background: var(--paper-2); border: 1px solid var(--line); overflow: hidden; display: flex; }
+  .prog__seg { height: 100%; position: relative; transition: filter var(--dur), transform var(--dur); }
+  .prog__seg[data-step="1"] { background: var(--steel-soft); }
+  .prog__seg[data-step="2"] { background: var(--steel); }
+  .prog__seg[data-step="3"] { background: var(--signal); }
+  .prog__seg[data-step="4"] { background: var(--signal-deep); }
+  .prog__seg.pulse { filter: brightness(1.18); }
+  .prog__free { height: 100%; background: repeating-linear-gradient(45deg, var(--paper-2), var(--paper-2) 6px, var(--line-soft) 6px 12px); flex: 1; }
+  .prog__badge { font-family: var(--mono); font-size: var(--text-xs); color: var(--ok); margin-top: 0.5rem; }
+
+  .gallery { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1.4rem; margin: 1.4rem 0 2.4rem; }
+  .clip { background: var(--panel); border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; }
+  .clip__frame { background: var(--ink); display: flex; align-items: center; justify-content: center; }
+  .clip__frame video { width: 100%; height: 100%; display: block; object-fit: cover; background: #000; }
+  .clip.ratio-169 .clip__frame { aspect-ratio: 16/9; }
+  .clip.ratio-916 .clip__frame { aspect-ratio: 9/16; max-height: 480px; margin-inline: auto; }
+  .clip__body { padding: 0.85rem 1rem 1rem; }
+  .clip__title { font-weight: 700; }
+  .clip__meta { font-family: var(--mono); font-size: var(--text-xs); color: var(--ink-faint); margin-top: 0.35rem; display: flex; gap: 0.6rem; flex-wrap: wrap; }
+  .clip__meta span { border: 1px solid var(--line); border-radius: 999px; padding: 0.12rem 0.55rem; }
+
+  .cta-wrap { text-align: center; padding: 2.4rem 0 1rem; }
+  .cta-btn { display: inline-flex; align-items: center; gap: 0.5rem; font-weight: 700; padding: 0.85rem 1.6rem; border-radius: var(--radius); background: var(--signal); color: oklch(22% 0.03 60); border: 1px solid var(--signal-deep); transition: transform var(--dur) var(--ease); }
+  .cta-btn:hover { transform: translateY(-2px); }
+
+  .dfoot { border-top: 1px solid var(--line); padding: 2rem 0; margin-top: 1rem; font-family: var(--mono); font-size: var(--text-xs); color: var(--ink-faint); }
+</style>
+</head>
+<body>
+
+<header class="dtop">
+  <div class="wrap dtop__inner">
+    <a class="dtop__brand" href="/"><b>2i</b><span class="dtop__label">데모 · 이슈 연동 광고 영상 스튜디오</span></a>
+    <nav class="dtop__links">
+      <a href="/cases.html#case-9">사례 보기</a>
+      <a href="https://github.com/2icorp/2i-case-09-promo-video" target="_blank" rel="noopener">소스코드</a>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+  <p class="honest">브라우저에서 도는 샘플 데이터 인터랙티브 데모입니다. 실제 파이프라인 구현은 소스코드 저장소에 있습니다.</p>
+
+  <section class="dhero">
+    <span class="eyebrow" style="font-family:var(--mono);font-size:var(--text-xs);color:var(--steel);letter-spacing:0.08em;">GENERATIVE MEDIA</span>
+    <h1>이슈 연동 광고 영상 스튜디오</h1>
+    <p>이번 주 이슈를 포착해 당일 안에 규격별 영상으로 납품하는 4단계 파이프라인입니다. 각 단계를 눌러 무엇을 하는지, 얼마나 걸리는지 확인하고 아래에서 실제로 만든 영상 3편을 재생해보세요.</p>
+  </section>
+
+  <div class="timeline" id="timeline" role="list"></div>
+  <div class="desc-card" id="descCard">
+    <div class="desc-card__title" id="descTitle"></div>
+    <div class="desc-card__body" id="descBody"></div>
+  </div>
+
+  <div class="prog">
+    <div class="prog__label"><span>파이프라인 총 소요시간</span><span id="progTotal">-</span></div>
+    <div class="prog__track" id="progTrack"></div>
+    <div class="prog__badge" id="progBadge"></div>
+  </div>
+
+  <section>
+    <h2 style="font-size:1.2rem;margin-bottom:0.9rem;">산출 영상 3편</h2>
+    <div class="gallery" id="gallery"></div>
+  </section>
+
+  <div class="cta-wrap">
+    <a class="cta-btn" href="/index.html#contact">우리 제품으로 만들기 <span aria-hidden="true">→</span></a>
+  </div>
+</main>
+
+<footer class="dfoot"><div class="wrap">© 2i · contact@2icorp.site</div></footer>
+
+<script>
+(function(){
+  "use strict";
+
+  var STEPS = [
+    { no: 1, title: "이슈 포착", dur: 45, body: "실시간 트렌드와 커뮤니티 반응을 스캔해 오늘 다룰 이슈를 확정합니다. 소재 방향과 타깃 규격(16:9/9:16)을 함께 정합니다." },
+    { no: 2, title: "스크립트", dur: 90, body: "이슈에 맞는 카피와 씬 구성을 초안으로 작성하고, 톤앤매너 승인을 받습니다. 여기서 확정된 스크립트가 생성 단계의 입력이 됩니다." },
+    { no: 3, title: "생성·편집", dur: 180, body: "장면별로 영상을 생성하고 컷 편집, 자막, 색보정을 거칩니다. 파이프라인에서 가장 오래 걸리는 단계입니다." },
+    { no: 4, title: "규격 납품", dur: 40, body: "채널별 규격(가로/세로, 길이, 코덱)으로 인코딩하고 최종 QC 후 전달합니다." }
+  ];
+
+  var DAY_MIN = 24 * 60;
+  var total = STEPS.reduce(function(s, x){ return s + x.dur; }, 0);
+
+  var timeline = document.getElementById("timeline");
+  STEPS.forEach(function(step, idx){
+    var el = document.createElement("button");
+    el.type = "button";
+    el.className = "tstep";
+    el.setAttribute("role", "listitem");
+    el.dataset.no = step.no;
+    el.innerHTML = '<div class="tstep__no">STEP 0' + step.no + '</div>' +
+      '<div class="tstep__title">' + step.title + '</div>' +
+      '<div class="tstep__dur">' + step.dur + '분</div>';
+    el.addEventListener("click", function(){ selectStep(step.no); });
+    timeline.appendChild(el);
+  });
+
+  var progTrack = document.getElementById("progTrack");
+  STEPS.forEach(function(step){
+    var seg = document.createElement("div");
+    seg.className = "prog__seg";
+    seg.dataset.step = step.no;
+    seg.style.width = (step.dur / DAY_MIN * 100) + "%";
+    progTrack.appendChild(seg);
+  });
+  var free = document.createElement("div");
+  free.className = "prog__free";
+  progTrack.appendChild(free);
+
+  var hoursTxt = Math.floor(total / 60) + "시간 " + (total % 60) + "분";
+  document.getElementById("progTotal").textContent = total + "분 (" + hoursTxt + ")";
+  document.getElementById("progBadge").textContent =
+    "24시간 중 " + (total / DAY_MIN * 100).toFixed(1) + "% 사용 · 나머지 " + (100 - total / DAY_MIN * 100).toFixed(1) + "%는 여유. 당일 납품 범위 안에 들어옵니다.";
+
+  function selectStep(no){
+    var step = STEPS.filter(function(s){ return s.no === no; })[0];
+    Array.prototype.forEach.call(timeline.querySelectorAll(".tstep"), function(el){
+      el.classList.toggle("active", parseInt(el.dataset.no, 10) === no);
+    });
+    document.getElementById("descTitle").textContent = "STEP 0" + step.no + " · " + step.title + " (" + step.dur + "분)";
+    document.getElementById("descBody").textContent = step.body;
+    Array.prototype.forEach.call(progTrack.querySelectorAll(".prog__seg"), function(el){
+      el.classList.toggle("pulse", parseInt(el.dataset.step, 10) === no);
+    });
+  }
+  selectStep(1);
+
+  var CLIPS = [
+    { file: "demo2-film-pado.mp4", poster: "demo2-poster.jpg", ratio: "169", title: "필름 파도", spec: "16:9" },
+    { file: "demo1-ad-sseoneul.mp4", poster: "demo1-poster.jpg", ratio: "916", title: "쓰어늘 광고", spec: "9:16" },
+    { file: "demo3-anime-dongdong.mp4", poster: "demo3-poster.jpg", ratio: "916", title: "동동 애니메이션", spec: "9:16" }
+  ];
+
+  var gallery = document.getElementById("gallery");
+  CLIPS.forEach(function(clip, idx){
+    var el = document.createElement("article");
+    el.className = "clip ratio-" + clip.ratio;
+    var videoId = "clipVideo" + idx;
+    var lenId = "clipLen" + idx;
+    el.innerHTML =
+      '<div class="clip__frame"><video id="' + videoId + '" controls preload="metadata" poster="../../videos/' + clip.poster + '"><source src="../../videos/' + clip.file + '" type="video/mp4"></video></div>' +
+      '<div class="clip__body">' +
+        '<div class="clip__title">' + clip.title + '</div>' +
+        '<div class="clip__meta"><span>' + clip.spec + '</span><span id="' + lenId + '">길이 확인중</span></div>' +
+      '</div>';
+    gallery.appendChild(el);
+  });
+
+  CLIPS.forEach(function(clip, idx){
+    var v = document.getElementById("clipVideo" + idx);
+    var lenEl = document.getElementById("clipLen" + idx);
+    v.addEventListener("loadedmetadata", function(){
+      if (isFinite(v.duration)) {
+        var s = Math.round(v.duration);
+        lenEl.textContent = "길이 " + s + "초";
+      }
+    });
+  });
+})();
+</script>
+</body>
+</html>

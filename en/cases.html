@@ -53,8 +53,20 @@
       </section>
 
   <section class="section" style="padding-top:1.5rem">
+    <div class="wrap">
+      <div class="ifilters cfilters reveal" role="tablist" aria-label="Case category filter" style="margin:0 0 1.2rem">
+        <button class="ifilter cfilter is-on" data-ccat="all">All <b>12</b></button>
+        <button class="ifilter cfilter" data-ccat="data">Data &amp; management <b>2</b></button>
+        <button class="ifilter cfilter" data-ccat="doc">Documents &amp; knowledge <b>2</b></button>
+        <button class="ifilter cfilter" data-ccat="vision">Vision AI <b>1</b></button>
+        <button class="ifilter cfilter" data-ccat="agent">Agents &amp; voice <b>2</b></button>
+        <button class="ifilter cfilter" data-ccat="signal">Signal &amp; telecom <b>1</b></button>
+        <button class="ifilter cfilter" data-ccat="sales">Sales &amp; marketing <b>3</b></button>
+        <button class="ifilter cfilter" data-ccat="infra">Infra &amp; tools <b>1</b></button>
+      </div>
+    </div>
     <div class="wrap case-list">
-      <article class="case reveal" id="case-1">
+      <article class="case reveal" id="case-1" data-ccat="data">
         <header class="case__top">
           <span class="case__no">01</span>
           <div class="case__id">
@@ -82,6 +94,7 @@
               <span class="chip chip--v">Eligible for government voucher</span>
             </div>
             <div class="case__proof">
+              <a class="chip chip--code" href="../demos/01-data-dashboard/" target="_blank" rel="noopener">&#x25B6; Live demo (runs in your browser) &#x2197;</a>
               <a class="chip chip--code" href="https://github.com/2icorp/2i-case-01-data-dashboard" target="_blank" rel="noopener">&#x2039;/&#x203A; Working reference demo · source code &#x2197;</a>
               <a class="chip chip--dl" href="../brochures/2i-brochure-01-오늘-재고-얼마야-반나절-3초.pdf" download>Brochure PDF &#x2193;</a>
             </div>
@@ -89,7 +102,7 @@
           </aside>
         </div>
       </article>
-      <article class="case reveal" id="case-2">
+      <article class="case reveal" id="case-2" data-ccat="doc">
         <header class="case__top">
           <span class="case__no">02</span>
           <div class="case__id">
@@ -117,6 +130,7 @@
               <span class="chip chip--v">Eligible for government voucher</span>
             </div>
             <div class="case__proof">
+              <a class="chip chip--code" href="../demos/02-doc-automation/" target="_blank" rel="noopener">&#x25B6; Live demo (runs in your browser) &#x2197;</a>
               <a class="chip chip--code" href="https://github.com/2icorp/2i-case-02-doc-automation" target="_blank" rel="noopener">&#x2039;/&#x203A; Working reference demo · source code &#x2197;</a>
               <a class="chip chip--dl" href="../brochures/2i-brochure-02-견적-발주-수기입력-담당자는-예외만-본다.pdf" download>Brochure PDF &#x2193;</a>
             </div>
@@ -124,7 +138,7 @@
           </aside>
         </div>
       </article>
-      <article class="case reveal" id="case-3">
+      <article class="case reveal" id="case-3" data-ccat="vision">
         <header class="case__top">
           <span class="case__no">03</span>
           <div class="case__id">
@@ -152,6 +166,7 @@
               <span class="chip chip--v">Eligible for government voucher</span>
             </div>
             <div class="case__proof">
+              <a class="chip chip--code" href="../demos/03-vision-defect/" target="_blank" rel="noopener">&#x25B6; Live demo (runs in your browser) &#x2197;</a>
               <a class="chip chip--code" href="https://github.com/2icorp/2i-case-03-vision-defect" target="_blank" rel="noopener">&#x2039;/&#x203A; Working reference demo · source code &#x2197;</a>
               <a class="chip chip--dl" href="../brochures/2i-brochure-03-검사원마다-다른-판정-24시간-같은-눈으로.pdf" download>Brochure PDF &#x2193;</a>
             </div>
@@ -159,7 +174,7 @@
           </aside>
         </div>
       </article>
-      <article class="case reveal" id="case-4">
+      <article class="case reveal" id="case-4" data-ccat="data">
         <header class="case__top">
           <span class="case__no">04</span>
           <div class="case__id">
@@ -187,6 +202,7 @@
               <span class="chip chip--v">Eligible for government voucher</span>
             </div>
             <div class="case__proof">
+              <a class="chip chip--code" href="../demos/04-demand-forecast/" target="_blank" rel="noopener">&#x25B6; Live demo (runs in your browser) &#x2197;</a>
               <a class="chip chip--code" href="https://github.com/2icorp/2i-case-04-demand-forecast" target="_blank" rel="noopener">&#x2039;/&#x203A; Working reference demo · source code &#x2197;</a>
               <a class="chip chip--dl" href="../brochures/2i-brochure-04-감으로-잡던-재고-결품과-악성재고를-동시에-줄인다.pdf" download>Brochure PDF &#x2193;</a>
             </div>
@@ -194,7 +210,7 @@
           </aside>
         </div>
       </article>
-      <article class="case reveal" id="case-5">
+      <article class="case reveal" id="case-5" data-ccat="agent">
         <header class="case__top">
           <span class="case__no">05</span>
           <div class="case__id">
@@ -222,6 +238,7 @@
               <span class="chip chip--v">Eligible for government voucher</span>
             </div>
             <div class="case__proof">
+              <a class="chip chip--code" href="../demos/05-support-chatbot/" target="_blank" rel="noopener">&#x25B6; Live demo (runs in your browser) &#x2197;</a>
               <a class="chip chip--code" href="https://github.com/2icorp/2i-case-05-support-chatbot" target="_blank" rel="noopener">&#x2039;/&#x203A; Live chatbot demo (with offline fallback built in) · source code &#x2197;</a>
               <a class="chip chip--dl" href="../brochures/2i-brochure-05-반복-문의는-AI가-사람은-진짜-상담에.pdf" download>Brochure PDF &#x2193;</a>
             </div>
@@ -229,7 +246,7 @@
           </aside>
         </div>
       </article>
-      <article class="case reveal" id="case-6">
+      <article class="case reveal" id="case-6" data-ccat="signal">
         <header class="case__top">
           <span class="case__no">06</span>
           <div class="case__id">
@@ -257,6 +274,7 @@
               <span class="chip chip--v">Eligible for government voucher</span>
             </div>
             <div class="case__proof">
+              <a class="chip chip--code" href="../demos/06-sigprint-rf/" target="_blank" rel="noopener">&#x25B6; Live demo (runs in your browser) &#x2197;</a>
               <a class="chip chip--code" href="https://github.com/2icorp/2i-case-06-sigprint-rf" target="_blank" rel="noopener">&#x2039;/&#x203A; Working reference demo (CFAR + fingerprint matching) · source code &#x2197;</a>
               <a class="chip chip--dl" href="../brochures/2i-brochure-06-무선망을-멈추는-원인-불명-전파-실시간으로-지목한다.pdf" download>Brochure PDF &#x2193;</a>
             </div>
@@ -264,7 +282,7 @@
           </aside>
         </div>
       </article>
-      <article class="case reveal" id="case-7">
+      <article class="case reveal" id="case-7" data-ccat="doc">
         <header class="case__top">
           <span class="case__no">07</span>
           <div class="case__id">
@@ -292,6 +310,7 @@
               <span class="chip chip--v">Eligible for government voucher</span>
             </div>
             <div class="case__proof">
+              <a class="chip chip--code" href="../demos/07-knowledge-rag/" target="_blank" rel="noopener">&#x25B6; Live demo (runs in your browser) &#x2197;</a>
               <a class="chip chip--code" href="https://github.com/2icorp/2i-case-07-knowledge-rag" target="_blank" rel="noopener">&#x2039;/&#x203A; Live RAG chatbot demo (with TF-IDF fallback built in) · source code &#x2197;</a>
               <a class="chip chip--dl" href="../brochures/2i-brochure-07-20년-베테랑의-머릿속-질문-한-번에-꺼낸다.pdf" download>Brochure PDF &#x2193;</a>
             </div>
@@ -299,7 +318,7 @@
           </aside>
         </div>
       </article>
-      <article class="case reveal" id="case-8">
+      <article class="case reveal" id="case-8" data-ccat="sales">
         <header class="case__top">
           <span class="case__no">08</span>
           <div class="case__id">
@@ -327,6 +346,7 @@
               <span class="chip chip--v">Eligible for government voucher</span>
             </div>
             <div class="case__proof">
+              <a class="chip chip--code" href="../demos/08-sales-signal/" target="_blank" rel="noopener">&#x25B6; Live demo (runs in your browser) &#x2197;</a>
               <a class="chip chip--code" href="https://github.com/2icorp/2i-case-08-sales-signal" target="_blank" rel="noopener">&#x2039;/&#x203A; Working reference demo · source code &#x2197;</a>
               <a class="chip chip--dl" href="../brochures/2i-brochure-08-제안-골든타임을-놓치지-않는-영업-레이더.pdf" download>Brochure PDF &#x2193;</a>
             </div>
@@ -334,7 +354,7 @@
           </aside>
         </div>
       </article>
-      <article class="case reveal" id="case-9">
+      <article class="case reveal" id="case-9" data-ccat="sales">
         <header class="case__top">
           <span class="case__no">09</span>
           <div class="case__id">
@@ -362,6 +382,7 @@
               <span class="chip chip--v">Eligible for government voucher</span>
             </div>
             <div class="case__proof">
+              <a class="chip chip--code" href="../demos/09-promo-video/" target="_blank" rel="noopener">&#x25B6; Live demo (runs in your browser) &#x2197;</a>
               <a class="chip chip--code" href="https://github.com/2icorp/2i-case-09-promo-video" target="_blank" rel="noopener">&#x2039;/&#x203A; Working reference demo · source code &#x2197;</a>
               <a class="chip chip--dl" href="../brochures/2i-brochure-09-제품-정보만-넣으면-채널별-홍보영상이-쏟아진다.pdf" download>Brochure PDF &#x2193;</a>
             </div>
@@ -369,7 +390,7 @@
           </aside>
         </div>
       </article>
-      <article class="case reveal" id="case-10">
+      <article class="case reveal" id="case-10" data-ccat="sales">
         <header class="case__top">
           <span class="case__no">10</span>
           <div class="case__id">
@@ -397,6 +418,7 @@
               <span class="chip chip--v">Eligible for government voucher</span>
             </div>
             <div class="case__proof">
+              <a class="chip chip--code" href="../demos/10-web-marketing/" target="_blank" rel="noopener">&#x25B6; Live demo (runs in your browser) &#x2197;</a>
               <a class="chip chip--code" href="https://github.com/2icorp/2i-case-10-web-marketing" target="_blank" rel="noopener">&#x2039;/&#x203A; Working reference starter (+ this site itself) · source code &#x2197;</a>
               <a class="chip chip--dl" href="../brochures/2i-brochure-10-검색하면-안-나오는-회사-신뢰받는-브랜드로.pdf" download>Brochure PDF &#x2193;</a>
             </div>
@@ -404,6 +426,77 @@
           </aside>
         </div>
       </article>
+
+      <article class="case reveal" id="case-11" data-ccat="agent">
+        <header class="case__top">
+          <span class="case__no">11</span>
+          <div class="case__id">
+            <span class="case__cat">Real-Time Voice AI · Self-Hosted</span>
+            <span class="case__ind">All Industries · Security-Sensitive Environments</span>
+          </div>
+          <div class="case__stkm" role="group" aria-label="The cost of the problem">
+            <span class="case__stkm-l">The cost of voice-API lock-in</span>
+            <span class="case__stkm-v">Data leaving your network + usage-based billing</span>
+          </div>
+        </header>
+        <h3 class="case__title">Turning OpenAI Realtime into an on-prem voice stack with one endpoint line</h3>
+        <p class="case__stakes">Build real-time voice support or guidance on an external voice API, and two things follow: the customer's actual voice leaves your network on every turn, and the bill grows in direct proportion to usage. Sites with security regulations can't even get started.</p>
+        <div class="case__grid">
+          <div class="case__main">
+            <div class="case__row"><span class="case__k">Insight</span><p>Open-source speech-to-speech stacks already speak the same protocol as the OpenAI Realtime API. That means you can leave your existing client code untouched, change a single connection URL, and bring the entire voice pipeline inside your own network.</p></div>
+            <div class="case__row"><span class="case__k">2i's Approach</span><p>We deploy a stack that ties VAD, Whisper STT, an OpenAI-compatible LLM, and Qwen3-TTS together over a single WebSocket on a private GPU cluster, and measured it with both a terminal smoke test and a browser-microphone end-to-end test. A single Korean turn round trip clocked in at 1.47 seconds from the terminal and 1.6 seconds from the browser, and we confirmed no voice or text data left the cluster.</p></div>
+            <ol class="case__gates"><li class="gate"><b class="gate__name">Measure Gate</b><span class="gate__what">We measure current voice-API usage, cost, and data flow, and set a baseline target latency (under 2 seconds per turn).</span></li><li class="gate"><b class="gate__name">Verify Gate</b><span class="gate__what">We run the stack on 1-2 GPUs, measure latency and quality against real call scenarios, and verify that the existing client connects with nothing more than an endpoint swap.</span></li><li class="gate"><b class="gate__name">Operate Gate</b><span class="gate__what">We reduce cold start with model pre-baking and hand it over to the operations team along with startup and shutdown procedures.</span></li></ol>
+          </div>
+          <aside class="case__side">
+            <div class="ba"><div class="ba__head">Measured metrics <span class="ba__note">· H200-class cluster, re-measure per environment</span></div><div class="ba__row"><span class="ba__m">Korean single-turn round trip</span><span class="ba__b">Dependent on external API</span><span class="ba__arw" aria-hidden="true">&#x2192;</span><span class="ba__a">1.47s (measured)</span></div><div class="ba__row"><span class="ba__m">Browser-microphone E2E</span><span class="ba__b">Not measurable (external)</span><span class="ba__arw" aria-hidden="true">&#x2192;</span><span class="ba__a">1.6s (measured)</span></div><div class="ba__row"><span class="ba__m">Voice data leaving the network</span><span class="ba__b">All of it</span><span class="ba__arw" aria-hidden="true">&#x2192;</span><span class="ba__a">0</span></div></div>
+            <div class="case__sowhat"><span class="case__k case__k--go">So what does this unlock</span><p>Sites that had ruled out voice AI because of security regulations become candidates again. As support volume grows, the cost structure shifts from an API bill to a fixed GPU cost.</p></div>
+            <div class="case__facts">
+              <span class="chip">Measured and verified · honest limitation: 25-30 minute cold start (resolved with pre-baking)</span>
+            </div>
+            <div class="case__proof">
+              <a class="chip chip--code" href="https://github.com/2icorp/2i-case-11-realtime-voice" target="_blank" rel="noopener">&#x2039;/&#x203A; Working reference demo · source code &#x2197;</a>
+            </div>
+            <p class="case__tech"><span class="case__tech-k">Tech used</span> Silero VAD + Whisper large-v3-turbo + OpenAI-compatible LLM serving + Qwen3-TTS, an OpenAI Realtime-compatible WebSocket, deployed on a Docker/GPU cluster.</p>
+          </aside>
+        </div>
+      </article>
+
+
+      <article class="case reveal" id="case-12" data-ccat="infra">
+        <header class="case__top">
+          <span class="case__no">12</span>
+          <div class="case__id">
+            <span class="case__cat">Infrastructure Decision Tool</span>
+            <span class="case__ind">All Industries · IT Planning &amp; Finance</span>
+          </div>
+          <div class="case__stkm" role="group" aria-label="The cost of the problem">
+            <span class="case__stkm-l">GPU purchases decided by gut feeling</span>
+            <span class="case__stkm-v">Tens of millions of won in misjudgment risk</span>
+          </div>
+        </header>
+        <h3 class="case__title">&quot;Keep paying for the API, or buy a GPU?&quot; Let a calculator decide, not gut feel</h3>
+        <p class="case__stakes">It's a question every growing LLM deployment eventually runs into: keep paying usage-based API fees, or buy GPUs and run it yourself. Make that call on gut feeling and you risk a misjudgment worth tens of millions of won, because the right answer depends entirely on model size, quantization, GPU model, and concurrent user count.</p>
+        <div class="case__grid">
+          <div class="case__main">
+            <div class="case__row"><span class="case__k">Insight</span><p>The math this decision needs (VRAM fit, throughput estimates, cost per token, break-even against the API) is well defined. The problem is that math lives only inside an engineer's head, so leadership never sees the same screen. Lock the calculation into a tool, and the meeting starts with numbers.</p></div>
+            <div class="case__row"><span class="case__k">2i's Approach</span><p>We built a calculator that runs 100% client-side in the browser. Combine 22 models (plus direct HF ID input), 25 GPUs and accelerators, and 6 quantization schemes, and it instantly computes VRAM fit, the number of GPUs required, estimated throughput (tok/s), self-hosted token cost against the commercial API break-even, and the payback period on a purchase. It also judges support across three serving engines, vLLM, SGLang, and TensorRT-LLM, and lets you download docker-compose, K8s, and Helm deployment manifests on the spot.</p></div>
+            <ol class="case__gates"><li class="gate"><b class="gate__name">Measure Gate</b><span class="gate__what">We measure current API usage, unit price, and traffic patterns, and fill the calculator's inputs with your company's actual figures.</span></li><li class="gate"><b class="gate__name">Verify Gate</b><span class="gate__what">We benchmark the one configuration the calculator points to on a real GPU and check the gap between the estimate and the measured result.</span></li><li class="gate"><b class="gate__name">Operate Gate</b><span class="gate__what">We hand over the adoption decision document, deployment manifests, and operating procedures together.</span></li></ol>
+          </div>
+          <aside class="case__side">
+            <div class="ba"><div class="ba__head">Questions the tool answers <span class="ba__note">· public-data-based approximations, re-verify with real measurements</span></div><div class="ba__row"><span class="ba__m">Does this model fit on this GPU</span><span class="ba__b">Engineer's rule of thumb</span><span class="ba__arw" aria-hidden="true">&#x2192;</span><span class="ba__a">VRAM fit + GPU count, instantly</span></div><div class="ba__row"><span class="ba__m">Break-even against the API</span><span class="ba__b">Re-argued every meeting</span><span class="ba__arw" aria-hidden="true">&#x2192;</span><span class="ba__a">$/1M token comparison + payback months</span></div></div>
+            <div class="case__sowhat"><span class="case__k case__k--go">So what does this unlock</span><p>The GPU purchase approval goes up the chain on the same calculator screen, not on a &quot;feeling.&quot; And verifying this math and actually building it out is exactly the work of our cloud practice.</p></div>
+            <div class="case__facts">
+              <span class="chip">Compute core covered by unit tests · no backend, no API key required</span>
+            </div>
+            <div class="case__proof">
+              <a class="chip chip--code" href="../demos/llm-selfhost-calc/" target="_blank" rel="noopener">&#x25B6; Live demo (runs in your browser) &#x2197;</a>
+              <a class="chip chip--code" href="https://github.com/2icorp/2i-case-12-llm-selfhost-calc" target="_blank" rel="noopener">&#x2039;/&#x203A; Working reference demo · source code &#x2197;</a>
+            </div>
+            <p class="case__tech"><span class="case__tech-k">Tech used</span> Pure JS client-side computation (zero backend), a model and GPU spec dataset, a vLLM/SGLang/TensorRT-LLM support matrix, and a deployment manifest generator.</p>
+          </aside>
+        </div>
+      </article>
+
     </div>
   </section>
   <section class="section section--alt">

@@ -1,0 +1,294 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<script>(function(){try{var t=localStorage.getItem("theme");if(!t&&window.matchMedia&&matchMedia("(prefers-color-scheme: dark)").matches)t="dark";if(t)document.documentElement.setAttribute("data-theme",t);}catch(e){}})();</script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>무선 간섭 진단 데모 | 2i</title>
+<meta name="description" content="실시간 스펙트럼 워터폴에서 간섭원을 주입하고 자동 탐지, 지문 매칭 결과를 확인하는 신호 지능 인터랙티브 데모.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23111827'/%3E%3Ctext x='16' y='22' font-family='monospace' font-size='16' font-weight='700' fill='%23e08a2b' text-anchor='middle'%3E2i%3C/text%3E%3C/svg%3E">
+<link rel="stylesheet" href="../../styles.css?v=14">
+<style>
+  .dtop { position: sticky; top: 0; z-index: 40; background: var(--nav-bg); backdrop-filter: blur(8px); border-bottom: 1px solid var(--line); }
+  .dtop__inner { display: flex; align-items: center; justify-content: space-between; height: 60px; flex-wrap: wrap; gap: 0.5rem; }
+  .dtop__brand { display: flex; align-items: baseline; gap: 0.6rem; color: var(--ink); font-weight: 700; }
+  .dtop__brand b { font-family: var(--mono); background: var(--ink); color: var(--panel); padding: 0.15rem 0.4rem; border-radius: 3px; font-size: 0.85rem; }
+  .dtop__label { font-size: var(--text-sm); color: var(--ink-soft); font-weight: 500; }
+  .dtop__links { display: flex; gap: 1.2rem; font-size: var(--text-sm); }
+  .dtop__links a { color: var(--ink-soft); border-bottom: 1px solid transparent; }
+  .dtop__links a:hover { color: var(--ink); border-color: var(--line); }
+
+  .honest { font-family: var(--mono); font-size: var(--text-xs); color: var(--ink-faint); background: var(--paper-2); border: 1px solid var(--line); border-radius: var(--radius); padding: 0.6rem 0.9rem; margin: 1.2rem auto 0; letter-spacing: 0.01em; }
+
+  .dhero { padding: 2.4rem 0 1rem; }
+  .dhero h1 { font-size: clamp(1.5rem, 1.1rem + 1.6vw, 2.2rem); margin: 0.5rem 0 0.6rem; }
+  .dhero p { color: var(--ink-soft); max-width: 64ch; }
+
+  .controls { display: flex; flex-wrap: wrap; gap: 0.8rem; align-items: center; margin: 1.4rem 0 1.4rem; }
+  .rf-btn { font-family: var(--sans); font-weight: 700; font-size: 0.9rem; padding: 0.65rem 1.15rem; border-radius: var(--radius); border: 1px solid var(--line); background: var(--panel); color: var(--ink); cursor: pointer; transition: transform var(--dur) var(--ease), border-color var(--dur); }
+  .rf-btn:hover { transform: translateY(-2px); border-color: var(--steel-soft); }
+  .rf-btn--on { border-color: var(--signal-deep); background: var(--signal); color: oklch(22% 0.03 60); }
+  .rf-btn:disabled { opacity: 0.5; cursor: default; transform: none; }
+  .far-chip { margin-left: auto; font-family: var(--mono); font-size: var(--text-xs); color: var(--ink-faint); border: 1px solid var(--line); border-radius: 999px; padding: 0.3rem 0.7rem; }
+
+  .wf-wrap { position: relative; background: var(--panel); border: 1px solid var(--line); border-radius: var(--radius); padding: 0.9rem; }
+  .wf-canvas-holder { position: relative; width: 100%; height: 320px; border-radius: 4px; overflow: hidden; background: var(--paper-2); }
+  #wfCanvas { width: 100%; height: 100%; display: block; }
+  .wf-marker { position: absolute; top: 0; bottom: 0; width: 2px; background: repeating-linear-gradient(180deg, var(--signal-deep) 0 6px, transparent 6px 12px); opacity: 0; transition: opacity var(--dur) var(--ease); pointer-events: none; }
+  .wf-marker.show { opacity: 1; }
+  .wf-marker__tag { position: absolute; top: 6px; left: 6px; background: var(--signal-deep); color: oklch(98% 0.01 60); font-family: var(--mono); font-size: 0.62rem; font-weight: 700; padding: 0.14rem 0.4rem; border-radius: 2px; white-space: nowrap; }
+  .wf-axis { display: flex; justify-content: space-between; font-family: var(--mono); font-size: var(--text-xs); color: var(--ink-faint); margin-top: 0.5rem; }
+  .wf-legend { display: flex; align-items: center; gap: 0.5rem; font-family: var(--mono); font-size: var(--text-xs); color: var(--ink-faint); margin-top: 0.6rem; }
+  .wf-legend__bar { height: 8px; flex: 1; border-radius: 4px; background: linear-gradient(90deg, var(--paper-2), var(--steel-soft), var(--steel), var(--signal), var(--signal-deep)); border: 1px solid var(--line); }
+
+  .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1rem; margin: 1.6rem 0 2.4rem; }
+  .card { background: var(--panel); border: 1px solid var(--line); border-radius: var(--radius); padding: 1.1rem 1.2rem; opacity: 0; transform: translateY(6px); transition: opacity var(--dur) var(--ease), transform var(--dur) var(--ease); }
+  .card.show { opacity: 1; transform: translateY(0); }
+  .card--alarm { border-color: color-mix(in oklch, var(--signal) 55%, var(--line)); }
+  .card__head { font-family: var(--mono); font-size: var(--text-xs); font-weight: 700; letter-spacing: 0.05em; color: var(--signal-deep); text-transform: uppercase; margin-bottom: 0.7rem; }
+  .card--fp .card__head { color: var(--steel); }
+  .card dl { display: grid; grid-template-columns: 1fr auto; gap: 0.35rem 0.8rem; margin: 0; }
+  .card dt { color: var(--ink-faint); font-size: var(--text-sm); }
+  .card dd { margin: 0; font-family: var(--mono); font-weight: 700; }
+  .card p { margin: 0; color: var(--ink-soft); font-size: var(--text-sm); line-height: 1.7; }
+  .status-line { font-family: var(--mono); font-size: var(--text-xs); color: var(--ink-faint); margin-top: 0.9rem; min-height: 1.2em; }
+
+  .dfoot { border-top: 1px solid var(--line); padding: 2rem 0; margin-top: 2rem; font-family: var(--mono); font-size: var(--text-xs); color: var(--ink-faint); }
+</style>
+</head>
+<body>
+
+<header class="dtop">
+  <div class="wrap dtop__inner">
+    <a class="dtop__brand" href="/"><b>2i</b><span class="dtop__label">데모 · 무선 간섭 진단</span></a>
+    <nav class="dtop__links">
+      <a href="/cases.html#case-6">사례 보기</a>
+      <a href="https://github.com/2icorp/2i-case-06-sigprint-rf" target="_blank" rel="noopener">소스코드</a>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+  <p class="honest">브라우저에서 도는 샘플 데이터 인터랙티브 데모입니다. 실제 파이프라인 구현은 소스코드 저장소에 있습니다.</p>
+
+  <section class="dhero">
+    <span class="eyebrow" style="font-family:var(--mono);font-size:var(--text-xs);color:var(--steel);letter-spacing:0.08em;">SIGNAL INTELLIGENCE</span>
+    <h1>무선 간섭 진단</h1>
+    <p>정상 채널 3개가 흐르는 스펙트럼 워터폴에 간섭원을 주입하면 자동 탐지 알람과 신호 지문 매칭 결과가 실시간으로 올라옵니다. 오탐률(FAR)은 고정된 값으로 표시됩니다.</p>
+  </section>
+
+  <div class="controls">
+    <button class="rf-btn" id="injectBtn" type="button">간섭원 주입</button>
+    <button class="rf-btn" id="clearBtn" type="button" disabled>간섭 제거</button>
+    <span class="far-chip" id="farChip">오탐률(FAR) 고정 · 0.10%</span>
+  </div>
+
+  <div class="wf-wrap">
+    <div class="wf-canvas-holder">
+      <canvas id="wfCanvas"></canvas>
+      <div class="wf-marker" id="wfMarker"><span class="wf-marker__tag" id="wfMarkerTag"></span></div>
+    </div>
+    <div class="wf-axis">
+      <span>2400 MHz</span><span>2420 MHz</span><span>2440 MHz</span><span>2460 MHz</span><span>2480 MHz</span>
+    </div>
+    <div class="wf-legend"><span>약함</span><span class="wf-legend__bar"></span><span>강함</span></div>
+    <p class="status-line" id="statusLine">채널 3개 정상 수신중. 간섭원 없음.</p>
+  </div>
+
+  <div class="cards">
+    <div class="card card--alarm" id="alarmCard">
+      <div class="card__head">간섭 탐지 알람</div>
+      <dl>
+        <dt>주파수</dt><dd id="alFreq">-</dd>
+        <dt>세기</dt><dd id="alAmp">-</dd>
+        <dt>신뢰도</dt><dd id="alConf">-</dd>
+      </dl>
+    </div>
+    <div class="card card--fp" id="fpCard">
+      <div class="card__head">지문 매칭 · 미등록 신호원</div>
+      <p id="fpCandidates">-</p>
+    </div>
+  </div>
+</main>
+
+<footer class="dfoot"><div class="wrap">© 2i · contact@2icorp.site</div></footer>
+
+<script>
+(function(){
+  "use strict";
+
+  var holder = document.querySelector(".wf-canvas-holder");
+  var canvas = document.getElementById("wfCanvas");
+  var ctx = canvas.getContext("2d");
+  var BINS = 240;
+  var FREQ_LO = 2400, FREQ_HI = 2480;
+
+  function resize(){
+    var w = holder.clientWidth, h = holder.clientHeight;
+    if (canvas.width !== w || canvas.height !== h) {
+      var snapshot = null;
+      if (canvas.width > 0) { try { snapshot = ctx.getImageData(0, 0, canvas.width, canvas.height); } catch(e){} }
+      canvas.width = w;
+      canvas.height = h;
+      ctx.fillStyle = readColor("--paper-2");
+      ctx.fillRect(0, 0, w, h);
+    }
+  }
+
+  function readColor(varName){
+    var probe = document.createElement("span");
+    probe.style.color = "var(" + varName + ")";
+    probe.style.position = "absolute";
+    probe.style.opacity = "0";
+    document.body.appendChild(probe);
+    var c = getComputedStyle(probe).color;
+    document.body.removeChild(probe);
+    var m = c.match(/[\d.]+/g) || [0,0,0];
+    return { rgb: [parseFloat(m[0]), parseFloat(m[1]), parseFloat(m[2])], str: c };
+  }
+
+  var STOPS = [
+    { t: 0.00, c: readColor("--paper-2").rgb },
+    { t: 0.35, c: readColor("--steel-soft").rgb },
+    { t: 0.62, c: readColor("--steel").rgb },
+    { t: 0.85, c: readColor("--signal").rgb },
+    { t: 1.00, c: readColor("--signal-deep").rgb }
+  ];
+
+  function colorFor(v){
+    v = Math.max(0, Math.min(1, v));
+    for (var i = 0; i < STOPS.length - 1; i++) {
+      var a = STOPS[i], b = STOPS[i+1];
+      if (v >= a.t && v <= b.t) {
+        var f = (v - a.t) / (b.t - a.t || 1);
+        var r = a.c[0] + (b.c[0]-a.c[0])*f;
+        var g = a.c[1] + (b.c[1]-a.c[1])*f;
+        var bl = a.c[2] + (b.c[2]-a.c[2])*f;
+        return "rgb(" + (r|0) + "," + (g|0) + "," + (bl|0) + ")";
+      }
+    }
+    return STOPS[STOPS.length-1].c.join(",");
+  }
+
+  var CHANNELS = [
+    { bin: Math.round(BINS*0.18), width: 3.4, baseAmp: 0.48, wobble: 0.12, speed: 0.6, phase: 0.3 },
+    { bin: Math.round(BINS*0.50), width: 4.2, baseAmp: 0.55, wobble: 0.10, speed: 0.4, phase: 1.7 },
+    { bin: Math.round(BINS*0.80), width: 3.0, baseAmp: 0.42, wobble: 0.14, speed: 0.5, phase: 2.9 }
+  ];
+
+  var interference = { active: false, bin: Math.round(BINS*0.635), width: 6.5, amp: 0.0, target: 0.0 };
+
+  function addGaussian(arr, center, width, amp){
+    var lo = Math.max(0, Math.floor(center - width*4));
+    var hi = Math.min(arr.length-1, Math.ceil(center + width*4));
+    for (var i = lo; i <= hi; i++) {
+      var d = (i - center) / width;
+      var v = amp * Math.exp(-d*d);
+      if (arr[i] < v) arr[i] = v;
+    }
+  }
+
+  var t0 = performance.now();
+  function computeRow(){
+    var arr = new Float32Array(BINS);
+    for (var i = 0; i < BINS; i++) arr[i] = Math.random() * 0.14;
+    var t = (performance.now() - t0) / 1000;
+    CHANNELS.forEach(function(ch){
+      var amp = ch.baseAmp + Math.sin(t*ch.speed + ch.phase) * ch.wobble;
+      addGaussian(arr, ch.bin, ch.width, Math.max(0, amp));
+    });
+    if (interference.amp > 0.01) {
+      var jitter = (Math.random() - 0.5) * 0.05;
+      addGaussian(arr, interference.bin, interference.width, Math.max(0, interference.amp + jitter));
+    }
+    return arr;
+  }
+
+  var lastTick = 0;
+  var TICK_MS = 55;
+  function loop(now){
+    requestAnimationFrame(loop);
+    if (now - lastTick < TICK_MS) return;
+    lastTick = now;
+    resize();
+    var w = canvas.width, h = canvas.height;
+    if (w < 2 || h < 2) return;
+    // ease interference amplitude toward target for smooth ramp in/out
+    interference.amp += (interference.target - interference.amp) * 0.12;
+    // scroll existing content down by 1px
+    ctx.drawImage(canvas, 0, 0, w, h - 1, 0, 1, w, h - 1);
+    var row = computeRow();
+    var binW = w / BINS;
+    for (var i = 0; i < BINS; i++) {
+      ctx.fillStyle = colorFor(row[i]);
+      ctx.fillRect(Math.floor(i * binW), 0, Math.ceil(binW) + 1, 1);
+    }
+  }
+  requestAnimationFrame(loop);
+  window.addEventListener("resize", resize);
+  resize();
+
+  // ---- marker + alarm/fingerprint cards ----
+  var marker = document.getElementById("wfMarker");
+  var markerTag = document.getElementById("wfMarkerTag");
+  var alarmCard = document.getElementById("alarmCard");
+  var fpCard = document.getElementById("fpCard");
+  var statusLine = document.getElementById("statusLine");
+  var injectBtn = document.getElementById("injectBtn");
+  var clearBtn = document.getElementById("clearBtn");
+
+  var CANDIDATE_TYPES = ["광대역 재머", "아날로그 FM 데이터 링크", "비인가 원격 제어기", "산업용 ISM 노이즈원"];
+
+  function binToFreq(bin){
+    return (FREQ_LO + (bin / BINS) * (FREQ_HI - FREQ_LO)).toFixed(1);
+  }
+
+  var detectTimer = null;
+
+  function injectInterference(){
+    interference.target = 0.92;
+    marker.style.left = (interference.bin / BINS * 100).toFixed(2) + "%";
+    marker.classList.add("show");
+    markerTag.textContent = binToFreq(interference.bin) + " MHz";
+    statusLine.textContent = "이상 신호 감지, 분석중...";
+    injectBtn.disabled = true;
+    clearBtn.disabled = false;
+    alarmCard.classList.remove("show");
+    fpCard.classList.remove("show");
+    clearTimeout(detectTimer);
+    detectTimer = setTimeout(function(){
+      var freq = binToFreq(interference.bin);
+      var strengthDb = (interference.target * 42 - 12).toFixed(1);
+      var confidence = (88 + Math.random() * 9).toFixed(1);
+      document.getElementById("alFreq").textContent = freq + " MHz";
+      document.getElementById("alAmp").textContent = strengthDb + " dBm(상대)";
+      document.getElementById("alConf").textContent = confidence + "%";
+      alarmCard.classList.add("show");
+
+      var shuffled = CANDIDATE_TYPES.slice().sort(function(){ return Math.random() - 0.5; });
+      var weights = [58, 26, 11, 5].sort(function(){ return 0; });
+      var text = shuffled.map(function(name, idx){ return name + " " + weights[idx] + "%"; }).join(" · ");
+      document.getElementById("fpCandidates").textContent = "등록된 신호 지문과 일치하지 않습니다. 후보 유형: " + text;
+      fpCard.classList.add("show");
+
+      statusLine.textContent = freq + " MHz 대역에서 지속 간섭 확인됨. 알람 유지중.";
+    }, 750);
+  }
+
+  function clearInterference(){
+    interference.target = 0.0;
+    marker.classList.remove("show");
+    alarmCard.classList.remove("show");
+    fpCard.classList.remove("show");
+    clearTimeout(detectTimer);
+    injectBtn.disabled = false;
+    clearBtn.disabled = true;
+    statusLine.textContent = "채널 3개 정상 수신중. 간섭원 없음.";
+  }
+
+  injectBtn.addEventListener("click", injectInterference);
+  clearBtn.addEventListener("click", clearInterference);
+})();
+</script>
+</body>
+</html>
