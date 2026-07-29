@@ -1,0 +1,178 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<script>(function(){try{var t=localStorage.getItem("theme");if(!t&&window.matchMedia&&matchMedia("(prefers-color-scheme: dark)").matches)t="dark";if(t)document.documentElement.setAttribute("data-theme",t);}catch(e){}})();</script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>고전 DSP+GBM 대 딥러닝: 신호 과제 결정 지도 · 2i</title>
+<meta name="description" content="변조분류·간섭탐지·드론오픈셋·채널추정·RF지문·신호분리 6개 과제를 같은 데이터·같은 지표로 공정 비교했습니다. 딥러닝이 전부를 이기지 않았고, 고전이 전부를 이기지도 않았습니다. 어디서 무엇이 이기는지를 숫자와 한계까지 공개합니다.">
+<meta property="og:title" content="고전 DSP+GBM 대 딥러닝: 신호 과제 결정 지도 · 2i">
+<meta property="og:description" content="변조분류·간섭탐지·드론오픈셋·채널추정·RF지문·신호분리 6개 과제를 같은 데이터·같은 지표로 공정 비교했습니다. 딥러닝이 전부를 이기지 않았고, 고전이 전부를 이기지도 않았습니다. 어디서 무엇이 이기는지를 숫자와 한계까지 공개합니다.">
+<meta property="og:type" content="article">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23111827'/%3E%3Ctext x='16' y='22' font-family='monospace' font-size='16' font-weight='700' fill='%23e08a2b' text-anchor='middle'%3E2i%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../styles.css?v=13">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js" onload="renderMathInElement(document.body,{delimiters:[{left:'$$',right:'$$',display:true},{left:'$',right:'$',display:false},{left:'\\[',right:'\\]',display:true},{left:'\\(',right:'\\)',display:false}]})"></script>
+</head>
+<body>
+
+<header class="nav">
+  <div class="wrap nav__inner">
+    <a class="brand" href="../" aria-label="2i 홈">
+      <span class="brand__mark">2i</span>
+      <span class="brand__tag">AX 컨설팅</span>
+    </a>
+    <button class="nav__burger" type="button" aria-expanded="false" aria-controls="navLinks" aria-label="메뉴 열기"><span></span><span></span><span></span></button>
+    <nav class="nav__links" id="navLinks" aria-label="주요 메뉴">
+      <a href="../cases.html">사례</a>
+      <a href="../comms.html">통신 기술</a>
+      <a href="../papers.html" aria-current="page">논문·실험</a>
+      <a href="../about.html">회사소개</a>
+      <button class="nav__theme" type="button" aria-label="테마 전환" title="테마 전환"><svg class="ic-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg><svg class="ic-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg></button>
+      <a class="nav__lang" href="../en/">EN</a>
+      <a class="nav__cta btn btn--signal" href="../index.html#contact">상담 신청</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <article class="article wrap">
+    <a class="article__back" href="../papers.html">← 논문·실험 게시판</a>
+    <div class="article__head">
+      <div class="pcard__meta"><span class="pcard__cat">benchmark</span><span class="pcard__date">2026.07.29</span><span class="pcard__rt">약 10분</span></div>
+      <h1 class="article__title">고전 DSP+GBM 대 딥러닝: 신호 과제 결정 지도</h1>
+      <p class="article__excerpt">변조분류·간섭탐지·드론오픈셋·채널추정·RF지문·신호분리 6개 과제를 같은 데이터·같은 지표로 공정 비교했습니다. 딥러닝이 전부를 이기지 않았고, 고전이 전부를 이기지도 않았습니다. 어디서 무엇이 이기는지를 숫자와 한계까지 공개합니다.</p>
+      <div class="pcard__tags"><span>#신호처리</span><span>#GBM</span><span>#딥러닝</span><span>#변조분류</span><span>#간섭탐지</span><span>#벤치마크</span></div>
+      <a class="btn btn--ghost article__pdf" href="/papers/pdf/classical-dsp-gbm-vs-deep-learning-signal-tasks-ko.pdf" target="_blank" rel="noopener">PDF 원문 (국문) <span class="arrow">↓</span></a>
+      <a class="btn btn--ghost article__pdf" href="/papers/pdf/classical-dsp-gbm-vs-deep-learning-signal-tasks-en.pdf" target="_blank" rel="noopener">PDF (English) <span class="arrow">↓</span></a>
+    </div>
+    <div class="article__body prose">
+<h2 id="_1">무엇을 재는가</h2>
+<p>무선 신호처리에서 딥러닝이 결국 고전 방법을 다 이긴다는 통념이 있습니다. 이
+통념을 검증 가능한 여섯 개 질문으로 좁혀서 실측했습니다. 변조분류, 고정
+오탐률 간섭탐지, 드론 무선신호 오픈셋 거부, 채널추정, 무선 지문(RF
+fingerprint) 융합, 동일 채널 신호분리입니다. 모든 비교는 같은 데이터·같은
+학습/테스트 분할·같은 평가지표 위에서 했고, 어느 쪽에도 유리한 전처리를
+주지 않았습니다.</p>
+<h2 id="-">결과 - 승자는 과제마다 갈렸습니다</h2>
+<p>표준 공개 데이터셋 <strong>RadioML2016.10a</strong>(6dB SNR)에서 변조분류는 고전 방법
+(28차원 물리 특징 + LightGBM, 정확도 0.855)이 딥러닝(트랜스포머, 0.681)을
+뚜렷하게 이겼습니다. 학습 데이터를 539개에서 2,000개로 늘려도 이 우위는
+유지됐고, 고전 곡선을 9,900개까지 더 늘려 봐도 완만히 정체하는 양상이었습니다
+(같은 지점의 딥러닝 재측정은 완료하지 못해 교차점 존재 여부는 확인하지
+못했습니다). 고정 오탐률을 요구하는 간섭탐지에서는 고전 CFAR 계열 탐지기가
+잡음 바닥이 12dB 흔들리는 조건에서도 목표 오탐률을 그대로 지켰지만, 제약
+없는 이진 딥러닝 탐지기는 같은 조건에서 오탐률이 1.0으로 폭발했습니다.
+공개 데이터셋 <strong>DroneRF</strong>(CC BY 4.0)로 잰 드론 무선신호 오픈셋 거부에서는
+단일 관측(K=1) 기준으로 고전 방법의 미지 장치 거부율이 딥러닝 대비 5.7배
+높았습니다.</p>
+<p>반대로 딥러닝이 뚜렷하게 이긴 과제도 있습니다. 동일 채널에 겹친 두 무선
+신호를 분리하는 과제에서 학습형 분리기(Conv-TasNet 변형)는 SI-SDRi
++3.01dB를 기록했지만, 고전 독립성분분석(ICA) 기반 방법은 -14.25dB로
+오히려 혼합 신호보다 더 나빴습니다. 무선 지문 융합에서도 딥러닝 임베딩이
+자체 고전 융합 기준선을 이겼습니다(AUROC 0.9994 대 0.945, K=50 융합).
+다만 이 승리에는 조건이 여러 겹 붙습니다. 단일 패킷(K=1) 기준 외부 문헌
+대비로는 오히려 뒤지고, 실제 보안 운영점(오탐률 0.1%에서의 탐지율)에서는
+둘 다 약하며, 융합에 쓴 관측이 서로 독립적인지에 대한 방법론적 우려도
+사후에 제기됐습니다. 채널추정은 방법론에 결함이 있던 초기 실험 외에 확정된
+결과가 없어 정직하게 미검증으로 남겼습니다.</p>
+<table>
+<thead>
+<tr>
+<th>과제</th>
+<th>승자</th>
+<th>핵심 수치</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>변조분류 (RadioML2016.10a)</td>
+<td>고전</td>
+<td>0.855 vs 0.681</td>
+</tr>
+<tr>
+<td>고정 오탐률 간섭탐지</td>
+<td>고전</td>
+<td>드리프트 후 오탐률 0.0 vs 1.0</td>
+</tr>
+<tr>
+<td>드론 오픈셋 거부 (K=1)</td>
+<td>고전</td>
+<td>미지거부율 5.7배</td>
+</tr>
+<tr>
+<td>채널추정/등화</td>
+<td>미검증</td>
+<td>방법론 결함 있는 초기결과만 존재</td>
+</tr>
+<tr>
+<td>무선 지문 융합 (K=50)</td>
+<td>딥러닝 (다중 조건)</td>
+<td>AUROC 0.9994 vs 0.945</td>
+</tr>
+<tr>
+<td>동일 채널 신호분리</td>
+<td>딥러닝</td>
+<td>SI-SDRi +3.01dB vs -14.25dB</td>
+</tr>
+</tbody>
+</table>
+<h2 id="_2">방법 (요약)</h2>
+<p>탐지 과제는 임계값을 간섭이 없는 학습 구간 통계에서 목표 오탐률에 맞춰
+역산하고, 테스트 구간에 변경 없이 적용하는 CFAR(constant-false-alarm-rate)
+규율을 따랐습니다. 채널추정 실험에서는 딥러닝이 "이긴" 사례 일부가 실제로는
+더 약한 순진한 기준선(naive LS)과의 비교였다는 방법론 결함을 발견했고, 이후
+모든 비교에 고전 성능 사다리(순진한 방법부터 오라클급까지)를 두고 어느
+기준선 대비 승리인지를 명시했습니다.</p>
+<h2 id="_3">정직한 한계</h2>
+<p>간섭탐지·간섭 위치추정·O-RAN/5G 시나리오는 전부 합성 데이터이며 실제 전파
+환경을 반영하지 않습니다. 동일 채널 신호분리는 실제 다중발신원 공개
+데이터셋의 라이선스가 불명확해 같은 문제 구조를 자체 합성한 혼합 신호로
+실험했습니다. 무선 지문 융합의 핵심 데이터셋(WiSig)은 비상업·연구 목적
+한정 라이선스입니다. 드론 오픈셋 비교는 고전과 딥러닝이 서로 다른
+데이터셋(DroneRF/CardRF)에서 얻은 결과라 동일 데이터 위의 직접 대조는
+아닙니다. 채널추정은 방법론을 고친 재설계가 준비됐지만 이 발행 시점까지
+실제 GPU 실행이 완료되지 않았습니다.</p>
+<h2 id="_4">왜 이게 자랑거리인가</h2>
+<p>이 벤치마크의 가치는 어느 한쪽을 응원하는 데 있지 않습니다. "딥러닝이
+신호처리 전반을 대체한다"는 명제도, "고전이 항상 충분하다"는 반대 명제도
+여섯 개 과제의 실측 근거로는 지지되지 않습니다. 승패를 가른 것은 각 과제의
+구조였습니다. 학습 데이터가 작고 물리적으로 해석 가능한 특징이 있는
+과제는 고전이 유리했고, 표현 학습 자체가 과제인 데이터가 풍부한 과제는
+딥러닝이 유리했습니다. PoC 예산을 지키려면, 어느 방법을 팔기 전에 먼저
+과제의 구조를 재는 것이 순서라고 저희는 생각합니다.</p>
+    </div>
+    <div class="article__cta">
+      <p>이 방법을 당신 현장의 숫자로 다시 재보고 싶다면.</p>
+      <a class="btn btn--signal" href="../index.html#contact">30분 진단 상담 <span class="arrow">→</span></a>
+      <a class="btn btn--ghost" href="../papers.html">다른 기록 보기</a>
+    </div>
+  </article>
+</main>
+
+<footer class="foot">
+  <div class="wrap foot__inner">
+    <div>
+      <div class="brand"><span class="brand__mark">2i</span><span class="brand__tag">AX 컨설팅</span></div>
+      <div class="foot__mono" style="margin-top:0.6rem">중소·중견 제조·유통을 위한 AI 전환</div>
+    </div>
+    <nav class="foot__links" aria-label="하단 메뉴">
+      <a href="../index.html#method">방식</a>
+      <a href="../comms.html">통신</a>
+      <a href="../papers.html">논문·실험</a>
+      <a href="../index.html#voucher">정부 바우처</a>
+      <a href="https://github.com/2icorp" target="_blank" rel="noopener">GitHub</a>
+      <a href="../en/">EN</a>
+    </nav>
+  </div>
+</footer>
+
+<script src="../main.js"></script>
+</body>
+</html>
