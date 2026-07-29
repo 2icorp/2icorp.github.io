@@ -3,12 +3,12 @@ title: "오디오 콘텐츠ID, 8천곡 규모로 키워도 정확도가 안 무�
 excerpt: "방송 저작권 모니터링에 쓰이는 피크쌍 해싱 음원식별을 999곡에서 7,996곡까지 실측으로 키웠습니다. 정확도는 99%대를 유지했지만, 인메모리 인덱스를 100만곡으로 외삽하면 약 868GB - 진짜 병목은 알고리즘이 아니라 인덱스 구조였습니다."
 date: 2026-07-29
 categories:
-  - media
+ - media
 tags:
-  - 오디오지문
-  - 저작권모니터링
-  - 콘텐츠ID
-  - 방송
+ - 오디오지문
+ - 저작권모니터링
+ - 콘텐츠ID
+ - 방송
 reading_time_min: 8
 pdf: /papers/pdf/audio-content-fingerprinting-at-scale-ko.pdf
 pdf_en: /papers/pdf/audio-content-fingerprinting-at-scale-en.pdf
