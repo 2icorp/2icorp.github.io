@@ -140,6 +140,56 @@
     </div>
   </section>
 
+
+  <!-- FINANCE AI MODEL PORTFOLIO -->
+  <section class="section section--alt" id="models">
+    <div class="wrap">
+      <div class="section__head reveal">
+        <span class="eyebrow">Finance AI model portfolio · HANDS-ON</span>
+        <h2>From face payment to credit scoring, built by someone who has actually shipped them.</h2>
+        <p>The areas below are model families our principal has personally built and operated in production finance settings. We do not drop company names. Instead we state exactly what we have handled, and you are welcome to probe the practical details in a consultation.</p>
+      </div>
+
+      <div class="mlegend reveal">
+        <span class="mtag mtag--demo">Hands-on · personally built and operated</span>
+        <span class="mtag mtag--extend">Ready · assembled from current tooling</span>
+      </div>
+
+      <div class="rf-grid reveal stagger" style="margin-top:1.6rem">
+        <div class="rf-cell rf-cell--lead">
+          <span class="rf-name">Face-recognition payment · biometric auth</span>
+          <span class="rf-desc">Hands-on across the full commercial payment pipeline: detection, alignment, embedding, 1:N matching, and liveness (presentation-attack detection). Operating-point tuning between false accept (FAR) and false reject (FRR), defenses against photo and screen-replay attacks, large-scale 1:N index optimization, on-device and server hybrid layouts. Payment-grade face recognition is not about how well you recognize a face. It is about how safely you reject the one you do not know. And because biometric data is sensitive personal data, consent-to-deletion compliance matters as much as the model.</span>
+          <span class="chip chip--v">Hands-on · 1:N matching / PAD / FAR·FRR operating point / privacy regulation</span>
+        </div>
+        <div class="rf-cell rf-cell--lead">
+          <span class="rf-name">Credit scoring (GBM · deep learning)</span>
+          <span class="rf-desc">Hands-on building credit models that support approval, limit, and pricing decisions: XGBoost and LightGBM scorecards with deep-learning complements. WOE binning and IV-based variable selection, PSI drift monitoring (the 0.25 review threshold in practice), SHAP-based adverse-action reasons, and alternative data such as telecom and spending signals. The explainability that financial AI guidelines demand is designed in from the start, not bolted on.</span>
+          <span class="chip chip--v">Hands-on · XGBoost·LightGBM / WOE·PSI / SHAP / alternative data</span>
+        </div>
+        <div class="rf-cell">
+          <span class="rf-name">Targeting models (CRM)</span>
+          <span class="rf-desc">Response, churn, and LTV prediction plus uplift modeling: choosing who to contact for genuine incremental effect. Combined with limit and pricing models into a full CRM loop.</span>
+          <span class="chip chip--v">Hands-on</span>
+        </div>
+        <div class="rf-cell">
+          <span class="rf-name">Securities · capital-markets models</span>
+          <span class="rf-desc">Factor and signal research, VWAP and TWAP execution logic, robo-advisory style asset allocation, market risk metrics. The backtest infrastructure runs daily on our own operations as described above.</span>
+          <span class="chip chip--v">Hands-on + daily in-house use</span>
+        </div>
+        <div class="rf-cell">
+          <span class="rf-name">Fraud detection (FDS)</span>
+          <span class="rf-desc">Real-time scoring with rules-plus-ML hybrids and graph features. Catching anomalous patterns at a fixed false-alarm rate: the same mathematics as the fixed-FAR detection on our Telecom page.</span>
+          <span class="chip chip--v">Hands-on</span>
+        </div>
+        <div class="rf-cell">
+          <span class="rf-name">Model risk · regulatory response</span>
+          <span class="rf-desc">Model validation documentation, automated performance and drift reporting, and alignment with Korea FSC AI guidelines (operations 2021, development 2022, security 2023). Keeping a model alive is a bigger job than building it.</span>
+          <span class="chip">Ready · scoped per engagement</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- CAPABILITY GRID -->
   <section class="section" id="capability">
     <div class="wrap">
@@ -199,6 +249,63 @@
       </div>
 
       <p class="auto-foot reveal">To be honest: the "run on our own operations" label isn't a client delivery record; it's a record of managing our own assets with our own tools. Returns weren't a performance metric here, they were a test environment. 2i does not provide investment advisory or discretionary management services, and the technology above is provided as a data-infrastructure and automation build engagement.</p>
+    </div>
+  </section>
+
+
+  <!-- INDUSTRY LANDSCAPE -->
+  <section class="section" id="landscape">
+    <div class="wrap">
+      <div class="section__head reveal">
+        <span class="eyebrow">Industry map · where the market already is</span>
+        <h2>These technologies are already at the checkout counter and the loan desk.</h2>
+        <p>Face payment is running in convenience-store pilots, GBM plus alternative data has become the credit-scoring standard, and robo-advisory and fraud detection are past the proving stage. The map below summarizes public announcements and press coverage (2024 to 2026). It does not mean we worked with these companies. It is a coordinate grid for where you stand.</p>
+      </div>
+
+      <div class="vert-groups reveal stagger">
+        <div class="vgroup">
+          <div class="vgroup__h">Face payment · biometric auth</div>
+          <div class="vitems">
+            <div class="vitem"><div class="vitem__body"><span class="vitem__t">Toss FacePay</span><span class="vitem__d">Convenience-store pilots since 2025; reported 400K sign-ups with roughly 60% one-month repeat use, and a publicly stated nationwide merchant expansion goal.</span></div><span class="mtag mtag--demo">Scaling</span></div>
+            <div class="vitem"><div class="vitem__body"><span class="vitem__t">Shinhan Card Face Pay</span><span class="vitem__d">Korea's first commercial face payment (2019), pairing a 3D camera with PIN entry to resist spoofing.</span></div><span class="mtag mtag--demo">Commercial</span></div>
+            <div class="vitem"><div class="vitem__body"><span class="vitem__t">Alipay Smile to Pay · Mastercard Biometric Checkout</span><span class="vitem__d">World-first commercial deployment in 2017 (KFC China); Mastercard has expanded pilots from Brazil into Europe.</span></div><span class="mtag mtag--demo">Commercial</span></div>
+            <div class="vitem"><div class="vitem__body"><span class="vitem__t">Amazon One (a cautionary tale)</span><span class="vitem__d">Palm payment reached some 500 retail locations, then announced a 2026 retail shutdown on low adoption. Biometric payment is a fight over habits, not just technology.</span></div><span class="mtag mtag--concept">Withdrawn</span></div>
+          </div>
+        </div>
+
+        <div class="vgroup">
+          <div class="vgroup__h">Credit scoring</div>
+          <div class="vitems">
+            <div class="vitem"><div class="vitem__body"><span class="vitem__t">KakaoBank · Kbank · Toss Bank</span><span class="vitem__d">Alternative credit scoring is now standard at Korea's internet banks, with published results on approving borrowers whom bureau-only scores rejected.</span></div><span class="mtag mtag--demo">Commercial</span></div>
+            <div class="vitem"><div class="vitem__body"><span class="vitem__t">FICO · Upstart · Zest AI</span><span class="vitem__d">The vast majority of US loan decisions run on FICO, while Upstart and Zest challenge that standard with AI underwriting over hundreds of variables.</span></div><span class="mtag mtag--demo">Commercial</span></div>
+            <div class="vitem"><div class="vitem__body"><span class="vitem__t">Working practice</span><span class="vitem__d">On tabular credit data, gradient boosting is the de-facto standard, with logistic scorecards still run in parallel for regulatory fit. WOE, PSI, and SHAP are operational essentials.</span></div><span class="mtag mtag--extend">Practice</span></div>
+          </div>
+        </div>
+
+        <div class="vgroup">
+          <div class="vgroup__h">Targeting · CRM</div>
+          <div class="vitems">
+            <div class="vitem"><div class="vitem__body"><span class="vitem__t">MyData personalization · uplift</span><span class="vitem__d">Korean card issuers run MyData-based personalization in production, and uplift modeling is an established technique across finance, telecom, and retail direct marketing.</span></div><span class="mtag mtag--demo">Commercial</span></div>
+          </div>
+        </div>
+
+        <div class="vgroup">
+          <div class="vgroup__h">Securities · wealth · FDS</div>
+          <div class="vitems">
+            <div class="vitem"><div class="vitem__body"><span class="vitem__t">Robo-advisors</span><span class="vitem__d">Korean robo-advisors publish algorithm performance through the Koscom testbed and have entered the retirement-pension mandate market.</span></div><span class="mtag mtag--demo">Commercial</span></div>
+            <div class="vitem"><div class="vitem__body"><span class="vitem__t">FDS · quant</span><span class="vitem__d">Supervised ML is the mainstay of Korean fraud detection, with the Financial Security Institute publishing model comparisons; offshore, quant houses like Two Sigma run ML strategies at scale.</span></div><span class="mtag mtag--demo">Commercial</span></div>
+          </div>
+        </div>
+
+        <div class="vgroup">
+          <div class="vgroup__h">Regulation · governance</div>
+          <div class="vitems">
+            <div class="vitem"><div class="vitem__body"><span class="vitem__t">FSC AI guidelines · biometric data rules</span><span class="vitem__d">Korea's three-part AI guidance (operations 2021, development 2022, security 2023) requires explainability, and facial biometrics are sensitive data requiring separate consent. Half of any model project is regulatory design.</span></div><span class="mtag mtag--extend">Required</span></div>
+          </div>
+        </div>
+      </div>
+
+      <p class="auto-foot reveal">This map says one thing: these technologies are no longer experiments. And the difference between having someone who has actually built these models sitting next to you, versus someone who knows them only from slides, is what decides the project.</p>
     </div>
   </section>
 

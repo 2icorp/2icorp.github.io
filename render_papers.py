@@ -342,7 +342,7 @@ EN_FOOT = """
     <nav class="foot__links" aria-label="Footer">
       <a href="about.html">About</a>
       <a href="index.html#method">Method</a>
-      <a href="index.html#ideas">30 Ideas</a>
+      <a href="index.html#ideas">35 Ideas</a>
       <a href="papers.html">Papers</a>
       <a href="index.html#voucher">Voucher</a>
       <a href="privacy.html">Privacy</a>

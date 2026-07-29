@@ -140,6 +140,56 @@
     </div>
   </section>
 
+
+  <!-- FINANCE AI MODEL PORTFOLIO -->
+  <section class="section section--alt" id="models">
+    <div class="wrap">
+      <div class="section__head reveal">
+        <span class="eyebrow">금융 AI 모델 포트폴리오 · HANDS-ON</span>
+        <h2>얼굴 결제부터 신용평가까지, 만들어 본 사람이 짓습니다.</h2>
+        <p>아래 영역은 대표가 금융 현장에서 직접 구축·운영해 본 모델군입니다. 회사 이름은 걸지 않습니다. 대신 무엇을 어디까지 다뤄 봤는지를 구체적으로 적습니다. 상담에서 각 영역의 실무 디테일로 검증하셔도 좋습니다.</p>
+      </div>
+
+      <div class="mlegend reveal">
+        <span class="mtag mtag--demo">실무 경험 · 직접 구축·운영해 본 영역</span>
+        <span class="mtag mtag--extend">확장 · 보유 기술로 바로 조립</span>
+      </div>
+
+      <div class="rf-grid reveal stagger" style="margin-top:1.6rem">
+        <div class="rf-cell rf-cell--lead">
+          <span class="rf-name">얼굴 인식 결제 · 생체인증</span>
+          <span class="rf-desc">검출, 정렬, 임베딩, 1:N 매칭, 라이브니스(위변조 검증)까지 상용 결제 파이프라인 전 단계를 실무로 다뤄 봤습니다. 오인식률(FAR)과 오거부율(FRR)의 운영점 튜닝, 사진·화면 재생 공격을 막는 PAD 설계, 대규모 1:N 인덱스 최적화, 온디바이스·서버 하이브리드 구성. 결제용 얼굴 인식은 "얼마나 잘 알아보나"가 아니라 "모르는 얼굴을 얼마나 안전하게 거절하나"의 설계라는 것을 현장에서 배웠습니다. 생체정보는 민감정보라서, 수집 동의부터 파기까지 규제 대응이 모델만큼 중요합니다.</span>
+          <span class="chip chip--v">실무 경험 · 1:N 매칭 / PAD / FAR·FRR 운영점 / 민감정보 규제</span>
+        </div>
+        <div class="rf-cell rf-cell--lead">
+          <span class="rf-name">신용평가 모델 (GBM · 딥러닝)</span>
+          <span class="rf-desc">XGBoost·LightGBM 계열 스코어카드와 딥러닝 보완 모형으로 승인·한도·금리 의사결정을 지원하는 신용평가를 실무로 구축해 봤습니다. WOE 비닝과 IV 변수 선별, PSI 드리프트 모니터링(0.25 초과 재검토 관행), SHAP 기반 거절 사유 설명, 통신·소비 같은 대안데이터 결합까지. 금융위 AI 가이드라인이 요구하는 설명가능성은 나중에 붙이는 게 아니라 설계 단계에 넣습니다.</span>
+          <span class="chip chip--v">실무 경험 · XGBoost·LightGBM / WOE·PSI / SHAP / 대안데이터</span>
+        </div>
+        <div class="rf-cell">
+          <span class="rf-name">타겟 모형 (CRM)</span>
+          <span class="rf-desc">반응·이탈·LTV 예측과 업리프트 모델링. "누구에게 보내면 순증 효과가 있는가"를 골라 캠페인 비용을 아끼는 모형군입니다. 한도·프라이싱 모형과 묶어 CRM 루프 전체를 설계합니다.</span>
+          <span class="chip chip--v">실무 경험</span>
+        </div>
+        <div class="rf-cell">
+          <span class="rf-name">증권 · 자본시장 모델</span>
+          <span class="rf-desc">팩터·시그널 리서치, VWAP·TWAP 주문 집행 로직, 로보어드바이저 계열 자산배분, 시장 리스크 지표. 백테스트 인프라는 위 파이프라인 그대로 사내에서 매일 돌아갑니다.</span>
+          <span class="chip chip--v">실무 경험 + 사내 실운영</span>
+        </div>
+        <div class="rf-cell">
+          <span class="rf-name">이상거래 탐지 (FDS)</span>
+          <span class="rf-desc">룰과 ML을 결합한 실시간 스코어링, 그래프 피처. 지정한 오탐률 안에서 이상 패턴을 잡는 설계는 통신 페이지의 고정 오탐률 탐지와 같은 수학입니다.</span>
+          <span class="chip chip--v">실무 경험</span>
+        </div>
+        <div class="rf-cell">
+          <span class="rf-name">모델 리스크 · 규제 대응</span>
+          <span class="rf-desc">모델 검증 문서화, 성능·드리프트 리포트 자동화, 금융위 AI 가이드라인(운영 2021 · 개발활용 2022 · 보안 2023) 대응 체계. 모델을 만드는 일보다 오래 살게 하는 일이 여기에 있습니다.</span>
+          <span class="chip">확장 · 요건 검증</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- CAPABILITY GRID -->
   <section class="section" id="capability">
     <div class="wrap">
@@ -199,6 +249,63 @@
       </div>
 
       <p class="auto-foot reveal">정직하게 말하면: "사내 실운영" 표기는 고객 납품 실적이 아니라 저희 자산을 저희 도구로 운용해 온 기록입니다. 수익률은 성과 지표가 아니라 검증 환경이었습니다. 2i는 투자 자문·일임 서비스를 제공하지 않으며, 위 기술은 데이터 인프라·자동화 구축 용역으로 제공됩니다.</p>
+    </div>
+  </section>
+
+
+  <!-- INDUSTRY LANDSCAPE -->
+  <section class="section" id="landscape">
+    <div class="wrap">
+      <div class="section__head reveal">
+        <span class="eyebrow">업계 지도 · 시장은 어디까지 왔나</span>
+        <h2>이미 계산대와 심사창구에 와 있는 기술입니다.</h2>
+        <p>얼굴 결제는 편의점 계산대에서 시범 운영 중이고, 신용평가는 GBM과 대안데이터 결합이 표준이 됐고, 로보어드바이저와 FDS는 검증 단계를 지났습니다. 아래는 각사 공개 발표와 언론 보도(2024~2026) 기준의 시장 지도입니다. 저희가 이 회사들과 일했다는 뜻이 아니라, 귀사가 어디쯤 서 있는지 가늠할 좌표입니다.</p>
+      </div>
+
+      <div class="vert-groups reveal stagger">
+        <div class="vgroup">
+          <div class="vgroup__h">얼굴 결제 · 생체인증</div>
+          <div class="vitems">
+            <div class="vitem"><div class="vitem__body"><span class="vitem__t">토스 페이스페이</span><span class="vitem__d">2025년 편의점 3사 시범 도입, 가입 40만·1개월 재이용률 약 60% 보도. 전국 가맹점 확대 목표를 공개했습니다.</span></div><span class="mtag mtag--demo">상용 확산</span></div>
+            <div class="vitem"><div class="vitem__body"><span class="vitem__t">신한카드 페이스페이</span><span class="vitem__d">2019년 국내 최초 안면인식 결제 상용화. 3D 카메라와 PIN 병행으로 위조를 방어하는 구성입니다.</span></div><span class="mtag mtag--demo">상용</span></div>
+            <div class="vitem"><div class="vitem__body"><span class="vitem__t">Alipay Smile to Pay · Mastercard Biometric Checkout</span><span class="vitem__d">2017년 세계 최초 상용화(중국 KFC), 마스터카드는 브라질에서 유럽으로 파일럿을 확대 중입니다.</span></div><span class="mtag mtag--demo">상용</span></div>
+            <div class="vitem"><div class="vitem__body"><span class="vitem__t">Amazon One (반면교사)</span><span class="vitem__d">손바닥 결제를 리테일 500여 매장까지 깔았지만 채택률 저조로 2026년 리테일 서비스 종료를 발표했습니다. 생체 결제는 기술이 아니라 습관을 바꾸는 싸움이라는 교훈입니다.</span></div><span class="mtag mtag--concept">철수 사례</span></div>
+          </div>
+        </div>
+
+        <div class="vgroup">
+          <div class="vgroup__h">신용평가</div>
+          <div class="vitems">
+            <div class="vitem"><div class="vitem__body"><span class="vitem__t">카카오뱅크 · 케이뱅크 · 토스뱅크</span><span class="vitem__d">대안신용평가가 인터넷은행의 표준이 됐습니다. 통신·소비 데이터 결합으로 기존 CB 기준 거절 고객의 일부를 승인권으로 끌어올렸다는 성과가 공개돼 있습니다.</span></div><span class="mtag mtag--demo">상용</span></div>
+            <div class="vitem"><div class="vitem__body"><span class="vitem__t">FICO · Upstart · Zest AI</span><span class="vitem__d">미국 대출 심사의 절대다수가 FICO 기반이고, Upstart·Zest는 수백 개 변수의 AI 언더라이팅으로 그 표준에 도전하고 있습니다.</span></div><span class="mtag mtag--demo">상용</span></div>
+            <div class="vitem"><div class="vitem__body"><span class="vitem__t">실무 표준</span><span class="vitem__d">정형 신용 데이터에서는 GBM 계열이 사실상 표준이고, 규제 적합성 때문에 로지스틱 스코어카드도 여전히 병행됩니다. WOE·PSI·SHAP은 운영 필수 도구입니다.</span></div><span class="mtag mtag--extend">관행</span></div>
+          </div>
+        </div>
+
+        <div class="vgroup">
+          <div class="vgroup__h">타겟팅 · CRM</div>
+          <div class="vitems">
+            <div class="vitem"><div class="vitem__body"><span class="vitem__t">마이데이터 초개인화 · 업리프트</span><span class="vitem__d">카드사들이 마이데이터 기반 개인화 서비스를 상용 운영 중이고, 업리프트 모델링은 금융·통신·리테일 직접마케팅의 대표 기법으로 자리잡았습니다.</span></div><span class="mtag mtag--demo">상용</span></div>
+          </div>
+        </div>
+
+        <div class="vgroup">
+          <div class="vgroup__h">증권 · 자산관리 · FDS</div>
+          <div class="vitems">
+            <div class="vitem"><div class="vitem__body"><span class="vitem__t">로보어드바이저</span><span class="vitem__d">국내 로보어드바이저들이 코스콤 테스트베드에서 알고리즘 성과를 공개 검증받으며 퇴직연금 일임 시장에 진입했습니다.</span></div><span class="mtag mtag--demo">상용</span></div>
+            <div class="vitem"><div class="vitem__body"><span class="vitem__t">FDS · 퀀트</span><span class="vitem__d">국내 FDS는 지도학습 ML이 주력으로 금융보안원이 모델 성능 비교 연구를 공개했고, 해외에서는 Two Sigma 같은 퀀트 하우스가 ML 기반 전략을 상시 운용합니다.</span></div><span class="mtag mtag--demo">상용</span></div>
+          </div>
+        </div>
+
+        <div class="vgroup">
+          <div class="vgroup__h">규제 · 거버넌스</div>
+          <div class="vitems">
+            <div class="vitem"><div class="vitem__body"><span class="vitem__t">금융위 AI 가이드라인 3종 · 생체정보 규제</span><span class="vitem__d">운영(2021)·개발활용(2022)·보안(2023) 가이드라인이 설명가능성을 요구하고, 안면 등 생체인식정보는 민감정보로 별도 동의가 원칙입니다. 모델 프로젝트의 절반은 규제 설계입니다.</span></div><span class="mtag mtag--extend">필수</span></div>
+          </div>
+        </div>
+      </div>
+
+      <p class="auto-foot reveal">이 지도가 말하는 것은 하나입니다. 이 기술들은 더 이상 실험이 아니라는 것. 그리고 위에 적힌 모델군을 실제로 만들어 본 사람이 귀사 옆에 앉는 것과, 슬라이드로만 아는 사람이 앉는 것의 차이가 프로젝트의 성패를 가른다는 것입니다.</p>
     </div>
   </section>
 
