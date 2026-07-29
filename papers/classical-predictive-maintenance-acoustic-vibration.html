@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<script>(function(){try{var t=localStorage.getItem("theme");if(!t&&window.matchMedia&&matchMedia("(prefers-color-scheme: dark)").matches)t="dark";if(t)document.documentElement.setAttribute("data-theme",t);}catch(e){}})();</script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>고전 특징 기반 설비 예측정비: 진동은 실측, 음향은 합성으로 검증했습니다 · 2i</title>
+<meta name="description" content="회전설비 결함 진단을 딥러닝 없이 물리 기반 고전 특징 + GBM으로 실측. 진동(CWRU 공개 데이터)은 저SNR에서 정확도 63.6% vs 베이스라인 18.6%, 음향은 합성 데이터로 같은 패턴을 재현하되 실측 검증(MIMII)이 남았음을 명시합니다.">
+<meta property="og:title" content="고전 특징 기반 설비 예측정비: 진동은 실측, 음향은 합성으로 검증했습니다 · 2i">
+<meta property="og:description" content="회전설비 결함 진단을 딥러닝 없이 물리 기반 고전 특징 + GBM으로 실측. 진동(CWRU 공개 데이터)은 저SNR에서 정확도 63.6% vs 베이스라인 18.6%, 음향은 합성 데이터로 같은 패턴을 재현하되 실측 검증(MIMII)이 남았음을 명시합니다.">
+<meta property="og:type" content="article">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23111827'/%3E%3Ctext x='16' y='22' font-family='monospace' font-size='16' font-weight='700' fill='%23e08a2b' text-anchor='middle'%3E2i%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../styles.css?v=13">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js" onload="renderMathInElement(document.body,{delimiters:[{left:'$$',right:'$$',display:true},{left:'$',right:'$',display:false},{left:'\\[',right:'\\]',display:true},{left:'\\(',right:'\\)',display:false}]})"></script>
+</head>
+<body>
+
+<header class="nav">
+  <div class="wrap nav__inner">
+    <a class="brand" href="../" aria-label="2i 홈">
+      <span class="brand__mark">2i</span>
+      <span class="brand__tag">AX 컨설팅</span>
+    </a>
+    <button class="nav__burger" type="button" aria-expanded="false" aria-controls="navLinks" aria-label="메뉴 열기"><span></span><span></span><span></span></button>
+    <nav class="nav__links" id="navLinks" aria-label="주요 메뉴">
+      <a href="../cases.html">사례</a>
+      <a href="../comms.html">통신 기술</a>
+      <a href="../papers.html" aria-current="page">논문·실험</a>
+      <a href="../about.html">회사소개</a>
+      <button class="nav__theme" type="button" aria-label="테마 전환" title="테마 전환"><svg class="ic-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg><svg class="ic-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg></button>
+      <a class="nav__lang" href="../en/">EN</a>
+      <a class="nav__cta btn btn--signal" href="../index.html#contact">상담 신청</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <article class="article wrap">
+    <a class="article__back" href="../papers.html">← 논문·실험 게시판</a>
+    <div class="article__head">
+      <div class="pcard__meta"><span class="pcard__cat">industrial</span><span class="pcard__date">2026.07.29</span><span class="pcard__rt">약 8분</span></div>
+      <h1 class="article__title">고전 특징 기반 설비 예측정비: 진동은 실측, 음향은 합성으로 검증했습니다</h1>
+      <p class="article__excerpt">회전설비 결함 진단을 딥러닝 없이 물리 기반 고전 특징 + GBM으로 실측. 진동(CWRU 공개 데이터)은 저SNR에서 정확도 63.6% vs 베이스라인 18.6%, 음향은 합성 데이터로 같은 패턴을 재현하되 실측 검증(MIMII)이 남았음을 명시합니다.</p>
+      <div class="pcard__tags"><span>#예측정비</span><span>#베어링</span><span>#음향진단</span><span>#진동분석</span><span>#고정오탐률</span></div>
+      <a class="btn btn--ghost article__pdf" href="/papers/pdf/classical-predictive-maintenance-acoustic-vibration-ko.pdf" target="_blank" rel="noopener">PDF 원문 (국문) <span class="arrow">↓</span></a>
+      <a class="btn btn--ghost article__pdf" href="/papers/pdf/classical-predictive-maintenance-acoustic-vibration-en.pdf" target="_blank" rel="noopener">PDF (English) <span class="arrow">↓</span></a>
+    </div>
+    <div class="article__body prose">
+<h2 id="_1">무엇을 재는가</h2>
+<p>회전설비(베어링, 펌프, 모터)의 초기 결함을 진동과 소음에서 잡아내는 예측정비는
+산업 AI에서 가장 오래된 응용 분야이면서 동시에 가장 자주 과대포장되는 분야입니다.
+베어링의 외륜, 내륜, 볼에는 결함이 생기면 매 회전마다 특정 주파수에서 충격이
+반복되는 물리 법칙이 있고, 이 물리는 40년 넘게 축적된 회전기계 진단 문헌에
+이미 정리돼 있습니다. 그래서 저희는 이 문제를 딥러닝 표현학습이 아니라, 물리를
+아는 고전 특징 공학 문제로 접근했습니다. 해석 가능하고, CPU에서 몇 초면 학습이
+끝나고, 엣지에서 바로 돌릴 수 있다는 것이 고전 접근의 실제 이점입니다.</p>
+<p>이번 실험은 두 모달리티를 나란히 놓았습니다. 진동은 표준 공개 베어링 결함
+데이터셋(CWRU)의 실제 가속도계 측정치를 썼고, 음향은 아직 실제 마이크 녹음을
+확보하지 못해 회전기계 음향 물리를 절차적으로 합성한 데이터를 썼습니다. 이 구분을
+숫자 옆에 항상 명시하는 것이 이 페이퍼의 핵심 규율입니다.</p>
+<h2 id="_2">결과 (진동은 실측, 음향은 합성 명시)</h2>
+<p>포락선 스펙트럼, 켑스트럼, 웨이블릿 대역 에너지 같은 물리 기반 특징을 뽑아
+LightGBM으로 분류하고, 단순 시간영역 통계량(RMS·커토시스 등)만 쓰는 베이스라인과
+비교했습니다. 깨끗한 데이터에서는 둘 다 잘합니다. 차이는 잡음이 만듭니다.</p>
+<table>
+<thead>
+<tr>
+<th>조건</th>
+<th>물리 기반 전체 특징</th>
+<th>단순 베이스라인</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>진동(CWRU, <strong>실측</strong>), 클린</td>
+<td>1.000</td>
+<td>1.000</td>
+</tr>
+<tr>
+<td>진동(CWRU, <strong>실측</strong>), SNR -5dB</td>
+<td><strong>0.636</strong></td>
+<td>0.186</td>
+</tr>
+<tr>
+<td>음향(<strong>합성</strong>), 클린</td>
+<td>0.903</td>
+<td>0.312</td>
+</tr>
+<tr>
+<td>음향(<strong>합성</strong>), SNR -5dB</td>
+<td><strong>0.492</strong></td>
+<td>0.302</td>
+</tr>
+</tbody>
+</table>
+<p>진동 실측에서 고SNR 구간에서는 4개짜리 단순 베이스라인이 오히려 살짝 낫습니다.
+결정 경계가 단순해서 과적합할 게 적기 때문입니다. 그런데 SNR 5dB 아래로 내려가면
+베이스라인은 0dB에서 0.520, -5dB에서 0.186까지 무너져 4클래스 우연 수준에
+가까워집니다. 반면 물리 기반 전체 특징은 -5dB에서도 0.636을 지킵니다. 포락선
+스펙트럼과 켑스트럼이 잡아내는 것은 결함의 주기적, 협대역 신호이고, 이런 신호는
+광대역 잡음에 상대적으로 강하게 버팁니다. 원시 시간영역 통계는 잡음 샘플 하나하나에
+바로 흔들립니다.</p>
+<p>음향 합성 데이터에서도 같은 정성적 패턴이 재현됐습니다. RMS 하나만 쓰는 베이스라인은
+SNR과 거의 무관하게 5클래스 우연 수준(0.20) 근처에 머물렀습니다. 애초에 결함
+종류를 가릴 신호를 가진 적이 없었기 때문입니다. 별도로, 고정 오탐률(fixed
+false-alarm-rate) 이상탐지 방식인 CA-CFAR를 합성 무선 간섭탐지 벤치에서 검증해
+목표 오탐률 5%를 실측 5.29%로 거의 정확히 지켰고, 그 조건에서 검출률 98.0%를
+얻었습니다. 이는 회전설비 데이터와 무관한 별도 검증으로, 오탐률을 먼저 고정하고
+검출률을 보고하는 방법론이 산업 신호 모니터링 일반에 적용 가능함을 보이는
+보조 증거입니다.</p>
+<h2 id="_3">방법 (요약)</h2>
+<p>힐베르트 엔벨로프 스펙트럼에서 베어링 기하로 계산되는 결함 특성주파수 대역의
+에너지를 추출하고, 켑스트럼·웨이블릿 대역 에너지·(음향은 추가로 로그멜/MFCC/
+스펙트럼 형태)를 더해 경량 GBDT(LightGBM)로 분류합니다. 비지도 이상탐지는
+정상 데이터만으로 학습한 IsolationForest를 씁니다. 판정 기준과 잡음 스윕은
+실험 전에 고정했고, 결과를 보고 사후에 옮기지 않았습니다.</p>
+<h2 id="_4">정직한 한계와 다음 단계</h2>
+<p><strong>가장 크고 가리기 어려운 한계는 음향 결과가 전부 합성이라는 점입니다.</strong> 물리
+(결함 차수 진폭변조 측파대, 기어 물림 변조, 불균형 하모닉)는 교과서에 충실하지만,
+실제 기계 음향은 절차적 합성기가 담아내지 못하는 구조적 공진, 반사, 다중 소음원
+간섭을 함께 지닙니다. 공개 산업 음향 데이터셋 <strong>MIMII</strong>(실제 공장 팬·펌프·슬라이더·
+밸브 녹음, CC-BY-4.0)를 이용한 검증이 다음 단계이며, 그 전까지 이 페이퍼의 음향
+정확도 숫자를 현장 성능의 대표값으로 취급해서는 안 됩니다.</p>
+<p>진동 쪽도 완결된 것은 아닙니다. CWRU는 단일 베어링, 단일 결함 심도의 실험실
+데이터이고, 실제 설비군에는 다양한 베어링 종류와 자연스럽게 진행하는 결함,
+그리고 부착 위치에 따라 달라지는 진동 전달 경로가 있습니다. 런투페일러(조기경보)
+검증도 아직 남아 있습니다. 이 중 어느 것도 딥러닝이 필요한 문제는 아니며, 모두
+센서 통합과 실측 데이터 확보의 문제입니다.</p>
+<p>파일럿을 검토 중이시라면, 먼저 무료 진단으로 이 파이프라인을 귀사의 실제 진동
+데이터에 재실행해 보고, 음향 진단이 필요하면 MIMII 실측 검증을 먼저 거친 뒤
+귀사 현장 음향으로 다시 측정하는 순서를 권장합니다.</p>
+    </div>
+    <div class="article__cta">
+      <p>이 방법을 당신 현장의 숫자로 다시 재보고 싶다면.</p>
+      <a class="btn btn--signal" href="../index.html#contact">30분 진단 상담 <span class="arrow">→</span></a>
+      <a class="btn btn--ghost" href="../papers.html">다른 기록 보기</a>
+    </div>
+  </article>
+</main>
+
+<footer class="foot">
+  <div class="wrap foot__inner">
+    <div>
+      <div class="brand"><span class="brand__mark">2i</span><span class="brand__tag">AX 컨설팅</span></div>
+      <div class="foot__mono" style="margin-top:0.6rem">중소·중견 제조·유통을 위한 AI 전환</div>
+    </div>
+    <nav class="foot__links" aria-label="하단 메뉴">
+      <a href="../index.html#method">방식</a>
+      <a href="../comms.html">통신</a>
+      <a href="../papers.html">논문·실험</a>
+      <a href="../index.html#voucher">정부 바우처</a>
+      <a href="https://github.com/2icorp" target="_blank" rel="noopener">GitHub</a>
+      <a href="../en/">EN</a>
+    </nav>
+  </div>
+</footer>
+
+<script src="../main.js"></script>
+</body>
+</html>

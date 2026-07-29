@@ -3,13 +3,13 @@ title: "고전 특징 기반 설비 예측정비: 진동은 실측, 음향은 �
 excerpt: "회전설비 결함 진단을 딥러닝 없이 물리 기반 고전 특징 + GBM으로 실측. 진동(CWRU 공개 데이터)은 저SNR에서 정확도 63.6% vs 베이스라인 18.6%, 음향은 합성 데이터로 같은 패턴을 재현하되 실측 검증(MIMII)이 남았음을 명시합니다."
 date: 2026-07-29
 categories:
-  - industrial
+ - industrial
 tags:
-  - 예측정비
-  - 베어링
-  - 음향진단
-  - 진동분석
-  - 고정오탐률
+ - 예측정비
+ - 베어링
+ - 음향진단
+ - 진동분석
+ - 고정오탐률
 reading_time_min: 8
 pdf: /papers/pdf/classical-predictive-maintenance-acoustic-vibration-ko.pdf
 pdf_en: /papers/pdf/classical-predictive-maintenance-acoustic-vibration-en.pdf

@@ -3,13 +3,13 @@ title: "오픈셋 RF 지문 검증: 분리성은 실재하나 하드 인증 동�
 excerpt: "공개 데이터 세 종(WiSig, INRIA, WIDEFT)으로 실측한 오픈셋 RF 지문 검증. AUROC 0.87까지 분리는 되지만, 접근제어가 실제로 요구하는 낮은 오탐률 지점(TAR@FAR)에서는 2~3%로 붕괴합니다. 라이선스가 다른 두 데이터셋에서 같은 격차가 재현된, 정직한 경계 연구입니다."
 date: 2026-07-29
 categories:
-  - signal
+ - signal
 tags:
-  - RF지문
-  - RFFI
-  - 오픈셋
-  - 기기인증
-  - 검증
+ - RF지문
+ - RFFI
+ - 오픈셋
+ - 기기인증
+ - 검증
 reading_time_min: 9
 pdf: /papers/pdf/openset-rf-fingerprint-verification-ko.pdf
 pdf_en: /papers/pdf/openset-rf-fingerprint-verification-en.pdf

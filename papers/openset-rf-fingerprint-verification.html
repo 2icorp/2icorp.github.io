@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<script>(function(){try{var t=localStorage.getItem("theme");if(!t&&window.matchMedia&&matchMedia("(prefers-color-scheme: dark)").matches)t="dark";if(t)document.documentElement.setAttribute("data-theme",t);}catch(e){}})();</script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>오픈셋 RF 지문 검증: 분리성은 실재하나 하드 인증 동작점은 아직 멀다 · 2i</title>
+<meta name="description" content="공개 데이터 세 종(WiSig, INRIA, WIDEFT)으로 실측한 오픈셋 RF 지문 검증. AUROC 0.87까지 분리는 되지만, 접근제어가 실제로 요구하는 낮은 오탐률 지점(TAR@FAR)에서는 2~3%로 붕괴합니다. 라이선스가 다른 두 데이터셋에서 같은 격차가 재현된, 정직한 경계 연구입니다.">
+<meta property="og:title" content="오픈셋 RF 지문 검증: 분리성은 실재하나 하드 인증 동작점은 아직 멀다 · 2i">
+<meta property="og:description" content="공개 데이터 세 종(WiSig, INRIA, WIDEFT)으로 실측한 오픈셋 RF 지문 검증. AUROC 0.87까지 분리는 되지만, 접근제어가 실제로 요구하는 낮은 오탐률 지점(TAR@FAR)에서는 2~3%로 붕괴합니다. 라이선스가 다른 두 데이터셋에서 같은 격차가 재현된, 정직한 경계 연구입니다.">
+<meta property="og:type" content="article">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23111827'/%3E%3Ctext x='16' y='22' font-family='monospace' font-size='16' font-weight='700' fill='%23e08a2b' text-anchor='middle'%3E2i%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../styles.css?v=13">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js" onload="renderMathInElement(document.body,{delimiters:[{left:'$$',right:'$$',display:true},{left:'$',right:'$',display:false},{left:'\\[',right:'\\]',display:true},{left:'\\(',right:'\\)',display:false}]})"></script>
+</head>
+<body>
+
+<header class="nav">
+  <div class="wrap nav__inner">
+    <a class="brand" href="../" aria-label="2i 홈">
+      <span class="brand__mark">2i</span>
+      <span class="brand__tag">AX 컨설팅</span>
+    </a>
+    <button class="nav__burger" type="button" aria-expanded="false" aria-controls="navLinks" aria-label="메뉴 열기"><span></span><span></span><span></span></button>
+    <nav class="nav__links" id="navLinks" aria-label="주요 메뉴">
+      <a href="../cases.html">사례</a>
+      <a href="../comms.html">통신 기술</a>
+      <a href="../papers.html" aria-current="page">논문·실험</a>
+      <a href="../about.html">회사소개</a>
+      <button class="nav__theme" type="button" aria-label="테마 전환" title="테마 전환"><svg class="ic-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg><svg class="ic-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg></button>
+      <a class="nav__lang" href="../en/">EN</a>
+      <a class="nav__cta btn btn--signal" href="../index.html#contact">상담 신청</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <article class="article wrap">
+    <a class="article__back" href="../papers.html">← 논문·실험 게시판</a>
+    <div class="article__head">
+      <div class="pcard__meta"><span class="pcard__cat">signal</span><span class="pcard__date">2026.07.29</span><span class="pcard__rt">약 9분</span></div>
+      <h1 class="article__title">오픈셋 RF 지문 검증: 분리성은 실재하나 하드 인증 동작점은 아직 멀다</h1>
+      <p class="article__excerpt">공개 데이터 세 종(WiSig, INRIA, WIDEFT)으로 실측한 오픈셋 RF 지문 검증. AUROC 0.87까지 분리는 되지만, 접근제어가 실제로 요구하는 낮은 오탐률 지점(TAR@FAR)에서는 2~3%로 붕괴합니다. 라이선스가 다른 두 데이터셋에서 같은 격차가 재현된, 정직한 경계 연구입니다.</p>
+      <div class="pcard__tags"><span>#RF지문</span><span>#RFFI</span><span>#오픈셋</span><span>#기기인증</span><span>#검증</span></div>
+      <a class="btn btn--ghost article__pdf" href="/papers/pdf/openset-rf-fingerprint-verification-ko.pdf" target="_blank" rel="noopener">PDF 원문 (국문) <span class="arrow">↓</span></a>
+      <a class="btn btn--ghost article__pdf" href="/papers/pdf/openset-rf-fingerprint-verification-en.pdf" target="_blank" rel="noopener">PDF (English) <span class="arrow">↓</span></a>
+    </div>
+    <div class="article__body prose">
+<h2 id="_1">무엇을 재는가</h2>
+<p>무선기기는 같은 모델이라도 완전히 똑같이 동작하지 않습니다. 발진기 위상잡음, ADC/DAC
+비선형성, 전력증폭기 응답 곡선처럼 아날로그 송신 체인의 제조 공차가 개체마다 조금씩
+다르고, 이 차이는 방사되는 파형에 재현 가능한 흔적으로 남습니다. 이 흔적으로 기기를
+구분하는 것이 RF 지문(RFFI)입니다. 크리덴셜을 추가로 심지 않고 물리계층 신호만으로 신원을
+확인할 수 있다는 점 때문에 공장 무선망의 미등록 기기 탐지부터 산업 IoT 인증, 심지어
+의료기기 네트워크 접근제어까지 다양하게 제안됩니다.</p>
+<p>문제는 이런 제안 대부분이 "닫힌 목록 안에서 어느 기기가 보냈는가"를 맞히는 정확도로
+근거를 댄다는 점입니다. 그러나 접근제어가 실제로 마주하는 질문은 다릅니다. 등록 목록에
+전혀 없는 기기가 등록된 신원을 사칭하려 할 때, 그 시도를 낮은 오탐률로 걸러낼 수 있는가
+하는 오픈셋 검증 문제입니다. 이 연구는 그 질문을 공개 데이터로 직접, 정직하게 측정했습니다.</p>
+<h2 id="_2">결과 (실측, 공개 데이터 세 종)</h2>
+<p>단일 패킷(K=1) 조건에서 AUROC는 세 데이터셋에 걸쳐 0.52(WIDEFT, 거의 우연)에서
+0.87(INRIA)까지 분산됐습니다. 분리성 자체는 우연을 뚜렷이 상회하는 실재하는 신호입니다.
+그러나 접근제어가 실제로 요구하는 낮은 오탐률 지점(TAR@FAR)으로 넘어가면 이 신호는
+붕괴합니다.</p>
+<table>
+<thead>
+<tr>
+<th>조건</th>
+<th>AUROC (K=1)</th>
+<th>TAR@FAR=1%</th>
+<th>TAR@FAR=0.1%</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>WiSig (CC BY-NC-SA, 비상업)</td>
+<td>0.729</td>
+<td>12.1%</td>
+<td>4.2%</td>
+</tr>
+<tr>
+<td>INRIA PLA (CC BY 4.0, 상업 이용 가능)</td>
+<td>0.868</td>
+<td>20.8%</td>
+<td>2.9%</td>
+</tr>
+<tr>
+<td>WiSig 교차수신기 (가장 어려운 일반화 조건)</td>
+<td>0.695</td>
+<td>-</td>
+<td>0.5%</td>
+</tr>
+</tbody>
+</table>
+<p>가장 눈에 띄는 대목은 라이선스 대응입니다. WiSig는 이 분야의 표준 벤치마크지만 라이선스가
+CC BY-NC-SA(비상업 전용)라 상업적 결론의 근거로 쓸 수 없습니다. 그래서 상업 이용이 허용된
+INRIA PLA(CC BY 4.0)에서 같은 프로토콜을 독립적으로 재현했습니다. INRIA는 AUROC가 WiSig보다
+오히려 더 높았음에도(0.868 대 0.729) TAR@FAR=0.1%는 여전히 3% 미만이었습니다. 즉 데이터를
+상업적으로 안전한 쪽으로 바꿔도 격차는 닫히지 않았습니다. 이는 이 결과가 특정 데이터셋의
+소음이 아니라 과제 자체의 성질임을 보여줍니다.</p>
+<p>10패킷을 융합(K=10)하면 격차가 크게 줄어 INRIA의 FAR=1% 지점에서는 TAR 91.4%까지 오르지만,
+가장 엄격한 목표인 FAR=0.1%에서는 61.6%로 다시 떨어집니다. 열 개의 패킷을 누적해도 정당한
+사용자 3명 중 1명 이상을 거부하게 됩니다. 저라벨 조건을 돕는 자기지도학습(SSL) 사전학습은
+AUROC를 +0.0235만큼 올렸지만, 같은 측정에서 가장 엄격한 동작점의 TAR는 오히려 낮아졌습니다.
+AUROC 상승이 곧 인증 성능 개선을 뜻하지 않는다는 이 연구의 핵심 경고를 SSL이라는 구체적
+개입에서도 재확인한 결과입니다.</p>
+<h2 id="_3">왜 이게 자랑거리인가</h2>
+<p>"분리는 되는데 인증 게이트로는 아직 멀다"는 결론을 그대로 공개하는 이유는, 이것이 저희
+게이지 방식의 실체이기 때문입니다. 값비싼 하드 인증 제품을 먼저 팔지 않고, 그것이 실제로
+값을 하는지 낮은 오탐률 동작점에서 먼저 재는 것. 그리고 그 결과가 부정적이면 숨기지 않고
+그대로 보여드리는 것입니다. 라이선스가 다른 두 데이터셋에서 같은 격차를 재현해 "우연히
+나온 나쁜 숫자가 아니다"를 직접 검증했고, 표준적인 완화책(도메인적응)도 시도해 효과가
+없음을 확인했습니다. 이 근거 위에서 저희가 정직하게 제안하는 형태는 하드 게이트가 아니라,
+다른 신호와 함께 융합되는 연속값 리스크 스코어 계층입니다. 지금 이 정도의 근거로 하드
+인증을 파는 것은 저희 방식에 맞지 않습니다.</p>
+<p>이 결론을 제품 설계로 옮기면 세 가지가 따라옵니다. 확신도의 소비자는 최종 사용자가 아니라
+융합 플랫폼이어야 합니다. RF 지문 점수 하나만으로 접근을 거부하면 여기서 측정한 오탐·오거부율이
+그대로 사용자 경험에 노출됩니다. 임계값은 배포 후에도 등록 검증 데이터로만 재보정해야
+하며, 실제 미등록 시도 데이터로 몰래 재보정하는 순간 이 연구가 경고한 누수가 그대로
+재현됩니다. 그리고 낮은 확신도를 받은 시도는 즉시 차단이 아니라 2차 인증 요청이나 운영자
+알림 같은 추가 검증으로 이어지는 것이 지금 근거 수준에 맞는 심층방어 설계입니다.</p>
+<p>이 연구가 측정하지 않은 것도 분명히 해둡니다. 교차 일자·교차 환경에 걸친 드리프트, 능동적
+스푸핑 공격 하에서의 강건성, 그리고 지금보다 훨씬 큰 등록 기기군(50대 이상)에서의 성능은
+범위 밖입니다. 등록 기기군이 커지면 어떤 고정 임계값에서든 미등록 기기가 우연히 충돌할
+가능성이 늘어나므로, 여기 보고된 수치는 오히려 실제 대규모 배치보다 낙관적인 쪽에 가깝다고
+보는 것이 안전합니다. 작은 기기 수(known 8~24대)에서 나온 점추정치에는 표본 변동성도
+있습니다. 예를 들어 INRIA K=1의 AUROC 0.868은 95% 신뢰구간이 [0.810, 0.932]로 넓은데,
+이는 계산 오류가 아니라 소규모 표본의 진짜 불확실성이며, 이 신뢰구간 안에서도 하드 인증
+미달이라는 결론은 그대로 성립합니다.</p>
+<p>전체 방법론, 지표(AUROC·EER·TAR@FAR)의 정의, 기기 단위 부트스트랩 신뢰구간, 그리고 세
+데이터셋의 라이선스 조건은 PDF 원문에 정리했습니다.</p>
+    </div>
+    <div class="article__cta">
+      <p>이 방법을 당신 현장의 숫자로 다시 재보고 싶다면.</p>
+      <a class="btn btn--signal" href="../index.html#contact">30분 진단 상담 <span class="arrow">→</span></a>
+      <a class="btn btn--ghost" href="../papers.html">다른 기록 보기</a>
+    </div>
+  </article>
+</main>
+
+<footer class="foot">
+  <div class="wrap foot__inner">
+    <div>
+      <div class="brand"><span class="brand__mark">2i</span><span class="brand__tag">AX 컨설팅</span></div>
+      <div class="foot__mono" style="margin-top:0.6rem">중소·중견 제조·유통을 위한 AI 전환</div>
+    </div>
+    <nav class="foot__links" aria-label="하단 메뉴">
+      <a href="../index.html#method">방식</a>
+      <a href="../comms.html">통신</a>
+      <a href="../papers.html">논문·실험</a>
+      <a href="../index.html#voucher">정부 바우처</a>
+      <a href="https://github.com/2icorp" target="_blank" rel="noopener">GitHub</a>
+      <a href="../en/">EN</a>
+    </nav>
+  </div>
+</footer>
+
+<script src="../main.js"></script>
+</body>
+</html>
