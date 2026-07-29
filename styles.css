@@ -333,6 +333,9 @@ section[id] { scroll-margin-top: 80px; }
 .form input::placeholder, .form textarea::placeholder { color: oklch(80% 0.01 255 / 0.45); }
 .form input:focus, .form select:focus, .form textarea:focus { outline: 2px solid var(--signal); outline-offset: 1px; border-color: transparent; }
 .form option { color: #000; background: #fff; }
+.form__status { min-height: 1.2em; margin: 0.2rem 0 0; font-size: var(--text-sm); color: var(--ink-soft); }
+.form__status.is-ok { color: var(--ok); }
+.form__status.is-err { color: oklch(62% 0.19 25); }
 
 /* ============ footer ============ */
 .foot { padding-block: 3rem; border-top: 1px solid var(--line); }

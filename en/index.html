@@ -745,8 +745,9 @@
       <div class="cta reveal">
         <h2>Let's figure out the next step together.</h2>
         <p>This isn't a sales call. It's a conversation about whether AI actually fits your company right now. Thirty minutes is enough to find direction.</p>
-        <!-- 상담 폼: 이메일 클라이언트로 전송(백엔드 불필요). Formspree 등 연동 시 action 교체 가능. -->
-        <form class="form" id="leadForm" action="mailto:contact@2icorp.site" method="POST" enctype="text/plain">
+        <!-- Lead form: set data-formspree-id to route via Formspree (no visitor mail app needed);
+             empty falls back to a prefilled mailto. Activate: create a free formspree.io form, paste its id. -->
+        <form class="form" id="leadFormEn" data-formspree-id="" action="mailto:contact@2icorp.site" method="POST" enctype="text/plain">
           <label>Name<input name="name" required placeholder="Geumji Han"></label>
           <label>Company<input name="company" required placeholder="ABC Manufacturing"></label>
           <label>Industry<select name="industry"><option>Manufacturing</option><option>Distribution</option><option>Logistics</option><option>Other</option></select></label>
@@ -764,6 +765,7 @@
           <div class="cta__row full">
             <button class="btn btn--signal" type="submit">Send inquiry <span class="arrow">→</span></button>
           </div>
+          <p class="form__status full" role="status" aria-live="polite"></p>
         </form>
         <p class="foot__legal" style="margin-top:1rem">If your mail app doesn't open, reach us at <a href="mailto:contact@2icorp.site">contact@2icorp.site</a>.</p>
       </div>
