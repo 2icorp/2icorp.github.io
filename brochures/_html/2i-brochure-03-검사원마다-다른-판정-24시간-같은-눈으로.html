@@ -72,7 +72,7 @@ h1,h2,h3{margin:0;letter-spacing:-0.02em;line-height:1.15;}
   <h1>검사원마다 다른 판정, 24시간 같은 눈으로</h1>
   <div class="chips">
     <span class="chip">제조 · 사출성형</span>
-    <span class="chip chip--v">약 8주 (측정 2 + 실증 6)</span>
+    <span class="chip chip--v">약 12주 (측정 2 + 실증 6 + 이관 4)</span>
     <span class="chip chip--c">정부 바우처 적합</span>
   </div>
   <div class="stakes-box"><span class="l">문제의 대가 · 불량 판정 기준</span><span class="v">사람·교대조마다 편차</span></div>
@@ -84,11 +84,11 @@ h1,h2,h3{margin:0;letter-spacing:-0.02em;line-height:1.15;}
 
 <div class="sec"><h2>2i의 방식</h2><p class="lead">제품 표면 이미지를 입력으로 하는 결함 탐지 비전 모델을 소량 데이터로 학습시키고, 실제 라인을 대체하지 않는 &#x27;섀도 모드&#x27;로 병행 관찰해 육안검사와 비교합니다. 사람을 없애는 게 아니라 24시간 흔들리지 않는 1차 스크리너를 붙이는 방식입니다.</p></div>
 
-<div class="sec"><h2>게이지 방식으로 진행합니다 · 측정 → 실증 → 이관</h2><div class="steps"><div class="step"><b>측정 게이트</b><p>현장 워크스루로 검사원별 판정 편차와 반복 불량 유형을 분류하고, &#x27;무엇을 불량으로 보는가&#x27;를 인터뷰로 문서화합니다.</p></div><div class="step"><b>실증 게이트</b><p>좁힌 1~2개 불량 유형을 수백~수천 장 촬영·라벨링해 모델을 학습시키고, 섀도 모드로 정확도·오탐·놓친 불량을 실측 리포트로 냅니다.</p></div></div></div>
+<div class="sec"><h2>게이지 방식으로 진행합니다 · 측정 → 실증 → 이관</h2><div class="steps"><div class="step"><b>측정 게이트</b><p>현장 워크스루로 검사원별 판정 편차와 반복 불량 유형을 분류하고, &#x27;무엇을 불량으로 보는가&#x27;를 인터뷰로 문서화합니다.</p></div><div class="step"><b>실증 게이트</b><p>좁힌 1~2개 불량 유형을 수백~수천 장 촬영·라벨링해 모델을 학습시키고, 섀도 모드로 정확도·오탐·놓친 불량을 실측 리포트로 냅니다.</p></div><div class="step"><b>이관 게이트</b><p>섀도 모드에서 확인된 정확도 기준을 넘긴 유형만 실제 판정에 투입하고, 검사원이 이견을 남기면 그 이미지가 재학습 큐에 쌓이는 운영 루프를 함께 넘깁니다. 판정 기준 변경 이력과 재학습 절차를 문서로 이관합니다.</p></div></div></div>
 
 <div class="sec two">
   <div class="card"><h3>사용 기술</h3><p>OpenCV·scikit-image 기반 이상탐지(픽셀 z-score + 윤곽 + SSIM). 정상 소량 이미지만으로 기포·스크래치 스코어링, SNR·임계값 스윕 평가 포함.</p></div>
-  <div class="card"><h3>표준 산출물</h3><ul class="deliv"><li>AX 진단 보고서</li><li>현장 KPI baseline 계측</li><li>과제 우선순위 로드맵</li><li>작동하는 PoC</li><li>before/after 측정 리포트</li><li>본도입 판단 근거</li></ul></div>
+  <div class="card"><h3>표준 산출물</h3><ul class="deliv"><li>AX 진단 보고서</li><li>현장 KPI baseline 계측</li><li>과제 우선순위 로드맵</li><li>작동하는 PoC</li><li>before/after 측정 리포트</li><li>본도입 판단 근거</li><li>운영 시스템</li><li>사내 이관 교육</li><li>운영 매뉴얼·문서</li></ul></div>
 </div>
 
 <div class="sec"><h2>목표 델타</h2><table class="ba"><caption>목표 지표 · 실제 수치는 귀사 데이터로 재측정</caption><tr><th>지표</th><th>현재</th><th></th><th>목표</th></tr><tr><td class="m">판정 일관성</td><td class="b">교대조·개인마다 편차</td><td class="arw">→</td><td class="a">동일 기준 상시 적용 (목표)</td></tr><tr><td class="m">1차 스크리닝 시간</td><td class="b">전량 육안</td><td class="arw">→</td><td class="a">반복 불량 30~50% 단축 (목표)</td></tr></table><div class="proof-line">‹/› 작동하는 증거: <b>github.com/2icorp/2i-case-03-vision-defect</b> · 합성 데이터로 실제 실행되는 레퍼런스 구현</div></div>
@@ -100,7 +100,7 @@ h1,h2,h3{margin:0;letter-spacing:-0.02em;line-height:1.15;}
   <div class="card"><h3>왜 2i인가</h3><p>대형 SI가 안 건드리는 중소·중견의 소규모·비정형 과제를, 진단부터 이관까지 한 사람이 책임지고 봅니다. 화려한 제안서 대신 측정된 진단과 검증된 PoC로 신뢰를 먼저 만듭니다.</p></div>
 </div>
 
-<div class="sec"><h2>자주 묻는 질문</h2><div class="faq"><div><q>Q. 데이터가 정리돼 있지 않아도 되나요?</q><p>네. 측정 게이트가 바로 흩어진 데이터와 현장을 정리해 무엇부터 할지 정하는 단계입니다. 준비가 안 됐다는 것 자체가 출발점입니다.</p></div><div><q>Q. 기간과 비용은 어느 정도인가요?</q><p>이 사례 기준 약 8주 (측정 2 + 실증 6) 정도이며, 범위와 데이터 상태에 따라 조정됩니다. 상당 부분을 정부 AX 바우처로 충당해 실부담을 크게 낮출 수 있습니다.</p></div><div><q>Q. 하다가 안 되면 어떻게 되나요?</q><p>그래서 실증 게이트가 있습니다. 큰돈을 걸기 전에 될지 안 될지를 작은 실증으로 먼저 확인하고, 목표 델타에 못 미치면 확장하지 않습니다.</p></div><div><q>Q. 사람 일자리를 없애는 건가요?</q><p>아닙니다. 사람을 대체하는 게 아니라, 반복 업무를 걷어내 사람이 판단과 관계에 집중하도록 속도와 정확도를 보완하는 방식입니다.</p></div></div></div>
+<div class="sec"><h2>자주 묻는 질문</h2><div class="faq"><div><q>Q. 데이터가 정리돼 있지 않아도 되나요?</q><p>네. 측정 게이트가 바로 흩어진 데이터와 현장을 정리해 무엇부터 할지 정하는 단계입니다. 준비가 안 됐다는 것 자체가 출발점입니다.</p></div><div><q>Q. 기간과 비용은 어느 정도인가요?</q><p>이 사례 기준 약 12주 (측정 2 + 실증 6 + 이관 4) 정도이며, 범위와 데이터 상태에 따라 조정됩니다. 상당 부분을 정부 AX 바우처로 충당해 실부담을 크게 낮출 수 있습니다.</p></div><div><q>Q. 하다가 안 되면 어떻게 되나요?</q><p>그래서 실증 게이트가 있습니다. 큰돈을 걸기 전에 될지 안 될지를 작은 실증으로 먼저 확인하고, 목표 델타에 못 미치면 확장하지 않습니다.</p></div><div><q>Q. 사람 일자리를 없애는 건가요?</q><p>아닙니다. 사람을 대체하는 게 아니라, 반복 업무를 걷어내 사람이 판단과 관계에 집중하도록 속도와 정확도를 보완하는 방식입니다.</p></div></div></div>
 
 <div class="foot">
   <div class="cta">먼저 <b>무료 자가진단</b> 또는 30분 상담으로 시작하세요. 귀사에 맞는 시작점을 함께 찾습니다. &nbsp;·&nbsp; <b>2i</b> AX 컨설팅</div>
