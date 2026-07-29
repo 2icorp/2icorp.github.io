@@ -175,6 +175,21 @@
     "reading_time": 7
   },
   {
+    "slug": "gbm-vs-dl-factor-returns",
+    "title": "팩터 수익 예측: 부스팅 vs 딥러닝",
+    "excerpt": "Fama-French 일간 팩터 데이터로 그래디언트 부스팅과 얕은 신경망을 시간순 분할로 맞세웠습니다. 훈련 60일에서는 신경망 R2가 -2.6까지 무너지고 부스팅은 -0.07로 훨씬 완만했지만, 훈련 데이터가 4천~8천일로 늘면 그 우위가 뒤집힙니다.",
+    "date": "2026-07-29",
+    "cat": "research",
+    "cat_label": "리서치",
+    "tags": [
+      "finance",
+      "factors",
+      "gbm",
+      "tabular"
+    ],
+    "reading_time": 8
+  },
+  {
     "slug": "int8-quantization-signal-models-qat-vs-ptq",
     "title": "신호 모델 엣지 배치: INT8 QAT 대 PTQ",
     "excerpt": "작은 변조분류 CNN 하나로 INT8 양자화의 두 경로를 실측했습니다. 학습 후 양자화(PTQ)는 정확도를 31%p 무너뜨렸고, 양자화 인식 학습(QAT)은 그 손실의 94.5%를 되찾았습니다. 크기·지연 이득은 두 경로가 동일했습니다.",
@@ -192,8 +207,8 @@
   },
   {
     "slug": "measurable-signal-intelligence-whitepaper",
-    "title": "측정 가능한 신호·판단 지능 (백서)",
-    "excerpt": "오디오 지문식별, WiFi-CSI 재실·낙상 감지, RF 지문 검증, 설비 예지보전, 엣지 양자화, 백테스트 규율까지 16편의 실증 논문을 하나의 측정 로직으로 묶은 2i의 플래그십 백서입니다.",
+    "title": "측정 가능한 신호·AI 지능 (백서 v3)",
+    "excerpt": "오디오 지문식별, WiFi-CSI 재실·낙상 감지, RF 지문 검증, 설비 예지보전, 엣지 양자화, 대규모 에이전트 검색, 금융 백테스트 규율까지 19편의 논문을 하나의 측정 로직으로 묶은 2i의 플래그십 백서 v3입니다. 하이브리드 검색이 늘 이기지는 않는다는 결과까지 그대로 공개합니다.",
     "date": "2026-07-29",
     "cat": "whitepaper",
     "cat_label": "whitepaper",
@@ -204,7 +219,7 @@
       "AX전략",
       "게이지방식"
     ],
-    "reading_time": 18
+    "reading_time": 19
   },
   {
     "slug": "probe-point-fingerprint-ablation",
@@ -218,6 +233,22 @@
       "수신체인",
       "절제연구",
       "프로브포인트"
+    ],
+    "reading_time": 8
+  },
+  {
+    "slug": "regime-detection-fixed-false-alarm",
+    "title": "고정 오탐률 레짐 탐지: 시장 국면 경보를 CFAR 규율로",
+    "excerpt": "레이더 신호탐지의 CFAR(고정 오탐률) 규율을 시장 국면 경보에 옮겨와 합성 마르코프 전환 실험으로 실측했습니다. 나이브 임계값은 목표 10%에서 4.53%로 빗나갔지만, CFAR 방식은 세 목표 수준 모두에서 0.02퍼센트포인트 안팎의 오차로 정확히 보정됩니다.",
+    "date": "2026-07-29",
+    "cat": "research",
+    "cat_label": "리서치",
+    "tags": [
+      "레짐탐지",
+      "CFAR",
+      "오탐률",
+      "캘리브레이션",
+      "신호탐지"
     ],
     "reading_time": 8
   },
@@ -251,6 +282,21 @@
       "LSH"
     ],
     "reading_time": 8
+  },
+  {
+    "slug": "skill-retrieval-at-scale",
+    "title": "대규모 스킬 코퍼스 라우팅: BM25 대 하이브리드 검색",
+    "excerpt": "도구가 1000개를 넘는 에이전트에서 검색 단계가 곧 정확도의 상한선입니다. 완전히 공개된 합성 코퍼스로 BM25, 유사-의미 검색, 하이브리드 RRF를 같은 질의로 실측하고, 하이브리드가 항상 이기지는 않는다는 결과까지 그대로 공개합니다.",
+    "date": "2026-07-29",
+    "cat": "research",
+    "cat_label": "리서치",
+    "tags": [
+      "retrieval",
+      "routing",
+      "bm25",
+      "rrf"
+    ],
+    "reading_time": 9
   },
   {
     "slug": "wifi-csi-cross-environment-calibration",
