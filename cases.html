@@ -53,8 +53,20 @@
       </section>
 
   <section class="section" style="padding-top:1.5rem">
+    <div class="wrap">
+      <div class="ifilters cfilters reveal" role="tablist" aria-label="사례 분류 필터" style="margin:0 0 1.2rem">
+        <button class="ifilter cfilter is-on" data-ccat="all">전체 <b>12</b></button>
+        <button class="ifilter cfilter" data-ccat="data">데이터·경영 <b>2</b></button>
+        <button class="ifilter cfilter" data-ccat="doc">문서·지식 <b>2</b></button>
+        <button class="ifilter cfilter" data-ccat="vision">비전 AI <b>1</b></button>
+        <button class="ifilter cfilter" data-ccat="agent">에이전트·음성 <b>2</b></button>
+        <button class="ifilter cfilter" data-ccat="signal">신호·통신 <b>1</b></button>
+        <button class="ifilter cfilter" data-ccat="sales">영업·마케팅 <b>3</b></button>
+        <button class="ifilter cfilter" data-ccat="infra">인프라·도구 <b>1</b></button>
+      </div>
+    </div>
     <div class="wrap case-list">
-      <article class="case reveal" id="case-1">
+      <article class="case reveal" id="case-1" data-ccat="data">
         <header class="case__top">
           <span class="case__no">01</span>
           <div class="case__id">
@@ -82,6 +94,7 @@
               <span class="chip chip--v">정부 바우처 적합</span>
             </div>
             <div class="case__proof">
+              <a class="chip chip--code" href="demos/01-data-dashboard/" target="_blank" rel="noopener">▶ 라이브 데모 (브라우저에서 바로) ↗</a>
               <a class="chip chip--code" href="https://github.com/2icorp/2i-case-01-data-dashboard" target="_blank" rel="noopener">‹/› 작동하는 레퍼런스 데모 · 소스코드 ↗</a>
               <a class="chip chip--dl" href="brochures/2i-brochure-01-오늘-재고-얼마야-반나절-3초.pdf" download>브로셔 PDF ↓</a>
             </div>
@@ -89,7 +102,7 @@
           </aside>
         </div>
       </article>
-      <article class="case reveal" id="case-2">
+      <article class="case reveal" id="case-2" data-ccat="doc">
         <header class="case__top">
           <span class="case__no">02</span>
           <div class="case__id">
@@ -117,6 +130,7 @@
               <span class="chip chip--v">정부 바우처 적합</span>
             </div>
             <div class="case__proof">
+              <a class="chip chip--code" href="demos/02-doc-automation/" target="_blank" rel="noopener">▶ 라이브 데모 (브라우저에서 바로) ↗</a>
               <a class="chip chip--code" href="https://github.com/2icorp/2i-case-02-doc-automation" target="_blank" rel="noopener">‹/› 작동하는 레퍼런스 데모 · 소스코드 ↗</a>
               <a class="chip chip--dl" href="brochures/2i-brochure-02-견적-발주-수기입력-담당자는-예외만-본다.pdf" download>브로셔 PDF ↓</a>
             </div>
@@ -124,7 +138,7 @@
           </aside>
         </div>
       </article>
-      <article class="case reveal" id="case-3">
+      <article class="case reveal" id="case-3" data-ccat="vision">
         <header class="case__top">
           <span class="case__no">03</span>
           <div class="case__id">
@@ -152,6 +166,7 @@
               <span class="chip chip--v">정부 바우처 적합</span>
             </div>
             <div class="case__proof">
+              <a class="chip chip--code" href="demos/03-vision-defect/" target="_blank" rel="noopener">▶ 라이브 데모 (브라우저에서 바로) ↗</a>
               <a class="chip chip--code" href="https://github.com/2icorp/2i-case-03-vision-defect" target="_blank" rel="noopener">‹/› 작동하는 레퍼런스 데모 · 소스코드 ↗</a>
               <a class="chip chip--dl" href="brochures/2i-brochure-03-검사원마다-다른-판정-24시간-같은-눈으로.pdf" download>브로셔 PDF ↓</a>
             </div>
@@ -159,7 +174,7 @@
           </aside>
         </div>
       </article>
-      <article class="case reveal" id="case-4">
+      <article class="case reveal" id="case-4" data-ccat="data">
         <header class="case__top">
           <span class="case__no">04</span>
           <div class="case__id">
@@ -187,6 +202,7 @@
               <span class="chip chip--v">정부 바우처 적합</span>
             </div>
             <div class="case__proof">
+              <a class="chip chip--code" href="demos/04-demand-forecast/" target="_blank" rel="noopener">▶ 라이브 데모 (브라우저에서 바로) ↗</a>
               <a class="chip chip--code" href="https://github.com/2icorp/2i-case-04-demand-forecast" target="_blank" rel="noopener">‹/› 작동하는 레퍼런스 데모 · 소스코드 ↗</a>
               <a class="chip chip--dl" href="brochures/2i-brochure-04-감으로-잡던-재고-결품과-악성재고를-동시에-줄인다.pdf" download>브로셔 PDF ↓</a>
             </div>
@@ -194,7 +210,7 @@
           </aside>
         </div>
       </article>
-      <article class="case reveal" id="case-5">
+      <article class="case reveal" id="case-5" data-ccat="agent">
         <header class="case__top">
           <span class="case__no">05</span>
           <div class="case__id">
@@ -222,6 +238,7 @@
               <span class="chip chip--v">정부 바우처 적합</span>
             </div>
             <div class="case__proof">
+              <a class="chip chip--code" href="demos/05-support-chatbot/" target="_blank" rel="noopener">▶ 라이브 데모 (브라우저에서 바로) ↗</a>
               <a class="chip chip--code" href="https://github.com/2icorp/2i-case-05-support-chatbot" target="_blank" rel="noopener">‹/› 실행되는 챗봇 데모 (오프라인 폴백 내장) · 소스코드 ↗</a>
               <a class="chip chip--dl" href="brochures/2i-brochure-05-반복-문의는-AI가-사람은-진짜-상담에.pdf" download>브로셔 PDF ↓</a>
             </div>
@@ -229,7 +246,7 @@
           </aside>
         </div>
       </article>
-      <article class="case reveal" id="case-6">
+      <article class="case reveal" id="case-6" data-ccat="signal">
         <header class="case__top">
           <span class="case__no">06</span>
           <div class="case__id">
@@ -257,6 +274,7 @@
               <span class="chip chip--v">정부 바우처 적합</span>
             </div>
             <div class="case__proof">
+              <a class="chip chip--code" href="demos/06-sigprint-rf/" target="_blank" rel="noopener">▶ 라이브 데모 (브라우저에서 바로) ↗</a>
               <a class="chip chip--code" href="https://github.com/2icorp/2i-case-06-sigprint-rf" target="_blank" rel="noopener">‹/› 작동하는 레퍼런스 데모 (CFAR + 지문 매칭) · 소스코드 ↗</a>
               <a class="chip chip--dl" href="brochures/2i-brochure-06-무선망을-멈추는-원인-불명-전파-실시간으로-지목한다.pdf" download>브로셔 PDF ↓</a>
             </div>
@@ -264,7 +282,7 @@
           </aside>
         </div>
       </article>
-      <article class="case reveal" id="case-7">
+      <article class="case reveal" id="case-7" data-ccat="doc">
         <header class="case__top">
           <span class="case__no">07</span>
           <div class="case__id">
@@ -292,6 +310,7 @@
               <span class="chip chip--v">정부 바우처 적합</span>
             </div>
             <div class="case__proof">
+              <a class="chip chip--code" href="demos/07-knowledge-rag/" target="_blank" rel="noopener">▶ 라이브 데모 (브라우저에서 바로) ↗</a>
               <a class="chip chip--code" href="https://github.com/2icorp/2i-case-07-knowledge-rag" target="_blank" rel="noopener">‹/› 실행되는 RAG 챗봇 데모 (TF-IDF 폴백 내장) · 소스코드 ↗</a>
               <a class="chip chip--dl" href="brochures/2i-brochure-07-20년-베테랑의-머릿속-질문-한-번에-꺼낸다.pdf" download>브로셔 PDF ↓</a>
             </div>
@@ -299,7 +318,7 @@
           </aside>
         </div>
       </article>
-      <article class="case reveal" id="case-8">
+      <article class="case reveal" id="case-8" data-ccat="sales">
         <header class="case__top">
           <span class="case__no">08</span>
           <div class="case__id">
@@ -327,6 +346,7 @@
               <span class="chip chip--v">정부 바우처 적합</span>
             </div>
             <div class="case__proof">
+              <a class="chip chip--code" href="demos/08-sales-signal/" target="_blank" rel="noopener">▶ 라이브 데모 (브라우저에서 바로) ↗</a>
               <a class="chip chip--code" href="https://github.com/2icorp/2i-case-08-sales-signal" target="_blank" rel="noopener">‹/› 작동하는 레퍼런스 데모 · 소스코드 ↗</a>
               <a class="chip chip--dl" href="brochures/2i-brochure-08-제안-골든타임을-놓치지-않는-영업-레이더.pdf" download>브로셔 PDF ↓</a>
             </div>
@@ -334,7 +354,7 @@
           </aside>
         </div>
       </article>
-      <article class="case reveal" id="case-9">
+      <article class="case reveal" id="case-9" data-ccat="sales">
         <header class="case__top">
           <span class="case__no">09</span>
           <div class="case__id">
@@ -362,6 +382,7 @@
               <span class="chip chip--v">정부 바우처 적합</span>
             </div>
             <div class="case__proof">
+              <a class="chip chip--code" href="demos/09-promo-video/" target="_blank" rel="noopener">▶ 라이브 데모 (브라우저에서 바로) ↗</a>
               <a class="chip chip--code" href="https://github.com/2icorp/2i-case-09-promo-video" target="_blank" rel="noopener">‹/› 작동하는 레퍼런스 데모 · 소스코드 ↗</a>
               <a class="chip chip--dl" href="brochures/2i-brochure-09-제품-정보만-넣으면-채널별-홍보영상이-쏟아진다.pdf" download>브로셔 PDF ↓</a>
             </div>
@@ -369,7 +390,7 @@
           </aside>
         </div>
       </article>
-      <article class="case reveal" id="case-10">
+      <article class="case reveal" id="case-10" data-ccat="sales">
         <header class="case__top">
           <span class="case__no">10</span>
           <div class="case__id">
@@ -397,6 +418,7 @@
               <span class="chip chip--v">정부 바우처 적합</span>
             </div>
             <div class="case__proof">
+              <a class="chip chip--code" href="demos/10-web-marketing/" target="_blank" rel="noopener">▶ 라이브 데모 (브라우저에서 바로) ↗</a>
               <a class="chip chip--code" href="https://github.com/2icorp/2i-case-10-web-marketing" target="_blank" rel="noopener">‹/› 작동하는 레퍼런스 스타터 (+ 이 사이트 자체) · 소스코드 ↗</a>
               <a class="chip chip--dl" href="brochures/2i-brochure-10-검색하면-안-나오는-회사-신뢰받는-브랜드로.pdf" download>브로셔 PDF ↓</a>
             </div>
@@ -404,6 +426,77 @@
           </aside>
         </div>
       </article>
+
+      <article class="case reveal" id="case-11" data-ccat="agent">
+        <header class="case__top">
+          <span class="case__no">11</span>
+          <div class="case__id">
+            <span class="case__cat">실시간 음성 AI · 셀프호스트</span>
+            <span class="case__ind">전 산업 · 보안 환경</span>
+          </div>
+          <div class="case__stkm" role="group" aria-label="문제의 대가">
+            <span class="case__stkm-l">음성 API 종속의 대가</span>
+            <span class="case__stkm-v">데이터 유출 + 종량 과금</span>
+          </div>
+        </header>
+        <h3 class="case__title">OpenAI Realtime을 엔드포인트 한 줄로 온프렘 음성 스택으로</h3>
+        <p class="case__stakes">실시간 음성 상담·안내를 외부 음성 API로 만들면 두 가지가 남습니다. 고객의 육성이 매 턴 외부로 나간다는 사실과, 사용량에 정비례해 커지는 청구서입니다. 보안 규정이 있는 현장은 시작조차 못 합니다.</p>
+        <div class="case__grid">
+          <div class="case__main">
+            <div class="case__row"><span class="case__k">통찰</span><p>오픈소스 speech-to-speech 스택은 이미 OpenAI Realtime API와 같은 프로토콜을 말합니다. 즉 기존 클라이언트 코드는 그대로 두고, 접속 주소 한 줄만 바꾸면 음성 전체를 내부망으로 가져올 수 있습니다.</p></div>
+            <div class="case__row"><span class="case__k">2i의 방식</span><p>VAD, Whisper STT, OpenAI 호환 LLM, Qwen3-TTS를 웹소켓 하나로 묶은 스택을 프라이빗 GPU 클러스터에 배포하고, 터미널 스모크와 브라우저 마이크 E2E로 실측했습니다. 한국어 1턴 왕복 1.47초(터미널)와 1.6초(브라우저)를 기록했고, 음성·텍스트가 클러스터 밖으로 나가지 않는 것을 확인했습니다.</p></div>
+            <ol class="case__gates"><li class="gate"><b class="gate__name">측정 게이트</b><span class="gate__what">현재 음성 API 사용량·비용·데이터 경로를 계측하고, 목표 지연(턴당 2초 이내)을 기준선으로 잡습니다.</span></li><li class="gate"><b class="gate__name">실증 게이트</b><span class="gate__what">GPU 1~2장에 스택을 올려 실제 통화 시나리오로 지연·품질을 재고, 기존 클라이언트가 엔드포인트 교체만으로 붙는지 검증합니다.</span></li><li class="gate"><b class="gate__name">이관 게이트</b><span class="gate__what">모델 프리베이크로 콜드스타트를 줄이고, 기동·중지 운영 절차와 함께 운영팀에 넘깁니다.</span></li></ol>
+          </div>
+          <aside class="case__side">
+            <div class="ba"><div class="ba__head">실측 지표 <span class="ba__note">· H200급 클러스터, 환경별 재측정</span></div><div class="ba__row"><span class="ba__m">한국어 1턴 왕복</span><span class="ba__b">외부 API 의존</span><span class="ba__arw" aria-hidden="true">→</span><span class="ba__a">1.47초 (실측)</span></div><div class="ba__row"><span class="ba__m">브라우저 마이크 E2E</span><span class="ba__b">측정 불가(외부)</span><span class="ba__arw" aria-hidden="true">→</span><span class="ba__a">1.6초 (실측)</span></div><div class="ba__row"><span class="ba__m">외부로 나가는 음성 데이터</span><span class="ba__b">전량</span><span class="ba__arw" aria-hidden="true">→</span><span class="ba__a">0</span></div></div>
+            <div class="case__sowhat"><span class="case__k case__k--go">그래서 무엇이 열리나</span><p>보안 규정 때문에 음성 AI를 포기했던 현장이 후보가 됩니다. 상담 볼륨이 커질수록 API 청구서 대신 고정된 GPU 비용으로 원가 구조가 바뀝니다.</p></div>
+            <div class="case__facts">
+              <span class="chip">실측 완료 · 정직한 한계: 콜드스타트 25~30분(프리베이크로 해소)</span>
+            </div>
+            <div class="case__proof">
+              <a class="chip chip--code" href="https://github.com/2icorp/2i-case-11-realtime-voice" target="_blank" rel="noopener">‹/› 작동하는 레퍼런스 데모 · 소스코드 ↗</a>
+            </div>
+            <p class="case__tech"><span class="case__tech-k">사용 기술</span> Silero VAD + Whisper large-v3-turbo + OpenAI 호환 LLM 서빙 + Qwen3-TTS, OpenAI Realtime 호환 WebSocket, Docker/GPU 클러스터 배포.</p>
+          </aside>
+        </div>
+      </article>
+
+
+      <article class="case reveal" id="case-12" data-ccat="infra">
+        <header class="case__top">
+          <span class="case__no">12</span>
+          <div class="case__id">
+            <span class="case__cat">인프라 의사결정 도구</span>
+            <span class="case__ind">전 산업 · IT 기획·재무</span>
+          </div>
+          <div class="case__stkm" role="group" aria-label="문제의 대가">
+            <span class="case__stkm-l">감으로 정하는 GPU 도입</span>
+            <span class="case__stkm-v">수천만원 오판 리스크</span>
+          </div>
+        </header>
+        <h3 class="case__title">"API 계속 쓸까, GPU 살까?" 감이 아니라 계산기로</h3>
+        <p class="case__stakes">LLM 도입이 커질수록 반드시 만나는 질문입니다. API 종량 과금을 계속 낼 것인가, GPU를 사서 직접 돌릴 것인가. 이 판단을 감으로 하면 수천만원 단위의 오판이 됩니다. 모델 크기, 양자화, GPU 기종, 동시 사용자 수에 따라 답이 전부 달라지기 때문입니다.</p>
+        <div class="case__grid">
+          <div class="case__main">
+            <div class="case__row"><span class="case__k">통찰</span><p>이 판단에 필요한 수학(VRAM 적합, 처리량 추정, 토큰당 원가, API 손익분기)은 정해져 있습니다. 문제는 그 수학이 엔지니어 머릿속에만 있어서 경영진과 같은 화면을 못 본다는 것. 계산을 도구로 고정하면 회의가 숫자로 시작됩니다.</p></div>
+            <div class="case__row"><span class="case__k">2i의 방식</span><p>브라우저에서 100% 클라이언트 사이드로 도는 계산기를 만들었습니다. 모델 22종(+HF ID 직접 입력)과 GPU·가속기 25종, 양자화 6종을 조합하면 VRAM 적합 여부와 필요 GPU 수, 예상 처리량(tok/s), 자체 호스팅 토큰 원가 대비 상용 API 손익분기, 구매 시 회수 개월을 즉시 계산합니다. vLLM·SGLang·TensorRT-LLM 3개 서빙 엔진의 지원 판정과 docker-compose·K8s·Helm 배포 매니페스트까지 바로 내려받게 했습니다.</p></div>
+            <ol class="case__gates"><li class="gate"><b class="gate__name">측정 게이트</b><span class="gate__what">현재 API 사용량·단가·트래픽 패턴을 계측해 계산기의 입력값을 귀사 실측치로 채웁니다.</span></li><li class="gate"><b class="gate__name">실증 게이트</b><span class="gate__what">계산기가 가리킨 최적 구성 1개를 실제 GPU에서 벤치마크해 추정치와 실측치의 오차를 확인합니다.</span></li><li class="gate"><b class="gate__name">이관 게이트</b><span class="gate__what">도입 결정 문서와 배포 매니페스트, 운영 절차를 함께 넘깁니다.</span></li></ol>
+          </div>
+          <aside class="case__side">
+            <div class="ba"><div class="ba__head">도구가 답하는 질문 <span class="ba__note">· 공개 정보 기반 근사치, 실측으로 재검증</span></div><div class="ba__row"><span class="ba__m">이 모델이 이 GPU에 올라가나</span><span class="ba__b">엔지니어 경험칙</span><span class="ba__arw" aria-hidden="true">→</span><span class="ba__a">VRAM 적합 + 필요 장수 즉시</span></div><div class="ba__row"><span class="ba__m">API 대비 손익분기</span><span class="ba__b">회의 때마다 재논쟁</span><span class="ba__arw" aria-hidden="true">→</span><span class="ba__a">$/1M 토큰 비교 + 회수 개월</span></div></div>
+            <div class="case__sowhat"><span class="case__k case__k--go">그래서 무엇이 열리나</span><p>GPU 도입 품의가 "느낌"이 아니라 같은 계산기 화면으로 올라갑니다. 그리고 이 계산의 검증과 실제 구축이 저희 클라우드 축의 일입니다.</p></div>
+            <div class="case__facts">
+              <span class="chip">계산 코어 단위테스트 검증 · 백엔드·API키 불필요</span>
+            </div>
+            <div class="case__proof">
+              <a class="chip chip--code" href="demos/llm-selfhost-calc/" target="_blank" rel="noopener">▶ 라이브 데모 (브라우저에서 바로) ↗</a>
+              <a class="chip chip--code" href="https://github.com/2icorp/2i-case-12-llm-selfhost-calc" target="_blank" rel="noopener">‹/› 작동하는 레퍼런스 데모 · 소스코드 ↗</a>
+            </div>
+            <p class="case__tech"><span class="case__tech-k">사용 기술</span> 순수 JS 클라이언트 계산(백엔드 0), 모델·GPU 스펙 데이터셋, vLLM·SGLang·TensorRT-LLM 지원 매트릭스, 배포 매니페스트 생성기.</p>
+          </aside>
+        </div>
+      </article>
+
     </div>
   </section>
   <section class="section section--alt">

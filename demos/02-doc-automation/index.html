@@ -1,0 +1,352 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<script>(function(){try{var t=localStorage.getItem("theme");if(!t&&window.matchMedia&&matchMedia("(prefers-color-scheme: dark)").matches)t="dark";if(t)document.documentElement.setAttribute("data-theme",t);}catch(e){}})();</script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>문서 자동 인식·입력 데모 | 2i</title>
+<meta name="description" content="거래명세서·발주서·세금계산서 샘플 문서를 클릭하면 필드를 스캔해 정형 테이블로 옮겨 담는 인터랙티브 데모입니다.">
+<link rel="stylesheet" href="../../styles.css?v=14">
+<style>
+  :root{ --demo-radius: 10px; }
+  body{ background:var(--paper); }
+  .dtop{ position:sticky; top:0; z-index:40; background:var(--paper); border-bottom:1px solid var(--line-soft); }
+  .dtop__inner{ max-width:1180px; margin:0 auto; padding:0.85rem 1.25rem; display:flex; align-items:center; justify-content:space-between; gap:1rem; }
+  .dtop__brand{ display:inline-flex; align-items:baseline; gap:0.5rem; text-decoration:none; }
+  .dtop__brand b{ font-family:var(--mono); color:var(--signal); font-weight:700; font-size:1.05rem; }
+  .dtop__brand span{ font-family:var(--mono); font-size:0.7rem; letter-spacing:0.14em; color:var(--ink-faint); text-transform:uppercase; }
+  .dtop__nav{ display:flex; gap:1.1rem; align-items:center; }
+  .dtop__nav a{ font-size:0.86rem; color:var(--ink-soft); text-decoration:none; white-space:nowrap; transition:color 0.15s ease; }
+  .dtop__nav a:hover{ color:var(--ink); }
+  .dtop__nav a:focus-visible{ outline:2px solid var(--signal); outline-offset:3px; }
+  .dhonest{ background:var(--panel); border-bottom:1px solid var(--line-soft); }
+  .dhonest__inner{ max-width:1180px; margin:0 auto; padding:0.55rem 1.25rem; font-family:var(--mono); font-size:0.74rem; color:var(--ink-faint); letter-spacing:0.01em; }
+  .dwrap{ max-width:1180px; margin:0 auto; padding:2rem 1.25rem 3.5rem; }
+  .dhead{ margin-bottom:1.6rem; }
+  .dhead h1{ font-size:1.7rem; line-height:1.25; color:var(--ink); margin:0 0 0.5rem; }
+  .dhead p{ color:var(--ink-soft); max-width:60ch; font-size:0.96rem; }
+  .stats{ display:flex; gap:0.9rem; flex-wrap:wrap; margin-top:1.1rem; }
+  .stat{ background:var(--panel); border:1px solid var(--line); border-radius:var(--demo-radius); padding:0.7rem 1rem; min-width:150px; }
+  .stat__label{ font-family:var(--mono); font-size:0.68rem; letter-spacing:0.1em; color:var(--ink-faint); text-transform:uppercase; }
+  .stat__value{ font-size:1.35rem; font-weight:700; color:var(--ink); margin-top:0.2rem; }
+  .stat__value b{ color:var(--signal); }
+  .grid{ display:grid; grid-template-columns:minmax(280px,340px) 1fr; gap:1.5rem; align-items:start; margin-top:1.8rem; }
+  @media (max-width:820px){ .grid{ grid-template-columns:1fr; } }
+  .docs{ display:flex; flex-direction:column; gap:1rem; }
+  .doccard{ background:var(--panel); border:1px solid var(--line); border-radius:var(--demo-radius); padding:0; overflow:hidden; cursor:pointer; text-align:left; width:100%; font-family:var(--sans); transition:border-color 0.15s ease, transform 0.15s ease, box-shadow 0.15s ease; }
+  .doccard:hover{ border-color:var(--steel-soft); transform:translateY(-2px); box-shadow:0 8px 22px oklch(24% 0.02 255 / 0.08); }
+  .doccard:focus-visible{ outline:2px solid var(--signal); outline-offset:2px; }
+  .doccard.active{ border-color:var(--signal); }
+  .doccard__tab{ display:flex; align-items:center; justify-content:space-between; padding:0.55rem 0.9rem; background:var(--paper-2); border-bottom:1px solid var(--line-soft); }
+  .doccard__tab span{ font-family:var(--mono); font-size:0.68rem; letter-spacing:0.08em; color:var(--ink-faint); text-transform:uppercase; }
+  .doccard__kind{ font-size:0.72rem; font-weight:700; color:var(--steel); }
+  .docsheet{ position:relative; padding:0.95rem 1rem 1.05rem; }
+  .docsheet__title{ font-weight:700; font-size:0.98rem; color:var(--ink); margin-bottom:0.65rem; }
+  .docsheet__row{ display:flex; justify-content:space-between; gap:0.6rem; font-size:0.78rem; padding:0.28rem 0; border-bottom:1px dashed var(--line-soft); color:var(--ink-soft); }
+  .docsheet__row:last-child{ border-bottom:none; }
+  .docsheet__row b{ color:var(--ink); font-weight:600; }
+  .docsheet__stamp{ position:absolute; top:0.7rem; right:0.9rem; width:38px; height:38px; border:2px solid var(--signal); border-radius:50%; opacity:0.55; display:flex; align-items:center; justify-content:center; font-family:var(--mono); font-size:0.5rem; color:var(--signal); transform:rotate(-12deg); }
+  .scan{ position:absolute; left:0; right:0; height:26%; top:0; background:linear-gradient(180deg, transparent, oklch(68% 0.175 55 / 0.22), transparent); pointer-events:none; opacity:0; }
+  .doccard.scanning .scan{ opacity:1; animation:scanmove 1.5s cubic-bezier(.4,0,.2,1) 1; }
+  @keyframes scanmove{ 0%{ top:-10%; } 100%{ top:100%; } }
+  .doccard.scanning .docsheet__row{ position:relative; }
+  .doccard.scanning .docsheet__row::after{ content:""; position:absolute; inset:0; background:oklch(68% 0.175 55 / 0.07); opacity:0; animation:rowflash 1.5s ease-out 1; }
+  .doccard.scanning .docsheet__row:nth-child(1)::after{ animation-delay:0.05s; }
+  .doccard.scanning .docsheet__row:nth-child(2)::after{ animation-delay:0.28s; }
+  .doccard.scanning .docsheet__row:nth-child(3)::after{ animation-delay:0.5s; }
+  .doccard.scanning .docsheet__row:nth-child(4)::after{ animation-delay:0.72s; }
+  .doccard.scanning .docsheet__row:nth-child(5)::after{ animation-delay:0.94s; }
+  @keyframes rowflash{ 0%{ opacity:0; } 18%{ opacity:1; } 55%{ opacity:0; } 100%{ opacity:0; } }
+  .panel{ background:var(--panel); border:1px solid var(--line); border-radius:var(--demo-radius); padding:1.3rem 1.4rem 1.5rem; min-height:420px; display:flex; flex-direction:column; }
+  .panel__head{ display:flex; align-items:center; justify-content:space-between; margin-bottom:1rem; gap:0.8rem; flex-wrap:wrap; }
+  .panel__head h2{ font-size:1.02rem; color:var(--ink); margin:0; }
+  .status{ font-family:var(--mono); font-size:0.75rem; color:var(--ink-faint); display:inline-flex; align-items:center; gap:0.4rem; }
+  .status .dot{ width:7px; height:7px; border-radius:50%; background:var(--line); }
+  .status.busy .dot{ background:var(--signal); animation:pulse 1s ease-in-out infinite; }
+  .status.done .dot{ background:var(--steel); }
+  @keyframes pulse{ 0%,100%{ opacity:1; } 50%{ opacity:0.35; } }
+  .empty{ margin:auto; text-align:center; color:var(--ink-faint); font-size:0.9rem; padding:2rem 1rem; }
+  table.result{ width:100%; border-collapse:collapse; font-size:0.86rem; }
+  table.result th{ text-align:left; font-family:var(--mono); font-size:0.68rem; letter-spacing:0.06em; color:var(--ink-faint); text-transform:uppercase; padding:0.5rem 0.6rem; border-bottom:1px solid var(--line); }
+  table.result td{ padding:0.62rem 0.6rem; border-bottom:1px solid var(--line-soft); color:var(--ink); vertical-align:middle; }
+  table.result tr:last-child td{ border-bottom:none; }
+  table.result td.num{ font-family:var(--mono); text-align:right; }
+  .badge{ display:inline-flex; align-items:center; gap:0.3rem; font-family:var(--mono); font-size:0.66rem; padding:0.16rem 0.5rem; border-radius:999px; font-weight:600; letter-spacing:0.02em; }
+  .badge--high{ background:oklch(64% 0.1 150 / 0.16); color:oklch(38% 0.09 150); }
+  .badge--low{ background:oklch(68% 0.175 55 / 0.18); color:var(--signal-deep); }
+  [data-theme="dark"] .badge--high{ color:oklch(78% 0.12 150); }
+  [data-theme="dark"] .badge--low{ color:oklch(80% 0.14 55); }
+  .field{ display:flex; flex-direction:column; gap:0.2rem; }
+  .field small{ font-family:var(--mono); font-size:0.66rem; color:var(--ink-faint); }
+  .panel__foot{ display:flex; align-items:center; justify-content:space-between; margin-top:1.2rem; padding-top:1rem; border-top:1px solid var(--line-soft); flex-wrap:wrap; gap:0.7rem; }
+  .btn2{ font-family:var(--sans); font-size:0.85rem; font-weight:600; padding:0.55rem 1.05rem; border-radius:999px; border:1px solid var(--line); background:var(--paper); color:var(--ink); cursor:pointer; transition:border-color 0.15s ease, background 0.15s ease, transform 0.1s ease; }
+  .btn2:hover{ border-color:var(--steel); }
+  .btn2:active{ transform:scale(0.97); }
+  .btn2:focus-visible{ outline:2px solid var(--signal); outline-offset:2px; }
+  .btn2:disabled{ opacity:0.4; cursor:not-allowed; }
+  .btn2--signal{ background:var(--signal); border-color:var(--signal); color:oklch(22% 0.03 60); }
+  .btn2--signal:hover{ border-color:var(--signal-deep); }
+  .toast{ position:fixed; left:50%; bottom:1.6rem; transform:translateX(-50%) translateY(8px); background:var(--ink); color:var(--paper); font-size:0.82rem; padding:0.6rem 1rem; border-radius:999px; opacity:0; pointer-events:none; transition:opacity 0.25s ease, transform 0.25s ease; z-index:50; }
+  .toast.show{ opacity:1; transform:translateX(-50%) translateY(0); }
+  .dfoot{ max-width:1180px; margin:0 auto; padding:1.6rem 1.25rem 2.5rem; font-family:var(--mono); font-size:0.75rem; color:var(--ink-faint); border-top:1px solid var(--line-soft); text-align:center; }
+</style>
+</head>
+<body>
+
+<div class="dtop">
+  <div class="dtop__inner">
+    <a class="dtop__brand" href="/"><b>2i</b><span>데모 · 문서 자동 인식</span></a>
+    <nav class="dtop__nav">
+      <a href="../../cases.html#case-2">사례 보기</a>
+      <a href="https://github.com/2icorp/2i-case-02-doc-automation" target="_blank" rel="noopener">소스코드</a>
+    </nav>
+  </div>
+</div>
+<div class="dhonest"><div class="dhonest__inner">브라우저에서 도는 샘플 데이터 인터랙티브 데모입니다. 실제 파이프라인 구현은 소스코드 저장소에 있습니다.</div></div>
+
+<main class="dwrap">
+  <div class="dhead">
+    <h1>문서 자동 인식·입력</h1>
+    <p>거래명세서·발주서·세금계산서처럼 서식이 제각각인 문서를 사람이 손으로 옮겨 적는 대신, 필드 위치를 스캔해 정형 테이블로 바로 채워 넣습니다. 왼쪽 문서를 클릭해 보세요.</p>
+    <div class="stats">
+      <div class="stat"><div class="stat__label">누적 처리 건수</div><div class="stat__value"><b id="statCount">0</b>건</div></div>
+      <div class="stat"><div class="stat__label">수기 대비 절감 시간</div><div class="stat__value"><b id="statSaved">0</b>분</div></div>
+      <div class="stat"><div class="stat__label">평균 인식 시간</div><div class="stat__value">약 1.6초 / 건</div></div>
+    </div>
+  </div>
+
+  <div class="grid">
+    <div class="docs" id="docList" role="list" aria-label="샘플 문서 목록"></div>
+
+    <div class="panel">
+      <div class="panel__head">
+        <h2>정형 데이터 추출 결과</h2>
+        <span class="status" id="statusEl"><span class="dot"></span><span id="statusText">대기 중</span></span>
+      </div>
+      <div id="resultArea">
+        <div class="empty">왼쪽에서 문서를 클릭하면 인식이 시작됩니다.</div>
+      </div>
+      <div class="panel__foot">
+        <span style="font-family:var(--mono); font-size:0.74rem; color:var(--ink-faint);" id="lastMeta">&nbsp;</span>
+        <button class="btn2 btn2--signal" id="csvBtn" disabled>CSV 내려받기</button>
+      </div>
+    </div>
+  </div>
+</main>
+
+<div class="toast" id="toast"></div>
+
+<footer class="dfoot">© 2i · contact@2icorp.site</footer>
+
+<script>
+(function(){
+  "use strict";
+
+  var DOCS = [
+    {
+      id: "doc1",
+      kind: "거래명세서",
+      title: "거래명세서 No. TX-2381",
+      preview: [
+        ["공급자", "대한정밀㈜"],
+        ["품목", "CNC 가공부품 A-102"],
+        ["수량", "480 EA"],
+        ["단가", "12,500원"],
+        ["합계금액", "6,000,000원"]
+      ],
+      extracted: {
+        공급자: { value: "대한정밀㈜", confidence: "high" },
+        품목: { value: "CNC 가공부품 A-102", confidence: "high" },
+        수량: { value: "480 EA", confidence: "high" },
+        단가: { value: "12,500원", confidence: "high" },
+        합계: { value: "6,000,000원", confidence: "high" }
+      }
+    },
+    {
+      id: "doc2",
+      kind: "발주서",
+      title: "발주서 No. PO-9042",
+      preview: [
+        ["공급자", "한빛유통"],
+        ["품목", "산업용 벨트 B-220"],
+        ["수량", "150 EA"],
+        ["단가", "34,000원"],
+        ["합계금액", "5,100,000원"]
+      ],
+      extracted: {
+        공급자: { value: "한빛유통", confidence: "high" },
+        품목: { value: "산업용 벨트 B-220 (추정)", confidence: "low" },
+        수량: { value: "150 EA", confidence: "high" },
+        단가: { value: "34,000원", confidence: "high" },
+        합계: { value: "5,100,000원", confidence: "high" }
+      }
+    },
+    {
+      id: "doc3",
+      kind: "세금계산서",
+      title: "세금계산서 No. TI-5517",
+      preview: [
+        ["공급자", "서진테크㈜"],
+        ["품목", "모터 컨트롤러 MC-77"],
+        ["수량", "60 EA"],
+        ["단가", "152,000원"],
+        ["합계금액", "9,120,000원"]
+      ],
+      extracted: {
+        공급자: { value: "서진테크㈜", confidence: "high" },
+        품목: { value: "모터 컨트롤러 MC-77", confidence: "high" },
+        수량: { value: "60 EA", confidence: "high" },
+        단가: { value: "152,000원", confidence: "high" },
+        합계: { value: "9,120,000원", confidence: "high" }
+      }
+    }
+  ];
+
+  var MANUAL_MIN_PER_DOC = 6;   // 수기 입력 가정 시간(분)
+  var AUTO_SEC_PER_DOC = 9;     // 자동 인식 가정 시간(초)
+
+  var processedCount = 0;
+  var docListEl = document.getElementById("docList");
+  var resultArea = document.getElementById("resultArea");
+  var statusEl = document.getElementById("statusEl");
+  var statusText = document.getElementById("statusText");
+  var csvBtn = document.getElementById("csvBtn");
+  var lastMeta = document.getElementById("lastMeta");
+  var toastEl = document.getElementById("toast");
+  var statCount = document.getElementById("statCount");
+  var statSaved = document.getElementById("statSaved");
+
+  var currentDoc = null;
+  var busy = false;
+
+  function renderDocs(){
+    docListEl.innerHTML = "";
+    DOCS.forEach(function(doc){
+      var card = document.createElement("button");
+      card.type = "button";
+      card.className = "doccard";
+      card.dataset.id = doc.id;
+      card.setAttribute("role", "listitem");
+      card.setAttribute("aria-label", doc.title + " 인식 시작");
+
+      var rows = doc.preview.map(function(r){
+        return '<div class="docsheet__row"><span>' + r[0] + '</span><b>' + r[1] + '</b></div>';
+      }).join("");
+
+      card.innerHTML =
+        '<div class="doccard__tab"><span>SAMPLE DOCUMENT</span><span class="doccard__kind">' + doc.kind + '</span></div>' +
+        '<div class="docsheet">' +
+          '<div class="scan"></div>' +
+          '<div class="docsheet__stamp">SAMPLE</div>' +
+          '<div class="docsheet__title">' + doc.title + '</div>' +
+          rows +
+        '</div>';
+
+      card.addEventListener("click", function(){ startScan(doc, card); });
+      docListEl.appendChild(card);
+    });
+  }
+
+  function setStatus(mode, text){
+    statusEl.className = "status" + (mode ? " " + mode : "");
+    statusText.textContent = text;
+  }
+
+  function startScan(doc, card){
+    if (busy) return;
+    busy = true;
+    currentDoc = doc;
+
+    Array.prototype.forEach.call(docListEl.querySelectorAll(".doccard"), function(c){
+      c.classList.remove("active");
+    });
+    card.classList.add("active", "scanning");
+
+    setStatus("busy", "인식 중 · " + doc.kind + " 필드 스캔");
+    resultArea.innerHTML = '<div class="empty">필드를 스캔하는 중입니다&hellip;</div>';
+    csvBtn.disabled = true;
+
+    var t0 = performance.now();
+    window.setTimeout(function(){
+      card.classList.remove("scanning");
+      var elapsedMs = performance.now() - t0;
+      renderResult(doc, elapsedMs);
+      busy = false;
+    }, 1550);
+  }
+
+  function badgeHtml(conf){
+    if (conf === "high") return '<span class="badge badge--high">● 높음</span>';
+    return '<span class="badge badge--low">● 검토필요</span>';
+  }
+
+  function renderResult(doc, elapsedMs){
+    var fields = doc.extracted;
+    var order = ["공급자", "품목", "수량", "단가", "합계"];
+
+    var rowsHtml = order.map(function(key){
+      var f = fields[key];
+      return '<tr><td>' + key + '</td>' +
+        '<td><div class="field"><span>' + f.value + '</span></div></td>' +
+        '<td>' + badgeHtml(f.confidence) + '</td></tr>';
+    }).join("");
+
+    resultArea.innerHTML =
+      '<table class="result">' +
+        '<thead><tr><th>필드</th><th>인식값</th><th>신뢰도</th></tr></thead>' +
+        '<tbody>' + rowsHtml + '</tbody>' +
+      '</table>';
+
+    setStatus("done", "인식 완료 · " + (elapsedMs / 1000).toFixed(1) + "초");
+    lastMeta.textContent = doc.title + " · " + (elapsedMs / 1000).toFixed(1) + "초 만에 5개 필드 추출";
+    csvBtn.disabled = false;
+
+    processedCount += 1;
+    statCount.textContent = String(processedCount);
+    var savedMin = processedCount * (MANUAL_MIN_PER_DOC - AUTO_SEC_PER_DOC / 60);
+    statSaved.textContent = savedMin.toFixed(1);
+
+    showToast(doc.kind + " 인식 완료");
+  }
+
+  function toCsv(doc){
+    var order = ["공급자", "품목", "수량", "단가", "합계"];
+    var header = ["필드", "인식값", "신뢰도"];
+    var lines = [header.join(",")];
+    order.forEach(function(key){
+      var f = doc.extracted[key];
+      var conf = f.confidence === "high" ? "높음" : "검토필요";
+      var val = '"' + String(f.value).replace(/"/g, '""') + '"';
+      lines.push([key, val, conf].join(","));
+    });
+    return "﻿" + lines.join("\r\n");
+  }
+
+  csvBtn.addEventListener("click", function(){
+    if (!currentDoc) return;
+    var csv = toCsv(currentDoc);
+    var blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
+    var url = URL.createObjectURL(blob);
+    var a = document.createElement("a");
+    a.href = url;
+    a.download = currentDoc.id + "-extract.csv";
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    window.setTimeout(function(){ URL.revokeObjectURL(url); }, 1000);
+    showToast("CSV 파일을 내려받았습니다");
+  });
+
+  var toastTimer = null;
+  function showToast(msg){
+    toastEl.textContent = msg;
+    toastEl.classList.add("show");
+    if (toastTimer) window.clearTimeout(toastTimer);
+    toastTimer = window.setTimeout(function(){ toastEl.classList.remove("show"); }, 1900);
+  }
+
+  renderDocs();
+})();
+</script>
+</body>
+</html>

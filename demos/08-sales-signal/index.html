@@ -1,0 +1,235 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<script>(function(){try{var t=localStorage.getItem("theme");if(!t&&window.matchMedia&&matchMedia("(prefers-color-scheme: dark)").matches)t="dark";if(t)document.documentElement.setAttribute("data-theme",t);}catch(e){}})();</script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>영업 신호 레이더 데모 · 2i</title>
+<link rel="stylesheet" href="../../styles.css?v=14">
+<style>
+  .demo-top{display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:1rem clamp(1rem,2vw,2rem);border-bottom:1px solid var(--line-soft);flex-wrap:wrap;}
+  .demo-brand{display:flex;align-items:baseline;gap:.6rem;text-decoration:none;color:var(--ink);}
+  .demo-brand__mark{font-family:var(--mono);font-weight:800;color:var(--signal);font-size:1.1rem;}
+  .demo-brand__tag{font-family:var(--mono);font-size:var(--text-xs);letter-spacing:.08em;color:var(--ink-faint);text-transform:uppercase;}
+  .demo-top__links{display:flex;gap:1.2rem;font-size:var(--text-sm);}
+  .demo-top__links a{color:var(--ink-soft);text-decoration:none;border-bottom:1px solid transparent;transition:color var(--dur) var(--ease),border-color var(--dur) var(--ease);}
+  .demo-top__links a:hover{color:var(--ink);border-color:var(--line);}
+  .demo-top__links a:focus-visible{outline:2px solid var(--signal);outline-offset:3px;}
+  .demo-banner{font-family:var(--mono);font-size:var(--text-xs);color:var(--ink-faint);background:var(--paper-2);border-bottom:1px solid var(--line-soft);padding:.55rem clamp(1rem,2vw,2rem);letter-spacing:.01em;}
+  main{max-width:1180px;margin:0 auto;padding:2rem clamp(1rem,2vw,2rem) 1rem;}
+  h1{font-size:var(--text-h2);margin:0 0 .4rem;}
+  .lede{color:var(--ink-soft);max-width:64ch;margin:0 0 1.4rem;line-height:1.7;}
+  .summary{font-family:var(--mono);font-size:var(--text-sm);color:var(--steel);background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:.9rem 1.2rem;margin-bottom:1.6rem;}
+  .summary b{color:var(--signal-deep);}
+  .summary__top{margin-top:.5rem;color:var(--ink-soft);font-size:var(--text-xs);}
+  .toolbar{display:flex;flex-wrap:wrap;gap:.6rem;align-items:center;justify-content:space-between;margin-bottom:1.2rem;}
+  .chips{display:flex;flex-wrap:wrap;gap:.55rem;}
+  .chip{font-family:var(--mono);font-size:var(--text-xs);padding:.45rem .9rem;border-radius:999px;border:1px solid var(--line);background:var(--paper);color:var(--ink-soft);cursor:pointer;transition:background var(--dur) var(--ease),border-color var(--dur) var(--ease),color var(--dur) var(--ease);}
+  .chip:hover{border-color:var(--signal);}
+  .chip:focus-visible{outline:2px solid var(--signal);outline-offset:2px;}
+  .chip.active{background:var(--ink);color:var(--paper);border-color:var(--ink);}
+  .sortbtn{font-family:var(--mono);font-size:var(--text-xs);padding:.45rem .9rem;border-radius:var(--radius);border:1px solid var(--line);background:var(--paper);color:var(--ink);cursor:pointer;transition:border-color var(--dur) var(--ease),background var(--dur) var(--ease);}
+  .sortbtn:hover{border-color:var(--signal);}
+  .sortbtn.active{background:var(--signal);color:oklch(22% 0.03 60);border-color:var(--signal);}
+  .layout{display:grid;grid-template-columns:1.5fr 1fr;gap:1.4rem;align-items:start;}
+  .list{display:grid;gap:.75rem;}
+  .sigcard{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:1rem 1.1rem;cursor:pointer;text-align:left;width:100%;transition:border-color var(--dur) var(--ease),transform var(--dur) var(--ease),box-shadow var(--dur) var(--ease);}
+  .sigcard:hover{border-color:var(--signal);transform:translateY(-1px);}
+  .sigcard:focus-visible{outline:2px solid var(--signal);outline-offset:2px;}
+  .sigcard.selected{border-color:var(--signal);box-shadow:0 0 0 1px var(--signal);}
+  .sigcard__head{display:flex;justify-content:space-between;align-items:flex-start;gap:.8rem;}
+  .sigcard__title{font-weight:700;font-size:.98rem;line-height:1.5;}
+  .sigcard__company{font-family:var(--mono);font-size:var(--text-xs);color:var(--steel);margin-bottom:.25rem;letter-spacing:.02em;}
+  .sigcard__score{font-family:var(--mono);font-weight:800;font-size:1.15rem;color:var(--signal-deep);white-space:nowrap;}
+  .sigcard__meta{display:flex;gap:.5rem;margin-top:.6rem;flex-wrap:wrap;}
+  .tag{font-family:var(--mono);font-size:var(--text-xs);padding:.15rem .5rem;border-radius:999px;border:1px solid var(--line);color:var(--ink-faint);}
+  .tag--bid{color:var(--signal-deep);border-color:var(--signal);}
+  .tag--news{color:var(--steel);border-color:var(--steel-soft);}
+  .tag--job{color:var(--ink-soft);border-color:var(--line);}
+  .tag--personnel{color:var(--ink);border-color:var(--ink-faint);}
+  .detail{position:sticky;top:1rem;background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:1.4rem;min-height:14rem;}
+  .detail__placeholder{color:var(--ink-faint);font-size:var(--text-sm);line-height:1.7;}
+  .detail__company{font-family:var(--mono);font-size:var(--text-xs);color:var(--steel);letter-spacing:.05em;text-transform:uppercase;}
+  .detail__title{font-size:1.15rem;font-weight:800;margin:.4rem 0 .8rem;line-height:1.5;}
+  .detail h4{font-size:var(--text-xs);text-transform:uppercase;letter-spacing:.08em;color:var(--ink-faint);font-family:var(--mono);margin:1rem 0 .35rem;}
+  .detail p{margin:0;line-height:1.75;font-size:.94rem;}
+  .detail__pitch{background:var(--paper);border:1px solid var(--line);border-left:2px solid var(--signal);border-radius:var(--radius);padding:.9rem 1rem;font-size:.92rem;line-height:1.75;color:var(--ink);}
+  .detail__scores{display:flex;gap:1rem;margin-top:.9rem;font-family:var(--mono);font-size:var(--text-xs);color:var(--ink-soft);}
+  .demo-foot{margin-top:3rem;padding:1.6rem clamp(1rem,2vw,2rem) 2.4rem;font-family:var(--mono);font-size:var(--text-xs);color:var(--ink-faint);border-top:1px solid var(--line-soft);text-align:center;}
+  @media (max-width:900px){
+    .layout{grid-template-columns:1fr;}
+    .detail{position:static;}
+  }
+</style>
+</head>
+<body>
+<header class="demo-top">
+  <a href="/" class="demo-brand"><span class="demo-brand__mark">2i</span><span class="demo-brand__tag">DEMO · 영업 신호 레이더</span></a>
+  <nav class="demo-top__links">
+    <a href="/cases.html#case-8">사례 보기</a>
+    <a href="https://github.com/2icorp/2i-case-08-sales-signal" target="_blank" rel="noopener">소스코드</a>
+  </nav>
+</header>
+<div class="demo-banner">브라우저에서 도는 샘플 데이터 인터랙티브 데모입니다. 실제 파이프라인 구현은 소스코드 저장소에 있습니다.</div>
+
+<main>
+  <h1>영업 신호 레이더</h1>
+  <p class="lede">입찰 공고, 뉴스, 채용 공고, 인사 이동을 한곳에서 훑고, 관련도와 시급도를 점수로 환산해 오늘 먼저 연락할 곳을 정합니다. 카드를 눌러 근거와 추천 멘트를 확인해보세요.</p>
+
+  <div class="summary" id="summaryBox">오늘 포착 <b>12건</b> · 상위 3건 당일 대응</div>
+
+  <div class="toolbar">
+    <div class="chips" id="chips">
+      <button class="chip active" data-type="all">전체</button>
+      <button class="chip" data-type="bid">입찰</button>
+      <button class="chip" data-type="news">뉴스</button>
+      <button class="chip" data-type="job">채용</button>
+      <button class="chip" data-type="personnel">인사</button>
+    </div>
+    <button class="sortbtn" id="sortBtn">스코어순 정렬</button>
+  </div>
+
+  <div class="layout">
+    <div class="list" id="list"></div>
+    <div class="detail" id="detail">
+      <div class="detail__placeholder">왼쪽 카드를 클릭하면 이 신호를 왜 포착했는지, 그리고 첫 접촉에 쓸 만한 멘트를 여기서 보여드립니다.</div>
+    </div>
+  </div>
+</main>
+
+<footer class="demo-foot">© 2i · contact@2icorp.site</footer>
+
+<script>
+(function(){
+  "use strict";
+
+  var TYPE_LABEL = { bid:"입찰", news:"뉴스", job:"채용", personnel:"인사" };
+
+  var signals = [
+    { id:1, type:"bid", company:"은하식품", title:"스마트물류센터 구축 입찰 공고 게시", relevance:8, urgency:9,
+      evidence:"입찰 공고 요구사항서에 재고 데이터 통합과 실시간 가시화가 명시되어 있고, 제안서 마감이 2주 이내로 촉박합니다.",
+      pitch:"은하식품님, 최근 스마트물류센터 입찰 공고를 보고 연락드립니다. 재고 데이터 통합 부분에서 도와드린 사례를 짧게 공유드려도 될까요." },
+    { id:2, type:"news", company:"청람전자", title:"시리즈B 220억원 투자 유치 보도", relevance:6, urgency:5,
+      evidence:"투자 유치 이후 통상 6개월 안에 시스템 고도화 예산이 집행되는 패턴이 반복적으로 관찰됩니다.",
+      pitch:"투자 유치 소식 축하드립니다. 이 시점에 데이터 인프라를 먼저 정비해두면 이후 확장 속도가 달라집니다. 잠깐 소개드려도 될까요." },
+    { id:3, type:"job", company:"다온물류", title:"데이터엔지니어 4명 신규 채용 공고", relevance:7, urgency:6,
+      evidence:"사내 데이터팀을 처음 꾸리는 시점으로 보이며, 이런 시기에는 외부 파트너 도입 여지가 큽니다.",
+      pitch:"데이터팀을 새로 꾸리신다는 소식을 보고 연락드렸습니다. 내부 팀 구성과 병행할 수 있는 초기 파이프라인 구축 사례를 보여드리고 싶습니다." },
+    { id:4, type:"personnel", company:"해오름테크", title:"신임 CDO(최고데이터책임자) 선임", relevance:8, urgency:7,
+      evidence:"신임 임원 부임 후 90일 안에 외부 벤더를 재평가하는 경우가 흔한 시점입니다.",
+      pitch:"신임 CDO님 취임 소식을 보고 연락드립니다. 취임 초기 데이터 현황을 빠르게 점검하실 때 참고할 체크리스트를 보내드려도 될까요." },
+    { id:5, type:"bid", company:"메타포레스트", title:"생산 현황 대시보드 구축 사업자 선정 공고", relevance:9, urgency:8,
+      evidence:"공고 요구사항서에 부서별 엑셀 취합 문제가 그대로 적혀 있어, 저희가 다뤄온 사례와 정확히 일치합니다.",
+      pitch:"공고에 적힌 부서별 취합 문제, 저희가 이미 여러 번 겪어본 문제입니다. 15분만 사례를 보여드려도 될까요." },
+    { id:6, type:"news", company:"브릿지케미칼", title:"생산라인 사고 이후 재발 방지 대책 발표", relevance:5, urgency:4,
+      evidence:"재발 방지 대책에서 설비 이상 조기 감지 체계 도입을 명시적으로 언급했습니다.",
+      pitch:"재발 방지 대책에 언급된 조기 감지 부분, 데이터 기반으로 접근한 사례를 공유드리고 싶습니다." },
+    { id:7, type:"job", company:"선린바이오", title:"품질관리 시스템 담당자 채용", relevance:4, urgency:3,
+      evidence:"품질 데이터 관리 인력을 처음 채용하는 것으로 보여, 아직 도구 선정 이전 단계로 추정됩니다.",
+      pitch:"품질관리 시스템 담당자를 새로 채용하신다고 들었습니다. 도구를 정하시기 전에 참고 자료로 저희 사례를 드려도 될까요." },
+    { id:8, type:"personnel", company:"코스모정밀", title:"생산본부장 교체", relevance:6, urgency:5,
+      evidence:"조직 개편 시점에는 기존의 수기 보고 관행이 함께 재검토되는 경우가 많습니다.",
+      pitch:"생산본부장님 취임을 계기로, 기존 수기 보고 체계를 점검해보실 계획이 있으신지 여쭙고 싶습니다." },
+    { id:9, type:"bid", company:"루미넌스AI", title:"AI 기반 수요예측 솔루션 도입 사업 공고", relevance:9, urgency:9,
+      evidence:"예산 배정이 이미 완료됐고 제안 마감이 10일 이내로, 오늘 신호 중 가장 시급합니다.",
+      pitch:"수요예측 솔루션 도입 공고를 보고 연락드립니다. 마감이 임박한 만큼 핵심만 빠르게 정리해서 보내드리겠습니다." },
+    { id:10, type:"news", company:"장원건설", title:"스마트팩토리 전환 3개년 계획 발표", relevance:7, urgency:4,
+      evidence:"발표 자료의 1단계 과제로 데이터 표준화가 명시되어 있습니다.",
+      pitch:"3개년 계획의 1단계인 데이터 표준화, 저희가 도와드릴 수 있는 영역입니다." },
+    { id:11, type:"job", company:"파인트리제약", title:"데이터 분석가(계약직) 채용", relevance:3, urgency:2,
+      evidence:"계약직 채용은 정식 조직 구성 전 파일럿 단계인 경우가 많아 우선순위는 낮게 봅니다.",
+      pitch:"데이터 분석 업무를 시작하신다고 들었습니다. 파일럿 단계에서 참고하실 만한 사례를 짧게 전달드려도 될까요." },
+    { id:12, type:"personnel", company:"델타모빌리티", title:"신임 운영총괄(COO) 선임", relevance:5, urgency:6,
+      evidence:"COO 선임 발표문에서 운영 효율화가 핵심 과제로 언급되었습니다.",
+      pitch:"신임 COO님 선임 소식을 보고 연락드립니다. 운영 효율화 과제에 참고하실 만한 자료를 보내드리고 싶습니다." }
+  ];
+
+  signals.forEach(function(s){
+    s.score = Math.round((s.relevance*0.6 + s.urgency*0.4) * 10) / 10;
+  });
+
+  var state = { filter:"all", sortByScore:false, selectedId:null };
+
+  var listEl = document.getElementById("list");
+  var detailEl = document.getElementById("detail");
+  var chipsEl = document.getElementById("chips");
+  var sortBtn = document.getElementById("sortBtn");
+  var summaryBox = document.getElementById("summaryBox");
+
+  function visibleSignals(){
+    var arr = signals.filter(function(s){ return state.filter === "all" || s.type === state.filter; });
+    if(state.sortByScore){
+      arr = arr.slice().sort(function(a,b){ return b.score - a.score; });
+    }
+    return arr;
+  }
+
+  function renderSummary(){
+    var top3 = signals.slice().sort(function(a,b){ return b.score - a.score; }).slice(0,3);
+    var names = top3.map(function(s){ return s.company; }).join(", ");
+    summaryBox.innerHTML = '오늘 포착 <b>' + signals.length + '건</b> · 상위 3건 당일 대응' +
+      '<div class="summary__top">당일 대응 우선순위: ' + names + '</div>';
+  }
+
+  function renderList(){
+    var arr = visibleSignals();
+    listEl.innerHTML = "";
+    arr.forEach(function(s){
+      var card = document.createElement("button");
+      card.className = "sigcard" + (s.id === state.selectedId ? " selected" : "");
+      card.setAttribute("data-id", s.id);
+      card.innerHTML =
+        '<div class="sigcard__head">' +
+          '<div>' +
+            '<div class="sigcard__company">' + s.company + '</div>' +
+            '<div class="sigcard__title">' + s.title + '</div>' +
+          '</div>' +
+          '<div class="sigcard__score">' + s.score.toFixed(1) + '</div>' +
+        '</div>' +
+        '<div class="sigcard__meta">' +
+          '<span class="tag tag--' + s.type + '">' + TYPE_LABEL[s.type] + '</span>' +
+          '<span class="tag">관련도 ' + s.relevance + '</span>' +
+          '<span class="tag">시급도 ' + s.urgency + '</span>' +
+        '</div>';
+      card.addEventListener("click", function(){
+        state.selectedId = s.id;
+        renderList();
+        renderDetail(s);
+      });
+      listEl.appendChild(card);
+    });
+  }
+
+  function renderDetail(s){
+    detailEl.innerHTML =
+      '<div class="detail__company">' + TYPE_LABEL[s.type] + ' 신호</div>' +
+      '<div class="detail__title">' + s.company + ' · ' + s.title + '</div>' +
+      '<h4>왜 이 신호인가</h4>' +
+      '<p>' + s.evidence + '</p>' +
+      '<h4>추천 첫 접촉 멘트</h4>' +
+      '<div class="detail__pitch">' + s.pitch + '</div>' +
+      '<div class="detail__scores"><span>관련도 ' + s.relevance + '/10</span><span>시급도 ' + s.urgency + '/10</span><span>종합 스코어 ' + s.score.toFixed(1) + '</span></div>';
+  }
+
+  chipsEl.addEventListener("click", function(e){
+    var btn = e.target.closest(".chip");
+    if(!btn) return;
+    chipsEl.querySelectorAll(".chip").forEach(function(c){ c.classList.remove("active"); });
+    btn.classList.add("active");
+    state.filter = btn.getAttribute("data-type");
+    renderList();
+  });
+
+  sortBtn.addEventListener("click", function(){
+    state.sortByScore = !state.sortByScore;
+    sortBtn.classList.toggle("active", state.sortByScore);
+    sortBtn.textContent = state.sortByScore ? "스코어순 정렬 중" : "스코어순 정렬";
+    renderList();
+  });
+
+  renderSummary();
+  renderList();
+})();
+</script>
+</body>
+</html>
