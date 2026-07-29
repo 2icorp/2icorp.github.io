@@ -80,6 +80,18 @@
         <p class="pcard__excerpt">방송 저작권 모니터링에 쓰이는 피크쌍 해싱 음원식별을 999곡에서 7,996곡까지 실측으로 키웠습니다. 정확도는 99%대를 유지했지만, 인메모리 인덱스를 100만곡으로 외삽하면 약 868GB - 진짜 병목은 알고리즘이 아니라 인덱스 구조였습니다.</p>
         <div class="pcard__tags"><span>#오디오지문</span><span>#저작권모니터링</span><span>#콘텐츠ID</span><span>#방송</span><span class="pcard__go">Read (KO) →</span></div>
       </a>
+      <a class="pcard reveal" href="../papers/backtest-discipline-overfit.html" data-cat="method">
+        <div class="pcard__meta"><span class="pcard__cat">Method</span><span class="pcard__date">2026.07.29</span><span class="pcard__rt">~9 min</span><span class="pcard__cat">KO</span></div>
+        <h3 class="pcard__title">백테스트 규율: 성과를 부풀리는 세 가지 함정</h3>
+        <p class="pcard__excerpt">룩어헤드 편향, 생존편향, 다중검정을 합성 시계열 위에서 각각 통제 실험으로 분리해 실측했습니다. 21배까지 벌어지는 착시부터 시도 횟수를 세지 않은 유의성 검정의 오판까지, 백테스트 성과가 부풀려지는 구조를 숫자로 보여줍니다.</p>
+        <div class="pcard__tags"><span>#백테스트</span><span>#과최적화</span><span>#정량투자</span><span>#방법론</span><span>#데이터규율</span><span class="pcard__go">Read (KO) →</span></div>
+      </a>
+      <a class="pcard reveal" href="../papers/calibrated-confidence-signal-risk-score.html" data-cat="method">
+        <div class="pcard__meta"><span class="pcard__cat">Method</span><span class="pcard__date">2026.07.29</span><span class="pcard__rt">~8 min</span><span class="pcard__cat">KO</span></div>
+        <h3 class="pcard__title">신호 판단의 캘리브레이션된 리스크-스코어: 하드 임계 대신 신뢰할 수 있는 확률로</h3>
+        <p class="pcard__excerpt">오픈셋 RF 인증이 하드 게이트로는 NO-GO였던 뒤, 정직한 형태는 리스크-스코어 융합입니다. DroneRF(CC BY 4.0) 실측으로 확인한 것은 원시 확률의 기대보정오차(ECE)가 0.045 수준이었고, Platt·온도·isotonic 보정이 이를 절반 가까이 줄이면서도 판별력(AUROC)은 그대로 보존했다는 사실입니다.</p>
+        <div class="pcard__tags"><span>#캘리브레이션</span><span>#ECE</span><span>#리스크스코어</span><span>#신뢰도</span><span>#신호판단</span><span class="pcard__go">Read (KO) →</span></div>
+      </a>
       <a class="pcard reveal" href="../papers/classical-predictive-maintenance-acoustic-vibration.html" data-cat="industrial">
         <div class="pcard__meta"><span class="pcard__cat">industrial</span><span class="pcard__date">2026.07.29</span><span class="pcard__rt">~8 min</span><span class="pcard__cat">KO</span></div>
         <h3 class="pcard__title">고전 특징 기반 설비 예측정비: 진동은 실측, 음향은 합성으로 검증했습니다</h3>
@@ -115,6 +127,12 @@
         <h3 class="pcard__title">측정 가능한 신호 지능 (백서)</h3>
         <p class="pcard__excerpt">오디오 지문식별, WiFi-CSI 재실·낙상 감지, 고전 대 딥러닝 결정 지도, 오픈셋 RF 지문 검증, 설비 예지보전. 다섯 편의 실증 논문을 하나의 판단 로직으로 묶고, 게이지 방식과 산업 확장 지도까지 담은 2i의 플래그십 백서입니다.</p>
         <div class="pcard__tags"><span>#백서</span><span>#신호지능</span><span>#AX전략</span><span>#게이지방식</span><span class="pcard__go">Read (KO) →</span></div>
+      </a>
+      <a class="pcard reveal" href="../papers/probe-point-fingerprint-ablation.html" data-cat="signal">
+        <div class="pcard__meta"><span class="pcard__cat">signal</span><span class="pcard__date">2026.07.29</span><span class="pcard__rt">~8 min</span><span class="pcard__cat">KO</span></div>
+        <h3 class="pcard__title">RF 지문은 수신 체인 어디서 살고 죽는가</h3>
+        <p class="pcard__excerpt">수신 체인 7개 지점(P0 원시 IQ부터 P7 복조 심볼까지)마다 지문 식별 모델을 독립 훈련해 실측했습니다. 통념과 반대로 지문은 체인 앞단에서 가장 강했고, 동기화 단계를 지날수록 지워져 마지막 지점에서는 검증 성능이 우연 수준(EER 0.499)까지 떨어졌습니다.</p>
+        <div class="pcard__tags"><span>#RF지문</span><span>#수신체인</span><span>#절제연구</span><span>#프로브포인트</span><span class="pcard__go">Read (KO) →</span></div>
       </a>
       <a class="pcard reveal" href="../papers/reproducible-openset-evaluation-protocol.html" data-cat="method">
         <div class="pcard__meta"><span class="pcard__cat">Method</span><span class="pcard__date">2026.07.29</span><span class="pcard__rt">~8 min</span><span class="pcard__cat">KO</span></div>

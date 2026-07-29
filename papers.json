@@ -80,6 +80,38 @@
     "reading_time": 8
   },
   {
+    "slug": "backtest-discipline-overfit",
+    "title": "백테스트 규율: 성과를 부풀리는 세 가지 함정",
+    "excerpt": "룩어헤드 편향, 생존편향, 다중검정을 합성 시계열 위에서 각각 통제 실험으로 분리해 실측했습니다. 21배까지 벌어지는 착시부터 시도 횟수를 세지 않은 유의성 검정의 오판까지, 백테스트 성과가 부풀려지는 구조를 숫자로 보여줍니다.",
+    "date": "2026-07-29",
+    "cat": "method",
+    "cat_label": "방법",
+    "tags": [
+      "백테스트",
+      "과최적화",
+      "정량투자",
+      "방법론",
+      "데이터규율"
+    ],
+    "reading_time": 9
+  },
+  {
+    "slug": "calibrated-confidence-signal-risk-score",
+    "title": "신호 판단의 캘리브레이션된 리스크-스코어: 하드 임계 대신 신뢰할 수 있는 확률로",
+    "excerpt": "오픈셋 RF 인증이 하드 게이트로는 NO-GO였던 뒤, 정직한 형태는 리스크-스코어 융합입니다. DroneRF(CC BY 4.0) 실측으로 확인한 것은 원시 확률의 기대보정오차(ECE)가 0.045 수준이었고, Platt·온도·isotonic 보정이 이를 절반 가까이 줄이면서도 판별력(AUROC)은 그대로 보존했다는 사실입니다.",
+    "date": "2026-07-29",
+    "cat": "method",
+    "cat_label": "방법",
+    "tags": [
+      "캘리브레이션",
+      "ECE",
+      "리스크스코어",
+      "신뢰도",
+      "신호판단"
+    ],
+    "reading_time": 8
+  },
+  {
     "slug": "classical-predictive-maintenance-acoustic-vibration",
     "title": "고전 특징 기반 설비 예측정비: 진동은 실측, 음향은 합성으로 검증했습니다",
     "excerpt": "회전설비 결함 진단을 딥러닝 없이 물리 기반 고전 특징 + GBM으로 실측. 진동(CWRU 공개 데이터)은 저SNR에서 정확도 63.6% vs 베이스라인 18.6%, 음향은 합성 데이터로 같은 패턴을 재현하되 실측 검증(MIMII)이 남았음을 명시합니다.",
@@ -172,6 +204,21 @@
       "게이지방식"
     ],
     "reading_time": 15
+  },
+  {
+    "slug": "probe-point-fingerprint-ablation",
+    "title": "RF 지문은 수신 체인 어디서 살고 죽는가",
+    "excerpt": "수신 체인 7개 지점(P0 원시 IQ부터 P7 복조 심볼까지)마다 지문 식별 모델을 독립 훈련해 실측했습니다. 통념과 반대로 지문은 체인 앞단에서 가장 강했고, 동기화 단계를 지날수록 지워져 마지막 지점에서는 검증 성능이 우연 수준(EER 0.499)까지 떨어졌습니다.",
+    "date": "2026-07-29",
+    "cat": "signal",
+    "cat_label": "signal",
+    "tags": [
+      "RF지문",
+      "수신체인",
+      "절제연구",
+      "프로브포인트"
+    ],
+    "reading_time": 8
   },
   {
     "slug": "reproducible-openset-evaluation-protocol",
