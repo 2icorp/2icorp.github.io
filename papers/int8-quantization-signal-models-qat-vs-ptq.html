@@ -1,0 +1,162 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<script>(function(){try{var t=localStorage.getItem("theme");if(!t&&window.matchMedia&&matchMedia("(prefers-color-scheme: dark)").matches)t="dark";if(t)document.documentElement.setAttribute("data-theme",t);}catch(e){}})();</script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>신호 모델 엣지 배치: INT8 QAT 대 PTQ · 2i</title>
+<meta name="description" content="작은 변조분류 CNN 하나로 INT8 양자화의 두 경로를 실측했습니다. 학습 후 양자화(PTQ)는 정확도를 31%p 무너뜨렸고, 양자화 인식 학습(QAT)은 그 손실의 94.5%를 되찾았습니다. 크기·지연 이득은 두 경로가 동일했습니다.">
+<meta property="og:title" content="신호 모델 엣지 배치: INT8 QAT 대 PTQ · 2i">
+<meta property="og:description" content="작은 변조분류 CNN 하나로 INT8 양자화의 두 경로를 실측했습니다. 학습 후 양자화(PTQ)는 정확도를 31%p 무너뜨렸고, 양자화 인식 학습(QAT)은 그 손실의 94.5%를 되찾았습니다. 크기·지연 이득은 두 경로가 동일했습니다.">
+<meta property="og:type" content="article">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23111827'/%3E%3Ctext x='16' y='22' font-family='monospace' font-size='16' font-weight='700' fill='%23e08a2b' text-anchor='middle'%3E2i%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../styles.css?v=13">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js" onload="renderMathInElement(document.body,{delimiters:[{left:'$$',right:'$$',display:true},{left:'$',right:'$',display:false},{left:'\\[',right:'\\]',display:true},{left:'\\(',right:'\\)',display:false}]})"></script>
+</head>
+<body>
+
+<header class="nav">
+  <div class="wrap nav__inner">
+    <a class="brand" href="../" aria-label="2i 홈">
+      <span class="brand__mark">2i</span>
+      <span class="brand__tag">AX 컨설팅</span>
+    </a>
+    <button class="nav__burger" type="button" aria-expanded="false" aria-controls="navLinks" aria-label="메뉴 열기"><span></span><span></span><span></span></button>
+    <nav class="nav__links" id="navLinks" aria-label="주요 메뉴">
+      <a href="../cases.html">사례</a>
+      <a href="../comms.html">통신 기술</a>
+      <a href="../papers.html" aria-current="page">논문·실험</a>
+      <a href="../about.html">회사소개</a>
+      <button class="nav__theme" type="button" aria-label="테마 전환" title="테마 전환"><svg class="ic-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg><svg class="ic-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg></button>
+      <a class="nav__lang" href="../en/">EN</a>
+      <a class="nav__cta btn btn--signal" href="../index.html#contact">상담 신청</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <article class="article wrap">
+    <a class="article__back" href="../papers.html">← 논문·실험 게시판</a>
+    <div class="article__head">
+      <div class="pcard__meta"><span class="pcard__cat">방법</span><span class="pcard__date">2026.07.29</span><span class="pcard__rt">약 7분</span></div>
+      <h1 class="article__title">신호 모델 엣지 배치: INT8 QAT 대 PTQ</h1>
+      <p class="article__excerpt">작은 변조분류 CNN 하나로 INT8 양자화의 두 경로를 실측했습니다. 학습 후 양자화(PTQ)는 정확도를 31%p 무너뜨렸고, 양자화 인식 학습(QAT)은 그 손실의 94.5%를 되찾았습니다. 크기·지연 이득은 두 경로가 동일했습니다.</p>
+      <div class="pcard__tags"><span>#양자화</span><span>#INT8</span><span>#엣지배치</span><span>#QAT</span><span>#온프렘</span></div>
+      <a class="btn btn--ghost article__pdf" href="/papers/pdf/int8-quantization-signal-models-qat-vs-ptq-ko.pdf" target="_blank" rel="noopener">PDF 원문 (국문) <span class="arrow">↓</span></a>
+      <a class="btn btn--ghost article__pdf" href="/papers/pdf/int8-quantization-signal-models-qat-vs-ptq-en.pdf" target="_blank" rel="noopener">PDF (English) <span class="arrow">↓</span></a>
+    </div>
+    <div class="article__body prose">
+<h2 id="_1">무엇을 재는가</h2>
+<p>엣지에서 신호 모델을 돌리는 곳은 대부분 GPU가 없습니다. 온프렘 서버의 저가
+CPU, 임베디드 보드, 라우터급 프로세서가 실제 배치 지점이고, 예산도 클라우드
+GPU 추론보다 훨씬 작습니다. 이런 환경에서 모델을 INT8로 양자화하면 크기와
+지연이 동시에 줄어든다는 것은 잘 알려져 있지만, "양자화하면 공짜로 3배
+작아진다"는 통념은 정확도라는 대가를 자주 숨깁니다. 작은 자동변조분류(AMC)
+CNN 하나를 대상으로 학습 후 양자화(PTQ, calibration만 거치고 재학습 없음)와
+양자화 인식 학습(QAT, 양자화를 학습 루프에 넣고 미세조정)을 같은 데이터,
+같은 모델, 같은 측정 하니스로 비교했습니다.</p>
+<h2 id="-">결과 - 크기·지연은 같은데 정확도가 다릅니다</h2>
+<p>RadioML2016.10a 6dB 부분집합(11개 변조 클래스)에서 FP32 기준선은 테스트
+정확도 93.18%를 기록했습니다. 여기에 calibration만 거친 static INT8 PTQ를
+적용하면 정확도가 61.91%로 떨어집니다. 31.27퍼센트포인트라는 손실은 실전
+배포에서 받아들일 수 있는 수준이 아닙니다. 같은 모델에 15에폭의 양자화
+인식 미세조정(학습률은 FP32 학습의 10분의 1, 관찰자와 배치정규화를 순서대로
+동결)을 적용하면 정확도는 91.45%로 회복됩니다. 손실이 1.73퍼센트포인트로
+줄어든다는 것은 PTQ가 낸 손실의 94.5%를 QAT가 되찾았다는 뜻입니다.</p>
+<p>크기와 지연 이득은 두 경로가 사실상 동일합니다. 모델 크기는 119.3KB에서
+35.5KB로 70.3% 줄었고, 이는 PTQ와 QAT 양쪽 모두에서 같습니다. 배치 크기
+1 기준 p50 추론 지연은 FP32의 0.278밀리초에서 PTQ는 0.158밀리초(43.2%
+감소), QAT는 0.155밀리초(44.2% 감소)로, QAT가 오히려 아주 근소하게 더
+빠르게 측정됐습니다. 두 경로 모두 같은 정수 연산 커널(qnnpack)로 변환되기
+때문에 미세조정 단계가 추론 그래프 자체를 바꾸지 않는다는 뜻입니다.</p>
+<table>
+<thead>
+<tr>
+<th>구성</th>
+<th>테스트 정확도</th>
+<th>모델 크기</th>
+<th>p50 지연</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>FP32 (기준선)</td>
+<td>93.18%</td>
+<td>119.3 KB</td>
+<td>0.278 ms</td>
+</tr>
+<tr>
+<td>INT8 PTQ (calibration만)</td>
+<td>61.91% (-31.27%p)</td>
+<td>35.5 KB (-70.3%)</td>
+<td>0.158 ms (-43.2%)</td>
+</tr>
+<tr>
+<td>INT8 QAT (15에폭 미세조정)</td>
+<td>91.45% (-1.73%p)</td>
+<td>35.5 KB (-70.3%)</td>
+<td>0.155 ms (-44.2%)</td>
+</tr>
+</tbody>
+</table>
+<h2 id="_2">방법 (요약)</h2>
+<p>두 경로 모두 컨볼루션+배치정규화+ReLU를 융합하는 데서 시작합니다. PTQ는
+융합 후 관찰자를 끼워 검증 세트로 캘리브레이션하고 바로 정수 커널로
+변환합니다. 재학습은 없습니다. QAT는 배치정규화를 즉시 얼리지 않고 학습
+가능한 융합 모듈로 유지한 채, 낮은 학습률로 몇 에폭 미세조정하면서 후반부에
+관찰자를 먼저 동결하고 배치정규화 이동통계를 그다음 동결하는 표준 안정화
+순서를 따랐습니다. 이 순서를 지키지 않으면 학습 초반 검증 정확도가 0.22와
+0.87 사이를 크게 진동했고, 배치정규화를 동결한 시점부터 급격히 안정됐습니다.
+모든 수치(정확도·크기·지연)는 모델의 자기 보고가 아니라 테스트 세트에서
+직접 계산한 값입니다.</p>
+<h2 id="_3">정직한 한계</h2>
+<p>이 결과는 이 자동변조분류 CNN과 6dB SNR이라는 특정 조건에 국한됩니다. 더
+크고 구조가 다른 모델(예를 들어 어텐션 풀링을 쓰는 기기 지문 인식 임베딩)에
+같은 결론이 그대로 옮겨진다고 단정할 수 없습니다. QAT의 학습률·동결 일정은
+한 세트만 시도했고, 스윕하면 더 나은 지점이 있을 가능성이 높습니다. 참고로
+측정한 fp16은 정확도 손실이 QAT보다도 작았지만(0.18%p), 이 CPU 환경에는
+네이티브 fp16 커널이 없어 지연이 오히려 4배 가까이 늘었습니다. "정밀도를
+낮추면 항상 빠르다"는 가정은 성립하지 않았습니다.</p>
+<h2 id="_4">왜 이게 중요한가</h2>
+<p>이 실험이 주는 메시지는 단순합니다. 저가 온프렘 엣지에 신호 분류 모델을
+INT8로 배치하려면, PTQ 단독으로는 이 모델에서 실전에 쓸 수 없는 손실이
+납니다. 크기·지연 이득은 PTQ와 QAT가 동일하게 받으므로, 그 이득을 받아들일
+만한 정확도로 지불하는 유일한 경로는 QAT입니다. 유일한 추가 비용은 학습
+파이프라인에 몇 에폭의 미세조정 단계를 붙이는 것뿐이며, 이 모델 규모에서는
+그 시간조차 무시할 만했습니다.</p>
+    </div>
+    <div class="article__cta">
+      <p>이 방법을 당신 현장의 숫자로 다시 재보고 싶다면.</p>
+      <a class="btn btn--signal" href="../index.html#contact">30분 진단 상담 <span class="arrow">→</span></a>
+      <a class="btn btn--ghost" href="../papers.html">다른 기록 보기</a>
+    </div>
+  </article>
+</main>
+
+<footer class="foot">
+  <div class="wrap foot__inner">
+    <div>
+      <div class="brand"><span class="brand__mark">2i</span><span class="brand__tag">AX 컨설팅</span></div>
+      <div class="foot__mono" style="margin-top:0.6rem">중소·중견 제조·유통을 위한 AI 전환</div>
+    </div>
+    <nav class="foot__links" aria-label="하단 메뉴">
+      <a href="../index.html#method">방식</a>
+      <a href="../comms.html">통신</a>
+      <a href="../papers.html">논문·실험</a>
+      <a href="../index.html#voucher">정부 바우처</a>
+      <a href="https://github.com/2icorp" target="_blank" rel="noopener">GitHub</a>
+      <a href="../en/">EN</a>
+    </nav>
+  </div>
+</footer>
+
+<script src="../main.js"></script>
+</body>
+</html>
