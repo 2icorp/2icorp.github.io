@@ -1,0 +1,109 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+@page { size: A4; margin: 15mm 14mm 16mm; }
+* { box-sizing: border-box; }
+:root{
+  --ink:#1b2230; --soft:#4a5568; --faint:#78849a; --line:#e3e7ee; --panel:#f7f8fb;
+  --signal:#d9821f; --signal-deep:#b5661a; --steel:#3f5c88;
+  --sans:"Pretendard Variable",Pretendard,-apple-system,system-ui,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+}
+html,body{margin:0;font-family:var(--sans);color:var(--ink);line-height:1.6;font-size:10.5pt;}
+h1,h2,h3{margin:0;letter-spacing:-0.02em;line-height:1.15;}
+.mono{font-family:var(--mono);}
+.eyebrow{font-family:var(--mono);font-size:7.5pt;letter-spacing:0.16em;text-transform:uppercase;color:var(--steel);}
+.cover{border-bottom:2px solid var(--ink);padding-bottom:14px;margin-bottom:16px;}
+.cover__top{display:flex;justify-content:space-between;align-items:baseline;}
+.brand{font-weight:800;font-size:16pt;letter-spacing:-0.03em;}
+.brand b{font-family:var(--mono);color:var(--signal);}
+.brand small{font-family:var(--mono);font-size:7pt;letter-spacing:0.14em;color:var(--faint);text-transform:uppercase;margin-left:6px;}
+.doclabel{font-family:var(--mono);font-size:7.5pt;letter-spacing:0.12em;color:var(--faint);text-transform:uppercase;}
+.cover h1{font-size:22pt;font-weight:850;margin:15px 0 8px;}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px;}
+.chip{font-family:var(--mono);font-size:7.5pt;border:1px solid var(--line);border-radius:20px;padding:3px 9px;color:var(--soft);}
+.chip--c{color:var(--signal-deep);border-color:#efc999;background:#fdf5ea;}
+.chip--v{color:var(--steel);}
+.stakes-box{margin-top:12px;border:1px solid var(--line);border-left:3px solid var(--signal);border-radius:3px;padding:8px 12px;background:#fdf7ef;display:flex;justify-content:space-between;align-items:baseline;gap:12px;}
+.stakes-box .l{font-family:var(--mono);font-size:8pt;color:var(--faint);text-transform:uppercase;letter-spacing:0.04em;}
+.stakes-box .v{font-family:var(--mono);font-weight:600;font-size:13pt;color:var(--signal-deep);white-space:nowrap;}
+.sec{margin-top:15px;break-inside:avoid;}
+.sec h2{font-size:11.5pt;font-weight:800;display:flex;align-items:center;gap:8px;margin-bottom:7px;}
+.sec h2::before{content:"";width:14px;height:2px;background:var(--signal);display:inline-block;}
+.lead{color:var(--soft);}
+.steps{display:grid;gap:8px;margin-top:4px;}
+.step{border:1px solid var(--line);border-left:3px solid var(--steel);border-radius:3px;padding:9px 12px;background:var(--panel);break-inside:avoid;}
+.step b{font-family:var(--mono);font-size:8pt;letter-spacing:0.06em;color:var(--steel);text-transform:uppercase;}
+.step p{margin:3px 0 0;font-size:9.7pt;}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+.card{border:1px solid var(--line);border-radius:3px;padding:10px 12px;background:#fff;}
+.card h3{font-size:9.5pt;color:var(--signal-deep);font-family:var(--mono);letter-spacing:0.04em;text-transform:uppercase;margin-bottom:5px;}
+.card p, .card li{font-size:9.6pt;}
+.deliv{list-style:none;margin:0;padding:0;display:grid;gap:4px;}
+.deliv li{padding-left:15px;position:relative;}
+.deliv li::before{content:"■";position:absolute;left:0;color:var(--steel);font-size:7pt;top:3px;}
+.ba{width:100%;border-collapse:collapse;margin-top:4px;font-size:9.4pt;}
+.ba caption{font-family:var(--mono);font-size:7.5pt;color:var(--faint);text-align:left;padding:0 0 5px;letter-spacing:0.03em;}
+.ba th{font-family:var(--mono);font-size:7.5pt;letter-spacing:0.04em;text-transform:uppercase;color:var(--faint);text-align:left;padding:5px 8px;border-bottom:1px solid var(--line);font-weight:500;}
+.ba td{padding:6px 8px;border-bottom:1px solid var(--line);vertical-align:baseline;}
+.ba .m{color:var(--soft);}
+.ba .b{font-family:var(--mono);font-size:8.6pt;color:var(--faint);text-decoration:line-through;}
+.ba .arw{color:var(--signal);text-align:center;}
+.ba .a{font-family:var(--mono);font-size:8.6pt;font-weight:600;color:var(--signal-deep);}
+.sowhat{border:1px solid var(--line);border-radius:3px;padding:10px 12px;background:var(--panel);font-size:9.8pt;margin-top:4px;}
+.proof-line{margin-top:7px;font-family:var(--mono);font-size:8.6pt;color:var(--steel);}
+.proof-line b{color:var(--ink);}
+.faq{display:grid;gap:8px;}
+.faq div{break-inside:avoid;}
+.faq q{display:block;font-weight:700;font-size:9.8pt;}
+.faq p{margin:2px 0 0;font-size:9.5pt;color:var(--soft);}
+.foot{margin-top:18px;border-top:1px solid var(--line);padding-top:12px;display:flex;justify-content:space-between;align-items:flex-end;gap:14px;}
+.cta{background:var(--ink);color:#fff;border-radius:4px;padding:11px 14px;font-size:9.5pt;flex:1;}
+.cta b{color:var(--signal);}
+.disc{font-family:var(--mono);font-size:6.8pt;color:var(--faint);line-height:1.5;max-width:50%;}
+</style></head><body>
+<div class="cover">
+  <div class="cover__top">
+    <div class="brand"><b>2i</b><small>AX 컨설팅</small></div>
+    <div class="doclabel">Case Brief · No.15 · 2i 게이지 방식</div>
+  </div>
+  <div class="eyebrow" style="margin-top:14px">인프라 · 엣지 AI</div>
+  <h1>&quot;GPU 서버 없이 영상 이해 AI가 될까&quot; 소비자용 실리콘에서 실측했다</h1>
+  <div class="chips">
+    <span class="chip">소매 · 현장 운영 · 온프렘</span>
+    <span class="chip chip--v">약 12주 (측정 2 + 실증 4 + 이관 6)</span>
+    <span class="chip chip--c">정부 바우처 적합</span>
+  </div>
+  <div class="stakes-box"><span class="l">문제의 대가 · 영상 이해 서버</span><span class="v">데이터센터 GPU 필수</span></div>
+</div>
+
+<div class="sec"><h2>문제의 대가</h2><p class="lead">매장 카메라나 순찰 현장에서 &#x27;방금 화면에 뭐가 지나갔는지&#x27;를 이해하려면 최신 영상-언어모델(VLM)이 필요합니다. 문제는 이 모델을 서빙하는 표준 경로가 데이터센터급 GPU라는 점입니다. 영상을 클라우드로 내보내지 않고, 데이터센터 GPU도 없이 현장에 두는 저가 온프렘 유닛에서 이 정도 모델이 실제로 돌아가는지는 아무도 재보지 않은 질문입니다.</p></div>
+
+<div class="sec"><h2>통찰</h2><p class="lead">최신 VLM을 &#x27;쓰는&#x27; 것과 저가 하드웨어에 &#x27;배포&#x27;하는 것은 다른 일입니다. 양자화로 모델을 줄이면 저절로 빨라진다는 가정은 이번 실측에서 정면으로 깨졌습니다. 메모리를 줄이는 축과 속도를 얻는 축은 서로 다른 문제이고, 그 사실을 모른 채 도입하면 &#x27;더 작아졌는데 왜 더 느리지&#x27;라는 함정에 걸립니다.</p></div>
+
+<div class="sec"><h2>2i의 방식</h2><p class="lead">공개 Apache-2.0 라이선스 VLM인 microsoft/Mage-VL(4.7B, 시각 인코더 Mage-ViT + Qwen3-4B 언어 백본)을 소비자용 Apple M4 Pro(통합 메모리 48GB)에 직접 올려 bf16·INT8·INT4 세 정밀도를 전부 실측했습니다. 메모리는 양자화로 줄었지만 같은 조건에서 디코드 속도는 오히려 느려졌고, 원인을 커널 단으로 추적해 언어 백본을 mlx-lm의 융합 커널 INT4 경로로 다시 재봤습니다. 결과는 동일 4비트에서 디코드 89.7 tok/s·2.46GB로, 나이브 양자화(0.47 tok/s·4.15GB) 대비 약 190배 더 빠르고 메모리도 더 작은 조합이었습니다. 모델을 고르는 게 아니라 이렇게 재고 검증하는 패키징 엔지니어링이 저희 일입니다.</p></div>
+
+<div class="sec"><h2>게이지 방식으로 진행합니다 · 측정 → 실증 → 이관</h2><div class="steps"><div class="step"><b>측정 게이트</b><p>대상 온프렘 하드웨어에서 bf16 기준선의 메모리 점유·디코드 처리량·응답 지연을 계측해 baseline을 고정합니다.</p></div><div class="step"><b>실증 게이트</b><p>INT8·INT4 등 양자화 조합을 실제로 돌려 메모리 절감분과 속도 변화를 함께 재고, 답변 품질이 유지되는지 대조합니다. 속도 이득이 안 나면 커널·런타임 조합을 바꿔 재검증합니다.</p></div><div class="step"><b>이관 게이트</b><p>검증된 양자화와 런타임 조합을 온프렘 유닛으로 패키징하고, 스트리밍과 이미지 스코프를 명확히 나눈 운영 매뉴얼과 함께 넘깁니다.</p></div></div></div>
+
+<div class="sec two">
+  <div class="card"><h3>사용 기술</h3><p>microsoft/Mage-VL(Mage-ViT + Qwen3-4B) · transformers + torch + Metal(MPS) · optimum-quanto weight-only 양자화(bf16/INT8/INT4) · mlx-lm 융합 저비트 커널 런타임 · Apple Silicon 온프렘 배치. 실측 스코프: 89.7 tok/s는 디코드를 지배하는 언어 백본(Qwen3-4B) 단독 프록시이며, 비전 타워를 포함한 mage_vl 전체의 MLX 포팅은 다음 상용화 작업입니다. 스트리밍 코덱(DCVC)은 CUDA 전용이라 로컬 미지원입니다.</p></div>
+  <div class="card"><h3>표준 산출물</h3><ul class="deliv"><li>AX 진단 보고서</li><li>현장 KPI baseline 계측</li><li>과제 우선순위 로드맵</li><li>작동하는 PoC</li><li>before/after 측정 리포트</li><li>본도입 판단 근거</li><li>운영 시스템</li><li>사내 이관 교육</li><li>운영 매뉴얼·문서</li></ul></div>
+</div>
+
+<div class="sec"><h2>목표 델타</h2><table class="ba"><caption>목표 지표 · 실제 수치는 귀사 데이터로 재측정</caption><tr><th>지표</th><th>현재</th><th></th><th>목표</th></tr><tr><td class="m">디바이스 메모리 (나이브 INT4)</td><td class="b">bf16 9.49GB</td><td class="arw">→</td><td class="a">4.15GB (56% 감소, 실측)</td></tr><tr><td class="m">디코드 처리량 (나이브 INT4)</td><td class="b">bf16 13.01 tok/s</td><td class="arw">→</td><td class="a">0.47 tok/s (96% 저하, 실측)</td></tr><tr><td class="m">디코드 처리량 (MLX 융합 INT4)</td><td class="b">나이브 INT4 0.47 tok/s</td><td class="arw">→</td><td class="a">89.67 tok/s (약 190배, 언어 백본 기준 실측)</td></tr><tr><td class="m">영상 이해 서버</td><td class="b">데이터센터 GPU 필수</td><td class="arw">→</td><td class="a">소비자용 Mac 1대 (이미지·프레임 기준)</td></tr></table></div>
+
+<div class="sec"><h2>그래서 무엇이 열리나</h2><div class="sowhat">양자화만으로는 부족합니다. 양자화와 올바른 융합커널 런타임을 함께 골라야 저가 온프렘 하드웨어에서 작고 &#x27;또&#x27; 빠르게 돈다는 것을 실측으로 닫았습니다. 언어 백본만으로 디코드 89.7 tok/s(약 190배)를 확인했고, 비전 타워까지 포함한 전체 모델의 MLX 포팅이 다음 상용화 단계입니다. 2i가 파는 것은 모델이 아니라, 이렇게 진단하고 런타임을 고르고 이관까지 마치는 측정된 패키징입니다.</div></div>
+
+<div class="sec two">
+  <div class="card"><h3>정부 바우처 활용</h3><p>정부 AX 바우처의 진단-PoC 트랙에 부합합니다. 기존 학습 데이터 없이 공개 모델과 귀사 하드웨어만으로 실증이 가능하고, 메모리·처리량이 수치로 남아 중간 점검 근거가 명확합니다. 지원 규모·요건은 연도별 공고에 따르며, 복잡한 신청·행정은 2i가 함께 처리합니다.</p></div>
+  <div class="card"><h3>왜 2i인가</h3><p>대형 SI가 안 건드리는 중소·중견의 소규모·비정형 과제를, 진단부터 이관까지 한 사람이 책임지고 봅니다. 화려한 제안서 대신 측정된 진단과 검증된 PoC로 신뢰를 먼저 만듭니다.</p></div>
+</div>
+
+<div class="sec"><h2>자주 묻는 질문</h2><div class="faq"><div><q>Q. 데이터가 정리돼 있지 않아도 되나요?</q><p>네. 측정 게이트가 바로 흩어진 데이터와 현장을 정리해 무엇부터 할지 정하는 단계입니다. 준비가 안 됐다는 것 자체가 출발점입니다.</p></div><div><q>Q. 기간과 비용은 어느 정도인가요?</q><p>이 사례 기준 약 12주 (측정 2 + 실증 4 + 이관 6) 정도이며, 범위와 데이터 상태에 따라 조정됩니다. 상당 부분을 정부 AX 바우처로 충당해 실부담을 크게 낮출 수 있습니다.</p></div><div><q>Q. 하다가 안 되면 어떻게 되나요?</q><p>그래서 실증 게이트가 있습니다. 큰돈을 걸기 전에 될지 안 될지를 작은 실증으로 먼저 확인하고, 목표 델타에 못 미치면 확장하지 않습니다.</p></div><div><q>Q. 사람 일자리를 없애는 건가요?</q><p>아닙니다. 사람을 대체하는 게 아니라, 반복 업무를 걷어내 사람이 판단과 관계에 집중하도록 속도와 정확도를 보완하는 방식입니다.</p></div></div></div>
+
+<div class="foot">
+  <div class="cta">먼저 <b>무료 자가진단</b> 또는 30분 상담으로 시작하세요. 귀사에 맞는 시작점을 함께 찾습니다. &nbsp;·&nbsp; <b>2i</b> AX 컨설팅</div>
+  <div class="disc">본 브로셔는 2i의 역량을 보여주는 시나리오형 예시입니다. 특정 실존 고객의 완료 실적이 아니며, 목표 수치는 업계 통상 기대치입니다. 실제 진행 시 귀사 데이터로 다시 측정합니다.</div>
+</div>
+</body></html>

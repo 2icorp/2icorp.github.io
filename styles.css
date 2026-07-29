@@ -399,6 +399,8 @@ section[id] { scroll-margin-top: 80px; }
 .chip--code:hover { transform: translateY(-1px); background: var(--steel); border-color: var(--steel); }
 .chip--demo { display: inline-flex; align-items: center; color: var(--ink); background: var(--paper); border-color: var(--ink); font-weight: 600; transition: transform var(--dur) var(--ease), background var(--dur), color var(--dur); }
 .chip--demo:hover { transform: translateY(-1px); background: var(--accent, var(--steel)); color: var(--paper); border-color: transparent; }
+.chip--doc { display: inline-flex; align-items: center; color: var(--ink); background: var(--paper); border-color: var(--ink); font-weight: 600; transition: transform var(--dur) var(--ease), background var(--dur), color var(--dur); }
+.chip--doc:hover { transform: translateY(-1px); background: var(--ink); color: var(--paper); border-color: transparent; }
 
 .case__facts { display: flex; flex-wrap: wrap; gap: 0.5rem; }
 .case__tech { font-size: 0.85rem; color: var(--ink-faint); line-height: 1.55; }

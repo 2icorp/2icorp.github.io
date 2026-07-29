@@ -1,5 +1,337 @@
 [
   {
+    "slug": "classical-dsp-gbm-vs-deep-learning-signal-tasks",
+    "title": "고전 DSP+GBM 대 딥러닝: 신호 과제 결정 지도",
+    "excerpt": "변조분류·간섭탐지·드론오픈셋·채널추정·RF지문·신호분리 6개 과제를 같은 데이터·같은 지표로 공정 비교했습니다. 딥러닝이 전부를 이기지 않았고, 고전이 전부를 이기지도 않았습니다. 어디서 무엇이 이기는지를 숫자와 한계까지 공개합니다.",
+    "date": "2026-07-29",
+    "cat": "benchmark",
+    "cat_label": "benchmark",
+    "tags": [
+      "신호처리",
+      "GBM",
+      "딥러닝",
+      "변조분류",
+      "간섭탐지",
+      "벤치마크"
+    ],
+    "reading_time": 10
+  },
+  {
+    "slug": "fixed-false-alarm-rate-industrial-detection",
+    "title": "고정 오탐률 산업 이상·간섭 탐지",
+    "excerpt": "산업 무선 모니터링의 진짜 계약은 탐지율이 아니라 오탐 예산입니다. CFAR 탐지기가 목표 오탐률을 실제로 지키는지, 간섭 유형분류와 위치추정은 어디까지 되는지를 합성 데이터로 실측하고 한계까지 공개합니다.",
+    "date": "2026-07-29",
+    "cat": "industrial",
+    "cat_label": "industrial",
+    "tags": [
+      "CFAR",
+      "고정오탐률",
+      "간섭탐지",
+      "이상탐지",
+      "산업모니터링"
+    ],
+    "reading_time": 8
+  },
+  {
+    "slug": "openset-rf-fingerprint-verification",
+    "title": "오픈셋 RF 지문 검증: 분리성은 실재하나 하드 인증 동작점은 아직 멀다",
+    "excerpt": "공개 데이터 세 종(WiSig, INRIA, WIDEFT)으로 실측한 오픈셋 RF 지문 검증. AUROC 0.87까지 분리는 되지만, 접근제어가 실제로 요구하는 낮은 오탐률 지점(TAR@FAR)에서는 2~3%로 붕괴합니다. 라이선스가 다른 두 데이터셋에서 같은 격차가 재현된, 정직한 경계 연구입니다.",
+    "date": "2026-07-29",
+    "cat": "signal",
+    "cat_label": "signal",
+    "tags": [
+      "RF지문",
+      "RFFI",
+      "오픈셋",
+      "기기인증",
+      "검증"
+    ],
+    "reading_time": 9
+  },
+  {
+    "slug": "tabular-boosting-vs-deep-learning-signal-features",
+    "title": "신호 특징 위에서 테이블러 부스팅이 딥러닝을 이기는 조건",
+    "excerpt": "GBM·TabPFN·딥러닝을 같은 물리 특징, 같은 분할 위에서 붙였습니다. 539개 학습 표본에서 LightGBM 0.855 대 원시 IQ 딥러닝 0.681. 표본을 2,000개로 늘리면 격차는 36.0%p에서 21.3%p로 좁혀지지만, 교차점이 실제로 존재하는지는 이 실험 범위에서 확인하지 못했습니다.",
+    "date": "2026-07-29",
+    "cat": "benchmark",
+    "cat_label": "benchmark",
+    "tags": [
+      "테이블러",
+      "GBM",
+      "LightGBM",
+      "딥러닝",
+      "변조분류"
+    ],
+    "reading_time": 8
+  },
+  {
+    "slug": "audio-content-fingerprinting-at-scale",
+    "title": "오디오 콘텐츠ID, 8천곡 규모로 키워도 정확도가 안 무너졌습니다 - 대신 메모리가 무너지는 지점을 찾았습니다",
+    "excerpt": "방송 저작권 모니터링에 쓰이는 피크쌍 해싱 음원식별을 999곡에서 7,996곡까지 실측으로 키웠습니다. 정확도는 99%대를 유지했지만, 인메모리 인덱스를 100만곡으로 외삽하면 약 868GB - 진짜 병목은 알고리즘이 아니라 인덱스 구조였습니다.",
+    "date": "2026-07-29",
+    "cat": "media",
+    "cat_label": "media",
+    "tags": [
+      "오디오지문",
+      "저작권모니터링",
+      "콘텐츠ID",
+      "방송"
+    ],
+    "reading_time": 8
+  },
+  {
+    "slug": "backtest-discipline-overfit",
+    "title": "백테스트 규율: 성과를 부풀리는 세 가지 함정",
+    "excerpt": "룩어헤드 편향, 생존편향, 다중검정을 합성 시계열 위에서 각각 통제 실험으로 분리해 실측했습니다. 21배까지 벌어지는 착시부터 시도 횟수를 세지 않은 유의성 검정의 오판까지, 백테스트 성과가 부풀려지는 구조를 숫자로 보여줍니다.",
+    "date": "2026-07-29",
+    "cat": "method",
+    "cat_label": "방법",
+    "tags": [
+      "백테스트",
+      "과최적화",
+      "정량투자",
+      "방법론",
+      "데이터규율"
+    ],
+    "reading_time": 9
+  },
+  {
+    "slug": "calibrated-confidence-signal-risk-score",
+    "title": "신호 판단의 캘리브레이션된 리스크-스코어: 하드 임계 대신 신뢰할 수 있는 확률로",
+    "excerpt": "오픈셋 RF 인증이 하드 게이트로는 NO-GO였던 뒤, 정직한 형태는 리스크-스코어 융합입니다. DroneRF(CC BY 4.0) 실측으로 확인한 것은 원시 확률의 기대보정오차(ECE)가 0.045 수준이었고, Platt·온도·isotonic 보정이 이를 절반 가까이 줄이면서도 판별력(AUROC)은 그대로 보존했다는 사실입니다.",
+    "date": "2026-07-29",
+    "cat": "method",
+    "cat_label": "방법",
+    "tags": [
+      "캘리브레이션",
+      "ECE",
+      "리스크스코어",
+      "신뢰도",
+      "신호판단"
+    ],
+    "reading_time": 8
+  },
+  {
+    "slug": "classical-predictive-maintenance-acoustic-vibration",
+    "title": "고전 특징 기반 설비 예측정비: 진동은 실측, 음향은 합성으로 검증했습니다",
+    "excerpt": "회전설비 결함 진단을 딥러닝 없이 물리 기반 고전 특징 + GBM으로 실측. 진동(CWRU 공개 데이터)은 저SNR에서 정확도 63.6% vs 베이스라인 18.6%, 음향은 합성 데이터로 같은 패턴을 재현하되 실측 검증(MIMII)이 남았음을 명시합니다.",
+    "date": "2026-07-29",
+    "cat": "industrial",
+    "cat_label": "industrial",
+    "tags": [
+      "예측정비",
+      "베어링",
+      "음향진단",
+      "진동분석",
+      "고정오탐률"
+    ],
+    "reading_time": 8
+  },
+  {
+    "slug": "device-free-wifi-csi-sensing",
+    "title": "장비 없는 WiFi-CSI 재실·낙상 감지: 실측 공개 데이터 검증",
+    "excerpt": "카메라도 웨어러블도 없이, 기존 WiFi 링크의 채널 정보만으로 재실과 낙상을 구분할 수 있는지 두 공개 데이터셋에서 검증했습니다. 7종 활동 분류 95.2%, 낙상 탐지 AUROC 0.990, 재실 판별은 빈 방 대비 걷기 52배 신호 차이로 AUROC 1.000. 방을 옮기면 재보정이 필요하다는 한계까지 그대로 적었습니다.",
+    "date": "2026-07-29",
+    "cat": "sensing",
+    "cat_label": "sensing",
+    "tags": [
+      "WiFi-CSI",
+      "재실감지",
+      "낙상감지",
+      "비접촉센싱"
+    ],
+    "reading_time": 8
+  },
+  {
+    "slug": "drone-rf-detection-open-set-reality",
+    "title": "드론 RF 탐지의 오픈셋 현실: 낮은 융합 수에서 고전이 이긴다",
+    "excerpt": "공개 데이터셋 DroneRF(CC BY 4.0)로 실측한 드론 오픈셋 거부. 단일 관측(K=1)에서 고전 DSP+GBM의 미지 드론 거부율이 딥러닝 대비 5.7배 높았습니다. 두 방법이 비슷해지는 것은 관측 수십 개를 누적해야 하는 K=20 이상뿐입니다.",
+    "date": "2026-07-29",
+    "cat": "signal",
+    "cat_label": "signal",
+    "tags": [
+      "드론탐지",
+      "안티드론",
+      "오픈셋",
+      "RF",
+      "보안"
+    ],
+    "reading_time": 8
+  },
+  {
+    "slug": "edge-signal-processing-budget-attribution",
+    "title": "엣지 신호처리 예산 귀속",
+    "excerpt": "저가 엣지 코어 하나에서 40 MSPS를 처리하겠다는 약속, 실제로 어느 나노초 예산 위에 서 있을까요. 12단계 고전 RF 수신기 프론트엔드를 스테이지별로 실측해 병목을 귀속시키고, 최적화만으로는 목표에 닿지 못한다는 것을 숫자로 보여드립니다.",
+    "date": "2026-07-29",
+    "cat": "method",
+    "cat_label": "방법",
+    "tags": [
+      "엣지컴퓨팅",
+      "실시간처리",
+      "신호처리",
+      "프로파일링",
+      "최적화"
+    ],
+    "reading_time": 7
+  },
+  {
+    "slug": "gbm-vs-dl-factor-returns",
+    "title": "팩터 수익 예측: 부스팅 vs 딥러닝",
+    "excerpt": "Fama-French 일간 팩터 데이터로 그래디언트 부스팅과 얕은 신경망을 시간순 분할로 맞세웠습니다. 훈련 60일에서는 신경망 R2가 -2.6까지 무너지고 부스팅은 -0.07로 훨씬 완만했지만, 훈련 데이터가 4천~8천일로 늘면 그 우위가 뒤집힙니다.",
+    "date": "2026-07-29",
+    "cat": "research",
+    "cat_label": "리서치",
+    "tags": [
+      "finance",
+      "factors",
+      "gbm",
+      "tabular"
+    ],
+    "reading_time": 8
+  },
+  {
+    "slug": "int8-quantization-signal-models-qat-vs-ptq",
+    "title": "신호 모델 엣지 배치: INT8 QAT 대 PTQ",
+    "excerpt": "작은 변조분류 CNN 하나로 INT8 양자화의 두 경로를 실측했습니다. 학습 후 양자화(PTQ)는 정확도를 31%p 무너뜨렸고, 양자화 인식 학습(QAT)은 그 손실의 94.5%를 되찾았습니다. 크기·지연 이득은 두 경로가 동일했습니다.",
+    "date": "2026-07-29",
+    "cat": "method",
+    "cat_label": "방법",
+    "tags": [
+      "양자화",
+      "INT8",
+      "엣지배치",
+      "QAT",
+      "온프렘"
+    ],
+    "reading_time": 7
+  },
+  {
+    "slug": "measurable-signal-intelligence-whitepaper",
+    "title": "측정 가능한 신호·AI 지능 (백서 v4)",
+    "excerpt": "오디오 지문식별, WiFi-CSI 재실·낙상 감지, RF 지문 검증, 설비 예지보전, 엣지 양자화, 엣지 VLM 온프렘 배치, 대규모 에이전트 검색, 금융 백테스트 규율까지 20편의 논문을 하나의 측정 로직으로 묶은 2i의 플래그십 백서 v4입니다. 같은 4비트 정밀도가 런타임만 바꿔도 디코드 속도가 190배 갈린다는 새 실측을 닫힌 결론으로 담았습니다.",
+    "date": "2026-07-29",
+    "cat": "whitepaper",
+    "cat_label": "whitepaper",
+    "tags": [
+      "백서",
+      "신호지능",
+      "측정규율",
+      "AX전략",
+      "게이지방식",
+      "엣지VLM"
+    ],
+    "reading_time": 20
+  },
+  {
+    "slug": "probe-point-fingerprint-ablation",
+    "title": "RF 지문은 수신 체인 어디서 살고 죽는가",
+    "excerpt": "수신 체인 7개 지점(P0 원시 IQ부터 P7 복조 심볼까지)마다 지문 식별 모델을 독립 훈련해 실측했습니다. 통념과 반대로 지문은 체인 앞단에서 가장 강했고, 동기화 단계를 지날수록 지워져 마지막 지점에서는 검증 성능이 우연 수준(EER 0.499)까지 떨어졌습니다.",
+    "date": "2026-07-29",
+    "cat": "signal",
+    "cat_label": "signal",
+    "tags": [
+      "RF지문",
+      "수신체인",
+      "절제연구",
+      "프로브포인트"
+    ],
+    "reading_time": 8
+  },
+  {
+    "slug": "regime-detection-fixed-false-alarm",
+    "title": "고정 오탐률 레짐 탐지: 시장 국면 경보를 CFAR 규율로",
+    "excerpt": "레이더 신호탐지의 CFAR(고정 오탐률) 규율을 시장 국면 경보에 옮겨와 합성 마르코프 전환 실험으로 실측했습니다. 나이브 임계값은 목표 10%에서 4.53%로 빗나갔지만, CFAR 방식은 세 목표 수준 모두에서 0.02퍼센트포인트 안팎의 오차로 정확히 보정됩니다.",
+    "date": "2026-07-29",
+    "cat": "research",
+    "cat_label": "리서치",
+    "tags": [
+      "레짐탐지",
+      "CFAR",
+      "오탐률",
+      "캘리브레이션",
+      "신호탐지"
+    ],
+    "reading_time": 8
+  },
+  {
+    "slug": "reproducible-openset-evaluation-protocol",
+    "title": "재현 가능한 오픈셋 평가 프로토콜: 왜 closed-set 정확도로 인증을 주장하면 안 되는가",
+    "excerpt": "같은 RF 지문 모델이 낙관적 프로토콜에서는 AUROC 0.9994를, 등록 목록에 없는 기기가 임의로 사칭을 시도하는 최악조건·장치분리 프로토콜에서는 TAR@FAR=1e-3 0.2235를 냅니다. 숫자를 믿을 수 있는지는 모델이 아니라 평가 프로토콜이 정한다는 것을 실측으로 보이는 방법론 논문입니다.",
+    "date": "2026-07-29",
+    "cat": "method",
+    "cat_label": "방법",
+    "tags": [
+      "평가프로토콜",
+      "오픈셋",
+      "검증",
+      "재현성"
+    ],
+    "reading_time": 8
+  },
+  {
+    "slug": "sharded-index-million-song-content-id",
+    "title": "100만곡 규모 오디오 콘텐츠ID를 위한 샤딩 인덱스",
+    "excerpt": "오디오 콘텐츠ID 인덱스를 100만곡으로 키우면 인메모리 딕셔너리 하나로는 약 868GB가 필요합니다. 같은 해시 테이블을 해시 키 기준으로 쪼개 정확도를 그대로 지키면서 노드 한 대가 짊어질 메모리를 실측으로 묶어봤습니다.",
+    "date": "2026-07-29",
+    "cat": "media",
+    "cat_label": "media",
+    "tags": [
+      "오디오지문",
+      "샤딩인덱스",
+      "스케일링",
+      "콘텐츠ID",
+      "LSH"
+    ],
+    "reading_time": 8
+  },
+  {
+    "slug": "skill-retrieval-at-scale",
+    "title": "대규모 스킬 코퍼스 라우팅: BM25 대 하이브리드 검색",
+    "excerpt": "도구가 1000개를 넘는 에이전트에서 검색 단계가 곧 정확도의 상한선입니다. 완전히 공개된 합성 코퍼스로 BM25, 유사-의미 검색, 하이브리드 RRF를 같은 질의로 실측하고, 하이브리드가 항상 이기지는 않는다는 결과까지 그대로 공개합니다.",
+    "date": "2026-07-29",
+    "cat": "research",
+    "cat_label": "리서치",
+    "tags": [
+      "retrieval",
+      "routing",
+      "bm25",
+      "rrf"
+    ],
+    "reading_time": 9
+  },
+  {
+    "slug": "streaming-vlm-quantization-consumer-silicon",
+    "title": "엣지 실리콘에서 스트리밍 VLM 양자화",
+    "excerpt": "같은 4비트 정밀도인데 런타임만 바꾸자 디코드 속도가 190배 빨라졌습니다. 4B급 스트리밍 VLM(microsoft/Mage-VL)을 소비자용 Apple 실리콘 Mac에서 실측해, 양자화만으로는 부족하고 융합커널 런타임이 있어야 작고도 빠른 조합이 나온다는 것을 데이터로 닫았습니다.",
+    "date": "2026-07-29",
+    "cat": "benchmark",
+    "cat_label": "benchmark",
+    "tags": [
+      "vlm",
+      "quantization",
+      "edge",
+      "apple-silicon",
+      "mlx"
+    ],
+    "reading_time": 10
+  },
+  {
+    "slug": "wifi-csi-cross-environment-calibration",
+    "title": "WiFi-CSI 환경 이동과 소량 보정",
+    "excerpt": "환경이 바뀌면 WiFi-CSI 센싱 정확도는 실측으로 55%까지 무너졌습니다. 클래스당 50개(약 350개) 목표 도메인 라벨을 더하는 것만으로 그 격차의 80%를 되찾았습니다.",
+    "date": "2026-07-29",
+    "cat": "sensing",
+    "cat_label": "sensing",
+    "tags": [
+      "WiFi-CSI",
+      "도메인적응",
+      "소량학습",
+      "보정",
+      "재실감지"
+    ],
+    "reading_time": 8
+  },
+  {
     "slug": "audio-content-id-robustness",
     "title": "음원 식별 API, 잡음·압축·속도변경에서 얼마나 버티나 실측했습니다",
     "excerpt": "999트랙 카탈로그에서 피크쌍 해싱 음원 식별을 자체벤치로 실측. 클린 95%, 강한 잡음(SNR -5dB)에서도 top-1 72.5%. 방송 모니터링·저작권 감시가 실제로 묻는 조건을 먼저 재봤습니다.",
