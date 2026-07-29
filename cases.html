@@ -55,14 +55,14 @@
   <section class="section" style="padding-top:1.5rem">
     <div class="wrap">
       <div class="ifilters cfilters reveal" role="tablist" aria-label="사례 분류 필터" style="margin:0 0 1.2rem">
-        <button class="ifilter cfilter is-on" data-ccat="all">전체 <b>12</b></button>
+        <button class="ifilter cfilter is-on" data-ccat="all">전체 <b>13</b></button>
         <button class="ifilter cfilter" data-ccat="data">데이터·경영 <b>2</b></button>
         <button class="ifilter cfilter" data-ccat="doc">문서·지식 <b>2</b></button>
         <button class="ifilter cfilter" data-ccat="vision">비전 AI <b>1</b></button>
         <button class="ifilter cfilter" data-ccat="agent">에이전트·음성 <b>2</b></button>
         <button class="ifilter cfilter" data-ccat="signal">신호·통신 <b>1</b></button>
         <button class="ifilter cfilter" data-ccat="sales">영업·마케팅 <b>3</b></button>
-        <button class="ifilter cfilter" data-ccat="infra">인프라·도구 <b>1</b></button>
+        <button class="ifilter cfilter" data-ccat="infra">인프라·도구 <b>2</b></button>
       </div>
     </div>
     <div class="wrap case-list">
@@ -493,6 +493,44 @@
               <a class="chip chip--code" href="https://github.com/2icorp/2i-case-12-llm-selfhost-calc" target="_blank" rel="noopener">‹/› 작동하는 레퍼런스 데모 · 소스코드 ↗</a>
             </div>
             <p class="case__tech"><span class="case__tech-k">사용 기술</span> 순수 JS 클라이언트 계산(백엔드 0), 모델·GPU 스펙 데이터셋, vLLM·SGLang·TensorRT-LLM 지원 매트릭스, 배포 매니페스트 생성기.</p>
+          </aside>
+        </div>
+      </article>
+
+
+      <article class="case reveal" id="case-13" data-ccat="infra">
+        <header class="case__top">
+          <span class="case__no">13</span>
+          <div class="case__id">
+            <span class="case__cat">인프라·엣지 AI</span>
+            <span class="case__ind">소매·현장 운영 · 온프렘</span>
+          </div>
+          <div class="case__stkm" role="group" aria-label="문제의 대가">
+            <span class="case__stkm-l">영상 이해 AI 서버 비용</span>
+            <span class="case__stkm-v">데이터센터 GPU급</span>
+          </div>
+        </header>
+        <h3 class="case__title">&quot;GPU 서버 없이 영상 이해 AI가 될까&quot; 소비자용 실리콘에서 실측했다</h3>
+        <p class="case__stakes">매장 카메라나 순찰 현장에서 &#x27;방금 화면에 뭐가 지나갔는지&#x27;를 이해하려면 최신 영상-언어모델(VLM)이 필요합니다. 문제는 이 모델을 서빙하는 표준 경로가 데이터센터급 GPU라는 점입니다. 영상을 클라우드로 내보내지 않고, 데이터센터 GPU도 없이 현장에 두는 저가 온프렘 유닛에서 이 정도 모델이 실제로 돌아가는지는 아무도 재보지 않은 질문입니다.</p>
+        <div class="case__grid">
+          <div class="case__main">
+            <div class="case__row"><span class="case__k">통찰</span><p>최신 VLM을 &#x27;쓰는&#x27; 것과 저가 하드웨어에 &#x27;배포&#x27;하는 것은 다른 일입니다. 양자화로 모델을 줄이면 저절로 빨라진다는 가정은 이번 실측에서 정면으로 깨졌습니다. 메모리를 줄이는 축과 속도를 얻는 축은 서로 다른 문제이고, 그 사실을 모른 채 도입하면 &#x27;더 작아졌는데 왜 더 느리지&#x27;라는 함정에 걸립니다.</p></div>
+            <div class="case__row"><span class="case__k">2i의 방식</span><p>공개 Apache-2.0 라이선스 VLM인 microsoft/Mage-VL(4.7B, 시각 인코더 Mage-ViT + Qwen3-4B 언어 백본)을 소비자용 Apple M4 Pro(통합 메모리 48GB)에 직접 올려 bf16·INT8·INT4 세 정밀도를 전부 실측했습니다. 메모리는 양자화로 줄었지만 같은 조건에서 디코드 속도는 오히려 느려졌고, 원인을 커널 단으로 추적해 언어 백본을 mlx-lm의 융합 커널 INT4 경로로 다시 재봤습니다. 결과는 동일 4비트에서 디코드 89.7 tok/s·2.46GB로, 나이브 양자화(0.47 tok/s·4.15GB) 대비 약 190배 더 빠르고 메모리도 더 작은 조합이었습니다. 모델을 고르는 게 아니라 이렇게 재고 검증하는 패키징 엔지니어링이 저희 일입니다.</p></div>
+            <ol class="case__gates"><li class="gate"><b class="gate__name">측정 게이트 · 2주</b><span class="gate__what">대상 온프렘 하드웨어에서 bf16 기준선의 메모리 점유·디코드 처리량·응답 지연을 계측해 baseline을 고정합니다.</span></li><li class="gate"><b class="gate__name">실증 게이트 · 4주</b><span class="gate__what">INT8·INT4 등 양자화 조합을 실제로 돌려 메모리 절감분과 속도 변화를 함께 재고, 답변 품질이 유지되는지 대조합니다. 속도 이득이 안 나면 커널·런타임 조합을 바꿔 재검증합니다.</span></li><li class="gate"><b class="gate__name">이관 게이트 · 6주</b><span class="gate__what">검증된 양자화+런타임 조합을 온프렘 유닛으로 패키징하고, 스트리밍/이미지 스코프를 명확히 나눈 운영 매뉴얼과 함께 넘깁니다.</span></li></ol>
+          </div>
+          <aside class="case__side">
+            <div class="ba"><div class="ba__head">실측 지표 <span class="ba__note">· Apple M4 Pro(통합 메모리 48GB), 환경별 재측정</span></div><div class="ba__row"><span class="ba__m">디바이스 메모리 (나이브 INT4)</span><span class="ba__b">bf16 9.49GB</span><span class="ba__arw" aria-hidden="true">→</span><span class="ba__a">4.15GB (56% 감소, 실측)</span></div><div class="ba__row"><span class="ba__m">디코드 처리량 (나이브 INT4)</span><span class="ba__b">bf16 13.01 tok/s</span><span class="ba__arw" aria-hidden="true">→</span><span class="ba__a">0.47 tok/s (96% 저하, 실측)</span></div><div class="ba__row"><span class="ba__m">디코드 처리량 (MLX 융합 INT4)</span><span class="ba__b">나이브 INT4 0.47 tok/s</span><span class="ba__arw" aria-hidden="true">→</span><span class="ba__a">89.67 tok/s (약 190배, 언어 백본 기준 실측)</span></div><div class="ba__row"><span class="ba__m">영상 이해 서버</span><span class="ba__b">데이터센터 GPU 필수</span><span class="ba__arw" aria-hidden="true">→</span><span class="ba__a">소비자용 Mac 1대 (이미지/프레임 기준)</span></div></div>
+            <div class="case__sowhat"><span class="case__k case__k--go">그래서 무엇이 열리나</span><p>양자화만으로는 부족합니다. 양자화와 올바른 융합커널 런타임을 함께 골라야 저가 온프렘 하드웨어에서 작고 &#x27;또&#x27; 빠르게 돈다는 것을 실측으로 닫았습니다. 언어 백본만으로 디코드 89.7 tok/s(약 190배)를 확인했고, 비전 타워까지 포함한 전체 모델의 MLX 포팅이 다음 상용화 단계입니다. 2i가 파는 것은 모델이 아니라, 이렇게 진단하고 런타임을 고르고 이관까지 마치는 측정된 패키징입니다.</p></div>
+            <div class="case__facts">
+              <span class="chip">융합커널 런타임(MLX) decode 89.7 tok/s · 2.46GB, 동일 4비트 나이브 양자화(0.47 tok/s) 대비 약 190배 (실측 Apple M4 Pro)</span>
+              <span class="chip">메모리 bf16 9.49GB → INT4(MLX 융합 커널) 2.46GB</span>
+              <span class="chip chip--v">데이터센터 GPU 불요 · 온프렘</span>
+              <span class="chip">실측 스코프: 89.7 tok/s는 디코드를 지배하는 언어 백본(Qwen3-4B) 단독 프록시 · 비전 타워 포함 mage_vl 전체 MLX 포팅은 다음 상용화 작업 · 스트리밍 코덱(DCVC)은 CUDA 전용, 로컬 미지원</span>
+            </div>
+            <div class="case__proof">
+              <a class="chip chip--code" href="/papers/streaming-vlm-quantization-consumer-silicon.html" target="_blank" rel="noopener">기술 논문: 실측 리포트 ↗</a>
+            </div>
+            <p class="case__tech"><span class="case__tech-k">사용 기술</span> microsoft/Mage-VL(Mage-ViT + Qwen3-4B) · transformers + torch + Metal(MPS) · optimum-quanto weight-only 양자화(bf16/INT8/INT4) · mlx-lm 융합 저비트 커널 런타임 · Apple Silicon 온프렘 배치.</p>
           </aside>
         </div>
       </article>
