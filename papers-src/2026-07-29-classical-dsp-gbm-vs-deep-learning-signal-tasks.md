@@ -3,14 +3,14 @@ title: "고전 DSP+GBM 대 딥러닝: 신호 과제 결정 지도"
 excerpt: "변조분류·간섭탐지·드론오픈셋·채널추정·RF지문·신호분리 6개 과제를 같은 데이터·같은 지표로 공정 비교했습니다. 딥러닝이 전부를 이기지 않았고, 고전이 전부를 이기지도 않았습니다. 어디서 무엇이 이기는지를 숫자와 한계까지 공개합니다."
 date: 2026-07-29
 categories:
-  - benchmark
+ - benchmark
 tags:
-  - 신호처리
-  - GBM
-  - 딥러닝
-  - 변조분류
-  - 간섭탐지
-  - 벤치마크
+ - 신호처리
+ - GBM
+ - 딥러닝
+ - 변조분류
+ - 간섭탐지
+ - 벤치마크
 reading_time_min: 10
 pdf: /papers/pdf/classical-dsp-gbm-vs-deep-learning-signal-tasks-ko.pdf
 pdf_en: /papers/pdf/classical-dsp-gbm-vs-deep-learning-signal-tasks-en.pdf
@@ -25,7 +25,7 @@ fingerprint) 융합, 동일 채널 신호분리입니다. 모든 비교는 같�
 학습/테스트 분할·같은 평가지표 위에서 했고, 어느 쪽에도 유리한 전처리를
 주지 않았습니다.
 
-## 결과 — 승자는 과제마다 갈렸습니다
+## 결과 - 승자는 과제마다 갈렸습니다
 
 표준 공개 데이터셋 **RadioML2016.10a**(6dB SNR)에서 변조분류는 고전 방법
 (28차원 물리 특징 + LightGBM, 정확도 0.855)이 딥러닝(트랜스포머, 0.681)을
