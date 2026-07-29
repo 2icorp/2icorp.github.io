@@ -65,7 +65,7 @@ def head(title, desc, rel, extra=""):
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="{rel}styles.css?v=12">{extra}
+<link rel="stylesheet" href="{rel}styles.css?v=13">{extra}
 </head>
 <body>
 
@@ -180,6 +180,7 @@ def parse(path):
         "tags": [str(t) for t in tags][:8],
         "reading_time": int(rt),
         "pdf": fm.get("pdf"),
+        "pdf_en": fm.get("pdf_en"),
         "body": body,
     }
 
@@ -249,8 +250,13 @@ def article_html(p):
             f'<span class="pcard__rt">약 {p["reading_time"]}분</span>']
     tags = "".join(f'<span>#{html.escape(t)}</span>' for t in p["tags"])
     pdf = ""
-    if p.get("pdf"):
-        pdf = f'<a class="btn btn--ghost article__pdf" href="{html.escape(str(p["pdf"]))}" target="_blank" rel="noopener">PDF 원문 내려받기 <span class="arrow">↓</span></a>'
+    if p.get("pdf") or p.get("pdf_en"):
+        btns = []
+        if p.get("pdf"):
+            btns.append(f'<a class="btn btn--ghost article__pdf" href="{html.escape(str(p["pdf"]))}" target="_blank" rel="noopener">PDF 원문 (국문) <span class="arrow">↓</span></a>')
+        if p.get("pdf_en"):
+            btns.append(f'<a class="btn btn--ghost article__pdf" href="{html.escape(str(p["pdf_en"]))}" target="_blank" rel="noopener">PDF (English) <span class="arrow">↓</span></a>')
+        pdf = "\n      ".join(btns)
     exc = f'<p class="article__excerpt">{html.escape(p["excerpt"])}</p>' if p["excerpt"] else ""
     katex = """
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
@@ -296,7 +302,7 @@ EN_HEAD = """<!doctype html>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../styles.css?v=12">
+<link rel="stylesheet" href="../styles.css?v=13">
 </head>
 <body>
 
