@@ -1,0 +1,365 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<script>(function(){try{var t=localStorage.getItem("theme");if(!t&&window.matchMedia&&matchMedia("(prefers-color-scheme: dark)").matches)t="dark";if(t)document.documentElement.setAttribute("data-theme",t);}catch(e){}})();</script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>대화형 AI 오케스트레이터 데모 | 2i</title>
+<meta name="description" content="한 문장을 의도로 분해해 여러 도구를 순차·병렬로 실행하고 하나의 답과 음성 요약으로 합치는 대화형 오케스트레이터 인터랙티브 데모입니다. 완전 오프라인, 브라우저에서 실행됩니다.">
+<link rel="stylesheet" href="../../styles.css?v=14">
+<style>
+  body{ background:var(--paper); }
+  .dtop{ position:sticky; top:0; z-index:40; background:var(--paper); border-bottom:1px solid var(--line-soft); }
+  .dtop__inner{ max-width:1040px; margin:0 auto; padding:0.85rem 1.25rem; display:flex; align-items:center; justify-content:space-between; gap:1rem; }
+  .dtop__brand{ display:inline-flex; align-items:baseline; gap:0.5rem; text-decoration:none; }
+  .dtop__brand b{ font-family:var(--mono); color:var(--signal); font-weight:700; font-size:1.05rem; }
+  .dtop__brand span{ font-family:var(--mono); font-size:0.7rem; letter-spacing:0.14em; color:var(--ink-faint); text-transform:uppercase; }
+  .dtop__nav{ display:flex; gap:1.1rem; align-items:center; }
+  .dtop__nav a{ font-size:0.86rem; color:var(--ink-soft); text-decoration:none; white-space:nowrap; transition:color 0.15s ease; }
+  .dtop__nav a:hover{ color:var(--ink); }
+  .dtop__nav a:focus-visible{ outline:2px solid var(--signal); outline-offset:3px; }
+  .dhonest{ background:var(--panel); border-bottom:1px solid var(--line-soft); }
+  .dhonest__inner{ max-width:1040px; margin:0 auto; padding:0.55rem 1.25rem; font-family:var(--mono); font-size:0.74rem; color:var(--ink-faint); }
+  .dwrap{ max-width:1040px; margin:0 auto; padding:2rem 1.25rem 3.5rem; }
+  .dhead h1{ font-size:1.7rem; line-height:1.25; color:var(--ink); margin:0 0 0.5rem; }
+  .dhead p{ color:var(--ink-soft); max-width:70ch; font-size:0.96rem; }
+
+  .counters{ display:flex; gap:0.9rem; flex-wrap:wrap; margin:1.2rem 0 1.4rem; }
+  .cnt{ background:var(--panel); border:1px solid var(--line); border-radius:10px; padding:0.65rem 1rem; min-width:132px; }
+  .cnt__label{ font-family:var(--mono); font-size:0.66rem; letter-spacing:0.08em; color:var(--ink-faint); text-transform:uppercase; }
+  .cnt__value{ font-size:1.3rem; font-weight:700; color:var(--ink); margin-top:0.15rem; }
+  .cnt__value.ok b{ color:oklch(52% 0.12 150); }
+  [data-theme="dark"] .cnt__value.ok b{ color:oklch(72% 0.13 150); }
+
+  .console{ background:var(--panel); border:1px solid var(--line); border-radius:14px; overflow:hidden; }
+  .console__head{ padding:0.8rem 1.1rem; border-bottom:1px solid var(--line-soft); display:flex; align-items:center; gap:0.6rem; font-size:0.85rem; color:var(--ink-soft); flex-wrap:wrap; }
+  .console__head .dot{ width:8px; height:8px; border-radius:50%; background:oklch(52% 0.12 150); box-shadow:0 0 0 3px oklch(52% 0.12 150 / 0.18); }
+  .console__head b{ color:var(--ink); }
+  .memtoggle{ margin-left:auto; display:inline-flex; align-items:center; gap:0.45rem; font-size:0.8rem; color:var(--ink-soft); cursor:pointer; user-select:none; }
+  .memtoggle input{ accent-color:var(--signal); width:16px; height:16px; }
+
+  .inputrow{ display:flex; gap:0.6rem; padding:0.9rem 1.1rem; }
+  .inputrow input{ flex:1; font-family:var(--sans); font-size:0.95rem; padding:0.7rem 0.95rem; border-radius:999px; border:1px solid var(--line); background:var(--paper); color:var(--ink); }
+  .inputrow input:focus-visible, .inputrow input:focus{ outline:2px solid var(--signal); outline-offset:2px; border-color:var(--signal); }
+  .inputrow button{ font-family:var(--sans); font-weight:700; font-size:0.9rem; padding:0.6rem 1.2rem; border-radius:999px; border:1px solid var(--signal); background:var(--signal); color:oklch(22% 0.03 60); cursor:pointer; transition:transform 0.1s ease, filter 0.15s ease; }
+  .inputrow button:hover{ filter:brightness(1.04); }
+  .inputrow button:active{ transform:scale(0.97); }
+  .inputrow button:focus-visible{ outline:2px solid var(--steel); outline-offset:2px; }
+  .inputrow button:disabled{ opacity:0.4; cursor:not-allowed; }
+
+  .chips{ display:flex; flex-wrap:wrap; gap:0.5rem; padding:0 1.1rem 1rem; }
+  .qchip{ font-family:var(--sans); font-size:0.78rem; padding:0.4rem 0.75rem; border-radius:999px; border:1px solid var(--line); background:var(--paper); color:var(--ink-soft); cursor:pointer; transition:border-color 0.15s ease, color 0.15s ease; }
+  .qchip:hover{ border-color:var(--steel); color:var(--ink); }
+  .qchip:focus-visible{ outline:2px solid var(--signal); outline-offset:2px; }
+
+  .stage{ border-top:1px solid var(--line-soft); padding:1.1rem; }
+  .stage__label{ font-family:var(--mono); font-size:0.68rem; letter-spacing:0.1em; text-transform:uppercase; color:var(--ink-faint); display:flex; align-items:center; gap:0.5rem; margin-bottom:0.7rem; }
+  .stage__label .n{ display:inline-flex; width:18px; height:18px; align-items:center; justify-content:center; border-radius:50%; background:var(--steel); color:var(--paper); font-size:0.66rem; }
+  .empty{ color:var(--ink-faint); font-size:0.88rem; padding:2.2rem 1.1rem; text-align:center; }
+
+  .intent{ display:flex; flex-wrap:wrap; gap:0.5rem; align-items:center; }
+  .intent__badge{ font-family:var(--mono); font-size:0.82rem; font-weight:700; color:var(--signal-deep); background:oklch(68% 0.175 55 / 0.1); border:1px solid oklch(68% 0.175 55 / 0.35); padding:0.3rem 0.7rem; border-radius:8px; }
+  .slot{ font-family:var(--mono); font-size:0.74rem; color:var(--ink); background:var(--paper); border:1px solid var(--line); border-radius:6px; padding:0.25rem 0.55rem; }
+  .slot b{ color:var(--ink-faint); font-weight:400; }
+  .slot--mem{ border-color:var(--ok); }
+  .slot--mem b{ color:var(--ok); }
+
+  .steps{ display:grid; gap:0.6rem; }
+  .step{ border:1px solid var(--line); border-radius:10px; padding:0.7rem 0.85rem; background:var(--paper); opacity:0.5; transform:translateY(4px); transition:opacity var(--dur) var(--ease), transform var(--dur) var(--ease), border-color var(--dur) var(--ease); }
+  .step.is-run{ opacity:1; transform:none; border-color:var(--steel-soft); }
+  .step.is-done{ opacity:1; transform:none; border-color:var(--ok); }
+  .step__top{ display:flex; align-items:center; gap:0.5rem; font-size:0.86rem; }
+  .step__tool{ font-family:var(--mono); font-weight:700; color:var(--ink); }
+  .step__mode{ font-family:var(--mono); font-size:0.66rem; padding:0.1rem 0.45rem; border-radius:999px; border:1px solid var(--line); color:var(--ink-faint); }
+  .step__mode.par{ color:var(--steel); border-color:var(--steel-soft); }
+  .step__mode.seq{ color:var(--signal-deep); border-color:oklch(68% 0.175 55 / 0.4); }
+  .step__state{ margin-left:auto; font-family:var(--mono); font-size:0.72rem; color:var(--ink-faint); }
+  .step.is-done .step__state{ color:var(--ok); }
+  .step__out{ font-size:0.82rem; color:var(--ink-soft); margin-top:0.4rem; line-height:1.5; min-height:1.1em; }
+
+  .timeline{ margin-top:0.9rem; position:relative; background:var(--paper); border:1px solid var(--line-soft); border-radius:8px; padding:0.7rem 0.7rem 1.3rem; }
+  .tl__row{ position:relative; height:22px; margin:0.28rem 0; }
+  .tl__bar{ position:absolute; top:2px; height:16px; border-radius:4px; opacity:0; transition:opacity var(--dur) var(--ease); }
+  .tl__bar.on{ opacity:1; }
+  .tl__tag{ position:absolute; top:1px; font-family:var(--mono); font-size:0.66rem; color:var(--ink-faint); white-space:nowrap; }
+  .tl__axis{ position:absolute; left:0.7rem; right:0.7rem; bottom:0.4rem; font-family:var(--mono); font-size:0.62rem; color:var(--ink-faint); display:flex; justify-content:space-between; }
+
+  .answer{ background:var(--paper); border:1px solid var(--line); border-left:3px solid var(--signal); border-radius:0 10px 10px 0; padding:0.9rem 1rem; font-size:0.94rem; line-height:1.6; color:var(--ink); white-space:pre-line; }
+  .voice{ display:flex; align-items:flex-start; gap:0.75rem; background:var(--panel-dark); color:var(--panel-dark-fg); border-radius:10px; padding:0.85rem 1rem; }
+  .voice__btn{ flex:none; font-family:var(--sans); font-weight:700; font-size:0.82rem; padding:0.5rem 0.9rem; border-radius:999px; border:1px solid var(--signal); background:var(--signal); color:oklch(22% 0.03 60); cursor:pointer; transition:filter 0.15s ease, transform 0.1s ease; }
+  .voice__btn:hover{ filter:brightness(1.05); }
+  .voice__btn:active{ transform:scale(0.96); }
+  .voice__btn:disabled{ opacity:0.45; cursor:not-allowed; }
+  .voice__txt{ font-size:0.9rem; line-height:1.55; }
+  .voice__note{ font-family:var(--mono); font-size:0.66rem; opacity:0.7; margin-top:0.3rem; }
+
+  .dfoot{ max-width:1040px; margin:0 auto; padding:1.6rem 1.25rem 2.5rem; font-family:var(--mono); font-size:0.75rem; color:var(--ink-faint); border-top:1px solid var(--line-soft); text-align:center; }
+  @media (prefers-reduced-motion: reduce){
+    .step, .tl__bar{ transition:none; }
+  }
+  @media (max-width:640px){ .step__state{ display:none; } }
+</style>
+</head>
+<body>
+
+<div class="dtop">
+  <div class="dtop__inner">
+    <a class="dtop__brand" href="/"><b>2i</b><span>데모 · 대화형 오케스트레이터</span></a>
+    <nav class="dtop__nav">
+      <a href="../../cases.html#case-14">사례 보기</a>
+      <a href="https://github.com/2icorp/2i-case-14-agent-orchestrator" target="_blank" rel="noopener">소스코드</a>
+    </nav>
+  </div>
+</div>
+<div class="dhonest"><div class="dhonest__inner">브라우저에서 도는 샘플 데이터 인터랙티브 데모입니다. 도구는 오프라인 목 어댑터이며, 실제 파이프라인 구현은 소스코드 저장소에 있습니다.</div></div>
+
+<main class="dwrap">
+  <div class="dhead">
+    <h1>대화형 AI 오케스트레이터</h1>
+    <p>한 문장을 의도로 분해해 필요한 도구를 순차·병렬로 실행하고, 결과를 하나의 답과 음성 요약으로 합칩니다. 사용자는 어떤 도구가 쓰이는지 고를 필요가 없습니다. 아래에 요청을 입력하거나 예시를 눌러 보세요. 전부 브라우저에서, 오프라인으로 돕니다.</p>
+  </div>
+
+  <div class="counters">
+    <div class="cnt"><div class="cnt__label">처리한 여정</div><div class="cnt__value"><b id="cntJourney">0</b>건</div></div>
+    <div class="cnt"><div class="cnt__label">호출한 도구</div><div class="cnt__value"><b id="cntTool">0</b>개</div></div>
+    <div class="cnt"><div class="cnt__label">재입력 절감</div><div class="cnt__value ok"><b id="cntReuse">0</b>회</div></div>
+  </div>
+
+  <div class="console">
+    <div class="console__head">
+      <span class="dot"></span><b>모두의 비서</b>&nbsp;· 오케스트레이션 콘솔
+      <label class="memtoggle"><input type="checkbox" id="memToggle" checked>개인화 메모리</label>
+    </div>
+    <div class="inputrow">
+      <input type="text" id="q" placeholder="예: 다음 주 부산 출장 준비해줘" aria-label="요청 입력">
+      <button id="runBtn" type="button">실행</button>
+    </div>
+    <div class="chips" id="chips"></div>
+
+    <div class="stage">
+      <div class="stage__label"><span class="n">1</span>의도 분해</div>
+      <div id="intentPanel"><div class="empty">요청을 입력하면 의도와 슬롯을 여기에 표시합니다.</div></div>
+    </div>
+    <div class="stage">
+      <div class="stage__label"><span class="n">2</span>도구 실행 (순차 · 병렬)</div>
+      <div id="stepsPanel"><div class="empty">분해된 도구들이 의존성 순서로 실행됩니다.</div></div>
+      <div id="timeline" class="timeline" hidden></div>
+    </div>
+    <div class="stage">
+      <div class="stage__label"><span class="n">3</span>통합 답변</div>
+      <div id="answerPanel"><div class="empty">여러 도구 결과가 하나의 답으로 병합됩니다.</div></div>
+    </div>
+    <div class="stage">
+      <div class="stage__label"><span class="n">4</span>음성 요약</div>
+      <div id="voicePanel"><div class="empty">완결 문장으로 렌더된 음성 스크립트를 재생할 수 있습니다.</div></div>
+    </div>
+  </div>
+
+  <p class="dfoot" style="border:0; text-align:left; padding-left:0.1rem;">지원 여정: 출장 준비(기차·날씨·캘린더) · 아침 브리핑(날씨·일정) · 행정 양식 채움(양식·메모리) · 단발: 날씨 · 최저가 비교</p>
+</main>
+
+<footer class="dfoot">© 2i · contact@2icorp.site</footer>
+
+<script>
+(function(){
+  "use strict";
+
+  // ---- 결정론 해시 (도구 목 응답용, 오프라인) ----
+  function h32(str){ var h=2166136261>>>0; str=String(str); for(var i=0;i<str.length;i++){ h^=str.charCodeAt(i); h=Math.imul(h,16777619)>>>0; } return h>>>0; }
+
+  var CITIES=["부산","서울","대구","광주","대전","울산","인천","제주","강릉","여수","경주"];
+  var DATE_TOKENS=[["다음 주","다음 주"],["다음주","다음 주"],["이번 주","이번 주"],["이번주","이번 주"],["내일","내일"],["모레","모레"],["오늘","오늘"]];
+  var FORMS=["전입신고서","주민등록등본","가족관계증명","사업자등록"];
+
+  // ---- 도구 어댑터(목) ----
+  var TOOLS={
+    weather:function(a){ var s=h32("weather|"+(a.city||"서울")+"|"+(a.date||"오늘")); var sum=["맑음","구름 조금","흐림","비","눈"][s%5];
+      return { city:a.city||"서울", date:a.date||"오늘", summary:sum, temp_c:8+(s%22), pm10:["좋음","보통","나쁨"][(s/7|0)%3] }; },
+    rail:function(a){ var s=h32("rail|"+(a.origin||"서울")+"|"+(a.dest||"부산")+"|"+(a.date||"다음 주")); var deps=["06:10","07:30","08:00","09:20","10:40","13:15"]; var dep=deps[s%6]; var hh=(parseInt(dep,10)+2)%24;
+      return { origin:a.origin||"서울", dest:a.dest||"부산", date:a.date||"다음 주", train:"KTX "+(101+(s%400)), depart:dep, arrive:(hh<10?"0"+hh:hh)+dep.slice(2), seat:(4+(s%12))+"호차 "+(1+(s%20))+"A", price_krw:43000+(s%20)*1000, status:"예약 확정" }; },
+    calendar_add:function(a){ return { event:a.title||"일정", date:a.date||"오늘", time:a.time||"09:00", status:"등록됨" }; },
+    calendar_agenda:function(a){ return { date:a.date||"오늘", count:3, items:[{time:"10:00",title:"팀 스탠드업"},{time:"14:00",title:"고객 미팅"},{time:"17:30",title:"주간 리포트 마감"}] }; },
+    shopping:function(a){ var p=a.product||"상품"; var s=h32("shop|"+p); var base=9900+(s%40)*1000; var sellers=["A몰","B스토어","C마켓","D쇼핑","E마트"]; var offers=sellers.map(function(se,i){return{seller:se,price_krw:base+i*((s%7)*300+200)};}); var low=offers.reduce(function(m,o){return o.price_krw<m.price_krw?o:m;},offers[0]);
+      return { product:p, n_offers:offers.length, lowest:low }; },
+    docs_fill:function(a){ var req=({"전입신고서":["성명","주민등록번호","새 주소","연락처"],"주민등록등본":["성명","주민등록번호","발급 통수"],"가족관계증명":["성명","주민등록번호","증명 종류"],"사업자등록":["대표자명","상호","사업장 주소","업종"]})[a.form]||["성명","주소","연락처"]; var v=a.values||{}; var filled=req.filter(function(f){return v[f]!=null;}); var missing=req.filter(function(f){return v[f]==null;});
+      return { form:a.form, required:req, filled:filled, missing:missing, complete:missing.length===0 }; }
+  };
+  var LAT={ rail:120, weather:40, calendar_add:30, calendar_agenda:30, shopping:80, docs_fill:60 };
+
+  // ---- 의도 분류 (규칙 라우터) ----
+  var RULES={
+    trip_planning:[["출장",2],["여행",2],["출장 준비",3],["다녀올",1]],
+    morning_briefing:[["아침",2],["브리핑",2],["오늘 일정",3],["오늘 뭐",2],["하루 시작",2]],
+    admin_form:[["양식",2],["서류",2],["신고",2],["민원",2],["행정",2],["신청서",2]],
+    weather_query:[["날씨",2],["미세먼지",2]],
+    shopping_compare:[["최저가",3],["가격 비교",3],["쇼핑",1],["얼마",1],["싸게",1]]
+  };
+  function extractSlots(t){ var s={}; for(var i=0;i<CITIES.length;i++){ if(t.indexOf(CITIES[i])>=0){ s.dest=CITIES[i]; break; } }
+    for(var j=0;j<DATE_TOKENS.length;j++){ if(t.indexOf(DATE_TOKENS[j][0])>=0){ s.date=DATE_TOKENS[j][1]; break; } }
+    for(var k=0;k<FORMS.length;k++){ if(t.indexOf(FORMS[k])>=0){ s.form=FORMS[k]; break; } }
+    var anchors=["최저가","가격","얼마","싸게"]; for(var m=0;m<anchors.length;m++){ var idx=t.indexOf(anchors[m]); if(idx>=0){ var head=t.slice(0,idx).trim().split(/\s+/); if(head.length&&head[0]) s.product=head[head.length-1]; break; } }
+    return s; }
+  function classify(u){ var t=(u||"").trim(); var bi="unknown", bs=0; for(var intent in RULES){ var sc=0; RULES[intent].forEach(function(kw){ if(t.indexOf(kw[0])>=0) sc+=kw[1]; }); if(intent==="trip_planning"&&CITIES.some(function(c){return t.indexOf(c)>=0;})) sc+=1; if(intent==="admin_form"&&FORMS.some(function(f){return t.indexOf(f)>=0;})) sc+=1; if(sc>bs){ bs=sc; bi=intent; } } if(bs<1) return {intent:"unknown",slots:{}}; return {intent:bi,slots:extractSlots(t)}; }
+
+  // ---- 계획(DAG) ----
+  function buildPlan(intent,slots){
+    if(intent==="trip_planning"){ var dest=slots.dest||"부산", date=slots.date||"다음 주", origin=slots.origin||"서울";
+      return [ {id:"rail",tool:"rail",label:"기차 예매",args:{origin:origin,dest:dest,date:date},deps:[]},
+        {id:"weather",tool:"weather",label:"날씨 조회",args:{city:dest,date:date},deps:[]},
+        {id:"calendar",tool:"calendar_add",label:"일정 등록",args:{title:dest+" 출장",date:date},deps:["rail"],bind:{time:["rail","depart"]}} ]; }
+    if(intent==="morning_briefing"){ var city=slots.dest||slots.origin||"서울";
+      return [ {id:"weather",tool:"weather",label:"날씨 조회",args:{city:city,date:"오늘"},deps:[]},
+        {id:"calendar",tool:"calendar_agenda",label:"오늘 일정",args:{date:"오늘"},deps:[]} ]; }
+    if(intent==="admin_form"){ var form=slots.form||"전입신고서";
+      return [ {id:"read",tool:"docs_fill",label:"양식 확인",args:{form:form,values:{}},deps:[]},
+        {id:"fill",tool:"docs_fill",label:"양식 채움",args:{form:form,values:slots.values||{}},deps:["read"]} ]; }
+    if(intent==="weather_query"){ return [ {id:"weather",tool:"weather",label:"날씨 조회",args:{city:slots.dest||"서울",date:slots.date||"오늘"},deps:[]} ]; }
+    if(intent==="shopping_compare"){ return [ {id:"shopping",tool:"shopping",label:"최저가 비교",args:{product:slots.product||"상품"},deps:[]} ]; }
+    return [];
+  }
+
+  // ---- 개인화 메모리 ----
+  var memory={}; // key -> value (단일 사용자 데모)
+  var PERSON_KEYS=["성명","주민등록번호","새 주소","연락처","대표자명","상호","사업장 주소","업종"];
+  // 데모: 최초 실행 시 인적사항을 아는 것으로 시드(재입력 절감을 보여주기 위함)
+  function seedMemory(){ memory={ origin:"서울", "성명":"홍길동", "주민등록번호":"900101-*******", "새 주소":"부산시 해운대구", "연락처":"010-1234-5678", "대표자명":"홍길동", "상호":"길동상사", "사업장 주소":"서울시 강남구", "업종":"도소매" }; }
+  seedMemory();
+
+  // ---- 상태/DOM ----
+  var qEl=document.getElementById("q"), runBtn=document.getElementById("runBtn"), chipsEl=document.getElementById("chips"), memToggle=document.getElementById("memToggle");
+  var intentPanel=document.getElementById("intentPanel"), stepsPanel=document.getElementById("stepsPanel"), timelineEl=document.getElementById("timeline"), answerPanel=document.getElementById("answerPanel"), voicePanel=document.getElementById("voicePanel");
+  var cntJourney=document.getElementById("cntJourney"), cntTool=document.getElementById("cntTool"), cntReuse=document.getElementById("cntReuse");
+  var jCount=0, tCount=0, rCount=0, busy=false;
+
+  var TOOL_KR={ rail:"기차", weather:"날씨", calendar_add:"캘린더", calendar_agenda:"캘린더", shopping:"쇼핑", docs_fill:"문서" };
+  var TOOL_COLOR={ rail:"var(--signal)", weather:"var(--steel)", calendar_add:"var(--ok)", calendar_agenda:"var(--ok)", shopping:"var(--signal-deep)", docs_fill:"var(--steel-soft)" };
+  var INTENT_KR={ trip_planning:"출장 준비 (여정)", morning_briefing:"아침 브리핑 (여정)", admin_form:"행정 양식 (여정)", weather_query:"날씨 (단발)", shopping_compare:"최저가 (단발)", unknown:"미매칭" };
+
+  var CHIPS=["다음 주 부산 출장 준비해줘","아침 브리핑 해줘","전입신고서 양식 채워줘","무선 이어폰 최저가 찾아줘","오늘 서울 날씨 어때"];
+
+  function esc(s){ return String(s).replace(/[&<>]/g,function(c){return c==="&"?"&amp;":c==="<"?"&lt;":"&gt;";}); }
+  function wait(ms){ return new Promise(function(r){ setTimeout(r,ms); }); }
+  function reduceMotion(){ return window.matchMedia && matchMedia("(prefers-color-scheme: reduce)").matches; }
+
+  function fillMemory(intent,slots){
+    var reused=0, out={}; for(var k in slots) out[k]=slots[k];
+    if(!memToggle.checked) return {slots:out,reused:0};
+    if(intent==="trip_planning"){ if(!out.origin && memory.origin){ out.origin=memory.origin; reused++; } }
+    else if(intent==="morning_briefing"){ if(!out.dest && memory.origin){ out.dest=memory.origin; reused++; } }
+    else if(intent==="admin_form"){ var v={}; PERSON_KEYS.forEach(function(pk){ if(memory[pk]!=null){ v[pk]=memory[pk]; reused++; } }); out.values=v; }
+    return {slots:out,reused:reused};
+  }
+
+  function renderIntent(intent,slots,reused){
+    var chips=[]; ["dest","date","form","product","origin"].forEach(function(k){ if(slots[k]) chips.push('<span class="slot"><b>'+k+'</b> '+esc(slots[k])+'</span>'); });
+    var memHtml = reused>0 ? '<span class="slot slot--mem"><b>메모리</b> 재입력 '+reused+'개 자동 채움</span>' : '';
+    intentPanel.innerHTML='<div class="intent"><span class="intent__badge">'+esc(INTENT_KR[intent]||intent)+'</span>'+chips.join("")+memHtml+'</div>';
+  }
+
+  function stepCard(step){
+    var mode = step.deps.length? '<span class="step__mode seq">순차 · '+step.deps.join(",")+' 이후</span>' : '<span class="step__mode par">병렬</span>';
+    return '<div class="step" id="st-'+step.id+'"><div class="step__top"><span class="step__tool">'+esc(TOOL_KR[step.tool]||step.tool)+'</span>'+mode+'<span class="step__state">대기</span></div><div class="step__out" id="out-'+step.id+'"></div></div>';
+  }
+
+  function summarize(step,res){
+    switch(step.tool){
+      case "rail": return res.train+" "+res.depart+"→"+res.arrive+" · "+res.price_krw.toLocaleString()+"원 · "+res.status;
+      case "weather": return res.date+" "+res.city+" "+res.summary+", "+res.temp_c+"℃, 미세먼지 "+res.pm10;
+      case "calendar_add": return "'"+res.event+"' "+res.date+" "+res.time+" "+res.status;
+      case "calendar_agenda": return "오늘 일정 "+res.count+"건: "+res.items.map(function(i){return i.time+" "+i.title;}).join(", ");
+      case "shopping": return res.product+" 최저가 "+res.lowest.seller+" "+res.lowest.price_krw.toLocaleString()+"원 (오퍼 "+res.n_offers+"건)";
+      case "docs_fill": return res.form+" · 채운 항목 "+(res.filled.length?res.filled.join(", "):"없음")+" · 남은 항목 "+(res.missing.length?res.missing.join(", "):"없음");
+      default: return JSON.stringify(res);
+    }
+  }
+
+  function computeSchedule(plan){
+    var start={}, end={};
+    plan.forEach(function(s){ var st=0; s.deps.forEach(function(d){ if(end[d]>st) st=end[d]; }); start[s.id]=st; end[s.id]=st+(LAT[s.tool]||50); });
+    return {start:start,end:end,max:Math.max.apply(null,plan.map(function(s){return end[s.id];}))};
+  }
+
+  function renderTimeline(plan,sched){
+    timelineEl.hidden=false;
+    var rows=plan.map(function(s){
+      var left=(sched.start[s.id]/sched.max*100), w=((sched.end[s.id]-sched.start[s.id])/sched.max*100);
+      return '<div class="tl__row"><span class="tl__bar" id="tl-'+s.id+'" style="left:'+left.toFixed(1)+'%;width:'+w.toFixed(1)+'%;background:'+TOOL_COLOR[s.tool]+';"></span><span class="tl__tag" style="left:'+Math.min(left+w+1,72).toFixed(1)+'%;">'+esc(TOOL_KR[s.tool]||s.tool)+(s.deps.length?" · 순차":" · 병렬")+'</span></div>';
+    }).join("");
+    timelineEl.innerHTML=rows+'<div class="tl__axis"><span>0 ms</span><span>'+sched.max+' ms (시뮬레이션)</span></div>';
+  }
+
+  function renderAnswer(intent,slots,results){
+    var lines=[];
+    if(intent==="trip_planning"){ var r=results.rail,w=results.weather,c=results.calendar; if(r)lines.push("기차: "+r.train+" "+r.depart+"→"+r.arrive+" ("+r.seat+", "+r.price_krw.toLocaleString()+"원)"); if(w)lines.push("날씨: "+w.date+" "+w.city+" "+w.summary+", "+w.temp_c+"℃, 미세먼지 "+w.pm10); if(c)lines.push("일정: '"+c.event+"' "+c.date+" "+c.time+" "+c.status); }
+    else if(intent==="morning_briefing"){ var w2=results.weather,a=results.calendar; if(w2)lines.push("오늘 "+w2.city+": "+w2.summary+", "+w2.temp_c+"℃, 미세먼지 "+w2.pm10); if(a)lines.push("오늘 일정 "+a.count+"건: "+a.items.map(function(i){return i.time+" "+i.title;}).join(", ")); }
+    else if(intent==="admin_form"){ var f=results.fill; if(f)lines.push(f.form+" 양식 · 채운 항목: "+(f.filled.length?f.filled.join(", "):"없음")+" · 남은 항목: "+(f.missing.length?f.missing.join(", "):"없음")); }
+    else if(intent==="weather_query"){ var w3=results.weather; if(w3)lines.push(w3.date+" "+w3.city+": "+w3.summary+", "+w3.temp_c+"℃, 미세먼지 "+w3.pm10); }
+    else if(intent==="shopping_compare"){ var sh=results.shopping; if(sh)lines.push(sh.product+" 최저가: "+sh.lowest.seller+" "+sh.lowest.price_krw.toLocaleString()+"원 (오퍼 "+sh.n_offers+"건 비교)"); }
+    else lines.push("요청을 이해하지 못했습니다. 다시 말씀해 주세요.");
+    answerPanel.innerHTML='<div class="answer">'+esc(lines.join("\n"))+'</div>';
+  }
+
+  function voiceScript(intent,slots,results){
+    var v=[];
+    if(intent==="trip_planning"){ var r=results.rail,w=results.weather; var dest=slots.dest||"목적지"; if(r)v.push(dest+"행 "+r.train+"을 "+r.depart+"에 예약했습니다."); if(w)v.push("그날 "+w.city+" 날씨는 "+w.summary+", 기온 "+w.temp_c+"도입니다."); v.push("출발 시간에 맞춰 캘린더에 일정도 등록했습니다."); }
+    else if(intent==="morning_briefing"){ var w2=results.weather,a=results.calendar; if(w2)v.push("오늘 "+w2.city+"는 "+w2.summary+", 기온 "+w2.temp_c+"도, 미세먼지 "+w2.pm10+" 수준입니다."); if(a)v.push("오늘 일정은 "+a.count+"건 있습니다."); }
+    else if(intent==="admin_form"){ var f=results.fill; if(f){ if(f.complete)v.push(f.form+" 양식을 모두 채웠습니다. 제출 절차를 안내해 드리겠습니다."); else v.push(f.form+" 양식에서 "+f.missing.join(", ")+" 항목만 확인하면 됩니다."); } }
+    else if(intent==="weather_query"){ var w3=results.weather; if(w3)v.push(w3.city+" 날씨는 "+w3.summary+", 기온 "+w3.temp_c+"도입니다."); }
+    else if(intent==="shopping_compare"){ var sh=results.shopping; if(sh)v.push(sh.product+" 최저가는 "+sh.lowest.seller+" "+sh.lowest.price_krw.toLocaleString()+"원입니다."); }
+    else v.push("죄송합니다. 요청을 이해하지 못했습니다.");
+    return v.join(" ");
+  }
+
+  function renderVoice(script){
+    var speakable = ("speechSynthesis" in window);
+    voicePanel.innerHTML='<div class="voice"><button class="voice__btn" id="playBtn"'+(speakable?"":" disabled")+'>▶ 음성 재생</button><div><div class="voice__txt">'+esc(script)+'</div><div class="voice__note">'+(speakable?"브라우저 음성 합성(ko-KR)으로 읽어드립니다.":"이 브라우저는 음성 합성을 지원하지 않습니다.")+'</div></div></div>';
+    if(speakable){ document.getElementById("playBtn").addEventListener("click",function(){ try{ window.speechSynthesis.cancel(); var u=new SpeechSynthesisUtterance(script); u.lang="ko-KR"; u.rate=1.0; var vs=window.speechSynthesis.getVoices(); var ko=vs.filter(function(x){return /ko/i.test(x.lang);})[0]; if(ko)u.voice=ko; window.speechSynthesis.speak(u); }catch(e){} }); }
+  }
+
+  async function runOnce(u){
+    if(busy) return; busy=true; runBtn.disabled=true;
+    var cls=classify(u); var mem=fillMemory(cls.intent,cls.slots);
+    renderIntent(cls.intent,mem.slots,mem.reused);
+    var plan=buildPlan(cls.intent,mem.slots);
+
+    if(!plan.length){ stepsPanel.innerHTML='<div class="empty">이 요청에 연결된 도구가 없습니다. (미매칭)</div>'; timelineEl.hidden=true; renderAnswer(cls.intent,mem.slots,{}); renderVoice(voiceScript(cls.intent,mem.slots,{})); busy=false; runBtn.disabled=false; return; }
+
+    stepsPanel.innerHTML='<div class="steps">'+plan.map(stepCard).join("")+'</div>';
+    var sched=computeSchedule(plan); renderTimeline(plan,sched);
+
+    var results={}; var done={}, remaining=plan.slice(); var scale=reduceMotion()?0:5;
+    // 라운드별 실행: 의존성 충족된 스텝을 동시에(병렬) 애니메이션
+    while(remaining.length){
+      var ready=remaining.filter(function(s){ return s.deps.every(function(d){return done[d];}); });
+      if(!ready.length) break;
+      ready.forEach(function(s){ var el=document.getElementById("st-"+s.id); if(el){ el.classList.add("is-run"); el.querySelector(".step__state").textContent="실행 중"; } var tl=document.getElementById("tl-"+s.id); if(tl) tl.classList.add("on"); });
+      var maxLat=Math.max.apply(null,ready.map(function(s){return LAT[s.tool]||50;}));
+      await wait(scale?maxLat*scale:0);
+      ready.forEach(function(s){
+        var args={}; for(var k in s.args) args[k]=s.args[k];
+        if(s.bind){ for(var b in s.bind){ var ref=s.bind[b]; args[b]=(results[ref[0]]||{})[ref[1]]; } }
+        var res=TOOLS[s.tool](args); results[s.id]=res; done[s.id]=true; tCount++;
+        var el=document.getElementById("st-"+s.id); if(el){ el.classList.remove("is-run"); el.classList.add("is-done"); el.querySelector(".step__state").textContent="완료 · "+(LAT[s.tool]||50)+"ms"; }
+        var out=document.getElementById("out-"+s.id); if(out) out.textContent=summarize(s,res);
+        remaining=remaining.filter(function(x){return x.id!==s.id;});
+      });
+      cntTool.textContent=String(tCount);
+    }
+
+    renderAnswer(cls.intent,mem.slots,results);
+    renderVoice(voiceScript(cls.intent,mem.slots,results));
+    jCount++; cntJourney.textContent=String(jCount);
+    if(mem.reused>0){ rCount+=mem.reused; cntReuse.textContent=String(rCount); }
+    busy=false; runBtn.disabled=false; qEl.focus();
+  }
+
+  function renderChips(){ CHIPS.forEach(function(t){ var b=document.createElement("button"); b.type="button"; b.className="qchip"; b.textContent=t; b.addEventListener("click",function(){ if(busy)return; qEl.value=t; runOnce(t); }); chipsEl.appendChild(b); }); }
+
+  runBtn.addEventListener("click",function(){ var v=qEl.value.trim(); if(v) runOnce(v); });
+  qEl.addEventListener("keydown",function(e){ if(e.key==="Enter"){ e.preventDefault(); runBtn.click(); } });
+  if("speechSynthesis" in window){ window.speechSynthesis.getVoices(); }
+  renderChips();
+})();
+</script>
+</body>
+</html>
