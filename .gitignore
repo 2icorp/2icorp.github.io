@@ -1,5 +1,13 @@
-papers-build/
 *.aux
 *.log
 *.out
 __pycache__/
+# 2i-paper-factory: track paper SOURCE md, ignore build artifacts
+papers-build/**/*.aux
+papers-build/**/*.log
+papers-build/**/*.out
+papers-build/**/main.tex
+papers-build/**/main.pdf
+papers-build/**/figures/
+!papers-build/*-ko.md
+!papers-build/*-en.md
