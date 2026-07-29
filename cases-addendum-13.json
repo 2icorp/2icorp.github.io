@@ -1,0 +1,48 @@
+{
+  "no": 13,
+  "ccat": "infra",
+  "cat": "인프라·엣지 AI",
+  "ind": "소매·현장 운영 · 온프렘",
+  "title": "\"GPU 서버 없이 영상 이해 AI가 될까\" 소비자용 실리콘에서 실측했다",
+  "stakes": "매장 카메라나 순찰 현장에서 '방금 화면에 뭐가 지나갔는지'를 이해하려면 최신 영상-언어모델(VLM)이 필요합니다. 문제는 이 모델을 서빙하는 표준 경로가 데이터센터급 GPU라는 점입니다. 영상을 클라우드로 내보내지 않고, 데이터센터 GPU도 없이 현장에 두는 저가 온프렘 유닛에서 이 정도 모델이 실제로 돌아가는지는 아무도 재보지 않은 질문입니다.",
+  "insight": "최신 VLM을 '쓰는' 것과 저가 하드웨어에 '배포'하는 것은 다른 일입니다. 양자화로 모델을 줄이면 저절로 빨라진다는 가정은 이번 실측에서 정면으로 깨졌습니다. 메모리를 줄이는 축과 속도를 얻는 축은 서로 다른 문제이고, 그 사실을 모른 채 도입하면 '더 작아졌는데 왜 더 느리지'라는 함정에 걸립니다.",
+  "mechanism": "공개 Apache-2.0 라이선스 VLM인 microsoft/Mage-VL(4.7B, 시각 인코더 Mage-ViT + Qwen3-4B 언어 백본)을 소비자용 Apple M4 Pro(통합 메모리 48GB)에 직접 올려 bf16·INT8·INT4 세 정밀도를 전부 실측했습니다. 메모리는 양자화로 줄었지만 같은 조건에서 디코드 속도는 오히려 느려졌고, 원인을 커널 단으로 추적해 언어 백본을 mlx-lm의 융합 커널 INT4 경로로 다시 재봤습니다. 결과는 동일 4비트에서 디코드 89.7 tok/s·2.46GB로, 나이브 양자화(0.47 tok/s·4.15GB) 대비 약 190배 더 빠르고 메모리도 더 작은 조합이었습니다. 모델을 고르는 게 아니라 이렇게 재고 검증하는 패키징 엔지니어링이 저희 일입니다.",
+  "gates": [
+    {
+      "name": "측정 게이트 · 2주",
+      "what": "대상 온프렘 하드웨어에서 bf16 기준선의 메모리 점유·디코드 처리량·응답 지연을 계측해 baseline을 고정합니다."
+    },
+    {
+      "name": "실증 게이트 · 4주",
+      "what": "INT8·INT4 등 양자화 조합을 실제로 돌려 메모리 절감분과 속도 변화를 함께 재고, 답변 품질이 유지되는지 대조합니다. 속도 이득이 안 나면 커널·런타임 조합을 바꿔 재검증합니다."
+    },
+    {
+      "name": "이관 게이트 · 6주",
+      "what": "검증된 양자화+런타임 조합을 온프렘 유닛으로 패키징하고, 스트리밍/이미지 스코프를 명확히 나눈 운영 매뉴얼과 함께 넘깁니다."
+    }
+  ],
+  "ba": {
+    "head": "실측 지표",
+    "note": "· Apple M4 Pro(통합 메모리 48GB), 환경별 재측정",
+    "rows": [
+      {"m": "디바이스 메모리 (나이브 INT4)", "b": "bf16 9.49GB", "a": "4.15GB (56% 감소, 실측)"},
+      {"m": "디코드 처리량 (나이브 INT4)", "b": "bf16 13.01 tok/s", "a": "0.47 tok/s (96% 저하, 실측)"},
+      {"m": "디코드 처리량 (MLX 융합 INT4)", "b": "나이브 INT4 0.47 tok/s", "a": "89.67 tok/s (약 190배, 언어 백본 기준 실측)"},
+      {"m": "영상 이해 서버", "b": "데이터센터 GPU 필수", "a": "소비자용 Mac 1대 (이미지/프레임 기준)"}
+    ]
+  },
+  "so_what": "양자화만으로는 부족합니다. 양자화와 올바른 융합커널 런타임을 함께 골라야 저가 온프렘 하드웨어에서 작고 '또' 빠르게 돈다는 것을 실측으로 닫았습니다. 언어 백본만으로 디코드 89.7 tok/s(약 190배)를 확인했고, 비전 타워까지 포함한 전체 모델의 MLX 포팅이 다음 상용화 단계입니다. 2i가 파는 것은 모델이 아니라, 이렇게 진단하고 런타임을 고르고 이관까지 마치는 측정된 패키징입니다.",
+  "facts": [
+    "융합커널 런타임(MLX) decode 89.7 tok/s · 2.46GB, 동일 4비트 나이브 양자화(0.47 tok/s) 대비 약 190배 (실측 Apple M4 Pro)",
+    "메모리 bf16 9.49GB → INT4(MLX 융합 커널) 2.46GB",
+    "데이터센터 GPU 불요 · 온프렘",
+    "실측 스코프: 89.7 tok/s는 디코드를 지배하는 언어 백본(Qwen3-4B) 단독 프록시 · 비전 타워 포함 mage_vl 전체 MLX 포팅은 다음 상용화 작업 · 스트리밍 코덱(DCVC)은 CUDA 전용, 로컬 미지원"
+  ],
+  "tech": ["Mage-VL", "MLX", "mlx-lm", "양자화", "Apple Silicon", "온프렘"],
+  "tech_note": "microsoft/Mage-VL(Mage-ViT + Qwen3-4B) · transformers + torch + Metal(MPS) · optimum-quanto weight-only 양자화(bf16/INT8/INT4) · mlx-lm 융합 저비트 커널 런타임 · Apple Silicon 온프렘 배치.",
+  "proof": {
+    "label": "기술 논문: 실측 리포트",
+    "href": "/papers/streaming-vlm-quantization-consumer-silicon.html"
+  },
+  "note": "UPDATED per coordinator (verified, not fabricated -- checked papers-src/streaming-vlm-quantization-consumer-silicon.md and /tmp/magevl-bench/result-mlx-qwen3backbone-int4.json before applying). CLOSED finding: naive optimum-quanto INT4 on the language backbone gets 0.47 tok/s decode / 4.15GB (bad -- no fused low-bit kernel on Apple MPS, dequantizes every forward pass). Re-running the same 4-bit backbone (Qwen3-4B-Instruct-2507) through mlx-lm's fused INT4 kernel path gets 89.67 tok/s decode / 2.46GB peak -- ~190x faster AND less memory, same bit-width. HONEST SCOPE kept: 89.67 tok/s is a decode-side proxy for the language backbone only (vision tower is prefill-only and untouched by this benchmark); porting the full mage_vl architecture (vision tower included) into mlx-vlm is the remaining commercial-deliverable step (mlx-vlm currently errors 'Model type mage_vl not supported'). DCVC-RT streaming-video codec remains CUDA-only, not attempted on Apple Metal. Fold into canonical cases.json + re-render on home machine."
+}
