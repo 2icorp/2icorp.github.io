@@ -746,8 +746,9 @@
       <div class="cta reveal">
         <h2>다음 한 걸음, 같이 정합시다.</h2>
         <p>무엇을 팔려는 상담이 아니라, 당신 회사에 지금 AI가 맞는지부터 함께 봅니다. 30분이면 방향이 잡힙니다.</p>
-        <!-- 상담 폼: 이메일 클라이언트로 전송(백엔드 불필요). Formspree 등 연동 시 action 교체 가능. -->
-        <form class="form" id="leadForm" action="mailto:contact@2icorp.site" method="POST" enctype="text/plain">
+        <!-- 상담 폼: data-formspree-id 를 채우면 Formspree 백엔드(방문자 메일앱 불필요)로 전송,
+             비우면 메일앱 prefill 폴백. 활성화: formspree.io 무료 폼 생성 후 아이디만 붙여넣기. -->
+        <form class="form" id="leadForm" data-formspree-id="" action="mailto:contact@2icorp.site" method="POST" enctype="text/plain">
           <label>이름<input name="name" required placeholder="한금지"></label>
           <label>회사<input name="company" required placeholder="○○ 제조"></label>
           <label>업종<select name="industry"><option>제조</option><option>유통</option><option>물류</option><option>기타</option></select></label>
@@ -765,6 +766,7 @@
           <div class="cta__row full">
             <button class="btn btn--signal" type="submit">상담 신청 보내기 <span class="arrow">→</span></button>
           </div>
+          <p class="form__status full" role="status" aria-live="polite"></p>
         </form>
         <p class="foot__legal" style="margin-top:1rem">메일 앱이 열리지 않으면 <a href="mailto:contact@2icorp.site">contact@2icorp.site</a> 로 보내주세요.</p>
       </div>
