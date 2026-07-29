@@ -299,6 +299,22 @@
     "reading_time": 9
   },
   {
+    "slug": "streaming-vlm-quantization-consumer-silicon",
+    "title": "엣지 실리콘에서 스트리밍 VLM 양자화",
+    "excerpt": "4B급 스트리밍 VLM(microsoft/Mage-VL)을 데이터센터가 아니라 소비자용 Apple 실리콘 Mac에 직접 올려 측정했습니다. 양자화는 디바이스 메모리를 56% 줄였지만 같은 조건에서 디코드 속도는 오히려 96%까지 느려졌습니다.",
+    "date": "2026-07-29",
+    "cat": "benchmark",
+    "cat_label": "benchmark",
+    "tags": [
+      "vlm",
+      "quantization",
+      "edge",
+      "apple-silicon",
+      "mlx"
+    ],
+    "reading_time": 8
+  },
+  {
     "slug": "wifi-csi-cross-environment-calibration",
     "title": "WiFi-CSI 환경 이동과 소량 보정",
     "excerpt": "환경이 바뀌면 WiFi-CSI 센싱 정확도는 실측으로 55%까지 무너졌습니다. 클래스당 50개(약 350개) 목표 도메인 라벨을 더하는 것만으로 그 격차의 80%를 되찾았습니다.",
