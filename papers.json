@@ -33,6 +33,22 @@
     "reading_time": 8
   },
   {
+    "slug": "moe-inference-cost-as-measurable-process",
+    "title": "MoE 추론 비용을 측정 가능한 공정으로: 30B 모델 전문가 프루닝",
+    "excerpt": "6144개 전문가 중 20%를 글로벌 기준으로 잘라 4915개만 남겼습니다. 라우터 통계 319만 4880행을 실측한 뒤 내린 결정이고, 실제 30B 가중치에서만 드러나는 구조 버그 2건을 잡아낸 재현성 게이트도 함께 남겼습니다.",
+    "date": "2026-07-29",
+    "cat": "experiment",
+    "cat_label": "실험 노트",
+    "tags": [
+      "MoE",
+      "전문가프루닝",
+      "양자화",
+      "추론비용",
+      "재현성"
+    ],
+    "reading_time": 9
+  },
+  {
     "slug": "openset-rf-fingerprint-verification",
     "title": "오픈셋 RF 지문 검증: 분리성은 실재하나 하드 인증 동작점은 아직 멀다",
     "excerpt": "공개 데이터 세 종(WiSig, INRIA, WIDEFT)으로 실측한 오픈셋 RF 지문 검증. AUROC 0.87까지 분리는 되지만, 접근제어가 실제로 요구하는 낮은 오탐률 지점(TAR@FAR)에서는 2~3%로 붕괴합니다. 라이선스가 다른 두 데이터셋에서 같은 격차가 재현된, 정직한 경계 연구입니다.",
