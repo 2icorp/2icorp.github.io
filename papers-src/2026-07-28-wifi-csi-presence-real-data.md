@@ -3,12 +3,12 @@ title: "카메라·센서 추가 없이, 기존 WiFi로 재실·움직임 감지
 excerpt: "공개 실측 WiFi 채널데이터(OPERAnet, 퍼블릭 도메인)로 재실·모션 감지 체인을 검증. 빈 방 대비 걷기 52배, 앉기·서기 13배의 모션 신호, 10초 윈도우 분리도 AUROC 1.000. 단일 방 결과라는 한계까지 그대로 적었습니다."
 date: 2026-07-28
 categories:
-  - experiment
+ - experiment
 tags:
-  - WiFiCSI
-  - 재실감지
-  - 스마트빌딩
-  - 자체벤치
+ - WiFiCSI
+ - 재실감지
+ - 스마트빌딩
+ - 자체벤치
 reading_time_min: 6
 ---
 

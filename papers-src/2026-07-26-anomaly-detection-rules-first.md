@@ -3,12 +3,12 @@ title: "이상탐지, 우리는 규칙 기반으로 먼저 갑니다"
 excerpt: "제조 현장의 불량·설비 이상을 잡을 때 딥러닝부터 꺼내지 않는 이유. 측정 게이트에서 규칙 기반이 먼저 통과해야 하는 근거를 실험 노트로 정리했습니다."
 date: 2026-07-26
 categories:
-  - experiment
+ - experiment
 tags:
-  - 이상탐지
-  - 제조AX
-  - 게이지방식
-  - PoC
+ - 이상탐지
+ - 제조AX
+ - 게이지방식
+ - PoC
 reading_time_min: 6
 ---
 

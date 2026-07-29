@@ -3,12 +3,12 @@ title: "모르는 신호를 '모른다'고 말하는 기계: 복잡한 방법이
 excerpt: "미지 신호원 거부(open-set) 실측 A/B. 극값이론 기반 고급 보정이 실측 무선 데이터에서 단순 거리 기반을 이기지 못했습니다. 병목은 점수 계산이 아니라 특징 공간이라는 결론과, 그걸 알아낸 실험 설계를 공개합니다."
 date: 2026-07-28
 categories:
-  - experiment
+ - experiment
 tags:
-  - openset
-  - 스펙트럼감시
-  - 이상탐지
-  - 자체벤치
+ - openset
+ - 스펙트럼감시
+ - 이상탐지
+ - 자체벤치
 reading_time_min: 5
 ---
 
