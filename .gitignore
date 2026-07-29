@@ -9,5 +9,6 @@ papers-build/**/*.out
 papers-build/**/main.tex
 papers-build/**/main.pdf
 papers-build/**/figures/
+papers-build/**/fonts/
 !papers-build/*-ko.md
 !papers-build/*-en.md
