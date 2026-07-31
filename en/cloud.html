@@ -202,8 +202,106 @@
     </div>
   </section>
 
+  <!-- STORAGE COST -->
+  <section class="section section--alt" id="storage">
+    <div class="wrap">
+      <div class="section__head reveal">
+        <span class="eyebrow">Storage Cost &amp; Durability</span>
+        <h2>Have you ever measured whether the data you must keep for ten years is still readable?</h2>
+        <p>Korean commercial law requires ten years of accounting records. Medical law requires ten years of patient charts. Public records can require permanent retention, and the statute explicitly demands accurate and reliable reproduction. In most sites that data sits in the most expensive storage class, and nobody has ever checked that it still reads back. Cost and integrity are two faces of the same problem. We split the work three ways. <b>Decide</b>: break the bill down by cause and judge, per workload, where it should live. <b>Measure</b>: re-test vendor claims with standard tools. <b>Build</b>: a minimal configuration for data that has to stay air-gapped. Every number below was produced by code in a public repository and can be reproduced with one command.</p>
+      </div>
+
+      <div class="mlegend reveal">
+        <span class="mtag mtag--demo">Proven · measured, reproducible from public code</span>
+        <span class="mtag mtag--extend">Ready · method in hand, re-measured on your data</span>
+        <span class="mtag mtag--concept">Concept · an idea to validate together</span>
+      </div>
+
+      <div class="rf-grid reveal stagger" style="margin-top:1.6rem">
+        <div class="rf-cell rf-cell--lead">
+          <span class="rf-metric">83.7</span>
+          <span class="rf-unit">USD/TB break-even</span>
+          <span class="rf-name">Decide · settle the on-prem question with a number</span>
+          <span class="rf-desc">"The cloud is expensive, let's bring it home" rests entirely on one input: the price of a disk. Our model exposes that price as a variable and computes where the answer flips. In the synthetic case the recommendation flipped from on-prem back to cloud above 83.7 USD per raw TB, which is 2.6x the baseline. Since 2025 AI demand has kept disk and NAND supply tight and hardware prices rising, so skipping this axis means regretting the move three years later.</span>
+          <span class="chip chip--v">Measured on synthetic data · a test enforces the flip exists</span>
+        </div>
+        <div class="rf-cell rf-cell--lead">
+          <span class="rf-metric">4.0<small>x</small></span>
+          <span class="rf-unit">worse than doing nothing</span>
+          <span class="rf-name">Decide · when "just move it to archive" is wrong</span>
+          <span class="rf-desc">We applied a day-30 deep-archive transition to a workload of 64KB objects retained for only 90 days. Storage cost fell, but per-object transition requests dominated, and a 180-day minimum duration against 90-day retention added early-delete penalties. The result cost four times more than doing nothing. The same model shows lifecycle winning for large objects. This is an area that needs calculation, not a rule of thumb.</span>
+          <span class="chip chip--v">Measured on synthetic data · transition fees and penalties included</span>
+        </div>
+        <div class="rf-cell">
+          <span class="rf-metric">54.2<small>%</small></span>
+          <span class="rf-unit">of the bill attributed to a cause</span>
+          <span class="rf-name">Decide · the unexplained 45.8 percent is not claimed as explained</span>
+          <span class="rf-desc">We decompose a bill by cause rather than by line item: cold data left in a hot class, snapshot sprawl, egress, small-object request fees, over-provisioned volumes. In the synthetic case about half the bill resolved into addressable savings and the rest is left explicitly unattributed. Causes where acting would lose money are shown as such.</span>
+          <span class="chip chip--v">Measured on synthetic data · double-counting blocked by test</span>
+        </div>
+        <div class="rf-cell rf-cell--lead">
+          <span class="rf-metric">28.2<small>%</small></span>
+          <span class="rf-unit">diagnostic coverage</span>
+          <span class="rf-name">Measure · coverage matters more than the score</span>
+          <span class="rf-desc">We diagnose a live deployment against 39 table-stakes storage capabilities. In the worked example we actually measured 11 of 39, which is 28.2 percent. The other 28 are reported as not measured, never as passing. Most diagnostic reports give you a score and stay silent about what was never tested. We put that number at the top of the table.</span>
+          <span class="chip chip--v">Measured · against a 4-drive erasure-coded MinIO deployment</span>
+        </div>
+        <div class="rf-cell">
+          <span class="rf-metric">27<small>/39</small></span>
+          <span class="rf-unit">items that cannot pass at all</span>
+          <span class="rf-name">Measure · code prevents unmeasured items from being reported as passing</span>
+          <span class="rf-desc">Items we lack the access or tooling to test have no code path to a passing state. Constructing a pass without an evidence payload raises an exception. Turning a failure into "not measured" to raise the score is recorded as a regression. It is the safety catch the diagnostic tool applies to itself, and it is the whole product.</span>
+          <span class="chip chip--v">Measured · a test runs all 27 and asserts not-measured</span>
+        </div>
+        <div class="rf-cell">
+          <span class="rf-metric">1</span>
+          <span class="rf-unit">critical finding in the worked example</span>
+          <span class="rf-name">Measure · things you only learn by breaking them</span>
+          <span class="rf-desc">We delete shards, flip bits, try to delete objects under retention lock, and authenticate with the wrong secret. On the example target, missing in-flight encryption came back as a critical failure. Conversely, where absence of plaintext cannot prove encryption, the result is not-measured rather than a pass.</span>
+          <span class="chip chip--v">Measured · includes 10 S3 sub-checks and 4 access-control checks</span>
+        </div>
+        <div class="rf-cell rf-cell--lead">
+          <span class="rf-metric">100<small>% / 0%</small></span>
+          <span class="rf-unit">bitrot detection, checksums on and off</span>
+          <span class="rf-name">Build · three replicas is not durability by itself</span>
+          <span class="rf-desc">We flipped a single bit in data on disk. With checksums, detection was 100 percent. Without them, zero. What is missed becomes silent corruption: the read succeeds and the content is wrong, which is the worst outcome a storage system can produce. Holding three copies and knowing those three copies are intact are different problems.</span>
+          <span class="chip chip--v">Measured · single-bit flip at a random offset, headers not avoided</span>
+        </div>
+        <div class="rf-cell">
+          <span class="rf-metric">13.3<small>%</small></span>
+          <span class="rf-unit">loss after six rounds without scrub</span>
+          <span class="rf-name">Build · corruption accumulates, and then it is unrecoverable</span>
+          <span class="rf-desc">Injecting identical corruption in identical order, with background scrub as the only variable: the scrubbing arm repaired all 144 injuries and lost nothing, while the other lost 13.3 percent of objects within six rounds. Once a second replica rots while the first is already rotten, there is nothing to recover from. That is why "we have backups" and "we can restore" are different statements.</span>
+          <span class="chip chip--v">Measured · 144 identical injuries, scrub as the only variable</span>
+        </div>
+        <div class="rf-cell">
+          <span class="rf-metric">2<small>x</small></span>
+          <span class="rf-unit">usable capacity on the same disks</span>
+          <span class="rf-name">Build · cheap hardware does not help if you lose it back in efficiency</span>
+          <span class="rf-desc">Tolerating the same two simultaneous losses, erasure coding stores 682 GiB per raw TiB where 3x replication stores 341 GiB. Exactly double. Money saved on cheaper hardware disappears if half the capacity goes with it. At this scale reconstruct timings reorder between runs, so we refuse to claim either is faster and publish the deterministic byte counts instead.</span>
+          <span class="chip chip--v">Measured · compared at equal fault tolerance</span>
+        </div>
+        <div class="rf-cell">
+          <span class="rf-metric">50.2 &rarr; 0<small>%</small></span>
+          <span class="rf-unit">replicas sharing one rack</span>
+          <span class="rf-name">Build · so a single rack failure does not take them together</span>
+          <span class="rf-desc">Picking the top-scoring nodes while ignoring failure domains puts two or more replicas of half the chunks in a single domain. Lose power to one rack and all of that disappears at once. Domain-aware placement drives the figure to zero, and when domains are insufficient it refuses explicitly rather than quietly reducing redundancy.</span>
+          <span class="chip chip--v">Measured · 12 nodes, 4 domains, 5000 chunks</span>
+        </div>
+      </div>
+
+      <div class="hero__cta reveal" style="margin-top:1.4rem">
+        <a class="btn" href="https://github.com/2icorp/2i-case-18-storage-cost-model" target="_blank" rel="noopener">Cost model source &nearr;</a>
+        <a class="btn" href="https://github.com/2icorp/2i-case-17-storage-proofkit" target="_blank" rel="noopener">Diagnostic harness source &nearr;</a>
+        <a class="btn" href="https://github.com/2icorp/2i-case-16-storage-durability" target="_blank" rel="noopener">Durability measurements source &nearr;</a>
+      </div>
+
+      <p class="auto-foot reveal">To be honest: the figures above come from synthetic data and our own lab, and they have to be re-measured in your environment. Here is what we did not do. No formal consistency verification of the Jepsen kind. Multi-site replication and large-node operation are outside what we tested. The store we built is not a Ceph alternative but a minimal implementation for small air-gapped deployments, and that limit is written on the first screen of its repository. Every published price in the cost model ships marked unverified, and a customer-facing report will not generate while that mark stands. Published sources disagree on Seoul-region egress alone, so we re-check and pin the numbers at proposal time.</p>
+    </div>
+  </section>
+
   <!-- CTA -->
-  <section class="section section--alt" id="cta">
+  <section class="section" id="cta">
     <div class="wrap">
       <div class="section__head reveal">
         <span class="eyebrow">Next Step</span>

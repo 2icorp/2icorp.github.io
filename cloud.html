@@ -188,8 +188,13 @@
         </div>
         <div class="rf-cell">
           <span class="rf-name">클라우드 이전 · 비용 최적화</span>
-          <span class="rf-desc">서버 난립 정리, 클라우드·온프렘 배치 재설계, 유휴 자원 회수. 귀사 청구서 기준으로 절감 폭을 먼저 진단합니다.</span>
-          <span class="chip">확장 · 진단부터</span>
+          <span class="rf-desc">서버 난립 정리, 클라우드·온프렘 배치 재설계, 유휴 자원 회수. 귀사 청구서 기준으로 절감 폭을 먼저 진단합니다. 청구서를 원인별로 쪼개고 워크로드마다 손익분기를 계산하는 모델을 공개해 뒀습니다.</span>
+          <span class="chip chip--v">실증 · 공개 비용 모델</span>
+        </div>
+        <div class="rf-cell">
+          <span class="rf-name">스토리지 내구성 · 보존 의무 대응</span>
+          <span class="rf-desc">법이 10년을 요구하는 데이터가 실제로 읽히는지 진단합니다. 필수 역량 39항목을 표준 도구로 재측정하고, 폐쇄망에 남겨야 하는 데이터는 정족수 쓰기와 배경 검증을 갖춘 최소 구성으로 받습니다. 측정하지 않은 항목은 통과로 보고하지 않습니다.</span>
+          <span class="chip chip--v">실증 · 아래 스토리지 비용 절 참조</span>
         </div>
         <div class="rf-cell">
           <span class="rf-name">MLOps 재학습 루프</span>
@@ -202,8 +207,106 @@
     </div>
   </section>
 
+  <!-- 스토리지 비용 -->
+  <section class="section section--alt" id="storage">
+    <div class="wrap">
+      <div class="section__head reveal">
+        <span class="eyebrow">스토리지 비용 · STORAGE COST &amp; DURABILITY</span>
+        <h2>10년 보관해야 하는 데이터가, 지금 살아 있는지 재보신 적 있습니까.</h2>
+        <p>상법은 상업장부를 10년, 의료법은 진료기록을 10년 보관하라고 합니다. 공공기록물은 최대 영구이고 "정확하고 신뢰성 있는 재생 능력"까지 요구합니다. 그런데 대부분의 현장에서 그 데이터는 가장 비싼 저장 등급에 방치돼 있고, 실제로 읽히는지는 아무도 재본 적이 없습니다. 비용과 무결성은 같은 문제의 양면입니다. 저희는 이걸 세 단계로 나눠 다룹니다. <b>정한다</b>(청구서를 원인별로 쪼개고 워크로드마다 어디에 둘지 판정), <b>잰다</b>(벤더 주장을 표준 도구로 재측정), <b>만든다</b>(그래도 폐쇄망에 둬야 하는 데이터를 위한 최소 구성). 아래 숫자는 전부 공개 저장소의 코드가 실행에서 뽑은 값이고, 명령 한 줄로 다시 뽑을 수 있습니다.</p>
+      </div>
+
+      <div class="mlegend reveal">
+        <span class="mtag mtag--demo">실증 · 공개 코드로 재현 가능한 실측</span>
+        <span class="mtag mtag--extend">확장 · 방법론 보유, 귀사 데이터로 재측정</span>
+        <span class="mtag mtag--concept">개념 · 함께 검증할 아이디어</span>
+      </div>
+
+      <div class="rf-grid reveal stagger" style="margin-top:1.6rem">
+        <div class="rf-cell rf-cell--lead">
+          <span class="rf-metric">83.7</span>
+          <span class="rf-unit">달러/TB · 손익분기 단가</span>
+          <span class="rf-name">정한다 · 온프렘이 답인지 아닌지를 숫자로 가른다</span>
+          <span class="rf-desc">"클라우드가 비싸니 내리자"는 판단은 하드웨어 단가 하나에 통째로 매달려 있습니다. 저희 모델은 그 단가를 입력 변수로 빼고 뒤집히는 지점을 계산합니다. 합성 사례에서는 원시 TB당 83.7달러를 넘는 순간 권고가 온프렘에서 클라우드로 뒤집혔습니다. 기준값의 2.6배입니다. 2025년 이후 AI 수요로 디스크와 낸드 공급이 빠듯해 하드웨어가 오르는 국면이라, 이 축을 안 재고 내리면 3년 뒤에 후회합니다.</span>
+          <span class="chip chip--v">합성 데이터 실측 · 손익분기 존재를 테스트가 강제</span>
+        </div>
+        <div class="rf-cell rf-cell--lead">
+          <span class="rf-metric">4.0<small>배</small></span>
+          <span class="rf-unit">공격적 라이프사이클이 더 비쌌다</span>
+          <span class="rf-name">정한다 · 아카이브로 내리면 싸진다는 말이 틀리는 조건</span>
+          <span class="rf-desc">64KB 작은 파일을 90일만 보관하는 워크로드에 30일 시점 심층 아카이브 전환을 걸어봤습니다. 저장비는 줄었지만 객체당 전환 요청비가 압도했고, 180일 최소 보관 기간과 90일 보존이 부딪혀 조기 삭제 위약금까지 붙었습니다. 결과는 아무것도 안 한 것보다 4배 비쌌습니다. 같은 모델이 큰 파일에서는 라이프사이클이 이긴다는 것도 보여줍니다. 규칙이 아니라 계산이 필요한 영역입니다.</span>
+          <span class="chip chip--v">합성 데이터 실측 · 전환요청비·위약금 포함 계산</span>
+        </div>
+        <div class="rf-cell">
+          <span class="rf-metric">54.2<small>%</small></span>
+          <span class="rf-unit">원인이 특정된 비율</span>
+          <span class="rf-name">정한다 · 설명 못 한 45.8퍼센트는 설명했다고 말하지 않는다</span>
+          <span class="rf-desc">청구서를 항목이 아니라 원인으로 쪼갭니다. 콜드 데이터의 핫 클래스 방치, 스냅샷 누적, 외부 전송, 소형 오브젝트 요청비, 과잉 프로비저닝. 합성 사례에서 절감 가능액으로 특정된 것은 절반가량이고 나머지는 미귀속으로 남겨둡니다. 원인 중에는 손대면 오히려 손해인 항목도 그대로 표시합니다.</span>
+          <span class="chip chip--v">합성 데이터 실측 · 원인 간 중복 계상 금지를 테스트가 강제</span>
+        </div>
+        <div class="rf-cell rf-cell--lead">
+          <span class="rf-metric">28.2<small>%</small></span>
+          <span class="rf-unit">진단 측정 범위</span>
+          <span class="rf-name">잰다 · 점수보다 중요한 것은 몇 퍼센트를 실제로 쟀는가</span>
+          <span class="rf-desc">스토리지 필수 역량 39항목을 놓고 실제 배포를 진단합니다. 공개 도구로 돌린 예제에서 저희가 실제로 측정한 항목은 39개 중 11개, 즉 28.2퍼센트였습니다. 나머지 28개는 통과로 보고하지 않고 미측정으로 남깁니다. 대부분의 진단 보고서가 점수만 말하고 무엇을 안 쟀는지는 말하지 않습니다. 저희는 그 숫자를 표 맨 위에 놓습니다.</span>
+          <span class="chip chip--v">실측 · MinIO 4드라이브 소거코드 구성 대상</span>
+        </div>
+        <div class="rf-cell">
+          <span class="rf-metric">27<small>/39</small></span>
+          <span class="rf-unit">통과가 아예 불가능한 항목</span>
+          <span class="rf-name">잰다 · 측정 안 한 것을 통과로 쓰지 못하게 코드가 막는다</span>
+          <span class="rf-desc">권한이나 도구가 없어 잴 수 없는 항목은 통과로 가는 코드 경로 자체가 없습니다. 증거 없이 통과 상태를 만들려 하면 예외가 납니다. 실패를 미측정으로 바꿔 점수를 올리는 것도 회귀로 기록됩니다. 진단 도구가 스스로에게 거는 안전장치이고, 이게 이 도구의 전부입니다.</span>
+          <span class="chip chip--v">실측 · 27개 전부 미측정 반환을 테스트가 확인</span>
+        </div>
+        <div class="rf-cell">
+          <span class="rf-metric">1<small>건</small></span>
+          <span class="rf-unit">예제 진단에서 나온 치명 결함</span>
+          <span class="rf-name">잰다 · 깨뜨려보지 않으면 모르는 것들</span>
+          <span class="rf-desc">샤드를 실제로 지우고, 비트를 뒤집고, 보존 잠금이 걸린 객체를 지워보고, 잘못된 비밀키로 접근해 봅니다. 예제 대상에서는 전송 구간 암호화 미적용이 치명 등급으로 잡혔습니다. 반대로 "평문이 안 보이니 암호화된 것"처럼 결론 낼 수 없는 항목은 통과가 아니라 미측정으로 돌립니다.</span>
+          <span class="chip chip--v">실측 · S3 호환 세부 10건, 접근제어 4건 포함</span>
+        </div>
+        <div class="rf-cell rf-cell--lead">
+          <span class="rf-metric">100<small>% / 0%</small></span>
+          <span class="rf-unit">체크섬 유무에 따른 비트로트 탐지율</span>
+          <span class="rf-name">만든다 · 복제 3벌은 그 자체로 내구성이 아니다</span>
+          <span class="rf-desc">디스크 위 데이터의 비트 하나를 뒤집었습니다. 체크섬이 있으면 100퍼센트 잡히고, 없으면 하나도 못 잡습니다. 못 잡은 경우는 읽기가 성공하는데 내용이 다른 조용한 오염으로 남습니다. 저장 시스템이 낼 수 있는 가장 나쁜 결과입니다. 복제본을 세 벌 두는 것과 그 세 벌이 온전한지 아는 것은 다른 문제입니다.</span>
+          <span class="chip chip--v">실측 · 임의 오프셋 단일 비트 반전, 헤더 회피 없음</span>
+        </div>
+        <div class="rf-cell">
+          <span class="rf-metric">13.3<small>%</small></span>
+          <span class="rf-unit">스크럽이 없을 때 6라운드 뒤 손실률</span>
+          <span class="rf-name">만든다 · 손상은 쌓이고, 쌓이면 복구 불능이 된다</span>
+          <span class="rf-desc">같은 손상을 같은 순서로 주입하면서 배경 스크럽만 켜고 껐습니다. 스크럽이 도는 쪽은 144건을 전부 복구해 손실 0이었고, 안 도는 쪽은 6라운드 만에 객체의 13.3퍼센트를 잃었습니다. 한 복제본이 썩는 동안 다른 복제본도 썩으면 되돌릴 수가 없습니다. 백업이 있다는 말과 복구된다는 말이 다른 이유입니다.</span>
+          <span class="chip chip--v">실측 · 손상 144건 동일 주입, 스크럽만 변수</span>
+        </div>
+        <div class="rf-cell">
+          <span class="rf-metric">2<small>배</small></span>
+          <span class="rf-unit">같은 디스크에 담기는 양</span>
+          <span class="rf-name">만든다 · 싸게 사도 저장 효율에서 잃으면 남는 게 없다</span>
+          <span class="rf-desc">동시 손실 2개를 똑같이 견디는 조건에서, 소거 부호는 원시 1TiB에 682GiB를 담고 3중 복제는 341GiB를 담습니다. 정확히 두 배입니다. 하드웨어를 싸게 사서 아낀 돈을 저장 효율에서 절반 잃으면 비용 논리가 성립하지 않습니다. 복원 속도는 이 규모에서 순위가 뒤바뀌어 어느 쪽이 빠르다고 말하지 않고, 읽고 쓴 바이트 수만 싣습니다.</span>
+          <span class="chip chip--v">실측 · 내고장성 동일 조건에서 비교</span>
+        </div>
+        <div class="rf-cell">
+          <span class="rf-metric">50.2 → 0<small>%</small></span>
+          <span class="rf-unit">복제본이 같은 랙에 몰린 비율</span>
+          <span class="rf-name">만든다 · 랙 하나가 죽을 때 같이 죽지 않게</span>
+          <span class="rf-desc">장애 도메인을 무시하고 점수 상위 노드를 고르면 절반의 청크가 복제본 둘 이상을 한 도메인에 둡니다. 랙 한 대의 전원이 나가면 그만큼이 한꺼번에 사라집니다. 도메인을 인식하는 배치는 이 비율을 0으로 만들고, 도메인이 모자라면 조용히 중복도를 낮추는 대신 명시적으로 거부합니다.</span>
+          <span class="chip chip--v">실측 · 노드 12, 도메인 4, 청크 5000</span>
+        </div>
+      </div>
+
+      <div class="hero__cta reveal" style="margin-top:1.4rem">
+        <a class="btn" href="https://github.com/2icorp/2i-case-18-storage-cost-model" target="_blank" rel="noopener">비용 모델 소스 ↗</a>
+        <a class="btn" href="https://github.com/2icorp/2i-case-17-storage-proofkit" target="_blank" rel="noopener">진단 하네스 소스 ↗</a>
+        <a class="btn" href="https://github.com/2icorp/2i-case-16-storage-durability" target="_blank" rel="noopener">내구성 실측 소스 ↗</a>
+      </div>
+
+      <p class="auto-foot reveal">정직하게 말하면: 위 수치는 합성 데이터와 저희 실험 환경에서 나온 값이고, 귀사 환경에서는 다시 재야 합니다. 저희가 하지 않은 것도 밝힙니다. 정형 일관성 검증(Jepsen류)을 하지 않았고, 다중 사이트 복제와 대규모 노드 운영은 검증 범위 밖입니다. 저희가 만든 저장소는 Ceph 대안이 아니라 폐쇄망 소규모 구성을 위한 최소 구현이며 그 한계를 저장소 문서 첫 화면에 적어뒀습니다. 비용 모델에 들어간 공개 요금은 전부 미확인 표시로 출하되고, 그 표시를 지우지 않으면 고객용 보고서가 생성되지 않습니다. 서울 리전 외부 전송 단가만 해도 공개 출처마다 값이 갈립니다. 제안 시점에 다시 조회해 확정합니다.</p>
+    </div>
+  </section>
+
   <!-- CTA -->
-  <section class="section section--alt" id="cta">
+  <section class="section" id="cta">
     <div class="wrap">
       <div class="section__head reveal">
         <span class="eyebrow">다음 단계</span>
