@@ -14,7 +14,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../styles.css?v=15">
+<link rel="stylesheet" href="../styles.css?v=17">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
 <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
 <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js" onload="renderMathInElement(document.body,{delimiters:[{left:'$$',right:'$$',display:true},{left:'$',right:'$',display:false},{left:'\\[',right:'\\]',display:true},{left:'\\(',right:'\\)',display:false}]})"></script>
@@ -59,7 +59,7 @@
 재고 병목이 어느 단계에 있는지 귀속해야 합니다. GPU 서버 데모와 현장 배포 사이의 간극이
 바로 여기서 드러납니다.</p>
 <h2 id="_2">결과 (불편한 숫자 그대로)</h2>
-<table>
+<div class="tscroll" tabindex="0" role="region" aria-label="표. 좌우로 스크롤할 수 있습니다"><table>
 <thead>
 <tr>
 <th>항목</th>
@@ -76,7 +76,7 @@
 <td><strong>0.19배</strong></td>
 </tr>
 </tbody>
-</table>
+</table></div>
 <p>즉 현재 파이프라인은 목표 대역폭의 실시간 처리에 5배 모자랍니다. 이 숫자를 숨기면 파일럿
 현장에서 터집니다. 단계별 프로파일링으로 병목을 특정 변환 단계에 귀속했고, 채널 분할
 처리(폴리페이즈 채널라이저로 대역을 쪼개 필요한 채널만 정밀 처리)라는 해결 방향까지
@@ -109,7 +109,7 @@
       <a href="../index.html#method">방식</a>
       <a href="../papers.html">논문·실험</a>
       <a href="../index.html#voucher">정부 바우처</a>
-      <a href="https://github.com/2icorp" target="_blank" rel="noopener">GitHub</a>
+      <a href="../cases.html">사례</a>
       <a href="../en/">EN</a>
     </nav>
   </div>

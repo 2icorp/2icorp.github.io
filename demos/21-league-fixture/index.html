@@ -1,0 +1,912 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<script>(function(){try{var t=localStorage.getItem("theme");if(!t&&window.matchMedia&&matchMedia("(prefers-color-scheme: dark)").matches)t="dark";if(t)document.documentElement.setAttribute("data-theme",t);}catch(e){}})();</script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>리그 일정 최적화 시뮬레이터 데모 · 2i</title>
+<link rel="stylesheet" href="../../styles.css?v=17">
+<style>
+  .demo-top{display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:1rem clamp(1rem,2vw,2rem);border-bottom:1px solid var(--line-soft);flex-wrap:wrap;}
+  .demo-brand{display:flex;align-items:baseline;gap:.6rem;text-decoration:none;color:var(--ink);}
+  .demo-brand__mark{font-family:var(--mono);font-weight:800;color:var(--signal);font-size:1.1rem;}
+  .demo-brand__tag{font-family:var(--mono);font-size:var(--text-xs);letter-spacing:.08em;color:var(--ink-faint);text-transform:uppercase;}
+  .demo-top__links{display:flex;gap:1.2rem;font-size:var(--text-sm);}
+  .demo-top__links a{color:var(--ink-soft);text-decoration:none;border-bottom:1px solid transparent;transition:color var(--dur) var(--ease),border-color var(--dur) var(--ease);}
+  .demo-top__links a:hover{color:var(--ink);border-color:var(--line);}
+  .demo-top__links a:focus-visible{outline:2px solid var(--signal);outline-offset:3px;}
+  .demo-banner{font-family:var(--mono);font-size:var(--text-xs);color:var(--ink-faint);background:var(--paper-2);border-bottom:1px solid var(--line-soft);padding:.55rem clamp(1rem,2vw,2rem);letter-spacing:.01em;}
+  main{max-width:1100px;margin:0 auto;padding:2rem clamp(1rem,2vw,2rem) 1rem;}
+  h1{font-size:var(--text-h2);margin:0 0 .4rem;}
+  .lede{color:var(--ink-soft);max-width:64ch;margin:0 0 2rem;line-height:1.7;}
+  section{margin-bottom:2.6rem;}
+  h2{font-size:var(--text-h3);margin:0 0 .8rem;}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);}
+  .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0;}
+
+  .controls2{display:grid;grid-template-columns:1fr 1fr;gap:1.4rem;padding:1.4rem clamp(1rem,2vw,1.8rem);}
+  .controls2 > *{min-width:0;}
+  .control h3{font-size:1rem;margin:0 0 .3rem;}
+  .control p{margin:0 0 .8rem;color:var(--ink-faint);font-size:var(--text-xs);font-family:var(--mono);line-height:1.6;}
+  .control__row{display:flex;align-items:center;gap:.9rem;}
+  input[type="range"]{flex:1;accent-color:var(--signal);height:44px;cursor:pointer;}
+  input[type="range"]:focus-visible{outline:2px solid var(--signal);outline-offset:3px;}
+  .control__val{font-family:var(--mono);font-weight:700;min-width:4.4rem;text-align:right;font-size:var(--text-sm);}
+  .toggle-row{display:flex;align-items:center;gap:.8rem;min-height:44px;}
+  .switch{position:relative;width:42px;height:24px;flex:none;}
+  .switch input{position:absolute;inset:0;opacity:0;cursor:pointer;margin:0;}
+  .switch span{position:absolute;inset:0;background:var(--line);border-radius:999px;transition:background var(--dur) var(--ease);}
+  .switch span::after{content:"";position:absolute;top:3px;left:3px;width:18px;height:18px;background:var(--paper);border-radius:50%;transition:transform var(--dur) var(--ease);box-shadow:0 1px 2px rgba(0,0,0,.3);}
+  .switch input:checked + span{background:var(--signal);}
+  .switch input:checked + span::after{transform:translateX(18px);}
+  .switch input:focus-visible + span{outline:2px solid var(--signal);outline-offset:2px;}
+  .toggle-label{font-size:var(--text-sm);color:var(--ink);}
+
+  .opt-row{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.9rem;padding:0 clamp(1rem,2vw,1.8rem) 1.2rem;}
+  .opt-toggle{min-height:44px;padding:.6rem 1.1rem;border:1px solid var(--line);border-radius:var(--radius);background:var(--paper-2);color:var(--ink);font-family:var(--mono);font-size:var(--text-xs);letter-spacing:.02em;cursor:pointer;transition:background var(--dur) var(--ease),border-color var(--dur) var(--ease),transform var(--dur) var(--ease);}
+  .opt-toggle:hover{border-color:var(--steel-soft);transform:translateY(-1px);}
+  .opt-toggle:active{transform:translateY(0);}
+  .opt-toggle:focus-visible{outline:2px solid var(--signal);outline-offset:2px;}
+  .opt-toggle[aria-pressed="true"]{background:var(--panel);border-color:var(--signal);box-shadow:0 0 0 1px var(--signal) inset;color:var(--signal-deep);font-weight:700;}
+  .progress-wrap{flex:1 1 220px;min-width:0;}
+  .progress{position:relative;height:4px;background:var(--line);border-radius:2px;overflow:hidden;}
+  .progress__fill{position:absolute;inset:0 auto 0 0;width:0;background:linear-gradient(90deg,var(--steel),var(--signal));transition:width .15s linear;}
+  .progress-status{font-family:var(--mono);font-size:var(--text-xs);color:var(--ink-faint);margin:.4rem 0 0;}
+
+  .view-note{font-family:var(--mono);font-size:var(--text-xs);color:var(--ink-faint);margin:0 0 1rem;}
+
+  .metrics{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;}
+  .metric{background:var(--panel);padding:1.2rem 1rem;min-width:0;}
+  .metric__label{font-family:var(--mono);font-size:var(--text-xs);color:var(--ink-faint);letter-spacing:.06em;text-transform:uppercase;}
+  .metric__value{font-size:1.55rem;font-weight:800;margin-top:.35rem;}
+  .metric__unit{font-size:.85rem;color:var(--ink-soft);font-weight:500;margin-left:.15rem;}
+  .metric__delta{font-family:var(--mono);font-size:var(--text-xs);margin-top:.4rem;line-height:1.5;}
+  .metric__delta.good{color:var(--steel);}
+  .metric__delta.bad{color:var(--signal-deep);}
+  .metric__delta.neutral{color:var(--ink-faint);}
+
+  .chart-card{padding:1.3rem clamp(1rem,2vw,1.6rem);}
+  .chart-card h3{font-size:1rem;margin:0 0 .2rem;}
+  .chart-card p{margin:0 0 1rem;color:var(--ink-faint);font-size:var(--text-xs);font-family:var(--mono);line-height:1.6;}
+  .legend{display:flex;flex-wrap:wrap;gap:1.1rem;font-family:var(--mono);font-size:var(--text-xs);color:var(--ink-soft);margin-bottom:.9rem;}
+  .legend span{display:inline-flex;align-items:center;gap:.4rem;}
+  .swatch{width:14px;height:14px;border-radius:50%;display:inline-block;background:var(--steel-soft);}
+  .swatch--home{background:var(--signal);}
+  .swatch--base{background:var(--paper);border:1.5px solid var(--ink-faint);}
+  .swatch--cur{background:var(--signal);border:1.5px solid var(--paper);}
+  svg{width:100%;height:auto;display:block;}
+
+  .sched-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:var(--radius);max-height:520px;overflow-y:auto;}
+  .sched-table{border-collapse:collapse;font-family:var(--mono);font-size:var(--text-xs);width:max-content;min-width:100%;}
+  .sched-table th,.sched-table td{padding:.4rem .5rem;border-bottom:1px solid var(--line-soft);border-right:1px solid var(--line-soft);text-align:center;white-space:nowrap;min-width:58px;}
+  .sched-table thead th{background:var(--paper-2);color:var(--ink-faint);font-weight:600;}
+  .sched-table th[scope="row"]{position:sticky;left:0;background:var(--paper-2);text-align:left;z-index:1;font-weight:700;color:var(--ink);}
+  .sched-table td.home{background:color-mix(in srgb, var(--steel) 12%, var(--panel));}
+  .sched-table td.away{background:var(--panel);}
+  .sched-table td.brk{box-shadow:inset 0 0 0 2px var(--signal);}
+  .sched-table .leg2start{border-left:2px solid var(--signal);}
+
+  .map-controls{display:flex;align-items:center;gap:.8rem;margin-bottom:1rem;flex-wrap:wrap;}
+  .map-controls label{font-size:var(--text-sm);color:var(--ink-soft);}
+  .map-controls select{min-height:44px;padding:.4rem .7rem;border:1px solid var(--line);border-radius:var(--radius);background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:var(--text-sm);}
+  .map-controls select:focus-visible{outline:2px solid var(--signal);outline-offset:2px;}
+  .city-dot{fill:var(--steel-soft);}
+  .city-dot--home{fill:var(--signal);}
+  .city-label{font-family:var(--mono);font-size:9px;fill:var(--ink-soft);}
+  .route-line{fill:none;stroke:var(--signal);stroke-width:1.5;stroke-dasharray:4 3;opacity:.85;}
+  .pareto-current{fill:var(--signal);stroke:var(--panel);stroke-width:1.5;}
+  .pareto-baseline{fill:var(--panel);stroke:var(--ink-faint);stroke-width:1.5;}
+  .pareto-sweep{fill:var(--steel-soft);}
+  .pareto-line{fill:none;stroke:var(--steel);stroke-width:1.3;stroke-dasharray:3 3;}
+  .pareto-axis{font-family:var(--mono);font-size:8px;fill:var(--ink-faint);}
+
+  .summary-note{margin-top:1rem;color:var(--ink-soft);line-height:1.75;background:var(--paper-2);border:1px solid var(--line-soft);border-radius:var(--radius);padding:1rem 1.2rem;}
+  .baseline-note{margin-top:1rem;color:var(--ink-faint);font-size:var(--text-xs);font-family:var(--mono);line-height:1.8;}
+  .demo-foot{margin-top:3rem;padding:1.6rem clamp(1rem,2vw,2rem) 2.4rem;font-family:var(--mono);font-size:var(--text-xs);color:var(--ink-faint);border-top:1px solid var(--line-soft);text-align:center;}
+
+  @media (max-width:820px){
+    .controls2{grid-template-columns:1fr;}
+    .metrics{grid-template-columns:repeat(2,1fr);}
+  }
+  @media (max-width:480px){
+    .metrics{grid-template-columns:1fr;}
+  }
+  @media (prefers-reduced-motion: reduce){
+    .switch span, .switch span::after, .opt-toggle, .progress__fill, .demo-top__links a{transition:none;}
+  }
+</style>
+</head>
+<body>
+<header class="demo-top">
+  <a href="/" class="demo-brand"><span class="demo-brand__mark">2i</span><span class="demo-brand__tag">DEMO · 리그 일정 최적화 시뮬레이터</span></a>
+  <nav class="demo-top__links">
+    <a href="/cases.html#case-21">사례 보기</a>
+    <a href="/#contact">상담 신청</a>
+  </nav>
+</header>
+<div class="demo-banner">브라우저에서 그 자리에서 라운드로빈 일정을 만들고 지역탐색으로 개선하는 인터랙티브 데모입니다. 합성 데이터를 씁니다.</div>
+
+<main>
+  <h1>이동거리와 연속 원정, 둘 다 가질 수는 없습니다</h1>
+  <p class="lede">스포츠 리그 일정에서 이동거리를 줄이는 것과 연속 원정·연속 홈(breaks)을 줄이는 것은 서로 당깁니다. 이 데모는 실제 라운드로빈 일정을 브라우저에서 만들고 지역탐색으로 개선하면서, 두 목표 사이의 교환비를 숫자로 보여줍니다.</p>
+
+  <section class="card controls2">
+    <div class="control">
+      <h3>팀 수</h3>
+      <p>리그에 참가하는 팀 수입니다. 팀이 늘수록 라운드 수도 늘어 계산량이 커집니다.</p>
+      <div class="control__row">
+        <input type="range" id="teamCountSlider" min="6" max="16" step="2" value="10" aria-label="팀 수">
+        <span class="control__val" id="teamCountVal">10팀</span>
+      </div>
+    </div>
+    <div class="control">
+      <h3>더블 라운드로빈</h3>
+      <p>켜면 모든 팀이 서로 홈·원정 한 번씩(총 두 번) 만납니다. 끄면 한 번씩만 만나는 싱글 라운드로빈입니다.</p>
+      <div class="toggle-row">
+        <label class="switch">
+          <input type="checkbox" id="doubleToggle" checked aria-label="더블 라운드로빈(홈·원정 각 1회)">
+          <span></span>
+        </label>
+        <span class="toggle-label">홈·원정 각 1회로 만납니다</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="card">
+    <div class="controls2">
+      <div class="control">
+        <h3>이동거리 가중치</h3>
+        <p>값이 클수록 원정을 몰아서 이동거리를 줄이려 합니다. 그 대신 breaks(연속 원정·연속 홈)가 늘어나기 쉽습니다.</p>
+        <div class="control__row">
+          <input type="range" id="wTravelSlider" min="0" max="10" step="1" value="5" aria-label="이동거리 가중치">
+          <span class="control__val" id="wTravelVal">5</span>
+        </div>
+      </div>
+      <div class="control">
+        <h3>breaks 가중치</h3>
+        <p>값이 클수록 홈·원정을 자주 번갈아 breaks를 줄이려 합니다. 그 대신 이동거리가 늘어나기 쉽습니다.</p>
+        <div class="control__row">
+          <input type="range" id="wBreaksSlider" min="0" max="10" step="1" value="5" aria-label="breaks 가중치">
+          <span class="control__val" id="wBreaksVal">5</span>
+        </div>
+      </div>
+    </div>
+    <div class="opt-row">
+      <button type="button" class="opt-toggle" id="optToggleBtn" aria-pressed="false">최적화 끄기(하드 제약만 보기)</button>
+      <div class="progress-wrap">
+        <div class="progress" aria-hidden="true"><div class="progress__fill" id="progressFill"></div></div>
+        <p class="progress-status" id="progressStatus" aria-live="polite">대기 중</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>핵심 지표</h2>
+    <p class="view-note" id="viewStateNote" aria-live="polite">계산 중입니다...</p>
+    <div class="metrics" id="metrics">
+      <div class="metric">
+        <div class="metric__label">총 이동거리</div>
+        <div class="metric__value"><span id="mDistance">-</span><span class="metric__unit">km</span></div>
+        <div class="metric__delta" id="mDistanceDelta"></div>
+      </div>
+      <div class="metric">
+        <div class="metric__label">breaks</div>
+        <div class="metric__value"><span id="mBreaks">-</span><span class="metric__unit">건</span></div>
+        <div class="metric__delta" id="mBreaksDelta"></div>
+      </div>
+      <div class="metric">
+        <div class="metric__label">공정성(Jain 지수)</div>
+        <div class="metric__value"><span id="mJain">-</span></div>
+        <div class="metric__delta" id="mJainDelta"></div>
+      </div>
+      <div class="metric">
+        <div class="metric__label">breaks 감소율</div>
+        <div class="metric__value"><span id="mReduction">-</span><span class="metric__unit">%</span></div>
+        <div class="metric__delta">최적화 끄기(하드 제약만) 대비</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="card chart-card">
+    <h3>일정표</h3>
+    <p>가로는 라운드, 세로는 팀입니다. 각 셀은 그 라운드의 상대와 홈·원정 여부이며, 테두리로 강조된 셀은 breaks(연속 홈 또는 연속 원정)가 발생한 지점입니다. 더블 라운드로빈이면 두 번째 리그(원정·홈이 뒤집힌 후반)가 시작되는 라운드에 세로선을 그어 구분합니다.</p>
+    <div class="sched-wrap" id="scheduleWrap"></div>
+  </section>
+
+  <section class="card chart-card">
+    <h3>팀 이동 경로</h3>
+    <p>팀을 선택하면 그 팀이 시즌 동안 실제로 이동한 경로를 순서대로 보여줍니다. 좌표는 합성 데이터이며 실제 도시 위치와 다를 수 있습니다.</p>
+    <div class="map-controls">
+      <label for="teamSelect">팀 선택</label>
+      <select id="teamSelect" aria-label="지도에서 경로를 볼 팀"></select>
+    </div>
+    <div class="legend">
+      <span><span class="swatch swatch--home"></span>선택한 팀의 연고지</span>
+      <span><span class="swatch"></span>다른 팀 연고지</span>
+    </div>
+    <svg id="mapSvg" preserveAspectRatio="xMidYMid meet" role="img" aria-label="팀 이동 경로 지도"></svg>
+  </section>
+
+  <section class="card chart-card">
+    <h3>이동거리 x breaks 교환비</h3>
+    <p>이동거리 가중치를 0에서 10까지 훑으며(breaks 가중치는 10에서 그만큼 뺀 값) 같은 리그를 지역탐색으로 반복해 다시 풀어 그린 곡선입니다. 큰 점은 지금 슬라이더 설정의 결과, 흰 점은 최적화를 끈 기준선입니다.</p>
+    <p class="progress-status" id="paretoStatus" aria-live="polite">교환비 스윕 계산 중입니다...</p>
+    <div class="legend">
+      <span><span class="swatch pareto-sweep" style="background:var(--steel-soft)"></span>가중치 스윕 지점</span>
+      <span><span class="swatch swatch--cur"></span>현재 설정</span>
+      <span><span class="swatch swatch--base"></span>최적화 끄기(기준선)</span>
+    </div>
+    <svg id="paretoSvg" viewBox="0 0 640 320" preserveAspectRatio="xMidYMid meet" role="img" aria-label="이동거리 대 breaks 교환비 산점도"></svg>
+  </section>
+
+  <section>
+    <h2>무엇을 봤나</h2>
+    <p class="summary-note" id="summaryNote" aria-live="polite">계산 중입니다...</p>
+  </section>
+
+  <p class="baseline-note">정직하게 말하면, 이 데모는 지역탐색이라 최적해를 보장하지 않습니다. 실제 프로젝트에서는 CP-SAT 같은 정수계획 solver로 정확해를 구하고 독립된 검증기를 따로 둡니다. 도시 좌표와 거리 행렬은 합성 데이터이며, 실제 리그 일정에는 경기장 가용성·중계 편성·연고지 규칙 같은 제약이 추가로 붙습니다. 공정성 지표로 쓴 Jain 지수는 이동거리 분포의 균등성만 재므로, 다른 방식으로 공정성을 정의하면 결론이 달라질 수 있습니다.</p>
+</main>
+
+<footer class="demo-foot">© 2i · contact@2icorp.site</footer>
+
+<script>
+(function(){
+  "use strict";
+
+  // ---------- constants ----------
+  var CITIES = [
+    {name:"서울", x:180, y:300},
+    {name:"인천", x:150, y:295},
+    {name:"수원", x:185, y:275},
+    {name:"춘천", x:230, y:310},
+    {name:"강릉", x:300, y:285},
+    {name:"대전", x:195, y:205},
+    {name:"청주", x:215, y:215},
+    {name:"전주", x:170, y:145},
+    {name:"광주", x:140, y:105},
+    {name:"여수", x:175, y:60},
+    {name:"목포", x:110, y:75},
+    {name:"대구", x:275, y:155},
+    {name:"포항", x:315, y:180},
+    {name:"울산", x:305, y:100},
+    {name:"부산", x:280, y:65},
+    {name:"창원", x:255, y:90}
+  ];
+  var MAP_MINX=110, MAP_MAXX=315, MAP_MINY=60, MAP_MAXY=310, MAP_MARGIN=25;
+  var MAP_W=(MAP_MAXX-MAP_MINX)+MAP_MARGIN*2, MAP_H=(MAP_MAXY-MAP_MINY)+MAP_MARGIN*2;
+  var ITER_MAIN=1200, ITER_SWEEP=800;
+  var SVGNS="http://www.w3.org/2000/svg";
+  var SWEEP=[0,2,4,5,6,8,10];
+
+  // ---------- seeded prng (mulberry32) ----------
+  function mulberry32(seed){
+    var s = seed >>> 0;
+    return function(){
+      s = (s + 0x6D2B79F5) | 0;
+      var t = Math.imul(s ^ (s >>> 15), 1 | s);
+      t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+      return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+    };
+  }
+  function hashSeed(str){
+    var h = 2166136261;
+    for(var i=0;i<str.length;i++){
+      h ^= str.charCodeAt(i);
+      h = Math.imul(h, 16777619);
+    }
+    return h >>> 0;
+  }
+
+  // ---------- geometry ----------
+  function dist(a,b){ var dx=a.x-b.x, dy=a.y-b.y; return Math.sqrt(dx*dx+dy*dy); }
+
+  function selectCities(T){
+    var n = CITIES.length;
+    var out = [];
+    var prev = -1;
+    for(var i=0;i<T;i++){
+      var idx = Math.round(i*(n-1)/(T-1));
+      if(idx<=prev) idx = prev+1;
+      if(idx>n-1) idx = n-1;
+      prev = idx;
+      out.push(CITIES[idx]);
+    }
+    return out;
+  }
+
+  // ---------- schedule generation: circle (polygon) method ----------
+  function buildLegRounds(T){
+    var arr = [];
+    for(var i=1;i<T;i++) arr.push(i);
+    var half = T/2;
+    var legRounds = [];
+    for(var r=0;r<T-1;r++){
+      var roundTeams = [0].concat(arr);
+      var matches = [];
+      for(var i2=0;i2<half;i2++){
+        var a = roundTeams[i2], b = roundTeams[T-1-i2];
+        var home, away;
+        if((i2+r)%2===0){ home=a; away=b; } else { home=b; away=a; }
+        matches.push({home:home, away:away});
+      }
+      legRounds.push(matches);
+      arr.unshift(arr.pop());
+    }
+    return legRounds;
+  }
+
+  function buildSchedule(T, double){
+    var leg1 = buildLegRounds(T);
+    if(!double) return leg1;
+    var leg2 = leg1.map(function(round){
+      return round.map(function(m){ return {home:m.away, away:m.home}; });
+    });
+    return leg1.concat(leg2);
+  }
+
+  function cloneRounds(rounds){
+    return rounds.map(function(round){
+      return round.map(function(m){ return {home:m.home, away:m.away}; });
+    });
+  }
+
+  // pairsList: for double leagues, each entry holds BOTH match objects of a
+  // pair (leg1 + leg2) so the home/away flip move can swap them together and
+  // preserve the "once home, once away" invariant. Object references stay
+  // valid even after round-swap moves, since those only move whole round
+  // arrays around, never mutate the match objects themselves.
+  function derivePairsList(rounds, T, double){
+    var half = T/2;
+    var legLen = T-1;
+    var pairsList = [];
+    if(double){
+      for(var r=0;r<legLen;r++){
+        for(var i=0;i<half;i++){
+          pairsList.push([ rounds[r][i], rounds[legLen+r][i] ]);
+        }
+      }
+    } else {
+      for(var r2=0;r2<legLen;r2++){
+        for(var i2=0;i2<half;i2++){
+          pairsList.push([ rounds[r2][i2] ]);
+        }
+      }
+    }
+    return pairsList;
+  }
+
+  // ---------- evaluation (real computation, no lookup tables) ----------
+  function evaluate(rounds, slotToCity, cities){
+    var T = slotToCity.length;
+    var numRounds = rounds.length;
+    var isHome = [], oppSlot = [];
+    for(var s=0;s<T;s++){ isHome.push(new Array(numRounds)); oppSlot.push(new Array(numRounds)); }
+    for(var r=0;r<numRounds;r++){
+      var ms = rounds[r];
+      for(var k=0;k<ms.length;k++){
+        var m = ms[k];
+        isHome[m.home][r]=true;  oppSlot[m.home][r]=m.away;
+        isHome[m.away][r]=false; oppSlot[m.away][r]=m.home;
+      }
+    }
+    var breaks=0;
+    var teamTotals = new Array(T);
+    for(var s2=0;s2<T;s2++){
+      var home = cities[slotToCity[s2]];
+      var loc = home;
+      var total=0;
+      for(var r2=0;r2<numRounds;r2++){
+        if(isHome[s2][r2]){
+          if(loc!==home){ total+=dist(loc,home); loc=home; }
+        } else {
+          var destCity = cities[slotToCity[oppSlot[s2][r2]]];
+          total+=dist(loc,destCity);
+          loc=destCity;
+        }
+        if(r2>0 && isHome[s2][r2]===isHome[s2][r2-1]) breaks++;
+      }
+      if(loc!==home) total+=dist(loc,home);
+      teamTotals[s2]=total;
+    }
+    var grand=0, sumSq=0;
+    for(var s3=0;s3<T;s3++){ grand+=teamTotals[s3]; sumSq+=teamTotals[s3]*teamTotals[s3]; }
+    var jain = sumSq>0 ? (grand*grand)/(T*sumSq) : 1;
+    return {breaks:breaks, totalDistance:grand, teamTotals:teamTotals, jain:jain, isHome:isHome, oppSlot:oppSlot, numRounds:numRounds};
+  }
+
+  function objective(ev, baselineDistance, maxBreaks, wTravel, wBreaks){
+    var normT = baselineDistance>0 ? ev.totalDistance/baselineDistance : 0;
+    var normB = maxBreaks>0 ? ev.breaks/maxBreaks : 0;
+    return wTravel*normT + wBreaks*normB + 1.0*(1-ev.jain);
+  }
+
+  // ---------- local search moves (all O(1), always valid) ----------
+  function moveRoundSwap(rounds, rng){
+    var n = rounds.length;
+    var r1 = Math.floor(rng()*n);
+    var r2 = Math.floor(rng()*(n-1));
+    if(r2>=r1) r2++;
+    var tmp = rounds[r1]; rounds[r1]=rounds[r2]; rounds[r2]=tmp;
+    return function undo(){ var t=rounds[r1]; rounds[r1]=rounds[r2]; rounds[r2]=t; };
+  }
+  function moveFlipPair(pairsList, rng){
+    var k = Math.floor(rng()*pairsList.length);
+    var pair = pairsList[k];
+    for(var i=0;i<pair.length;i++){
+      var m=pair[i], h=m.home; m.home=m.away; m.away=h;
+    }
+    return function undo(){
+      for(var j=0;j<pair.length;j++){
+        var m2=pair[j], h2=m2.home; m2.home=m2.away; m2.away=h2;
+      }
+    };
+  }
+  function moveTeamSwap(slotToCity, rng){
+    var T = slotToCity.length;
+    var i = Math.floor(rng()*T);
+    var j = Math.floor(rng()*(T-1));
+    if(j>=i) j++;
+    var tmp = slotToCity[i]; slotToCity[i]=slotToCity[j]; slotToCity[j]=tmp;
+    return function undo(){ var t=slotToCity[i]; slotToCity[i]=slotToCity[j]; slotToCity[j]=t; };
+  }
+
+  // ---------- chunked simulated-annealing local search ----------
+  // batchSize >= iterTotal runs synchronously in one tick (used for the
+  // pareto sweep); a smaller batchSize yields to requestAnimationFrame
+  // between chunks so the UI never freezes (used for the main slider-driven run).
+  function runSearch(cities, rounds, slotToCity, pairsList, baselineDistance, maxBreaks, wTravel, wBreaks, iterTotal, seedStr, batchSize, onProgress, onDone){
+    var rng = mulberry32(hashSeed(seedStr));
+    var currentObj = objective(evaluate(rounds, slotToCity, cities), baselineDistance, maxBreaks, wTravel, wBreaks);
+    var bestObj = currentObj;
+    var bestRounds = cloneRounds(rounds);
+    var bestSlotToCity = slotToCity.slice();
+    var iter = 0;
+    var T0=2.5, Tend=0.01;
+
+    function tick(){
+      var n = Math.min(batchSize, iterTotal-iter);
+      for(var b=0;b<n;b++,iter++){
+        var moveType = Math.floor(rng()*3);
+        var undo;
+        if(moveType===0) undo=moveRoundSwap(rounds, rng);
+        else if(moveType===1) undo=moveFlipPair(pairsList, rng);
+        else undo=moveTeamSwap(slotToCity, rng);
+
+        var candEval = evaluate(rounds, slotToCity, cities);
+        var candObj = objective(candEval, baselineDistance, maxBreaks, wTravel, wBreaks);
+        var delta = candObj - currentObj;
+        var frac = iterTotal>1 ? iter/(iterTotal-1) : 1;
+        var temp = Math.max(T0*Math.pow(Tend/T0, frac), 1e-6);
+        var accept = delta<0 || rng()<Math.exp(-delta/temp);
+        if(accept){
+          currentObj = candObj;
+          if(candObj < bestObj){
+            bestObj = candObj;
+            bestRounds = cloneRounds(rounds);
+            bestSlotToCity = slotToCity.slice();
+          }
+        } else {
+          undo();
+        }
+      }
+      if(onProgress) onProgress(iter/iterTotal);
+      if(iter<iterTotal){
+        requestAnimationFrame(tick);
+      } else {
+        var finalEval = evaluate(bestRounds, bestSlotToCity, cities);
+        onDone({rounds:bestRounds, slotToCity:bestSlotToCity, eval:finalEval});
+      }
+    }
+    tick();
+  }
+
+  // ---------- formatting ----------
+  function fmtKm(n){ return Math.round(n).toLocaleString("ko-KR"); }
+  function fmtJain(n){ return n.toFixed(3); }
+  function fmtPct1(n){ return n.toFixed(1); }
+
+  // ---------- app state ----------
+  var state = {
+    T: 10, double: true, wTravel: 5, wBreaks: 5, showBaseline: false,
+    cities: [], baselineRounds: null, baselineSlotToCity: null, baselineEval: null,
+    optRounds: null, optSlotToCity: null, optEval: null,
+    paretoPoints: null, selectedCityIdx: 0, optGen: 0, paretoGen: 0
+  };
+
+  var els = {};
+  ["teamCountSlider","teamCountVal","doubleToggle","wTravelSlider","wTravelVal","wBreaksSlider","wBreaksVal",
+   "optToggleBtn","progressFill","progressStatus","paretoStatus","viewStateNote",
+   "mDistance","mDistanceDelta","mBreaks","mBreaksDelta","mJain","mJainDelta","mReduction",
+   "scheduleWrap","mapSvg","teamSelect","paretoSvg","summaryNote"].forEach(function(id){
+    els[id] = document.getElementById(id);
+  });
+
+  function currentDisplay(){
+    if(state.showBaseline){
+      return {rounds: state.baselineRounds, slotToCity: state.baselineSlotToCity, eval: state.baselineEval};
+    }
+    return {
+      rounds: state.optRounds || state.baselineRounds,
+      slotToCity: state.optSlotToCity || state.baselineSlotToCity,
+      eval: state.optEval || state.baselineEval
+    };
+  }
+
+  function setProgress(pct, text){
+    els.progressFill.style.width = Math.max(0,Math.min(100,pct))+"%";
+    if(text!==undefined) els.progressStatus.textContent = text;
+  }
+
+  function debounce(fn, ms){
+    var t=null;
+    return function(){
+      var args=arguments;
+      clearTimeout(t);
+      t=setTimeout(function(){ fn.apply(null,args); }, ms);
+    };
+  }
+
+  // ---------- orchestration ----------
+  // optimize (slider-driven) and the pareto sweep (league-driven) are two
+  // independent async flows; each owns its own generation counter so a new
+  // run of one never silently cancels the other mid-flight.
+  function regenerateLeague(){
+    state.T = parseInt(els.teamCountSlider.value,10);
+    state.double = els.doubleToggle.checked;
+    state.cities = selectCities(state.T);
+
+    var rounds = buildSchedule(state.T, state.double);
+    var slotToCity = [];
+    for(var i=0;i<state.T;i++) slotToCity.push(i);
+    state.baselineRounds = cloneRounds(rounds);
+    state.baselineSlotToCity = slotToCity.slice();
+    state.baselineEval = evaluate(state.baselineRounds, state.baselineSlotToCity, state.cities);
+    state.optRounds = null; state.optSlotToCity = null; state.optEval = null;
+    state.paretoPoints = null;
+    state.selectedCityIdx = 0;
+
+    buildTeamSelect();
+    els.paretoStatus.textContent = "교환비 스윕 계산 중입니다...";
+    renderAll();
+    runOptimizeOnly();
+    computeParetoSweep();
+  }
+
+  function runOptimizeOnly(){
+    state.optGen++;
+    var myGen = state.optGen;
+    state.wTravel = parseFloat(els.wTravelSlider.value);
+    state.wBreaks = parseFloat(els.wBreaksSlider.value);
+
+    var rounds = cloneRounds(state.baselineRounds);
+    var slotToCity = state.baselineSlotToCity.slice();
+    var pairsList = derivePairsList(rounds, state.T, state.double);
+    var maxBreaks = state.T*(state.baselineEval.numRounds-1);
+    var seedStr = "SA-T"+state.T+"D"+(state.double?1:0)+"WT"+state.wTravel+"WB"+state.wBreaks;
+    var batchSize = Math.max(20, Math.ceil(ITER_MAIN/24));
+
+    setProgress(0, "지역탐색 계산 중입니다...");
+    runSearch(state.cities, rounds, slotToCity, pairsList,
+      state.baselineEval.totalDistance, maxBreaks, state.wTravel, state.wBreaks,
+      ITER_MAIN, seedStr, batchSize,
+      function(frac){ if(myGen===state.optGen) setProgress(frac*100, "지역탐색 계산 중입니다..."); },
+      function(result){
+        if(myGen!==state.optGen) return;
+        state.optRounds = result.rounds;
+        state.optSlotToCity = result.slotToCity;
+        state.optEval = result.eval;
+        setProgress(100, "지역탐색 완료");
+        renderAll();
+      }
+    );
+  }
+
+  function computeParetoSweep(){
+    state.paretoGen++;
+    var myGen = state.paretoGen;
+    var points = [];
+    var idx = 0;
+    var maxBreaks = state.T*(state.baselineEval.numRounds-1);
+    function next(){
+      if(myGen!==state.paretoGen) return;
+      if(idx>=SWEEP.length){
+        state.paretoPoints = points;
+        els.paretoStatus.textContent = "교환비 스윕 완료 (인스턴스당 이동거리 가중치 "+SWEEP.join(", ")+" 순서로 재계산)";
+        renderPareto();
+        renderSummary();
+        return;
+      }
+      els.paretoStatus.textContent = "교환비 스윕 계산 중 ("+(idx+1)+"/"+SWEEP.length+")";
+      var wT = SWEEP[idx], wB = 10-wT;
+      var rounds = cloneRounds(state.baselineRounds);
+      var slotToCity = state.baselineSlotToCity.slice();
+      var pairsList = derivePairsList(rounds, state.T, state.double);
+      var seedStr = "SA-T"+state.T+"D"+(state.double?1:0)+"WT"+wT+"WB"+wB;
+      runSearch(state.cities, rounds, slotToCity, pairsList,
+        state.baselineEval.totalDistance, maxBreaks, wT, wB,
+        ITER_SWEEP, seedStr, ITER_SWEEP, null,
+        function(result){
+          points.push({wTravel:wT, wBreaks:wB, distance:result.eval.totalDistance, breaks:result.eval.breaks});
+          idx++;
+          setTimeout(next, 0);
+        }
+      );
+    }
+    next();
+  }
+
+  // ---------- rendering ----------
+  function setDelta(el, current, base, unit, lowerIsBetter, decimals){
+    var diff = current - base;
+    var better = diff===0 ? true : (lowerIsBetter ? diff<0 : diff>0);
+    el.className = "metric__delta " + (diff===0 ? "neutral" : (better?"good":"bad"));
+    var val = decimals!==undefined ? Math.abs(diff).toFixed(decimals) : (unit==="km" ? fmtKm(Math.abs(diff)) : Math.round(Math.abs(diff)));
+    var sign = diff>0 ? "+" : (diff<0 ? "-" : "±");
+    el.textContent = "기준선 대비 " + sign + val + (unit?unit:"") + (diff===0 ? "" : (better ? " 개선" : " 악화"));
+  }
+
+  function renderMetrics(){
+    var disp = currentDisplay();
+    var base = state.baselineEval;
+    els.viewStateNote.textContent = state.showBaseline
+      ? "지금 보고 있는 결과: 하드 제약만(최적화 없음, 기준선)입니다."
+      : "지금 보고 있는 결과: 지역탐색 최적화(이동거리 가중치 "+state.wTravel+", breaks 가중치 "+state.wBreaks+")입니다.";
+
+    els.mDistance.textContent = fmtKm(disp.eval.totalDistance);
+    els.mBreaks.textContent = disp.eval.breaks;
+    els.mJain.textContent = fmtJain(disp.eval.jain);
+
+    setDelta(els.mDistanceDelta, disp.eval.totalDistance, base.totalDistance, "km", true);
+    setDelta(els.mBreaksDelta, disp.eval.breaks, base.breaks, "건", true);
+    setDelta(els.mJainDelta, disp.eval.jain, base.jain, "", false, 3);
+
+    var reduction = base.breaks>0 ? ((base.breaks - disp.eval.breaks)/base.breaks*100) : 0;
+    els.mReduction.textContent = fmtPct1(reduction);
+  }
+
+  function renderGrid(){
+    var disp = currentDisplay();
+    var ev = disp.eval;
+    var slotToCity = disp.slotToCity;
+    var T = state.T;
+    var numRounds = ev.numRounds;
+    var slotOfCity = new Array(T);
+    for(var s=0;s<T;s++) slotOfCity[slotToCity[s]] = s;
+    var legLen = state.double ? numRounds/2 : numRounds;
+
+    var table = document.createElement("table");
+    table.className = "sched-table";
+    var caption = document.createElement("caption");
+    caption.className = "sr-only";
+    caption.textContent = "팀별 라운드 일정표. 행은 팀, 열은 라운드이며 각 셀은 상대팀과 홈 원정 여부를 나타냅니다.";
+    table.appendChild(caption);
+
+    var thead = document.createElement("thead");
+    var htr = document.createElement("tr");
+    var corner = document.createElement("th"); corner.scope="col"; corner.textContent="팀"; htr.appendChild(corner);
+    for(var r=0;r<numRounds;r++){
+      var th = document.createElement("th"); th.scope="col";
+      th.textContent = "R"+(r+1);
+      if(state.double && r===legLen) th.className="leg2start";
+      htr.appendChild(th);
+    }
+    thead.appendChild(htr);
+    table.appendChild(thead);
+
+    var tbody = document.createElement("tbody");
+    for(var c=0;c<T;c++){
+      var tr = document.createElement("tr");
+      var rowTh = document.createElement("th"); rowTh.scope="row";
+      rowTh.textContent = state.cities[c].name;
+      tr.appendChild(rowTh);
+      var slot = slotOfCity[c];
+      for(var r2=0;r2<numRounds;r2++){
+        var td = document.createElement("td");
+        var home = ev.isHome[slot][r2];
+        var oppCityIdx = slotToCity[ev.oppSlot[slot][r2]];
+        td.textContent = state.cities[oppCityIdx].name + (home?"(홈)":"(원)");
+        var cls = home ? "home" : "away";
+        if(r2>0 && ev.isHome[slot][r2]===ev.isHome[slot][r2-1]) cls += " brk";
+        if(state.double && r2===legLen) cls += " leg2start";
+        td.className = cls;
+        tr.appendChild(td);
+      }
+      tbody.appendChild(tr);
+    }
+    table.appendChild(tbody);
+    els.scheduleWrap.innerHTML = "";
+    els.scheduleWrap.appendChild(table);
+  }
+
+  function buildTeamSelect(){
+    els.teamSelect.innerHTML = "";
+    state.cities.forEach(function(c,i){
+      var opt = document.createElement("option");
+      opt.value = i; opt.textContent = c.name;
+      els.teamSelect.appendChild(opt);
+    });
+    els.teamSelect.value = 0;
+    state.selectedCityIdx = 0;
+  }
+
+  function renderMap(){
+    var svg = els.mapSvg;
+    while(svg.firstChild) svg.removeChild(svg.firstChild);
+    svg.setAttribute("viewBox","0 0 "+MAP_W+" "+MAP_H);
+
+    var disp = currentDisplay();
+    var ev = disp.eval;
+    var slotToCity = disp.slotToCity;
+    var T = state.T;
+    var slotOfCity = new Array(T);
+    for(var s=0;s<T;s++) slotOfCity[slotToCity[s]] = s;
+
+    function px(city){ return {x:(city.x-MAP_MINX)+MAP_MARGIN, y:(MAP_MAXY-city.y)+MAP_MARGIN}; }
+
+    var selCity = state.selectedCityIdx;
+    var selSlot = slotOfCity[selCity];
+    var homeCity = state.cities[selCity];
+    var seq = [homeCity];
+    for(var r=0;r<ev.numRounds;r++){
+      if(ev.isHome[selSlot][r]){
+        if(seq[seq.length-1]!==homeCity) seq.push(homeCity);
+      } else {
+        seq.push(state.cities[slotToCity[ev.oppSlot[selSlot][r]]]);
+      }
+    }
+    if(seq[seq.length-1]!==homeCity) seq.push(homeCity);
+
+    var pts = seq.map(function(c){ var p=px(c); return p.x.toFixed(1)+","+p.y.toFixed(1); });
+    var path = document.createElementNS(SVGNS,"path");
+    path.setAttribute("d", "M " + pts.join(" L "));
+    path.setAttribute("class","route-line");
+    svg.appendChild(path);
+
+    for(var i=0;i<T;i++){
+      var c = state.cities[i];
+      var p = px(c);
+      var circ = document.createElementNS(SVGNS,"circle");
+      circ.setAttribute("cx",p.x); circ.setAttribute("cy",p.y);
+      circ.setAttribute("r", i===selCity ? 5 : 3);
+      circ.setAttribute("class", i===selCity ? "city-dot city-dot--home" : "city-dot");
+      svg.appendChild(circ);
+      var label = document.createElementNS(SVGNS,"text");
+      label.setAttribute("x", p.x+6); label.setAttribute("y", p.y+3);
+      label.setAttribute("class","city-label");
+      label.textContent = c.name;
+      svg.appendChild(label);
+    }
+    svg.setAttribute("aria-label", homeCity.name+" 팀의 시즌 이동 경로. 계산값 기준 총 "+fmtKm(ev.teamTotals[selSlot])+"km 이동합니다.");
+  }
+
+  function renderPareto(){
+    if(!state.paretoPoints) return;
+    var svg = els.paretoSvg;
+    while(svg.firstChild) svg.removeChild(svg.firstChild);
+    var W=640,H=320,padL=60,padR=20,padT=16,padB=40;
+    var pts = state.paretoPoints;
+    var allD = pts.map(function(p){return p.distance;}).concat([state.baselineEval.totalDistance]);
+    var allB = pts.map(function(p){return p.breaks;}).concat([state.baselineEval.breaks]);
+    if(state.optEval){ allD.push(state.optEval.totalDistance); allB.push(state.optEval.breaks); }
+    var minD=Math.min.apply(null,allD), maxD=Math.max.apply(null,allD);
+    var minB=Math.min.apply(null,allB), maxB=Math.max.apply(null,allB);
+    if(maxD===minD){ maxD+=1; minD-=1; }
+    if(maxB===minB){ maxB+=1; minB=Math.max(0,minB-1); }
+    var innerW=W-padL-padR, innerH=H-padT-padB;
+    function X(d){ return padL + innerW*(d-minD)/(maxD-minD); }
+    function Y(b){ return padT + innerH - innerH*(b-minB)/(maxB-minB); }
+
+    function line(x1,y1,x2,y2){
+      var l=document.createElementNS(SVGNS,"line");
+      l.setAttribute("x1",x1); l.setAttribute("y1",y1); l.setAttribute("x2",x2); l.setAttribute("y2",y2);
+      l.setAttribute("stroke","var(--line)"); svg.appendChild(l);
+    }
+    line(padL, padT+innerH, padL+innerW, padT+innerH);
+    line(padL, padT, padL, padT+innerH);
+
+    var sorted = pts.slice().sort(function(a,b){return a.distance-b.distance;});
+    var d = "M " + sorted.map(function(p){ return X(p.distance).toFixed(1)+","+Y(p.breaks).toFixed(1); }).join(" L ");
+    var pline = document.createElementNS(SVGNS,"path");
+    pline.setAttribute("d", d); pline.setAttribute("class","pareto-line");
+    svg.appendChild(pline);
+
+    pts.forEach(function(p){
+      var c = document.createElementNS(SVGNS,"circle");
+      c.setAttribute("cx",X(p.distance)); c.setAttribute("cy",Y(p.breaks)); c.setAttribute("r",4);
+      c.setAttribute("class","pareto-sweep");
+      svg.appendChild(c);
+    });
+
+    var bc = document.createElementNS(SVGNS,"circle");
+    bc.setAttribute("cx",X(state.baselineEval.totalDistance)); bc.setAttribute("cy",Y(state.baselineEval.breaks));
+    bc.setAttribute("r",6); bc.setAttribute("class","pareto-baseline");
+    svg.appendChild(bc);
+
+    if(state.optEval){
+      var cc = document.createElementNS(SVGNS,"circle");
+      cc.setAttribute("cx",X(state.optEval.totalDistance)); cc.setAttribute("cy",Y(state.optEval.breaks));
+      cc.setAttribute("r",7); cc.setAttribute("class","pareto-current");
+      svg.appendChild(cc);
+    }
+
+    function axisText(x,y,txt,anchor){
+      var t=document.createElementNS(SVGNS,"text");
+      t.setAttribute("x",x); t.setAttribute("y",y); t.setAttribute("class","pareto-axis");
+      if(anchor) t.setAttribute("text-anchor",anchor);
+      t.textContent = txt; svg.appendChild(t);
+    }
+    axisText(padL, padT+innerH+16, fmtKm(minD)+"km", "start");
+    axisText(padL+innerW, padT+innerH+16, fmtKm(maxD)+"km", "end");
+    axisText(padL-8, padT+innerH+4, minB+"건", "end");
+    axisText(padL-8, padT+6, maxB+"건", "end");
+    axisText(padL+innerW/2, H-4, "총 이동거리(km, 값이 클수록 오른쪽)", "middle");
+
+    svg.setAttribute("aria-label","이동거리와 breaks의 교환비 산점도. 이동거리가 줄수록 breaks가 늘어나는 경향을 보여줍니다.");
+  }
+
+  function renderSummary(){
+    var disp = currentDisplay();
+    var ev = disp.eval;
+    var line1;
+    if(state.showBaseline){
+      line1 = "지금 보는 것은 최적화 없이 하드 제약만 지킨 일정입니다. 총 이동거리 "+fmtKm(ev.totalDistance)+"km, breaks "+ev.breaks+"건, 공정성 Jain 지수 "+fmtJain(ev.jain)+"입니다.";
+    } else {
+      line1 = "현재 가중치(이동거리 "+state.wTravel+", breaks "+state.wBreaks+")에서 총 이동거리 "+fmtKm(ev.totalDistance)+"km, breaks "+ev.breaks+"건, 공정성 Jain 지수 "+fmtJain(ev.jain)+"입니다.";
+    }
+    var line2;
+    if(state.paretoPoints && state.paretoPoints.length){
+      var minBreaksPt = state.paretoPoints.reduce(function(a,b){return b.breaks<a.breaks?b:a;});
+      var minDistPt = state.paretoPoints.reduce(function(a,b){return b.distance<a.distance?b:a;});
+      var extra = Math.max(0, minBreaksPt.distance - minDistPt.distance);
+      line2 = " 이 리그에서 스윕으로 도달한 최소 breaks 수준("+minBreaksPt.breaks+"건)까지 낮추려면, 같은 인스턴스 기준으로 이동거리가 약 "+fmtKm(extra)+"km 더 필요합니다.";
+    } else {
+      line2 = " 교환비 곡선을 계산하는 중입니다.";
+    }
+    els.summaryNote.textContent = line1 + line2;
+  }
+
+  function renderAll(){
+    renderMetrics();
+    renderGrid();
+    renderMap();
+    renderPareto();
+    renderSummary();
+  }
+
+  // ---------- event wiring ----------
+  var debouncedRegenerate = debounce(regenerateLeague, 150);
+  var debouncedOptimize = debounce(runOptimizeOnly, 220);
+
+  els.teamCountSlider.addEventListener("input", function(){
+    els.teamCountVal.textContent = els.teamCountSlider.value+"팀";
+    debouncedRegenerate();
+  });
+  els.doubleToggle.addEventListener("change", function(){ regenerateLeague(); });
+  els.wTravelSlider.addEventListener("input", function(){
+    els.wTravelVal.textContent = els.wTravelSlider.value;
+    debouncedOptimize();
+  });
+  els.wBreaksSlider.addEventListener("input", function(){
+    els.wBreaksVal.textContent = els.wBreaksSlider.value;
+    debouncedOptimize();
+  });
+  els.optToggleBtn.addEventListener("click", function(){
+    state.showBaseline = !state.showBaseline;
+    els.optToggleBtn.setAttribute("aria-pressed", state.showBaseline?"true":"false");
+    els.optToggleBtn.textContent = state.showBaseline ? "최적화 결과 보기" : "최적화 끄기(하드 제약만 보기)";
+    renderAll();
+  });
+  els.teamSelect.addEventListener("change", function(){
+    state.selectedCityIdx = parseInt(els.teamSelect.value,10);
+    renderMap();
+  });
+
+  // ---------- init ----------
+  els.teamCountVal.textContent = els.teamCountSlider.value+"팀";
+  els.wTravelVal.textContent = els.wTravelSlider.value;
+  els.wBreaksVal.textContent = els.wBreaksSlider.value;
+  regenerateLeague();
+})();
+</script>
+</body>
+</html>

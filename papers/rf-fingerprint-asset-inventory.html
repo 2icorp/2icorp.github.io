@@ -14,7 +14,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../styles.css?v=15">
+<link rel="stylesheet" href="../styles.css?v=17">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
 <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
 <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js" onload="renderMathInElement(document.body,{delimiters:[{left:'$$',right:'$$',display:true},{left:'$',right:'$',display:false},{left:'\\[',right:'\\]',display:true},{left:'\\(',right:'\\)',display:false}]})"></script>
@@ -61,7 +61,7 @@
 <h2 id="150">결과 (공개 실측 데이터, 150대)</h2>
 <p>등록 N대(10·20·50 스윕)를 K샷으로 등록하고, 별도 30대를 미등록 침입자로 두었습니다.
 임계값은 등록 데이터만으로 보정했습니다(침입자 데이터로 튜닝하면 누수입니다).</p>
-<table>
+<div class="tscroll" tabindex="0" role="region" aria-label="표. 좌우로 스크롤할 수 있습니다"><table>
 <thead>
 <tr>
 <th>조건</th>
@@ -86,7 +86,7 @@
 <td>절반 이하로 추가 하락</td>
 </tr>
 </tbody>
-</table>
+</table></div>
 <p>라벨을 무작위로 섞은 대조 실험은 AUROC 0.49로 떨어졌습니다. 즉 0.80은 통계 장난이 아니라
 실제 기기 지문입니다.</p>
 <h2 id="_2">방법 (요약)</h2>
@@ -118,7 +118,7 @@
       <a href="../index.html#method">방식</a>
       <a href="../papers.html">논문·실험</a>
       <a href="../index.html#voucher">정부 바우처</a>
-      <a href="https://github.com/2icorp" target="_blank" rel="noopener">GitHub</a>
+      <a href="../cases.html">사례</a>
       <a href="../en/">EN</a>
     </nav>
   </div>

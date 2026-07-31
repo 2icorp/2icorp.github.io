@@ -14,7 +14,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../styles.css?v=15">
+<link rel="stylesheet" href="../styles.css?v=17">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
 <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
 <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js" onload="renderMathInElement(document.body,{delimiters:[{left:'$$',right:'$$',display:true},{left:'$',right:'$',display:false},{left:'\\[',right:'\\]',display:true},{left:'\\(',right:'\\)',display:false}]})"></script>
@@ -59,7 +59,7 @@
 벤치는 조용한 환경에서 하지만, 실제 현장에는 WiFi 트래픽이 흐릅니다. 트래픽이 섞였을 때
 탐지가 얼마나 버티는지를 파형 유형별 매트릭스로 실측했습니다.</p>
 <h2 id="_2">결과 (오탐률 고정, 사전선언 판정)</h2>
-<table>
+<div class="tscroll" tabindex="0" role="region" aria-label="표. 좌우로 스크롤할 수 있습니다"><table>
 <thead>
 <tr>
 <th>조건</th>
@@ -76,7 +76,7 @@
 <td>27/36</td>
 </tr>
 </tbody>
-</table>
+</table></div>
 <p>실패 9건은 전부 트래픽 혼재 조건에서 나왔고, 원인을 특정 파형군(펄스 수가 적거나 호핑하는
 유형)의 펄스 검출 오염으로 귀속했습니다. 중요한 것은 절차입니다. 통과 기준(달성 오탐률 상한
 포함)을 실험 전에 고정했고, 처방 실험에는 무작위 대조군(같은 폭의 무작위 대역 제거, 셔플
@@ -108,7 +108,7 @@
       <a href="../index.html#method">방식</a>
       <a href="../papers.html">논문·실험</a>
       <a href="../index.html#voucher">정부 바우처</a>
-      <a href="https://github.com/2icorp" target="_blank" rel="noopener">GitHub</a>
+      <a href="../cases.html">사례</a>
       <a href="../en/">EN</a>
     </nav>
   </div>

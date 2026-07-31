@@ -1,0 +1,995 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<script>(function(){try{var t=localStorage.getItem("theme");if(!t&&window.matchMedia&&matchMedia("(prefers-color-scheme: dark)").matches)t="dark";if(t)document.documentElement.setAttribute("data-theme",t);}catch(e){}})();</script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>콜센터 인력 배치 · 시프트 최적화 시뮬레이터 데모 · 2i</title>
+<link rel="stylesheet" href="../../styles.css?v=17">
+<style>
+  .demo-top{display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:1rem clamp(1rem, 2vw, 2rem);border-bottom:1px solid var(--line-soft);flex-wrap:wrap;}
+  .demo-brand{display:flex;align-items:baseline;gap:.6rem;text-decoration:none;color:var(--ink);}
+  .demo-brand__mark{font-family:var(--mono);font-weight:800;color:var(--signal);font-size:1.1rem;}
+  .demo-brand__tag{font-family:var(--mono);font-size:var(--text-xs);letter-spacing:.08em;color:var(--ink-faint);text-transform:uppercase;}
+  .demo-top__links{display:flex;gap:1.2rem;font-size:var(--text-sm);}
+  .demo-top__links a{color:var(--ink-soft);text-decoration:none;border-bottom:1px solid transparent;transition:color var(--dur) var(--ease), border-color var(--dur) var(--ease);}
+  .demo-top__links a:hover{color:var(--ink);border-color:var(--line);}
+  .demo-top__links a:focus-visible{outline:2px solid var(--signal);outline-offset:3px;}
+  .demo-banner{font-family:var(--mono);font-size:var(--text-xs);color:var(--ink-faint);background:var(--paper-2);border-bottom:1px solid var(--line-soft);padding:.55rem clamp(1rem, 2vw, 2rem);letter-spacing:.01em;}
+  main{max-width:1180px;margin:0 auto;padding:2rem clamp(1rem, 2vw, 2rem) 1rem;}
+  h1{font-size:var(--text-h2);margin:0 0 .4rem;}
+  .lede{color:var(--ink-soft);max-width:68ch;margin:0 0 1.6rem;line-height:1.75;}
+  section{margin-bottom:2.6rem;min-width:0;}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);min-width:0;}
+  h2.sec-title{font-size:1.1rem;margin:0 0 .3rem;}
+  p.sec-desc{margin:0 0 1rem;color:var(--ink-faint);font-size:var(--text-xs);font-family:var(--mono);}
+
+  /* reference callout */
+  .refbox{padding:1.2rem clamp(1rem, 2vw, 1.6rem);}
+  .refbox h2{font-size:1rem;margin:0 0 .7rem;}
+  .refrow{display:flex;flex-wrap:wrap;gap:.5rem 1.4rem;padding:.6rem 0;border-top:1px solid var(--line-soft);}
+  .refrow:first-of-type{border-top:none;}
+  .refrow__label{flex:1 1 260px;color:var(--ink-soft);font-size:var(--text-sm);min-width:0;}
+  .refrow__val{font-family:var(--mono);font-size:var(--text-sm);color:var(--ink);white-space:normal;}
+  .refrow__tag{font-family:var(--mono);font-size:.66rem;color:var(--ink-faint);letter-spacing:.04em;}
+
+  /* controls */
+  .presets{display:flex;flex-wrap:wrap;gap:.6rem;padding:1.1rem clamp(1rem, 2vw, 1.6rem) 0;}
+  .preset-btn{font-family:var(--mono);font-size:var(--text-xs);letter-spacing:.02em;padding:.6rem 1rem;min-height:44px;border:1px solid var(--line);border-radius:var(--radius);background:var(--paper-2);color:var(--ink-soft);cursor:pointer;transition:background var(--dur) var(--ease), color var(--dur) var(--ease), border-color var(--dur) var(--ease);}
+  .preset-btn:hover{color:var(--ink);border-color:var(--steel);}
+  .preset-btn:focus-visible{outline:2px solid var(--signal);outline-offset:2px;}
+  .preset-btn[aria-pressed="true"]{background:var(--signal);border-color:var(--signal);color:var(--paper);}
+
+  .controls{display:grid;grid-template-columns:repeat(2, 1fr);gap:1.3rem;padding:1.2rem clamp(1rem, 2vw, 1.6rem) 1.4rem;}
+  .control h3{font-size:.92rem;margin:0 0 .25rem;}
+  .control p{margin:0 0 .7rem;color:var(--ink-faint);font-size:var(--text-xs);font-family:var(--mono);}
+  .control__row{display:flex;align-items:center;gap:.9rem;}
+  input[type="range"]{flex:1;accent-color:var(--signal);min-height:44px;}
+  .control__val{font-family:var(--mono);font-weight:700;min-width:5.6rem;text-align:right;font-size:.86rem;}
+
+  .toggles{display:flex;flex-wrap:wrap;gap:.7rem 1.2rem;padding:0 clamp(1rem, 2vw, 1.6rem) 1.3rem;}
+  .toggle{display:inline-flex;align-items:center;gap:.5rem;min-height:44px;padding:.3rem .2rem;cursor:pointer;font-size:.88rem;color:var(--ink-soft);}
+  .toggle input{width:18px;height:18px;accent-color:var(--signal);}
+  .toggle:hover{color:var(--ink);}
+
+  /* chart cards */
+  .chart-card{padding:1.3rem clamp(1rem, 2vw, 1.6rem);}
+  .chart-card h3{font-size:1rem;margin:0 0 .2rem;}
+  .chart-card p{margin:0 0 1rem;color:var(--ink-faint);font-size:var(--text-xs);font-family:var(--mono);}
+  .chart-toolbar{display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap;margin-bottom:.8rem;}
+  .chart-toolbar select{font-family:var(--mono);font-size:var(--text-xs);padding:.4rem .6rem;min-height:38px;border:1px solid var(--line);border-radius:var(--radius);background:var(--paper-2);color:var(--ink);}
+  .legend{display:flex;flex-wrap:wrap;gap:1.1rem;font-family:var(--mono);font-size:var(--text-xs);color:var(--ink-soft);margin-bottom:.9rem;}
+  .legend span{display:inline-flex;align-items:center;gap:.4rem;}
+  .swatch{width:16px;height:12px;display:inline-block;background:var(--steel);border-radius:1px;}
+  .swatch--short{background:var(--signal);}
+  .swatch--over{background:var(--steel-soft);}
+  .swatch--line{width:18px;height:0;border-top:1.5px dashed var(--ink-faint);}
+  svg{width:100%;height:auto;display:block;overflow:visible;}
+  .axis-label{font-family:var(--mono);font-size:8px;fill:var(--ink-faint);}
+  .row-label{font-family:var(--mono);font-size:9px;fill:var(--ink-soft);}
+  .scroll-x{overflow-x:auto;}
+
+  /* comparison grid */
+  .compare-grid{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--line);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;}
+  .compare-col{background:var(--panel);padding:1.2rem clamp(.9rem, 1.4vw, 1.4rem);min-width:0;}
+  .compare-col h3{font-size:.92rem;margin:0 0 .9rem;font-family:var(--mono);letter-spacing:.03em;text-transform:uppercase;color:var(--ink-soft);}
+  .compare-col.is-mixed h3{color:var(--signal);}
+  .cstat{display:flex;justify-content:space-between;align-items:baseline;gap:.6rem;padding:.5rem 0;border-top:1px solid var(--line-soft);}
+  .cstat:first-of-type{border-top:none;}
+  .cstat__label{font-size:.8rem;color:var(--ink-faint);}
+  .cstat__val{font-family:var(--mono);font-weight:700;font-size:1.05rem;white-space:nowrap;}
+  .delta-banner{margin-top:1px;background:var(--panel);border:1px solid var(--line);border-top:none;border-radius:0 0 var(--radius) var(--radius);padding:1.1rem clamp(1rem, 2vw, 1.6rem);display:grid;grid-template-columns:repeat(3, 1fr);gap:1rem;}
+  .dstat{text-align:center;}
+  .dstat__label{font-family:var(--mono);font-size:var(--text-xs);color:var(--ink-faint);text-transform:uppercase;letter-spacing:.06em;}
+  .dstat__val{font-size:1.3rem;font-weight:800;margin-top:.3rem;}
+  .dstat__val.good{color:var(--ok);}
+  .dstat__val.bad{color:var(--signal-deep);}
+
+  .conclusion{margin-top:1.4rem;padding:1.1rem clamp(1rem, 1.6vw, 1.5rem);border-left:3px solid var(--signal);background:var(--paper-2);border-radius:0 var(--radius) var(--radius) 0;}
+  .conclusion p{margin:0;line-height:1.7;font-size:.98rem;}
+
+  /* curve progress */
+  .progress-wrap{display:flex;align-items:center;gap:.8rem;margin-bottom:.9rem;font-family:var(--mono);font-size:var(--text-xs);color:var(--ink-faint);}
+  .progress{flex:1;height:6px;background:var(--line);border-radius:3px;overflow:hidden;}
+  .progress__bar{height:100%;width:0%;background:var(--signal);transition:width 120ms var(--ease);}
+  .curve-marker-note{margin-top:.7rem;font-family:var(--mono);font-size:var(--text-xs);color:var(--ink-soft);}
+
+  .seed-note{margin-top:.4rem;font-family:var(--mono);font-size:.68rem;color:var(--ink-faint);}
+
+  .honest{padding:1.3rem clamp(1rem, 2vw, 1.6rem);}
+  .honest h2{font-size:1rem;margin:0 0 .6rem;}
+  .honest p{margin:0 0 .8rem;color:var(--ink-soft);line-height:1.75;font-size:.92rem;}
+  .honest p:last-child{margin-bottom:0;}
+
+  .demo-foot{margin-top:2rem;padding:1.6rem clamp(1rem, 2vw, 2rem) 2.4rem;font-family:var(--mono);font-size:var(--text-xs);color:var(--ink-faint);border-top:1px solid var(--line-soft);text-align:center;}
+
+  @media (max-width:820px){
+    .controls{grid-template-columns:1fr;}
+    .compare-grid{grid-template-columns:1fr;}
+    .delta-banner{grid-template-columns:1fr;}
+  }
+  @media (prefers-reduced-motion: reduce){
+    .progress__bar{transition:none;}
+  }
+</style>
+</head>
+<body>
+<header class="demo-top">
+  <a href="/" class="demo-brand"><span class="demo-brand__mark">2i</span><span class="demo-brand__tag">DEMO · 콜센터 인력 배치 시뮬레이터</span></a>
+  <nav class="demo-top__links">
+    <a href="/cases.html#case-20">사례 보기</a>
+    <a href="/#contact">상담 신청</a>
+  </nav>
+</header>
+<div class="demo-banner">브라우저에서 그 자리에서 계산하는 인터랙티브 데모입니다. 합성 데이터를 씁니다.</div>
+
+<main>
+  <h1>콜센터 인력 배치 · 시프트 최적화 시뮬레이터</h1>
+  <p class="lede">이 데모는 인력을 더 뽑지 않아도, 같은 인건비 안에서 시프트 구성만 바꾸면 SLA(응대율)가 오른다는 것을 보여줍니다. 30분 단위 48구간 수요 곡선에서 Erlang C로 구간별 필요 인원을 실제로 계산하고, 그 위에서 8시간 고정 시프트만 쓰는 안과 6·4시간 파트타임·분할 근무를 섞은 안을 같은 총 인건시간 상한 아래에서 각각 배치 최적화합니다. 슬라이더를 움직이면 전부 다시 계산됩니다.</p>
+
+  <section class="card refbox">
+    <h2>사전 검증값 (실측)</h2>
+    <div class="refrow">
+      <span class="refrow__label">동일 인건비(약 707~713시간)에서 SLA 달성률</span>
+      <span class="refrow__val">8시간 고정 62.83% <span class="refrow__tag">(실측)</span> → 혼합 시프트(FT8+PT6+PT4+SPLIT) 67.80%, +4.97%p <span class="refrow__tag">(실측, 이득의 하한)</span></span>
+    </div>
+    <div class="refrow">
+      <span class="refrow__label">동일 조건 부족·과잉 인원-구간(person-interval)</span>
+      <span class="refrow__val">8시간 고정 부족 619 · 과잉 666칸 <span class="refrow__tag">(실측)</span> → 혼합 시프트 부족 547 · 과잉 627칸 <span class="refrow__tag">(실측)</span></span>
+    </div>
+    <div class="refrow">
+      <span class="refrow__label">SLA 목표 70%→95% 상향 시 필요 인건시간(medium, seed 1)</span>
+      <span class="refrow__val">목표 70% → 1,078시간에 달성 79.53% <span class="refrow__tag">(실측)</span> · 목표 95% → 1,460시간(+35.4%)에 달성 67.46% <span class="refrow__tag">(실측)</span></span>
+    </div>
+    <p class="seed-note">위 값은 OR-Tools CP-SAT 정수계획 모델로 별도 검증한 결과입니다. 아래 인터랙티브 데모는 브라우저에서 도는 그리디+지역탐색 휴리스틱으로 같은 개념을 가볍게 재현하며, 입력을 바꿀 때마다 그 자리에서 다시 계산합니다. 알고리즘이 다르므로 나오는 숫자는 위 값과 다를 수 있습니다(정직 고지 참고).</p>
+  </section>
+
+  <section class="card">
+    <h2 class="sec-title" style="padding:1.1rem clamp(1rem, 2vw, 1.6rem) 0;">수요 곡선 조작</h2>
+    <p class="sec-desc" style="padding:0 clamp(1rem, 2vw, 1.6rem);">하루 콜 패턴의 모양과 크기를 정합니다. 프리셋은 곡선 모양을, 슬라이더는 크기·강도·SLA 목표를 조절합니다.</p>
+    <div class="presets" role="group" aria-label="수요 곡선 프리셋">
+      <button type="button" class="preset-btn" data-shape="dual" aria-pressed="true">이중피크</button>
+      <button type="button" class="preset-btn" data-shape="morning" aria-pressed="false">오전 집중</button>
+      <button type="button" class="preset-btn" data-shape="flat" aria-pressed="false">평탄</button>
+      <button type="button" class="preset-btn" data-shape="lunch" aria-pressed="false">점심 골</button>
+    </div>
+    <div class="controls">
+      <div class="control">
+        <h3>일 총 콜수</h3>
+        <p>하루(06:00~22:00) 동안 걸려오는 전체 상담 콜 수입니다.</p>
+        <div class="control__row">
+          <input type="range" id="totalCallsSlider" min="800" max="5000" step="50" value="3200" aria-label="일 총 콜수">
+          <span class="control__val" id="totalCallsVal">3200건</span>
+        </div>
+      </div>
+      <div class="control">
+        <h3>피크 강도</h3>
+        <p>값이 클수록 특정 시간대에 콜이 몰리고, 작을수록 하루 종일 고르게 퍼집니다.</p>
+        <div class="control__row">
+          <input type="range" id="peakSlider" min="0.4" max="2.4" step="0.1" value="1.4" aria-label="피크 강도">
+          <span class="control__val" id="peakVal">1.4×</span>
+        </div>
+      </div>
+      <div class="control">
+        <h3>평균 처리시간(AHT)</h3>
+        <p>상담원 한 명이 콜 한 건을 처리하는 데 걸리는 평균 시간입니다. 길수록 같은 인원으로 처리 가능한 콜이 줄어듭니다.</p>
+        <div class="control__row">
+          <input type="range" id="ahtSlider" min="120" max="420" step="10" value="240" aria-label="평균 처리시간">
+          <span class="control__val" id="ahtVal">4분 0초</span>
+        </div>
+      </div>
+      <div class="control">
+        <h3>목표 응답시간</h3>
+        <p>고객이 상담원과 연결되기까지 기다려도 되는 최대 시간입니다. 짧을수록 더 많은 인원이 필요합니다.</p>
+        <div class="control__row">
+          <input type="range" id="targetTSlider" min="10" max="60" step="5" value="20" aria-label="목표 응답시간">
+          <span class="control__val" id="targetTVal">20초</span>
+        </div>
+      </div>
+      <div class="control">
+        <h3>SLA 목표</h3>
+        <p>목표 응답시간 안에 응답해야 하는 콜의 비율입니다. 이 값이 구간별 필요 인원(Erlang C 계산)을 결정합니다.</p>
+        <div class="control__row">
+          <input type="range" id="slaSlider" min="60" max="95" step="1" value="80" aria-label="SLA 목표">
+          <span class="control__val" id="slaVal">80%</span>
+        </div>
+      </div>
+      <div class="control">
+        <h3>총 인건시간 상한</h3>
+        <p>두 안(8시간 고정 vs 혼합 시프트)이 동일하게 쓸 수 있는 하루 총 인건시간입니다. 이 상한을 고정해야 비교가 공정합니다.</p>
+        <div class="control__row">
+          <input type="range" id="budgetSlider" min="150" max="900" step="10" value="340" aria-label="총 인건시간 상한">
+          <span class="control__val" id="budgetVal">340시간</span>
+        </div>
+      </div>
+    </div>
+    <h2 class="sec-title" style="padding:0 clamp(1rem, 2vw, 1.6rem);">혼합 시프트에 포함할 유형</h2>
+    <p class="sec-desc" style="padding:0 clamp(1rem, 2vw, 1.6rem);">체크를 끄면 그 유형은 혼합 시프트 계산에서 제외됩니다. 8시간 고정 시프트만 쓰는 비교안은 이 토글과 무관하게 항상 FT8만으로 계산됩니다.</p>
+    <div class="toggles" role="group" aria-label="혼합 시프트 유형 선택">
+      <label class="toggle"><input type="checkbox" id="typeFT8" checked> FT8 (8시간 연속)</label>
+      <label class="toggle"><input type="checkbox" id="typePT6" checked> PT6 (6시간 연속)</label>
+      <label class="toggle"><input type="checkbox" id="typePT4" checked> PT4 (4시간 연속)</label>
+      <label class="toggle"><input type="checkbox" id="typeSPLIT" checked> SPLIT (4시간+휴식2시간+3시간)</label>
+    </div>
+  </section>
+
+  <section class="card chart-card">
+    <div class="chart-toolbar">
+      <div>
+        <h3>수요 대 배치 인원 (48구간, 30분 단위)</h3>
+        <p>막대는 실제 배치 인원, 점선은 Erlang C가 계산한 필요 인원입니다.</p>
+      </div>
+      <select id="chartScenarioSelect" aria-label="차트에 표시할 시프트 안">
+        <option value="mixed" selected>혼합 시프트 안</option>
+        <option value="fixed">8시간 고정 안</option>
+      </select>
+    </div>
+    <div class="legend">
+      <span><span class="swatch"></span>적정 배치</span>
+      <span><span class="swatch swatch--short"></span>부족 구간</span>
+      <span><span class="swatch swatch--over"></span>과잉 구간</span>
+      <span><span class="swatch--line"></span>필요 인원(Erlang C)</span>
+    </div>
+    <div class="scroll-x">
+      <svg id="coverageChart" viewBox="0 0 900 260" preserveAspectRatio="xMidYMid meet" role="img" aria-label="수요 대 배치 인원 차트" style="min-width:640px;"></svg>
+    </div>
+  </section>
+
+  <section class="card chart-card">
+    <h3>시프트 간트 (선택된 안)</h3>
+    <p>유형별로 하루 중 어느 시간대에 몇 명이 겹쳐 근무하는지 진하기로 보여줍니다.</p>
+    <div class="scroll-x">
+      <svg id="ganttChart" viewBox="0 0 900 150" preserveAspectRatio="xMidYMid meet" role="img" aria-label="시프트 유형별 근무 시간대 간트차트" style="min-width:640px;"></svg>
+    </div>
+  </section>
+
+  <section aria-live="polite">
+    <div class="compare-grid">
+      <div class="compare-col">
+        <h3>8시간 고정 시프트만</h3>
+        <div class="cstat"><span class="cstat__label">사용 인건시간</span><span class="cstat__val" id="aHours">-</span></div>
+        <div class="cstat"><span class="cstat__label">SLA 달성률</span><span class="cstat__val" id="aSLA">-</span></div>
+        <div class="cstat"><span class="cstat__label">부족 person-interval</span><span class="cstat__val" id="aShort">-</span></div>
+        <div class="cstat"><span class="cstat__label">과잉 person-interval</span><span class="cstat__val" id="aSurplus">-</span></div>
+      </div>
+      <div class="compare-col is-mixed">
+        <h3>혼합 시프트</h3>
+        <div class="cstat"><span class="cstat__label">사용 인건시간</span><span class="cstat__val" id="bHours">-</span></div>
+        <div class="cstat"><span class="cstat__label">SLA 달성률</span><span class="cstat__val" id="bSLA">-</span></div>
+        <div class="cstat"><span class="cstat__label">부족 person-interval</span><span class="cstat__val" id="bShort">-</span></div>
+        <div class="cstat"><span class="cstat__label">과잉 person-interval</span><span class="cstat__val" id="bSurplus">-</span></div>
+      </div>
+    </div>
+    <div class="delta-banner">
+      <div class="dstat"><div class="dstat__label">SLA 차이</div><div class="dstat__val" id="deltaSLA">-</div></div>
+      <div class="dstat"><div class="dstat__label">부족 칸 차이</div><div class="dstat__val" id="deltaShort">-</div></div>
+      <div class="dstat"><div class="dstat__label">과잉 칸 차이</div><div class="dstat__val" id="deltaSurplus">-</div></div>
+    </div>
+    <div class="conclusion">
+      <p id="conclusionText">계산 중입니다.</p>
+    </div>
+  </section>
+
+  <section class="card chart-card">
+    <h3>SLA 목표 대 필요 인건시간 곡선</h3>
+    <p>목표 SLA를 70%에서 95%까지 훑으며, 혼합 시프트로 그 목표를 달성하는 데 필요한 최소 인건시간을 이분탐색으로 찾습니다.</p>
+    <div class="progress-wrap">
+      <span id="curveStatus">계산 대기 중</span>
+      <div class="progress"><div class="progress__bar" id="curveProgressBar"></div></div>
+    </div>
+    <div class="scroll-x">
+      <svg id="slaCurveChart" viewBox="0 0 900 260" preserveAspectRatio="xMidYMid meet" role="img" aria-label="SLA 목표 대 필요 인건시간 곡선" style="min-width:640px;"></svg>
+    </div>
+    <p class="curve-marker-note" id="curveMarkerNote"></p>
+  </section>
+
+  <section class="card honest">
+    <h2>정직하게 말하면</h2>
+    <p>Erlang C는 무한 대기열, 포기(콜 끊김) 없음, 정상상태(steady state)를 가정합니다. 실제 콜센터는 포기율, 재통화, 스킬 기반 라우팅이 섞여 있어 이 데모의 값과 실제 SLA는 다르게 움직입니다.</p>
+    <p>수요 곡선은 프리셋 기반의 합성 데이터이며, 실제 도입 시에는 귀사의 실제 콜 로그로 다시 계산해야 합니다. 위 사전 검증값은 별도의 OR-Tools CP-SAT 정수계획 모델로 구한 값이고, 이 화면의 실시간 계산은 브라우저에서 그리디+지역탐색 휴리스틱으로 근사합니다. 같은 개념이지만 탐색 방식이 달라 정확한 숫자는 일치하지 않을 수 있습니다.</p>
+    <p>혼합 시프트로 얻는 이득은 근로기준법과 각 사업장의 근로계약이 허용하는 범위 안에서만 실제로 실현됩니다. 분할 근무, 단시간 근로 도입 전에 인사·노무 검토가 먼저입니다.</p>
+  </section>
+</main>
+
+<footer class="demo-foot">© 2i · contact@2icorp.site</footer>
+
+<script>
+(function(){
+  "use strict";
+
+  /* ---------------- seeded PRNG (mulberry32) ---------------- */
+  var SEED = 20260731;
+  function mulberry32(seed){
+    var s = seed >>> 0;
+    return function(){
+      s = (s + 0x6D2B79F5) | 0;
+      var t = Math.imul(s ^ (s >>> 15), 1 | s);
+      t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+      return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+    };
+  }
+
+  /* ---------------- constants ---------------- */
+  var N = 48;           // 30-min intervals in a day
+  var HALF = 0.5;        // hours per interval
+  var INTERVAL_SEC = 1800;
+  var WINDOW_START = 12; // 06:00
+  var WINDOW_END = 44;   // 22:00 (exclusive)
+
+  function timeLabel(i){
+    var h = Math.floor(i/2), m = (i%2)*30;
+    return (h<10?"0":"")+h+":"+(m===0?"00":"30");
+  }
+
+  /* ---------------- demand shapes ---------------- */
+  var SHAPES = {
+    dual:    { baseline:0.16, peaks:[{c:20,s:3.0,w:1.0},{c:32,s:3.2,w:0.85}], dip:null, defIntensity:1.4 },
+    morning: { baseline:0.13, peaks:[{c:19,s:3.5,w:1.0},{c:34,s:4.2,w:0.28}], dip:null, defIntensity:1.5 },
+    flat:    { baseline:0.60, peaks:[{c:22,s:9.0,w:0.32},{c:34,s:9.0,w:0.28}], dip:null, defIntensity:0.6 },
+    lunch:   { baseline:0.16, peaks:[{c:19,s:2.6,w:1.0},{c:31,s:2.6,w:0.9}], dip:{c:25,depth:0.55,s:1.6}, defIntensity:1.3 }
+  };
+
+  function gauss(i,c,s){ var d=(i-c)/s; return Math.exp(-0.5*d*d); }
+
+  function weightAt(i, cfg, intensity){
+    var w = cfg.baseline;
+    for(var k=0;k<cfg.peaks.length;k++){
+      var p = cfg.peaks[k];
+      w += p.w * intensity * gauss(i, p.c, p.s);
+    }
+    if(cfg.dip){ w *= (1 - cfg.dip.depth * gauss(i, cfg.dip.c, cfg.dip.s)); }
+    return Math.max(0.02, w);
+  }
+
+  function generateDemand(shapeKey, intensity, totalCalls){
+    var cfg = SHAPES[shapeKey];
+    var raw = new Array(N).fill(0);
+    var sum = 0;
+    for(var i=WINDOW_START;i<WINDOW_END;i++){
+      var w = weightAt(i, cfg, intensity);
+      raw[i] = w; sum += w;
+    }
+    var calls = new Array(N).fill(0);
+    var running = 0, maxIdx = WINDOW_START;
+    for(var j=WINDOW_START;j<WINDOW_END;j++){
+      var v = Math.round(raw[j]/sum*totalCalls);
+      calls[j] = v; running += v;
+      if(raw[j] > raw[maxIdx]) maxIdx = j;
+    }
+    calls[maxIdx] += (totalCalls - running);
+    if(calls[maxIdx] < 0) calls[maxIdx] = 0;
+    return calls;
+  }
+
+  /* ---------------- Erlang B / Erlang C ---------------- */
+  function erlangB(A, c){
+    var b = 1;
+    for(var n=1;n<=c;n++){
+      b = (A*b) / (n + A*b);
+    }
+    return b;
+  }
+  function erlangC(A, c){
+    if(c <= 0) return 1;
+    if(c <= A) return 1;
+    var b = erlangB(A, c);
+    var C = b / (1 - (A/c)*(1-b));
+    if(!isFinite(C)) return 1;
+    return Math.min(1, Math.max(0, C));
+  }
+  function serviceLevel(A, c, ahtSec, targetSec){
+    if(A <= 0) return 1;
+    if(c <= 0) return 0;
+    if(c <= A) return 0;
+    var pWait = erlangC(A, c);
+    var sl = 1 - pWait * Math.exp(-(c - A) * targetSec / ahtSec);
+    return Math.min(1, Math.max(0, sl));
+  }
+  function requiredAgents(calls, ahtSec, targetSec, slaTarget){
+    if(calls <= 0) return 0;
+    var A = calls * ahtSec / INTERVAL_SEC;
+    var cap = Math.ceil(A) + 120;
+    for(var c=1; c<=cap; c++){
+      if(serviceLevel(A, c, ahtSec, targetSec) >= slaTarget) return c;
+    }
+    return cap;
+  }
+
+  function buildRequiredArr(calls, ahtSec, targetSec, slaTarget){
+    var req = new Array(N).fill(0);
+    for(var i=0;i<N;i++){ req[i] = requiredAgents(calls[i], ahtSec, targetSec, slaTarget); }
+    return req;
+  }
+
+  /* ---------------- shift catalogue ---------------- */
+  var SHIFT_TYPES = {
+    FT8:   { label:"FT8 (8시간 연속)",       kind:"block", len:16, step:2 },
+    PT6:   { label:"PT6 (6시간 연속)",       kind:"block", len:12, step:1 },
+    PT4:   { label:"PT4 (4시간 연속)",       kind:"block", len:8,  step:1 },
+    SPLIT: { label:"SPLIT (4시간+휴식+3시간)", kind:"split", len1:8, gap:4, len2:6, step:1 }
+  };
+  var TYPE_ORDER = ["FT8","PT6","PT4","SPLIT"];
+
+  function candidatesForType(typeKey){
+    var def = SHIFT_TYPES[typeKey];
+    var out = [];
+    if(def.kind === "block"){
+      var maxStart = WINDOW_END - def.len;
+      for(var s=WINDOW_START; s<=maxStart; s+=def.step){
+        var cov = [];
+        for(var i=s;i<s+def.len;i++) cov.push(i);
+        out.push({ type:typeKey, start:s, coverage:cov, hours:def.len*HALF, key:typeKey+"_"+s });
+      }
+    } else {
+      var span = def.len1 + def.gap + def.len2;
+      var maxStart2 = WINDOW_END - span;
+      for(var s2=WINDOW_START; s2<=maxStart2; s2+=def.step){
+        var cov2 = [];
+        for(var i2=s2;i2<s2+def.len1;i2++) cov2.push(i2);
+        var s3 = s2 + def.len1 + def.gap;
+        for(var i3=s3;i3<s3+def.len2;i3++) cov2.push(i3);
+        out.push({ type:typeKey, start:s2, coverage:cov2, hours:(def.len1+def.len2)*HALF, key:typeKey+"_"+s2 });
+      }
+    }
+    return out;
+  }
+
+  var CAND_CACHE = {};
+  function candidatesFor(typeKeys){
+    var poolKey = typeKeys.slice().sort().join(",");
+    if(CAND_CACHE[poolKey]) return CAND_CACHE[poolKey];
+    var pool = [];
+    for(var k=0;k<typeKeys.length;k++){ pool = pool.concat(candidatesForType(typeKeys[k])); }
+    CAND_CACHE[poolKey] = pool;
+    return pool;
+  }
+
+  /* ---------------- greedy + local-search shift solver ---------------- */
+  function shuffle(arr, rng){
+    var a = arr.slice();
+    for(var i=a.length-1;i>0;i--){
+      var j = Math.floor(rng()*(i+1));
+      var tmp = a[i]; a[i]=a[j]; a[j]=tmp;
+    }
+    return a;
+  }
+
+  // gain/surplus weighted by call volume: an interval with 150 calls matters
+  // far more than an interval with 5 calls, so the greedy fills high-traffic
+  // gaps first instead of treating every 30-min slot as equally important.
+  function weightedGain(cov, req, calls, staffed){
+    var g = 0;
+    for(var i=0;i<cov.length;i++){
+      var idx = cov[i];
+      var d = req[idx] - staffed[idx];
+      if(d > 0) g += (calls[idx] || 1) * d;
+    }
+    return g;
+  }
+  function weightedSurplus(cov, req, calls, staffed){
+    var s = 0;
+    for(var i=0;i<cov.length;i++){
+      var idx = cov[i];
+      var d = staffed[idx] - req[idx];
+      if(d > 0) s += (calls[idx] || 1) * d;
+    }
+    return s;
+  }
+
+  function solveShiftPlan(reqArr, calls, pool, budgetHours, rng, localPasses){
+    var staffed = new Array(N).fill(0);
+    var remaining = budgetHours;
+    var chosen = [];
+    var order = shuffle(pool, rng);
+    var maxIter = 6000;
+
+    for(var iter=0; iter<maxIter && remaining>1e-9; iter++){
+      var best = null, bestScore = 0;
+      for(var k=0;k<order.length;k++){
+        var cand = order[k];
+        if(cand.hours > remaining + 1e-9) continue;
+        var gain = weightedGain(cand.coverage, reqArr, calls, staffed);
+        if(gain <= 0) continue;
+        var score = gain / cand.hours;
+        if(score > bestScore){ bestScore = score; best = cand; }
+      }
+      if(!best) break;
+      for(var c=0;c<best.coverage.length;c++){ staffed[best.coverage[c]]++; }
+      remaining -= best.hours;
+      chosen.push(best);
+    }
+
+    // local search: remove the most wasteful placement, try a better replacement
+    var passes = localPasses || 30;
+    for(var p=0;p<passes;p++){
+      if(chosen.length === 0) break;
+      var worstIdx = -1, worstSurplus = -1;
+      for(var m=0;m<chosen.length;m++){
+        var sp = weightedSurplus(chosen[m].coverage, reqArr, calls, staffed);
+        if(sp > worstSurplus){ worstSurplus = sp; worstIdx = m; }
+      }
+      if(worstSurplus <= 0) break;
+      var removed = chosen[worstIdx];
+      for(var r=0;r<removed.coverage.length;r++){ staffed[removed.coverage[r]]--; }
+      var freed = remaining + removed.hours;
+
+      var best2 = null, bestScore2 = 0;
+      for(var q=0;q<order.length;q++){
+        var cand2 = order[q];
+        if(cand2.hours > freed + 1e-9) continue;
+        var gain2 = weightedGain(cand2.coverage, reqArr, calls, staffed);
+        if(gain2 <= 0) continue;
+        var score2 = gain2 / cand2.hours;
+        if(score2 > bestScore2){ bestScore2 = score2; best2 = cand2; }
+      }
+      if(best2){
+        for(var c2=0;c2<best2.coverage.length;c2++){ staffed[best2.coverage[c2]]++; }
+        remaining = freed - best2.hours;
+        chosen.splice(worstIdx, 1);
+        chosen.push(best2);
+      } else {
+        for(var r2=0;r2<removed.coverage.length;r2++){ staffed[removed.coverage[r2]]++; }
+      }
+    }
+
+    var hoursUsed = budgetHours - remaining;
+    return { staffed:staffed, chosen:chosen, hoursUsed:hoursUsed };
+  }
+
+  function computeMetrics(reqArr, calls, staffed, ahtSec, targetSec){
+    var shortage=0, surplus=0, sumSL=0, totalCalls=0;
+    for(var i=0;i<N;i++){
+      shortage += Math.max(0, reqArr[i]-staffed[i]);
+      surplus  += Math.max(0, staffed[i]-reqArr[i]);
+      if(calls[i] > 0){
+        var A = calls[i]*ahtSec/INTERVAL_SEC;
+        var sl = serviceLevel(A, staffed[i], ahtSec, targetSec);
+        sumSL += calls[i]*sl;
+        totalCalls += calls[i];
+      }
+    }
+    var achieved = totalCalls > 0 ? sumSL/totalCalls : 1;
+    return { shortage:shortage, surplus:surplus, achieved:achieved, totalCalls:totalCalls };
+  }
+
+  /* ---------------- DOM refs ---------------- */
+  var $ = function(id){ return document.getElementById(id); };
+  var els = {
+    totalCalls: $("totalCallsSlider"), totalCallsVal: $("totalCallsVal"),
+    peak: $("peakSlider"), peakVal: $("peakVal"),
+    aht: $("ahtSlider"), ahtVal: $("ahtVal"),
+    targetT: $("targetTSlider"), targetTVal: $("targetTVal"),
+    sla: $("slaSlider"), slaVal: $("slaVal"),
+    budget: $("budgetSlider"), budgetVal: $("budgetVal"),
+    typeFT8: $("typeFT8"), typePT6: $("typePT6"), typePT4: $("typePT4"), typeSPLIT: $("typeSPLIT"),
+    scenarioSelect: $("chartScenarioSelect"),
+    coverageChart: $("coverageChart"), ganttChart: $("ganttChart"), slaCurveChart: $("slaCurveChart"),
+    aHours: $("aHours"), aSLA: $("aSLA"), aShort: $("aShort"), aSurplus: $("aSurplus"),
+    bHours: $("bHours"), bSLA: $("bSLA"), bShort: $("bShort"), bSurplus: $("bSurplus"),
+    deltaSLA: $("deltaSLA"), deltaShort: $("deltaShort"), deltaSurplus: $("deltaSurplus"),
+    conclusionText: $("conclusionText"),
+    curveStatus: $("curveStatus"), curveProgressBar: $("curveProgressBar"), curveMarkerNote: $("curveMarkerNote")
+  };
+
+  var presetBtns = Array.prototype.slice.call(document.querySelectorAll(".preset-btn"));
+  var currentShape = "dual";
+
+  function fmtHours(h){ return h.toFixed(1) + "시간"; }
+  function fmtPct(p){ return (p*100).toFixed(2) + "%"; }
+  function fmtPP(p){ var v=p*100; return (v>=0?"+":"") + v.toFixed(2) + "%p"; }
+  function fmtSigned(n){ return (n>=0?"+":"") + n; }
+  function fmtAHT(s){ var m=Math.floor(s/60), sec=s%60; return m+"분 "+sec+"초"; }
+
+  function enabledTypes(){
+    var out = [];
+    if(els.typeFT8.checked) out.push("FT8");
+    if(els.typePT6.checked) out.push("PT6");
+    if(els.typePT4.checked) out.push("PT4");
+    if(els.typeSPLIT.checked) out.push("SPLIT");
+    if(out.length === 0){ els.typeFT8.checked = true; out.push("FT8"); }
+    return out;
+  }
+
+  /* ---------------- rendering: coverage chart ---------------- */
+  var svgNS = "http://www.w3.org/2000/svg";
+  function clearSvg(svg){ while(svg.firstChild){ svg.removeChild(svg.firstChild); } }
+
+  function renderCoverageChart(reqArr, staffed, label){
+    var svg = els.coverageChart;
+    clearSvg(svg);
+    var W=900,H=260,padL=40,padR=14,padT=16,padB=30;
+    var innerW=W-padL-padR, innerH=H-padT-padB;
+    var span = WINDOW_END - WINDOW_START;
+    var maxV = 1;
+    for(var i=WINDOW_START;i<WINDOW_END;i++){ maxV = Math.max(maxV, reqArr[i], staffed[i]); }
+    maxV = maxV * 1.15;
+    function x(idx){ return padL + innerW * (idx - WINDOW_START) / span; }
+    function y(v){ return padT + innerH - (v/maxV)*innerH; }
+    var barW = (innerW/span) * 0.72;
+
+    for(var i2=WINDOW_START;i2<WINDOW_END;i2++){
+      var req = reqArr[i2], st = staffed[i2];
+      var bx = x(i2) + (innerW/span - barW)/2;
+      var baseTop = y(Math.min(req, st));
+      var baseH = padT+innerH - baseTop;
+      if(baseH > 0){
+        var baseRect = document.createElementNS(svgNS,"rect");
+        baseRect.setAttribute("x", bx.toFixed(1)); baseRect.setAttribute("y", baseTop.toFixed(1));
+        baseRect.setAttribute("width", barW.toFixed(1)); baseRect.setAttribute("height", baseH.toFixed(1));
+        baseRect.setAttribute("fill","var(--steel)");
+        svg.appendChild(baseRect);
+      }
+      if(st < req){
+        var gapTop = y(req), gapBottom = y(st);
+        var gapRect = document.createElementNS(svgNS,"rect");
+        gapRect.setAttribute("x", bx.toFixed(1)); gapRect.setAttribute("y", gapTop.toFixed(1));
+        gapRect.setAttribute("width", barW.toFixed(1)); gapRect.setAttribute("height", (gapBottom-gapTop).toFixed(1));
+        gapRect.setAttribute("fill","color-mix(in srgb, var(--signal) 55%, transparent)");
+        svg.appendChild(gapRect);
+      } else if(st > req){
+        var overTop = y(st), overBottom = y(req);
+        var overRect = document.createElementNS(svgNS,"rect");
+        overRect.setAttribute("x", bx.toFixed(1)); overRect.setAttribute("y", overTop.toFixed(1));
+        overRect.setAttribute("width", barW.toFixed(1)); overRect.setAttribute("height", (overBottom-overTop).toFixed(1));
+        overRect.setAttribute("fill","var(--steel-soft)");
+        svg.appendChild(overRect);
+      }
+      if(i2 % 4 === 0){
+        var t = document.createElementNS(svgNS,"text");
+        t.setAttribute("x", (bx+barW/2).toFixed(1)); t.setAttribute("y", H-10);
+        t.setAttribute("text-anchor","middle"); t.setAttribute("class","axis-label");
+        t.textContent = timeLabel(i2);
+        svg.appendChild(t);
+      }
+    }
+
+    var pts = [];
+    for(var i3=WINDOW_START;i3<WINDOW_END;i3++){
+      var cx = x(i3)+innerW/span/2;
+      pts.push(cx.toFixed(1)+","+y(reqArr[i3]).toFixed(1));
+      pts.push((cx+innerW/span).toFixed(1)+","+y(reqArr[i3]).toFixed(1));
+    }
+    var line = document.createElementNS(svgNS,"polyline");
+    line.setAttribute("points", pts.join(" "));
+    line.setAttribute("fill","none");
+    line.setAttribute("stroke","var(--ink-faint)");
+    line.setAttribute("stroke-width","1.4");
+    line.setAttribute("stroke-dasharray","4 3");
+    svg.appendChild(line);
+
+    svg.setAttribute("aria-label", label + " 시나리오의 30분 구간별 필요 인원과 실제 배치 인원 차트");
+  }
+
+  function renderGantt(chosen, allowedTypes){
+    var svg = els.ganttChart;
+    clearSvg(svg);
+    var rows = allowedTypes.filter(function(t){ return TYPE_ORDER.indexOf(t) >= 0; });
+    var rowH = 28;
+    var W=900, padL=96, padR=14, padT=10, padB=26;
+    var H = rows.length*rowH + padT + padB;
+    svg.setAttribute("viewBox","0 0 "+W+" "+H);
+    var innerW = W-padL-padR;
+    var span = WINDOW_END - WINDOW_START;
+    function x(idx){ return padL + innerW*(idx-WINDOW_START)/span; }
+    var cellW = innerW/span;
+
+    var counts = {};
+    rows.forEach(function(t){ counts[t] = new Array(N).fill(0); });
+    for(var k=0;k<chosen.length;k++){
+      var inst = chosen[k];
+      if(!counts[inst.type]) continue;
+      for(var c=0;c<inst.coverage.length;c++){ counts[inst.type][inst.coverage[c]]++; }
+    }
+    var maxCount = 1;
+    rows.forEach(function(t){ counts[t].forEach(function(v){ if(v>maxCount) maxCount=v; }); });
+
+    rows.forEach(function(type, ri){
+      var rowY = padT + ri*rowH;
+      var label = document.createElementNS(svgNS,"text");
+      label.setAttribute("x", 4); label.setAttribute("y", rowY+rowH/2+3);
+      label.setAttribute("class","row-label");
+      label.textContent = SHIFT_TYPES[type].label.split(" ")[0];
+      svg.appendChild(label);
+      for(var i=WINDOW_START;i<WINDOW_END;i++){
+        var v = counts[type][i];
+        var rect = document.createElementNS(svgNS,"rect");
+        rect.setAttribute("x", x(i).toFixed(1)); rect.setAttribute("y", (rowY+3).toFixed(1));
+        rect.setAttribute("width", cellW.toFixed(1)); rect.setAttribute("height", (rowH-8).toFixed(1));
+        var op = v===0 ? 0.06 : (0.18 + 0.72*(v/maxCount));
+        rect.setAttribute("fill", "color-mix(in srgb, var(--signal) "+Math.round(op*100)+"%, var(--panel))");
+        svg.appendChild(rect);
+      }
+    });
+    for(var i2=WINDOW_START;i2<WINDOW_END;i2++){
+      if(i2 % 4 !== 0) continue;
+      var t2 = document.createElementNS(svgNS,"text");
+      t2.setAttribute("x", (x(i2)+cellW/2).toFixed(1)); t2.setAttribute("y", H-8);
+      t2.setAttribute("text-anchor","middle"); t2.setAttribute("class","axis-label");
+      t2.textContent = timeLabel(i2);
+      svg.appendChild(t2);
+    }
+  }
+
+  /* ---------------- main lightweight recompute ---------------- */
+  var STATE = { calls:null, reqArr:null, solveA:null, solveB:null, mA:null, mB:null };
+
+  function fullRecompute(){
+    var totalCalls = parseInt(els.totalCalls.value, 10);
+    var intensity = parseFloat(els.peak.value);
+    var aht = parseInt(els.aht.value, 10);
+    var targetT = parseInt(els.targetT.value, 10);
+    var slaTarget = parseInt(els.sla.value, 10) / 100;
+    var budget = parseFloat(els.budget.value);
+
+    els.totalCallsVal.textContent = totalCalls + "건";
+    els.peakVal.textContent = intensity.toFixed(1) + "×";
+    els.ahtVal.textContent = fmtAHT(aht);
+    els.targetTVal.textContent = targetT + "초";
+    els.slaVal.textContent = Math.round(slaTarget*100) + "%";
+    els.budgetVal.textContent = budget.toFixed(0) + "시간";
+
+    var calls = generateDemand(currentShape, intensity, totalCalls);
+    var reqArr = buildRequiredArr(calls, aht, targetT, slaTarget);
+
+    var poolA = candidatesFor(["FT8"]);
+    var poolB = candidatesFor(enabledTypes());
+
+    var solveA = solveShiftPlan(reqArr, calls, poolA, budget, mulberry32(SEED), 30);
+    var solveB = solveShiftPlan(reqArr, calls, poolB, budget, mulberry32(SEED+1), 40);
+
+    var mA = computeMetrics(reqArr, calls, solveA.staffed, aht, targetT);
+    var mB = computeMetrics(reqArr, calls, solveB.staffed, aht, targetT);
+
+    STATE.calls = calls; STATE.reqArr = reqArr;
+    STATE.solveA = solveA; STATE.solveB = solveB; STATE.mA = mA; STATE.mB = mB;
+    STATE.aht = aht; STATE.targetT = targetT;
+
+    els.aHours.textContent = fmtHours(solveA.hoursUsed);
+    els.aSLA.textContent = fmtPct(mA.achieved);
+    els.aShort.textContent = mA.shortage + "칸";
+    els.aSurplus.textContent = mA.surplus + "칸";
+
+    els.bHours.textContent = fmtHours(solveB.hoursUsed);
+    els.bSLA.textContent = fmtPct(mB.achieved);
+    els.bShort.textContent = mB.shortage + "칸";
+    els.bSurplus.textContent = mB.surplus + "칸";
+
+    var dSLA = mB.achieved - mA.achieved;
+    var dShort = mB.shortage - mA.shortage;
+    var dSurplus = mB.surplus - mA.surplus;
+    els.deltaSLA.textContent = fmtPP(dSLA);
+    els.deltaSLA.className = "dstat__val " + (dSLA >= 0 ? "good" : "bad");
+    els.deltaShort.textContent = fmtSigned(dShort) + "칸";
+    els.deltaShort.className = "dstat__val " + (dShort <= 0 ? "good" : "bad");
+    els.deltaSurplus.textContent = fmtSigned(dSurplus) + "칸";
+    els.deltaSurplus.className = "dstat__val " + (dSurplus <= 0 ? "good" : "bad");
+
+    var hoursDisplay = ((solveA.hoursUsed + solveB.hoursUsed)/2).toFixed(0);
+    var concl;
+    if(Math.abs(dSLA) < 0.0003){
+      concl = "이번 설정에서는 두 안이 사실상 같은 인건시간(" + hoursDisplay + "시간 안팎)에서 비슷한 SLA를 냅니다. 혼합 시프트 유형을 더 켜거나 인건시간 상한을 낮춰 차이를 키워보세요.";
+    } else {
+      concl = "같은 인건비 " + hoursDisplay + "시간에서 8시간 고정은 SLA " + fmtPct(mA.achieved) + ", 혼합 시프트는 SLA " + fmtPct(mB.achieved) + "입니다. 차이는 " + fmtPP(dSLA) + "이고, 증원 없이 시프트 모양만 바꿔 얻은 값입니다.";
+    }
+    els.conclusionText.textContent = concl;
+
+    renderScenarioViews();
+  }
+
+  function renderScenarioViews(){
+    if(!STATE.reqArr) return;
+    var mode = els.scenarioSelect.value;
+    if(mode === "fixed"){
+      renderCoverageChart(STATE.reqArr, STATE.solveA.staffed, "8시간 고정");
+      renderGantt(STATE.solveA.chosen, ["FT8"]);
+    } else {
+      renderCoverageChart(STATE.reqArr, STATE.solveB.staffed, "혼합 시프트");
+      renderGantt(STATE.solveB.chosen, enabledTypes());
+    }
+  }
+
+  /* ---------------- SLA target -> required hours curve ---------------- */
+  var TARGET_POINTS = [0.60,0.65,0.70,0.75,0.80,0.85,0.90,0.95];
+  var CURVE_STATE = { points:null };
+
+  // Bisection needs achieved(hours) to be monotone non-decreasing in hours to
+  // converge correctly. That only holds if the SAME candidate order (same rng
+  // seed) is reused across every trial budget in the search -- a fresh random
+  // seed per trial would let tie-breaking noise make the search jump around.
+  function bisectHours(reqBuilder, poolB, lo, hi, iters, seed){
+    for(var b=0;b<iters;b++){
+      var mid = (lo+hi)/2;
+      var sol = solveShiftPlan(reqBuilder.reqArr, reqBuilder.calls, poolB, mid, mulberry32(seed), 20);
+      var m = computeMetrics(reqBuilder.reqArr, reqBuilder.calls, sol.staffed, reqBuilder.aht, reqBuilder.targetT);
+      if(m.achieved >= reqBuilder.target - 0.0006){ hi = mid; } else { lo = mid; }
+    }
+    var finalSol = solveShiftPlan(reqBuilder.reqArr, reqBuilder.calls, poolB, hi, mulberry32(seed), 20);
+    var finalM = computeMetrics(reqBuilder.reqArr, reqBuilder.calls, finalSol.staffed, reqBuilder.aht, reqBuilder.targetT);
+    return { hours:hi, achieved:finalM.achieved, capped: finalM.achieved < reqBuilder.target - 0.0006 };
+  }
+
+  function scheduleCurveRecompute(){
+    var totalCalls = parseInt(els.totalCalls.value, 10);
+    var intensity = parseFloat(els.peak.value);
+    var aht = parseInt(els.aht.value, 10);
+    var targetT = parseInt(els.targetT.value, 10);
+    var calls = generateDemand(currentShape, intensity, totalCalls);
+    var poolB = candidatesFor(enabledTypes());
+
+    els.curveStatus.textContent = "재계산 중...";
+    els.curveProgressBar.style.width = "0%";
+
+    var results = [];
+    var idx = 0;
+    var prevHours = 0; // ratchet: a higher SLA target can never need fewer hours
+    function step(){
+      if(idx >= TARGET_POINTS.length){
+        els.curveStatus.textContent = "계산 완료";
+        els.curveProgressBar.style.width = "100%";
+        CURVE_STATE.points = results;
+        renderSLACurve();
+        updateCurrentTargetMarker();
+        return;
+      }
+      var target = TARGET_POINTS[idx];
+      var reqArr = buildRequiredArr(calls, aht, targetT, target);
+      var reqBuilder = { reqArr:reqArr, calls:calls, aht:aht, targetT:targetT, target:target };
+      var seed = SEED + 500 + idx*97;
+      var r = bisectHours(reqBuilder, poolB, 60, 1800, 16, seed);
+      if(r.hours < prevHours){
+        // the search-noise floor dipped below the previous point; re-solve at
+        // the previous (already-sufficient) budget so the displayed hours and
+        // achieved% stay internally consistent instead of just clamping hours.
+        var fixSol = solveShiftPlan(reqArr, calls, poolB, prevHours, mulberry32(seed), 20);
+        var fixM = computeMetrics(reqArr, calls, fixSol.staffed, aht, targetT);
+        r = { hours:prevHours, achieved:fixM.achieved, capped:false };
+      }
+      prevHours = r.hours;
+      results.push({ target:target, hours:r.hours, achieved:r.achieved, capped:r.capped });
+      idx++;
+      els.curveProgressBar.style.width = Math.round(idx/TARGET_POINTS.length*100) + "%";
+      setTimeout(step, 0);
+    }
+    step();
+  }
+
+  function renderSLACurve(){
+    var svg = els.slaCurveChart;
+    clearSvg(svg);
+    var pts = CURVE_STATE.points;
+    if(!pts || pts.length === 0) return;
+    var W=900,H=260,padL=54,padR=20,padT=16,padB=34;
+    var innerW=W-padL-padR, innerH=H-padT-padB;
+    var minT=0.58, maxT=0.97;
+    var minH = Math.min.apply(null, pts.map(function(p){return p.hours;})) * 0.92;
+    var maxH = Math.max.apply(null, pts.map(function(p){return p.hours;})) * 1.08;
+    function x(t){ return padL + innerW*(t-minT)/(maxT-minT); }
+    function y(h){ return padT + innerH - innerH*(h-minH)/(maxH-minH); }
+
+    // gridlines + y labels
+    var ySteps = 4;
+    for(var g=0; g<=ySteps; g++){
+      var hv = minH + (maxH-minH)*g/ySteps;
+      var gy = y(hv);
+      var gl = document.createElementNS(svgNS,"line");
+      gl.setAttribute("x1",padL); gl.setAttribute("x2",W-padR);
+      gl.setAttribute("y1",gy.toFixed(1)); gl.setAttribute("y2",gy.toFixed(1));
+      gl.setAttribute("stroke","var(--line-soft)"); gl.setAttribute("stroke-width","1");
+      svg.appendChild(gl);
+      var gt = document.createElementNS(svgNS,"text");
+      gt.setAttribute("x", padL-6); gt.setAttribute("y", gy+3);
+      gt.setAttribute("text-anchor","end"); gt.setAttribute("class","axis-label");
+      gt.textContent = Math.round(hv);
+      svg.appendChild(gt);
+    }
+
+    var linePts = pts.map(function(p){ return x(p.target).toFixed(1)+","+y(p.hours).toFixed(1); });
+    var poly = document.createElementNS(svgNS,"polyline");
+    poly.setAttribute("points", linePts.join(" "));
+    poly.setAttribute("fill","none");
+    poly.setAttribute("stroke","var(--signal)");
+    poly.setAttribute("stroke-width","2.2");
+    svg.appendChild(poly);
+
+    pts.forEach(function(p){
+      var cx = x(p.target), cy = y(p.hours);
+      var dot = document.createElementNS(svgNS,"circle");
+      dot.setAttribute("cx", cx.toFixed(1)); dot.setAttribute("cy", cy.toFixed(1));
+      dot.setAttribute("r", p.capped ? 4.5 : 4);
+      dot.setAttribute("fill", p.capped ? "var(--panel)" : "var(--signal-deep)");
+      dot.setAttribute("stroke", "var(--signal-deep)");
+      dot.setAttribute("stroke-width", p.capped ? "2" : "0");
+      svg.appendChild(dot);
+      var lx = document.createElementNS(svgNS,"text");
+      lx.setAttribute("x", cx.toFixed(1)); lx.setAttribute("y", H-12);
+      lx.setAttribute("text-anchor","middle"); lx.setAttribute("class","axis-label");
+      lx.textContent = Math.round(p.target*100)+"%";
+      svg.appendChild(lx);
+    });
+  }
+
+  function updateCurrentTargetMarker(){
+    var slaTarget = parseInt(els.sla.value,10)/100;
+    var totalCalls = parseInt(els.totalCalls.value, 10);
+    var intensity = parseFloat(els.peak.value);
+    var aht = parseInt(els.aht.value, 10);
+    var targetT = parseInt(els.targetT.value, 10);
+    var calls = generateDemand(currentShape, intensity, totalCalls);
+    var poolB = candidatesFor(enabledTypes());
+    var reqArr = buildRequiredArr(calls, aht, targetT, slaTarget);
+    var reqBuilder = { reqArr:reqArr, calls:calls, aht:aht, targetT:targetT, target:slaTarget };
+    var r = bisectHours(reqBuilder, poolB, 60, 1800, 14, SEED+9000);
+
+    els.curveMarkerNote.textContent = "현재 SLA 목표(" + Math.round(slaTarget*100) + "%)를 혼합 시프트로 달성하려면 약 " + r.hours.toFixed(0) + "시간이 필요합니다(달성 " + fmtPct(r.achieved) + (r.capped ? ", 탐색 상한 내 목표 도달 실패" : "") + ").";
+
+    var svg = els.slaCurveChart;
+    var marker = svg.querySelector("#currentMarker");
+    if(marker) marker.remove();
+    if(!CURVE_STATE.points) return;
+    var W=900,H=260,padL=54,padR=20,padT=16,padB=34;
+    var innerW=W-padL-padR, innerH=H-padT-padB;
+    var minT=0.58, maxT=0.97;
+    var pts = CURVE_STATE.points;
+    var minH = Math.min.apply(null, pts.map(function(p){return p.hours;})) * 0.92;
+    var maxH = Math.max.apply(null, pts.map(function(p){return p.hours;})) * 1.08;
+    var mh = Math.max(minH, Math.min(maxH, r.hours));
+    var cx = padL + innerW*(slaTarget-minT)/(maxT-minT);
+    var cy = padT + innerH - innerH*(mh-minH)/(maxH-minH);
+    var g = document.createElementNS(svgNS,"g");
+    g.setAttribute("id","currentMarker");
+    var vline = document.createElementNS(svgNS,"line");
+    vline.setAttribute("x1",cx.toFixed(1)); vline.setAttribute("x2",cx.toFixed(1));
+    vline.setAttribute("y1",padT); vline.setAttribute("y2",padT+innerH);
+    vline.setAttribute("stroke","var(--ink-faint)"); vline.setAttribute("stroke-dasharray","3 3");
+    g.appendChild(vline);
+    var mdot = document.createElementNS(svgNS,"circle");
+    mdot.setAttribute("cx",cx.toFixed(1)); mdot.setAttribute("cy",cy.toFixed(1));
+    mdot.setAttribute("r","6"); mdot.setAttribute("fill","var(--ink)");
+    g.appendChild(mdot);
+    svg.appendChild(g);
+  }
+
+  /* ---------------- wiring ---------------- */
+  function debounce(fn, wait){
+    var t;
+    return function(){
+      var args = arguments, ctx = this;
+      clearTimeout(t);
+      t = setTimeout(function(){ fn.apply(ctx, args); }, wait);
+    };
+  }
+  var debouncedCurve = debounce(scheduleCurveRecompute, 60);
+
+  ["totalCalls","peak","aht","targetT","budget"].forEach(function(key){
+    els[key].addEventListener("input", fullRecompute);
+  });
+  ["totalCalls","peak","aht","targetT"].forEach(function(key){
+    els[key].addEventListener("change", debouncedCurve);
+  });
+  els.sla.addEventListener("input", function(){ fullRecompute(); updateCurrentTargetMarker(); });
+
+  [els.typeFT8, els.typePT6, els.typePT4, els.typeSPLIT].forEach(function(cb){
+    cb.addEventListener("change", function(){ fullRecompute(); debouncedCurve(); });
+  });
+
+  els.scenarioSelect.addEventListener("change", renderScenarioViews);
+
+  presetBtns.forEach(function(btn){
+    btn.addEventListener("click", function(){
+      presetBtns.forEach(function(b){ b.setAttribute("aria-pressed","false"); });
+      btn.setAttribute("aria-pressed","true");
+      currentShape = btn.getAttribute("data-shape");
+      var cfg = SHAPES[currentShape];
+      els.peak.value = cfg.defIntensity;
+      fullRecompute();
+      debouncedCurve();
+    });
+  });
+
+  fullRecompute();
+  updateCurrentTargetMarker();
+  scheduleCurveRecompute();
+})();
+</script>
+</body>
+</html>

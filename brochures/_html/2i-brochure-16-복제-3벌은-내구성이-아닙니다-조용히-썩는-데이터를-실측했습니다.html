@@ -1,0 +1,109 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+@page { size: A4; margin: 15mm 14mm 16mm; }
+* { box-sizing: border-box; }
+:root{
+  --ink:#1b2230; --soft:#4a5568; --faint:#78849a; --line:#e3e7ee; --panel:#f7f8fb;
+  --signal:#d9821f; --signal-deep:#b5661a; --steel:#3f5c88;
+  --sans:"Pretendard Variable",Pretendard,-apple-system,system-ui,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+}
+html,body{margin:0;font-family:var(--sans);color:var(--ink);line-height:1.6;font-size:10.5pt;}
+h1,h2,h3{margin:0;letter-spacing:-0.02em;line-height:1.15;}
+.mono{font-family:var(--mono);}
+.eyebrow{font-family:var(--mono);font-size:7.5pt;letter-spacing:0.16em;text-transform:uppercase;color:var(--steel);}
+.cover{border-bottom:2px solid var(--ink);padding-bottom:14px;margin-bottom:16px;}
+.cover__top{display:flex;justify-content:space-between;align-items:baseline;}
+.brand{font-weight:800;font-size:16pt;letter-spacing:-0.03em;}
+.brand b{font-family:var(--mono);color:var(--signal);}
+.brand small{font-family:var(--mono);font-size:7pt;letter-spacing:0.14em;color:var(--faint);text-transform:uppercase;margin-left:6px;}
+.doclabel{font-family:var(--mono);font-size:7.5pt;letter-spacing:0.12em;color:var(--faint);text-transform:uppercase;}
+.cover h1{font-size:22pt;font-weight:850;margin:15px 0 8px;}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px;}
+.chip{font-family:var(--mono);font-size:7.5pt;border:1px solid var(--line);border-radius:20px;padding:3px 9px;color:var(--soft);}
+.chip--c{color:var(--signal-deep);border-color:#efc999;background:#fdf5ea;}
+.chip--v{color:var(--steel);}
+.stakes-box{margin-top:12px;border:1px solid var(--line);border-left:3px solid var(--signal);border-radius:3px;padding:8px 12px;background:#fdf7ef;display:flex;justify-content:space-between;align-items:baseline;gap:12px;}
+.stakes-box .l{font-family:var(--mono);font-size:8pt;color:var(--faint);text-transform:uppercase;letter-spacing:0.04em;}
+.stakes-box .v{font-family:var(--mono);font-weight:600;font-size:13pt;color:var(--signal-deep);white-space:nowrap;}
+.sec{margin-top:15px;break-inside:avoid;}
+.sec h2{font-size:11.5pt;font-weight:800;display:flex;align-items:center;gap:8px;margin-bottom:7px;}
+.sec h2::before{content:"";width:14px;height:2px;background:var(--signal);display:inline-block;}
+.lead{color:var(--soft);}
+.steps{display:grid;gap:8px;margin-top:4px;}
+.step{border:1px solid var(--line);border-left:3px solid var(--steel);border-radius:3px;padding:9px 12px;background:var(--panel);break-inside:avoid;}
+.step b{font-family:var(--mono);font-size:8pt;letter-spacing:0.06em;color:var(--steel);text-transform:uppercase;}
+.step p{margin:3px 0 0;font-size:9.7pt;}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+.card{border:1px solid var(--line);border-radius:3px;padding:10px 12px;background:#fff;}
+.card h3{font-size:9.5pt;color:var(--signal-deep);font-family:var(--mono);letter-spacing:0.04em;text-transform:uppercase;margin-bottom:5px;}
+.card p, .card li{font-size:9.6pt;}
+.deliv{list-style:none;margin:0;padding:0;display:grid;gap:4px;}
+.deliv li{padding-left:15px;position:relative;}
+.deliv li::before{content:"■";position:absolute;left:0;color:var(--steel);font-size:7pt;top:3px;}
+.ba{width:100%;border-collapse:collapse;margin-top:4px;font-size:9.4pt;}
+.ba caption{font-family:var(--mono);font-size:7.5pt;color:var(--faint);text-align:left;padding:0 0 5px;letter-spacing:0.03em;}
+.ba th{font-family:var(--mono);font-size:7.5pt;letter-spacing:0.04em;text-transform:uppercase;color:var(--faint);text-align:left;padding:5px 8px;border-bottom:1px solid var(--line);font-weight:500;}
+.ba td{padding:6px 8px;border-bottom:1px solid var(--line);vertical-align:baseline;}
+.ba .m{color:var(--soft);}
+.ba .b{font-family:var(--mono);font-size:8.6pt;color:var(--faint);text-decoration:line-through;}
+.ba .arw{color:var(--signal);text-align:center;}
+.ba .a{font-family:var(--mono);font-size:8.6pt;font-weight:600;color:var(--signal-deep);}
+.sowhat{border:1px solid var(--line);border-radius:3px;padding:10px 12px;background:var(--panel);font-size:9.8pt;margin-top:4px;}
+.proof-line{margin-top:7px;font-family:var(--mono);font-size:8.6pt;color:var(--steel);}
+.proof-line b{color:var(--ink);}
+.faq{display:grid;gap:8px;}
+.faq div{break-inside:avoid;}
+.faq q{display:block;font-weight:700;font-size:9.8pt;}
+.faq p{margin:2px 0 0;font-size:9.5pt;color:var(--soft);}
+.foot{margin-top:18px;border-top:1px solid var(--line);padding-top:12px;display:flex;justify-content:space-between;align-items:flex-end;gap:14px;}
+.cta{background:var(--ink);color:#fff;border-radius:4px;padding:11px 14px;font-size:9.5pt;flex:1;}
+.cta b{color:var(--signal);}
+.disc{font-family:var(--mono);font-size:6.8pt;color:var(--faint);line-height:1.5;max-width:50%;}
+</style></head><body>
+<div class="cover">
+  <div class="cover__top">
+    <div class="brand"><b>2i</b><small>AX 컨설팅</small></div>
+    <div class="doclabel">Case Brief · No.16 · 2i 게이지 방식</div>
+  </div>
+  <div class="eyebrow" style="margin-top:14px">온프렘 스토리지 · 내구성</div>
+  <h1>복제 3벌은 내구성이 아닙니다. 조용히 썩는 데이터를 실측했습니다</h1>
+  <div class="chips">
+    <span class="chip">제조 · 의료 · 공공 (폐쇄망 장기보관)</span>
+    <span class="chip chip--v">약 10주 (측정 2 + 실증 4 + 이관 4)</span>
+    <span class="chip chip--c">정부 바우처 적합</span>
+  </div>
+  <div class="stakes-box"><span class="l">문제의 대가 · 체크섬이 없을 때 비트로트 탐지율</span><span class="v">0% (실측)</span></div>
+</div>
+
+<div class="sec"><h2>문제의 대가</h2><p class="lead">상법은 상업장부를 10년, 의료법은 진료기록을 10년 보관하라고 하고 공공기록물은 최대 영구입니다. 그런데 그 데이터가 실제로 읽히는지를 재본 현장은 거의 없습니다. 복제본을 세 벌 두는 것과 그 세 벌이 온전한지 아는 것은 다른 문제인데, 대부분의 백업 정책은 앞의 것만 말합니다.</p></div>
+
+<div class="sec"><h2>통찰</h2><p class="lead">복제는 가용성을 만들고 무결성은 체크섬과 스크럽이 만듭니다. 체크섬이 없으면 손상된 데이터도 읽기가 성공합니다. 내용만 다를 뿐입니다. 이것이 저장 시스템이 낼 수 있는 가장 나쁜 결과이고, 백업이 있다는 말과 복구된다는 말이 갈리는 지점입니다.</p></div>
+
+<div class="sec"><h2>2i의 방식</h2><p class="lead">주장을 검증으로 바꿉니다. 디스크 위 데이터의 비트 하나를 임의 오프셋에서 뒤집어(헤더를 피하지 않습니다) 체크섬 유무에 따른 탐지율을 재고, 동일한 손상 144건을 같은 순서로 주입하면서 배경 스크럽만 켜고 껐습니다. 저장 효율은 동시 손실 2개를 똑같이 견디는 조건에서 소거 부호와 3중 복제를 나란히 재고, 배치는 장애 도메인을 인식할 때와 무시할 때의 복제본 집중도를 셉니다. 전부 공개 저장소의 코드가 실행에서 뽑은 값이라 명령 한 줄로 다시 뽑힙니다.</p></div>
+
+<div class="sec"><h2>게이지 방식으로 진행합니다 · 측정 → 실증 → 이관</h2><div class="steps"><div class="step"><b>측정 게이트</b><p>현재 보관 데이터의 체크섬 유무, 스크럽 주기, 장애 도메인 분포를 실태 조사해 무엇이 검증되지 않은 채 보관 중인지 목록으로 고정합니다.</p></div><div class="step"><b>실증 게이트</b><p>귀사 구성 한 벌에 같은 손상 주입과 스크럽 온·오프 비교를 그대로 돌려 탐지율과 손실률을 실측합니다. 복구되지 않으면 확장하지 않습니다.</p></div><div class="step"><b>이관 게이트</b><p>검증된 스크럽 주기·소거 부호 파라미터·도메인 배치 정책을 운영 매뉴얼과 함께 넘기고, 정기 무결성 리포트가 자동으로 나오게 남깁니다.</p></div></div></div>
+
+<div class="sec two">
+  <div class="card"><h3>사용 기술</h3><p>정족수 쓰기 · 청크 단위 체크섬 · 배경 스크럽 복구 · 소거 부호(리드솔로몬) · 장애 도메인 인식 배치. 합성 데이터 기반 레퍼런스 구현이며 명령 한 줄로 전 수치가 재현됩니다. 검증 범위 밖: 정형 일관성 검증(Jepsen류), 다중 사이트 복제, 대규모 노드 운영.</p></div>
+  <div class="card"><h3>표준 산출물</h3><ul class="deliv"><li>AX 진단 보고서</li><li>현장 KPI baseline 계측</li><li>과제 우선순위 로드맵</li><li>작동하는 PoC</li><li>before/after 측정 리포트</li><li>본도입 판단 근거</li><li>운영 시스템</li><li>사내 이관 교육</li><li>운영 매뉴얼·문서</li></ul></div>
+</div>
+
+<div class="sec"><h2>목표 델타</h2><table class="ba"><caption>목표 지표 · 실제 수치는 귀사 데이터로 재측정</caption><tr><th>지표</th><th>현재</th><th></th><th>목표</th></tr><tr><td class="m">임의 오프셋 단일 비트 반전 탐지율</td><td class="b">체크섬 없음: 0%, 읽기는 성공하고 내용만 다름 (실측)</td><td class="arw">→</td><td class="a">체크섬 있음: 100% 탐지 (실측)</td></tr><tr><td class="m">동일 손상 144건 주입 후 6라운드 뒤 객체 손실률</td><td class="b">배경 스크럽 끔: 13.3% 손실 (실측)</td><td class="arw">→</td><td class="a">배경 스크럽 켬: 144건 전량 복구, 손실 0 (실측)</td></tr><tr><td class="m">동시 손실 2개를 동일하게 견디는 조건에서 원시 1TiB에 담기는 양</td><td class="b">3중 복제: 341GiB (실측)</td><td class="arw">→</td><td class="a">소거 부호: 682GiB, 정확히 2배 (실측)</td></tr><tr><td class="m">복제본이 한 장애 도메인에 몰린 청크 비율 (노드 12 · 도메인 4 · 청크 5000)</td><td class="b">도메인 무시, 점수 상위 노드 선택: 50.2% (실측)</td><td class="arw">→</td><td class="a">도메인 인식 배치: 0%, 도메인이 모자라면 조용히 낮추지 않고 명시적으로 거부 (실측)</td></tr></table><div class="proof-line">▶ 작동하는 증거: <b>2icorp.github.io/demos/16-storage-durability/</b> · 브라우저에서 그 자리에서 계산하는 데모</div></div>
+
+<div class="sec"><h2>그래서 무엇이 열리나</h2><div class="sowhat">보관 중인 데이터가 실제로 살아 있는지를 매번 증명할 수 있게 됩니다. 랙 한 대가 나가도 같이 죽지 않고, 저장 효율을 절반 잃지 않으면서 같은 내고장성을 유지합니다. 저희가 만든 저장소는 Ceph 대안이 아니라 폐쇄망 소규모 구성을 위한 최소 구현이며, 그 한계를 저장소 문서 첫 화면에 적어뒀습니다.</div></div>
+
+<div class="sec two">
+  <div class="card"><h3>정부 바우처 활용</h3><p>정부 AX·클라우드 바우처의 진단-실증 트랙에 부합합니다. 기존 보관 데이터를 그대로 두고 사본 한 벌에서 실증할 수 있어 리스크가 낮고, 탐지율·손실률이 수치로 남아 중간 점검 근거가 명확합니다. 지원 규모·요건은 연도별 공고에 따르며, 복잡한 신청·행정은 2i가 함께 처리합니다.</p></div>
+  <div class="card"><h3>왜 2i인가</h3><p>대형 SI가 안 건드리는 중소·중견의 소규모·비정형 과제를, 진단부터 이관까지 한 사람이 책임지고 봅니다. 화려한 제안서 대신 측정된 진단과 검증된 PoC로 신뢰를 먼저 만듭니다.</p></div>
+</div>
+
+<div class="sec"><h2>자주 묻는 질문</h2><div class="faq"><div><q>Q. 데이터가 정리돼 있지 않아도 되나요?</q><p>네. 측정 게이트가 바로 흩어진 데이터와 현장을 정리해 무엇부터 할지 정하는 단계입니다. 준비가 안 됐다는 것 자체가 출발점입니다.</p></div><div><q>Q. 기간과 비용은 어느 정도인가요?</q><p>이 사례 기준 약 10주 (측정 2 + 실증 4 + 이관 4) 정도이며, 범위와 데이터 상태에 따라 조정됩니다. 상당 부분을 정부 AX 바우처로 충당해 실부담을 크게 낮출 수 있습니다.</p></div><div><q>Q. 하다가 안 되면 어떻게 되나요?</q><p>그래서 실증 게이트가 있습니다. 큰돈을 걸기 전에 될지 안 될지를 작은 실증으로 먼저 확인하고, 목표 델타에 못 미치면 확장하지 않습니다.</p></div><div><q>Q. 사람 일자리를 없애는 건가요?</q><p>아닙니다. 사람을 대체하는 게 아니라, 반복 업무를 걷어내 사람이 판단과 관계에 집중하도록 속도와 정확도를 보완하는 방식입니다.</p></div></div></div>
+
+<div class="foot">
+  <div class="cta">먼저 <b>무료 자가진단</b> 또는 30분 상담으로 시작하세요. 귀사에 맞는 시작점을 함께 찾습니다. &nbsp;·&nbsp; <b>2i</b> AX 컨설팅</div>
+  <div class="disc">본 브로셔는 2i의 역량을 보여주는 시나리오형 예시입니다. 특정 실존 고객의 완료 실적이 아니며, 목표 수치는 업계 통상 기대치입니다. 실제 진행 시 귀사 데이터로 다시 측정합니다.</div>
+</div>
+</body></html>

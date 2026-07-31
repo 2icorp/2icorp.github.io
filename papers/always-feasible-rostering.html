@@ -14,7 +14,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../styles.css?v=15">
+<link rel="stylesheet" href="../styles.css?v=17">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
 <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
 <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js" onload="renderMathInElement(document.body,{delimiters:[{left:'$$',right:'$$',display:true},{left:'$',right:'$',display:false},{left:'\\[',right:'\\]',display:true},{left:'\\(',right:'\\)',display:false}]})"></script>
@@ -84,7 +84,7 @@ horizon, 시드 3개를 조합한 합성 인스턴스 18개에 그대로 돌려�
 연속야간 초과·선호 위반은 전부 슬랙 변수와 벌점으로 흡수했습니다. 이렇게 설계하면 계약에
 최소 근무시간 하한을 별도로 넣지 않는 한, 이 모델은 구조적으로 INFEASIBLE이 될 수
 없습니다. 최악의 경우에도 "아무도 배정하지 않는" 해가 모든 하드 제약을 만족하기 때문입니다.</p>
-<table>
+<div class="tscroll" tabindex="0" role="region" aria-label="표. 좌우로 스크롤할 수 있습니다"><table>
 <thead>
 <tr>
 <th>인스턴스</th>
@@ -129,7 +129,7 @@ horizon, 시드 3개를 조합한 합성 인스턴스 18개에 그대로 돌려�
 <td>위반 0</td>
 </tr>
 </tbody>
-</table>
+</table></div>
 <p>네 인스턴스 모두 원본이 손도 못 댔던 문제에서 새 모델은 OPTIMAL을 증명했고, 커버리지
 부족도 0이었습니다. 검증은 모델 내부 코드를 재사용하지 않는 독립 스크립트가 배정 결과를
 처음부터 다시 훑어 근로기준법 조항·휴가·강제 시퀀스를 재확인한 결과이고, 네 건 모두
@@ -161,7 +161,7 @@ horizon, 시드 3개를 조합한 합성 인스턴스 18개에 그대로 돌려�
 남은 5건도 채점기 쪽의 경계 조건 버그(근무 horizon 끝에서 잘린 연속근무 스트릭을 잘못
 위반으로 판정)로 확인되어, 그 채점기를 고치자 8개 인스턴스 전부 하드 위반 0건, 유효한
 해가 됐습니다.</p>
-<table>
+<div class="tscroll" tabindex="0" role="region" aria-label="표. 좌우로 스크롤할 수 있습니다"><table>
 <thead>
 <tr>
 <th>단계</th>
@@ -196,7 +196,7 @@ horizon, 시드 3개를 조합한 합성 인스턴스 18개에 그대로 돌려�
 <td style="text-align: right;">8/8</td>
 </tr>
 </tbody>
-</table>
+</table></div>
 <p>유효성을 확보한 뒤, 알려진 최고해(BKS, 2차 출처) 대비 목적함수 gap을 좁히는 두 가지
 레버(벤치마크가 요구하는 커버리지·선호 가중치를 실제로 배선하는 것, 그리고 CP-SAT
 탐색 시간을 20초에서 120초로 늘리는 것)를 각각 분리해서 실험했습니다. 가중치 배선만
@@ -250,7 +250,7 @@ horizon, 시드 3개를 조합한 합성 인스턴스 18개에 그대로 돌려�
       <a href="../index.html#method">방식</a>
       <a href="../papers.html">논문·실험</a>
       <a href="../index.html#voucher">정부 바우처</a>
-      <a href="https://github.com/2icorp" target="_blank" rel="noopener">GitHub</a>
+      <a href="../cases.html">사례</a>
       <a href="../en/">EN</a>
     </nav>
   </div>

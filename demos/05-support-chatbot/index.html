@@ -6,7 +6,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>고객 문의 자동응대 데모 | 2i</title>
 <meta name="description" content="지식베이스 12항목을 키워드로 실시간 매칭해 답을 찾고, 확신이 낮으면 담당자 연결로 넘기는 고객 응대 챗봇 인터랙티브 데모입니다.">
-<link rel="stylesheet" href="../../styles.css?v=14">
+<link rel="stylesheet" href="../../styles.css?v=17">
 <style>
   body{ background:var(--paper); }
   .dtop{ position:sticky; top:0; z-index:40; background:var(--paper); border-bottom:1px solid var(--line-soft); }
@@ -62,8 +62,9 @@
   .chip:hover{ border-color:var(--steel); color:var(--ink); }
   .chip:focus-visible{ outline:2px solid var(--signal); outline-offset:2px; }
 
-  .inputrow{ display:flex; gap:0.6rem; padding:0.9rem 1.1rem; border-top:1px solid var(--line-soft); }
-  .inputrow input{ flex:1; font-family:var(--sans); font-size:0.92rem; padding:0.65rem 0.9rem; border-radius:999px; border:1px solid var(--line); background:var(--paper); color:var(--ink); }
+  .inputrow{ display:flex; flex-wrap:wrap; gap:0.6rem; padding:0.9rem 1.1rem; border-top:1px solid var(--line-soft); }
+  /* min-width:0 이 없으면 input 의 기본 고유폭이 줄지 않아 320px 에서 박스를 넘어 잘린다 */
+  .inputrow input{ flex:1 1 8rem; min-width:0; font-family:var(--sans); font-size:0.92rem; padding:0.65rem 0.9rem; border-radius:999px; border:1px solid var(--line); background:var(--paper); color:var(--ink); }
   .inputrow input:focus-visible, .inputrow input:focus{ outline:2px solid var(--signal); outline-offset:2px; border-color:var(--signal); }
   .inputrow button{ font-family:var(--sans); font-weight:700; font-size:0.88rem; padding:0.6rem 1.15rem; border-radius:999px; border:1px solid var(--signal); background:var(--signal); color:oklch(22% 0.03 60); cursor:pointer; transition:transform 0.1s ease, filter 0.15s ease; }
   .inputrow button:hover{ filter:brightness(1.04); }
@@ -82,11 +83,10 @@
     <a class="dtop__brand" href="/"><b>2i</b><span>데모 · 고객 문의 자동응대</span></a>
     <nav class="dtop__nav">
       <a href="../../cases.html#case-5">사례 보기</a>
-      <a href="https://github.com/2icorp/2i-case-05-support-chatbot" target="_blank" rel="noopener">소스코드</a>
     </nav>
   </div>
 </div>
-<div class="dhonest"><div class="dhonest__inner">브라우저에서 도는 샘플 데이터 인터랙티브 데모입니다. 실제 파이프라인 구현은 소스코드 저장소에 있습니다.</div></div>
+<div class="dhonest"><div class="dhonest__inner">브라우저에서 그 자리에서 계산하는 인터랙티브 데모입니다. 합성 데이터를 씁니다.</div></div>
 
 <main class="dwrap">
   <div class="dhead">

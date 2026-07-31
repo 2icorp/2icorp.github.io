@@ -1,0 +1,502 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<script>(function(){try{var t=localStorage.getItem("theme");if(!t&&window.matchMedia&&matchMedia("(prefers-color-scheme: dark)").matches)t="dark";if(t)document.documentElement.setAttribute("data-theme",t);}catch(e){}})();</script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>스토리지 비용 모델 계산기 데모 · 2i</title>
+<link rel="stylesheet" href="../../styles.css?v=17">
+<style>
+  .demo-top{display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:1rem clamp(1rem,2vw,2rem);border-bottom:1px solid var(--line-soft);flex-wrap:wrap;}
+  .demo-brand{display:flex;align-items:baseline;gap:.6rem;text-decoration:none;color:var(--ink);}
+  .demo-brand__mark{font-family:var(--mono);font-weight:800;color:var(--signal);font-size:1.1rem;}
+  .demo-brand__tag{font-family:var(--mono);font-size:var(--text-xs);letter-spacing:.08em;color:var(--ink-faint);text-transform:uppercase;}
+  .demo-top__links{display:flex;gap:1.2rem;font-size:var(--text-sm);}
+  .demo-top__links a{color:var(--ink-soft);text-decoration:none;border-bottom:1px solid transparent;transition:color var(--dur) var(--ease),border-color var(--dur) var(--ease);}
+  .demo-top__links a:hover{color:var(--ink);border-color:var(--line);}
+  .demo-top__links a:focus-visible{outline:2px solid var(--signal);outline-offset:3px;}
+  .demo-banner{font-family:var(--mono);font-size:var(--text-xs);color:var(--ink-faint);background:var(--paper-2);border-bottom:1px solid var(--line-soft);padding:.55rem clamp(1rem,2vw,2rem);letter-spacing:.01em;}
+  main{max-width:1100px;margin:0 auto;padding:2rem clamp(1rem,2vw,2rem) 1rem;}
+  h1{font-size:var(--text-h2);margin:0 0 .4rem;}
+  .lede{color:var(--ink-soft);max-width:66ch;margin:0 0 2rem;line-height:1.7;}
+  section{margin-bottom:2.6rem;min-width:0;}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);min-width:0;}
+  .card-pad{padding:1.3rem clamp(1rem,2vw,1.6rem);}
+  h2.sec-title{font-size:var(--text-h3);margin:0 0 .3rem;}
+  .sec-desc{margin:0 0 1.2rem;color:var(--ink-faint);font-size:var(--text-xs);font-family:var(--mono);line-height:1.6;}
+
+  .presets{display:flex;flex-wrap:wrap;gap:.6rem;margin-bottom:1.4rem;}
+  .preset-btn{min-height:44px;padding:.5rem 1rem;border:1px solid var(--line);background:var(--paper-2);color:var(--ink-soft);border-radius:var(--radius);font-family:var(--mono);font-size:var(--text-xs);cursor:pointer;transition:border-color var(--dur) var(--ease),color var(--dur) var(--ease),background var(--dur) var(--ease);}
+  .preset-btn:hover{border-color:var(--signal);color:var(--ink);}
+  .preset-btn:focus-visible{outline:2px solid var(--signal);outline-offset:2px;}
+
+  .controls{display:grid;grid-template-columns:1fr 1fr;gap:1.4rem;}
+  .control{min-width:0;}
+  .control h3{font-size:1rem;margin:0 0 .3rem;}
+  .control p{margin:0 0 .7rem;color:var(--ink-faint);font-size:var(--text-xs);font-family:var(--mono);line-height:1.6;}
+  .control__row{display:flex;align-items:center;gap:.9rem;}
+  input[type="range"]{flex:1;accent-color:var(--signal);min-height:44px;min-width:0;}
+  input[type="range"]:focus-visible{outline:2px solid var(--signal);outline-offset:3px;}
+  .control__val{font-family:var(--mono);font-weight:700;min-width:6.2rem;text-align:right;font-size:var(--text-sm);}
+
+  input[type="number"],select{background:var(--paper);color:var(--ink);border:1px solid var(--line);border-radius:var(--radius);padding:.5rem .6rem;font-family:var(--mono);font-size:var(--text-sm);min-height:44px;width:100%;}
+  input[type="number"]:focus-visible,select:focus-visible{outline:2px solid var(--signal);outline-offset:2px;}
+
+  .badge{display:inline-block;font-family:var(--mono);font-size:.62rem;letter-spacing:.05em;padding:.15rem .4rem;border-radius:2px;text-transform:uppercase;}
+  .badge-unverified{color:var(--signal-deep);border:1px solid color-mix(in srgb, var(--signal) 45%, transparent);background:color-mix(in srgb, var(--signal) 10%, transparent);}
+  .badge-ok{color:var(--steel);border:1px solid color-mix(in srgb, var(--steel) 45%, transparent);background:color-mix(in srgb, var(--steel) 10%, transparent);}
+  .badge-warn{color:var(--signal-deep);border:1px solid var(--signal-deep);background:color-mix(in srgb, var(--signal-deep) 12%, transparent);}
+
+  .table-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:var(--radius);}
+  table.price-table{border-collapse:collapse;width:100%;min-width:640px;font-size:var(--text-sm);}
+  table.price-table th,table.price-table td{padding:.6rem .7rem;border-bottom:1px solid var(--line-soft);text-align:left;vertical-align:middle;}
+  table.price-table th{font-family:var(--mono);font-size:var(--text-xs);color:var(--ink-faint);letter-spacing:.04em;background:var(--paper-2);white-space:nowrap;}
+  table.price-table td.rowlabel{font-weight:700;white-space:nowrap;}
+  table.price-table input[type="number"]{width:6.4rem;}
+  table.price-table tr:last-child td{border-bottom:none;}
+  .dash-cell{color:var(--ink-faint);font-family:var(--mono);text-align:center;}
+  .egress-row{display:flex;align-items:center;gap:.9rem;margin-top:1rem;flex-wrap:wrap;}
+  .egress-row label{font-family:var(--mono);font-size:var(--text-xs);color:var(--ink-soft);}
+  .egress-row input{width:8rem;}
+
+  .onprem-controls{display:grid;grid-template-columns:1fr 1fr;gap:1.4rem;margin-bottom:1.4rem;}
+  .year-btn-group{display:flex;gap:.5rem;}
+  .year-btn{min-height:44px;min-width:44px;padding:.4rem .9rem;border:1px solid var(--line);background:var(--paper-2);color:var(--ink-soft);border-radius:var(--radius);font-family:var(--mono);cursor:pointer;transition:border-color var(--dur) var(--ease),color var(--dur) var(--ease),background var(--dur) var(--ease);}
+  .year-btn:hover{border-color:var(--signal);}
+  .year-btn[aria-pressed="true"]{background:var(--signal);border-color:var(--signal);color:var(--paper);font-weight:700;}
+  .year-btn:focus-visible{outline:2px solid var(--signal);outline-offset:2px;}
+
+  .metrics{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;}
+  .metrics.metrics-3{grid-template-columns:repeat(3,1fr);}
+  .metric{background:var(--panel);padding:1.2rem 1rem;min-width:0;}
+  .metric__label{font-family:var(--mono);font-size:var(--text-xs);color:var(--ink-faint);letter-spacing:.06em;text-transform:uppercase;}
+  .metric__value{font-size:1.5rem;font-weight:800;margin-top:.35rem;word-break:break-all;}
+  .metric__unit{font-size:.82rem;color:var(--ink-soft);font-weight:500;margin-left:.15rem;}
+  .metric__delta{font-family:var(--mono);font-size:var(--text-xs);margin-top:.4rem;}
+  .metric__delta.good{color:var(--steel);}
+  .metric__delta.bad{color:var(--signal-deep);}
+
+  svg{width:100%;height:auto;display:block;}
+  .axis-label{font-family:var(--mono);font-size:8px;fill:var(--ink-faint);}
+  .chart-title{font-size:1rem;margin:0 0 .2rem;}
+  .chart-desc{margin:0 0 .9rem;color:var(--ink-faint);font-size:var(--text-xs);font-family:var(--mono);}
+  .chart-note{margin-top:.7rem;color:var(--ink-faint);font-size:var(--text-xs);font-family:var(--mono);}
+  .legend{display:flex;flex-wrap:wrap;gap:1rem;font-family:var(--mono);font-size:var(--text-xs);color:var(--ink-soft);margin-bottom:.9rem;}
+  .legend span{display:inline-flex;align-items:center;gap:.4rem;}
+  .swatch{width:18px;height:3px;display:inline-block;background:var(--steel);}
+  .swatch--signal{background:var(--signal);}
+  .swatch--dash{background:repeating-linear-gradient(90deg, var(--signal) 0 5px, transparent 5px 9px);}
+
+  .verdict{font-size:1.02rem;line-height:1.75;padding:1.1rem 1.3rem;border-left:3px solid var(--signal);background:var(--paper-2);border-radius:var(--radius);margin:1.2rem 0 0;}
+  .verdict strong{color:var(--signal-deep);}
+
+  .attrib-legend{list-style:none;margin:1rem 0 0;padding:0;display:grid;grid-template-columns:1fr 1fr;gap:.5rem 1.4rem;font-size:var(--text-sm);}
+  .attrib-legend li{display:flex;justify-content:space-between;gap:.6rem;border-bottom:1px dashed var(--line-soft);padding:.35rem 0;min-width:0;}
+  .attrib-legend li .lbl{display:flex;align-items:center;gap:.5rem;color:var(--ink-soft);}
+  .attrib-legend li .lbl .dot{width:11px;height:11px;border-radius:2px;flex:none;}
+  .attrib-legend li .val{font-family:var(--mono);font-weight:700;white-space:nowrap;}
+
+  .validation-row{display:flex;align-items:center;gap:.6rem;margin-top:1rem;font-family:var(--mono);font-size:var(--text-xs);}
+  .validation-dot{width:10px;height:10px;border-radius:50%;flex:none;}
+  .validation-dot.ok{background:var(--ok);}
+  .validation-dot.bad{background:var(--signal-deep);}
+
+  .warn-box{margin-top:1rem;padding:.9rem 1.1rem;border:1px solid var(--signal-deep);background:color-mix(in srgb, var(--signal-deep) 8%, transparent);border-radius:var(--radius);font-size:var(--text-sm);line-height:1.65;}
+  .warn-box strong{color:var(--signal-deep);}
+
+  .honesty{font-size:var(--text-sm);color:var(--ink-soft);line-height:1.8;}
+  .honesty p{margin:0 0 .8rem;}
+  .checkbox-row{display:flex;align-items:flex-start;gap:.7rem;margin:1.1rem 0;min-height:44px;}
+  .checkbox-row input[type="checkbox"]{width:20px;height:20px;min-height:20px;accent-color:var(--signal);margin-top:.15rem;flex:none;}
+  .checkbox-row input[type="checkbox"]:focus-visible{outline:2px solid var(--signal);outline-offset:2px;}
+  .checkbox-row label{cursor:pointer;}
+  .report-btn{min-height:44px;padding:.6rem 1.2rem;border:1px solid var(--line);background:var(--paper-2);color:var(--ink-faint);border-radius:var(--radius);font-family:var(--mono);font-size:var(--text-sm);cursor:not-allowed;transition:all var(--dur) var(--ease);}
+  .report-btn:not(:disabled){cursor:pointer;background:var(--signal);border-color:var(--signal);color:var(--paper);font-weight:700;}
+  .report-btn:not(:disabled):hover{background:var(--signal-deep);border-color:var(--signal-deep);}
+  .report-btn:focus-visible{outline:2px solid var(--signal);outline-offset:3px;}
+  #reportStatus{display:block;margin-top:.6rem;font-family:var(--mono);font-size:var(--text-xs);color:var(--ink-faint);}
+
+  .demo-foot{margin-top:3rem;padding:1.6rem clamp(1rem,2vw,2rem) 2.4rem;font-family:var(--mono);font-size:var(--text-xs);color:var(--ink-faint);border-top:1px solid var(--line-soft);text-align:center;}
+
+  @media (max-width:820px){
+    .controls{grid-template-columns:1fr;}
+    .onprem-controls{grid-template-columns:1fr;}
+    .metrics{grid-template-columns:1fr 1fr;}
+    .attrib-legend{grid-template-columns:1fr;}
+  }
+  @media (max-width:480px){
+    .metrics{grid-template-columns:1fr;}
+    .control__val{min-width:5rem;}
+  }
+</style>
+</head>
+<body>
+<header class="demo-top">
+  <a href="/" class="demo-brand"><span class="demo-brand__mark">2i</span><span class="demo-brand__tag">DEMO · 스토리지 비용 모델</span></a>
+  <nav class="demo-top__links">
+    <a href="/cases.html#case-18">사례 보기</a>
+    <a href="/#contact">상담 신청</a>
+  </nav>
+</header>
+<div class="demo-banner">브라우저에서 그 자리에서 계산하는 인터랙티브 데모입니다. 합성 데이터를 씁니다.</div>
+
+<main>
+  <h1>클라우드 vs 온프렘 스토리지 비용 계산기</h1>
+  <p class="lede">"클라우드가 비싸니 내리자"는 판단은 대개 하드웨어 단가 하나에 통째로 매달려 있습니다. 그 단가를 상수가 아니라 입력 변수로 빼면 권고가 뒤집히는 지점이 계산으로 나옵니다. 아카이브로 내리면 무조건 싸진다는 규칙도 조건에 따라 정반대가 됩니다. 아래 슬라이더를 움직이면 총소유비용과 손익분기 단가가 그 자리에서 다시 계산됩니다.</p>
+
+  <section class="card card-pad" aria-labelledby="workload-h">
+    <h2 class="sec-title" id="workload-h">1. 워크로드 입력</h2>
+    <p class="sec-desc">이 값들이 아래 모든 계산의 공통 입력입니다. 프리셋을 눌러 전형적인 워크로드로 바꿔볼 수 있습니다.</p>
+    <div class="presets" role="group" aria-label="워크로드 프리셋">
+      <button type="button" class="preset-btn" data-preset="small">소형 파일 다량</button>
+      <button type="button" class="preset-btn" data-preset="media">대형 미디어</button>
+      <button type="button" class="preset-btn" data-preset="medimg">의료 영상 장기보관</button>
+      <button type="button" class="preset-btn" data-preset="log">로그·백업</button>
+    </div>
+    <div class="controls">
+      <div class="control">
+        <h3>총 용량</h3>
+        <p>지금 보관 중인 원시 데이터 총량입니다. 온프렘 조달 규모와 클라우드 저장비 양쪽을 좌우합니다.</p>
+        <div class="control__row">
+          <input type="range" id="totalTB" min="10" max="2000" step="10" value="300" aria-label="총 용량, 테라바이트">
+          <span class="control__val" id="totalTBVal">300 TB</span>
+        </div>
+      </div>
+      <div class="control">
+        <h3>평균 객체 크기</h3>
+        <p>파일 하나의 평균 크기입니다. 작을수록 같은 용량에 객체가 많아져 요청비·전환비 부담이 커집니다. 로그 스케일입니다.</p>
+        <div class="control__row">
+          <input type="range" id="objSize" min="1.80618" max="6" step="0.01" value="3.69897" aria-label="평균 객체 크기, 로그 스케일">
+          <span class="control__val" id="objSizeVal">5.0 MB</span>
+        </div>
+      </div>
+      <div class="control">
+        <h3>월 증가율</h3>
+        <p>매달 데이터가 늘어나는 비율입니다. 온프렘은 이 증가율만큼 미래 용량을 미리 사둬야 합니다.</p>
+        <div class="control__row">
+          <input type="range" id="growth" min="0" max="10" step="0.1" value="1.5" aria-label="월 증가율, 퍼센트">
+          <span class="control__val" id="growthVal">1.5%</span>
+        </div>
+      </div>
+      <div class="control">
+        <h3>보존 기간</h3>
+        <p>객체 하나가 삭제되기까지 보관되는 기간입니다. 라이프사이클 전환 계산에 직접 쓰입니다.</p>
+        <div class="control__row">
+          <input type="range" id="retention" min="30" max="1825" step="5" value="365" aria-label="보존 기간, 일">
+          <span class="control__val" id="retentionVal">365일</span>
+        </div>
+      </div>
+      <div class="control">
+        <h3>월 읽기 비율</h3>
+        <p>전체 용량 중 한 달 동안 실제로 읽히는 비율입니다. 요청비(GET) 계산에 쓰입니다.</p>
+        <div class="control__row">
+          <input type="range" id="readRatio" min="0" max="50" step="0.5" value="5" aria-label="월 읽기 비율, 퍼센트">
+          <span class="control__val" id="readRatioVal">5.0%</span>
+        </div>
+      </div>
+      <div class="control">
+        <h3>월 외부 전송량</h3>
+        <p>매달 외부로 나가는 데이터 양입니다. 다운로드·복제·연동이 여기 해당합니다.</p>
+        <div class="control__row">
+          <input type="range" id="egress" min="0" max="200" step="0.5" value="5" aria-label="월 외부 전송량, 테라바이트">
+          <span class="control__val" id="egressVal">5.0 TB</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="card card-pad" aria-labelledby="pricing-h">
+    <h2 class="sec-title" id="pricing-h">2. 클라우드 저장 클래스 단가 <span class="badge badge-unverified">미확인</span></h2>
+    <p class="sec-desc">공개 요금표를 참고한 추정치입니다. 전부 편집할 수 있고, 아래 모든 계산이 이 표를 그대로 읽어 다시 계산됩니다. 제안 시점에 반드시 재조회해 확정하세요.</p>
+    <div class="table-wrap">
+      <table class="price-table">
+        <thead>
+          <tr>
+            <th>저장 클래스</th>
+            <th>저장비 ($/GB·월)</th>
+            <th>PUT ($/1000건)</th>
+            <th>GET ($/1000건)</th>
+            <th>최소 보관 기간(일)</th>
+            <th>전환 요청비 ($/1000객체)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr data-class="standard">
+            <td class="rowlabel">스탠다드</td>
+            <td><input type="number" id="price_storage_standard" value="0.0230" step="0.0001" min="0" aria-label="스탠다드 저장비, GB당 월 달러"></td>
+            <td><input type="number" id="price_put_standard" value="0.0050" step="0.0001" min="0" aria-label="스탠다드 PUT 요청비, 1000건당 달러"></td>
+            <td><input type="number" id="price_get_standard" value="0.0004" step="0.0001" min="0" aria-label="스탠다드 GET 요청비, 1000건당 달러"></td>
+            <td><input type="number" id="price_min_standard" value="0" step="1" min="0" aria-label="스탠다드 최소 보관 기간, 일"></td>
+            <td class="dash-cell">-</td>
+          </tr>
+          <tr data-class="infrequent">
+            <td class="rowlabel">저빈도(IA)</td>
+            <td><input type="number" id="price_storage_infrequent" value="0.0125" step="0.0001" min="0" aria-label="저빈도 저장비, GB당 월 달러"></td>
+            <td><input type="number" id="price_put_infrequent" value="0.0100" step="0.0001" min="0" aria-label="저빈도 PUT 요청비, 1000건당 달러"></td>
+            <td><input type="number" id="price_get_infrequent" value="0.0010" step="0.0001" min="0" aria-label="저빈도 GET 요청비, 1000건당 달러"></td>
+            <td><input type="number" id="price_min_infrequent" value="30" step="1" min="0" aria-label="저빈도 최소 보관 기간, 일"></td>
+            <td><input type="number" id="price_transfee_infrequent" value="0.0100" step="0.0001" min="0" aria-label="저빈도로 전환 요청비, 1000객체당 달러"></td>
+          </tr>
+          <tr data-class="archive">
+            <td class="rowlabel">아카이브</td>
+            <td><input type="number" id="price_storage_archive" value="0.0036" step="0.0001" min="0" aria-label="아카이브 저장비, GB당 월 달러"></td>
+            <td><input type="number" id="price_put_archive" value="0.0300" step="0.0001" min="0" aria-label="아카이브 PUT 요청비, 1000건당 달러"></td>
+            <td><input type="number" id="price_get_archive" value="0.0004" step="0.0001" min="0" aria-label="아카이브 GET 요청비, 1000건당 달러"></td>
+            <td><input type="number" id="price_min_archive" value="90" step="1" min="0" aria-label="아카이브 최소 보관 기간, 일"></td>
+            <td><input type="number" id="price_transfee_archive" value="0.0100" step="0.0001" min="0" aria-label="아카이브로 전환 요청비, 1000객체당 달러"></td>
+          </tr>
+          <tr data-class="deepArchive">
+            <td class="rowlabel">심층 아카이브</td>
+            <td><input type="number" id="price_storage_deepArchive" value="0.00099" step="0.00001" min="0" aria-label="심층 아카이브 저장비, GB당 월 달러"></td>
+            <td><input type="number" id="price_put_deepArchive" value="0.0500" step="0.0001" min="0" aria-label="심층 아카이브 PUT 요청비, 1000건당 달러"></td>
+            <td><input type="number" id="price_get_deepArchive" value="0.0004" step="0.0001" min="0" aria-label="심층 아카이브 GET 요청비, 1000건당 달러"></td>
+            <td><input type="number" id="price_min_deepArchive" value="180" step="1" min="0" aria-label="심층 아카이브 최소 보관 기간, 일"></td>
+            <td><input type="number" id="price_transfee_deepArchive" value="0.0160" step="0.0001" min="0" aria-label="심층 아카이브로 전환 요청비, 1000객체당 달러"></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="egress-row">
+      <label for="egressPrice">외부 전송 단가 ($/GB) <span class="badge badge-unverified">미확인</span></label>
+      <input type="number" id="egressPrice" value="0.0900" step="0.0010" min="0" aria-label="외부 전송 단가, GB당 달러">
+      <span style="font-family:var(--mono);font-size:var(--text-xs);color:var(--ink-faint);flex:1 1 100%;min-width:0;">서울 리전 공개 단가는 출처마다 값이 갈립니다. 제안 시점에 재조회하세요.</span>
+    </div>
+  </section>
+
+  <section class="card card-pad" aria-labelledby="tco-h">
+    <h2 class="sec-title" id="tco-h">3. 총소유비용(TCO)과 손익분기 단가</h2>
+    <p class="sec-desc">온프렘 조달 조건을 입력하면 선택한 기간의 누적 비용을 클라우드와 나란히 계산하고, 하드웨어 단가만 움직여 권고가 뒤집히는 지점을 이분탐색으로 찾습니다.</p>
+
+    <div class="onprem-controls">
+      <div class="control">
+        <h3>하드웨어 단가</h3>
+        <p>원시 TB당 온프렘 하드웨어 조달 단가입니다. 이 값 하나로 권고가 뒤집힙니다.</p>
+        <div class="control__row">
+          <input type="range" id="hwPrice" min="5" max="300" step="1" value="32" aria-label="하드웨어 단가, TB당 달러">
+          <span class="control__val" id="hwPriceVal">$32/TB</span>
+        </div>
+      </div>
+      <div class="control">
+        <h3>소거 부호 구성</h3>
+        <p>k개 데이터 조각 + m개 패리티 조각입니다. m이 클수록 내구성은 높지만 실효 용량은 줄어듭니다.</p>
+        <select id="ecScheme" aria-label="소거 부호 구성 선택">
+          <option value="4-2">4+2 (소규모, 1.50배)</option>
+          <option value="8-2">8+2 (표준, 1.25배)</option>
+          <option value="10-4" selected>10+4 (고내구성, 1.40배)</option>
+          <option value="12-4">12+4 (대규모, 1.33배)</option>
+        </select>
+      </div>
+      <div class="control">
+        <h3>분석 기간</h3>
+        <p>감가상각·TCO 비교 기간입니다.</p>
+        <div class="year-btn-group" role="group" aria-label="분석 기간 선택">
+          <button type="button" class="year-btn" data-years="3" aria-pressed="true">3년</button>
+          <button type="button" class="year-btn" data-years="4" aria-pressed="false">4년</button>
+          <button type="button" class="year-btn" data-years="5" aria-pressed="false">5년</button>
+        </div>
+      </div>
+      <div class="control">
+        <h3>교체율 / 월 운영비</h3>
+        <p>연간 하드웨어 교체율(%)과 전력·상면·운영 인건비 합계(월, $)입니다.</p>
+        <div class="control__row" style="gap:.6rem;flex-wrap:wrap;">
+          <input type="number" id="replacementRate" value="8" step="0.5" min="0" max="30" aria-label="연간 교체율, 퍼센트" style="width:5rem;">
+          <span style="font-family:var(--mono);font-size:var(--text-xs);">%/년</span>
+          <input type="number" id="monthlyOpex" value="7600" step="50" min="0" aria-label="월 전력·상면·운영 인건비, 달러" style="width:7rem;">
+          <span style="font-family:var(--mono);font-size:var(--text-xs);">$/월</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="metrics" id="tcoMetrics" aria-live="polite">
+      <div class="metric">
+        <div class="metric__label">클라우드 총비용</div>
+        <div class="metric__value"><span id="mCloudTCO">-</span></div>
+      </div>
+      <div class="metric">
+        <div class="metric__label">온프렘 총비용</div>
+        <div class="metric__value"><span id="mOnpremTCO">-</span></div>
+        <div class="metric__delta" id="mOnpremDelta"></div>
+      </div>
+      <div class="metric">
+        <div class="metric__label">손익분기 하드웨어 단가</div>
+        <div class="metric__value"><span id="mBreakeven">-</span></div>
+        <div class="metric__delta" id="mBreakevenNote"></div>
+      </div>
+      <div class="metric">
+        <div class="metric__label">현재 설정 기준</div>
+        <div class="metric__value" style="font-size:1.1rem;"><span id="mVerdictSide">-</span></div>
+      </div>
+    </div>
+
+    <p class="verdict" id="verdictText" aria-live="polite">계산 중입니다.</p>
+
+    <div style="margin-top:1.8rem;">
+      <h3 class="chart-title">누적 비용 곡선</h3>
+      <p class="chart-desc">월별로 실제로 누적 합산한 값입니다. 온프렘은 첫 달에 하드웨어 구매비가 한꺼번에 반영되고, 클라우드는 데이터 증가율만큼 매달 커집니다.</p>
+      <div class="legend">
+        <span><span class="swatch"></span>클라우드 누적</span>
+        <span><span class="swatch swatch--dash"></span>온프렘 누적</span>
+      </div>
+      <svg id="cumulativeChart" viewBox="0 0 900 260" preserveAspectRatio="xMidYMid meet" role="img" aria-label="클라우드와 온프렘의 누적 비용 곡선"></svg>
+      <p class="chart-note" id="crossoverNote"></p>
+    </div>
+
+    <div style="margin-top:1.8rem;">
+      <h3 class="chart-title">손익분기 그래프</h3>
+      <p class="chart-desc">x축은 하드웨어 단가, y축은 분석 기간 총비용입니다. 온프렘 선이 클라우드 수평선과 만나는 지점이 손익분기 단가입니다.</p>
+      <div class="legend">
+        <span><span class="swatch"></span>클라우드 총비용(고정)</span>
+        <span><span class="swatch swatch--signal"></span>온프렘 총비용(단가 함수)</span>
+      </div>
+      <svg id="breakevenChart" viewBox="0 0 900 260" preserveAspectRatio="xMidYMid meet" role="img" aria-label="하드웨어 단가에 따른 온프렘 대 클라우드 손익분기 그래프"></svg>
+    </div>
+  </section>
+
+  <section class="card card-pad" aria-labelledby="lifecycle-h">
+    <h2 class="sec-title" id="lifecycle-h">4. 라이프사이클 전환 시뮬레이션</h2>
+    <p class="sec-desc">위 워크로드의 객체 크기·보존 기간을 그대로 써서, N일 시점에 저가 클래스로 전환하는 게 실제로 이득인지 계산합니다. 전환 요청비와 최소 보관 기간 위약금까지 포함합니다.</p>
+    <div class="controls">
+      <div class="control">
+        <h3>전환 시점</h3>
+        <p>스탠다드에서 대상 클래스로 옮기는 시점입니다(경과일). 보존 기간을 넘을 수 없습니다.</p>
+        <div class="control__row">
+          <input type="range" id="transitionDay" min="1" max="179" step="1" value="30" aria-label="전환 시점, 경과일">
+          <span class="control__val" id="transitionDayVal">30일</span>
+        </div>
+      </div>
+      <div class="control">
+        <h3>전환 대상 클래스</h3>
+        <p>저장비는 싸지지만 최소 보관 기간이 길수록 조기 삭제 위약금 위험이 커집니다.</p>
+        <select id="targetClass" aria-label="전환 대상 클래스 선택">
+          <option value="infrequent">저빈도(IA)</option>
+          <option value="archive">아카이브</option>
+          <option value="deepArchive" selected>심층 아카이브</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="metrics" id="lifeMetrics" aria-live="polite">
+      <div class="metric">
+        <div class="metric__label">전환 없음 (TB당, 보존 기간 전체)</div>
+        <div class="metric__value"><span id="mNoTransition">-</span></div>
+      </div>
+      <div class="metric">
+        <div class="metric__label">N일 전환 (TB당, 보존 기간 전체)</div>
+        <div class="metric__value"><span id="mTransition">-</span></div>
+      </div>
+      <div class="metric">
+        <div class="metric__label">배율</div>
+        <div class="metric__value"><span id="mRatio">-</span></div>
+        <div class="metric__delta" id="mRatioNote"></div>
+      </div>
+      <div class="metric">
+        <div class="metric__label">역전 지점 객체 크기</div>
+        <div class="metric__value"><span id="mReversalSize">-</span></div>
+      </div>
+    </div>
+
+    <p class="verdict" id="lifecycleSentence" aria-live="polite">계산 중입니다.</p>
+
+    <div style="margin-top:1.6rem;">
+      <h3 class="chart-title">객체 크기에 따른 역전</h3>
+      <p class="chart-desc">x축은 평균 객체 크기(로그 스케일), y축은 보존 기간 전체 TB당 비용입니다. 전환 요청비는 객체 수에 비례하므로 작은 파일일수록 전환이 불리해집니다.</p>
+      <div class="legend">
+        <span><span class="swatch"></span>전환 없음</span>
+        <span><span class="swatch swatch--signal"></span>N일 전환</span>
+      </div>
+      <svg id="lifecycleChart" viewBox="0 0 900 240" preserveAspectRatio="xMidYMid meet" role="img" aria-label="객체 크기에 따른 라이프사이클 전환 비용 역전 그래프"></svg>
+    </div>
+  </section>
+
+  <section class="card card-pad" aria-labelledby="attrib-h">
+    <h2 class="sec-title" id="attrib-h">5. 청구서 원인 분해</h2>
+    <p class="sec-desc">현재 월 청구액을 원인별로 쪼갭니다. 원인 간 중복 계상은 금지되고, 설명하지 못한 몫은 절감 가능액에 넣지 않고 미귀속으로 남습니다.</p>
+    <div class="controls">
+      <div class="control">
+        <h3>콜드인데 핫 클래스에 방치</h3>
+        <p>접근 빈도가 낮은데도 스탠다드에 남아 있는 용량 비율입니다.</p>
+        <div class="control__row">
+          <input type="range" id="coldPct" min="0" max="60" step="1" value="37" aria-label="콜드 데이터 핫 클래스 방치 비율, 퍼센트">
+          <span class="control__val" id="coldPctVal">37%</span>
+        </div>
+      </div>
+      <div class="control">
+        <h3>스냅샷 누적</h3>
+        <p>정리되지 않고 쌓인 스냅샷이 차지하는 용량 비율입니다.</p>
+        <div class="control__row">
+          <input type="range" id="snapshotPct" min="0" max="30" step="1" value="8" aria-label="스냅샷 누적 비율, 퍼센트">
+          <span class="control__val" id="snapshotPctVal">8%</span>
+        </div>
+      </div>
+      <div class="control">
+        <h3>과잉 프로비저닝</h3>
+        <p>실제로 쓰이지 않는데 확보만 해 둔 용량 비율입니다.</p>
+        <div class="control__row">
+          <input type="range" id="overProvPct" min="0" max="40" step="1" value="12" aria-label="과잉 프로비저닝 비율, 퍼센트">
+          <span class="control__val" id="overProvPctVal">12%</span>
+        </div>
+      </div>
+    </div>
+
+    <div style="margin-top:1.4rem;">
+      <h3 class="chart-title">청구서 원인 분해</h3>
+      <p class="chart-desc">외부 전송·소형 오브젝트 요청비는 1번·2번 섹션에서 계산한 실제 값을 그대로 가져옵니다.</p>
+      <svg id="attributionChart" viewBox="0 0 900 70" preserveAspectRatio="xMidYMid meet" role="img" aria-label="월 청구서 원인별 분해 누적 막대 그래프"></svg>
+      <ul class="attrib-legend" id="attribLegend" aria-live="polite">
+        <li><span class="lbl"><span class="dot" style="background:var(--signal)"></span>콜드 데이터 방치</span><span class="val" id="legCold">-</span></li>
+        <li><span class="lbl"><span class="dot" style="background:var(--signal-deep)"></span>스냅샷 누적</span><span class="val" id="legSnap">-</span></li>
+        <li><span class="lbl"><span class="dot" style="background:var(--steel)"></span>외부 전송</span><span class="val" id="legEgress">-</span></li>
+        <li><span class="lbl"><span class="dot" style="background:var(--steel-soft)"></span>소형 오브젝트 요청비</span><span class="val" id="legSmall">-</span></li>
+        <li><span class="lbl"><span class="dot" style="background:var(--ok)"></span>과잉 프로비저닝</span><span class="val" id="legOver">-</span></li>
+        <li><span class="lbl"><span class="dot" style="background:var(--ink-faint)"></span>미귀속</span><span class="val" id="legUnattr">-</span></li>
+      </ul>
+    </div>
+
+    <div class="metrics metrics-3" id="attribMetrics" aria-live="polite">
+      <div class="metric">
+        <div class="metric__label">원인 특정 금액(월)</div>
+        <div class="metric__value"><span id="mAttributed">-</span></div>
+      </div>
+      <div class="metric">
+        <div class="metric__label">미귀속 금액(월)</div>
+        <div class="metric__value"><span id="mUnattributed">-</span></div>
+      </div>
+      <div class="metric">
+        <div class="metric__label">원인 귀속률</div>
+        <div class="metric__value"><span id="mAttribRate">-</span></div>
+      </div>
+    </div>
+
+    <div class="validation-row" id="validationRow">
+      <span class="validation-dot ok" id="validationDot"></span>
+      <span id="validationText">검증 중입니다.</span>
+    </div>
+
+    <div class="warn-box" id="lifecycleTrapWarning" hidden>
+      <strong>주의:</strong> <span id="trapWarningText"></span>
+    </div>
+  </section>
+
+  <section class="card card-pad" aria-labelledby="summary-h">
+    <h2 class="sec-title" id="summary-h">무엇을 봤나</h2>
+    <p class="verdict" id="finalVerdict" aria-live="polite">계산 중입니다.</p>
+  </section>
+
+  <section class="card card-pad honesty" aria-labelledby="honest-h">
+    <h2 class="sec-title" id="honest-h">정직하게 말하면</h2>
+    <p>이 계산기에 들어간 공개 요금은 전부 <span class="badge badge-unverified">미확인</span> 추정치입니다. 서울 리전 외부 전송 단가만 해도 공개 출처마다 값이 갈리므로, 제안 시점에 다시 조회해 확정해야 합니다. 소거 부호 오버헤드, 교체율, 전력·인건비도 전형적인 값을 가정한 것이지 귀사 실측이 아닙니다.</p>
+    <p>이 데모는 합성 데이터 기반 모델입니다. 실제 청구서를 넣어야 원인 분해가 의미를 갖고, 실제 워크로드 프로파일(객체 크기 분포, 접근 빈도, 보존 정책)을 넣어야 손익분기 단가가 귀사에 맞게 계산됩니다. 온프렘 TCO는 소거 부호·감가상각·운영비를 단순화한 모델이며 네트워크 장비, 백업 인프라, 재해복구 비용은 포함하지 않았습니다.</p>
+    <div class="checkbox-row">
+      <input type="checkbox" id="honestyCheck">
+      <label for="honestyCheck">위 요금이 전부 미확인 추정치라는 것을 확인했고, 실제 도입 전 재조회가 필요하다는 데 동의합니다.</label>
+    </div>
+    <button type="button" class="report-btn" id="reportBtn" disabled>고객용 보고서 생성</button>
+    <span id="reportStatus">체크박스를 확인하기 전에는 보고서를 생성할 수 없습니다. 미확인 요금 표시를 지운 채로 고객에게 나가는 숫자를 막기 위한 게이트입니다.</span>
+  </section>
+</main>
+
+<footer class="demo-foot">© 2i · contact@2icorp.site</footer>
+
+<script src="app.js"></script>
+</body>
+</html>

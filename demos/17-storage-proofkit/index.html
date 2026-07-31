@@ -1,0 +1,717 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<script>(function(){try{var t=localStorage.getItem("theme");if(!t&&window.matchMedia&&matchMedia("(prefers-color-scheme: dark)").matches)t="dark";if(t)document.documentElement.setAttribute("data-theme",t);}catch(e){}})();</script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>스토리지 진단 커버리지 하네스 데모 · 2i</title>
+<link rel="stylesheet" href="../../styles.css?v=17">
+<style>
+  .demo-top{display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:1rem clamp(1rem, 2vw, 2rem);border-bottom:1px solid var(--line-soft);flex-wrap:wrap;}
+  .demo-brand{display:flex;align-items:baseline;gap:.6rem;text-decoration:none;color:var(--ink);}
+  .demo-brand__mark{font-family:var(--mono);font-weight:800;color:var(--signal);font-size:1.1rem;}
+  .demo-brand__tag{font-family:var(--mono);font-size:var(--text-xs);letter-spacing:.08em;color:var(--ink-faint);text-transform:uppercase;}
+  .demo-top__links{display:flex;gap:1.2rem;font-size:var(--text-sm);}
+  .demo-top__links a{color:var(--ink-soft);text-decoration:none;border-bottom:1px solid transparent;transition:color var(--dur) var(--ease),border-color var(--dur) var(--ease);}
+  .demo-top__links a:hover{color:var(--ink);border-color:var(--line);}
+  .demo-top__links a:focus-visible{outline:2px solid var(--signal);outline-offset:3px;}
+  .demo-banner{font-family:var(--mono);font-size:var(--text-xs);color:var(--ink-faint);background:var(--paper-2);border-bottom:1px solid var(--line-soft);padding:.55rem clamp(1rem, 2vw, 2rem);letter-spacing:.01em;}
+  main{max-width:1100px;margin:0 auto;padding:2rem clamp(1rem, 2vw, 2rem) 1rem;}
+  h1{font-size:var(--text-h2);margin:0 0 .4rem;}
+  .lede{color:var(--ink-soft);max-width:66ch;margin:0 0 2rem;line-height:1.7;}
+  section{margin-bottom:2.6rem;}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);}
+  h2.sec-title{font-size:var(--text-h3);margin:0 0 .3rem;}
+  .sec-desc{margin:0 0 1.1rem;color:var(--ink-faint);font-size:var(--text-xs);font-family:var(--mono);max-width:70ch;}
+
+  /* controls */
+  .controls-card{padding:1.4rem clamp(1rem, 2vw, 1.8rem);}
+  .control-block{margin-bottom:1.3rem;}
+  .control-block:last-child{margin-bottom:0;}
+  .control-block h3{font-size:.98rem;margin:0 0 .3rem;}
+  .control-block p{margin:0 0 .7rem;color:var(--ink-faint);font-size:var(--text-xs);font-family:var(--mono);max-width:64ch;}
+  .seg{display:flex;flex-wrap:wrap;gap:.5rem;}
+  .seg button{min-height:44px;min-width:44px;padding:.5rem 1rem;border:1px solid var(--line);border-radius:var(--radius);background:var(--panel);color:var(--ink-soft);font-family:var(--mono);font-size:var(--text-xs);cursor:pointer;transition:background var(--dur) var(--ease),color var(--dur) var(--ease),border-color var(--dur) var(--ease),transform var(--dur) var(--ease);}
+  .seg button:hover{border-color:var(--ink-faint);}
+  .seg button[aria-pressed="true"]{background:var(--ink);color:var(--paper);border-color:var(--ink);}
+  .seg button:focus-visible{outline:2px solid var(--signal);outline-offset:3px;}
+  .toggle-row{display:flex;align-items:center;gap:.75rem;padding:.5rem 0;min-height:44px;font-size:var(--text-sm);color:var(--ink);cursor:pointer;flex-wrap:wrap;}
+  .switch{position:relative;width:42px;height:24px;flex:none;}
+  .switch input{position:absolute;inset:0;opacity:0;cursor:pointer;margin:0;}
+  .switch span{position:absolute;inset:0;background:var(--line);border-radius:999px;transition:background var(--dur) var(--ease);}
+  .switch span::after{content:"";position:absolute;top:3px;left:3px;width:18px;height:18px;background:var(--paper);border-radius:50%;transition:transform var(--dur) var(--ease);box-shadow:0 1px 2px oklch(24% 0.02 255 / .35);}
+  .switch input:checked + span{background:var(--signal);}
+  .switch input:checked + span::after{transform:translateX(18px);}
+  .switch input:focus-visible + span{outline:2px solid var(--signal);outline-offset:2px;}
+  .toggle-row__label{font-weight:600;}
+  .toggle-row__desc{flex-basis:100%;font-family:var(--mono);font-size:var(--text-xs);color:var(--ink-faint);}
+  .target-note{margin:.7rem 0 0;padding:.7rem .9rem;border-left:3px solid var(--steel);background:var(--paper-2);border-radius:var(--radius);font-size:var(--text-xs);font-family:var(--mono);color:var(--ink-soft);}
+
+  /* gauges + metrics */
+  .gauge-row{display:flex;flex-wrap:wrap;gap:2rem 2.6rem;justify-content:center;align-items:flex-start;padding:1.5rem clamp(1rem, 2vw, 1.8rem);}
+  .gauge{position:relative;width:150px;height:150px;flex:none;}
+  .gauge svg{width:100%;height:100%;transform:rotate(-90deg);display:block;}
+  .gauge circle{fill:none;stroke-width:12;}
+  .gauge circle.track{stroke:var(--line-soft);}
+  .gauge circle.value{stroke-linecap:round;transition:stroke-dashoffset var(--dur) var(--ease);}
+  .gauge--coverage circle.value{stroke:var(--steel);}
+  .gauge--score circle.value{stroke:var(--signal);}
+  .gauge__label{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;}
+  .gauge__num{font-size:1.5rem;font-weight:800;font-family:var(--mono);}
+  .gauge__unit{font-size:var(--text-xs);color:var(--ink-faint);}
+  .gauge__wrap{display:flex;flex-direction:column;align-items:center;}
+  .gauge__title{margin-top:.7rem;text-align:center;font-family:var(--mono);font-size:var(--text-xs);color:var(--ink-faint);max-width:150px;}
+
+  .metrics{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;}
+  .metric{background:var(--panel);padding:1.1rem 1rem;min-width:0;}
+  .metric__label{font-family:var(--mono);font-size:var(--text-xs);color:var(--ink-faint);letter-spacing:.06em;text-transform:uppercase;}
+  .metric__value{font-size:1.5rem;font-weight:800;margin-top:.3rem;}
+  .metric__unit{font-size:.85rem;color:var(--ink-soft);font-weight:500;margin-left:.1rem;}
+  .metric__delta{font-family:var(--mono);font-size:var(--text-xs);margin-top:.35rem;}
+  .metric__delta.good{color:var(--ok);}
+  .metric__delta.bad{color:var(--signal-deep);}
+  .metric__delta.flat{color:var(--ink-faint);}
+  @media (max-width:820px){ .metrics{grid-template-columns:repeat(2,1fr);} }
+
+  /* item grid */
+  .legend{display:flex;flex-wrap:wrap;gap:1.1rem;font-family:var(--mono);font-size:var(--text-xs);color:var(--ink-soft);margin-bottom:1.1rem;}
+  .legend span{display:inline-flex;align-items:center;gap:.4rem;}
+  .swatch{width:14px;height:14px;display:inline-block;border-radius:2px;flex:none;}
+  .swatch--pass{background:var(--ok);}
+  .swatch--fail{background:var(--signal-deep);}
+  .swatch--unmeasured{background:repeating-linear-gradient(135deg, var(--ink-faint) 0 3px, transparent 3px 6px);border:1px dashed var(--ink-faint);}
+  .cat-block{margin-bottom:1.5rem;}
+  .cat-block:last-child{margin-bottom:0;}
+  .cat-block h3{font-size:.92rem;margin:0 0 .55rem;font-family:var(--mono);letter-spacing:.03em;color:var(--ink-soft);display:flex;align-items:center;gap:.5rem;}
+  .cat-block h3 .cat-count{color:var(--ink-faint);font-weight:400;}
+  .item-grid{display:grid;grid-template-columns:repeat(auto-fill, minmax(150px, 1fr));gap:.6rem;}
+  .item-chip{all:unset;box-sizing:border-box;min-width:0;min-height:64px;display:flex;flex-direction:column;justify-content:space-between;gap:.4rem;padding:.6rem .7rem;border:1px solid var(--line);border-left-width:4px;border-radius:var(--radius);background:var(--panel);cursor:pointer;transition:transform var(--dur) var(--ease), border-color var(--dur) var(--ease), box-shadow var(--dur) var(--ease);}
+  .item-chip:hover{transform:translateY(-1px);}
+  .item-chip:focus-visible{outline:2px solid var(--signal);outline-offset:2px;}
+  .item-chip__name{font-size:.78rem;line-height:1.4;color:var(--ink);word-break:keep-all;}
+  .item-chip__status{font-family:var(--mono);font-size:var(--text-xs);font-weight:700;letter-spacing:.03em;}
+  .item-chip--pass{border-left-color:var(--ok);}
+  .item-chip--pass .item-chip__status{color:var(--ok);}
+  .item-chip--fail{border-left-color:var(--signal-deep);}
+  .item-chip--fail .item-chip__status{color:var(--signal-deep);}
+  .item-chip--fail.item-chip--critical{box-shadow:0 0 0 1px var(--signal-deep) inset;}
+  .item-chip--unmeasured{border-left-color:var(--ink-faint);border-left-style:dashed;background:repeating-linear-gradient(135deg, var(--paper-2) 0 7px, var(--panel) 7px 14px);}
+  .item-chip--unmeasured .item-chip__status{color:var(--ink-faint);}
+
+  .evidence-banner{margin-top:1.1rem;padding:0;max-height:0;overflow:hidden;border-radius:var(--radius);opacity:0;transition:max-height var(--dur) var(--ease), opacity var(--dur) var(--ease), padding var(--dur) var(--ease);}
+  .evidence-banner.show{max-height:12rem;opacity:1;padding:.9rem 1.1rem;border:1px solid var(--signal-deep);background:color-mix(in srgb, var(--signal-deep) 9%, var(--panel));}
+  .evidence-banner__title{font-family:var(--mono);font-size:var(--text-xs);font-weight:700;letter-spacing:.04em;color:var(--signal-deep);margin:0 0 .3rem;text-transform:uppercase;}
+  .evidence-banner__msg{margin:0;font-size:var(--text-sm);color:var(--ink);line-height:1.6;}
+  .attempt-summary{margin:1rem 0 .4rem;font-family:var(--mono);font-size:var(--text-xs);color:var(--ink-faint);}
+  .attempt-log{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:.25rem;max-height:9.5rem;overflow-y:auto;font-family:var(--mono);font-size:var(--text-xs);color:var(--ink-soft);border-top:1px solid var(--line-soft);}
+  .attempt-log li{padding:.4rem .1rem;border-bottom:1px dashed var(--line-soft);}
+  .attempt-log__empty{color:var(--ink-faint);}
+  @media (prefers-reduced-motion: reduce){ .evidence-banner{transition:none;} .item-chip{transition:none;} }
+
+  /* scatter */
+  .chart-card{padding:1.3rem clamp(1rem, 2vw, 1.6rem);}
+  .chart-card h3{font-size:1rem;margin:0 0 .2rem;}
+  .chart-card p{margin:0 0 1rem;color:var(--ink-faint);font-size:var(--text-xs);font-family:var(--mono);}
+  svg.chart{width:100%;height:auto;display:block;}
+  .axis-label{font-family:var(--mono);font-size:9px;fill:var(--ink-faint);}
+  .grid-line{stroke:var(--line-soft);stroke-width:1;}
+  .scatter-caption{margin-top:1rem;padding:.8rem .9rem;background:var(--paper-2);border-left:3px solid var(--steel);border-radius:var(--radius);font-size:var(--text-xs);font-family:var(--mono);color:var(--ink-soft);line-height:1.6;}
+
+  /* scope calc */
+  .calc-row{display:flex;flex-wrap:wrap;align-items:center;gap:1.4rem;padding:1.4rem clamp(1rem, 2vw, 1.8rem);}
+  .calc-fraction{font-family:var(--mono);}
+  .calc-fraction__pct{font-size:2.2rem;font-weight:800;}
+  .calc-fraction__frac{font-size:var(--text-sm);color:var(--ink-faint);margin-top:.2rem;}
+  .calc-bar-wrap{flex:1;min-width:180px;}
+  .calc-bar{height:14px;border-radius:999px;background:var(--line-soft);overflow:hidden;}
+  .calc-bar__fill{height:100%;background:var(--signal);border-radius:999px;transition:width var(--dur) var(--ease);}
+  @media (prefers-reduced-motion: reduce){ .calc-bar__fill{transition:none;} }
+
+  .honest{padding:1.2rem clamp(1rem, 2vw, 1.6rem);color:var(--ink-soft);font-size:var(--text-sm);line-height:1.75;}
+  .honest strong{color:var(--ink);}
+  .summary-line{padding:1.1rem clamp(1rem, 2vw, 1.6rem);font-size:1rem;line-height:1.7;border-left:3px solid var(--signal);background:var(--paper-2);}
+  .summary-line b{color:var(--ink);}
+
+  .demo-foot{margin-top:3rem;padding:1.6rem clamp(1rem, 2vw, 2rem) 2.4rem;font-family:var(--mono);font-size:var(--text-xs);color:var(--ink-faint);border-top:1px solid var(--line-soft);text-align:center;}
+
+  @media (max-width:820px){
+    .controls-card{padding:1.1rem;}
+    .gauge-row{gap:1.5rem;}
+  }
+</style>
+</head>
+<body>
+<header class="demo-top">
+  <a href="/" class="demo-brand"><span class="demo-brand__mark">2i</span><span class="demo-brand__tag">DEMO · 스토리지 진단 커버리지 하네스</span></a>
+  <nav class="demo-top__links">
+    <a href="/cases.html#case-17">사례 보기</a>
+    <a href="/#contact">상담 신청</a>
+  </nav>
+</header>
+<div class="demo-banner">브라우저에서 그 자리에서 계산하는 인터랙티브 데모입니다. 합성 데이터를 씁니다.</div>
+
+<main>
+  <h1>스토리지 진단 커버리지 하네스</h1>
+  <p class="lede">스토리지 진단 보고서의 핵심은 점수가 아니라 커버리지입니다. 대부분의 보고서는 점수만 말하고 무엇을 못 쟀는지는 침묵합니다. 이 데모는 필수 역량 39항목을 놓고, 아래에서 고르는 환경 조건에 따라 실제로 몇 개가 측정되고 몇 개가 통과가 아니라 모른다로 남는지 그 자리에서 계산합니다. 미측정 항목을 억지로 통과로 바꾸려 하면 코드가 예외를 던지며 막습니다.</p>
+
+  <section class="card controls-card" aria-labelledby="controlsTitle">
+    <h2 class="sec-title" id="controlsTitle">환경 조건</h2>
+    <p class="sec-desc">진단 대상과 접근 권한을 바꿔가며 커버리지가 어떻게 흔들리는지 확인하세요.</p>
+
+    <div class="control-block">
+      <h3>진단 대상</h3>
+      <div class="seg" id="targetSeg" role="group" aria-label="진단 대상 선택">
+        <button type="button" data-target="minio" aria-pressed="true">MinIO(4드라이브 소거코드)</button>
+        <button type="button" data-target="twoi" aria-pressed="false">2i 저장소(콘텐츠 주소 방식)</button>
+        <button type="button" data-target="nas" aria-pressed="false">일반 NAS(S3 게이트웨이)</button>
+      </div>
+      <p class="target-note" id="targetNote" aria-live="polite"></p>
+    </div>
+
+    <div class="control-block">
+      <h3>접근 권한</h3>
+      <label class="toggle-row">
+        <span class="switch"><input type="checkbox" id="toggleAdmin"><span></span></span>
+        <span class="toggle-row__label">관리자 API 접근</span>
+        <span class="toggle-row__desc">정책·키·로그를 조회하는 관리자 권한입니다. 없으면 권한 필요 항목은 항상 미측정입니다.</span>
+      </label>
+      <label class="toggle-row">
+        <span class="switch"><input type="checkbox" id="toggleDisk"><span></span></span>
+        <span class="toggle-row__label">디스크 원본(백킹 파일) 접근</span>
+        <span class="toggle-row__desc">저장 노드의 실제 파일을 직접 열어보는 권한입니다. 대상마다 저장 구조가 달라 하네스가 못 찾을 수 있습니다.</span>
+      </label>
+      <label class="toggle-row">
+        <span class="switch"><input type="checkbox" id="toggleDestructive"><span></span></span>
+        <span class="toggle-row__label">파괴 시험 허용</span>
+        <span class="toggle-row__desc">샤드 삭제, 비트 반전, 보존 잠금 우회 시도, 오인증 접근 같은 실제 파괴 행위를 허용합니다.</span>
+      </label>
+      <label class="toggle-row">
+        <span class="switch"><input type="checkbox" id="toggleS3tests" checked><span></span></span>
+        <span class="toggle-row__label">표준 스위트(s3-tests) 실행</span>
+        <span class="toggle-row__desc">공개된 S3 호환성 테스트 스위트를 대상에 돌릴 수 있는지 여부입니다.</span>
+      </label>
+    </div>
+  </section>
+
+  <section aria-labelledby="gaugeTitle">
+    <h2 class="sec-title" id="gaugeTitle">커버리지와 점수</h2>
+    <p class="sec-desc">커버리지는 39항목 중 실제로 측정된 항목의 비율입니다. 점수는 그 측정된 항목 안에서만 계산합니다. 미측정 항목은 점수 계산에서 아예 빠집니다.</p>
+    <div class="card gauge-row" aria-live="polite" id="gaugeRegion">
+      <div class="gauge__wrap">
+        <div class="gauge gauge--coverage">
+          <svg viewBox="0 0 120 120" role="img" aria-label="커버리지 게이지">
+            <circle class="track" cx="60" cy="60" r="45"></circle>
+            <circle class="value" id="coverageArc" cx="60" cy="60" r="45" stroke-dasharray="282.7" stroke-dashoffset="282.7"></circle>
+          </svg>
+          <div class="gauge__label"><span class="gauge__num" id="coverageNum">-</span><span class="gauge__unit">커버리지 %</span></div>
+        </div>
+        <p class="gauge__title">측정된 항목 / 전체 39항목</p>
+      </div>
+      <div class="gauge__wrap">
+        <div class="gauge gauge--score">
+          <svg viewBox="0 0 120 120" role="img" aria-label="점수 게이지">
+            <circle class="track" cx="60" cy="60" r="45"></circle>
+            <circle class="value" id="scoreArc" cx="60" cy="60" r="45" stroke-dasharray="282.7" stroke-dashoffset="282.7"></circle>
+          </svg>
+          <div class="gauge__label"><span class="gauge__num" id="scoreNum">-</span><span class="gauge__unit">점수 %</span></div>
+        </div>
+        <p class="gauge__title">측정된 항목 중 통과 비율(합성 데이터 계산)</p>
+      </div>
+    </div>
+
+    <section class="metrics" id="metrics" aria-live="polite">
+      <div class="metric">
+        <div class="metric__label">커버리지</div>
+        <div class="metric__value"><span id="mCoverage">-</span><span class="metric__unit">%</span></div>
+        <div class="metric__delta" id="mCoverageDelta"></div>
+      </div>
+      <div class="metric">
+        <div class="metric__label">점수(측정분)</div>
+        <div class="metric__value"><span id="mScore">-</span><span class="metric__unit">점</span></div>
+        <div class="metric__delta" id="mScoreDelta"></div>
+      </div>
+      <div class="metric">
+        <div class="metric__label">측정된 항목</div>
+        <div class="metric__value"><span id="mMeasured">-</span><span class="metric__unit">/ 39</span></div>
+        <div class="metric__delta flat" id="mMeasuredNote">미측정 <span id="mUnmeasured">-</span>개</div>
+      </div>
+      <div class="metric">
+        <div class="metric__label">치명 결함</div>
+        <div class="metric__value"><span id="mCritical">-</span><span class="metric__unit">건</span></div>
+        <div class="metric__delta flat" id="mCriticalNote">측정된 항목 기준</div>
+      </div>
+    </section>
+  </section>
+
+  <section aria-labelledby="gridTitle">
+    <h2 class="sec-title" id="gridTitle">39항목 진단 보드</h2>
+    <p class="sec-desc">각 항목을 클릭하면 무슨 일이 일어나는지 확인할 수 있습니다. 이미 측정된 항목은 결과를 알려주고, 미측정 항목은 통과로 바꾸려는 시도를 코드가 예외로 차단합니다.</p>
+    <div class="card" style="padding:1.3rem clamp(1rem, 2vw, 1.8rem);">
+      <div class="legend">
+        <span><span class="swatch swatch--pass"></span>통과</span>
+        <span><span class="swatch swatch--fail"></span>실패</span>
+        <span><span class="swatch swatch--unmeasured"></span>미측정</span>
+      </div>
+      <div id="itemBoard"></div>
+
+      <div class="evidence-banner" id="evidenceBanner" role="alert">
+        <p class="evidence-banner__title">NoEvidenceError</p>
+        <p class="evidence-banner__msg" id="evidenceMsg"></p>
+      </div>
+      <p class="attempt-summary" id="attemptSummary">아직 시도한 강제 통과가 없습니다.</p>
+      <ul class="attempt-log" id="attemptLog" aria-live="polite"></ul>
+    </div>
+  </section>
+
+  <section class="card summary-line" id="summaryLine" aria-live="polite"></section>
+
+  <section aria-labelledby="scatterTitle">
+    <h2 class="sec-title" id="scatterTitle">자기진단 대조</h2>
+    <p class="sec-desc">같은 하네스를 만든 사람들에게 먼저 겨눴습니다. 2i 저장소는 콘텐츠 주소 방식이라 하네스의 백킹 파일 탐색 코드가 사본을 하나도 못 찾았고, 그 결과가 아래 그대로입니다.</p>
+    <div class="card chart-card">
+      <h3>커버리지 대 점수</h3>
+      <p>가로축은 커버리지(%), 세로축은 점수(%)입니다. 실측 두 점과 지금 설정한 값 한 점을 함께 표시합니다.</p>
+      <svg class="chart" id="scatterChart" viewBox="0 0 900 320" preserveAspectRatio="xMidYMid meet" role="img" aria-label="2i 저장소, MinIO, 현재 설정의 커버리지 대 점수 산점도"></svg>
+      <div class="legend">
+        <span><span class="swatch" style="background:var(--signal-deep);border-radius:50%;"></span>2i 저장소(실측)</span>
+        <span><span class="swatch" style="background:var(--steel);border-radius:50%;"></span>MinIO(실측)</span>
+        <span><span class="swatch" style="background:var(--ok);border-radius:50%;"></span>현재 설정(합성 데이터 계산)</span>
+      </div>
+      <p class="scatter-caption">2i 저장소 커버리지 15.4%, 측정분 점수 41.7(실측). MinIO 커버리지 28.2%, 측정분 점수 72.7(실측). 2i가 진 원인은 저장소 품질이 아니라 하네스가 콘텐츠 주소 구조의 백킹 파일을 못 찾은 탐색 코드 결함입니다. 그 결함을 대상에 맞춰 고치지 않았습니다.</p>
+    </div>
+  </section>
+
+  <section aria-labelledby="calcTitle">
+    <h2 class="sec-title" id="calcTitle">s3-tests 범위 계산기</h2>
+    <p class="sec-desc">같은 시스템인데 범위 선언에 따라 통과율이 얼마나 달라지는지 실제 나눗셈으로 보여줍니다.</p>
+    <div class="card">
+      <div class="calc-row">
+        <div class="seg" id="scopeSeg" role="group" aria-label="s3-tests 범위 선택">
+          <button type="button" data-scope="claimed" aria-pressed="true">주장 범위만</button>
+          <button type="button" data-scope="full" aria-pressed="false">미구현 포함 전체</button>
+        </div>
+        <div class="calc-fraction">
+          <div class="calc-fraction__pct" id="scopePct">-</div>
+          <div class="calc-fraction__frac" id="scopeFrac">-</div>
+        </div>
+        <div class="calc-bar-wrap">
+          <div class="calc-bar"><div class="calc-bar__fill" id="scopeBar" style="width:0%"></div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="card honest" aria-labelledby="honestTitle">
+    <h2 class="sec-title" id="honestTitle">정직하게 말하면</h2>
+    <p>항목 세트와 판정 규칙은 레퍼런스 구현이며, 실제 진단에는 대상 환경마다 다른 어댑터가 필요합니다. 이 데모는 브라우저 안의 모형이고 실제 저장소를 건드리지 않습니다. 낮은 커버리지가 대상의 문제가 아니라 하네스 자신의 결함일 수 있으며, 그런 경우에도 이 하네스는 대상에 맞춰 코드를 고치지 않습니다. 재는 도구를 재는 대상에 맞춰 손보면, 재는 것이 아니라 손본 것이 됩니다.</p>
+  </section>
+</main>
+
+<footer class="demo-foot">© 2i · contact@2icorp.site</footer>
+
+<script>
+(function(){
+  "use strict";
+
+  var CAT_LABEL = {
+    integrity: "무결성", durability: "내구성", access: "접근제어", s3compat: "S3 호환",
+    encryption: "암호화", retention: "보존·잠금", observability: "관측성", recovery: "복구"
+  };
+  var CAT_ORDER = ["integrity","durability","access","s3compat","encryption","retention","observability","recovery"];
+  var REQ_LABEL = { a: "관리자 API 접근", d: "디스크 원본 접근", x: "파괴 시험 허용", s: "표준 스위트(s3-tests) 실행" };
+
+  var ITEMS = [
+    { cat:"integrity", name:"콘텐츠 체크섬 검증(업로드 시 불일치 거부)", reqs:["s"], out:{minio:"f",twoi:"p",nas:"p"} },
+    { cat:"integrity", name:"저장 후 정기 무결성 스캔(백그라운드 스크럽)", reqs:["d"], out:{minio:"p",twoi:"p",nas:"p"} },
+    { cat:"integrity", name:"비트 반전(bit rot) 탐지", reqs:["d","x"], out:{minio:"p",twoi:"p",nas:"f"} },
+    { cat:"integrity", name:"다운로드 시 서버측 체크섬 재검증", reqs:["d"], out:{minio:"p",twoi:"p",nas:"p"} },
+    { cat:"integrity", name:"소거코드 조각별 무결성 확인", reqs:["d"], out:{minio:"p",twoi:"p",nas:"f"} },
+
+    { cat:"durability", name:"반환 체크섬 기반 패리티 자기검증", reqs:[], out:{minio:"p",twoi:"p",nas:"p"} },
+    { cat:"durability", name:"소거코드 중복도 계산(N+K)", reqs:["d"], out:{minio:"p",twoi:"p",nas:"f"} },
+    { cat:"durability", name:"드라이브 강제 이탈 시뮬레이션", reqs:["x"], out:{minio:"p",twoi:"p",nas:"f"} },
+    { cat:"durability", name:"재구성(rebuild) 소요시간 측정", reqs:["d","x"], out:{minio:"f",twoi:"p",nas:"f"} },
+    { cat:"durability", name:"리전 간 복제 일관성 확인", reqs:["d"], out:{minio:"f",twoi:"p",nas:"f"} },
+
+    { cat:"access", name:"미인증 요청 거부 확인", reqs:[], out:{minio:"p",twoi:"p",nas:"p"} },
+    { cat:"access", name:"만료된 presigned URL 거부 확인", reqs:[], out:{minio:"f",twoi:"p",nas:"f"} },
+    { cat:"access", name:"버킷 정책 최소권한 검사", reqs:["a"], out:{minio:"p",twoi:"p",nas:"p"} },
+    { cat:"access", name:"IAM 역할 분리 검증", reqs:["a"], out:{minio:"p",twoi:"p",nas:"p"} },
+    { cat:"access", name:"MFA delete 설정 확인", reqs:["a"], out:{minio:"f",twoi:"f",nas:"p"} },
+
+    { cat:"s3compat", name:"ListObjectsV2 페이지네이션 정합성", reqs:["s"], out:{minio:"p",twoi:"p",nas:"p"} },
+    { cat:"s3compat", name:"멀티파트 업로드 재조립 정합성", reqs:["s"], out:{minio:"p",twoi:"p",nas:"f"} },
+    { cat:"s3compat", name:"조건부 쓰기(If-Match) 지원", reqs:["s"], out:{minio:"p",twoi:"f",nas:"f"} },
+    { cat:"s3compat", name:"버저닝 헤더 정합성", reqs:["s"], out:{minio:"p",twoi:"p",nas:"f"} },
+    { cat:"s3compat", name:"오브젝트 태깅 API 정합성", reqs:["s"], out:{minio:"p",twoi:"p",nas:"p"} },
+
+    { cat:"encryption", name:"전송 구간 암호화 강제(TLS 전용 리스너)", reqs:[], out:{minio:"f",twoi:"p",nas:"f"}, critical:true },
+    { cat:"encryption", name:"저장 시 기본 암호화(SSE) 적용 확인", reqs:["d"], out:{minio:"f",twoi:"p",nas:"f"} },
+    { cat:"encryption", name:"KMS 키 회전 감사", reqs:["a"], out:{minio:"p",twoi:"p",nas:"p"} },
+    { cat:"encryption", name:"봉투 암호화(envelope encryption) 검증", reqs:["d","x"], out:{minio:"p",twoi:"p",nas:"f"} },
+    { cat:"encryption", name:"암호화 키 접근 로그 확인", reqs:["a"], out:{minio:"p",twoi:"p",nas:"p"} },
+
+    { cat:"retention", name:"Object Lock 거버넌스 모드 우회 시도", reqs:["x"], out:{minio:"p",twoi:"p",nas:"f"} },
+    { cat:"retention", name:"Object Lock 컴플라이언스 모드 우회 시도", reqs:["x"], out:{minio:"p",twoi:"p",nas:"f"} },
+    { cat:"retention", name:"리걸 홀드 해제 권한 검사", reqs:["a"], out:{minio:"p",twoi:"p",nas:"p"} },
+    { cat:"retention", name:"보존 기간 만료 전 삭제 시도", reqs:["x"], out:{minio:"p",twoi:"p",nas:"f"} },
+    { cat:"retention", name:"WORM 저장소 실제 쓰기 방지 확인", reqs:["d","x"], out:{minio:"p",twoi:"p",nas:"f"} },
+
+    { cat:"observability", name:"메트릭 엔드포인트 응답 확인", reqs:[], out:{minio:"p",twoi:"p",nas:"p"} },
+    { cat:"observability", name:"접근 로그 활성화 확인", reqs:["a"], out:{minio:"p",twoi:"p",nas:"p"} },
+    { cat:"observability", name:"감사 추적 완결성 확인", reqs:["a"], out:{minio:"f",twoi:"f",nas:"p"} },
+    { cat:"observability", name:"이상 탐지 알림 연동 확인", reqs:["a"], out:{minio:"f",twoi:"f",nas:"p"} },
+    { cat:"observability", name:"용량 임계치 경보 설정 확인", reqs:["a"], out:{minio:"p",twoi:"p",nas:"p"} },
+
+    { cat:"recovery", name:"특정 시점 복원(PITR) 리허설", reqs:["x"], out:{minio:"p",twoi:"p",nas:"f"} },
+    { cat:"recovery", name:"리전 장애 조치(failover) 테스트", reqs:["a","x"], out:{minio:"f",twoi:"f",nas:"f"} },
+    { cat:"recovery", name:"백업 사본 존재 확인", reqs:["d"], out:{minio:"p",twoi:"p",nas:"p"} },
+    { cat:"recovery", name:"DR 런북 유효성 검증", reqs:["a"], out:{minio:"f",twoi:"f",nas:"p"} }
+  ];
+
+  var TARGETS = {
+    minio: { label:"MinIO(4드라이브 소거코드)", blockAdmin:false, blockDisk:false,
+      note:"관리자 API와 디스크 접근을 모두 켜면 39항목 대부분이 측정 가능한 기준 환경입니다." },
+    twoi: { label:"2i 저장소(콘텐츠 주소 방식)", blockAdmin:false, blockDisk:true,
+      note:"디스크 원본 접근을 켜도 하네스가 콘텐츠 주소 구조에서 백킹 파일을 찾지 못해 디스크 필요 항목은 항상 미측정으로 남습니다. 대상이 아니라 하네스의 결함입니다." },
+    nas: { label:"일반 NAS(S3 게이트웨이)", blockAdmin:true, blockDisk:false,
+      note:"관리자 API가 없는 게이트웨이라 관리자 API가 필요한 항목은 켜도 항상 미측정으로 남습니다." }
+  };
+
+  var SCOPE = {
+    claimed: { pass:97, total:107, label:"주장 범위만(실측)" },
+    full: { pass:164, total:838, label:"미구현 포함 전체(실측)" }
+  };
+
+  var state = {
+    target: "minio",
+    toggles: { admin:false, disk:false, destructive:false, s3tests:true },
+    scopeMode: "claimed",
+    attemptTotal: 0,
+    attempts: []
+  };
+
+  function NoEvidenceError(item, reason){
+    this.name = "NoEvidenceError";
+    this.message = "증거 없음: '" + item.name + "' 항목은 통과 코드 경로가 없습니다. " + reason;
+  }
+  NoEvidenceError.prototype = Object.create(Error.prototype);
+  NoEvidenceError.prototype.constructor = NoEvidenceError;
+
+  function targetCfg(){ return TARGETS[state.target]; }
+
+  function reqMet(code){
+    var t = targetCfg();
+    if(code === "a") return state.toggles.admin && !t.blockAdmin;
+    if(code === "d") return state.toggles.disk && !t.blockDisk;
+    if(code === "x") return state.toggles.destructive;
+    if(code === "s") return state.toggles.s3tests;
+    return true;
+  }
+
+  function firstUnmet(item){
+    for(var i=0;i<item.reqs.length;i++){ if(!reqMet(item.reqs[i])) return item.reqs[i]; }
+    return null;
+  }
+
+  function isMeasured(item){ return firstUnmet(item) === null; }
+
+  function reasonText(item){
+    var code = firstUnmet(item);
+    var t = targetCfg();
+    if(code === "d" && t.blockDisk){
+      return "백킹 파일 탐색 실패: 콘텐츠 주소 구조에서 사본을 찾지 못합니다(하네스 결함, 대상 문제 아님).";
+    }
+    if(code === "a" && t.blockAdmin){
+      return "관리자 API가 없는 환경입니다(게이트웨이 미지원).";
+    }
+    return "측정 조건 미충족: " + REQ_LABEL[code] + " 필요.";
+  }
+
+  function computeStats(){
+    var measured = 0, pass = 0, criticalFails = 0;
+    var rows = ITEMS.map(function(item){
+      var m = isMeasured(item);
+      var status = m ? (item.out[state.target] === "p" ? "pass" : "fail") : "unmeasured";
+      if(m){
+        measured++;
+        if(status === "pass") pass++;
+        if(status === "fail" && item.critical) criticalFails++;
+      }
+      return { item:item, status:status };
+    });
+    var coverage = ITEMS.length > 0 ? (measured / ITEMS.length) * 100 : 0;
+    var score = measured > 0 ? (pass / measured) * 100 : 0;
+    return { rows:rows, measured:measured, pass:pass, coverage:coverage, score:score,
+      criticalFails:criticalFails, unmeasured: ITEMS.length - measured };
+  }
+
+  function fmt1(n){ return n.toFixed(1); }
+
+  var CIRC = 2 * Math.PI * 45;
+
+  function setGauge(circleEl, numEl, pct){
+    var clamped = Math.max(0, Math.min(100, pct));
+    circleEl.setAttribute("stroke-dasharray", CIRC.toFixed(1));
+    circleEl.setAttribute("stroke-dashoffset", (CIRC * (1 - clamped / 100)).toFixed(1));
+    numEl.textContent = fmt1(pct);
+  }
+
+  function setDelta(id, current, baseline, unit){
+    var el = document.getElementById(id);
+    var diff = current - baseline;
+    var cls = Math.abs(diff) < 0.05 ? "flat" : (diff >= 0 ? "good" : "bad");
+    el.className = "metric__delta " + cls;
+    var sign = diff >= 0 ? "+" : "";
+    el.textContent = "MinIO 예제(28.2%/72.7점) 대비 " + sign + fmt1(diff) + unit;
+  }
+
+  // ---- item board build (once) ----
+  var chipEls = [];
+  (function buildBoard(){
+    var board = document.getElementById("itemBoard");
+    CAT_ORDER.forEach(function(cat){
+      var items = ITEMS.filter(function(it){ return it.cat === cat; });
+      var block = document.createElement("div");
+      block.className = "cat-block";
+      var h3 = document.createElement("h3");
+      h3.innerHTML = CAT_LABEL[cat] + " <span class=\"cat-count\">(" + items.length + ")</span>";
+      block.appendChild(h3);
+      var grid = document.createElement("div");
+      grid.className = "item-grid";
+      items.forEach(function(item){
+        var idx = ITEMS.indexOf(item);
+        var chip = document.createElement("button");
+        chip.type = "button";
+        chip.className = "item-chip";
+        var nameEl = document.createElement("span");
+        nameEl.className = "item-chip__name";
+        nameEl.textContent = item.name;
+        var statusEl = document.createElement("span");
+        statusEl.className = "item-chip__status";
+        chip.appendChild(nameEl);
+        chip.appendChild(statusEl);
+        chip.addEventListener("click", function(){ handleChipClick(idx); });
+        grid.appendChild(chip);
+        chipEls[idx] = { chip:chip, status:statusEl };
+      });
+      block.appendChild(grid);
+      board.appendChild(block);
+    });
+  })();
+
+  function renderBoard(stats){
+    stats.rows.forEach(function(row, idx){
+      var el = chipEls[idx];
+      var cls = "item-chip item-chip--" + row.status;
+      if(row.item.critical) cls += " item-chip--critical";
+      el.chip.className = cls;
+      var label = row.status === "pass" ? "통과" : row.status === "fail" ? "실패" : "미측정";
+      el.status.textContent = label;
+      var aria = row.item.name + ". 상태: " + label + ".";
+      if(row.status === "unmeasured") aria += " " + reasonText(row.item) + " 클릭하면 강제 통과를 시도합니다.";
+      else aria += " 클릭하면 결과를 다시 안내합니다.";
+      el.chip.setAttribute("aria-label", aria);
+    });
+  }
+
+  function handleChipClick(idx){
+    var item = ITEMS[idx];
+    if(isMeasured(item)){
+      var status = item.out[state.target] === "p" ? "통과" : "실패";
+      announceMeasured(item.name + ": 이미 측정됨 → " + status + ".");
+      return;
+    }
+    state.attemptTotal++;
+    var reason = reasonText(item);
+    try{
+      throw new NoEvidenceError(item, reason);
+    }catch(e){
+      console.error(e);
+      logAttempt(item);
+      showBanner(e.message);
+    }
+    renderAttempts();
+  }
+
+  function announceMeasured(msg){
+    var banner = document.getElementById("evidenceBanner");
+    banner.classList.remove("show");
+    document.getElementById("evidenceMsg").textContent = msg;
+    // reflow before re-adding to allow re-trigger of the reveal transition
+    void banner.offsetWidth;
+    banner.querySelector(".evidence-banner__title").textContent = "측정됨";
+    banner.classList.add("show");
+  }
+
+  function showBanner(msg){
+    var banner = document.getElementById("evidenceBanner");
+    banner.querySelector(".evidence-banner__title").textContent = "NoEvidenceError";
+    document.getElementById("evidenceMsg").textContent = msg;
+    banner.classList.add("show");
+  }
+
+  function logAttempt(item){
+    state.attempts.unshift({ name:item.name, cat:CAT_LABEL[item.cat] });
+    if(state.attempts.length > 8) state.attempts.length = 8;
+  }
+
+  function renderAttempts(){
+    var summary = document.getElementById("attemptSummary");
+    if(state.attemptTotal === 0){
+      summary.textContent = "아직 시도한 강제 통과가 없습니다.";
+    } else {
+      summary.textContent = "강제 통과 시도 " + state.attemptTotal + "회 · 차단 " + state.attemptTotal + "회(100%).";
+    }
+    var log = document.getElementById("attemptLog");
+    log.innerHTML = "";
+    if(state.attempts.length === 0){
+      var li = document.createElement("li");
+      li.className = "attempt-log__empty";
+      li.textContent = "시도 원장이 비어 있습니다.";
+      log.appendChild(li);
+      return;
+    }
+    state.attempts.forEach(function(a){
+      var li = document.createElement("li");
+      li.textContent = "[" + a.cat + "] " + a.name + " → 차단됨(NoEvidenceError)";
+      log.appendChild(li);
+    });
+  }
+
+  // ---- scatter chart ----
+  function drawScatter(stats){
+    var svg = document.getElementById("scatterChart");
+    svg.innerHTML = "";
+    var svgNS = "http://www.w3.org/2000/svg";
+    var W = 900, H = 320, padL = 56, padR = 30, padT = 20, padB = 44;
+    var innerW = W - padL - padR, innerH = H - padT - padB;
+    function x(pct){ return padL + innerW * (pct/100); }
+    function y(pct){ return padT + innerH * (1 - pct/100); }
+
+    for(var g=0; g<=100; g+=20){
+      var gl = document.createElementNS(svgNS,"line");
+      gl.setAttribute("x1", x(0)); gl.setAttribute("x2", x(100));
+      gl.setAttribute("y1", y(g)); gl.setAttribute("y2", y(g));
+      gl.setAttribute("class","grid-line");
+      svg.appendChild(gl);
+      var gv = document.createElementNS(svgNS,"line");
+      gv.setAttribute("y1", y(0)); gv.setAttribute("y2", y(100));
+      gv.setAttribute("x1", x(g)); gv.setAttribute("x2", x(g));
+      gv.setAttribute("class","grid-line");
+      svg.appendChild(gv);
+      var ty = document.createElementNS(svgNS,"text");
+      ty.setAttribute("x", padL - 8); ty.setAttribute("y", y(g)+3);
+      ty.setAttribute("text-anchor","end"); ty.setAttribute("class","axis-label");
+      ty.textContent = g;
+      svg.appendChild(ty);
+      var tx = document.createElementNS(svgNS,"text");
+      tx.setAttribute("x", x(g)); tx.setAttribute("y", y(0)+16);
+      tx.setAttribute("text-anchor","middle"); tx.setAttribute("class","axis-label");
+      tx.textContent = g;
+      svg.appendChild(tx);
+    }
+    var xlab = document.createElementNS(svgNS,"text");
+    xlab.setAttribute("x", padL + innerW/2); xlab.setAttribute("y", H-4);
+    xlab.setAttribute("text-anchor","middle"); xlab.setAttribute("class","axis-label");
+    xlab.textContent = "커버리지 %";
+    svg.appendChild(xlab);
+    var ylab = document.createElementNS(svgNS,"text");
+    ylab.setAttribute("x", 12); ylab.setAttribute("y", padT+10);
+    ylab.setAttribute("class","axis-label");
+    ylab.textContent = "점수 %";
+    svg.appendChild(ylab);
+
+    function point(px, py, color, label){
+      var c = document.createElementNS(svgNS,"circle");
+      c.setAttribute("cx", x(px)); c.setAttribute("cy", y(py)); c.setAttribute("r", 8);
+      c.setAttribute("fill", color); c.setAttribute("stroke", "var(--panel)"); c.setAttribute("stroke-width","2");
+      svg.appendChild(c);
+      var t = document.createElementNS(svgNS,"text");
+      t.setAttribute("x", x(px)+11); t.setAttribute("y", y(py)+4);
+      t.setAttribute("class","axis-label"); t.setAttribute("font-size","10");
+      t.textContent = label;
+      svg.appendChild(t);
+    }
+
+    point(15.4, 41.7, "var(--signal-deep)", "2i " + fmt1(15.4) + "/" + fmt1(41.7));
+    point(28.2, 72.7, "var(--steel)", "MinIO " + fmt1(28.2) + "/" + fmt1(72.7));
+    point(stats.coverage, stats.score, "var(--ok)", "현재 " + fmt1(stats.coverage) + "/" + fmt1(stats.score));
+  }
+
+  // ---- scope calculator ----
+  function renderScope(){
+    var d = SCOPE[state.scopeMode];
+    var pct = (d.pass / d.total) * 100;
+    document.getElementById("scopePct").textContent = fmt1(pct) + "%";
+    document.getElementById("scopeFrac").textContent = d.pass + " / " + d.total + " 통과 (" + d.label + ")";
+    document.getElementById("scopeBar").style.width = pct + "%";
+  }
+
+  document.getElementById("scopeSeg").addEventListener("click", function(e){
+    var btn = e.target.closest("button[data-scope]");
+    if(!btn) return;
+    state.scopeMode = btn.getAttribute("data-scope");
+    Array.prototype.forEach.call(this.querySelectorAll("button"), function(b){
+      b.setAttribute("aria-pressed", b === btn ? "true" : "false");
+    });
+    renderScope();
+  });
+
+  // ---- controls wiring ----
+  document.getElementById("targetSeg").addEventListener("click", function(e){
+    var btn = e.target.closest("button[data-target]");
+    if(!btn) return;
+    state.target = btn.getAttribute("data-target");
+    Array.prototype.forEach.call(this.querySelectorAll("button"), function(b){
+      b.setAttribute("aria-pressed", b === btn ? "true" : "false");
+    });
+    document.getElementById("evidenceBanner").classList.remove("show");
+    render();
+  });
+
+  ["Admin","Disk","Destructive","S3tests"].forEach(function(key){
+    var id = "toggle" + key;
+    var el = document.getElementById(id);
+    el.addEventListener("change", function(){
+      var stateKey = key.toLowerCase() === "s3tests" ? "s3tests" : key.toLowerCase();
+      state.toggles[stateKey] = el.checked;
+      document.getElementById("evidenceBanner").classList.remove("show");
+      render();
+    });
+  });
+
+  function render(){
+    var stats = computeStats();
+
+    document.getElementById("targetNote").textContent = targetCfg().note;
+
+    setGauge(document.getElementById("coverageArc"), document.getElementById("coverageNum"), stats.coverage);
+    setGauge(document.getElementById("scoreArc"), document.getElementById("scoreNum"), stats.score);
+
+    document.getElementById("mCoverage").textContent = fmt1(stats.coverage);
+    document.getElementById("mScore").textContent = fmt1(stats.score);
+    document.getElementById("mMeasured").textContent = stats.measured;
+    document.getElementById("mUnmeasured").textContent = stats.unmeasured;
+    document.getElementById("mCritical").textContent = stats.criticalFails;
+
+    setDelta("mCoverageDelta", stats.coverage, 28.2, "%p");
+    setDelta("mScoreDelta", stats.score, 72.7, "점");
+
+    renderBoard(stats);
+
+    document.getElementById("summaryLine").innerHTML =
+      "현재 조건에서는 39항목 중 <b>" + stats.measured + "개</b>만 측정됩니다. 점수 <b>" + fmt1(stats.score) +
+      "점</b>은 그 " + stats.measured + "개 안에서의 값이고, 나머지 <b>" + stats.unmeasured +
+      "개</b>는 통과가 아니라 모릅니다(합성 데이터 계산).";
+
+    drawScatter(stats);
+  }
+
+  render();
+  renderAttempts();
+  renderScope();
+})();
+</script>
+</body>
+</html>

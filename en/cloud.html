@@ -15,7 +15,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../styles.css?v=15">
+<link rel="stylesheet" href="../styles.css?v=17">
 </head>
 <body>
 
@@ -62,7 +62,7 @@
       <p class="chero__lede">Seven stages carry data scattered across spreadsheets to a management decision that arrives every morning. 2i builds this pipeline ourselves, and runs it on our own operations first. Whether it's cloud, on-premise, or an air-gapped network, the same architecture carries over unchanged.</p>
       <div class="chero__stats reveal stagger">
         <div class="cstat"><span class="cstat__n">3<small>sec</small></span><span class="cstat__l">Management dashboard lookup (Case 01 target, re-measured on your data)</span></div>
-        <div class="cstat"><span class="cstat__n">10<small>/10</small></span><span class="cstat__l">Every published case runs on this same foundation</span></div>
+        <div class="cstat"><span class="cstat__n">22<small>/22</small></span><span class="cstat__l">Every case runs on this same foundation</span></div>
         <div class="cstat"><span class="cstat__n">0</span><span class="cstat__l">Cloud lock-in · deploys as-is in air-gapped/on-prem environments</span></div>
         <div class="cstat"><span class="cstat__n">24<small>/7</small></span><span class="cstat__l">Unattended operations pipeline (run daily on our own operations)</span></div>
       </div>
@@ -311,9 +311,6 @@
       </div>
 
       <div class="hero__cta reveal" style="margin-top:1.4rem">
-        <a class="btn" href="https://github.com/2icorp/2i-case-18-storage-cost-model" target="_blank" rel="noopener">Cost model source &nearr;</a>
-        <a class="btn" href="https://github.com/2icorp/2i-case-17-storage-proofkit" target="_blank" rel="noopener">Diagnostic harness source &nearr;</a>
-        <a class="btn" href="https://github.com/2icorp/2i-case-16-storage-durability" target="_blank" rel="noopener">Durability measurements source &nearr;</a>
       </div>
 
       <p class="auto-foot reveal">To be honest: the figures above come from synthetic data and our own lab, and they have to be re-measured in your environment. Here is what we did not do. No formal consistency verification of the Jepsen kind. Multi-site replication and large-node operation are outside what we tested. The store we built is not a Ceph alternative but a minimal implementation for small air-gapped deployments, and that limit is written on the first screen of its repository. Every published price in the cost model ships marked unverified, and a customer-facing report will not generate while that mark stands. Published sources disagree on Seoul-region egress alone, so we re-check and pin the numbers at proposal time.</p>
@@ -352,7 +349,6 @@
       <a href="papers.html">Papers</a>
       <a href="index.html#voucher">Voucher</a>
       <a href="privacy.html">Privacy Policy</a>
-      <a href="https://github.com/2icorp" target="_blank" rel="noopener">GitHub</a>
       <a href="/cloud.html">한국어</a>
     </nav>
   </div>

@@ -14,7 +14,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../styles.css?v=15">
+<link rel="stylesheet" href="../styles.css?v=17">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
 <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
 <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js" onload="renderMathInElement(document.body,{delimiters:[{left:'$$',right:'$$',display:true},{left:'$',right:'$',display:false},{left:'\\[',right:'\\]',display:true},{left:'\\(',right:'\\)',display:false}]})"></script>
@@ -77,7 +77,7 @@
 <p>원시 확률의 ECE는 평균 0.0446(표준편차 0.0062)이었습니다. 세 보정 방법 모두 이를
 낮췄고, 가장 큰 개선은 isotonic 회귀로 ECE 0.0188, 약 58% 감소였습니다. Platt과
 온도 스케일링은 각각 ECE 0.0223, 0.0228로 약 49~50% 감소였습니다.</p>
-<table>
+<div class="tscroll" tabindex="0" role="region" aria-label="표. 좌우로 스크롤할 수 있습니다"><table>
 <thead>
 <tr>
 <th>방법</th>
@@ -112,7 +112,7 @@
 <td>0.9363</td>
 </tr>
 </tbody>
-</table>
+</table></div>
 <p>적합된 온도 T는 평균 1.599(표준편차 0.099)로 5개 시드 전체에서 1보다 뚜렷이 컸고
 (1.4376~1.7289 범위, 1보다 작은 시드는 없었습니다), 이는 이 분류기가 체계적으로
 과신하는 방향으로 미보정돼 있었음을 정량적으로 확인합니다. 신뢰도 다이어그램을
@@ -157,7 +157,7 @@ Platt 0.0797 → 온도 0.0795 → isotonic 0.0803)을 가리켰습니다.</p>
       <a href="../index.html#method">방식</a>
       <a href="../papers.html">논문·실험</a>
       <a href="../index.html#voucher">정부 바우처</a>
-      <a href="https://github.com/2icorp" target="_blank" rel="noopener">GitHub</a>
+      <a href="../cases.html">사례</a>
       <a href="../en/">EN</a>
     </nav>
   </div>

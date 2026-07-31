@@ -1,0 +1,984 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<script>(function(){try{var t=localStorage.getItem("theme");if(!t&&window.matchMedia&&matchMedia("(prefers-color-scheme: dark)").matches)t="dark";if(t)document.documentElement.setAttribute("data-theme",t);}catch(e){}})();</script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>간호사 근무표 편성 시뮬레이터 데모 · 2i</title>
+<link rel="stylesheet" href="../../styles.css?v=17">
+<style>
+  .demo-top{display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:1rem clamp(1rem,2vw,2rem);border-bottom:1px solid var(--line-soft);flex-wrap:wrap;}
+  .demo-brand{display:flex;align-items:baseline;gap:.6rem;text-decoration:none;color:var(--ink);}
+  .demo-brand__mark{font-family:var(--mono);font-weight:800;color:var(--signal);font-size:1.1rem;}
+  .demo-brand__tag{font-family:var(--mono);font-size:var(--text-xs);letter-spacing:.08em;color:var(--ink-faint);text-transform:uppercase;}
+  .demo-top__links{display:flex;gap:1.2rem;font-size:var(--text-sm);}
+  .demo-top__links a{color:var(--ink-soft);text-decoration:none;border-bottom:1px solid transparent;transition:color var(--dur) var(--ease),border-color var(--dur) var(--ease);}
+  .demo-top__links a:hover{color:var(--ink);border-color:var(--line);}
+  .demo-top__links a:focus-visible{outline:2px solid var(--signal);outline-offset:3px;}
+  .demo-banner{font-family:var(--mono);font-size:var(--text-xs);color:var(--ink-faint);background:var(--paper-2);border-bottom:1px solid var(--line-soft);padding:.55rem clamp(1rem,2vw,2rem);letter-spacing:.01em;}
+  main{max-width:1180px;margin:0 auto;padding:2rem clamp(1rem,2vw,2rem) 1rem;}
+  h1{font-size:var(--text-h2);margin:0 0 .4rem;}
+  .lede{color:var(--ink-soft);max-width:70ch;margin:0 0 1.6rem;line-height:1.7;}
+  .refstat{background:var(--paper-2);border:1px solid var(--line-soft);border-radius:var(--radius);padding:.9rem 1.1rem;margin:0 0 2.2rem;font-family:var(--mono);font-size:var(--text-xs);color:var(--ink-soft);line-height:1.8;}
+  .refstat b{color:var(--ink);font-family:var(--sans);font-weight:700;}
+  section{margin-bottom:2.6rem;}
+  h2{font-size:var(--text-h3);margin:0 0 .3rem;}
+  h3{font-size:1rem;margin:0 0 .2rem;}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);}
+  .section-note{margin:0 0 1rem;color:var(--ink-faint);font-size:var(--text-xs);font-family:var(--mono);}
+
+  /* ---- controls ---- */
+  .controls{padding:1.4rem clamp(1rem,2vw,1.8rem);}
+  .controls__grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.3rem 1.6rem;}
+  .control h3{margin:0 0 .25rem;}
+  .control p{margin:0 0 .7rem;color:var(--ink-faint);font-size:var(--text-xs);font-family:var(--mono);line-height:1.55;}
+  .control__row{display:flex;align-items:center;gap:.8rem;}
+  input[type="range"]{flex:1;accent-color:var(--signal);min-height:44px;}
+  .control__val{font-family:var(--mono);font-weight:700;min-width:4.4rem;text-align:right;}
+  .presets{display:flex;flex-wrap:wrap;gap:.6rem;margin-top:1.4rem;padding-top:1.2rem;border-top:1px solid var(--line-soft);}
+  .btn{font-family:var(--sans);font-size:var(--text-sm);font-weight:600;padding:.65rem 1.1rem;min-height:44px;border-radius:var(--radius);border:1px solid var(--line);background:var(--panel);color:var(--ink);cursor:pointer;transition:background var(--dur) var(--ease),border-color var(--dur) var(--ease),transform var(--dur) var(--ease);}
+  .btn:hover{background:var(--paper-2);border-color:var(--ink-faint);}
+  .btn:active{transform:translateY(1px);}
+  .btn:focus-visible{outline:2px solid var(--signal);outline-offset:2px;}
+  .btn--go{background:var(--steel);border-color:var(--steel);color:var(--panel);}
+  .btn--go:hover{background:var(--steel-soft);border-color:var(--steel-soft);}
+  .capacity-line{margin-top:1rem;font-family:var(--mono);font-size:var(--text-xs);color:var(--ink-soft);line-height:1.7;background:var(--paper-2);border:1px solid var(--line-soft);border-radius:var(--radius);padding:.8rem 1rem;}
+  .capacity-line b{color:var(--signal-deep);font-family:var(--sans);}
+  .capacity-line.ok b{color:var(--ok);}
+
+  /* ---- progress ---- */
+  .progress-wrap{margin-top:1.2rem;height:auto;min-height:1.2rem;}
+  .progress-label{font-family:var(--mono);font-size:var(--text-xs);color:var(--ink-faint);margin-bottom:.35rem;}
+  .progress-track{height:6px;background:var(--line-soft);border-radius:99px;overflow:hidden;}
+  .progress-bar{height:100%;width:0%;background:var(--signal);transition:width 120ms linear;}
+  .progress-wrap[hidden]{display:none;}
+
+  /* ---- metrics ---- */
+  .metrics{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;}
+  .metric{background:var(--panel);padding:1.2rem 1.05rem;min-width:0;}
+  .metric__label{font-family:var(--mono);font-size:var(--text-xs);color:var(--ink-faint);letter-spacing:.06em;text-transform:uppercase;}
+  .metric__value{font-size:1.5rem;font-weight:800;margin-top:.35rem;word-break:keep-all;}
+  .metric__unit{font-size:.85rem;color:var(--ink-soft);font-weight:500;margin-left:.15rem;}
+  .metric__sub{font-family:var(--mono);font-size:var(--text-xs);margin-top:.4rem;color:var(--ink-faint);}
+  .metric__value.status-ok{color:var(--ok);}
+  .metric__value.status-bad{color:var(--signal-deep);}
+
+  /* ---- roster grids ---- */
+  .roster-block{margin-bottom:1.8rem;}
+  .roster-banner{font-family:var(--mono);font-size:var(--text-xs);padding:.7rem 1rem;border-radius:var(--radius);margin-bottom:.8rem;border:1px solid transparent;}
+  .roster-banner--ok{background:color-mix(in srgb, var(--ok) 12%, transparent);border-color:color-mix(in srgb, var(--ok) 35%, transparent);color:var(--ok);}
+  .roster-banner--bad{background:color-mix(in srgb, var(--signal-deep) 12%, transparent);border-color:color-mix(in srgb, var(--signal-deep) 35%, transparent);color:var(--signal-deep);}
+  .legend{display:flex;flex-wrap:wrap;gap:1rem;font-family:var(--mono);font-size:var(--text-xs);color:var(--ink-soft);margin-bottom:.7rem;align-items:center;}
+  .legend span{display:inline-flex;align-items:center;gap:.4rem;}
+  .swatch{width:16px;height:16px;border-radius:3px;display:inline-block;border:1px solid var(--line);}
+  .swatch--D{background:var(--steel);}
+  .swatch--E{background:var(--steel-soft);}
+  .swatch--N{background:var(--signal-deep);}
+  .swatch--O{background:var(--paper-2);}
+  .swatch--req{width:8px;height:8px;border-radius:50%;background:var(--signal);border:none;}
+  .table-scroll{overflow-x:auto;border:1px solid var(--line);border-radius:var(--radius);}
+  table.roster{border-collapse:collapse;font-family:var(--mono);font-size:11px;width:100%;}
+  table.roster th, table.roster td{border:1px solid var(--line-soft);padding:0;text-align:center;}
+  table.roster thead th{background:var(--paper-2);color:var(--ink-soft);font-weight:700;padding:.35rem .1rem;min-width:28px;}
+  table.roster thead th.deficit-day{color:var(--signal-deep);box-shadow:inset 0 -3px 0 var(--signal-deep);}
+  /* rowhead 는 width 를 명시해 auto 테이블 레이아웃이 여분 폭을 라벨 열이 아니라
+     날짜 열에 나눠주게 한다(그렇지 않으면 브라우저가 여분 폭을 열 원 크기 비례로
+     분배해 라벨 열까지 불필요하게 넓어진다). */
+  table.roster th.rowhead{position:sticky;left:0;background:var(--paper-2);z-index:1;padding:.3rem .6rem;width:76px;min-width:76px;max-width:76px;text-align:right;color:var(--ink-soft);font-weight:600;white-space:nowrap;}
+  .cellbtn{position:relative;width:100%;min-width:28px;height:30px;border:none;background:var(--paper-2);color:var(--ink-faint);font-family:var(--mono);font-size:10px;font-weight:700;cursor:pointer;padding:0;transition:filter var(--dur) var(--ease);}
+  .cellbtn:hover{filter:brightness(0.94);}
+  [data-theme="dark"] .cellbtn:hover{filter:brightness(1.2);}
+  .cellbtn:focus-visible{outline:2px solid var(--signal);outline-offset:-2px;z-index:2;position:relative;}
+  .cellbtn--D{background:var(--steel);color:var(--panel);}
+  .cellbtn--E{background:var(--steel-soft);color:var(--panel);}
+  .cellbtn--N{background:var(--signal-deep);color:var(--panel);}
+  .cellbtn--O{background:var(--paper-2);color:var(--ink-faint);}
+  .reqdot{position:absolute;top:2px;right:2px;width:6px;height:6px;border-radius:50%;background:var(--signal);box-shadow:0 0 0 1px var(--panel);}
+  .roster-hint{margin-top:.6rem;font-family:var(--mono);font-size:var(--text-xs);color:var(--ink-faint);}
+
+  /* ---- charts ---- */
+  .chart-card{padding:1.2rem clamp(1rem,2vw,1.5rem);}
+  svg{width:100%;height:auto;display:block;}
+  .axis-label{font-family:var(--mono);font-size:8px;fill:var(--ink-faint);}
+
+  /* ---- violation list ---- */
+  .violist{list-style:none;margin:0;padding:0;font-family:var(--mono);font-size:var(--text-xs);color:var(--ink-soft);max-height:280px;overflow-y:auto;border:1px solid var(--line-soft);border-radius:var(--radius);}
+  .violist li{padding:.5rem .9rem;border-bottom:1px solid var(--line-soft);display:flex;justify-content:space-between;gap:1rem;}
+  .violist li:last-child{border-bottom:none;}
+  .violist li span.amt{color:var(--signal-deep);font-weight:700;white-space:nowrap;}
+  .violist--empty{padding:1rem;text-align:center;color:var(--ink-faint);}
+
+  /* ---- conclusion / honesty ---- */
+  .conclusion{background:var(--paper-2);border:1px solid var(--line-soft);border-radius:var(--radius);padding:1.2rem 1.4rem;font-size:1rem;line-height:1.75;}
+  .conclusion b{color:var(--signal-deep);}
+  .honesty{color:var(--ink-faint);font-size:var(--text-sm);line-height:1.75;border-top:1px solid var(--line-soft);padding-top:1.4rem;}
+  .honesty b{color:var(--ink-soft);}
+
+  .demo-foot{margin-top:3rem;padding:1.6rem clamp(1rem,2vw,2rem) 2.4rem;font-family:var(--mono);font-size:var(--text-xs);color:var(--ink-faint);border-top:1px solid var(--line-soft);text-align:center;}
+
+  @media (max-width:900px){
+    .controls__grid{grid-template-columns:1fr 1fr;}
+    .metrics{grid-template-columns:1fr 1fr;}
+  }
+  @media (max-width:560px){
+    .controls__grid{grid-template-columns:1fr;}
+    .metrics{grid-template-columns:1fr;}
+  }
+  @media (prefers-reduced-motion: reduce){
+    .progress-bar, .cellbtn, .btn{transition:none;}
+  }
+</style>
+</head>
+<body>
+<header class="demo-top">
+  <a href="/" class="demo-brand"><span class="demo-brand__mark">2i</span><span class="demo-brand__tag">DEMO · 근무표 자동 편성</span></a>
+  <nav class="demo-top__links">
+    <a href="/cases.html#case-19">사례 보기</a>
+    <a href="/#contact">상담 신청</a>
+  </nav>
+</header>
+<div class="demo-banner">브라우저에서 그 자리에서 계산하는 인터랙티브 데모입니다. 합성 데이터를 씁니다.</div>
+
+<main>
+  <h1>간호사 근무표 편성 시뮬레이터</h1>
+  <p class="lede">근무표가 안 풀리는 이유는 대개 최적해를 못 찾아서가 아니라, 지금 걸어둔 제약을 전부 만족하는 표가 물리적으로 없어서입니다. 이 데모는 같은 편성 문제를 브라우저에서 직접 두 가지 방식으로 풉니다. 구모델은 필요 인원을 등식 하드 제약으로 걸어 조건이 조금만 빠듯해도 그냥 실패하고, 신모델은 부족분을 슬랙 변수로 흡수해 항상 표를 내놓되 무엇을 얼마나 양보했는지 정확한 숫자로 보고합니다. 슬라이더를 움직이면 두 solver가 그 자리에서 다시 계산합니다.</p>
+
+  <div class="refstat">
+    <b>원 실험 결과(실측, 참고용)</b> · 구모델 편성 시도 성공률 18건 중 12건 해 없음(66.7% 실패) · 신모델은 시도한 규모·기간 조합 전량 해 도출 · 야간 근무 최다-최소 편차는 공정성 가중치 0일 때 11일 차, 가중치 10 이상에서 0일 차로 수렴 · 국제 표준 NRP 벤치마크 8개 인스턴스에서 가중치와 탐색시간을 보정하면 중앙값 gap이 18.98%에서 12.96%로 개선. 아래 데모는 이 결과를 재현하려는 것이 아니라, 브라우저에서 직접 계산한 자체 값(합성 데이터 계산)으로 같은 현상을 보여줍니다.
+  </div>
+
+  <section class="card controls">
+    <h2>조작부</h2>
+    <p class="section-note">값을 바꾸면 아래 두 solver가 그 자리에서 다시 풉니다. 프리셋으로 빠르게 상황을 바꿔볼 수 있습니다.</p>
+    <div class="controls__grid">
+      <div class="control">
+        <h3>간호사 수</h3>
+        <p>이 병동에 배치된 간호사 인원입니다. 적을수록 같은 필요 인원을 채우기 어려워집니다.</p>
+        <div class="control__row">
+          <input type="range" id="nSlider" min="8" max="24" step="1" value="16" aria-label="간호사 수">
+          <span class="control__val" id="nVal">16명</span>
+        </div>
+      </div>
+      <div class="control">
+        <h3>편성 기간</h3>
+        <p>근무표를 짜는 기간입니다. 길어질수록 연속근무·최소휴식 제약이 누적되어 문제가 커집니다.</p>
+        <div class="control__row">
+          <input type="range" id="dSlider" min="7" max="28" step="1" value="14" aria-label="편성 기간(일)">
+          <span class="control__val" id="dVal">14일</span>
+        </div>
+      </div>
+      <div class="control">
+        <h3>연속 근무일 상한</h3>
+        <p>하루도 쉬지 않고 일할 수 있는 최대 일수입니다. 이 규칙은 두 모델 모두에서 항상 하드 제약입니다.</p>
+        <div class="control__row">
+          <input type="range" id="consecSlider" min="3" max="6" step="1" value="5" aria-label="연속 근무일 상한">
+          <span class="control__val" id="consecVal">5일</span>
+        </div>
+      </div>
+      <div class="control">
+        <h3>주간 필요 인원</h3>
+        <p>하루 주간(D) 근무에 반드시 있어야 하는 인원 수입니다.</p>
+        <div class="control__row">
+          <input type="range" id="reqDSlider" min="1" max="10" step="1" value="4" aria-label="주간 필요 인원">
+          <span class="control__val" id="reqDVal">4명</span>
+        </div>
+      </div>
+      <div class="control">
+        <h3>저녁 필요 인원</h3>
+        <p>하루 저녁(E) 근무에 반드시 있어야 하는 인원 수입니다.</p>
+        <div class="control__row">
+          <input type="range" id="reqESlider" min="1" max="10" step="1" value="3" aria-label="저녁 필요 인원">
+          <span class="control__val" id="reqEVal">3명</span>
+        </div>
+      </div>
+      <div class="control">
+        <h3>야간 필요 인원</h3>
+        <p>하루 야간(N) 근무에 반드시 있어야 하는 인원 수입니다.</p>
+        <div class="control__row">
+          <input type="range" id="reqNSlider" min="1" max="8" step="1" value="2" aria-label="야간 필요 인원">
+          <span class="control__val" id="reqNVal">2명</span>
+        </div>
+      </div>
+      <div class="control">
+        <h3>공정성 가중치</h3>
+        <p>값을 올릴수록 야간 근무를 인원 간에 고르게 나누는 쪽으로 재탐색합니다. 대신 커버리지 부족이 늘어날 수 있습니다.</p>
+        <div class="control__row">
+          <input type="range" id="fairSlider" min="0" max="20" step="1" value="0" aria-label="공정성 가중치">
+          <span class="control__val" id="fairVal">0</span>
+        </div>
+      </div>
+      <div class="control">
+        <h3>탐색 강도(반복 횟수)</h3>
+        <p>지역탐색이 해를 개선하려고 시도하는 횟수입니다. 값이 클수록 더 나은 해를 찾을 가능성이 높지만 계산이 오래 걸립니다.</p>
+        <div class="control__row">
+          <input type="range" id="iterSlider" min="200" max="5000" step="100" value="1500" aria-label="탐색 강도(반복 횟수)">
+          <span class="control__val" id="iterVal">1500회</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="presets">
+      <button type="button" class="btn" id="presetEasy">프리셋 · 여유 있음</button>
+      <button type="button" class="btn" id="presetTight">프리셋 · 빠듯함(주당 상한 초과)</button>
+      <button type="button" class="btn" id="presetShortage">프리셋 · 인력 부족(구모델 실패 유도)</button>
+      <button type="button" class="btn btn--go" id="recomputeBtn">지금 다시 계산</button>
+    </div>
+
+    <p class="capacity-line" id="capacityLine" aria-live="polite"></p>
+
+    <div class="progress-wrap" id="progressWrap" hidden>
+      <div class="progress-label" id="progressLabel">계산 중...</div>
+      <div class="progress-track"><div class="progress-bar" id="progressBar"></div></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>결과 지표</h2>
+    <p class="section-note">현재 설정으로 두 solver를 각각 끝까지 돌린 결과입니다.</p>
+    <div class="metrics" id="metrics" aria-live="polite">
+      <div class="metric">
+        <div class="metric__label">구모델(하드 등식)</div>
+        <div class="metric__value" id="mHardStatus">-</div>
+        <div class="metric__sub" id="mHardSub"></div>
+      </div>
+      <div class="metric">
+        <div class="metric__label">신모델(슬랙 흡수)</div>
+        <div class="metric__value" id="mSoftStatus">-</div>
+        <div class="metric__sub" id="mSoftSub"></div>
+      </div>
+      <div class="metric">
+        <div class="metric__label">야간 근무 최다-최소 편차</div>
+        <div class="metric__value"><span id="mSpread">-</span><span class="metric__unit">일</span></div>
+        <div class="metric__sub" id="mSpreadSub"></div>
+      </div>
+      <div class="metric">
+        <div class="metric__label">신모델 커버리지 충족률</div>
+        <div class="metric__value"><span id="mCoverage">-</span><span class="metric__unit">%</span></div>
+        <div class="metric__sub" id="mCoverageSub"></div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>근무표</h2>
+    <p class="section-note">셀을 클릭하면 그 간호사·날짜에 휴무를 요청합니다(점 표시). 두 모델 모두 요청휴무는 항상 지키는 하드 제약이고, 요청은 두 표에서 공유됩니다.</p>
+    <div class="legend">
+      <span><span class="swatch swatch--D"></span>주간(D)</span>
+      <span><span class="swatch swatch--E"></span>저녁(E)</span>
+      <span><span class="swatch swatch--N"></span>야간(N)</span>
+      <span><span class="swatch swatch--O"></span>휴무(O)</span>
+      <span><span class="swatch swatch--req"></span>요청휴무 표시</span>
+    </div>
+
+    <div class="roster-block">
+      <h3>구모델(하드 등식) 결과</h3>
+      <div class="roster-banner" id="hardBanner"></div>
+      <div class="table-scroll" id="hardTableWrap" role="img" aria-label="구모델이 계산한 간호사별 근무표"></div>
+    </div>
+
+    <div class="roster-block">
+      <h3>신모델(슬랙 흡수) 결과</h3>
+      <div class="roster-banner roster-banner--ok" id="softBanner"></div>
+      <div class="table-scroll" id="softTableWrap" role="img" aria-label="신모델이 계산한 간호사별 근무표"></div>
+      <p class="roster-hint">날짜 머리글에 밑줄이 있으면 그날 어느 시프트든 부족이 있다는 뜻입니다. 아래 막대 차트와 목록에서 정확한 위치를 확인할 수 있습니다.</p>
+    </div>
+  </section>
+
+  <section class="card chart-card">
+    <h3>일자별 커버리지 부족</h3>
+    <p class="section-note">신모델이 그날 3개 시프트에서 못 채운 인원 합계입니다, 단위 명.</p>
+    <svg id="deficitChart" viewBox="0 0 900 200" preserveAspectRatio="xMidYMid meet" role="img" aria-label="일자별 커버리지 부족 인원 막대 차트"></svg>
+  </section>
+
+  <section class="card chart-card">
+    <h3>간호사별 야간 근무 수</h3>
+    <p class="section-note">신모델 결과 기준, 1인당 야간 근무 횟수입니다. 점선은 평균입니다.</p>
+    <svg id="nightChart" viewBox="0 0 900 200" preserveAspectRatio="xMidYMid meet" role="img" aria-label="간호사별 야간 근무 횟수 히스토그램"></svg>
+  </section>
+
+  <section class="card chart-card">
+    <h3>위반·부족 목록</h3>
+    <p class="section-note">신모델이 슬랙으로 흡수한 커버리지 부족을 날짜·시프트별로 정확히 보고합니다.</p>
+    <ul class="violist" id="violist"></ul>
+  </section>
+
+  <section>
+    <h2>무엇을 봤나</h2>
+    <p class="conclusion" id="conclusion" aria-live="polite"></p>
+  </section>
+
+  <section class="honesty">
+    <p><b>정직하게 말하면</b> 이 데모의 solver는 브라우저에서 도는 시드 고정 지역탐색 휴리스틱이라 최적해를 보장하지 않습니다. 구모델이 &quot;해 없음&quot;으로 표시해도, 더 강한 CP-SAT 정수계획 solver라면 실제로는 해를 찾을 수 있는 경계 사례가 있을 수 있습니다(다만 인력 부족 프리셋처럼 필요 인원이 전체 인원수를 넘는 경우나, 주당 근무 상한으로 산수 자체가 안 맞는 경우는 어떤 solver를 써도 해가 없습니다). 실제 프로젝트에서는 CP-SAT 같은 정확해 solver와 국제 표준 벤치마크(Curtois &amp; Qu NRP) 대조 하네스, 독립 검증기를 함께 씁니다. 이 데모의 근무 규칙은 합성 데이터로 단순화한 예시이고, 실제 병동의 근로계약 유형별 규칙·법정 근로시간·사내 협약은 다르므로 도입 시 제약 목록을 다시 정의해야 합니다.</p>
+  </section>
+</main>
+
+<footer class="demo-foot">© 2i · contact@2icorp.site</footer>
+
+<script>
+(function(){
+  "use strict";
+
+  // ---------------------------------------------------------------------
+  // 시드 고정 PRNG (mulberry32). 같은 입력이면 항상 같은 결과가 나온다.
+  // ---------------------------------------------------------------------
+  function mulberry32(seed){
+    return function(){
+      seed |= 0; seed = (seed + 0x6D2B79F5) | 0;
+      var t = Math.imul(seed ^ (seed >>> 15), 1 | seed);
+      t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+      return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+    };
+  }
+  var SEED_BASE = 20260731;
+
+  var WEEKLY_MAX_WORKDAYS = 5;   // 하드 제약, 슬라이더 없이 항상 적용
+  var HARD_COVER_WEIGHT = 500;   // 구모델: 커버리지 미스를 아주 무겁게 벌점
+  var SOFT_COVER_WEIGHT = 25;    // 신모델: 커버리지 미스를 공정성과 저울질 가능한 무게로 벌점
+  var FAIRNESS_SCALE = 3;
+
+  // ---------------------------------------------------------------------
+  // DOM 참조
+  // ---------------------------------------------------------------------
+  var nSlider = document.getElementById("nSlider");
+  var dSlider = document.getElementById("dSlider");
+  var consecSlider = document.getElementById("consecSlider");
+  var reqDSlider = document.getElementById("reqDSlider");
+  var reqESlider = document.getElementById("reqESlider");
+  var reqNSlider = document.getElementById("reqNSlider");
+  var fairSlider = document.getElementById("fairSlider");
+  var iterSlider = document.getElementById("iterSlider");
+
+  var nVal = document.getElementById("nVal");
+  var dVal = document.getElementById("dVal");
+  var consecVal = document.getElementById("consecVal");
+  var reqDVal = document.getElementById("reqDVal");
+  var reqEVal = document.getElementById("reqEVal");
+  var reqNVal = document.getElementById("reqNVal");
+  var fairVal = document.getElementById("fairVal");
+  var iterVal = document.getElementById("iterVal");
+
+  var capacityLine = document.getElementById("capacityLine");
+  var progressWrap = document.getElementById("progressWrap");
+  var progressLabel = document.getElementById("progressLabel");
+  var progressBar = document.getElementById("progressBar");
+
+  // requestedOff[n][d] = true/false, N x D 크기. 인원/기간이 바뀌면 재생성된다.
+  var requestedOff = null;
+  var reqN_cached = 0, reqD_cached = 0;
+
+  function buildRequestedOff(N, D){
+    var rng = mulberry32(SEED_BASE + N * 1000 + D);
+    var arr = [];
+    for(var n=0; n<N; n++){
+      var row = new Array(D).fill(false);
+      var count = 1 + Math.floor(rng() * (D > 14 ? 2 : 1));
+      for(var k=0; k<count; k++){
+        var d = Math.floor(rng() * D);
+        row[d] = true;
+      }
+      arr.push(row);
+    }
+    return arr;
+  }
+
+  function ensureRequestedOff(N, D){
+    if(requestedOff === null || reqN_cached !== N || reqD_cached !== D){
+      requestedOff = buildRequestedOff(N, D);
+      reqN_cached = N; reqD_cached = D;
+    }
+  }
+
+  // ---------------------------------------------------------------------
+  // 제약 검사 함수. 야간→익일 주간 금지 / 연속근무 상한 / 주당 근무일 상한 /
+  // 요청휴무는 하드 등식이든 슬랙 모델이든 항상 하드 제약이다. 흔들리는 것은
+  // 오직 커버리지(필요 인원) 하나뿐이다.
+  // ---------------------------------------------------------------------
+  function pairOK(prev, cur){
+    return !(prev === "N" && cur === "D");
+  }
+
+  function restOK(schedule, n, d, newShift, D){
+    if(d > 0 && !pairOK(schedule[n][d-1], newShift)) return false;
+    if(d < D-1 && !pairOK(newShift, schedule[n][d+1])) return false;
+    return true;
+  }
+
+  function consecRunOK(schedule, n, d, newShift, maxConsec, D){
+    if(newShift === "O") return true;
+    var run = 1;
+    var i = d - 1;
+    while(i >= 0 && schedule[n][i] !== "O"){ run++; i--; }
+    var j = d + 1;
+    while(j < D && schedule[n][j] !== "O"){ run++; j++; }
+    return run <= maxConsec;
+  }
+
+  function weeklyOK(schedule, n, d, newShift, D){
+    if(D < 7) return true;
+    var startMin = Math.max(0, d - 6);
+    var startMax = Math.min(d, D - 7);
+    for(var start = startMin; start <= startMax; start++){
+      var cnt = 0;
+      for(var k = start; k < start + 7; k++){
+        var s = (k === d) ? newShift : schedule[n][k];
+        if(s !== "O") cnt++;
+      }
+      if(cnt > WEEKLY_MAX_WORKDAYS) return false;
+    }
+    return true;
+  }
+
+  function isValidAssign(schedule, n, d, newShift, ctx){
+    if(ctx.requestedOff[n][d] && newShift !== "O") return false;
+    if(!restOK(schedule, n, d, newShift, ctx.D)) return false;
+    if(!consecRunOK(schedule, n, d, newShift, ctx.maxConsec, ctx.D)) return false;
+    if(!weeklyOK(schedule, n, d, newShift, ctx.D)) return false;
+    return true;
+  }
+
+  // ---------------------------------------------------------------------
+  // 초기해: 요청휴무 우선 반영, 하루씩 D/E/N 순으로 부하가 적은 간호사부터
+  // 채우는 그리디. 완전히 못 채우면 그 칸은 부족(슬랙)으로 남는다.
+  // ---------------------------------------------------------------------
+  function workCountSoFar(schedule, n, d){
+    var c = 0;
+    for(var i = 0; i < d; i++) if(schedule[n][i] !== "O") c++;
+    return c;
+  }
+  function nightCountSoFar(schedule, n, d){
+    var c = 0;
+    for(var i = 0; i < d; i++) if(schedule[n][i] === "N") c++;
+    return c;
+  }
+
+  function initGreedy(ctx){
+    var N = ctx.N, D = ctx.D;
+    var schedule = [];
+    for(var n = 0; n < N; n++) schedule.push(new Array(D).fill("O"));
+
+    var need = { D: ctx.reqD, E: ctx.reqE, N: ctx.reqN };
+    var order = ["D", "E", "N"];
+
+    for(var d = 0; d < D; d++){
+      for(var oi = 0; oi < order.length; oi++){
+        var shift = order[oi];
+        var required = need[shift];
+        var candidates = [];
+        for(var n2 = 0; n2 < N; n2++){
+          if(schedule[n2][d] !== "O") continue;
+          if(ctx.requestedOff[n2][d]) continue;
+          candidates.push(n2);
+        }
+        candidates.sort(function(a, b){
+          var la = workCountSoFar(schedule, a, d), lb = workCountSoFar(schedule, b, d);
+          if(la !== lb) return la - lb;
+          if(shift === "N"){
+            var na = nightCountSoFar(schedule, a, d), nb = nightCountSoFar(schedule, b, d);
+            if(na !== nb) return na - nb;
+          }
+          return ctx.rngInit() - 0.5;
+        });
+        var assigned = 0;
+        for(var ci = 0; ci < candidates.length && assigned < required; ci++){
+          var cand = candidates[ci];
+          if(isValidAssign(schedule, cand, d, shift, ctx)){
+            schedule[cand][d] = shift;
+            assigned++;
+          }
+        }
+      }
+    }
+    return schedule;
+  }
+
+  // ---------------------------------------------------------------------
+  // 비용 함수: 커버리지 부족(모드별 가중치 다름) + 야간 근무 분산(공정성 가중치)
+  // ---------------------------------------------------------------------
+  function quickCost(schedule, ctx, mode, fairnessW){
+    var N = ctx.N, D = ctx.D;
+    var need = { D: ctx.reqD, E: ctx.reqE, N: ctx.reqN };
+    var deficitTotal = 0;
+    for(var d = 0; d < D; d++){
+      var cD = 0, cE = 0, cN = 0;
+      for(var n = 0; n < N; n++){
+        var s = schedule[n][d];
+        if(s === "D") cD++; else if(s === "E") cE++; else if(s === "N") cN++;
+      }
+      deficitTotal += Math.max(0, need.D - cD) + Math.max(0, need.E - cE) + Math.max(0, need.N - cN);
+    }
+    var nightCounts = new Array(N).fill(0);
+    for(var n2 = 0; n2 < N; n2++)
+      for(var d2 = 0; d2 < D; d2++)
+        if(schedule[n2][d2] === "N") nightCounts[n2]++;
+    var mean = nightCounts.reduce(function(a, b){ return a + b; }, 0) / N;
+    var varSum = 0;
+    for(var n3 = 0; n3 < N; n3++) varSum += (nightCounts[n3] - mean) * (nightCounts[n3] - mean);
+    var coverW = (mode === "hard") ? HARD_COVER_WEIGHT : SOFT_COVER_WEIGHT;
+    return deficitTotal * coverW + varSum * fairnessW * FAIRNESS_SCALE;
+  }
+
+  function evaluateFull(schedule, ctx){
+    var N = ctx.N, D = ctx.D;
+    var need = { D: ctx.reqD, E: ctx.reqE, N: ctx.reqN };
+    var deficitTotal = 0;
+    var deficitByDay = new Array(D).fill(0);
+    var deficitDetail = [];
+    for(var d = 0; d < D; d++){
+      var counts = { D: 0, E: 0, N: 0 };
+      for(var n = 0; n < N; n++){
+        var s = schedule[n][d];
+        if(s === "D" || s === "E" || s === "N") counts[s]++;
+      }
+      ["D", "E", "N"].forEach(function(shift){
+        var missing = Math.max(0, need[shift] - counts[shift]);
+        if(missing > 0){
+          deficitTotal += missing;
+          deficitByDay[d] += missing;
+          deficitDetail.push({ d: d, shift: shift, missing: missing });
+        }
+      });
+    }
+    var nightCounts = new Array(N).fill(0);
+    for(var n2 = 0; n2 < N; n2++)
+      for(var d2 = 0; d2 < D; d2++)
+        if(schedule[n2][d2] === "N") nightCounts[n2]++;
+    var spread = nightCounts.length ? (Math.max.apply(null, nightCounts) - Math.min.apply(null, nightCounts)) : 0;
+    var totalNeed = (ctx.reqD + ctx.reqE + ctx.reqN) * D;
+    var coveragePct = totalNeed > 0 ? Math.max(0, Math.min(100, (1 - deficitTotal / totalNeed) * 100)) : 100;
+    return {
+      deficitTotal: deficitTotal,
+      deficitByDay: deficitByDay,
+      deficitDetail: deficitDetail,
+      nightCounts: nightCounts,
+      spread: spread,
+      coveragePct: coveragePct
+    };
+  }
+
+  // ---------------------------------------------------------------------
+  // 지역탐색 이동: 단일 칸 재배정 또는 같은 날 두 간호사 교환.
+  // ---------------------------------------------------------------------
+  function proposeMove(schedule, ctx, rng){
+    if(rng() < 0.7){
+      var n = Math.floor(rng() * ctx.N);
+      var d = Math.floor(rng() * ctx.D);
+      if(ctx.requestedOff[n][d]) return null;
+      var choices = ["D", "E", "N", "O"];
+      var newShift = choices[Math.floor(rng() * 4)];
+      if(newShift === schedule[n][d]) return null;
+      if(!isValidAssign(schedule, n, d, newShift, ctx)) return null;
+      return { type: "set", n: n, d: d, oldShift: schedule[n][d], newShift: newShift };
+    }
+    var d2 = Math.floor(rng() * ctx.D);
+    var n1 = Math.floor(rng() * ctx.N);
+    var n2 = Math.floor(rng() * ctx.N);
+    if(n1 === n2) return null;
+    if(ctx.requestedOff[n1][d2] || ctx.requestedOff[n2][d2]) return null;
+    var s1 = schedule[n1][d2], s2 = schedule[n2][d2];
+    if(s1 === s2) return null;
+    if(!isValidAssign(schedule, n1, d2, s2, ctx)) return null;
+    if(!isValidAssign(schedule, n2, d2, s1, ctx)) return null;
+    return { type: "swap", n1: n1, n2: n2, d: d2, s1: s1, s2: s2 };
+  }
+
+  function applyMove(schedule, move){
+    if(move.type === "set"){ schedule[move.n][move.d] = move.newShift; }
+    else { schedule[move.n1][move.d] = move.s2; schedule[move.n2][move.d] = move.s1; }
+  }
+  function undoMove(schedule, move){
+    if(move.type === "set"){ schedule[move.n][move.d] = move.oldShift; }
+    else { schedule[move.n1][move.d] = move.s1; schedule[move.n2][move.d] = move.s2; }
+  }
+
+  // ---------------------------------------------------------------------
+  // 청크 구동 solver. requestAnimationFrame 청크로 나눠 UI를 얼리지 않는다.
+  // ---------------------------------------------------------------------
+  var CHUNK_SIZE = 250;
+  var runToken = 0;
+
+  function makeSolveState(ctx, mode, fairnessW, iterations, mySeed){
+    // 온도(T0)는 커버리지 가중치에 비례시킨다. 구모델(가중치 500)과 신모델(가중치 25)이
+    // 같은 반복 예산 안에서 비슷한 상대적 속도로 식어야, 두 모델이 커버리지만큼은
+    // 공정하게 비교된다(온도가 모드마다 안 맞으면 신모델만 유독 덜 수렴해 보인다).
+    var coverW = (mode === "hard") ? HARD_COVER_WEIGHT : SOFT_COVER_WEIGHT;
+    return {
+      ctx: ctx,
+      mode: mode,
+      fairnessW: fairnessW,
+      totalIter: iterations,
+      iter: 0,
+      rng: mulberry32(mySeed),
+      T0: coverW * 0.05,
+      schedule: null
+    };
+  }
+
+  function stepChunk(state){
+    var schedule = state.schedule;
+    var ctx = state.ctx;
+    var limit = Math.min(state.iter + CHUNK_SIZE, state.totalIter);
+    while(state.iter < limit){
+      var move = proposeMove(schedule, ctx, state.rng);
+      if(move){
+        var before = quickCost(schedule, ctx, state.mode, state.fairnessW);
+        applyMove(schedule, move);
+        var after = quickCost(schedule, ctx, state.mode, state.fairnessW);
+        var delta = after - before;
+        var accept = delta <= 0;
+        if(!accept){
+          var T = state.T0 * Math.max(0, 1 - state.iter / state.totalIter);
+          if(T > 0.001){
+            var prob = Math.exp(-delta / Math.max(T, 0.001));
+            if(state.rng() < prob) accept = true;
+          }
+        }
+        if(!accept) undoMove(schedule, move);
+      }
+      state.iter++;
+    }
+  }
+
+  function runChunkedSolve(ctx, mode, fairnessW, iterations, seedOffset, onDone){
+    var myToken = runToken;
+    var state = makeSolveState(ctx, mode, fairnessW, iterations, SEED_BASE + seedOffset);
+    state.schedule = initGreedy(ctx);
+
+    function tick(){
+      if(myToken !== runToken) return; // 새 요청이 들어와 이 실행은 취소됨
+      stepChunk(state);
+      var pct = state.totalIter > 0 ? Math.round((state.iter / state.totalIter) * 100) : 100;
+      progressBar.style.width = pct + "%";
+      progressLabel.textContent = (mode === "hard" ? "구모델" : "신모델") + " 계산 중 (" + state.iter + " / " + state.totalIter + ")";
+      if(state.iter < state.totalIter){
+        setTimeout(tick, 0);
+      } else {
+        onDone(state.schedule);
+      }
+    }
+    tick();
+  }
+
+  // ---------------------------------------------------------------------
+  // 렌더링
+  // ---------------------------------------------------------------------
+  var SHIFT_LABEL = { D: "주", E: "저", N: "야", O: "휴" };
+
+  function buildScheduleTable(schedule, ctx, deficitByDay){
+    var N = ctx.N, D = ctx.D;
+    var html = "";
+    html += '<table class="roster"><thead><tr><th class="rowhead" scope="col">간호사</th>';
+    for(var d = 0; d < D; d++){
+      var isDeficitDay = deficitByDay && deficitByDay[d] > 0;
+      html += '<th scope="col"' + (isDeficitDay ? ' class="deficit-day" title="' + (d+1) + '일차 부족 ' + deficitByDay[d] + '명"' : "") + '>' + (d + 1) + '</th>';
+    }
+    html += "</tr></thead><tbody>";
+    for(var n = 0; n < N; n++){
+      html += '<tr><th class="rowhead" scope="row">간호사 ' + (n + 1) + '</th>';
+      for(var d2 = 0; d2 < D; d2++){
+        var shift = schedule[n][d2];
+        var req = ctx.requestedOff[n][d2];
+        var label = SHIFT_LABEL[shift];
+        var aria = (n + 1) + "번 간호사 " + (d2 + 1) + "일차: " + label + (req ? ", 요청휴무" : "") + ". 클릭하면 요청휴무를 전환합니다.";
+        html += '<td><button type="button" class="cellbtn cellbtn--' + shift + '" data-n="' + n + '" data-d="' + d2 + '" aria-pressed="' + req + '" aria-label="' + aria + '">' + label + (req ? '<span class="reqdot"></span>' : "") + '</button></td>';
+      }
+      html += "</tr>";
+    }
+    html += "</tbody></table>";
+    return html;
+  }
+
+  var hardTableWrap = document.getElementById("hardTableWrap");
+  var softTableWrap = document.getElementById("softTableWrap");
+  var hardBanner = document.getElementById("hardBanner");
+  var softBanner = document.getElementById("softBanner");
+
+  function onCellClick(evt){
+    var btn = evt.target.closest ? evt.target.closest("button.cellbtn") : null;
+    if(!btn) return;
+    var n = parseInt(btn.getAttribute("data-n"), 10);
+    var d = parseInt(btn.getAttribute("data-d"), 10);
+    if(isNaN(n) || isNaN(d)) return;
+    ensureRequestedOff(readParams().N, readParams().D);
+    requestedOff[n][d] = !requestedOff[n][d];
+    scheduleRecompute(false);
+  }
+  hardTableWrap.addEventListener("click", onCellClick);
+  softTableWrap.addEventListener("click", onCellClick);
+
+  function drawBarChart(svgId, values, labelPrefix, unit, emptyMessage){
+    var svg = document.getElementById(svgId);
+    while(svg.firstChild) svg.removeChild(svg.firstChild);
+    var W = 900, H = 200, padL = 34, padR = 12, padT = 12, padB = 26;
+    var innerW = W - padL - padR, innerH = H - padT - padB;
+    var n = values.length;
+    var svgNS = "http://www.w3.org/2000/svg";
+    if(n === 0) return;
+
+    var hasPositive = values.some(function(v){ return v > 0; });
+    if(!hasPositive && emptyMessage){
+      svg.setAttribute("aria-label", emptyMessage);
+      var msg = document.createElementNS(svgNS, "text");
+      msg.setAttribute("x", (W / 2).toFixed(1));
+      msg.setAttribute("y", (H / 2).toFixed(1));
+      msg.setAttribute("text-anchor", "middle");
+      msg.setAttribute("dominant-baseline", "middle");
+      msg.setAttribute("fill", "var(--ink-faint)");
+      msg.setAttribute("font-family", "var(--mono)");
+      msg.setAttribute("font-size", "14");
+      msg.textContent = emptyMessage;
+      svg.appendChild(msg);
+      return;
+    }
+
+    var maxV = Math.max.apply(null, values.concat([1]));
+    var barGap = 2;
+    var barW = Math.max(1, innerW / n - barGap);
+    var meanV = values.reduce(function(a, b){ return a + b; }, 0) / n;
+
+    for(var i = 0; i < n; i++){
+      var v = values[i];
+      var x = padL + (innerW / n) * i;
+      var barH = maxV > 0 ? (v / maxV) * innerH : 0;
+      var y = padT + innerH - barH;
+      var rect = document.createElementNS(svgNS, "rect");
+      rect.setAttribute("x", x.toFixed(1));
+      rect.setAttribute("y", y.toFixed(1));
+      rect.setAttribute("width", barW.toFixed(1));
+      rect.setAttribute("height", Math.max(0, barH).toFixed(1));
+      rect.setAttribute("fill", v > 0 ? "var(--signal-deep)" : "var(--steel-soft)");
+      var titleEl = document.createElementNS(svgNS, "title");
+      titleEl.textContent = labelPrefix + " " + (i + 1) + ": " + v + unit;
+      rect.appendChild(titleEl);
+      svg.appendChild(rect);
+    }
+
+    if(meanV > 0){
+      var meanY = padT + innerH - (meanV / maxV) * innerH;
+      var line = document.createElementNS(svgNS, "line");
+      line.setAttribute("x1", padL); line.setAttribute("x2", W - padR);
+      line.setAttribute("y1", meanY.toFixed(1)); line.setAttribute("y2", meanY.toFixed(1));
+      line.setAttribute("stroke", "var(--signal)");
+      line.setAttribute("stroke-width", "1.4");
+      line.setAttribute("stroke-dasharray", "5 4");
+      svg.appendChild(line);
+    }
+
+    var step = Math.max(1, Math.ceil(n / 14));
+    for(var k = 0; k < n; k += step){
+      var tx = padL + (innerW / n) * (k + 0.5);
+      var t = document.createElementNS(svgNS, "text");
+      t.setAttribute("x", tx.toFixed(1));
+      t.setAttribute("y", H - 8);
+      t.setAttribute("text-anchor", "middle");
+      t.setAttribute("class", "axis-label");
+      t.textContent = String(k + 1);
+      svg.appendChild(t);
+    }
+  }
+
+  function renderViolationList(deficitDetail, D){
+    var el = document.getElementById("violist");
+    var shiftLabel = { D: "주간", E: "저녁", N: "야간" };
+    if(deficitDetail.length === 0){
+      el.innerHTML = '<li class="violist--empty">현재 설정에서는 신모델도 부족 없이 커버리지를 전부 채웠습니다.</li>';
+      return;
+    }
+    var sorted = deficitDetail.slice().sort(function(a, b){
+      if(a.d !== b.d) return a.d - b.d;
+      return a.shift.localeCompare(b.shift);
+    });
+    var cap = 60;
+    var html = "";
+    for(var i = 0; i < Math.min(cap, sorted.length); i++){
+      var e = sorted[i];
+      html += "<li><span>" + (e.d + 1) + "일차 " + shiftLabel[e.shift] + "</span><span class=\"amt\">" + e.missing + "명 부족</span></li>";
+    }
+    if(sorted.length > cap){
+      html += "<li class=\"violist--empty\">외 " + (sorted.length - cap) + "건 더</li>";
+    }
+    el.innerHTML = html;
+  }
+
+  // ---------------------------------------------------------------------
+  // 파라미터 읽기 / 표시 갱신
+  // ---------------------------------------------------------------------
+  function readParams(){
+    return {
+      N: parseInt(nSlider.value, 10),
+      D: parseInt(dSlider.value, 10),
+      maxConsec: parseInt(consecSlider.value, 10),
+      reqD: parseInt(reqDSlider.value, 10),
+      reqE: parseInt(reqESlider.value, 10),
+      reqN: parseInt(reqNSlider.value, 10),
+      fairnessW: parseInt(fairSlider.value, 10),
+      iterations: parseInt(iterSlider.value, 10)
+    };
+  }
+
+  function refreshLabels(){
+    var p = readParams();
+    nVal.textContent = p.N + "명";
+    dVal.textContent = p.D + "일";
+    consecVal.textContent = p.maxConsec + "일";
+    reqDVal.textContent = p.reqD + "명";
+    reqEVal.textContent = p.reqE + "명";
+    reqNVal.textContent = p.reqN + "명";
+    fairVal.textContent = String(p.fairnessW);
+    iterVal.textContent = p.iterations + "회";
+  }
+
+  function updateCapacityLine(p){
+    var totalNeed = (p.reqD + p.reqE + p.reqN) * p.D;
+    var fullWeeks = Math.floor(p.D / 7);
+    var remainder = p.D - fullWeeks * 7;
+    var maxCapacity = p.N * (fullWeeks * WEEKLY_MAX_WORKDAYS + Math.min(remainder, WEEKLY_MAX_WORKDAYS));
+    var ok = totalNeed <= maxCapacity;
+    capacityLine.className = "capacity-line" + (ok ? " ok" : "");
+    capacityLine.innerHTML = "하루 필요 인원 합계 <b>" + (p.reqD + p.reqE + p.reqN) + "명</b> · 전체 " + p.D + "일 필요 슬롯 <b>" + totalNeed + "건</b> · 간호사 " + p.N + "명이 주당 최대 " + WEEKLY_MAX_WORKDAYS + "일 근무 규칙으로 낼 수 있는 최대 근무일수 <b>" + maxCapacity + "건</b>" +
+      (ok ? " → 산수로는 가능합니다. 다만 연속근무·최소휴식·요청휴무 배치가 실제로 풀리는지는 solver가 확인합니다." : " → 산수만으로도 부족이 확정됩니다. 어떤 solver를 쓰든 이 조건에서는 완전한 해가 존재하지 않습니다.");
+  }
+
+  // ---------------------------------------------------------------------
+  // 메인 재계산 파이프라인
+  // ---------------------------------------------------------------------
+  var debounceTimer = null;
+  function scheduleRecompute(resetRequests){
+    if(debounceTimer) clearTimeout(debounceTimer);
+    debounceTimer = setTimeout(function(){ recomputeAll(resetRequests); }, 180);
+  }
+
+  function recomputeAll(resetRequests){
+    var p = readParams();
+    if(resetRequests) requestedOff = null;
+    ensureRequestedOff(p.N, p.D);
+    updateCapacityLine(p);
+
+    runToken++;
+    var myToken = runToken;
+    progressWrap.hidden = false;
+    progressBar.style.width = "0%";
+
+    var ctxBase = {
+      N: p.N, D: p.D, maxConsec: p.maxConsec,
+      reqD: p.reqD, reqE: p.reqE, reqN: p.reqN,
+      fairnessW: p.fairnessW,
+      requestedOff: requestedOff,
+      rngInit: mulberry32(SEED_BASE + 7 + p.N * 31 + p.D)
+    };
+
+    runChunkedSolve(ctxBase, "hard", p.fairnessW, p.iterations, 101, function(hardSchedule){
+      if(myToken !== runToken) return;
+      var hardRes = evaluateFull(hardSchedule, ctxBase);
+      renderHard(hardSchedule, hardRes, ctxBase);
+
+      runChunkedSolve(ctxBase, "soft", p.fairnessW, p.iterations, 202, function(softSchedule){
+        if(myToken !== runToken) return;
+        var softRes = evaluateFull(softSchedule, ctxBase);
+        renderSoft(softSchedule, softRes, ctxBase);
+        renderMetrics(hardRes, softRes, ctxBase);
+        renderConclusion(hardRes, softRes, ctxBase);
+        progressWrap.hidden = true;
+      });
+    });
+  }
+
+  function renderHard(schedule, res, ctx){
+    var feasible = res.deficitTotal === 0;
+    hardBanner.className = "roster-banner " + (feasible ? "roster-banner--ok" : "roster-banner--bad");
+    hardBanner.textContent = feasible
+      ? "해 도출됨: 이 조건에서 구모델도 하드 등식 커버리지를 전부 만족하는 근무표를 찾았습니다."
+      : "해 없음(INFEASIBLE): 이 조건을 전부 만족하는 근무표가 없습니다. 구모델은 부족분 " + res.deficitTotal + "건을 채우지 못해 표를 낼 수 없다고 판정합니다. 아래 표는 탐색 과정에서 나온 최선의 시도이며 사용 불가능한 임시 결과입니다.";
+    hardTableWrap.innerHTML = buildScheduleTable(schedule, ctx, null);
+    hardTableWrap.style.opacity = feasible ? "1" : "0.55";
+  }
+
+  function renderSoft(schedule, res, ctx){
+    softBanner.textContent = res.deficitTotal === 0
+      ? "해 도출됨: 이 조건에서는 부족 없이 전 시프트를 채웠습니다."
+      : "해 도출됨: 항상 근무표를 냅니다. 대신 커버리지 " + res.deficitTotal + "명·슬롯 분을 슬랙으로 흡수했고, 정확히 어디가 부족한지는 아래 차트와 목록에 있습니다.";
+    softTableWrap.innerHTML = buildScheduleTable(schedule, ctx, res.deficitByDay);
+    drawBarChart("deficitChart", res.deficitByDay, "", "명 부족", "이 설정에서는 부족 구간이 없습니다.");
+    drawBarChart("nightChart", res.nightCounts, "간호사", "회");
+    renderViolationList(res.deficitDetail, ctx.D);
+  }
+
+  function renderMetrics(hardRes, softRes, ctx){
+    var mHardStatus = document.getElementById("mHardStatus");
+    var mHardSub = document.getElementById("mHardSub");
+    var mSoftStatus = document.getElementById("mSoftStatus");
+    var mSoftSub = document.getElementById("mSoftSub");
+    var mSpread = document.getElementById("mSpread");
+    var mSpreadSub = document.getElementById("mSpreadSub");
+    var mCoverage = document.getElementById("mCoverage");
+    var mCoverageSub = document.getElementById("mCoverageSub");
+
+    var hardFeasible = hardRes.deficitTotal === 0;
+    mHardStatus.textContent = hardFeasible ? "해 도출" : "해 없음";
+    mHardStatus.className = "metric__value " + (hardFeasible ? "status-ok" : "status-bad");
+    mHardSub.textContent = hardFeasible ? "부족 0건" : "부족 " + hardRes.deficitTotal + "건(계산값)";
+
+    mSoftStatus.textContent = "해 도출";
+    mSoftStatus.className = "metric__value status-ok";
+    mSoftSub.textContent = softRes.deficitTotal === 0 ? "부족 0건" : "부족 " + softRes.deficitTotal + "건을 슬랙으로 흡수(계산값)";
+
+    mSpread.textContent = String(softRes.spread);
+    mSpreadSub.textContent = "공정성 가중치 " + ctx.fairnessW + " 적용, 신모델 기준(계산값)";
+
+    mCoverage.textContent = softRes.coveragePct.toFixed(1);
+    mCoverageSub.textContent = "필요 슬롯 대비 실제 충족 비율(계산값)";
+  }
+
+  function renderConclusion(hardRes, softRes, ctx){
+    var el = document.getElementById("conclusion");
+    if(hardRes.deficitTotal === 0){
+      el.innerHTML = "이 조건에서는 구모델도 해를 찾습니다. 인력을 줄이거나 필요 인원을 늘려 조건을 더 빠듯하게 만들면(예: 프리셋 &#39;인력 부족&#39;) 구모델이 먼저 무너지는 것을 확인할 수 있습니다. 신모델의 부족은 <b>0건</b>입니다.";
+      return;
+    }
+    var shiftLabel = { D: "주간", E: "저녁", N: "야간" };
+    var sorted = softRes.deficitDetail.slice().sort(function(a, b){ return b.missing - a.missing; });
+    var top = sorted[0];
+    el.innerHTML = "이 조건에서 완전한 근무표는 존재하지 않습니다. 대신 <b>" + (top.d + 1) + "일차 " + shiftLabel[top.shift] + "</b> 커버리지를 <b>" + top.missing + "명</b> 양보하면, 연속근무 상한·최소휴식·요청휴무 같은 나머지 하드 제약을 전부 지키는 표가 나옵니다. 신모델은 전체 기간에서 총 <b>" + softRes.deficitTotal + "명·슬롯</b> 분의 부족을 정확히 어디서 무엇이 모자란지 목록으로 보고합니다. 구모델은 같은 조건에서 부족 " + hardRes.deficitTotal + "건을 이유로 근무표 자체를 내놓지 못합니다.";
+  }
+
+  // ---------------------------------------------------------------------
+  // 프리셋
+  // ---------------------------------------------------------------------
+  function applyPreset(p){
+    nSlider.value = p.N; dSlider.value = p.D; consecSlider.value = p.maxConsec;
+    reqDSlider.value = p.reqD; reqESlider.value = p.reqE; reqNSlider.value = p.reqN;
+    fairSlider.value = p.fairnessW; iterSlider.value = p.iterations;
+    refreshLabels();
+    scheduleRecompute(true);
+  }
+
+  document.getElementById("presetEasy").addEventListener("click", function(){
+    applyPreset({ N: 16, D: 14, maxConsec: 5, reqD: 4, reqE: 3, reqN: 2, fairnessW: 0, iterations: 1500 });
+  });
+  document.getElementById("presetTight").addEventListener("click", function(){
+    applyPreset({ N: 12, D: 14, maxConsec: 5, reqD: 4, reqE: 3, reqN: 3, fairnessW: 0, iterations: 2500 });
+  });
+  document.getElementById("presetShortage").addEventListener("click", function(){
+    applyPreset({ N: 9, D: 14, maxConsec: 4, reqD: 4, reqE: 4, reqN: 3, fairnessW: 0, iterations: 2500 });
+  });
+  document.getElementById("recomputeBtn").addEventListener("click", function(){
+    scheduleRecompute(false);
+  });
+
+  [nSlider, dSlider].forEach(function(s){
+    s.addEventListener("input", refreshLabels);
+    s.addEventListener("change", function(){ refreshLabels(); scheduleRecompute(true); });
+  });
+  [consecSlider, reqDSlider, reqESlider, reqNSlider, fairSlider, iterSlider].forEach(function(s){
+    s.addEventListener("input", refreshLabels);
+    s.addEventListener("change", function(){ refreshLabels(); scheduleRecompute(false); });
+  });
+
+  // ---------------------------------------------------------------------
+  // 초기 실행
+  // ---------------------------------------------------------------------
+  refreshLabels();
+  recomputeAll(true);
+})();
+</script>
+</body>
+</html>

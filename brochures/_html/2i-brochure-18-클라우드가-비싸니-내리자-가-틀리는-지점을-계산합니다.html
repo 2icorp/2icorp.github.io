@@ -1,0 +1,109 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+@page { size: A4; margin: 15mm 14mm 16mm; }
+* { box-sizing: border-box; }
+:root{
+  --ink:#1b2230; --soft:#4a5568; --faint:#78849a; --line:#e3e7ee; --panel:#f7f8fb;
+  --signal:#d9821f; --signal-deep:#b5661a; --steel:#3f5c88;
+  --sans:"Pretendard Variable",Pretendard,-apple-system,system-ui,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+}
+html,body{margin:0;font-family:var(--sans);color:var(--ink);line-height:1.6;font-size:10.5pt;}
+h1,h2,h3{margin:0;letter-spacing:-0.02em;line-height:1.15;}
+.mono{font-family:var(--mono);}
+.eyebrow{font-family:var(--mono);font-size:7.5pt;letter-spacing:0.16em;text-transform:uppercase;color:var(--steel);}
+.cover{border-bottom:2px solid var(--ink);padding-bottom:14px;margin-bottom:16px;}
+.cover__top{display:flex;justify-content:space-between;align-items:baseline;}
+.brand{font-weight:800;font-size:16pt;letter-spacing:-0.03em;}
+.brand b{font-family:var(--mono);color:var(--signal);}
+.brand small{font-family:var(--mono);font-size:7pt;letter-spacing:0.14em;color:var(--faint);text-transform:uppercase;margin-left:6px;}
+.doclabel{font-family:var(--mono);font-size:7.5pt;letter-spacing:0.12em;color:var(--faint);text-transform:uppercase;}
+.cover h1{font-size:22pt;font-weight:850;margin:15px 0 8px;}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px;}
+.chip{font-family:var(--mono);font-size:7.5pt;border:1px solid var(--line);border-radius:20px;padding:3px 9px;color:var(--soft);}
+.chip--c{color:var(--signal-deep);border-color:#efc999;background:#fdf5ea;}
+.chip--v{color:var(--steel);}
+.stakes-box{margin-top:12px;border:1px solid var(--line);border-left:3px solid var(--signal);border-radius:3px;padding:8px 12px;background:#fdf7ef;display:flex;justify-content:space-between;align-items:baseline;gap:12px;}
+.stakes-box .l{font-family:var(--mono);font-size:8pt;color:var(--faint);text-transform:uppercase;letter-spacing:0.04em;}
+.stakes-box .v{font-family:var(--mono);font-weight:600;font-size:13pt;color:var(--signal-deep);white-space:nowrap;}
+.sec{margin-top:15px;break-inside:avoid;}
+.sec h2{font-size:11.5pt;font-weight:800;display:flex;align-items:center;gap:8px;margin-bottom:7px;}
+.sec h2::before{content:"";width:14px;height:2px;background:var(--signal);display:inline-block;}
+.lead{color:var(--soft);}
+.steps{display:grid;gap:8px;margin-top:4px;}
+.step{border:1px solid var(--line);border-left:3px solid var(--steel);border-radius:3px;padding:9px 12px;background:var(--panel);break-inside:avoid;}
+.step b{font-family:var(--mono);font-size:8pt;letter-spacing:0.06em;color:var(--steel);text-transform:uppercase;}
+.step p{margin:3px 0 0;font-size:9.7pt;}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+.card{border:1px solid var(--line);border-radius:3px;padding:10px 12px;background:#fff;}
+.card h3{font-size:9.5pt;color:var(--signal-deep);font-family:var(--mono);letter-spacing:0.04em;text-transform:uppercase;margin-bottom:5px;}
+.card p, .card li{font-size:9.6pt;}
+.deliv{list-style:none;margin:0;padding:0;display:grid;gap:4px;}
+.deliv li{padding-left:15px;position:relative;}
+.deliv li::before{content:"■";position:absolute;left:0;color:var(--steel);font-size:7pt;top:3px;}
+.ba{width:100%;border-collapse:collapse;margin-top:4px;font-size:9.4pt;}
+.ba caption{font-family:var(--mono);font-size:7.5pt;color:var(--faint);text-align:left;padding:0 0 5px;letter-spacing:0.03em;}
+.ba th{font-family:var(--mono);font-size:7.5pt;letter-spacing:0.04em;text-transform:uppercase;color:var(--faint);text-align:left;padding:5px 8px;border-bottom:1px solid var(--line);font-weight:500;}
+.ba td{padding:6px 8px;border-bottom:1px solid var(--line);vertical-align:baseline;}
+.ba .m{color:var(--soft);}
+.ba .b{font-family:var(--mono);font-size:8.6pt;color:var(--faint);text-decoration:line-through;}
+.ba .arw{color:var(--signal);text-align:center;}
+.ba .a{font-family:var(--mono);font-size:8.6pt;font-weight:600;color:var(--signal-deep);}
+.sowhat{border:1px solid var(--line);border-radius:3px;padding:10px 12px;background:var(--panel);font-size:9.8pt;margin-top:4px;}
+.proof-line{margin-top:7px;font-family:var(--mono);font-size:8.6pt;color:var(--steel);}
+.proof-line b{color:var(--ink);}
+.faq{display:grid;gap:8px;}
+.faq div{break-inside:avoid;}
+.faq q{display:block;font-weight:700;font-size:9.8pt;}
+.faq p{margin:2px 0 0;font-size:9.5pt;color:var(--soft);}
+.foot{margin-top:18px;border-top:1px solid var(--line);padding-top:12px;display:flex;justify-content:space-between;align-items:flex-end;gap:14px;}
+.cta{background:var(--ink);color:#fff;border-radius:4px;padding:11px 14px;font-size:9.5pt;flex:1;}
+.cta b{color:var(--signal);}
+.disc{font-family:var(--mono);font-size:6.8pt;color:var(--faint);line-height:1.5;max-width:50%;}
+</style></head><body>
+<div class="cover">
+  <div class="cover__top">
+    <div class="brand"><b>2i</b><small>AX 컨설팅</small></div>
+    <div class="doclabel">Case Brief · No.18 · 2i 게이지 방식</div>
+  </div>
+  <div class="eyebrow" style="margin-top:14px">스토리지 비용 · TCO</div>
+  <h1>&quot;클라우드가 비싸니 내리자&quot;가 틀리는 지점을 계산합니다</h1>
+  <div class="chips">
+    <span class="chip">제조 · 유통 · 의료 (데이터 보관 비용)</span>
+    <span class="chip chip--v">약 8주 (측정 2 + 실증 3 + 이관 3)</span>
+    <span class="chip chip--c">정부 바우처 적합</span>
+  </div>
+  <div class="stakes-box"><span class="l">문제의 대가 · 청구서에서 원인이 특정되지 않는 비율</span><span class="v">45.8% (실측)</span></div>
+</div>
+
+<div class="sec"><h2>문제의 대가</h2><p class="lead">데이터 보관비는 매달 나가는데 왜 그만큼 나가는지는 아무도 설명하지 못합니다. 그래서 결정이 두 방향으로만 갑니다. 그냥 두거나, 전부 온프렘으로 내리거나. 둘 다 계산이 아니라 분위기입니다. 하드웨어가 오르는 국면이라 이 축을 안 재고 내리면 3년 뒤에 후회합니다.</p></div>
+
+<div class="sec"><h2>통찰</h2><p class="lead">온프렘이 싸다는 판단은 하드웨어 단가 하나에 통째로 매달려 있습니다. 그 단가를 상수로 두지 말고 입력 변수로 빼면, 권고가 뒤집히는 지점이 계산됩니다. 아카이브로 내리면 싸진다는 규칙도 조건에 따라 정반대가 됩니다. 규칙이 아니라 계산이 필요한 영역입니다.</p></div>
+
+<div class="sec"><h2>2i의 방식</h2><p class="lead">청구서를 항목이 아니라 원인으로 쪼갭니다. 콜드 데이터의 핫 클래스 방치, 스냅샷 누적, 외부 전송, 소형 오브젝트 요청비, 과잉 프로비저닝입니다. 원인 간 중복 계상은 테스트가 금지하고, 설명하지 못한 몫은 미귀속으로 남깁니다. 그 위에서 워크로드마다 3~5년 TCO를 계산하고 온프렘·클라우드 손익분기 단가를 뽑습니다. 손대면 오히려 손해인 항목도 그대로 표시합니다.</p></div>
+
+<div class="sec"><h2>게이지 방식으로 진행합니다 · 측정 → 실증 → 이관</h2><div class="steps"><div class="step"><b>측정 게이트</b><p>실제 청구서와 워크로드 프로파일(객체 크기 분포, 접근 빈도, 보존 기간)을 받아 원인별로 분해하고 미귀속 몫을 명시합니다.</p></div><div class="step"><b>실증 게이트</b><p>워크로드별로 라이프사이클·저장 클래스·배치 대안을 계산해 손익분기 단가를 뽑고, 절감이 실제로 남는 항목만 후보로 올립니다.</p></div><div class="step"><b>이관 게이트</b><p>검증된 배치 정책과 재계산 모델을 넘겨, 요금이나 워크로드가 바뀔 때 운영팀이 직접 다시 판정하게 합니다.</p></div></div></div>
+
+<div class="sec two">
+  <div class="card"><h3>사용 기술</h3><p>청구서 원인 분해(핫 클래스 방치 · 스냅샷 누적 · 외부 전송 · 요청비 · 과잉 프로비저닝) · 중복 계상 금지를 강제하는 테스트 · 워크로드별 3~5년 TCO · 손익분기 단가 역산 · 공개 요금 미확인 플래그 게이트. 합성 데이터 기반 레퍼런스 구현입니다.</p></div>
+  <div class="card"><h3>표준 산출물</h3><ul class="deliv"><li>AX 진단 보고서</li><li>현장 KPI baseline 계측</li><li>과제 우선순위 로드맵</li><li>작동하는 PoC</li><li>before/after 측정 리포트</li><li>본도입 판단 근거</li><li>운영 시스템</li><li>사내 이관 교육</li><li>운영 매뉴얼·문서</li></ul></div>
+</div>
+
+<div class="sec"><h2>목표 델타</h2><table class="ba"><caption>목표 지표 · 실제 수치는 귀사 데이터로 재측정</caption><tr><th>지표</th><th>현재</th><th></th><th>목표</th></tr><tr><td class="m">온프렘·클라우드 권고가 뒤집히는 하드웨어 단가</td><td class="b">단가 가정 하나에 결론이 통째로 매달림</td><td class="arw">→</td><td class="a">원시 TB당 83.7달러, 기준값의 2.6배에서 반전 (합성 사례 실측)</td></tr><tr><td class="m">64KB 소형 파일 90일 보관에 30일 심층 아카이브 전환 적용</td><td class="b">아무것도 하지 않음: 기준</td><td class="arw">→</td><td class="a">공격적 라이프사이클: 4.0배 더 비쌈. 전환 요청비와 조기 삭제 위약금 포함 (합성 사례 실측)</td></tr><tr><td class="m">청구서 원인 귀속률</td><td class="b">항목별 청구서, 원인 불명</td><td class="arw">→</td><td class="a">54.2% 원인 특정, 나머지 45.8%는 미귀속으로 명시 (합성 사례 실측)</td></tr></table><div class="proof-line">▶ 작동하는 증거: <b>2icorp.github.io/demos/18-storage-cost-model/</b> · 브라우저에서 그 자리에서 계산하는 데모</div></div>
+
+<div class="sec"><h2>그래서 무엇이 열리나</h2><div class="sowhat">비용 논의가 인상에서 계산으로 넘어갑니다. 어디를 손대면 얼마가 남는지, 어디는 손대면 손해인지가 같은 표에 있습니다. 비용 모델에 들어간 공개 요금은 전부 미확인 표시로 출하되고, 그 표시를 지우지 않으면 고객용 보고서가 생성되지 않습니다. 서울 리전 외부 전송 단가만 해도 공개 출처마다 값이 갈리므로 제안 시점에 다시 조회해 확정합니다.</div></div>
+
+<div class="sec two">
+  <div class="card"><h3>정부 바우처 활용</h3><p>바우처 신청서의 비용 절감 근거로 그대로 쓸 수 있습니다. 절감 추정이 아니라 원인별 분해와 미귀속 몫까지 남아 사후 정산 설명이 쉽습니다. 지원 규모·요건은 연도별 공고에 따르며, 복잡한 신청·행정은 2i가 함께 처리합니다.</p></div>
+  <div class="card"><h3>왜 2i인가</h3><p>대형 SI가 안 건드리는 중소·중견의 소규모·비정형 과제를, 진단부터 이관까지 한 사람이 책임지고 봅니다. 화려한 제안서 대신 측정된 진단과 검증된 PoC로 신뢰를 먼저 만듭니다.</p></div>
+</div>
+
+<div class="sec"><h2>자주 묻는 질문</h2><div class="faq"><div><q>Q. 데이터가 정리돼 있지 않아도 되나요?</q><p>네. 측정 게이트가 바로 흩어진 데이터와 현장을 정리해 무엇부터 할지 정하는 단계입니다. 준비가 안 됐다는 것 자체가 출발점입니다.</p></div><div><q>Q. 기간과 비용은 어느 정도인가요?</q><p>이 사례 기준 약 8주 (측정 2 + 실증 3 + 이관 3) 정도이며, 범위와 데이터 상태에 따라 조정됩니다. 상당 부분을 정부 AX 바우처로 충당해 실부담을 크게 낮출 수 있습니다.</p></div><div><q>Q. 하다가 안 되면 어떻게 되나요?</q><p>그래서 실증 게이트가 있습니다. 큰돈을 걸기 전에 될지 안 될지를 작은 실증으로 먼저 확인하고, 목표 델타에 못 미치면 확장하지 않습니다.</p></div><div><q>Q. 사람 일자리를 없애는 건가요?</q><p>아닙니다. 사람을 대체하는 게 아니라, 반복 업무를 걷어내 사람이 판단과 관계에 집중하도록 속도와 정확도를 보완하는 방식입니다.</p></div></div></div>
+
+<div class="foot">
+  <div class="cta">먼저 <b>무료 자가진단</b> 또는 30분 상담으로 시작하세요. 귀사에 맞는 시작점을 함께 찾습니다. &nbsp;·&nbsp; <b>2i</b> AX 컨설팅</div>
+  <div class="disc">본 브로셔는 2i의 역량을 보여주는 시나리오형 예시입니다. 특정 실존 고객의 완료 실적이 아니며, 목표 수치는 업계 통상 기대치입니다. 실제 진행 시 귀사 데이터로 다시 측정합니다.</div>
+</div>
+</body></html>

@@ -1,0 +1,589 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<script>(function(){try{var t=localStorage.getItem("theme");if(!t&&window.matchMedia&&matchMedia("(prefers-color-scheme: dark)").matches)t="dark";if(t)document.documentElement.setAttribute("data-theme",t);}catch(e){}})();</script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>온프렘 VLM 양자화·동시처리 시뮬레이터 데모 · 2i</title>
+<link rel="stylesheet" href="../../styles.css?v=17">
+<style>
+  .demo-top{display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:1rem clamp(1rem, 2vw, 2rem);border-bottom:1px solid var(--line-soft);flex-wrap:wrap;}
+  .demo-brand{display:flex;align-items:baseline;gap:.6rem;text-decoration:none;color:var(--ink);}
+  .demo-brand__mark{font-family:var(--mono);font-weight:800;color:var(--signal);font-size:1.1rem;}
+  .demo-brand__tag{font-family:var(--mono);font-size:var(--text-xs);letter-spacing:.08em;color:var(--ink-faint);text-transform:uppercase;}
+  .demo-top__links{display:flex;gap:1.2rem;font-size:var(--text-sm);}
+  .demo-top__links a{color:var(--ink-soft);text-decoration:none;border-bottom:1px solid transparent;transition:color var(--dur) var(--ease), border-color var(--dur) var(--ease);}
+  .demo-top__links a:hover{color:var(--ink);border-color:var(--line);}
+  .demo-top__links a:focus-visible{outline:2px solid var(--signal);outline-offset:3px;}
+  .demo-banner{font-family:var(--mono);font-size:var(--text-xs);color:var(--ink-faint);background:var(--paper-2);border-bottom:1px solid var(--line-soft);padding:.55rem clamp(1rem, 2vw, 2rem);letter-spacing:.01em;}
+  main{max-width:1100px;margin:0 auto;padding:2rem clamp(1rem, 2vw, 2rem) 1rem;}
+  h1{font-size:var(--text-h2);margin:0 0 .4rem;}
+  .lede{color:var(--ink-soft);max-width:70ch;margin:0 0 2.2rem;line-height:1.75;}
+  section{margin-bottom:2.6rem;}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);}
+  .chart-card{padding:1.3rem clamp(1rem, 2vw, 1.6rem);}
+  .chart-card h3{font-size:1rem;margin:0 0 .2rem;}
+  .chart-card p{margin:0 0 1rem;color:var(--ink-faint);font-size:var(--text-xs);font-family:var(--mono);}
+  svg{width:100%;height:auto;display:block;}
+  .axis-label{font-family:var(--mono);font-size:8px;fill:var(--ink-faint);}
+  .scatter-pt{fill:var(--steel);}
+  .scatter-pt--selected{fill:var(--signal);stroke:var(--signal-deep);stroke-width:2;}
+  .scatter-label{font-family:var(--mono);font-size:9px;fill:var(--ink-soft);}
+  .scatter-note{font-family:var(--mono);font-size:8px;fill:var(--signal-deep);}
+  .bar-label{font-family:var(--mono);font-size:11px;fill:var(--ink-soft);}
+  .bar-value{font-family:var(--mono);font-size:11px;fill:var(--ink);font-weight:700;}
+  .bar--ok{fill:var(--ok);}
+  .bar--signal{fill:var(--signal);}
+  .bar--neutral{fill:var(--steel-soft);}
+
+  .combo-card{padding:1.3rem clamp(1rem, 2vw, 1.6rem);}
+  .combo-card h3{font-size:1rem;margin:0 0 .2rem;}
+  .combo-card > p{margin:0 0 1rem;color:var(--ink-faint);font-size:var(--text-xs);font-family:var(--mono);line-height:1.6;}
+  .combo-select{display:flex;flex-wrap:wrap;gap:.7rem;margin:0;list-style:none;padding:0;}
+  .combo-btn{flex:1 1 190px;min-height:64px;text-align:left;background:var(--paper-2);border:1px solid var(--line);border-radius:var(--radius);padding:.7rem .9rem;cursor:pointer;display:flex;flex-direction:column;justify-content:center;gap:.28rem;font-family:var(--sans);color:var(--ink);transition:background var(--dur) var(--ease), border-color var(--dur) var(--ease), transform var(--dur) var(--ease), box-shadow var(--dur) var(--ease);}
+  .combo-btn__label{font-weight:700;font-size:var(--text-sm);}
+  .combo-btn__sub{font-family:var(--mono);font-size:var(--text-xs);color:var(--ink-faint);}
+  .combo-btn:hover{background:var(--panel);border-color:var(--steel-soft);transform:translateY(-1px);}
+  .combo-btn:active{transform:translateY(0);}
+  .combo-btn:focus-visible{outline:2px solid var(--signal);outline-offset:2px;}
+  .combo-btn.is-selected{background:var(--panel);border-color:var(--signal);box-shadow:0 0 0 1px var(--signal) inset;}
+  .combo-btn.is-selected .combo-btn__label{color:var(--signal-deep);}
+
+  .controls3{display:grid;grid-template-columns:repeat(auto-fit, minmax(220px, 1fr));gap:1.4rem;padding:1.4rem clamp(1rem, 2vw, 1.8rem);}
+  .control h3{font-size:1rem;margin:0 0 .3rem;}
+  .control p{margin:0 0 .8rem;color:var(--ink-faint);font-size:var(--text-xs);font-family:var(--mono);line-height:1.6;}
+  .control__row{display:flex;align-items:center;gap:.9rem;}
+  input[type="range"]{flex:1;accent-color:var(--signal);height:44px;cursor:pointer;}
+  input[type="range"]:focus-visible{outline:2px solid var(--signal);outline-offset:3px;}
+  .control__val{font-family:var(--mono);font-weight:700;min-width:5.6rem;text-align:right;font-size:var(--text-sm);}
+
+  .formula-note{font-family:var(--mono);font-size:var(--text-xs);color:var(--ink-faint);background:var(--paper-2);border:1px solid var(--line-soft);border-radius:var(--radius);padding:.85rem 1rem;line-height:1.75;margin:0 0 1.2rem;}
+
+  .metrics{display:grid;grid-template-columns:repeat(auto-fit, minmax(150px, 1fr));gap:1px;background:var(--line);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;}
+  .metric{background:var(--panel);padding:1.2rem 1.05rem;}
+  .metric__label{font-family:var(--mono);font-size:var(--text-xs);color:var(--ink-faint);letter-spacing:.06em;text-transform:uppercase;}
+  .metric__value{font-size:1.55rem;font-weight:800;margin-top:.35rem;}
+  .metric__unit{font-size:.86rem;color:var(--ink-soft);font-weight:500;margin-left:.15rem;}
+  .metric__delta{font-family:var(--mono);font-size:var(--text-xs);margin-top:.4rem;min-height:1.1em;}
+  .metric__delta.good{color:var(--steel);}
+  .metric__delta.bad{color:var(--signal-deep);}
+
+  .conclusion-card{padding:1.4rem clamp(1rem, 2vw, 1.8rem);}
+  .conclusion-card h3{font-size:1rem;margin:0 0 .8rem;}
+  .conclusion-card p{font-size:var(--text-base);line-height:1.8;margin:0;}
+
+  .honest-note{padding:1.4rem clamp(1rem, 2vw, 1.8rem);color:var(--ink-soft);font-size:var(--text-sm);line-height:1.75;}
+  .honest-note h3{font-size:1rem;margin:0 0 .8rem;color:var(--ink);}
+  .honest-note ul{margin:0;padding-left:1.2rem;}
+  .honest-note li{margin-bottom:.55rem;}
+  .honest-note li:last-child{margin-bottom:0;}
+
+  .baseline-note{margin-top:1rem;color:var(--ink-faint);font-size:var(--text-xs);font-family:var(--mono);}
+  .demo-foot{margin-top:3rem;padding:1.6rem clamp(1rem, 2vw, 2rem) 2.4rem;font-family:var(--mono);font-size:var(--text-xs);color:var(--ink-faint);border-top:1px solid var(--line-soft);text-align:center;}
+
+  @media (max-width:820px){
+    .controls3{grid-template-columns:1fr;}
+  }
+  @media (prefers-reduced-motion: reduce){
+    .combo-btn{transition:none;}
+    .combo-btn:hover{transform:none;}
+    .demo-top__links a{transition:none;}
+  }
+</style>
+</head>
+<body>
+<header class="demo-top">
+  <a href="/" class="demo-brand"><span class="demo-brand__mark">2i</span><span class="demo-brand__tag">DEMO · 엣지 VLM 양자화 시뮬레이터</span></a>
+  <nav class="demo-top__links">
+    <a href="/cases.html#case-15">사례 보기</a>
+    <a href="/#contact">상담 신청</a>
+  </nav>
+</header>
+<div class="demo-banner">브라우저에서 그 자리에서 계산하는 인터랙티브 데모입니다. Mage-VL 4.7B 실측 상수를 입력으로 쓰고, 동시 스트림·처리량 계산은 공개된 아키텍처 파라미터를 근거로 한 산술입니다.</div>
+
+<main>
+  <h1>온프렘 VLM 양자화·동시처리 시뮬레이터</h1>
+  <p class="lede">양자화하면 무조건 빨라진다는 통념을 소비자용 Apple M4 Pro 실측으로 반박합니다. 나이브 INT4는 메모리를 56% 줄였지만 디코드는 오히려 96% 느려졌고, 원인은 커널이었습니다. 언어 백본을 mlx-lm 융합 저비트 커널 경로로 바꾸자 같은 4비트에서 디코드가 약 190배 빨라졌습니다. 아래에서 정밀도·런타임 조합과 메모리·카메라 부하를 직접 조절해 이 결과가 매장 카메라 몇 대를 실제로 감당하는지 계산해보세요.</p>
+
+  <section class="card combo-card">
+    <h3>정밀도·런타임 조합</h3>
+    <p>실측된 세 가지 조합 중 하나를 고르세요. 값을 바꾸면 아래 모든 계산이 그 자리에서 다시 됩니다. INT8은 이번 실측 범위에 없어 선택지에서 뺐습니다(bf16과 나이브 INT4 사이 어딘가로 추정될 뿐, 숫자를 만들어 넣지 않았습니다).</p>
+    <div class="combo-select" role="group" aria-label="정밀도·런타임 조합 선택">
+      <button type="button" class="combo-btn" data-combo="bf16" aria-pressed="false">
+        <span class="combo-btn__label">bf16 (기준선)</span>
+        <span class="combo-btn__sub">메모리 9.49GB · 디코드 13.01 tok/s</span>
+      </button>
+      <button type="button" class="combo-btn" data-combo="naive4" aria-pressed="false">
+        <span class="combo-btn__label">나이브 INT4</span>
+        <span class="combo-btn__sub">메모리 4.15GB · 디코드 0.47 tok/s</span>
+      </button>
+      <button type="button" class="combo-btn" data-combo="mlx4" aria-pressed="false">
+        <span class="combo-btn__label">MLX 융합 커널 INT4</span>
+        <span class="combo-btn__sub">메모리 2.46GB · 디코드 89.67 tok/s</span>
+      </button>
+    </div>
+  </section>
+
+  <section class="metrics metrics--combo" id="comboMetrics" aria-live="polite">
+    <div class="metric">
+      <div class="metric__label">모델 메모리 (실측)</div>
+      <div class="metric__value"><span id="mComboMem">-</span><span class="metric__unit">GB</span></div>
+      <div class="metric__delta" id="mComboMemDelta"></div>
+    </div>
+    <div class="metric">
+      <div class="metric__label">디코드 속도 (실측)</div>
+      <div class="metric__value"><span id="mComboDecode">-</span><span class="metric__unit">tok/s</span></div>
+      <div class="metric__delta" id="mComboDecodeDelta"></div>
+    </div>
+  </section>
+
+  <section class="card chart-card">
+    <h3>메모리 대 디코드 처리량</h3>
+    <p>가로축은 모델 메모리(GB), 세로축은 디코드 처리량(tok/s, 로그 스케일)입니다. 강조된 점이 현재 선택한 조합입니다. 나이브 INT4는 메모리는 줄었지만 속도를 잃은 자리에 있습니다.</p>
+    <svg id="scatterChart" viewBox="0 0 640 340" preserveAspectRatio="xMidYMid meet" role="img" aria-label="메모리 대 디코드 처리량 산점도"></svg>
+  </section>
+
+  <section class="card controls3" id="memoryControls">
+    <div class="control">
+      <h3>디바이스 통합 메모리</h3>
+      <p>이 온프렘 유닛이 가진 전체 통합 메모리입니다. M4 Pro 실측 기준값은 48GB입니다.</p>
+      <div class="control__row">
+        <input type="range" id="deviceMemSlider" min="8" max="128" step="8" value="48" aria-label="디바이스 통합 메모리, 기가바이트">
+        <span class="control__val" id="deviceMemVal">48GB</span>
+      </div>
+    </div>
+    <div class="control">
+      <h3>OS·기타 예약분</h3>
+      <p>운영체제와 다른 프로세스가 미리 잡아두는 메모리입니다. 클수록 모델과 스트림이 쓸 여유가 줄어듭니다.</p>
+      <div class="control__row">
+        <input type="range" id="reserveSlider" min="2" max="16" step="1" value="6" aria-label="OS 및 기타 예약 메모리, 기가바이트">
+        <span class="control__val" id="reserveVal">6GB</span>
+      </div>
+    </div>
+    <div class="control">
+      <h3>세션당 컨텍스트 길이</h3>
+      <p>카메라 세션 하나가 유지하는 프레임·대화 컨텍스트 길이입니다. 길수록 스트림 하나가 잡는 KV 캐시가 커집니다.</p>
+      <div class="control__row">
+        <input type="range" id="contextSlider" min="512" max="16384" step="512" value="2048" aria-label="세션당 컨텍스트 길이, 토큰">
+        <span class="control__val" id="contextVal">2,048토큰</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="card chart-card">
+    <h3>동시 스트림 계산</h3>
+    <p class="formula-note" id="streamFormulaNote">스트림당 KV 캐시(GB) = 2(K+V) × 레이어 36 × KV 헤드 8 × head_dim 128 × 2바이트/요소 × 컨텍스트 길이 ÷ 1024의 3제곱(Qwen3-4B급 파라미터, KV 캐시는 정밀도와 무관하게 2바이트/요소로 고정 가정). 최대 동시 스트림 = floor((가용 메모리 − 모델 메모리) ÷ 스트림당 KV 캐시) + 1.</p>
+    <div class="metrics" id="memoryMetrics" aria-live="polite">
+      <div class="metric">
+        <div class="metric__label">가용 메모리 (예약 제외)</div>
+        <div class="metric__value"><span id="mUsable">-</span><span class="metric__unit">GB</span></div>
+      </div>
+      <div class="metric">
+        <div class="metric__label">스트림당 KV 캐시</div>
+        <div class="metric__value"><span id="mPerStream">-</span><span class="metric__unit">GB</span></div>
+      </div>
+      <div class="metric">
+        <div class="metric__label">모델 적재 후 여유</div>
+        <div class="metric__value"><span id="mAfterModel">-</span><span class="metric__unit">GB</span></div>
+      </div>
+      <div class="metric">
+        <div class="metric__label">최대 동시 스트림</div>
+        <div class="metric__value"><span id="mStreams">-</span><span class="metric__unit">개</span></div>
+        <div class="metric__delta" id="mStreamsWarn"></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="card controls3" id="cameraControls">
+    <div class="control">
+      <h3>프레임당 출력 토큰 수</h3>
+      <p>모델이 프레임 하나를 설명하는 데 쓰는 출력 토큰 수입니다. 짧을수록 더 많은 프레임을 처리합니다.</p>
+      <div class="control__row">
+        <input type="range" id="tokensSlider" min="16" max="256" step="8" value="64" aria-label="프레임당 출력 토큰 수">
+        <span class="control__val" id="tokensVal">64토큰</span>
+      </div>
+    </div>
+    <div class="control">
+      <h3>매장 카메라 대수</h3>
+      <p>동시에 감시해야 하는 매장 카메라 수입니다.</p>
+      <div class="control__row">
+        <input type="range" id="cameraSlider" min="1" max="32" step="1" value="8" aria-label="매장 카메라 대수">
+        <span class="control__val" id="cameraVal">8대</span>
+      </div>
+    </div>
+    <div class="control">
+      <h3>대당 샘플링 간격</h3>
+      <p>카메라 한 대당 몇 초에 한 번 프레임을 분석할지 정하는 값입니다. 짧을수록 더 촘촘히 감시하지만 처리량 요구가 늘어납니다.</p>
+      <div class="control__row">
+        <input type="range" id="intervalSlider" min="1" max="60" step="1" value="8" aria-label="카메라 대당 샘플링 간격, 초">
+        <span class="control__val" id="intervalVal">8초</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="card chart-card">
+    <h3>요구 처리량 대비 가용 처리량</h3>
+    <p>현재 조합의 디코드 속도로 카메라 부하를 감당할 수 있는지 대조합니다. 초록은 감당 가능, 강조색은 부족한 쪽입니다.</p>
+    <svg id="throughputBar" viewBox="0 0 640 130" preserveAspectRatio="xMidYMid meet" role="img" aria-label="가용 처리량과 필요 처리량 비교 막대그래프"></svg>
+    <div class="metrics" id="throughputMetrics" aria-live="polite">
+      <div class="metric">
+        <div class="metric__label">초당 처리 가능 프레임</div>
+        <div class="metric__value"><span id="mAvailFps">-</span><span class="metric__unit">프레임/초</span></div>
+      </div>
+      <div class="metric">
+        <div class="metric__label">카메라 1대 전담 시 최소 간격</div>
+        <div class="metric__value"><span id="mSecPerFrame">-</span><span class="metric__unit">초</span></div>
+      </div>
+      <div class="metric">
+        <div class="metric__label">필요 처리량</div>
+        <div class="metric__value"><span id="mReqFps">-</span><span class="metric__unit">프레임/초</span></div>
+        <div class="metric__delta" id="mReqFpsNote"></div>
+      </div>
+      <div class="metric">
+        <div class="metric__label">판정</div>
+        <div class="metric__value" id="mVerdict">-</div>
+        <div class="metric__delta" id="mVerdictDelta"></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="card conclusion-card">
+    <h3>무엇을 봤나</h3>
+    <p id="conclusionText" aria-live="polite">계산 중입니다.</p>
+  </section>
+
+  <section class="card honest-note">
+    <h3>정직하게 말하면</h3>
+    <ul>
+      <li>89.67 tok/s는 디코드를 지배하는 언어 백본(Qwen3-4B)만 따로 잰 실측값입니다. 시각 인코더(Mage-ViT)를 포함한 전체 모델의 MLX 포팅은 다음 단계이고, 아직 끝나지 않았습니다.</li>
+      <li>동시 스트림 수와 프레임 처리 시간은 공개된 아키텍처 파라미터(레이어 36, KV 헤드 8, head_dim 128)로 계산한 추정치입니다. KV 캐시를 2바이트/요소로 고정 가정했고, 실제 배치에서는 다시 재야 하는 값입니다.</li>
+      <li>스트리밍 압축 코덱(DCVC)은 CUDA 전용이라 이 온프렘 경로에서는 지원하지 않습니다.</li>
+      <li>이 데모의 계산은 세 가지 실측 조합의 메모리·디코드 속도만 입력으로 씁니다. 그 위의 스트림·처리량 산술은 전부 브라우저에서 그 자리에서 계산한 결과이며, 미리 적어둔 값을 조건문으로 골라 보여주지 않습니다.</li>
+    </ul>
+  </section>
+</main>
+
+<footer class="demo-foot">© 2i · contact@2icorp.site</footer>
+
+<script>
+(function(){
+  "use strict";
+
+  var COMBOS = [
+    {id:"bf16",  label:"bf16 (기준선)",       mem:9.49, decode:13.01},
+    {id:"naive4",label:"나이브 INT4",          mem:4.15, decode:0.47},
+    {id:"mlx4",  label:"MLX 융합 커널 INT4",   mem:2.46, decode:89.67}
+  ];
+  var BF16 = COMBOS[0];
+
+  // Qwen3-4B급 파라미터(언어 백본) 가정. KV 캐시는 정밀도와 무관하게 2바이트/요소 고정.
+  var LAYERS = 36, KV_HEADS = 8, HEAD_DIM = 128, BYTES_PER_ELEM = 2;
+  var KV_BYTES_PER_TOKEN = 2 * LAYERS * KV_HEADS * HEAD_DIM * BYTES_PER_ELEM; // K+V 합산
+
+  var state = { comboId: "mlx4" };
+
+  function getCombo(){
+    for (var i = 0; i < COMBOS.length; i++) {
+      if (COMBOS[i].id === state.comboId) return COMBOS[i];
+    }
+    return COMBOS[0];
+  }
+
+  function fmt(n, d){
+    if (typeof n !== "number" || !isFinite(n)) return "-";
+    return n.toLocaleString("ko-KR", {minimumFractionDigits:d, maximumFractionDigits:d});
+  }
+
+  var deviceMemSlider = document.getElementById("deviceMemSlider");
+  var reserveSlider   = document.getElementById("reserveSlider");
+  var contextSlider   = document.getElementById("contextSlider");
+  var tokensSlider    = document.getElementById("tokensSlider");
+  var cameraSlider    = document.getElementById("cameraSlider");
+  var intervalSlider  = document.getElementById("intervalSlider");
+
+  function updateSliderEchoes(){
+    document.getElementById("deviceMemVal").textContent = deviceMemSlider.value + "GB";
+    document.getElementById("reserveVal").textContent = reserveSlider.value + "GB";
+    document.getElementById("contextVal").textContent = parseInt(contextSlider.value, 10).toLocaleString("ko-KR") + "토큰";
+    document.getElementById("tokensVal").textContent = tokensSlider.value + "토큰";
+    document.getElementById("cameraVal").textContent = cameraSlider.value + "대";
+    document.getElementById("intervalVal").textContent = intervalSlider.value + "초";
+  }
+
+  // ---- 계산 ----
+  function computeMemory(combo){
+    var deviceMem = parseFloat(deviceMemSlider.value);
+    var reserve = parseFloat(reserveSlider.value);
+    var contextLen = parseInt(contextSlider.value, 10);
+    var usable = deviceMem - reserve;
+    var perStreamGB = (KV_BYTES_PER_TOKEN * contextLen) / Math.pow(1024, 3);
+    var availForStreams = usable - combo.mem;
+    var streams;
+    if (availForStreams < 0) {
+      streams = 0;
+    } else {
+      streams = Math.floor(availForStreams / perStreamGB) + 1;
+    }
+    return {
+      deviceMem: deviceMem, reserve: reserve, contextLen: contextLen,
+      usable: usable, perStreamGB: perStreamGB, availForStreams: availForStreams,
+      streams: streams
+    };
+  }
+
+  function computeThroughput(combo){
+    var tokensPerFrame = parseInt(tokensSlider.value, 10);
+    var cameraCount = parseInt(cameraSlider.value, 10);
+    var interval = parseInt(intervalSlider.value, 10);
+    var availableFps = combo.decode / tokensPerFrame;
+    var secPerFrame = tokensPerFrame / combo.decode;
+    var requiredFps = cameraCount / interval;
+    var pass = availableFps >= requiredFps;
+    var ratio = pass ? (availableFps / requiredFps) : (requiredFps / availableFps);
+    return {
+      tokensPerFrame: tokensPerFrame, cameraCount: cameraCount, interval: interval,
+      availableFps: availableFps, secPerFrame: secPerFrame, requiredFps: requiredFps,
+      pass: pass, ratio: ratio
+    };
+  }
+
+  // ---- 렌더 ----
+  function renderComboButtons(combo){
+    var btns = document.querySelectorAll(".combo-btn");
+    for (var i = 0; i < btns.length; i++) {
+      var b = btns[i];
+      var id = b.getAttribute("data-combo");
+      var sel = (id === combo.id);
+      b.setAttribute("aria-pressed", sel ? "true" : "false");
+      b.classList.toggle("is-selected", sel);
+    }
+  }
+
+  function renderComboMetrics(combo){
+    document.getElementById("mComboMem").textContent = fmt(combo.mem, 2);
+    document.getElementById("mComboDecode").textContent = fmt(combo.decode, 2);
+
+    var memDeltaEl = document.getElementById("mComboMemDelta");
+    var decDeltaEl = document.getElementById("mComboDecodeDelta");
+
+    if (combo.id === "bf16") {
+      memDeltaEl.textContent = "기준선(bf16)";
+      memDeltaEl.className = "metric__delta";
+      decDeltaEl.textContent = "기준선(bf16)";
+      decDeltaEl.className = "metric__delta";
+      return;
+    }
+
+    var memPct = (combo.mem - BF16.mem) / BF16.mem * 100;
+    var decPct = (combo.decode - BF16.decode) / BF16.decode * 100;
+    var mult = combo.decode / BF16.decode;
+
+    memDeltaEl.textContent = "bf16 대비 " + (memPct >= 0 ? "+" : "") + fmt(memPct, 1) + "%";
+    memDeltaEl.className = "metric__delta " + (memPct < 0 ? "good" : "bad");
+
+    decDeltaEl.textContent = "bf16 대비 " + (decPct >= 0 ? "+" : "") + fmt(decPct, 1) + "% (" + fmt(mult, 2) + "배)";
+    decDeltaEl.className = "metric__delta " + (decPct >= 0 ? "good" : "bad");
+  }
+
+  function renderMemoryMetrics(mem){
+    document.getElementById("mUsable").textContent = fmt(mem.usable, 1);
+    document.getElementById("mPerStream").textContent = fmt(mem.perStreamGB, 3);
+    document.getElementById("mAfterModel").textContent = fmt(Math.max(0, mem.availForStreams), 2);
+    document.getElementById("mStreams").textContent = fmt(mem.streams, 0);
+
+    var warn = document.getElementById("mStreamsWarn");
+    if (mem.availForStreams < 0) {
+      warn.textContent = "예약분과 모델 메모리가 가용 메모리를 넘어섭니다. 이 조합은 이 설정으로 올라가지 않습니다.";
+      warn.className = "metric__delta bad";
+    } else {
+      warn.textContent = "";
+      warn.className = "metric__delta";
+    }
+  }
+
+  function renderThroughputMetrics(thr){
+    document.getElementById("mAvailFps").textContent = fmt(thr.availableFps, thr.availableFps < 1 ? 3 : 2);
+    document.getElementById("mSecPerFrame").textContent = fmt(thr.secPerFrame, 3);
+    document.getElementById("mReqFps").textContent = fmt(thr.requiredFps, thr.requiredFps < 1 ? 3 : 2);
+    document.getElementById("mReqFpsNote").textContent = thr.cameraCount + "대 · 간격 " + thr.interval + "초 기준";
+
+    var verdictEl = document.getElementById("mVerdict");
+    var deltaEl = document.getElementById("mVerdictDelta");
+    verdictEl.textContent = thr.pass ? "가능" : "부족";
+    verdictEl.style.color = thr.pass ? "var(--steel)" : "var(--signal-deep)";
+    deltaEl.textContent = thr.pass ? ("여유 " + fmt(thr.ratio, 2) + "배") : ("부족 " + fmt(thr.ratio, 2) + "배");
+    deltaEl.className = "metric__delta " + (thr.pass ? "good" : "bad");
+  }
+
+  function renderConclusion(combo, mem, thr){
+    var el = document.getElementById("conclusionText");
+    var passTxt = thr.pass ? "있습니다" : "없습니다";
+    var extra = thr.pass
+      ? ("처리량에는 " + fmt(thr.ratio, 2) + "배의 여유가 있습니다.")
+      : ("부족분은 " + fmt(thr.ratio, 2) + "배입니다.");
+    var streamNote = mem.availForStreams < 0
+      ? "다만 이 메모리 설정에서는 모델 자체가 올라가지 않습니다."
+      : ("메모리 기준으로는 세션을 최대 " + fmt(mem.streams, 0) + "개까지 동시에 유지할 수 있습니다.");
+
+    el.textContent =
+      combo.label + " 조합, 컨텍스트 " + mem.contextLen.toLocaleString("ko-KR") + "토큰 기준으로 " +
+      "M4 Pro 급 디바이스 1대로 카메라 " + thr.cameraCount + "대를 " + thr.interval + "초 간격으로 커버할 수 " + passTxt + ". " +
+      extra + " " + streamNote;
+  }
+
+  function renderScatter(combo){
+    var svg = document.getElementById("scatterChart");
+    while (svg.firstChild) svg.removeChild(svg.firstChild);
+    var svgNS = "http://www.w3.org/2000/svg";
+    var W = 640, H = 340, padL = 44, padR = 20, padT = 16, padB = 34;
+    var innerW = W - padL - padR, innerH = H - padT - padB;
+    var xMax = 11;
+    var yMin = 0.3, yMax = 150;
+    var logMin = Math.log(yMin) / Math.LN10, logMax = Math.log(yMax) / Math.LN10;
+
+    function x(v){ return padL + innerW * (v / xMax); }
+    function y(v){
+      var t = (Math.log(v) / Math.LN10 - logMin) / (logMax - logMin);
+      return padT + innerH * (1 - t);
+    }
+
+    var yTicks = [0.5, 1, 5, 10, 50, 100];
+    var i;
+    for (i = 0; i < yTicks.length; i++) {
+      var gy = y(yTicks[i]);
+      var line = document.createElementNS(svgNS, "line");
+      line.setAttribute("x1", padL); line.setAttribute("x2", W - padR);
+      line.setAttribute("y1", gy); line.setAttribute("y2", gy);
+      line.setAttribute("stroke", "var(--line-soft)"); line.setAttribute("stroke-width", "1");
+      svg.appendChild(line);
+      var lbl = document.createElementNS(svgNS, "text");
+      lbl.setAttribute("x", padL - 6); lbl.setAttribute("y", gy + 3);
+      lbl.setAttribute("text-anchor", "end"); lbl.setAttribute("class", "axis-label");
+      lbl.textContent = yTicks[i] + "";
+      svg.appendChild(lbl);
+    }
+
+    var xTicks = [0, 2, 4, 6, 8, 10];
+    for (i = 0; i < xTicks.length; i++) {
+      var gx = x(xTicks[i]);
+      var xlbl = document.createElementNS(svgNS, "text");
+      xlbl.setAttribute("x", gx); xlbl.setAttribute("y", H - padB + 16);
+      xlbl.setAttribute("text-anchor", "middle"); xlbl.setAttribute("class", "axis-label");
+      xlbl.textContent = xTicks[i] + "GB";
+      svg.appendChild(xlbl);
+    }
+
+    for (i = 0; i < COMBOS.length; i++) {
+      var c = COMBOS[i];
+      var cx = x(c.mem), cy = y(c.decode);
+      var selected = (c.id === combo.id);
+      var circle = document.createElementNS(svgNS, "circle");
+      circle.setAttribute("cx", cx); circle.setAttribute("cy", cy);
+      circle.setAttribute("r", selected ? 9 : 6);
+      circle.setAttribute("class", selected ? "scatter-pt scatter-pt--selected" : "scatter-pt");
+      svg.appendChild(circle);
+
+      var plbl = document.createElementNS(svgNS, "text");
+      plbl.setAttribute("x", cx); plbl.setAttribute("y", cy - 14);
+      plbl.setAttribute("text-anchor", "middle"); plbl.setAttribute("class", "scatter-label");
+      plbl.textContent = c.label;
+      svg.appendChild(plbl);
+    }
+
+    var naive = COMBOS[1];
+    var note = document.createElementNS(svgNS, "text");
+    note.setAttribute("x", x(naive.mem)); note.setAttribute("y", y(naive.decode) + 22);
+    note.setAttribute("text-anchor", "middle"); note.setAttribute("class", "scatter-note");
+    note.textContent = "메모리만 줄고 속도 손실";
+    svg.appendChild(note);
+
+    svg.setAttribute("aria-label",
+      "메모리 대 디코드 처리량 산점도. bf16 9.49기가바이트 13.01톡퍼세컨드, 나이브 INT4 4.15기가바이트 0.47톡퍼세컨드, " +
+      "MLX 융합 INT4 2.46기가바이트 89.67톡퍼세컨드. 현재 선택 " + combo.label);
+  }
+
+  function renderBarChart(thr){
+    var svg = document.getElementById("throughputBar");
+    while (svg.firstChild) svg.removeChild(svg.firstChild);
+    var svgNS = "http://www.w3.org/2000/svg";
+    var W = 640, padL = 170, padR = 70, barH = 34, gap = 26;
+    var maxV = Math.max(thr.availableFps, thr.requiredFps) * 1.18;
+    if (!isFinite(maxV) || maxV <= 0) maxV = 1;
+    var scaleW = W - padL - padR;
+
+    function bw(v){ return Math.max(2, (v / maxV) * scaleW); }
+
+    var rows = [
+      {label:"가용 처리량", value: thr.availableFps, cls: thr.pass ? "bar--ok" : "bar--neutral"},
+      {label:"필요 처리량", value: thr.requiredFps, cls: thr.pass ? "bar--neutral" : "bar--signal"}
+    ];
+
+    for (var i = 0; i < rows.length; i++) {
+      var r = rows[i];
+      var y = 18 + i * (barH + gap);
+
+      var label = document.createElementNS(svgNS, "text");
+      label.setAttribute("x", padL - 12); label.setAttribute("y", y + barH / 2 + 4);
+      label.setAttribute("text-anchor", "end"); label.setAttribute("class", "bar-label");
+      label.textContent = r.label;
+      svg.appendChild(label);
+
+      var rect = document.createElementNS(svgNS, "rect");
+      rect.setAttribute("x", padL); rect.setAttribute("y", y);
+      rect.setAttribute("width", bw(r.value)); rect.setAttribute("height", barH);
+      rect.setAttribute("rx", 2);
+      rect.setAttribute("class", r.cls);
+      svg.appendChild(rect);
+
+      var valText = document.createElementNS(svgNS, "text");
+      valText.setAttribute("x", padL + bw(r.value) + 10); valText.setAttribute("y", y + barH / 2 + 4);
+      valText.setAttribute("class", "bar-value");
+      valText.textContent = fmt(r.value, r.value < 1 ? 3 : 2) + " 프레임/초";
+      svg.appendChild(valText);
+    }
+
+    svg.setAttribute("aria-label",
+      "가용 처리량 " + fmt(thr.availableFps, thr.availableFps < 1 ? 3 : 2) + " 대 필요 처리량 " +
+      fmt(thr.requiredFps, thr.requiredFps < 1 ? 3 : 2) + " 프레임 매 초 비교 막대그래프. 판정 " + (thr.pass ? "가능" : "부족"));
+  }
+
+  function render(){
+    var combo = getCombo();
+    renderComboButtons(combo);
+    renderComboMetrics(combo);
+    renderScatter(combo);
+
+    var mem = computeMemory(combo);
+    renderMemoryMetrics(mem);
+
+    var thr = computeThroughput(combo);
+    renderThroughputMetrics(thr);
+    renderBarChart(thr);
+
+    renderConclusion(combo, mem, thr);
+  }
+
+  function attachEvents(){
+    var sliders = [deviceMemSlider, reserveSlider, contextSlider, tokensSlider, cameraSlider, intervalSlider];
+    for (var i = 0; i < sliders.length; i++) {
+      sliders[i].addEventListener("input", function(){
+        updateSliderEchoes();
+        render();
+      });
+    }
+    var btns = document.querySelectorAll(".combo-btn");
+    for (var j = 0; j < btns.length; j++) {
+      btns[j].addEventListener("click", function(){
+        state.comboId = this.getAttribute("data-combo");
+        render();
+      });
+    }
+  }
+
+  attachEvents();
+  updateSliderEchoes();
+  render();
+})();
+</script>
+</body>
+</html>

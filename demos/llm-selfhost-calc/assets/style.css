@@ -129,8 +129,8 @@ footer a { color: var(--accent); }
 .reference { max-width: var(--maxw); margin: 8px auto; padding: 0 var(--pad); }
 .reference > h2 { font-size: 15px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--dim); margin: 18px 0 6px; }
 .ref-sub { margin: 0 0 16px; color: var(--dim); font-size: 13px; max-width: 80ch; }
-.ref-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
-@media (max-width: 760px) { .ref-grid { grid-template-columns: 1fr; } }
+.ref-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+@media (max-width: 900px) { .ref-grid { grid-template-columns: minmax(0, 1fr); } }
 .ref-card { background: var(--panel); border: 1px solid var(--border); border-radius: var(--radius); padding: 16px; }
 .ref-card h3 { margin: 0 0 12px; font-size: 13px; letter-spacing: -0.01em; }
 .ref-table { display: flex; flex-direction: column; }

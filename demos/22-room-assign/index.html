@@ -1,0 +1,931 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<script>(function(){try{var t=localStorage.getItem("theme");if(!t&&window.matchMedia&&matchMedia("(prefers-color-scheme: dark)").matches)t="dark";if(t)document.documentElement.setAttribute("data-theme",t);}catch(e){}})();</script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>방배정 선호충족 최적화 데모 · 2i</title>
+<link rel="stylesheet" href="../../styles.css?v=17">
+<style>
+  .demo-top{display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:1rem clamp(1rem, 2vw, 2rem);border-bottom:1px solid var(--line-soft);flex-wrap:wrap;}
+  .demo-brand{display:flex;align-items:baseline;gap:.6rem;text-decoration:none;color:var(--ink);}
+  .demo-brand__mark{font-family:var(--mono);font-weight:800;color:var(--signal);font-size:1.1rem;}
+  .demo-brand__tag{font-family:var(--mono);font-size:var(--text-xs);letter-spacing:.08em;color:var(--ink-faint);text-transform:uppercase;}
+  .demo-top__links{display:flex;gap:1.2rem;font-size:var(--text-sm);}
+  .demo-top__links a{color:var(--ink-soft);text-decoration:none;border-bottom:1px solid transparent;transition:color var(--dur) var(--ease),border-color var(--dur) var(--ease);}
+  .demo-top__links a:hover{color:var(--ink);border-color:var(--line);}
+  .demo-top__links a:focus-visible{outline:2px solid var(--signal);outline-offset:3px;}
+  .demo-banner{font-family:var(--mono);font-size:var(--text-xs);color:var(--ink-faint);background:var(--paper-2);border-bottom:1px solid var(--line-soft);padding:.55rem clamp(1rem, 2vw, 2rem);letter-spacing:.01em;}
+  main{max-width:1180px;margin:0 auto;padding:2rem clamp(1rem, 2vw, 2rem) 1rem;}
+  h1{font-size:var(--text-h2);margin:0 0 .4rem;}
+  .lede{color:var(--ink-soft);max-width:68ch;margin:0 0 2rem;line-height:1.7;}
+  section{margin-bottom:2.6rem;min-width:0;}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);min-width:0;}
+  .chart-card{padding:1.3rem clamp(1rem, 2vw, 1.6rem);}
+  .chart-card h3{font-size:1rem;margin:0 0 .2rem;}
+  .chart-card p.hint{margin:0 0 1rem;color:var(--ink-faint);font-size:var(--text-xs);font-family:var(--mono);}
+  .legend{display:flex;flex-wrap:wrap;gap:.9rem 1.1rem;font-family:var(--mono);font-size:var(--text-xs);color:var(--ink-soft);margin-bottom:.9rem;}
+  .legend span{display:inline-flex;align-items:center;gap:.4rem;}
+  .swatch{width:14px;height:14px;display:inline-block;border-radius:var(--radius);flex:none;}
+  .swatch--ok{border:2px solid var(--ok);background:transparent;}
+  .swatch--bad{border:2px solid var(--signal);background:transparent;}
+  .swatch--org{border:2px solid var(--ink-soft);}
+  .swatch--line{width:18px;height:3px;border-radius:0;background:var(--steel);}
+  .swatch--dash{width:18px;height:0;border-top:2px dashed var(--ink-faint);}
+  .swatch--dash2{width:18px;height:0;border-top:2px dashed var(--signal);}
+  svg{width:100%;height:auto;display:block;}
+  .axis-label{font-family:var(--mono);font-size:8.5px;fill:var(--ink-faint);}
+
+  /* ---- controls ---- */
+  .controls{padding:1.4rem clamp(1rem, 2vw, 1.8rem);}
+  .controls fieldset{border:0;margin:0;padding:0;min-width:0;}
+  .controls legend{float:none;position:static;width:auto;max-width:100%;padding:0;margin:0 0 1.1rem;white-space:normal;font-size:1rem;font-weight:700;color:var(--ink);}
+  .control-grid{display:grid;grid-template-columns:repeat(auto-fit, minmax(210px, 1fr));gap:1.3rem 1.4rem;}
+  .control{min-width:0;}
+  .control h3{font-size:.92rem;margin:0 0 .25rem;}
+  .control p{margin:0 0 .6rem;color:var(--ink-faint);font-size:var(--text-xs);font-family:var(--mono);line-height:1.5;}
+  .control__row{display:flex;align-items:center;gap:.8rem;}
+  input[type="range"]{flex:1;accent-color:var(--signal);min-height:44px;}
+  input[type="number"]{width:6rem;min-height:44px;font-family:var(--mono);font-size:var(--text-sm);background:var(--paper);color:var(--ink);border:1px solid var(--line);border-radius:var(--radius);padding:0 .6rem;}
+  .control__val{font-family:var(--mono);font-weight:700;min-width:4.4rem;text-align:right;font-size:var(--text-sm);}
+  .toggle-row{display:flex;flex-wrap:wrap;gap:1rem 1.6rem;margin-top:1.5rem;padding-top:1.3rem;border-top:1px solid var(--line-soft);}
+  /* 자체 체크박스 행. site-wide styles.css 의 ".toggle"(iOS 스위치 컴포넌트, input+span
+     형제 셀렉터 기반)와 클래스명이 겹치면 그 스위치 스타일이 이 텍스트 라벨에 그대로
+     씌워져 깨진다 -- 그래서 데모 전용 이름(.opt-row)을 쓴다. */
+  .opt-row{display:flex;align-items:center;gap:.6rem;min-height:44px;cursor:pointer;font-size:var(--text-sm);}
+  .opt-row input{width:20px;height:20px;accent-color:var(--signal);flex:none;}
+  .opt-row span.opt-row__desc{color:var(--ink-faint);font-size:var(--text-xs);font-family:var(--mono);display:block;}
+  .run-row{display:flex;align-items:center;gap:1.1rem;margin-top:1.4rem;flex-wrap:wrap;}
+  .btn-run{min-height:44px;padding:.7rem 1.4rem;background:var(--ink);color:var(--paper);border:0;border-radius:var(--radius);font-weight:700;font-size:var(--text-sm);cursor:pointer;transition:background var(--dur) var(--ease),transform var(--dur) var(--ease);}
+  .btn-run:hover{background:var(--signal-deep);}
+  .btn-run:active{transform:scale(.98);}
+  .btn-run:focus-visible{outline:2px solid var(--signal);outline-offset:3px;}
+  .btn-run:disabled{opacity:.55;cursor:progress;}
+  .progress{flex:1;min-width:160px;height:8px;background:var(--line-soft);border-radius:99px;overflow:hidden;position:relative;}
+  .progress__bar{height:100%;width:0%;background:var(--signal);transition:width 120ms linear;}
+  .progress-label{font-family:var(--mono);font-size:var(--text-xs);color:var(--ink-faint);min-width:7rem;}
+
+  /* ---- view tabs ---- */
+  .view-tabs{display:flex;gap:.5rem;margin-bottom:1rem;flex-wrap:wrap;}
+  .view-tab{min-height:44px;padding:.5rem 1rem;background:var(--paper-2);border:1px solid var(--line);border-radius:var(--radius);font-family:var(--mono);font-size:var(--text-xs);color:var(--ink-soft);cursor:pointer;transition:background var(--dur) var(--ease),color var(--dur) var(--ease),border-color var(--dur) var(--ease);}
+  .view-tab:hover{color:var(--ink);}
+  .view-tab:focus-visible{outline:2px solid var(--signal);outline-offset:2px;}
+  .view-tab[aria-pressed="true"]{background:var(--ink);color:var(--paper);border-color:var(--ink);}
+
+  /* ---- room grid ---- */
+  .room-grid{display:grid;grid-template-columns:repeat(auto-fit, minmax(148px, 1fr));gap:.55rem;max-height:560px;overflow-y:auto;padding:.2rem;border:1px solid var(--line-soft);border-radius:var(--radius);background:var(--paper-2);}
+  .room-card{min-width:0;background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:.55rem .65rem;}
+  .room-card__head{display:flex;justify-content:space-between;align-items:baseline;font-family:var(--mono);font-size:var(--text-xs);gap:.4rem;}
+  .room-card__no{font-weight:700;color:var(--ink);}
+  .room-card__cap{color:var(--ink-faint);}
+  .room-card__attr{font-family:var(--mono);font-size:9.5px;color:var(--ink-faint);margin:.15rem 0 .45rem;letter-spacing:.02em;}
+  .room-card__chips{display:flex;flex-wrap:wrap;gap:.28rem;}
+  .chip{font-family:var(--mono);font-size:9.5px;padding:.16rem .4rem;border:1.6px solid var(--line);border-radius:var(--radius);color:var(--ink-soft);line-height:1.4;}
+  .chip--good{border-color:var(--ok);color:var(--ink);}
+  .chip--bad{border-color:var(--signal);color:var(--ink);}
+
+  /* ---- metrics ---- */
+  .metrics{display:grid;grid-template-columns:repeat(4, 1fr);gap:1px;background:var(--line);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;}
+  .metric{background:var(--panel);padding:1.2rem 1rem;min-width:0;}
+  .metric__label{font-family:var(--mono);font-size:var(--text-xs);color:var(--ink-faint);letter-spacing:.06em;text-transform:uppercase;}
+  .metric__value{font-size:1.55rem;font-weight:800;margin-top:.3rem;word-break:keep-all;}
+  .metric__unit{font-size:.85rem;color:var(--ink-soft);font-weight:500;margin-left:.12rem;}
+  .metric__delta{font-family:var(--mono);font-size:var(--text-xs);margin-top:.35rem;}
+  .metric__delta.good{color:var(--steel);}
+  .metric__delta.bad{color:var(--signal-deep);}
+  .metric__delta.info{color:var(--ink-faint);}
+
+  .summary{margin-top:1.2rem;padding:1rem 1.2rem;background:var(--paper-2);border:1px solid var(--line-soft);border-radius:var(--radius);font-size:var(--text-sm);line-height:1.7;}
+
+  .div-wrap{display:grid;grid-template-columns:minmax(220px, 320px) 1fr;gap:1.4rem;align-items:start;}
+  .div-note{color:var(--ink-soft);font-size:var(--text-sm);line-height:1.75;}
+  .div-note b{color:var(--ink);}
+
+  .honest{margin-top:1rem;padding:1.1rem 1.3rem;border:1px dashed var(--line);border-radius:var(--radius);color:var(--ink-faint);font-size:var(--text-xs);line-height:1.85;font-family:var(--mono);}
+  .honest strong{color:var(--ink-soft);font-family:var(--sans);}
+
+  .demo-foot{margin-top:3rem;padding:1.6rem clamp(1rem, 2vw, 2rem) 2.4rem;font-family:var(--mono);font-size:var(--text-xs);color:var(--ink-faint);border-top:1px solid var(--line-soft);text-align:center;}
+
+  @media (max-width:820px){
+    .metrics{grid-template-columns:repeat(2, 1fr);}
+    .div-wrap{grid-template-columns:1fr;}
+  }
+  @media (max-width:480px){
+    .metrics{grid-template-columns:1fr;}
+  }
+</style>
+</head>
+<body>
+<header class="demo-top">
+  <a href="/" class="demo-brand"><span class="demo-brand__mark">2i</span><span class="demo-brand__tag">DEMO · 방배정 선호충족 최적화</span></a>
+  <nav class="demo-top__links">
+    <a href="/cases.html#case-22">사례 보기</a>
+    <a href="/#contact">상담 신청</a>
+  </nav>
+</header>
+<div class="demo-banner">브라우저에서 그 자리에서 계산하는 인터랙티브 데모입니다. 합성 데이터를 씁니다.</div>
+
+<main>
+  <h1>방배정 선호충족 최적화 시뮬레이터</h1>
+  <p class="lede">기숙사·연수원 방배정에서 모든 선호를 들어줄 수는 없습니다. 이 데모는 그 한계가 풀이 부족이 아니라 상충하는 선호와 정원이 만드는 물리적 상한이라는 것을 직접 계산해서 보여줍니다. 슬라이더로 인원과 조건을 바꾸면 하드 제약만 지킨 배정, 선호까지 최적화한 배정, 그리고 이론상 도달 가능한 상한까지 그 자리에서 다시 계산됩니다.</p>
+
+  <section class="card controls">
+    <fieldset id="controlsFieldset">
+      <legend>배정 조건</legend>
+      <div class="control-grid">
+        <div class="control">
+          <h3>신청 인원</h3>
+          <p>배정 대상 인원 수입니다. 많을수록 상충 관계가 늘어 문제가 빡빡해집니다.</p>
+          <div class="control__row">
+            <input type="range" id="pSlider" min="20" max="200" step="5" value="80" aria-label="신청 인원">
+            <span class="control__val" id="pVal">80명</span>
+          </div>
+        </div>
+        <div class="control">
+          <h3>방 정원</h3>
+          <p>방 하나에 들어갈 수 있는 최대 인원입니다. 작을수록 한 방에 모으고 싶은 무리가 정원을 넘기기 쉬워집니다.</p>
+          <div class="control__row">
+            <input type="range" id="cSlider" min="2" max="6" step="1" value="4" aria-label="방 정원">
+            <span class="control__val" id="cVal">4인실</span>
+          </div>
+        </div>
+        <div class="control">
+          <h3>조직/부서 수</h3>
+          <p>다양성 강제(믹스 모드)를 켰을 때 한 방에 몰리지 않게 나눌 소속 집단 수입니다.</p>
+          <div class="control__row">
+            <input type="range" id="gSlider" min="2" max="6" step="1" value="4" aria-label="조직 부서 수">
+            <span class="control__val" id="gVal">4개</span>
+          </div>
+        </div>
+        <div class="control">
+          <h3>선호 밀도</h3>
+          <p>한 사람이 함께 쓰고 싶다고 지목하는 인원 수입니다. 높을수록 상호 요청이 겹쳐 정원 초과 클러스터가 늘어납니다.</p>
+          <div class="control__row">
+            <input type="range" id="densitySlider" min="1" max="3" step="0.5" value="2" aria-label="선호 밀도">
+            <span class="control__val" id="densityVal">2.0명</span>
+          </div>
+        </div>
+        <div class="control">
+          <h3>상충률</h3>
+          <p>내가 회피하는 사람이 실은 나를 원하는 경우의 비율입니다. 높을수록 어떤 배정으로도 풀 수 없는 상충 쌍이 늘어납니다.</p>
+          <div class="control__row">
+            <input type="range" id="conflictSlider" min="0" max="60" step="5" value="20" aria-label="상충률">
+            <span class="control__val" id="conflictVal">20%</span>
+          </div>
+        </div>
+        <div class="control">
+          <h3>탐색 강도</h3>
+          <p>지역탐색이 반복 시도하는 횟수입니다. 높일수록 결과가 더 나은 해에 수렴하지만, 어느 지점부터는 더 돌려도 오르지 않습니다.</p>
+          <div class="control__row">
+            <input type="range" id="iterSlider" min="200" max="6000" step="200" value="2000" aria-label="탐색 강도">
+            <span class="control__val" id="iterVal">2000회</span>
+          </div>
+        </div>
+        <div class="control">
+          <h3>시드</h3>
+          <p>같은 시드는 같은 선호 데이터를 만듭니다. 값을 바꾸면 다른 인스턴스로 재현성 있게 실험할 수 있습니다.</p>
+          <div class="control__row">
+            <input type="number" id="seedInput" min="1" max="999" step="1" value="7" aria-label="난수 시드">
+          </div>
+        </div>
+      </div>
+
+      <div class="toggle-row">
+        <label class="opt-row">
+          <input type="checkbox" id="hardSepToggle">
+          <span>그룹 분리 규칙 강제(성별 등)<span class="opt-row__desc">하드 제약. 켜면 한 방에 서로 다른 그룹을 절대 섞지 않습니다.</span></span>
+        </label>
+        <label class="opt-row">
+          <input type="checkbox" id="mixModeToggle">
+          <span>조직 다양성 강제(믹스 모드)<span class="opt-row__desc">소프트 제약. 켜면 한 방에 같은 조직이 몰리지 않게 목적함수에 페널티를 더합니다.</span></span>
+        </label>
+      </div>
+
+      <div class="run-row">
+        <button type="button" class="btn-run" id="runBtn">계산 실행</button>
+        <div class="progress" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" id="progressBar">
+          <div class="progress__bar" id="progressFill"></div>
+        </div>
+        <span class="progress-label" id="progressLabel">대기 중</span>
+      </div>
+    </fieldset>
+  </section>
+
+  <section class="card chart-card">
+    <h3>방 배정 격자</h3>
+    <p class="hint">각 카드가 방 하나이고, 칩 하나가 신청자 한 명입니다. 테두리 색으로 선호 충족·위반을 표시합니다.</p>
+    <div class="view-tabs" role="group" aria-label="배정 방식 표시 전환">
+      <button type="button" class="view-tab" id="tabOptimized" aria-pressed="true">최적화 배정</button>
+      <button type="button" class="view-tab" id="tabBaseline" aria-pressed="false">하드 제약만 배정</button>
+    </div>
+    <div class="legend" id="roomLegend"></div>
+    <div class="room-grid" id="roomGrid" role="img" aria-label="방 배정 격자"></div>
+  </section>
+
+  <section class="card chart-card">
+    <h3>탐색에 따른 선호 충족률 수렴</h3>
+    <p class="hint">지역탐색을 반복할수록 충족률이 오르다가 어느 지점부터 평평해집니다. 그 평평한 지점이 곧 이 조건에서의 실질적 한계입니다.</p>
+    <div class="legend">
+      <span><span class="swatch swatch--line"></span>탐색 곡선(현재 선택된 정책)</span>
+      <span><span class="swatch swatch--dash"></span>하드 제약만 기준선</span>
+      <span><span class="swatch swatch--dash2"></span>이론 상한(계산값)</span>
+    </div>
+    <svg id="convChart" viewBox="0 0 900 240" preserveAspectRatio="xMidYMid meet" role="img" aria-label="지역탐색 반복 횟수에 따른 선호 충족률 수렴 곡선, 하드 제약만 기준선과 이론 상한 병기"></svg>
+  </section>
+
+  <section class="metrics" id="metrics" aria-live="polite">
+    <div class="metric">
+      <div class="metric__label">선호 충족률(최적화)</div>
+      <div class="metric__value"><span id="mFulfill">-</span><span class="metric__unit">%</span></div>
+      <div class="metric__delta" id="mFulfillDelta"></div>
+    </div>
+    <div class="metric">
+      <div class="metric__label">이론 상한(계산값)</div>
+      <div class="metric__value"><span id="mUpper">-</span><span class="metric__unit">%</span></div>
+      <div class="metric__delta info" id="mUpperDelta"></div>
+    </div>
+    <div class="metric">
+      <div class="metric__label">회피 위반 건수</div>
+      <div class="metric__value"><span id="mViol">-</span><span class="metric__unit">건</span></div>
+      <div class="metric__delta" id="mViolDelta"></div>
+    </div>
+    <div class="metric">
+      <div class="metric__label">다양성 교환비</div>
+      <div class="metric__value"><span id="mDiv">-</span><span class="metric__unit">%p</span></div>
+      <div class="metric__delta info" id="mDivDelta"></div>
+    </div>
+  </section>
+
+  <p class="summary" id="summaryText" aria-live="polite">계산 중입니다.</p>
+
+  <section class="card chart-card">
+    <h3>다양성 강제의 교환비</h3>
+    <p class="hint">조직이 한 방에 몰리지 않게 강제하면 선호 충족률이 얼마나 내려가는지, 같은 인스턴스를 두 번 다시 탐색해 비교합니다.</p>
+    <div class="div-wrap">
+      <svg id="divChart" viewBox="0 0 320 180" preserveAspectRatio="xMidYMid meet" role="img" aria-label="믹스 모드 껐을 때와 켰을 때의 선호 충족률 비교 막대그래프"></svg>
+      <p class="div-note" id="divNote"></p>
+    </div>
+  </section>
+
+  <div class="honest">
+    <strong>정직하게 말하면.</strong> 이 데모는 브라우저에서 도는 그리디 초기해 + 지역탐색 휴리스틱이라 최적해를 보장하지 않습니다. 실제 프로젝트는 CP-SAT 같은 정수계획 solver로 최적성 gap을 함께 보고합니다. 이론 상한도 상충 쌍과 정원 초과 클러스터만 세는 느슨한 상한입니다. 실제 최적해는 그보다 더 낮을 수 있고, 여기 표시되는 상한은 달성값보다 낮게 나오면 달성값까지 끌어올려 표시합니다. 선호 데이터는 시드로 생성한 합성 데이터이며, 실제 도입 시에는 설문 설계부터 다시 검증해야 합니다.
+  </div>
+</main>
+
+<footer class="demo-foot">© 2i · contact@2icorp.site</footer>
+
+<script>
+(function(){
+  "use strict";
+
+  /* ---------------- seeded PRNG (mulberry32) ---------------- */
+  function mulberry32(seed){
+    var s = seed >>> 0;
+    return function(){
+      s |= 0; s = (s + 0x6D2B79F5) | 0;
+      var t = Math.imul(s ^ (s >>> 15), 1 | s);
+      t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+      return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+    };
+  }
+
+  var ORG_BORDER_STYLES = ["solid","dashed","dotted","double","groove","ridge"];
+  function orgColor(orgIdx, G){
+    var pct = G<=1 ? 30 : (15 + orgIdx*(58/(G-1)));
+    return "color-mix(in srgb, var(--steel) " + pct.toFixed(0) + "%, var(--panel))";
+  }
+
+  /* ---------------- instance generation ---------------- */
+  function generateInstance(p){
+    var seedBase = ((p.seed * 2654435761) >>> 0) ^ 0x9e3779b9;
+    var rng = mulberry32(seedBase >>> 0);
+    var P=p.P, C=p.C, G=p.G, density=p.density, conflictRate=p.conflictRate/100, hardSep=p.hardSep;
+
+    var orgArr = [];
+    for (var i=0;i<P;i++) orgArr.push(i % G);
+    for (var i=orgArr.length-1;i>0;i--){
+      var j = Math.floor(rng()*(i+1));
+      var tmp = orgArr[i]; orgArr[i]=orgArr[j]; orgArr[j]=tmp;
+    }
+
+    var people = [];
+    var groupACount = 0;
+    for (var i=0;i<P;i++){
+      var group = rng() < 0.5 ? 0 : 1;
+      if (group===0) groupACount++;
+      people.push({ id:i, org:orgArr[i], group:group, roomPref: rng()<0.5?0:1, pos:[], neg:[] });
+    }
+    var groupBCount = P - groupACount;
+
+    // 친목 클러스터: 실제 룸메이트 선호는 완전 무작위가 아니라 소규모 친구 집단 안에서
+    // 몰린다. 클러스터가 없으면(완전 균일 무작위 그래프) 어느 방식으로 묶어도 잘라낼
+    // 여지가 없어 최적화조차 상한이 바닥을 긴다 -- 클러스터 크기를 방 정원의 약 1.6배로
+    // 두면 절반 정도는 방 하나에 다 들어가고 절반은 정원을 넘겨 "정원 초과 클러스터"가
+    // 자연스럽게 생긴다.
+    var clusterOf = new Array(P);
+    var numClusters = Math.max(1, Math.round(P / (C*1.6)));
+    var clusterArr = [];
+    for (var i=0;i<P;i++) clusterArr.push(i % numClusters);
+    for (var i=clusterArr.length-1;i>0;i--){
+      var j = Math.floor(rng()*(i+1));
+      var tmp = clusterArr[i]; clusterArr[i]=clusterArr[j]; clusterArr[j]=tmp;
+    }
+    var clusterMembers = [];
+    for (var c=0;c<numClusters;c++) clusterMembers.push([]);
+    for (var i=0;i<P;i++){ clusterOf[i]=clusterArr[i]; clusterMembers[clusterArr[i]].push(i); }
+
+    var densityFloor = Math.floor(density), densityFrac = density - densityFloor;
+    var wantedBy = []; for (var i=0;i<P;i++) wantedBy.push([]);
+    var edgesPos = [];
+    var IN_CLUSTER_PROB = 0.82;
+    for (var i=0;i<P;i++){
+      var cnt = densityFloor + (rng() < densityFrac ? 1 : 0);
+      var tries = 0;
+      while (people[i].pos.length < cnt && tries < 60){
+        tries++;
+        var pool = clusterMembers[clusterOf[i]];
+        var t;
+        if (rng() < IN_CLUSTER_PROB && pool.length > 1){
+          t = pool[Math.floor(rng()*pool.length)];
+        } else {
+          t = Math.floor(rng()*P);
+        }
+        if (t===i) continue;
+        if (people[i].pos.indexOf(t) !== -1) continue;
+        people[i].pos.push(t);
+        edgesPos.push([i,t]);
+        wantedBy[t].push(i);
+      }
+    }
+
+    var edgesNeg = [];
+    for (var j=0;j<P;j++){
+      var roll = rng();
+      var negCount = roll < 0.25 ? 0 : (roll < 0.75 ? 1 : 2);
+      var tries2 = 0;
+      while (people[j].neg.length < negCount && tries2 < 60){
+        tries2++;
+        var target;
+        if (rng() < conflictRate && wantedBy[j].length > 0){
+          target = wantedBy[j][Math.floor(rng()*wantedBy[j].length)];
+        } else {
+          target = Math.floor(rng()*P);
+        }
+        if (target===j) continue;
+        if (people[j].neg.indexOf(target) !== -1) continue;
+        if (people[j].pos.indexOf(target) !== -1) continue;
+        people[j].neg.push(target);
+        edgesNeg.push([j,target]);
+      }
+    }
+
+    var posSet = {};
+    edgesPos.forEach(function(e){ posSet[e[0] + "_" + e[1]] = true; });
+    var conflictCount = 0;
+    edgesNeg.forEach(function(e){
+      var j=e[0], t=e[1];
+      if (posSet[t + "_" + j]) conflictCount++;
+    });
+
+    var R, roomsA = 0, roomsB = 0;
+    if (hardSep){
+      roomsA = Math.max(1, Math.ceil(groupACount / C)) * (groupACount>0?1:0);
+      roomsB = Math.max(1, Math.ceil(groupBCount / C)) * (groupBCount>0?1:0);
+      if (groupACount===0) roomsA = 0;
+      if (groupBCount===0) roomsB = 0;
+      R = roomsA + roomsB;
+    } else {
+      R = Math.ceil(P / C);
+    }
+    var rooms = [];
+    for (var r=0;r<R;r++){
+      var lockedGroup = hardSep ? (r < roomsA ? 0 : 1) : null;
+      rooms.push({ attr: r % 2, group: lockedGroup });
+    }
+
+    // 정원 초과 클러스터 추정: 완전 그래프 연결성분이 아니라 생성 시점에 이미 아는
+    // 친목 클러스터 단위로 센다. 그래프 연결성분으로 세면 소수의 클러스터간 노이즈
+    // 엣지만으로도 전체가 거대 연결성분 하나로 뭉쳐(작은 세상 효과) 상한이 0으로
+    // 무너지는 문제가 있었다 -- 클러스터는 생성 시점에 확정된 구조라 안정적이다.
+    var pairSeen = {};
+    edgesPos.forEach(function(e){
+      var a=e[0], b=e[1];
+      var key = Math.min(a,b) + "_" + Math.max(a,b);
+      pairSeen[key] = true;
+    });
+    var crowdingLoss = 0;
+    for (var c=0;c<numClusters;c++){
+      var s = clusterMembers[c].length;
+      if (s <= C) continue;
+      var g = Math.ceil(s / C);
+      var memberSet = {}; clusterMembers[c].forEach(function(x){ memberSet[x]=true; });
+      var m = 0;
+      Object.keys(pairSeen).forEach(function(key){
+        var parts = key.split("_"); var a=+parts[0], b=+parts[1];
+        if (memberSet[a] && memberSet[b]) m++;
+      });
+      crowdingLoss += m * (1 - 1/g);
+    }
+    crowdingLoss = Math.round(crowdingLoss);
+
+    var totalPos = edgesPos.length, totalNeg = edgesNeg.length;
+    // "선호 충족률" 은 함께 쓰고 싶다는 요청(positive) 이 실제로 충족된 비율만 센다.
+    // 회피(negative)는 별도 "위반 건수"로, 방 속성은 목적함수 보조항으로만 쓴다 -- 회피가
+    // 우연히 충족되는 비율(무작위 배정에서도 높다)이 지표에 섞이면 하드제약만 기준선이
+    // 실제보다 훨씬 높게 나와 "거의 못 들어준다"는 요지가 흐려진다.
+    var impossible = Math.min(totalPos, conflictCount + crowdingLoss);
+    var upperBoundRate = totalPos>0 ? (totalPos - impossible) / totalPos : 1;
+
+    return {
+      P:P, C:C, G:G, R:R, hardSep:hardSep, people:people, edgesPos:edgesPos, edgesNeg:edgesNeg,
+      wantedBy:wantedBy, rooms:rooms, groupACount:groupACount, groupBCount:groupBCount, roomsA:roomsA,
+      totalPos:totalPos, totalNeg:totalNeg, clusterOf:clusterOf, clusterMembers:clusterMembers, numClusters:numClusters,
+      conflictCount:conflictCount, crowdingLoss:crowdingLoss, upperBoundRate:upperBoundRate
+    };
+  }
+
+  /* ---------------- assignment builders ---------------- */
+  function roomsForPerson(inst, i){
+    var list = [];
+    for (var r=0;r<inst.R;r++){
+      if (inst.hardSep && inst.rooms[r].group !== null && inst.rooms[r].group !== inst.people[i].group) continue;
+      list.push(r);
+    }
+    return list;
+  }
+
+  function assignHardOnly(inst){
+    var assign = new Array(inst.P).fill(-1);
+    var occ = new Array(inst.R).fill(0);
+    for (var i=0;i<inst.P;i++){
+      var person = inst.people[i];
+      for (var r=0;r<inst.R;r++){
+        if (occ[r] >= inst.C) continue;
+        if (inst.hardSep && inst.rooms[r].group !== null && inst.rooms[r].group !== person.group) continue;
+        assign[i] = r; occ[r]++; break;
+      }
+    }
+    return assign;
+  }
+
+  // 클러스터 우선 배치: 이론 상한이 "친목 클러스터를 통째로 몇 개 방에 나눠 담을 때
+  // 어쩔 수 없이 잘리는 엣지" 로 계산되므로(정원 초과 클러스터), 초기해도 같은 원리로
+  // 클러스터를 방 단위로 채워야 상한에 근접한다. 클러스터 내부에서도 연결이 많은
+  // 사람(핵심 인물)부터 채워 서브그룹이 여러 방으로 흩어지는 걸 줄인다.
+  function greedyInit(inst){
+    var assign = new Array(inst.P).fill(-1);
+    var occ = new Array(inst.R).fill(0);
+    var roomClusterCount = []; for (var r=0;r<inst.R;r++) roomClusterCount.push({});
+    function place(i, r){
+      assign[i]=r; occ[r]++;
+      var c = inst.clusterOf[i];
+      roomClusterCount[r][c] = (roomClusterCount[r][c]||0) + 1;
+    }
+
+    for (var c=0;c<inst.numClusters;c++){
+      var members = inst.clusterMembers[c].slice();
+      var degree = {};
+      members.forEach(function(i){
+        degree[i] = inst.people[i].pos.filter(function(t){ return inst.clusterOf[t]===c; }).length +
+                    inst.wantedBy[i].filter(function(t){ return inst.clusterOf[t]===c; }).length;
+      });
+      members.sort(function(x, y){ return degree[y]-degree[x]; });
+
+      members.forEach(function(i){
+        if (assign[i]!==-1) return;
+        var candidates = roomsForPerson(inst, i).filter(function(r){ return occ[r] < inst.C; });
+        candidates.sort(function(r1, r2){
+          var n1 = roomClusterCount[r1][c]||0, n2 = roomClusterCount[r2][c]||0;
+          if (n1!==n2) return n2-n1;
+          var s1 = inst.rooms[r1].attr===inst.people[i].roomPref ? 0 : 1;
+          var s2 = inst.rooms[r2].attr===inst.people[i].roomPref ? 0 : 1;
+          return s1 - s2;
+        });
+        if (candidates.length) place(i, candidates[0]);
+      });
+    }
+
+    // 방어적 처리: 이론상 전부 배치되지만(총 정원 >= P) 혹시 남으면 아무 자리에나.
+    for (var i=0;i<inst.P;i++){
+      if (assign[i]!==-1) continue;
+      var cands = roomsForPerson(inst, i).filter(function(r){ return occ[r] < inst.C; });
+      if (cands.length) place(i, cands[0]);
+    }
+    return assign;
+  }
+
+  /* ---------------- scoring ---------------- */
+  // 회피(negative) 가중치를 선호(positive) 보다 높게 둔다: 상충 쌍(i가 j를 원하는데 j가 i를
+  // 피함)에서 지역탐색이 "그래도 같이 두자"로 흔들리지 않고 실제로 갈라놓게 만들어, 그 positive
+  // 항목이 이론 상한 계산과 일관되게 진짜로 충족 불가능한 채로 남게 한다.
+  var W_POS=3, W_NEG=4, W_ROOM=1, W_DIV=2;
+  function scoreAssignment(inst, assign, mixMode){
+    var posSat=0;
+    inst.edgesPos.forEach(function(e){ if (assign[e[0]]===assign[e[1]]) posSat++; });
+    var negViol=0;
+    inst.edgesNeg.forEach(function(e){ if (assign[e[0]]===assign[e[1]]) negViol++; });
+    var roomSat=0;
+    for (var i=0;i<inst.P;i++){ if (inst.rooms[assign[i]].attr===inst.people[i].roomPref) roomSat++; }
+    var divViol=0;
+    if (mixMode){
+      var byRoom={};
+      for (var i=0;i<inst.P;i++){ var r=assign[i]; (byRoom[r]=byRoom[r]||[]).push(inst.people[i].org); }
+      Object.keys(byRoom).forEach(function(r){
+        var counts={};
+        byRoom[r].forEach(function(o){ counts[o]=(counts[o]||0)+1; });
+        Object.keys(counts).forEach(function(o){ var c=counts[o]; divViol += c*(c-1)/2; });
+      });
+    }
+    var objective = W_POS*posSat - W_NEG*negViol + W_ROOM*roomSat - (mixMode ? W_DIV*divViol : 0);
+    // 선호 충족률 = 함께 쓰고 싶다는 요청이 충족된 비율(headline). 회피 위반은 별도 지표로,
+    // 방 속성 만족은 목적함수 보조항으로만 반영한다.
+    var fulfillRate = inst.totalPos>0 ? posSat/inst.totalPos : 0;
+    return { posSat:posSat, negViol:negViol, roomSat:roomSat, divViol:divViol, objective:objective, fulfilled:posSat, fulfillRate:fulfillRate };
+  }
+
+  /* ---------------- local search (chunked) ---------------- */
+  function localSearchRun(inst, initAssign, iterations, mixMode, seedOffset, onProgress, onDone){
+    var rng = mulberry32(((inst.P*7919 + seedOffset*104729) ^ 0x2545F491) >>> 0);
+    var assign = initAssign.slice();
+    var occ = new Array(inst.R).fill(0);
+    assign.forEach(function(r){ occ[r]++; });
+    var cur = scoreAssignment(inst, assign, mixMode);
+    var curve = [{ iter:0, rate:cur.fulfillRate }];
+
+    var totalSteps = iterations;
+    var chunk = Math.max(20, Math.ceil(iterations/40));
+    var done = 0;
+
+    function step(){
+      var lim = Math.min(chunk, totalSteps-done);
+      for (var s=0;s<lim;s++){
+        var a = Math.floor(rng()*inst.P);
+        var linked = inst.people[a].pos.concat(inst.people[a].neg, inst.wantedBy[a]);
+        if (rng() < 0.5){
+          // 절반은 무작위 상대, 절반은(연결이 있으면) a와 선호/회피로 얽힌 상대를 겨냥한다.
+          // 순수 무작위 탐색만으로는 P가 커질수록 유의미한 교환을 우연히 만날 확률이 급감한다.
+          var b = (linked.length && rng()<0.7) ? linked[Math.floor(rng()*linked.length)] : Math.floor(rng()*inst.P);
+          if (b===a || assign[a]===assign[b]) continue;
+          var ra = assign[a], rb = assign[b];
+          if (inst.hardSep){
+            if (inst.rooms[rb].group!==null && inst.rooms[rb].group!==inst.people[a].group) continue;
+            if (inst.rooms[ra].group!==null && inst.rooms[ra].group!==inst.people[b].group) continue;
+          }
+          assign[a]=rb; assign[b]=ra;
+          var next = scoreAssignment(inst, assign, mixMode);
+          if (next.objective > cur.objective || (next.objective===cur.objective && rng()<0.3)){
+            cur = next;
+          } else {
+            assign[a]=ra; assign[b]=rb;
+          }
+        } else {
+          var candidates = roomsForPerson(inst, a);
+          var r;
+          var wantRooms = [];
+          if (linked.length){
+            for (var li=0; li<linked.length; li++){
+              var rr = assign[linked[li]];
+              if (rr!==assign[a] && occ[rr]<inst.C && candidates.indexOf(rr)!==-1) wantRooms.push(rr);
+            }
+          }
+          if (wantRooms.length && rng()<0.8){
+            r = wantRooms[Math.floor(rng()*wantRooms.length)];
+          } else {
+            r = candidates[Math.floor(rng()*candidates.length)];
+          }
+          if (r===assign[a] || occ[r]>=inst.C) continue;
+          var prevRoom = assign[a];
+          occ[prevRoom]--; occ[r]++; assign[a]=r;
+          var next2 = scoreAssignment(inst, assign, mixMode);
+          if (next2.objective > cur.objective || (next2.objective===cur.objective && rng()<0.3)){
+            cur = next2;
+          } else {
+            occ[r]--; occ[prevRoom]++; assign[a]=prevRoom;
+          }
+        }
+      }
+      done += lim;
+      curve.push({ iter:done, rate:cur.fulfillRate });
+      if (onProgress) onProgress(done/totalSteps);
+      if (done < totalSteps){
+        setTimeout(step, 0);
+      } else {
+        onDone({ assign:assign, curve:curve, score:cur });
+      }
+    }
+    step();
+  }
+
+  function runLocalSearchAsync(inst, initAssign, iterations, mixMode, seedOffset, onProgress){
+    return new Promise(function(resolve){
+      localSearchRun(inst, initAssign, iterations, mixMode, seedOffset, onProgress, resolve);
+    });
+  }
+
+  /* ---------------- rendering ---------------- */
+  function fmt1(n){ return n.toFixed(1); }
+
+  function renderRoomLegend(inst){
+    var el = document.getElementById("roomLegend");
+    el.innerHTML = "";
+    var items = [
+      ["<span class='swatch swatch--ok'></span>선호 룸메이트 충족", null],
+      ["<span class='swatch swatch--bad'></span>회피 대상과 동실(위반)", null]
+    ];
+    items.forEach(function(it){ var sp=document.createElement("span"); sp.innerHTML=it[0]; el.appendChild(sp); });
+    for (var g=0; g<inst.G; g++){
+      var sp = document.createElement("span");
+      var sw = document.createElement("span");
+      sw.className = "swatch swatch--org";
+      sw.style.background = orgColor(g, inst.G);
+      sw.style.borderStyle = ORG_BORDER_STYLES[g % ORG_BORDER_STYLES.length];
+      sp.appendChild(sw);
+      sp.appendChild(document.createTextNode("조직 " + String.fromCharCode(65+g)));
+      el.appendChild(sp);
+    }
+  }
+
+  function renderRoomGrid(inst, assign){
+    var el = document.getElementById("roomGrid");
+    el.innerHTML = "";
+    var goodFlag = new Array(inst.P).fill(false);
+    var badFlag = new Array(inst.P).fill(false);
+    inst.edgesPos.forEach(function(e){ if (assign[e[0]]===assign[e[1]]) goodFlag[e[0]]=true; });
+    inst.edgesNeg.forEach(function(e){ if (assign[e[0]]===assign[e[1]]) badFlag[e[0]]=true; });
+
+    var byRoom = {}; for (var r=0;r<inst.R;r++) byRoom[r]=[];
+    for (var i=0;i<inst.P;i++) byRoom[assign[i]].push(i);
+
+    var frag = document.createDocumentFragment();
+    for (var r=0;r<inst.R;r++){
+      var card = document.createElement("div");
+      card.className = "room-card";
+      var occCount = byRoom[r].length;
+      var attrLabel = inst.rooms[r].attr===0 ? "저층·조용구역" : "고층·활동구역";
+      if (inst.hardSep && inst.rooms[r].group!==null) attrLabel += " · " + (inst.rooms[r].group===0 ? "그룹A" : "그룹B");
+      var head = document.createElement("div");
+      head.className = "room-card__head";
+      var no = document.createElement("span"); no.className="room-card__no"; no.textContent=(r+1)+"호실";
+      var cap = document.createElement("span"); cap.className="room-card__cap"; cap.textContent=occCount+"/"+inst.C;
+      head.appendChild(no); head.appendChild(cap);
+      card.appendChild(head);
+      var sub = document.createElement("div"); sub.className="room-card__attr"; sub.textContent=attrLabel;
+      card.appendChild(sub);
+      var chips = document.createElement("div"); chips.className="room-card__chips";
+      byRoom[r].forEach(function(i){
+        var chip = document.createElement("span");
+        var cls = "chip";
+        if (goodFlag[i]) cls += " chip--good";
+        if (badFlag[i]) cls += " chip--bad";
+        chip.className = cls;
+        chip.style.background = orgColor(inst.people[i].org, inst.G);
+        chip.style.borderStyle = ORG_BORDER_STYLES[inst.people[i].org % ORG_BORDER_STYLES.length];
+        chip.textContent = "#" + (i+1);
+        var statusTxt = goodFlag[i] && badFlag[i] ? "선호 충족과 회피 위반 동시 발생" : goodFlag[i] ? "선호 룸메이트 충족" : badFlag[i] ? "회피 대상과 동실(위반)" : "해당 없음";
+        chip.title = "신청자 " + (i+1) + "번 · 조직 " + String.fromCharCode(65+inst.people[i].org) + " · " + statusTxt;
+        chips.appendChild(chip);
+      });
+      card.appendChild(chips);
+      frag.appendChild(card);
+    }
+    el.innerHTML = "";
+    el.appendChild(frag);
+  }
+
+  function renderConvergenceChart(curve, baselineRate, upperBoundRate){
+    var svg = document.getElementById("convChart");
+    while (svg.firstChild) svg.removeChild(svg.firstChild);
+    var W=900, H=240, padL=44, padR=100, padT=16, padB=28;
+    var innerW=W-padL-padR, innerH=H-padT-padB;
+    var maxIter = curve.length ? curve[curve.length-1].iter || 1 : 1;
+    function x(it){ return padL + innerW*(it/maxIter); }
+    function y(rate){ return padT + innerH - Math.max(0, Math.min(1, rate))*innerH; }
+    var svgNS = "http://www.w3.org/2000/svg";
+
+    [0, 0.5, 1].forEach(function(g){
+      var line = document.createElementNS(svgNS, "line");
+      line.setAttribute("x1", padL); line.setAttribute("x2", W-padR);
+      line.setAttribute("y1", y(g)); line.setAttribute("y2", y(g));
+      line.setAttribute("stroke", "var(--line-soft)"); line.setAttribute("stroke-width", "1");
+      svg.appendChild(line);
+      var t = document.createElementNS(svgNS, "text");
+      t.setAttribute("x", padL-8); t.setAttribute("y", y(g)+3);
+      t.setAttribute("text-anchor", "end"); t.setAttribute("class", "axis-label");
+      t.textContent = Math.round(g*100) + "%";
+      svg.appendChild(t);
+    });
+
+    function hline(rate, color, label){
+      var ly = y(rate);
+      var line = document.createElementNS(svgNS, "line");
+      line.setAttribute("x1", padL); line.setAttribute("x2", W-padR);
+      line.setAttribute("y1", ly); line.setAttribute("y2", ly);
+      line.setAttribute("stroke", color); line.setAttribute("stroke-width", "1.6");
+      line.setAttribute("stroke-dasharray", "5 4");
+      svg.appendChild(line);
+      var t = document.createElementNS(svgNS, "text");
+      t.setAttribute("x", W-padR+6); t.setAttribute("y", ly+3);
+      t.setAttribute("class", "axis-label"); t.setAttribute("fill", color);
+      t.textContent = label;
+      svg.appendChild(t);
+    }
+    hline(baselineRate, "var(--ink-faint)", "하드제약만 " + fmt1(baselineRate*100) + "%");
+    hline(upperBoundRate, "var(--signal)", "이론상한 " + fmt1(upperBoundRate*100) + "%");
+
+    var d = "M " + curve.map(function(p){ return x(p.iter).toFixed(1) + "," + y(p.rate).toFixed(1); }).join(" L ");
+    var path = document.createElementNS(svgNS, "path");
+    path.setAttribute("d", d); path.setAttribute("fill", "none");
+    path.setAttribute("stroke", "var(--steel)"); path.setAttribute("stroke-width", "2.6");
+    svg.appendChild(path);
+
+    var t0 = document.createElementNS(svgNS, "text");
+    t0.setAttribute("x", padL); t0.setAttribute("y", H-8); t0.setAttribute("class", "axis-label");
+    t0.textContent = "0회"; svg.appendChild(t0);
+    var t1 = document.createElementNS(svgNS, "text");
+    t1.setAttribute("x", W-padR); t1.setAttribute("y", H-8); t1.setAttribute("text-anchor", "end"); t1.setAttribute("class", "axis-label");
+    t1.textContent = maxIter + "회"; svg.appendChild(t1);
+  }
+
+  function renderDiversityBar(rateOff, rateOn, mixIsPrimary){
+    var svg = document.getElementById("divChart");
+    while (svg.firstChild) svg.removeChild(svg.firstChild);
+    var W=320, H=180, padB=30, padT=22;
+    var innerH = H-padT-padB;
+    var svgNS = "http://www.w3.org/2000/svg";
+    var bars = [
+      { label:"믹스 off", rate:rateOff, active: !mixIsPrimary },
+      { label:"믹스 on", rate:rateOn, active: mixIsPrimary }
+    ];
+    var bw=76, gap=48, startX=52;
+    bars.forEach(function(b, idx){
+      var bx = startX + idx*(bw+gap);
+      var bh = Math.max(2, b.rate*innerH);
+      var by = padT+innerH-bh;
+      var rect = document.createElementNS(svgNS, "rect");
+      rect.setAttribute("x", bx); rect.setAttribute("y", by);
+      rect.setAttribute("width", bw); rect.setAttribute("height", bh);
+      rect.setAttribute("fill", b.active ? "color-mix(in srgb, var(--signal) 68%, var(--panel))" : "var(--line)");
+      rect.setAttribute("stroke", "var(--ink)"); rect.setAttribute("stroke-width", "1");
+      svg.appendChild(rect);
+      var vt = document.createElementNS(svgNS, "text");
+      vt.setAttribute("x", bx+bw/2); vt.setAttribute("y", by-7);
+      vt.setAttribute("text-anchor", "middle"); vt.setAttribute("class", "axis-label");
+      vt.textContent = fmt1(b.rate*100) + "%";
+      svg.appendChild(vt);
+      var lt = document.createElementNS(svgNS, "text");
+      lt.setAttribute("x", bx+bw/2); lt.setAttribute("y", H-8);
+      lt.setAttribute("text-anchor", "middle"); lt.setAttribute("class", "axis-label");
+      lt.textContent = b.label;
+      svg.appendChild(lt);
+    });
+  }
+
+  function setDelta(el, diff, unit, higherIsBetter){
+    var better = higherIsBetter ? diff>0 : diff<0;
+    var cls = "metric__delta";
+    if (Math.abs(diff) > 0.001) cls += better ? " good" : " bad";
+    el.className = cls;
+    var sign = diff>=0 ? "+" : "";
+    el.textContent = "하드 제약만 대비 " + sign + fmt1(diff) + unit + (Math.abs(diff)<=0.001 ? "" : (better ? " (개선)" : " (악화)"));
+  }
+
+  /* ---------------- orchestration ---------------- */
+  var state = { inst:null, baselineAssign:null, baselineScore:null, mixOff:null, mixOn:null, gridMode:"optimized" };
+
+  function readParams(){
+    return {
+      P: parseInt(document.getElementById("pSlider").value, 10),
+      C: parseInt(document.getElementById("cSlider").value, 10),
+      G: parseInt(document.getElementById("gSlider").value, 10),
+      density: parseFloat(document.getElementById("densitySlider").value),
+      conflictRate: parseInt(document.getElementById("conflictSlider").value, 10),
+      iterations: parseInt(document.getElementById("iterSlider").value, 10),
+      seed: Math.max(1, Math.min(999, parseInt(document.getElementById("seedInput").value, 10) || 1)),
+      hardSep: document.getElementById("hardSepToggle").checked
+    };
+  }
+
+  function setRunning(running){
+    document.getElementById("controlsFieldset").disabled = running;
+    document.getElementById("runBtn").disabled = running;
+    document.getElementById("tabOptimized").disabled = running;
+    document.getElementById("tabBaseline").disabled = running;
+    document.getElementById("progressLabel").textContent = running ? "탐색 중..." : "완료";
+    if (!running){
+      setTimeout(function(){
+        document.getElementById("progressFill").style.width = "0%";
+        document.getElementById("progressBar").setAttribute("aria-valuenow", "0");
+        document.getElementById("progressLabel").textContent = "대기 중";
+      }, 500);
+    }
+  }
+
+  function updateProgress(runIndex, totalRuns, frac){
+    var overall = Math.round(((runIndex + frac) / totalRuns) * 100);
+    document.getElementById("progressFill").style.width = overall + "%";
+    document.getElementById("progressBar").setAttribute("aria-valuenow", String(overall));
+    document.getElementById("progressLabel").textContent = "탐색 중 " + overall + "%";
+  }
+
+  function renderAll(){
+    var inst = state.inst;
+    var mixOn = document.getElementById("mixModeToggle").checked;
+    var primary = mixOn ? state.mixOn : state.mixOff;
+
+    renderRoomLegend(inst);
+    var displayAssign = state.gridMode==="optimized" ? primary.assign : state.baselineAssign;
+    renderRoomGrid(inst, displayAssign);
+
+    renderConvergenceChart(primary.curve, state.baselineScore.fulfillRate, inst.upperBoundRate);
+    renderDiversityBar(state.mixOff.score.fulfillRate, state.mixOn.score.fulfillRate, mixOn);
+
+    var upperBound = Math.max(inst.upperBoundRate, primary.score.fulfillRate);
+    var achieved = primary.score.fulfillRate;
+    var baseline = state.baselineScore.fulfillRate;
+
+    document.getElementById("mFulfill").textContent = fmt1(achieved*100);
+    setDelta(document.getElementById("mFulfillDelta"), (achieved-baseline)*100, "%p", true);
+
+    document.getElementById("mUpper").textContent = fmt1(upperBound*100);
+    var gap = (upperBound-achieved)*100;
+    document.getElementById("mUpperDelta").textContent = "달성값까지 여유 " + fmt1(gap) + "%p";
+
+    document.getElementById("mViol").textContent = String(primary.score.negViol);
+    setDelta(document.getElementById("mViolDelta"), primary.score.negViol - state.baselineScore.negViol, "건", false);
+
+    var divDelta = (state.mixOn.score.fulfillRate - state.mixOff.score.fulfillRate) * 100;
+    document.getElementById("mDiv").textContent = (divDelta>=0?"+":"") + fmt1(divDelta);
+    document.getElementById("mDivDelta").textContent = "믹스 off " + fmt1(state.mixOff.score.fulfillRate*100) + "% -> 믹스 on " + fmt1(state.mixOn.score.fulfillRate*100) + "%";
+
+    var unmet = inst.totalPos - primary.score.fulfilled;
+    var w = Math.max(0, Math.min(inst.conflictCount, unmet));
+    document.getElementById("summaryText").textContent =
+      "이 조건에서 선호의 " + fmt1(achieved*100) + "%를 충족했습니다. 구조적 상한은 " + fmt1(upperBound*100) +
+      "%이고, 못 들어준 " + unmet + "건 중 " + w + "건은 서로 상충하는 요청이라 어떤 배정으로도 불가능합니다.";
+
+    document.getElementById("divNote").innerHTML =
+      "현재 조건에서 조직 다양성을 강제하면(믹스 on) 선호 충족률이 <b>" + fmt1(divDelta) + "%p</b> " + (divDelta<0?"내려갑니다":"움직입니다") +
+      ". 같은 조직끼리 몰아 배정하는 편이 순수 선호는 더 잘 맞지만, 부서 융합이나 신입 적응처럼 다양성 자체가 목표일 때는 이 손실을 감수할 가치가 있는지 담당자가 판단할 문제입니다.";
+  }
+
+  function recomputeAll(){
+    setRunning(true);
+    var params = readParams();
+    var inst = generateInstance(params);
+    var baselineAssign = assignHardOnly(inst);
+    var baselineScore = scoreAssignment(inst, baselineAssign, false);
+    var initAssign = greedyInit(inst);
+
+    runLocalSearchAsync(inst, initAssign, params.iterations, false, 11, function(frac){ updateProgress(0, 2, frac); })
+      .then(function(mixOffResult){
+        state.inst = inst;
+        state.baselineAssign = baselineAssign;
+        state.baselineScore = baselineScore;
+        state.mixOff = mixOffResult;
+        return runLocalSearchAsync(inst, initAssign, params.iterations, true, 29, function(frac){ updateProgress(1, 2, frac); });
+      })
+      .then(function(mixOnResult){
+        state.mixOn = mixOnResult;
+        renderAll();
+        setRunning(false);
+      });
+  }
+
+  /* ---------------- wiring ---------------- */
+  function bindLive(id, valId, fmt){
+    var input = document.getElementById(id), val = document.getElementById(valId);
+    input.addEventListener("input", function(){ val.textContent = fmt(input.value); });
+    input.addEventListener("change", recomputeAll);
+  }
+  bindLive("pSlider", "pVal", function(v){ return v + "명"; });
+  bindLive("cSlider", "cVal", function(v){ return v + "인실"; });
+  bindLive("gSlider", "gVal", function(v){ return v + "개"; });
+  bindLive("densitySlider", "densityVal", function(v){ return parseFloat(v).toFixed(1) + "명"; });
+  bindLive("conflictSlider", "conflictVal", function(v){ return v + "%"; });
+  bindLive("iterSlider", "iterVal", function(v){ return v + "회"; });
+
+  document.getElementById("seedInput").addEventListener("change", recomputeAll);
+  document.getElementById("hardSepToggle").addEventListener("change", recomputeAll);
+  document.getElementById("mixModeToggle").addEventListener("change", function(){
+    if (state.inst) renderAll();
+  });
+  document.getElementById("runBtn").addEventListener("click", recomputeAll);
+
+  document.getElementById("tabOptimized").addEventListener("click", function(){
+    state.gridMode = "optimized";
+    this.setAttribute("aria-pressed", "true");
+    document.getElementById("tabBaseline").setAttribute("aria-pressed", "false");
+    if (state.inst) renderAll();
+  });
+  document.getElementById("tabBaseline").addEventListener("click", function(){
+    state.gridMode = "baseline";
+    this.setAttribute("aria-pressed", "true");
+    document.getElementById("tabOptimized").setAttribute("aria-pressed", "false");
+    if (state.inst) renderAll();
+  });
+
+  recomputeAll();
+})();
+</script>
+</body>
+</html>

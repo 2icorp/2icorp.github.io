@@ -14,7 +14,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../styles.css?v=15">
+<link rel="stylesheet" href="../styles.css?v=17">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
 <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
 <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js" onload="renderMathInElement(document.body,{delimiters:[{left:'$$',right:'$$',display:true},{left:'$',right:'$',display:false},{left:'\\[',right:'\\]',display:true},{left:'\\(',right:'\\)',display:false}]})"></script>
@@ -82,7 +82,7 @@ Ceph가 <code>size</code>와 <code>min_size</code>로 표현하는 것이 이것
 살아 있는 노드가 W 이상일 때만 쓰기가 받아들여져야 하고, 결과는 계약 위반 0건이었습니다.</p>
 <p>문제는 그다음입니다. 정확히 W개만 응답하게 만든 뒤, 응답을 준 노드부터 죽였습니다.
 최악의 경우입니다.</p>
-<table>
+<div class="tscroll" tabindex="0" role="region" aria-label="표. 좌우로 스크롤할 수 있습니다"><table>
 <thead>
 <tr>
 <th>정족수 W</th>
@@ -115,7 +115,7 @@ Ceph가 <code>size</code>와 <code>min_size</code>로 표현하는 것이 이것
 <td>0.0%</td>
 </tr>
 </tbody>
-</table>
+</table></div>
 <p>정족수 1은 빠릅니다. 그리고 응답을 준 그 노드가 죽는 순간 전부 사라집니다. 이건 버그가
 아니라 계약대로 동작한 것입니다. 성능을 위해 W를 1로 낮추는 설정은 흔하고, 그 설정이
 무엇을 포기하는지가 위 표입니다. 계약을 명시하지 않으면 이 표는 장애가 난 다음에 그려집니다.</p>
@@ -125,7 +125,7 @@ Ceph가 <code>size</code>와 <code>min_size</code>로 표현하는 것이 이것
 하지만, 틀린 내용을 성공으로 돌려주면 그대로 흘러갑니다.</p>
 <p>청크 파일의 임의 위치에서 비트 하나를 뒤집었습니다. 헤더 영역을 피하지 않았습니다.
 실제 비트로트는 헤더를 비켜 가지 않고, 비켜 가게 만들면 우리에게 유리한 실험이 됩니다.</p>
-<table>
+<div class="tscroll" tabindex="0" role="region" aria-label="표. 좌우로 스크롤할 수 있습니다"><table>
 <thead>
 <tr>
 <th>체크섬</th>
@@ -151,7 +151,7 @@ Ceph가 <code>size</code>와 <code>min_size</code>로 표현하는 것이 이것
 <td>20 (100%)</td>
 </tr>
 </tbody>
-</table>
+</table></div>
 <p>여기까지는 예상 가능합니다. 흥미로운 것은 그다음이었습니다. 탐지는 손상을 알려줄 뿐
 고치지는 않습니다. 손상은 쌓입니다.</p>
 <p>같은 손상을 같은 순서로 여섯 라운드에 걸쳐 144건 주입하면서, 배경 검증만 켜고 껐습니다.
@@ -177,7 +177,7 @@ Ceph가 <code>size</code>와 <code>min_size</code>로 표현하는 것이 이것
 <p>온프렘으로 내리면 싸다는 논리의 절반은 하드웨어 단가이고, 나머지 절반은 그 하드웨어에
 얼마를 담느냐입니다. 후자는 자주 빠집니다.</p>
 <p>동시 손실 2개를 똑같이 견디는 조건에서 비교했습니다. 내고장성이 같아야 공정한 비교입니다.</p>
-<table>
+<div class="tscroll" tabindex="0" role="region" aria-label="표. 좌우로 스크롤할 수 있습니다"><table>
 <thead>
 <tr>
 <th>방식</th>
@@ -197,7 +197,7 @@ Ceph가 <code>size</code>와 <code>min_size</code>로 표현하는 것이 이것
 <td>341.33 GiB</td>
 </tr>
 </tbody>
-</table>
+</table></div>
 <p>정확히 두 배입니다. 디스크를 절반 값에 사도 저장 효율에서 절반을 잃으면 남는 게 없습니다.</p>
 <p>복원 속도는 어떨까요. 25회씩 쟀는데, 이 규모에서는 페이지 캐시와 파일 시스템 잡음이
 지배해서 반복 실행하면 두 방식의 평균이 겹치고 순위가 뒤바뀝니다. 그래서 어느 쪽이 빠르다고
@@ -259,7 +259,7 @@ Ceph가 <code>size</code>와 <code>min_size</code>로 표현하는 것이 이것
       <a href="../index.html#method">방식</a>
       <a href="../papers.html">논문·실험</a>
       <a href="../index.html#voucher">정부 바우처</a>
-      <a href="https://github.com/2icorp" target="_blank" rel="noopener">GitHub</a>
+      <a href="../cases.html">사례</a>
       <a href="../en/">EN</a>
     </nav>
   </div>

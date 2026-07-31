@@ -1,0 +1,258 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<script>(function(){try{var t=localStorage.getItem("theme");if(!t&&window.matchMedia&&matchMedia("(prefers-color-scheme: dark)").matches)t="dark";if(t)document.documentElement.setAttribute("data-theme",t);}catch(e){}})();</script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>복제는 내구성이 아니다 · 저장소 무결성 시뮬레이터 데모 · 2i</title>
+<link rel="stylesheet" href="../../styles.css?v=17">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="demo-top">
+  <a href="/" class="demo-brand"><span class="demo-brand__mark">2i</span><span class="demo-brand__tag">DEMO · 저장소 무결성 시뮬레이터</span></a>
+  <nav class="demo-top__links">
+    <a href="/cases.html#case-16">사례 보기</a>
+    <a href="/#contact">상담 신청</a>
+  </nav>
+</header>
+<div class="demo-banner">브라우저에서 그 자리에서 계산하는 인터랙티브 데모입니다. 합성 데이터를 씁니다.</div>
+
+<main>
+  <h1>복제 3벌은 내구성이 아니다</h1>
+  <p class="lede">복제는 가용성을 만듭니다. 무결성은 체크섬과 스크럽이 만듭니다. 체크섬이 없으면 손상된 데이터도 읽기가 성공합니다. 내용만 다를 뿐이고, 이것이 저장 시스템이 낼 수 있는 가장 나쁜 결과인 조용한 오염입니다. 아래 세 시뮬레이터는 전부 이 페이지에서 그 자리에서 계산합니다.</p>
+
+  <section class="card demo-sec" id="secA">
+    <div class="demo-sec__no">시뮬레이터 1</div>
+    <h2>손상·탐지·복구</h2>
+    <p class="section-lede">객체마다 복제본을 여러 벌 두고, 라운드마다 무작위로 비트를 반전시킵니다. 체크섬을 켜면 손상이 보이고, 스크럽을 켜면 보이는 손상이 복구됩니다. 둘 다 꺼두면 손상은 조용히 쌓입니다.</p>
+
+    <div class="sim-controls">
+      <div class="control">
+        <h3>객체 수</h3>
+        <p>격자에 그릴 객체 개수입니다. 많을수록 손실률 통계가 더 안정적으로 보입니다.</p>
+        <div class="control__row">
+          <input type="range" id="nSlider" min="100" max="2000" step="50" value="300" aria-label="객체 수 슬라이더">
+          <span class="control__val" id="nVal">300개</span>
+        </div>
+      </div>
+      <div class="control">
+        <h3>복제본 수</h3>
+        <p>객체 하나를 몇 벌 복제해 저장할지입니다. 벌수가 많을수록 전 복제본이 동시에 상하기 어려워집니다.</p>
+        <div class="control__row">
+          <input type="range" id="rSlider" min="2" max="4" step="1" value="3" aria-label="복제본 수 슬라이더">
+          <span class="control__val" id="rVal">3벌</span>
+        </div>
+      </div>
+      <div class="control">
+        <h3>라운드당 손상 주입률</h3>
+        <p>라운드마다 전체 복제본 중 이 비율만큼 무작위로 비트가 반전됩니다.</p>
+        <div class="control__row">
+          <input type="range" id="rateSlider" min="1" max="20" step="0.5" value="8.5" aria-label="라운드당 손상 주입률 슬라이더">
+          <span class="control__val" id="rateVal">8.5%</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="toggle-box">
+      <label class="toggle-row">
+        <span class="toggle-row__text">
+          <h4>체크섬</h4>
+          <p>꺼두면 손상된 복제본도 읽기가 그대로 성공합니다. 탐지 자체가 안 됩니다.</p>
+        </span>
+        <span class="dtoggle"><input type="checkbox" id="checksumToggle" checked><span></span></span>
+      </label>
+      <label class="toggle-row">
+        <span class="toggle-row__text">
+          <h4>배경 스크럽</h4>
+          <p>켜두면 라운드마다 탐지된 손상을 온전한 복제본에서 찾아 복구합니다.</p>
+        </span>
+        <span class="dtoggle"><input type="checkbox" id="scrubToggle"><span></span></span>
+      </label>
+    </div>
+
+    <p class="fact-line" id="bitFact"></p>
+
+    <div class="btn-row">
+      <button type="button" class="btn btn--signal" id="btnStep">1라운드 진행</button>
+      <button type="button" class="btn btn--ghost" id="btnAuto6">6라운드 자동</button>
+      <button type="button" class="btn btn--ghost" id="btnReset">초기화</button>
+    </div>
+    <p class="round-status" id="roundStatus" aria-live="polite"></p>
+
+    <div class="legend">
+      <span><span class="swatch swatch--ok"></span>정상</span>
+      <span><span class="swatch swatch--signal"></span>탐지된 손상</span>
+      <span><span class="swatch swatch--silent"></span>조용한 오염(미탐지)</span>
+      <span><span class="swatch swatch--lost"></span>손실(복구 불능)</span>
+    </div>
+    <div class="obj-grid-wrap">
+      <div class="obj-grid" id="objGrid" role="img" aria-label="객체 격자, 아직 계산 전"></div>
+    </div>
+
+    <div class="card chart-card" style="padding:1.3rem clamp(1rem,2vw,1.6rem)">
+      <h3>라운드별 누적 손실률</h3>
+      <div class="legend">
+        <span><span class="swatch swatch--line-actual"></span>현재 설정</span>
+        <span><span class="swatch swatch--line-base"></span>스크럽을 한 번도 안 돌렸다면(기준선)</span>
+      </div>
+      <svg id="lossChart" viewBox="0 0 600 200" preserveAspectRatio="xMidYMid meet" role="img" aria-label="라운드별 누적 손실률 라인 차트"></svg>
+    </div>
+
+    <div class="metrics" id="metricsA" aria-live="polite">
+      <div class="metric">
+        <div class="metric__label">손상 탐지율</div>
+        <div class="metric__value"><span id="mDetect">-</span><span class="metric__unit">%</span></div>
+      </div>
+      <div class="metric">
+        <div class="metric__label">누적 복구 건수</div>
+        <div class="metric__value"><span id="mRepair">-</span><span class="metric__unit">건</span></div>
+      </div>
+      <div class="metric">
+        <div class="metric__label">누적 손실 객체</div>
+        <div class="metric__value"><span id="mLostCount">-</span><span class="metric__unit">개</span></div>
+        <div class="metric__delta" id="mLostCountDelta"></div>
+      </div>
+      <div class="metric">
+        <div class="metric__label">누적 손실률</div>
+        <div class="metric__value"><span id="mLostRate">-</span><span class="metric__unit">%</span></div>
+        <div class="metric__delta" id="mLostRateDelta"></div>
+      </div>
+    </div>
+
+    <p class="summary-note" id="summaryA" aria-live="polite"></p>
+  </section>
+
+  <section class="card demo-sec" id="secB">
+    <div class="demo-sec__no">시뮬레이터 2</div>
+    <h2>저장 효율 비교</h2>
+    <p class="section-lede">복제와 소거 부호가 동시 손실을 똑같이 견디도록 맞춰놓고, 원시 용량 얼마를 넣으면 실사용 가능한 용량이 얼마나 나오는지 순수 계산으로 비교합니다.</p>
+
+    <div class="sim-controls">
+      <div class="control">
+        <h3>원시 용량</h3>
+        <p>실제로 갖고 있는 디스크 총량입니다.</p>
+        <div class="control__row">
+          <input type="range" id="rawSlider" min="0.25" max="10" step="0.25" value="1" aria-label="원시 용량 슬라이더">
+          <span class="control__val" id="rawVal">1 TiB</span>
+        </div>
+      </div>
+      <div class="control">
+        <h3>동시 손실 허용 수</h3>
+        <p>노드나 디스크가 동시에 몇 개 죽어도 데이터를 지켜야 하는지입니다.</p>
+        <div class="control__row">
+          <input type="range" id="fSlider" min="1" max="3" step="1" value="2" aria-label="동시 손실 허용 수 슬라이더">
+          <span class="control__val" id="fVal">2개</span>
+        </div>
+      </div>
+      <div class="control">
+        <h3>소거 부호 데이터 조각 수(k)</h3>
+        <p>소거 부호에서 원본 데이터를 나누는 조각 수입니다. 패리티 조각 수는 동시 손실 허용 수와 같게 자동으로 맞춥니다.</p>
+        <div class="control__row">
+          <input type="range" id="kSlider" min="2" max="8" step="1" value="4" aria-label="소거 부호 데이터 조각 수 슬라이더">
+          <span class="control__val" id="kVal">4조각</span>
+        </div>
+      </div>
+    </div>
+
+    <p class="fact-line" id="effFormula"></p>
+
+    <div class="card chart-card" style="padding:1.3rem clamp(1rem,2vw,1.6rem)">
+      <h3>같은 내구성, 다른 실사용 용량</h3>
+      <svg id="effChart" viewBox="0 0 600 140" preserveAspectRatio="xMidYMid meet" role="img" aria-label="복제와 소거 부호의 실사용 용량 막대 비교"></svg>
+      <p class="eff-legend" id="effLegend"></p>
+    </div>
+
+    <div class="metrics metrics--3" id="metricsB" aria-live="polite">
+      <div class="metric">
+        <div class="metric__label">복제(N중) 실사용 용량</div>
+        <div class="metric__value"><span id="mUsableRepl">-</span><span class="metric__unit">GiB</span></div>
+      </div>
+      <div class="metric">
+        <div class="metric__label">소거 부호(k+m) 실사용 용량</div>
+        <div class="metric__value"><span id="mUsableEC">-</span><span class="metric__unit">GiB</span></div>
+      </div>
+      <div class="metric">
+        <div class="metric__label">효율 배수</div>
+        <div class="metric__value"><span id="mEffRatio">-</span><span class="metric__unit">배</span></div>
+      </div>
+    </div>
+
+    <p class="summary-note" id="summaryB" aria-live="polite"></p>
+  </section>
+
+  <section class="card demo-sec" id="secC">
+    <div class="demo-sec__no">시뮬레이터 3</div>
+    <h2>장애 도메인 배치</h2>
+    <p class="section-lede">복제본을 아무 노드에나 흩뿌리면 우연히 같은 랙이나 같은 가용영역에 몰립니다. 그 도메인 하나가 죽으면 복제본 여러 벌이 동시에 사라집니다. 도메인을 인식해 배치를 나누면 이 몰림을 원천적으로 막을 수 있는지 실제로 배치를 돌려 셉니다.</p>
+
+    <div class="sim-controls">
+      <div class="control">
+        <h3>노드 수</h3>
+        <p>클러스터 전체 노드 개수입니다.</p>
+        <div class="control__row">
+          <input type="range" id="nodesSlider" min="6" max="24" step="1" value="12" aria-label="노드 수 슬라이더">
+          <span class="control__val" id="nodesVal">12개</span>
+        </div>
+      </div>
+      <div class="control">
+        <h3>장애 도메인 수</h3>
+        <p>랙·전원·스위치처럼 한 번에 같이 죽을 수 있는 묶음의 개수입니다.</p>
+        <div class="control__row">
+          <input type="range" id="domainsSlider" min="2" max="8" step="1" value="4" aria-label="장애 도메인 수 슬라이더">
+          <span class="control__val" id="domainsVal">4개</span>
+        </div>
+      </div>
+      <div class="control">
+        <h3>청크 수</h3>
+        <p>배치를 시뮬레이션할 청크(복제 단위) 개수입니다. 많을수록 비율이 안정적입니다.</p>
+        <div class="control__row">
+          <input type="range" id="chunksSlider" min="1000" max="10000" step="500" value="5000" aria-label="청크 수 슬라이더">
+          <span class="control__val" id="chunksVal">5000개</span>
+        </div>
+      </div>
+      <div class="control">
+        <h3>청크당 복제본 수</h3>
+        <p>청크 하나를 몇 개 노드에 나눠 저장할지입니다.</p>
+        <div class="control__row">
+          <input type="range" id="cReplSlider" min="2" max="4" step="1" value="3" aria-label="청크당 복제본 수 슬라이더">
+          <span class="control__val" id="cReplVal">3벌</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="domain-map" id="domainMap"></div>
+
+    <div class="card chart-card" style="padding:1.3rem clamp(1rem,2vw,1.6rem)">
+      <h3>한 도메인에 복제본이 몰린 청크 비율</h3>
+      <svg id="domainChart" viewBox="0 0 600 140" preserveAspectRatio="xMidYMid meet" role="img" aria-label="도메인 무시 배치와 도메인 인식 배치의 몰림 비율 막대 비교"></svg>
+      <p class="eff-legend" id="domainLegend"></p>
+    </div>
+
+    <p class="reject-note" id="rejectNote"></p>
+
+    <div class="metrics metrics--3" id="metricsC" aria-live="polite">
+      <div class="metric">
+        <div class="metric__label">도메인 무시 몰림 비율</div>
+        <div class="metric__value"><span id="mNaive">-</span><span class="metric__unit">%</span></div>
+      </div>
+      <div class="metric">
+        <div class="metric__label">도메인 인식 몰림 비율</div>
+        <div class="metric__value"><span id="mAware">-</span><span class="metric__unit">%</span></div>
+      </div>
+      <div class="metric">
+        <div class="metric__label">도메인 부족 거부</div>
+        <div class="metric__value"><span id="mReject">-</span><span class="metric__unit">건</span></div>
+      </div>
+    </div>
+
+    <p class="summary-note" id="summaryC" aria-live="polite"></p>
+  </section>
+
+  <p class="honesty"><strong>정직하게 말하면,</strong> 이 데모는 합성 데이터로 손상·탐지·복구·배치를 흉내 낸 시뮬레이션입니다. 실제 디스크의 물리적 특성이나 펌웨어 버그, 여러 장애가 동시에 상관관계를 갖고 터지는 상황은 이 모델에 들어 있지 않습니다. 정형 일관성 검증(Jepsen류 테스트), 여러 사이트에 걸친 복제, 대규모 노드 운영 검증은 이 데모의 범위 밖입니다. 2i가 만드는 저장소는 Ceph 같은 범용 분산 저장소의 대안이 아니라, 인터넷이 끊긴 폐쇄망의 소규모 구성을 위한 최소한의 구현입니다.</p>
+</main>
+
+<footer class="demo-foot">© 2i · contact@2icorp.site</footer>
+<script src="app.js" defer></script>
+</body>
+</html>
