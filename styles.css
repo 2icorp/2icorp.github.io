@@ -59,6 +59,10 @@ a { color: inherit; text-decoration: none; }
 /* ---- shared atoms ---- */
 .wrap { width: min(1180px, 100% - var(--gutter) * 2); margin-inline: auto; }
 
+/* 미디어가 컨테이너를 넘지 않게 하는 안전망. 좁은 화면 가로 스크롤의 흔한 원인이다. */
+img, video, canvas { max-width: 100%; height: auto; }
+svg { max-width: 100%; }
+
 .eyebrow {
   font-family: var(--mono);
   font-size: var(--text-xs);
@@ -119,7 +123,7 @@ a { color: inherit; text-decoration: none; }
 .brand { display: flex; align-items: baseline; gap: 0.6rem; font-weight: 800; letter-spacing: -0.03em; font-size: 1.35rem; }
 .brand__mark { font-family: var(--mono); color: var(--signal); font-weight: 700; }
 .brand__tag { font-family: var(--mono); font-size: var(--text-xs); letter-spacing: 0.14em; color: var(--ink-faint); text-transform: uppercase; }
-.nav__links { display: flex; align-items: center; gap: 1.7rem; }
+.nav__links { display: flex; align-items: center; gap: 1.25rem; }
 .nav__links a { font-size: 0.92rem; color: var(--ink-soft); transition: color var(--dur); white-space: nowrap; }
 .nav__links a:hover { color: var(--ink); }
 .nav__links a:focus-visible { outline: 2px solid var(--signal); outline-offset: 3px; border-radius: 2px; }
@@ -151,7 +155,9 @@ a { color: inherit; text-decoration: none; }
 .nav--open .nav__burger span:nth-child(2) { opacity: 0; }
 .nav--open .nav__burger span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
 
-@media (max-width: 1000px) {
+/* 정본 상단 탭은 10개다. 1150px 아래에서는 한 줄에 못 들어가 줄바꿈으로 헤더가 무너지므로
+   그 전에 햄버거로 접는다. (2026-07-31: 상단 깨짐 신고의 직접 원인) */
+@media (max-width: 1150px) {
   .nav__burger { display: flex; }
   .nav__links {
     position: absolute;
@@ -164,6 +170,10 @@ a { color: inherit; text-decoration: none; }
     background: var(--paper);
     border-bottom: 1px solid var(--line);
     box-shadow: 0 24px 40px -28px oklch(24% 0.02 255 / 0.4);
+    /* 항목이 많아 세로로 화면을 넘칠 때 메뉴 안에서 스크롤되게 한다 */
+    max-height: calc(100vh - 64px);
+    overflow-y: auto;
+    overscroll-behavior: contain;
   }
   .nav--open .nav__links { display: flex; }
   .nav__links a { padding: 0.85rem var(--gutter); font-size: 1rem; }
@@ -314,9 +324,13 @@ section[id] { scroll-margin-top: 80px; }
 .cta__row { margin-top: 2rem; display: flex; gap: 0.8rem; justify-content: center; flex-wrap: wrap; }
 
 .form { max-width: 620px; margin: 2.5rem auto 0; display: grid; grid-template-columns: 1fr 1fr; gap: 0.9rem; text-align: left; }
-.form label { display: flex; flex-direction: column; gap: 0.4rem; font-size: var(--text-sm); color: oklch(85% 0.01 255 / 0.85); }
+/* min-width:0 이 없으면 그리드 항목이 내용(가장 긴 select option)보다 작아지지 않아
+   좁은 화면에서 폼이 뷰포트를 넘긴다. */
+.form label { display: flex; flex-direction: column; gap: 0.4rem; min-width: 0; font-size: var(--text-sm); color: oklch(85% 0.01 255 / 0.85); }
 .form .full { grid-column: 1 / -1; }
+@media (max-width: 560px) { .form { grid-template-columns: 1fr; } }
 .form input, .form select, .form textarea {
+  width: 100%; min-width: 0; max-width: 100%;
   font-family: inherit; font-size: 0.96rem; padding: 0.75rem 0.85rem; min-height: 44px;
   background: oklch(100% 0 0 / 0.06); border: 1px solid oklch(100% 0 0 / 0.16);
   border-radius: var(--radius); color: var(--paper);
@@ -329,7 +343,8 @@ section[id] { scroll-margin-top: 80px; }
 .foot { padding-block: 3rem; border-top: 1px solid var(--line); }
 .foot__inner { display: flex; justify-content: space-between; gap: 1.5rem; flex-wrap: wrap; align-items: center; }
 .foot__mono { font-family: var(--mono); font-size: var(--text-xs); color: var(--ink-faint); letter-spacing: 0.06em; }
-.foot__links { display: flex; gap: 1.4rem; font-size: 0.9rem; color: var(--ink-soft); }
+/* 좁은 화면에서 줄바꿈이 없으면 푸터 링크 줄이 뷰포트를 넘겨 문서 전체에 가로 스크롤을 만든다. */
+.foot__links { display: flex; flex-wrap: wrap; gap: 0.6rem 1.4rem; font-size: 0.9rem; color: var(--ink-soft); }
 
 /* ============ CASE STUDIES (사례집) ============ */
 .cases-hero { padding-top: clamp(2.5rem, 1rem + 6vw, 5rem); padding-bottom: clamp(2rem,1rem + 3vw,3.5rem); }
@@ -448,7 +463,9 @@ section[id] { scroll-margin-top: 80px; }
 .rf-cell--pending .rf-desc { color: var(--ink-faint); font-style: italic; }
 
 /* ============ APPLICATIONS / VERTICAL EXPANSION MAP ============ */
-.mtag { display: inline-flex; align-items: center; font-family: var(--mono); font-size: var(--text-xs); letter-spacing: 0.04em; padding: 0.22rem 0.65rem; border-radius: 999px; white-space: nowrap; }
+.mtag { display: inline-flex; align-items: center; max-width: 100%; font-family: var(--mono); font-size: var(--text-xs); letter-spacing: 0.04em; padding: 0.22rem 0.65rem; border-radius: 999px; white-space: nowrap; }
+/* 영어 라벨은 한국어보다 길어 좁은 화면에서 알약 하나가 뷰포트를 넘긴다. 그때는 줄바꿈을 허용한다. */
+@media (max-width: 620px) { .mtag { white-space: normal; } }
 .mtag--demo { color: var(--signal-deep); background: color-mix(in oklab, var(--signal) 12%, transparent); border: 1px solid color-mix(in oklab, var(--signal) 30%, transparent); }
 .mtag--extend { color: var(--ok); background: color-mix(in oklab, var(--ok) 12%, transparent); border: 1px solid color-mix(in oklab, var(--ok) 30%, transparent); }
 .mtag--research { color: var(--steel); background: color-mix(in oklab, var(--steel) 10%, transparent); border: 1px solid color-mix(in oklab, var(--steel) 24%, transparent); }
@@ -547,9 +564,16 @@ section[id] { scroll-margin-top: 80px; }
 }
 
 /* filter chips */
+/* 분류 탭은 상단 헤더(64px) 바로 아래에 고정한다. 필터를 누르면 카드가 접혀 문서가
+   짧아지는데, 고정이 아니면 탭 줄이 화면 밖으로 밀려 "탭이 사라졌다 생겼다" 로 보인다. */
 .pfilters {
   display: flex; flex-wrap: wrap; gap: 0.5rem;
+  position: sticky; top: 64px; z-index: 20;
   margin-bottom: 1.5rem;
+  padding: 0.8rem 0 0.7rem;
+  background: oklch(97.5% 0.008 85 / 0.92);
+  backdrop-filter: saturate(140%) blur(10px);
+  border-bottom: 1px solid var(--line-soft);
 }
 .pfilter {
   font-family: var(--mono);
@@ -843,7 +867,15 @@ section[id] { scroll-margin-top: 80px; }
 .pillar__ref { font-family: var(--mono); font-size: var(--text-xs); color: var(--ink-faint); border-top: 1px solid var(--line-soft); padding-top: 0.65rem; }
 
 /* ============ AX IDEAS 30 ============ */
-.ifilters { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1.6rem; }
+.ifilters {
+  display: flex; flex-wrap: wrap; gap: 0.5rem;
+  position: sticky; top: 64px; z-index: 20;
+  margin-bottom: 1.6rem;
+  padding: 0.8rem 0 0.7rem;
+  background: oklch(97.5% 0.008 85 / 0.92);
+  backdrop-filter: saturate(140%) blur(10px);
+  border-bottom: 1px solid var(--line-soft);
+}
 .ifilter { font-family: var(--mono); font-size: var(--text-sm); color: var(--ink-soft); background: var(--panel); border: 1px solid var(--line); border-radius: 999px; padding: 0.45rem 0.95rem; cursor: pointer; transition: color var(--dur) var(--ease), border-color var(--dur) var(--ease), background var(--dur) var(--ease); }
 .ifilter b { color: var(--ink); font-weight: 600; margin-left: 0.15rem; }
 .ifilter:hover { border-color: var(--steel-soft); color: var(--ink); }

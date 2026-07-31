@@ -71,7 +71,7 @@ def head(title, desc, rel, extra=""):
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="{rel}styles.css?v=10">{extra}
+<link rel="stylesheet" href="{rel}styles.css?v=15">{extra}
 </head>
 <body>
 
@@ -85,7 +85,9 @@ def head(title, desc, rel, extra=""):
     <nav class="nav__links" id="navLinks" aria-label="주요 메뉴">
       <a href="{rel}index.html#method">방식</a>
       <a href="{rel}cases.html">사례</a>
-      <a href="{rel}index.html#ideas">아이디어 30</a>
+      <a href="{rel}comms.html">통신</a>
+      <a href="{rel}cloud.html">클라우드</a>
+      <a href="{rel}finance.html">금융</a>
       <a href="{rel}papers.html">논문·실험</a>
       <a href="{rel}about.html">회사소개</a>
       <a href="{rel}index.html#voucher">정부 바우처</a>
