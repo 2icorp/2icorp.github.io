@@ -1,0 +1,594 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>사례 15선 | 2i AX 컨설팅</title>
+<meta name="description" content="중소·중견 제조·유통을 위한 AX 시나리오 사례 15선. 2i 게이지 방식(측정→실증→이관)으로 현장 KPI를 어떻게 바꾸는지, 각 사례마다 작동하는 소스코드로 증명합니다.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23111827'/%3E%3Ctext x='16' y='22' font-family='monospace' font-size='16' font-weight='700' fill='%23e08a2b' text-anchor='middle'%3E2i%3C/text%3E%3C/svg%3E">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css?v=4">
+</head>
+<body>
+<header class="nav">
+  <div class="wrap nav__inner">
+    <a class="brand" href="/"><span class="brand__mark">2i</span><span class="brand__tag">AX 컨설팅</span></a>
+    <nav class="nav__links" aria-label="주요 메뉴">
+      <a href="/#method">방식</a>
+      <a href="cases.html">사례</a>
+      <a href="/#voucher">정부 바우처</a>
+      <a class="nav__cta btn btn--signal" href="/#contact">상담 신청</a>
+    </nav>
+  </div>
+</header>
+<main>
+  <section class="wrap cases-hero">
+    <span class="eyebrow">사례집 · 15선 · 각 사례마다 작동하는 코드 · 라이브 데모</span>
+    <h1>만든 게 아니라,<br><span class="u accent">바꾼</span> 것을 봅니다.</h1>
+    <p>기초 데이터 통합부터 완전 자동화, 홈페이지·마케팅까지. 각 사례는 <b>문제의 대가 → 통찰 → 2i의 방식 → 목표 델타 → 작동하는 증거(소스코드)</b> 순으로 읽힙니다. 슬라이드가 아니라, 브라우저에서 바로 열리는 라이브 데모와 GitHub 소스코드가 사례마다 붙어 있습니다.</p>
+    <p class="disclaimer">ⓘ 아래는 <b>시나리오형 역량 사례</b>입니다. 특정 실존 고객의 완료 실적이 아니라 "이런 문제를 이렇게 다룹니다"를 보여주는 대표 예시이며, 목표 수치는 업계 통상 기대치입니다. 실제 진행 시 <b>귀사 데이터로 다시 측정</b>합니다. 각 사례에 링크된 소스코드는 합성 데이터로 동작하는 레퍼런스 구현입니다.</p>
+  </section>
+<div class="ticker" aria-hidden="true"><div class="ticker__track"><span class="ticker__item">현황 파악 소요 <b>조회 즉시 (목표)</b></span><span class="ticker__item">문서 1건 처리시간 <b>60~70% 단축 (목표)</b></span><span class="ticker__item">판정 일관성 <b>동일 기준 상시 적용 (목표)</b></span><span class="ticker__item">핵심 SKU 결품 <b>30~40% 감소 (목표)</b></span><span class="ticker__item">단순 반복 문의 응대시간 <b>60~70% 단축 (목표)</b></span><span class="ticker__item">간섭원 특정 <b>실시간 원인 지목 (목표)</b></span><span class="ticker__item">설비 이슈 검색시간 <b>50~70% 단축 (목표)</b></span><span class="ticker__item">일일 정보 탐색시간 <b>60~70% 단축 (목표)</b></span><span class="ticker__item">영상 제작 소요 <b>80% 단축 (목표)</b></span><span class="ticker__item">브랜드 검색 노출 <b>단기 확보 (목표)</b></span><span class="ticker__item">여정 1건 처리 <b>한 문장 · 자동 (목표)</b></span><span class="ticker__item">설계 게이트 위반 <b>7개 전부 통과 (합성 스펙 실측)</b></span><span class="ticker__item">품질 게이트 <b>6개 중 5개 통과 (합성 팬텀 실측)</b></span><span class="ticker__item">운영 게이트 <b>5개 전부 통과 (합성 시나리오 실측)</b></span><span class="ticker__item">디바이스 메모리 (나이브 INT4) <b>4.15GB (56% 감소, 실측)</b></span></div></div>
+      <section class="method wrap" aria-label="2i 게이지 방식">
+        <div class="method__head">
+          <span class="eyebrow">2i 게이지 방식</span>
+          <h2>추측하지 않습니다. <span class="u accent">계측</span>합니다.</h2>
+          <p>모든 프로젝트는 세 개의 게이트를 지납니다. 각 게이트를 <b>통과할 때만 다음 단계의 예산을 씁니다.</b> AI 도입의 가장 큰 불안, '돈만 쓰고 안 되면?'을 구조로 제거하는 방식입니다.</p>
+        </div>
+        <ol class="gates3">
+          <li class="g3"><span class="g3__no">01</span><div><b>측정 게이트</b><span class="g3__sub">MEASURE · 진단</span><p>문제를 숫자로 고정합니다. 현장 KPI의 현재값(baseline)과 데이터 실태를 계측해, 무엇을 얼마나 개선할지 기준선을 만듭니다.</p></div></li>
+          <li class="g3"><span class="g3__no">02</span><div><b>실증 게이트</b><span class="g3__sub">VERIFY · PoC</span><p>한 지점만 골라 before→after를 실제로 측정합니다. 여기서 목표 델타에 못 미치면 <b>확장하지 않습니다.</b> 큰돈은 검증 뒤에.</p></div></li>
+          <li class="g3 g3--build"><span class="g3__no">03</span><div><b>이관 게이트</b><span class="g3__sub">OPERATE · 구축</span><p>검증된 것만 확장하고 운영팀이 스스로 돌리게 넘깁니다. 문서·매뉴얼과 함께, 성과가 날 때까지 동행합니다.</p></div></li>
+        </ol>
+      </section>
+
+  <section class="section" style="padding-top:1.5rem">
+    <div class="wrap case-list">
+      <article class="case reveal" id="case-1">
+        <header class="case__top">
+          <span class="case__no">01</span>
+          <div class="case__id">
+            <span class="case__cat">경영 가시성</span>
+            <span class="case__ind">제조 · 정밀부품</span>
+          </div>
+          <div class="case__stkm" role="group" aria-label="문제의 대가">
+            <span class="case__stkm-l">현황 파악에 걸리는 시간</span>
+            <span class="case__stkm-v">반나절+</span>
+          </div>
+        </header>
+        <h3 class="case__title">&quot;오늘 재고 얼마야?&quot; 반나절 → 3초</h3>
+        <p class="case__stakes">부서별 엑셀 수십 개와 담당자 개인 PC에 데이터가 흩어져 있으면, 대표가 오늘의 생산·재고를 확인하는 데만 담당자 취합으로 반나절이 걸립니다. 더 큰 손실은 눈에 안 보이는 쪽입니다. 같은 지표를 부서마다 다르게 계산하고, 담당자가 퇴사하면 그 데이터가 어디서 어떻게 갱신되는지 아는 사람이 사라져 업무 연속성 자체가 흔들립니다.</p>
+        <div class="case__grid">
+          <div class="case__main">
+            <div class="case__row"><span class="case__k">통찰</span><p>문제는 대시보드가 없어서가 아니라, 숫자의 &#x27;출처와 정의&#x27;가 사람 머릿속에만 있어서입니다. 화면을 예쁘게 만들기 전에, 각 지표가 어디서 와서 어떻게 계산되는지를 먼저 코드로 고정해야 합니다.</p></div>
+            <div class="case__row"><span class="case__k">2i의 방식</span><p>흩어진 엑셀·사내 시스템을 자동 수집해 표준 스키마로 정제하는 ETL 파이프라인을 깔고, 경영진용 요약 뷰와 현장용 상세 뷰를 분리해 하나의 진실된 숫자로 통합합니다. 핵심은 화면이 아니라 &#x27;담당자가 바뀌어도 끊기지 않는 데이터 흐름&#x27;입니다.</p></div>
+            <ol class="case__gates"><li class="gate"><b class="gate__name">측정 게이트</b><span class="gate__what">부서별 데이터 소재·갱신주기·담당자·병목을 전수 조사하고, 대표가 매일 보고 싶은 지표를 3~5개로 좁혀 baseline을 계측합니다.</span></li><li class="gate"><b class="gate__name">실증 게이트</b><span class="gate__what">우선 지표 1~2개만 자동 수집·정제해 실시간 프로토타입을 만들고, 현업이 실제 업무에서 써보며 갱신주기·예외처리를 조정합니다. 여기서 값이 안 맞으면 확장하지 않습니다.</span></li><li class="gate"><b class="gate__name">이관 게이트</b><span class="gate__what">검증된 방식을 나머지 소스로 확장하고, 데이터 흐름 문서와 운영 매뉴얼을 함께 남겨 담당자 교체에도 운영이 끊기지 않게 넘깁니다.</span></li></ol>
+          </div>
+          <aside class="case__side">
+            <div class="ba"><div class="ba__head">목표 지표 <span class="ba__note">· 실제 수치는 귀사 데이터로 재측정</span></div><div class="ba__row"><span class="ba__m">현황 파악 소요</span><span class="ba__b">반나절+ (수기 취합)</span><span class="ba__arw" aria-hidden="true">→</span><span class="ba__a">조회 즉시 (목표)</span></div><div class="ba__row"><span class="ba__m">지표 정의 일관성</span><span class="ba__b">부서마다 제각각</span><span class="ba__arw" aria-hidden="true">→</span><span class="ba__a">단일 정의 · 공용 파이프라인</span></div></div>
+            <div class="case__sowhat"><span class="case__k case__k--go">그래서 무엇이 열리나</span><p>대표가 &#x27;느낌&#x27;이 아니라 같은 숫자를 보고 회의를 시작합니다. 담당자 이탈이 더 이상 데이터 실종으로 이어지지 않고, 이 통합 데이터가 이후 수요예측·품질 AI의 연료가 됩니다.</p></div>
+            <div class="case__facts">
+              <span class="chip">약 12주 (측정 2 + 실증 4 + 이관 6)</span>
+              <span class="chip chip--v">정부 바우처 적합</span>
+            </div>
+            <div class="case__proof">
+              <a class="chip chip--code" href="https://github.com/2icorp/2i-case-01-data-dashboard" target="_blank" rel="noopener">‹/› 작동하는 레퍼런스 데모 · 소스코드 ↗</a><a class="chip chip--demo" href="/demos/01-data-dashboard/">▶ 라이브 데모</a>
+              <a class="chip chip--dl" href="brochures/2i-brochure-01-오늘-재고-얼마야-반나절-3초.pdf" download>브로셔 PDF ↓</a>
+            </div>
+            <p class="case__tech"><span class="case__tech-k">사용 기술</span> pandas·SQLite 기반 ETL + Streamlit 통합 대시보드. 부서별 원본을 자동 수집·표준화해 KPI 카드·추세 차트로 렌더.</p>
+          </aside>
+        </div>
+      </article>
+      <article class="case reveal" id="case-2">
+        <header class="case__top">
+          <span class="case__no">02</span>
+          <div class="case__id">
+            <span class="case__cat">문서 자동화</span>
+            <span class="case__ind">도매 · 유통</span>
+          </div>
+          <div class="case__stkm" role="group" aria-label="문제의 대가">
+            <span class="case__stkm-l">문서 1건 수기 처리</span>
+            <span class="case__stkm-v">5~10분 × 수백 건</span>
+          </div>
+        </header>
+        <h3 class="case__title">견적·발주 수기입력, 담당자는 예외만 본다</h3>
+        <p class="case__stakes">거래처마다 팩스·PDF·사진으로 제각각 오는 견적서·발주서·세금계산서를 담당자가 눈으로 확인해 ERP에 수기로 옮깁니다. 품목명·수량·단가가 조금만 어긋나도 재확인·재입력이 반복되고, 물량이 몰리는 월말·분기말엔 이 수작업 지연이 발주 처리 전체의 병목이 됩니다.</p>
+        <div class="case__grid">
+          <div class="case__main">
+            <div class="case__row"><span class="case__k">통찰</span><p>문서를 100% 자동으로 읽으려는 시도는 대부분 실패합니다. 진짜 레버리지는 &#x27;기계가 자신 있게 읽은 건 통과시키고, 애매한 항목만 사람에게 올리는&#x27; 검증 큐를 만드는 데 있습니다. 사람의 시간을 전수 입력이 아니라 예외 판단에만 쓰게 하는 것.</p></div>
+            <div class="case__row"><span class="case__k">2i의 방식</span><p>문서 파싱으로 표·항목 구조를 추출하고, 품목코드·단가를 사전 규칙과 대조해 자동 분류·이상치 검증합니다. 신뢰도 낮은 항목만 검수 화면으로 올려 담당자가 &#x27;전부 입력&#x27;이 아니라 &#x27;예외만 확인&#x27;하게 만듭니다.</p></div>
+            <ol class="case__gates"><li class="gate"><b class="gate__name">측정 게이트</b><span class="gate__what">실제 거래문서 표본을 모아 포맷 다양성·담당자별 입력 소요·반복 오류 지점을 계측하고 자동화 우선순위를 정합니다.</span></li><li class="gate"><b class="gate__name">실증 게이트</b><span class="gate__what">문서 유형 하나로 항목 추출·검증 로직을 시범 적용해 인식 정확도와 예외 처리 방식을 실측합니다.</span></li><li class="gate"><b class="gate__name">이관 게이트</b><span class="gate__what">검증된 로직을 나머지 유형으로 확장하고, 반자동 검증 화면과 ERP 연동을 붙여 운영에 넘깁니다.</span></li></ol>
+          </div>
+          <aside class="case__side">
+            <div class="ba"><div class="ba__head">목표 지표 <span class="ba__note">· 실제 수치는 귀사 데이터로 재측정</span></div><div class="ba__row"><span class="ba__m">문서 1건 처리시간</span><span class="ba__b">5~10분 수기</span><span class="ba__arw" aria-hidden="true">→</span><span class="ba__a">60~70% 단축 (목표)</span></div><div class="ba__row"><span class="ba__m">사람이 보는 범위</span><span class="ba__b">전량 입력</span><span class="ba__arw" aria-hidden="true">→</span><span class="ba__a">저신뢰 항목만 검수</span></div></div>
+            <div class="case__sowhat"><span class="case__k case__k--go">그래서 무엇이 열리나</span><p>월말 발주 병목이 풀리고, 담당자는 반복 타이핑에서 벗어나 거래처 응대·단가 협상 같은 판단 업무로 이동합니다.</p></div>
+            <div class="case__facts">
+              <span class="chip">약 12주 (문서 유형 수에 따라 변동)</span>
+              <span class="chip chip--v">정부 바우처 적합</span>
+            </div>
+            <div class="case__proof">
+              <a class="chip chip--code" href="https://github.com/2icorp/2i-case-02-doc-automation" target="_blank" rel="noopener">‹/› 작동하는 레퍼런스 데모 · 소스코드 ↗</a><a class="chip chip--demo" href="/demos/02-doc-automation/">▶ 라이브 데모</a>
+              <a class="chip chip--dl" href="brochures/2i-brochure-02-견적-발주-수기입력-담당자는-예외만-본다.pdf" download>브로셔 PDF ↓</a>
+            </div>
+            <p class="case__tech"><span class="case__tech-k">사용 기술</span> pydantic 기반 파싱·규칙 검증 파이프라인. 견적·발주·세금계산서에서 품목/수량/단가/공급가액 추출 → 오류(단가 이상·합계 불일치·VAT 오류) 자동 플래그 → 우선순위 검수 큐.</p>
+          </aside>
+        </div>
+      </article>
+      <article class="case reveal" id="case-3">
+        <header class="case__top">
+          <span class="case__no">03</span>
+          <div class="case__id">
+            <span class="case__cat">제조 비전 AI</span>
+            <span class="case__ind">제조 · 사출성형</span>
+          </div>
+          <div class="case__stkm" role="group" aria-label="문제의 대가">
+            <span class="case__stkm-l">불량 판정 기준</span>
+            <span class="case__stkm-v">사람·교대조마다 편차</span>
+          </div>
+        </header>
+        <h3 class="case__title">검사원마다 다른 판정, 24시간 같은 눈으로</h3>
+        <p class="case__stakes">최종 품질검사를 검사원 육안에 의존하면, 같은 불량이라도 숙련도·피로도·조명에 따라 판정이 갈립니다. 표면 기포·플래시 유출률이 교대조마다 들쭉날쭉하고, &#x27;무엇을 불량으로 보는가&#x27;가 사람 머릿속 암묵지로만 존재해 신규 교육도 재현 가능한 품질관리도 어렵습니다. 유출된 불량 하나가 클레임·반품으로 돌아오면 검사 인건비보다 훨씬 큰 비용이 됩니다.</p>
+        <div class="case__grid">
+          <div class="case__main">
+            <div class="case__row"><span class="case__k">통찰</span><p>전 라인을 한 번에 AI로 바꾸려다 데이터도 예산도 감당 못 해 멈추는 게 대부분입니다. 정답은 &#x27;가장 자주·가장 명확한 불량 1~2종&#x27;만 먼저 좁혀, 수백 장 소량 데이터로 검증하는 것. 저위험으로 시작해 되는 것만 넓힙니다.</p></div>
+            <div class="case__row"><span class="case__k">2i의 방식</span><p>제품 표면 이미지를 입력으로 하는 결함 탐지 비전 모델을 소량 데이터로 학습시키고, 실제 라인을 대체하지 않는 &#x27;섀도 모드&#x27;로 병행 관찰해 육안검사와 비교합니다. 사람을 없애는 게 아니라 24시간 흔들리지 않는 1차 스크리너를 붙이는 방식입니다.</p></div>
+            <ol class="case__gates"><li class="gate"><b class="gate__name">측정 게이트</b><span class="gate__what">현장 워크스루로 검사원별 판정 편차와 반복 불량 유형을 분류하고, &#x27;무엇을 불량으로 보는가&#x27;를 인터뷰로 문서화합니다.</span></li><li class="gate"><b class="gate__name">실증 게이트</b><span class="gate__what">좁힌 1~2개 불량 유형을 수백~수천 장 촬영·라벨링해 모델을 학습시키고, 섀도 모드로 정확도·오탐·놓친 불량을 실측 리포트로 냅니다.</span></li><li class="gate"><b class="gate__name">이관 게이트</b><span class="gate__what">섀도 모드에서 확인된 정확도 기준을 넘긴 유형만 실제 판정에 투입하고, 검사원이 이견을 남기면 그 이미지가 재학습 큐에 쌓이는 운영 루프를 함께 넘깁니다. 판정 기준 변경 이력과 재학습 절차를 문서로 이관합니다.</span></li></ol>
+          </div>
+          <aside class="case__side">
+            <div class="ba"><div class="ba__head">목표 지표 <span class="ba__note">· 실제 수치는 귀사 데이터로 재측정</span></div><div class="ba__row"><span class="ba__m">판정 일관성</span><span class="ba__b">교대조·개인마다 편차</span><span class="ba__arw" aria-hidden="true">→</span><span class="ba__a">동일 기준 상시 적용 (목표)</span></div><div class="ba__row"><span class="ba__m">1차 스크리닝 시간</span><span class="ba__b">전량 육안</span><span class="ba__arw" aria-hidden="true">→</span><span class="ba__a">반복 불량 30~50% 단축 (목표)</span></div></div>
+            <div class="case__sowhat"><span class="case__k case__k--go">그래서 무엇이 열리나</span><p>암묵지가 재현 가능한 기준으로 바뀌어 신규 검사원 교육이 빨라지고, 야간·교대 구간의 품질 편차가 줄어 클레임 리스크가 내려갑니다.</p></div>
+            <div class="case__facts">
+              <span class="chip">약 12주 (측정 2 + 실증 6 + 이관 4)</span>
+              <span class="chip chip--v">정부 바우처 적합</span>
+            </div>
+            <div class="case__proof">
+              <a class="chip chip--code" href="https://github.com/2icorp/2i-case-03-vision-defect" target="_blank" rel="noopener">‹/› 작동하는 레퍼런스 데모 · 소스코드 ↗</a><a class="chip chip--demo" href="/demos/03-vision-defect/">▶ 라이브 데모</a>
+              <a class="chip chip--dl" href="brochures/2i-brochure-03-검사원마다-다른-판정-24시간-같은-눈으로.pdf" download>브로셔 PDF ↓</a>
+            </div>
+            <p class="case__tech"><span class="case__tech-k">사용 기술</span> OpenCV·scikit-image 기반 이상탐지(픽셀 z-score + 윤곽 + SSIM). 정상 소량 이미지만으로 기포·스크래치 스코어링, SNR·임계값 스윕 평가 포함.</p>
+          </aside>
+        </div>
+      </article>
+      <article class="case reveal" id="case-4">
+        <header class="case__top">
+          <span class="case__no">04</span>
+          <div class="case__id">
+            <span class="case__cat">수요예측 · 재고</span>
+            <span class="case__ind">유통 · 물류</span>
+          </div>
+          <div class="case__stkm" role="group" aria-label="문제의 대가">
+            <span class="case__stkm-l">발주 결정 근거</span>
+            <span class="case__stkm-v">담당자 개인의 감</span>
+          </div>
+        </header>
+        <h3 class="case__title">감으로 잡던 재고, 결품과 악성재고를 동시에 줄인다</h3>
+        <p class="case__stakes">SKU별 발주량을 담당자 경험과 감으로 정하면, 잘 팔리는 제품은 결품으로 판매 기회를 놓치고 시즌 지난 제품은 창고에 악성재고로 쌓이는 일이 동시에 벌어집니다. 두 손실이 같은 원인(정량 근거 부재)에서 나옵니다. 그리고 담당자가 바뀌면 그 감각이 통째로 사라집니다.</p>
+        <div class="case__grid">
+          <div class="case__main">
+            <div class="case__row"><span class="case__k">통찰</span><p>재고 문제는 &#x27;더 많이/적게&#x27;의 문제가 아니라 &#x27;어느 SKU가 결품형이고 어느 SKU가 악성재고형인가&#x27;를 분리하지 못하는 문제입니다. 이 둘을 먼저 갈라내면, 정반대 처방을 각각 내릴 수 있습니다.</p></div>
+            <div class="case__row"><span class="case__k">2i의 방식</span><p>판매이력·시즌지수·프로모션·날씨 등 외부 신호를 결합한 시계열 수요예측 모델을 만들고, 예측치를 &#x27;제안 발주량 + 근거&#x27;가 붙은 발주 권고 리스트로 자동 변환합니다. 담당자의 감을 대체하는 게 아니라, 감이 놓치는 SKU를 잡아주는 보조 도구입니다.</p></div>
+            <ol class="case__gates"><li class="gate"><b class="gate__name">측정 게이트</b><span class="gate__what">POS·발주이력·회전율·결품 로그로 결품형/악성재고형 SKU를 분리하고, 담당자의 실제 발주 기준을 인터뷰로 확인합니다.</span></li><li class="gate"><b class="gate__name">실증 게이트</b><span class="gate__what">핵심 SKU 20~30종에 예측 모델을 적용해 기존 방식과 4주 병행하며 예측 오차·결품·과잉 개선폭을 실측합니다.</span></li><li class="gate"><b class="gate__name">이관 게이트</b><span class="gate__what">검증 모델을 전 SKU로 확장하고, 매일 보는 발주 권고 대시보드와 판매결과 기반 자동 재학습 루틴을 넘깁니다.</span></li></ol>
+          </div>
+          <aside class="case__side">
+            <div class="ba"><div class="ba__head">목표 지표 <span class="ba__note">· 실제 수치는 귀사 데이터로 재측정</span></div><div class="ba__row"><span class="ba__m">핵심 SKU 결품</span><span class="ba__b">반복 발생</span><span class="ba__arw" aria-hidden="true">→</span><span class="ba__a">30~40% 감소 (목표)</span></div><div class="ba__row"><span class="ba__m">악성(장기 미회전) 재고</span><span class="ba__b">누적</span><span class="ba__arw" aria-hidden="true">→</span><span class="ba__a">20% 내외 축소 (목표)</span></div></div>
+            <div class="case__sowhat"><span class="case__k case__k--go">그래서 무엇이 열리나</span><p>결품으로 놓치던 매출과 창고에 묶이던 현금이 동시에 풀리고, 발주 근거가 문서로 남아 담당자 교체 리스크가 사라집니다.</p></div>
+            <div class="case__facts">
+              <span class="chip">약 12주 (측정 2 + 실증 4 + 이관 6)</span>
+              <span class="chip chip--v">정부 바우처 적합</span>
+            </div>
+            <div class="case__proof">
+              <a class="chip chip--code" href="https://github.com/2icorp/2i-case-04-demand-forecast" target="_blank" rel="noopener">‹/› 작동하는 레퍼런스 데모 · 소스코드 ↗</a><a class="chip chip--demo" href="/demos/04-demand-forecast/">▶ 라이브 데모</a>
+              <a class="chip chip--dl" href="brochures/2i-brochure-04-감으로-잡던-재고-결품과-악성재고를-동시에-줄인다.pdf" download>브로셔 PDF ↓</a>
+            </div>
+            <p class="case__tech"><span class="case__tech-k">사용 기술</span> statsmodels 기반 계절 이동평균 vs SARIMA 백테스트 자동선택 + 안전재고·재발주점(ROP) 로직 + naive 대비 재고 시뮬레이션.</p>
+          </aside>
+        </div>
+      </article>
+      <article class="case reveal" id="case-5">
+        <header class="case__top">
+          <span class="case__no">05</span>
+          <div class="case__id">
+            <span class="case__cat">AI 상담 에이전트</span>
+            <span class="case__ind">서비스 · 온라인 유통</span>
+          </div>
+          <div class="case__stkm" role="group" aria-label="문제의 대가">
+            <span class="case__stkm-l">정형 반복 문의 비중</span>
+            <span class="case__stkm-v">상담량의 절반+</span>
+          </div>
+        </header>
+        <h3 class="case__title">반복 문의는 AI가, 사람은 진짜 상담에</h3>
+        <p class="case__stakes">주문상태·배송·환불·재고 같은 정형 문의가 상담 채널의 절반 이상을 차지하는 경우가 많습니다. 소수 인력이 이걸 다 받다 보면 정작 클레임 조정·신규 고객 대응처럼 판단이 필요한 문의가 대기열에 밀려 응대 품질이 함께 떨어집니다. 야간·주말엔 문의가 방치돼 다음 영업일까지 고객이 기다립니다.</p>
+        <div class="case__grid">
+          <div class="case__main">
+            <div class="case__row"><span class="case__k">통찰</span><p>AI 챗봇의 성패는 &#x27;얼마나 똑똑하냐&#x27;가 아니라 &#x27;AI가 처리할 범위와 사람에게 넘길 경계를 얼마나 명확히 나누느냐&#x27;에 있습니다. 고가 환불·감정적 클레임은 절대 자동화하지 않는 게 오히려 신뢰를 만듭니다.</p></div>
+            <div class="case__row"><span class="case__k">2i의 방식</span><p>주문·재고·CS 시스템과 연동된 상담 에이전트가 정형 문의를 처리하고, 처리 불가로 판단하면 대화 맥락과 함께 상담원에게 자동 이관합니다. 핵심은 &#x27;핸드오프 경계&#x27;를 규칙으로 못 박는 설계입니다. 사람 대체가 아니라 사람이 중요한 일에 집중하게 하는 재배치죠.</p></div>
+            <ol class="case__gates"><li class="gate"><b class="gate__name">측정 게이트</b><span class="gate__what">문의 로그 4주치를 유형별로 분류해 정형 문의 비중·평균 처리시간을 정량화하고, 자동화 가능 범위와 반드시 사람이 볼 예외(고가 환불·클레임)의 경계를 확정합니다.</span></li><li class="gate"><b class="gate__name">실증 게이트</b><span class="gate__what">주문조회·배송추적·기본 환불안내 3개 시나리오만 소규모 채널에 제한 노출하고, 상담원이 사후 검수하며 정답률·이관률·만족도를 측정합니다.</span></li><li class="gate"><b class="gate__name">이관 게이트</b><span class="gate__what">검증 시나리오를 전 채널로 확장하고, 오답 로그·이관 사유 대시보드를 함께 넘겨 운영팀이 스스로 튜닝하게 합니다.</span></li></ol>
+          </div>
+          <aside class="case__side">
+            <div class="ba"><div class="ba__head">목표 지표 <span class="ba__note">· 실제 수치는 귀사 데이터로 재측정</span></div><div class="ba__row"><span class="ba__m">단순 반복 문의 응대시간</span><span class="ba__b">전량 사람</span><span class="ba__arw" aria-hidden="true">→</span><span class="ba__a">60~70% 단축 (목표)</span></div><div class="ba__row"><span class="ba__m">영업시간 외 1차 응대</span><span class="ba__b">다음날까지 대기</span><span class="ba__arw" aria-hidden="true">→</span><span class="ba__a">24시간 즉시 (목표)</span></div></div>
+            <div class="case__sowhat"><span class="case__k case__k--go">그래서 무엇이 열리나</span><p>같은 인력으로 처리 가능한 고난도 상담량이 늘고, 밤·주말 이탈 고객이 줄며, 상담원이 &#x27;타이핑 기계&#x27;가 아니라 관계를 만드는 역할로 돌아갑니다.</p></div>
+            <div class="case__facts">
+              <span class="chip">약 12주 (측정 2 + 실증 4 + 이관 6)</span>
+              <span class="chip chip--v">정부 바우처 적합</span>
+            </div>
+            <div class="case__proof">
+              <a class="chip chip--code" href="https://github.com/2icorp/2i-case-05-support-chatbot" target="_blank" rel="noopener">‹/› 실행되는 챗봇 데모 (오프라인 폴백 내장) · 소스코드 ↗</a><a class="chip chip--demo" href="/demos/05-support-chatbot/">▶ 라이브 데모</a>
+              <a class="chip chip--dl" href="brochures/2i-brochure-05-반복-문의는-AI가-사람은-진짜-상담에.pdf" download>브로셔 PDF ↓</a>
+            </div>
+            <p class="case__tech"><span class="case__tech-k">사용 기술</span> FastAPI 챗봇: 인텐트 분류 → 목 백엔드 툴 호출 → 응답. 고액환불·클레임 사람 이관 규칙. LLM 키 없으면 규칙기반 오프라인 폴백. 웹 채팅 UI 포함.</p>
+          </aside>
+        </div>
+      </article>
+      <article class="case reveal" id="case-6">
+        <header class="case__top">
+          <span class="case__no">06</span>
+          <div class="case__id">
+            <span class="case__cat">신호 지문 · 통신</span>
+            <span class="case__ind">스마트팩토리 · 무선 인프라</span>
+          </div>
+          <div class="case__stkm" role="group" aria-label="문제의 대가">
+            <span class="case__stkm-l">간섭원 특정</span>
+            <span class="case__stkm-v">매번 원인 불명 · 임시조치</span>
+          </div>
+        </header>
+        <h3 class="case__title">무선망을 멈추는 &#x27;원인 불명 전파&#x27;, 실시간으로 지목한다</h3>
+        <p class="case__stakes">공장 무선 센서망·AGV·RFID가 원인 불명의 전파 간섭으로 수시로 끊겨 라인이 멈추는데, 전자레인지·인접 설비·외부 불법 전파 중 무엇이 원인인지 특정하지 못해 매번 임시 조치로 넘어갑니다. 라인이 멈추는 몇 분이 곧 생산 손실이고, 원인을 모르니 재발이 반복됩니다.</p>
+        <div class="case__grid">
+          <div class="case__main">
+            <div class="case__row"><span class="case__k">통찰</span><p>간섭원 식별의 통념은 &#x27;학습 데이터를 잔뜩 모아 분류 모델을 훈련한다&#x27;지만, 현장엔 그런 라벨 데이터가 없습니다. 학습 없이 신호의 &#x27;지문(occupancy 패턴)&#x27;을 실시간으로 대조하면, 데이터 구축 없이 원인을 지목할 수 있습니다.</p></div>
+            <div class="case__row"><span class="case__k">2i의 방식</span><p>CFAR 검출로 이상 신호를 실시간 포착하고, 후보 간섭원의 파형을 시그니처 DB에 등록해 robust-hash 지문 매칭으로 원인을 특정하는 sigprint 엔진을 씁니다. 밀리초 단위 처리·약신호 환경 동작을 목표로 설계했습니다. 동일 지문 방식을 설비 음향·진동 이상탐지로도 확장할 수 있습니다.</p></div>
+            <ol class="case__gates"><li class="gate"><b class="gate__name">측정 게이트</b><span class="gate__what">무선망 장애·설비 정지 이력을 구간별로 정리하고 현장 RF 스펙트럼을 수집해 간섭이 반복되는 시간대·대역의 1차 패턴을 확인, 간섭 의심 설비를 후보군으로 좁힙니다.</span></li><li class="gate"><b class="gate__name">실증 게이트</b><span class="gate__what">sigprint 엔진을 현장 게이트웨이에 시범 설치해 CFAR로 이상 신호를 포착하고 후보 파형을 시그니처 DB에 등록, robust-hash 매칭으로 실제 원인을 특정합니다. 핵심 설비 음향·진동도 함께 채집해 확장성을 검증합니다.</span></li><li class="gate"><b class="gate__name">이관 게이트</b><span class="gate__what">검증된 시그니처 DB와 판정 로직을 운영 체계에 편입해 간섭 발생 시 원인 후보를 자동 알림으로 띄우고, 담당자용 대시보드·대응 매뉴얼을 함께 넘깁니다.</span></li></ol>
+          </div>
+          <aside class="case__side">
+            <div class="ba"><div class="ba__head">목표 지표 <span class="ba__note">· 실제 수치는 귀사 데이터로 재측정</span></div><div class="ba__row"><span class="ba__m">간섭원 특정</span><span class="ba__b">불가 · 임시조치 반복</span><span class="ba__arw" aria-hidden="true">→</span><span class="ba__a">실시간 원인 지목 (목표)</span></div><div class="ba__row"><span class="ba__m">무선망 단절 라인정지</span><span class="ba__b">돌발 · 반복</span><span class="ba__arw" aria-hidden="true">→</span><span class="ba__a">빈도 감소 (목표)</span></div></div>
+            <div class="case__sowhat"><span class="case__k case__k--go">그래서 무엇이 열리나</span><p>&#x27;원인 모를 정지&#x27;가 &#x27;지목 가능한 원인&#x27;으로 바뀌어 재발 대응 시간이 줄고, 같은 지문 엔진이 설비 예지보전으로 확장돼 돌발 고장을 앞당겨 잡습니다. 이 기술은 2i의 자체 신호처리 엔진입니다.</p></div>
+            <div class="case__facts">
+              <span class="chip">약 16주 (측정 2 + 실증 6 + 이관 8, 예시)</span>
+              <span class="chip chip--v">정부 바우처 적합</span>
+            </div>
+            <div class="case__proof">
+              <a class="chip chip--code" href="https://github.com/2icorp/2i-case-06-sigprint-rf" target="_blank" rel="noopener">‹/› 작동하는 레퍼런스 데모 (CFAR + 지문 매칭) · 소스코드 ↗</a><a class="chip chip--demo" href="/demos/06-sigprint-rf/">▶ 라이브 데모</a>
+              <a class="chip chip--dl" href="brochures/2i-brochure-06-무선망을-멈추는-원인-불명-전파-실시간으로-지목한다.pdf" download>브로셔 PDF ↓</a>
+            </div>
+            <p class="case__tech"><span class="case__tech-k">사용 기술</span> numpy·scipy 기반 CFAR 검출 + occupancy 지문 Jaccard 매칭. 무학습으로 레이더 chirp/셀룰러 버스트/CW 톤 간섭원 분류, SNR 스윕 정확도·판정지연 벤치마크 포함. (원 엔진: Rust, O-RAN xApp)</p>
+          </aside>
+        </div>
+      </article>
+      <article class="case reveal" id="case-7">
+        <header class="case__top">
+          <span class="case__no">07</span>
+          <div class="case__id">
+            <span class="case__cat">지식 자산화 (RAG)</span>
+            <span class="case__ind">제조 · 전문서비스</span>
+          </div>
+          <div class="case__stkm" role="group" aria-label="문제의 대가">
+            <span class="case__stkm-l">핵심 노하우 보관 위치</span>
+            <span class="case__stkm-v">베테랑 1~2명의 기억</span>
+          </div>
+        </header>
+        <h3 class="case__title">20년 베테랑의 머릿속, 질문 한 번에 꺼낸다</h3>
+        <p class="case__stakes">중소 제조사에서는 20년 넘게 근무한 베테랑 한두 명이 설비 이상 대응법·도면 변경 이력·거래처 특이사항을 사실상 혼자 기억합니다. 매뉴얼이 있어도 버전이 뒤섞이거나 스캔본으로만 남아, 실제로는 그 사람에게 직접 물어봐야 업무가 돌아갑니다. 그가 자리를 비우면 후임은 같은 문제를 처음부터 다시 겪습니다.</p>
+        <div class="case__grid">
+          <div class="case__main">
+            <div class="case__row"><span class="case__k">통찰</span><p>지식 자산화의 함정은 &#x27;모든 문서를 다 넣는&#x27; 것입니다. 정답은 가장 자주 물어보는 문서군(설비 트러블슈팅 이력·도면 개정 로그) 하나부터 시작해, 답변에 반드시 원문 근거를 붙여 &#x27;믿을 수 있는&#x27; 검색을 만드는 것입니다.</p></div>
+            <div class="case__row"><span class="case__k">2i의 방식</span><p>매뉴얼·도면·이력 문서를 벡터 검색 가능한 형태로 색인하고, 자연어 질문에 원문 근거를 함께 제시하는 RAG(검색증강생성)를 구성합니다. 스캔본·비정형 문서는 OCR·파싱으로 텍스트화. 베테랑을 대체하는 게 아니라, 그의 답을 언제든 꺼낼 수 있는 사내 어시스턴트로 복제합니다.</p></div>
+            <ol class="case__gates"><li class="gate"><b class="gate__name">측정 게이트</b><span class="gate__what">베테랑 심층 인터뷰·현장 동행으로 암묵지를 목록화하고, 흩어진 매뉴얼·도면·이력 문서의 형식·중복·누락을 전수 조사해 우선 자산화 문서군을 확정합니다.</span></li><li class="gate"><b class="gate__name">실증 게이트</b><span class="gate__what">우선 문서군 한두 개로 소규모 RAG를 만들고, 실제 현장 질문 20~30개로 답변 정확도와 근거 인용 여부를 검증, 담당자 피드백으로 용어집을 보완합니다.</span></li><li class="gate"><b class="gate__name">이관 게이트</b><span class="gate__what">검증 구조를 전체 문서군으로 확장하고, 사내 채팅 인터페이스·부서별 권한·신규 문서 자동 반영 파이프라인을 붙여 온보딩·인수인계 체크리스트에 결합합니다.</span></li></ol>
+          </div>
+          <aside class="case__side">
+            <div class="ba"><div class="ba__head">목표 지표 <span class="ba__note">· 실제 수치는 귀사 데이터로 재측정</span></div><div class="ba__row"><span class="ba__m">설비 이슈 검색시간</span><span class="ba__b">매뉴얼·이력 수작업 탐색</span><span class="ba__arw" aria-hidden="true">→</span><span class="ba__a">50~70% 단축 (목표)</span></div><div class="ba__row"><span class="ba__m">핵심 인력 공백 시</span><span class="ba__b">업무 중단</span><span class="ba__arw" aria-hidden="true">→</span><span class="ba__a">이력·근거 즉시 조회 (목표)</span></div></div>
+            <div class="case__sowhat"><span class="case__k case__k--go">그래서 무엇이 열리나</span><p>구두로만 전해지던 노하우가 검색 가능한 자산으로 축적돼, 퇴사·휴직이 지식 실종으로 이어지지 않고 신규 인력이 빠르게 제 몫을 하게 됩니다.</p></div>
+            <div class="case__facts">
+              <span class="chip">약 12~14주 (측정 2 + 실증 4 + 이관 6~8)</span>
+              <span class="chip chip--v">정부 바우처 적합</span>
+            </div>
+            <div class="case__proof">
+              <a class="chip chip--code" href="https://github.com/2icorp/2i-case-07-knowledge-rag" target="_blank" rel="noopener">‹/› 실행되는 RAG 챗봇 데모 (TF-IDF 폴백 내장) · 소스코드 ↗</a><a class="chip chip--demo" href="/demos/07-knowledge-rag/">▶ 라이브 데모</a>
+              <a class="chip chip--dl" href="brochures/2i-brochure-07-20년-베테랑의-머릿속-질문-한-번에-꺼낸다.pdf" download>브로셔 PDF ↓</a>
+            </div>
+            <p class="case__tech"><span class="case__tech-k">사용 기술</span> FastAPI RAG 챗봇: 사내 문서 임베딩 색인, 원문 근거 인용 답변. LLM 키 없으면 TF-IDF 검색 폴백. OCR·문서 파싱 전처리 포함.</p>
+          </aside>
+        </div>
+      </article>
+      <article class="case reveal" id="case-8">
+        <header class="case__top">
+          <span class="case__no">08</span>
+          <div class="case__id">
+            <span class="case__cat">영업 인텔리전스</span>
+            <span class="case__ind">B2B · 산업자재 유통</span>
+          </div>
+          <div class="case__stkm" role="group" aria-label="문제의 대가">
+            <span class="case__stkm-l">신호 → 첫 접촉</span>
+            <span class="case__stkm-v">며칠 지연 · 골든타임 상실</span>
+          </div>
+        </header>
+        <h3 class="case__title">제안 골든타임을 놓치지 않는 영업 레이더</h3>
+        <p class="case__stakes">영업 담당자가 매일 아침 업계 뉴스·나라장터 입찰공고·거래처 증설/인사/실적을 개인적으로 검색하다 보니, 정작 먼저 연락해야 할 골든타임을 놓칩니다. 확인한 정보도 개인 브라우저 히스토리·메모에만 남아 CRM으로 이어지지 않고, 담당자가 바뀌면 그대로 소실됩니다.</p>
+        <div class="case__grid">
+          <div class="case__main">
+            <div class="case__row"><span class="case__k">통찰</span><p>영업 신호의 문제는 &#x27;정보가 없어서&#x27;가 아니라 &#x27;신호를 포착해도 행동(연락·제안)으로 이어지지 않고 끊겨서&#x27;입니다. 수집을 자동화하는 것보다, 신호를 CRM 타임라인에 자동으로 꽂아 행동으로 잇는 게 핵심입니다.</p></div>
+            <div class="case__row"><span class="case__k">2i의 방식</span><p>핵심 거래처·업종 키워드 기준으로 뉴스·공공데이터(나라장터)를 자동 수집·필터링하고, LLM으로 중요도를 분류해 슬랙 알림과 CRM 메모로 연결합니다. 신호가 담당자 기억이 아니라 시스템에 쌓이게 만드는 것.</p></div>
+            <ol class="case__gates"><li class="gate"><b class="gate__name">측정 게이트</b><span class="gate__what">영업 조직의 정보 수집 경로와 CRM 입력 실태를 워크섀도잉으로 파악하고, 신호가 행동으로 이어지지 않고 끊기는 지점을 식별합니다.</span></li><li class="gate"><b class="gate__name">실증 게이트</b><span class="gate__what">핵심 거래처 20~30개사·업종 키워드로 뉴스·공고를 자동 수집·필터링해 슬랙 알림·CRM 메모로 연결하는 파일럿을 4주 운영, 피드백으로 오탐·누락을 줄입니다.</span></li><li class="gate"><b class="gate__name">이관 게이트</b><span class="gate__what">검증 필터·알림을 CRM 커스텀 필드와 연동해 신호가 리드·거래처 타임라인에 자동 기록되게 하고, 중요도 스코어링·담당자 자동 배정을 붙여 운영 전환합니다.</span></li></ol>
+          </div>
+          <aside class="case__side">
+            <div class="ba"><div class="ba__head">목표 지표 <span class="ba__note">· 실제 수치는 귀사 데이터로 재측정</span></div><div class="ba__row"><span class="ba__m">일일 정보 탐색시간</span><span class="ba__b">담당자 수작업 검색</span><span class="ba__arw" aria-hidden="true">→</span><span class="ba__a">60~70% 단축 (목표)</span></div><div class="ba__row"><span class="ba__m">신호 후 첫 접촉</span><span class="ba__b">며칠</span><span class="ba__arw" aria-hidden="true">→</span><span class="ba__a">당일 대응 (목표)</span></div></div>
+            <div class="case__sowhat"><span class="case__k case__k--go">그래서 무엇이 열리나</span><p>입찰·증설 신호에 남보다 먼저 반응하는 영업 조직이 되고, 거래처 동향이 CRM에 자동 축적돼 담당자 교체에도 제안 기회가 끊기지 않습니다.</p></div>
+            <div class="case__facts">
+              <span class="chip">약 12주 (측정 2 + 실증 4 + 이관 6)</span>
+              <span class="chip chip--v">정부 바우처 적합</span>
+            </div>
+            <div class="case__proof">
+              <a class="chip chip--code" href="https://github.com/2icorp/2i-case-08-sales-signal" target="_blank" rel="noopener">‹/› 작동하는 레퍼런스 데모 · 소스코드 ↗</a><a class="chip chip--demo" href="/demos/08-sales-signal/">▶ 라이브 데모</a>
+              <a class="chip chip--dl" href="brochures/2i-brochure-08-제안-골든타임을-놓치지-않는-영업-레이더.pdf" download>브로셔 PDF ↓</a>
+            </div>
+            <p class="case__tech"><span class="case__tech-k">사용 기술</span> 뉴스·공공데이터(나라장터) 수집 + 기업/업종 키워드 매칭 필터 + LLM 요약·중요도 분류 + CRM Webhook 연동.</p>
+          </aside>
+        </div>
+      </article>
+      <article class="case reveal" id="case-9">
+        <header class="case__top">
+          <span class="case__no">09</span>
+          <div class="case__id">
+            <span class="case__cat">마케팅 자동화</span>
+            <span class="case__ind">소비재 · 제조</span>
+          </div>
+          <div class="case__stkm" role="group" aria-label="문제의 대가">
+            <span class="case__stkm-l">영상 외주</span>
+            <span class="case__stkm-v">건당 비용 · 긴 리드타임</span>
+          </div>
+        </header>
+        <h3 class="case__title">제품 정보만 넣으면, 채널별 홍보영상이 쏟아진다</h3>
+        <p class="case__stakes">제품력은 있는데 영상 촬영·편집 예산도 전담 인력도 없어 온라인 노출이 약합니다. 신제품이 나와도 홍보 콘텐츠가 못 따라가 판매 골든타임을 놓치고, 외주는 건당 비용·리드타임이 부담스러워 시도 자체를 포기합니다.</p>
+        <div class="case__grid">
+          <div class="case__main">
+            <div class="case__row"><span class="case__k">통찰</span><p>중소 제조사에 필요한 건 &#x27;작품 영상&#x27;이 아니라 &#x27;신제품마다 즉시 나오는 채널 규격 영상&#x27;입니다. 완성도의 마지막 5%가 아니라, 0에서 1을 자동으로 채우는 속도가 매출을 만듭니다.</p></div>
+            <div class="case__row"><span class="case__k">2i의 방식</span><p>제품 텍스트·이미지만으로 숏폼 영상 시안을 자동 생성하고, 채널별 규격 변환·브랜드 템플릿을 적용하는 파이프라인을 신제품 등록 프로세스에 연동합니다. 사람의 창의성을 대체하는 게 아니라, 만들지 못하던 콘텐츠를 존재하게 만드는 것.</p></div>
+            <ol class="case__gates"><li class="gate"><b class="gate__name">측정 게이트</b><span class="gate__what">보유 소재를 점검하고 채널별 필요 영상 포맷·규격을 정리합니다.</span></li><li class="gate"><b class="gate__name">실증 게이트</b><span class="gate__what">제품 텍스트·이미지만으로 숏폼 시안을 자동 생성하는 파이프라인을 시범 구축해 산출 속도·품질을 확인합니다.</span></li><li class="gate"><b class="gate__name">이관 게이트</b><span class="gate__what">검증 파이프라인을 신제품 등록 프로세스에 연동해 채널별 규격 영상을 일괄 산출합니다.</span></li></ol>
+          </div>
+          <aside class="case__side">
+            <div class="ba"><div class="ba__head">목표 지표 <span class="ba__note">· 실제 수치는 귀사 데이터로 재측정</span></div><div class="ba__row"><span class="ba__m">영상 제작 소요</span><span class="ba__b">외주 · 수일~수주</span><span class="ba__arw" aria-hidden="true">→</span><span class="ba__a">80% 단축 (목표)</span></div><div class="ba__row"><span class="ba__m">신제품 홍보 대응</span><span class="ba__b">포기 · 지연</span><span class="ba__arw" aria-hidden="true">→</span><span class="ba__a">출시 즉시 콘텐츠</span></div></div>
+            <div class="case__sowhat"><span class="case__k case__k--go">그래서 무엇이 열리나</span><p>신제품 출시와 홍보가 같은 속도로 움직이고, 예산 때문에 비어 있던 SNS 채널이 채워져 온라인 존재감이 생깁니다.</p></div>
+            <div class="case__facts">
+              <span class="chip">약 4주 (측정 1 + 실증 3)</span>
+              <span class="chip chip--v">정부 바우처 적합</span>
+            </div>
+            <div class="case__proof">
+              <a class="chip chip--code" href="https://github.com/2icorp/2i-case-09-promo-video" target="_blank" rel="noopener">‹/› 작동하는 레퍼런스 데모 · 소스코드 ↗</a><a class="chip chip--demo" href="/demos/09-promo-video/">▶ 라이브 데모</a>
+              <a class="chip chip--dl" href="brochures/2i-brochure-09-제품-정보만-넣으면-채널별-홍보영상이-쏟아진다.pdf" download>브로셔 PDF ↓</a>
+            </div>
+            <p class="case__tech"><span class="case__tech-k">사용 기술</span> Pillow·ffmpeg 기반: 제품 JSON(텍스트·이미지) → 채널별 규격 숏폼 영상 자동 합성, 브랜드 템플릿 적용.</p>
+          </aside>
+        </div>
+      </article>
+      <article class="case reveal" id="case-10">
+        <header class="case__top">
+          <span class="case__no">10</span>
+          <div class="case__id">
+            <span class="case__cat">온라인 존재감 원스톱</span>
+            <span class="case__ind">전 업종 · 온라인 취약 기업</span>
+          </div>
+          <div class="case__stkm" role="group" aria-label="문제의 대가">
+            <span class="case__stkm-l">온라인 존재감</span>
+            <span class="case__stkm-v">검색해도 안 나옴</span>
+          </div>
+        </header>
+        <h3 class="case__title">검색하면 안 나오는 회사, 신뢰받는 브랜드로</h3>
+        <p class="case__stakes">제품과 기술은 좋은데 홈페이지가 없거나 몇 년째 방치돼 있고, 콘텐츠·홍보 영상을 만들 예산도 인력도 없어 온라인에서 사실상 존재하지 않는 회사처럼 보입니다. 거래처가 검색해도 나오는 게 없으니 신뢰를 얻기 어렵고, 마케팅은 늘 &#x27;나중에 할 일&#x27;로 밀립니다.</p>
+        <div class="case__grid">
+          <div class="case__main">
+            <div class="case__row"><span class="case__k">통찰</span><p>홈페이지의 목적은 예쁜 화면이 아니라 &#x27;방문을 상담 문의로 바꾸는 것&#x27;입니다. 그리고 그 시작은 도메인 구입도, 큰 예산도 아닌 무료 호스팅 위에서 지금 당장 가능합니다. 우리가 그걸 우리 자신에게 먼저 증명했습니다.</p></div>
+            <div class="case__row"><span class="case__k">2i의 방식</span><p>브랜드 톤에 맞춘 반응형 랜딩을 제작·배포(도메인 없이 무료 호스팅부터)하고 기본 SEO·문의 폼·자가진단 같은 전환 장치를 붙입니다. 이어 블로그 골격과 홍보 숏폼을 자동 생성 파이프라인으로 채워 초기 콘텐츠까지 넘기는 원스톱. 2i는 자사 사이트를 정확히 이 방식으로 무료 GitHub Pages에 구축했습니다.</p></div>
+            <ol class="case__gates"><li class="gate"><b class="gate__name">측정 게이트</b><span class="gate__what">회사 강점·타겟·경쟁사를 정리해 한 줄 포지셔닝·페이지 구조·확보할 검색 키워드를 정하고, 저비용 배포 경로와 리드 수집 방식을 설계합니다.</span></li><li class="gate"><b class="gate__name">실증 게이트</b><span class="gate__what">정한 포지셔닝과 키워드로 핵심 페이지 한 벌을 먼저 띄워 노출·유입·문의 전환을 2주간 실측합니다. 목표 유입에 못 미치면 전체 사이트를 만들지 않고 메시지와 키워드부터 다시 잡습니다.</span></li><li class="gate"><b class="gate__name">이관 게이트</b><span class="gate__what">브랜드 톤 반응형 랜딩을 제작·배포하고 기본 SEO·문의 폼을 붙인 뒤, 블로그 골격과 제품 홍보 숏폼을 자동 생성으로 채워 초기 콘텐츠까지 넘깁니다.</span></li></ol>
+          </div>
+          <aside class="case__side">
+            <div class="ba"><div class="ba__head">목표 지표 <span class="ba__note">· 실제 수치는 귀사 데이터로 재측정</span></div><div class="ba__row"><span class="ba__m">브랜드 검색 노출</span><span class="ba__b">없음</span><span class="ba__arw" aria-hidden="true">→</span><span class="ba__a">단기 확보 (목표)</span></div><div class="ba__row"><span class="ba__m">방문 → 상담 리드</span><span class="ba__b">전환 장치 없음</span><span class="ba__arw" aria-hidden="true">→</span><span class="ba__a">문의 폼·자가진단 연결</span></div></div>
+            <div class="case__sowhat"><span class="case__k case__k--go">그래서 무엇이 열리나</span><p>거래처가 검색했을 때 &#x27;제대로 된 회사&#x27;로 보이기 시작하고, 방문이 실제 상담으로 이어지며, 초기 콘텐츠가 쌓여 재방문 여지가 생깁니다. 이 사례의 최종 증거물은 지금 보고 계신 이 사이트입니다.</p></div>
+            <div class="case__facts">
+              <span class="chip">약 6~7주 (측정 1 + 실증 2 + 이관 3~4)</span>
+              <span class="chip chip--v">정부 바우처 적합</span>
+            </div>
+            <div class="case__proof">
+              <a class="chip chip--code" href="https://github.com/2icorp/2i-case-10-web-marketing" target="_blank" rel="noopener">‹/› 작동하는 레퍼런스 스타터 (+ 이 사이트 자체) · 소스코드 ↗</a><a class="chip chip--demo" href="/demos/10-web-marketing/">▶ 라이브 데모</a>
+              <a class="chip chip--dl" href="brochures/2i-brochure-10-검색하면-안-나오는-회사-신뢰받는-브랜드로.pdf" download>브로셔 PDF ↓</a>
+            </div>
+            <p class="case__tech"><span class="case__tech-k">사용 기술</span> 디자인 토큰 기반 반응형 랜딩 + 기본 SEO + 리드 폼 + 블로그/홍보영상 자동 생성 결합. 무료 GitHub Pages 배포 스타터.</p>
+          </aside>
+        </div>
+      </article>
+      <article class="case reveal" id="case-11">
+        <header class="case__top">
+          <span class="case__no">11</span>
+          <div class="case__id">
+            <span class="case__cat">대화형 에이전트 오케스트레이션</span>
+            <span class="case__ind">공공·생활 서비스 · 소상공인</span>
+          </div>
+          <div class="case__stkm" role="group" aria-label="문제의 대가">
+            <span class="case__stkm-l">도구 전환</span>
+            <span class="case__stkm-v">수십 개 앱·사이트 왕복</span>
+          </div>
+        </header>
+        <h3 class="case__title">&quot;부산 출장 준비해줘&quot; 한마디로, 앱 열 개를 대신 연다</h3>
+        <p class="case__stakes">한 가지 일을 끝내려 예매·날씨·일정·쇼핑·행정 서류를 각각 다른 앱과 사이트에서 처리합니다. 여정 하나에 화면 열 개를 오가고, 타이핑이 힘든 사람에겐 진입 자체가 벽입니다.</p>
+        <div class="case__grid">
+          <div class="case__main">
+            <div class="case__row"><span class="case__k">통찰</span><p>필요한 건 더 많은 앱이 아니라, 한 문장의 의도를 이해해 여러 도구를 대신 엮어 실행하고 하나의 답으로 합쳐주는 오케스트레이터입니다. &#x27;택배 어디야&#x27; 같은 단발 질의와 &#x27;부산 출장 준비해줘&#x27; 같은 여정 단위 요청의 차이가 핵심입니다.</p></div>
+            <div class="case__row"><span class="case__k">2i의 방식</span><p>자연어 의도를 분해해 필요한 도구를 순차·병렬로 호출하고 결과를 하나로 병합합니다. 개인화 메모리로 반복 입력을 없애고, 도구는 표준 어댑터로 붙여 확장합니다. 말로 묻고 말로 답받는 음성 우선 흐름이라 손이 자유롭지 않은 순간에도 씁니다.</p></div>
+            <ol class="case__gates"><li class="gate"><b class="gate__name">측정 게이트</b><span class="gate__what">자주 하는 여정별로 지금 몇 개 도구를 몇 분에 걸쳐 오가는지, 도구 전환 마찰을 측정합니다.</span></li><li class="gate"><b class="gate__name">실증 게이트</b><span class="gate__what">핵심 여정 3종을 오프라인 오케스트레이터로 자동화해 의도 분류 정확도와 멀티스텝 체인 성공률을 확인합니다.</span></li><li class="gate"><b class="gate__name">이관 게이트</b><span class="gate__what">검증된 파이프라인을 실제 도구 어댑터와 개인화 메모리에 연동해 여정을 한 문장으로 처리합니다.</span></li></ol>
+          </div>
+          <aside class="case__side">
+            <div class="ba"><div class="ba__head">목표 지표 <span class="ba__note">· 실제 수치는 귀사 데이터로 재측정</span></div><div class="ba__row"><span class="ba__m">여정 1건 처리</span><span class="ba__b">앱 여러 개 · 수분~수십분</span><span class="ba__arw" aria-hidden="true">→</span><span class="ba__a">한 문장 · 자동 (목표)</span></div><div class="ba__row"><span class="ba__m">반복 입력</span><span class="ba__b">매번 재입력</span><span class="ba__arw" aria-hidden="true">→</span><span class="ba__a">메모리로 0회 (목표)</span></div></div>
+            <div class="case__sowhat"><span class="case__k case__k--go">그래서 무엇이 열리나</span><p>도구를 고를 필요 없이 &#x27;해줘&#x27; 한마디로 여정이 끝나고, 타이핑이 힘든 사람도 말로 접근합니다. 흩어진 도구가 하나의 대화 창구로 모입니다.</p></div>
+            <div class="case__facts">
+              <span class="chip">약 5주 (측정 1 + 실증 4)</span>
+              <span class="chip chip--v">정부 바우처 적합</span>
+            </div>
+            <div class="case__proof">
+              <a class="chip chip--code" href="https://github.com/2icorp/2i-case-11-agent-orchestrator" target="_blank" rel="noopener">‹/› 작동하는 레퍼런스 데모 · 소스코드 ↗</a><a class="chip chip--demo" href="/demos/11-agent-orchestrator/">▶ 라이브 데모</a>
+              <a class="chip chip--dl" href="brochures/2i-brochure-11-부산-출장-준비해줘-한마디로-앱-열-개를-대신-연다.pdf" download>브로셔 PDF ↓</a>
+            </div>
+            <p class="case__tech"><span class="case__tech-k">사용 기술</span> Python 표준 라이브러리 기반: 자연어 의도 → 분류·슬롯 추출 → 도구 DAG 순차·병렬 실행(목 어댑터: 날씨·기차예매·캘린더·쇼핑비교·문서) → 결과 병합 + 음성 요약 스크립트. 규칙 라우터(LLM 선택·오프라인 폴백) + 개인화 메모리. 완전 오프라인·합성 데이터·유료 API 0.</p>
+          </aside>
+        </div>
+      </article>
+      <article class="case reveal" id="case-12">
+        <header class="case__top">
+          <span class="case__no">12</span>
+          <div class="case__id">
+            <span class="case__cat">설계 자동화 · 폐루프</span>
+            <span class="case__ind">건축 · 엔지니어링</span>
+          </div>
+          <div class="case__stkm" role="group" aria-label="문제의 대가">
+            <span class="case__stkm-l">초안 도달</span>
+            <span class="case__stkm-v">매번 백지에서 이틀</span>
+          </div>
+        </header>
+        <h3 class="case__title">백지 도면에서 이틀, 비판할 수 있는 초안까지 열 분</h3>
+        <p class="case__stakes">기본 설계 초안 한 장을 잡는 데 이틀이 걸립니다. 실 배치, 코어 위치, 복도 폭, 면적 배분을 손으로 맞추다 보면 정작 검토할 시간이 없고, 면적 미달이나 피난거리 초과는 도면을 다 그린 뒤에야 드러나 처음부터 다시 그립니다.</p>
+        <div class="case__grid">
+          <div class="case__main">
+            <div class="case__row"><span class="case__k">통찰</span><p>AI에게 예쁜 도면을 그리게 하는 접근은 현장에서 쓸모가 없습니다. 편집 불가능한 그림이 나오기 때문입니다. 실제로 필요한 건 완성작이 아니라 비판할 수 있는 초안입니다. 에이전트가 요구 스펙으로 초안을 만들고 스스로 면적·일조·피난을 재서 어긋난 실만 고치면, 설계자는 백지가 아니라 결함이 드러난 안에서 시작합니다.</p></div>
+            <div class="case__row"><span class="case__k">2i의 방식</span><p>에이전트에게 두 개의 눈을 줍니다. 평면을 렌더해 눈으로 보는 시각의 눈과, 실면적·일조 심도·복도 경유 피난거리·실 간섭·모듈 정합을 수치로 재는 구조의 눈입니다. 위반을 진단해 표적 패치만 적용하고, 재측정해 개선되지 않으면 체크포인트로 되돌립니다. 실 id와 용도는 전 반복에서 보존되므로 결과는 CAD·BIM에서 계속 편집됩니다.</p></div>
+            <ol class="case__gates"><li class="gate"><b class="gate__name">측정 게이트</b><span class="gate__what">현재 초안 작업의 소요 시간과 재작업 횟수를 실측하고, 귀사 설계 기준·관련 법규에서 게이트 항목과 허용치를 확정합니다.</span></li><li class="gate"><b class="gate__name">실증 게이트</b><span class="gate__what">요구 스펙 세트를 폐루프에 넣어 blockout을 자동 생성하고, 전 게이트 통과 여부와 반복당 위반 감소를 실측합니다. 잘못된 수정이 실제로 롤백되는지 확인합니다.</span></li><li class="gate"><b class="gate__name">이관 게이트</b><span class="gate__what">검증된 게이트와 패치 규칙을 사내 CAD·BIM 도구 어댑터에 연결하고, 설계자 검토 흐름과 산출물 규격을 함께 넘깁니다.</span></li></ol>
+          </div>
+          <aside class="case__side">
+            <div class="ba"><div class="ba__head">목표 지표 <span class="ba__note">· 실제 수치는 귀사 데이터로 재측정</span></div><div class="ba__row"><span class="ba__m">설계 게이트 위반</span><span class="ba__b">초안 7개 중 5개 미달</span><span class="ba__arw" aria-hidden="true">→</span><span class="ba__a">7개 전부 통과 (합성 스펙 실측)</span></div><div class="ba__row"><span class="ba__m">수정 방식</span><span class="ba__b">위반 발견 시 전체 재작도</span><span class="ba__arw" aria-hidden="true">→</span><span class="ba__a">위반 실만 표적 수정 · 실 id 보존</span></div></div>
+            <div class="case__sowhat"><span class="case__k case__k--go">그래서 무엇이 열리나</span><p>설계자가 백지를 마주하는 시간이 사라지고, 검토할 대상이 있는 상태에서 판단을 시작합니다. 면적·피난 같은 계산 가능한 오류는 도면을 그리기 전에 걸러지므로 재작도가 줄어듭니다.</p></div>
+            <div class="case__facts">
+              <span class="chip">약 8주 (측정 2 + 실증 3 + 이관 3)</span>
+              <span class="chip chip--v">정부 바우처 적합</span>
+            </div>
+            <div class="case__proof">
+              <a class="chip chip--code" href="https://github.com/2icorp/2i-case-12-cad-blockout-agent" target="_blank" rel="noopener">‹/› 작동하는 레퍼런스 데모 (라이브 루프 리플레이) · 소스코드 ↗</a><a class="chip chip--demo" href="/demos/12-cad-blockout/">▶ 라이브 데모 · 루프 리플레이</a>
+              <a class="chip chip--dl" href="brochures/2i-brochure-12-백지-도면에서-이틀-비판할-수-있는-초안까지-열-분.pdf" download>브로셔 PDF ↓</a>
+            </div>
+            <p class="case__tech"><span class="case__tech-k">사용 기술</span> 순수 기하 객체 그래프(실·코어·복도·구조 그리드) + 설계 게이트 7종(면적·일조 심도·복도 경유 피난거리·실 간섭·대지 이탈·모듈 정합·복도 폭) + 결정론 크리틱 + 패치 원장·체크포인트 롤백. 실측: 게이트 점수 11.40 → 0.00, 5회 반복, 패치 수용 4건·롤백 1건, 테스트 21개. CAD 설치·API 키 불요.</p>
+          </aside>
+        </div>
+      </article>
+      <article class="case reveal" id="case-13">
+        <header class="case__top">
+          <span class="case__no">13</span>
+          <div class="case__id">
+            <span class="case__cat">연구 도구 자동화 · 폐루프</span>
+            <span class="case__ind">의료영상 연구 · 의료기기 (연구용)</span>
+          </div>
+          <div class="case__stkm" role="group" aria-label="문제의 대가">
+            <span class="case__stkm-l">파라미터 반복</span>
+            <span class="case__stkm-v">사람이 눈으로 보고 손으로 조정</span>
+          </div>
+        </header>
+        <h3 class="case__title">분할 오류 찾아 고치는 반복, 연구자 대신 에이전트가 돈다</h3>
+        <p class="case__stakes">영상 분할은 한 번에 끝나지 않습니다. 결과를 화면으로 확인하고, 임계값과 후처리를 바꾸고, 다시 돌리는 일을 연구자가 반복합니다. 판단 자체는 어렵지 않은데 시간이 통째로 들어가고, 사람마다 조정 방식이 달라 재현이 안 됩니다.</p>
+        <div class="case__grid">
+          <div class="case__main">
+            <div class="case__row"><span class="case__k">통찰</span><p>정답 마스크는 실제 연구 현장에 없습니다. 그런데도 결과가 잘못됐다는 신호는 영상 안에 이미 있습니다. 마스크가 수백 조각으로 부서졌는지, 내부에 구멍이 뚫렸는지, 경계가 영상의 실제 윤곽선 위에 놓였는지, 부피가 생리학적으로 말이 되는지입니다. 정답 없이 계산 가능한 이 신호만으로 도구를 조정해도 실제 정확도가 올라갑니다.</p></div>
+            <div class="case__row"><span class="case__k">2i의 방식</span><p>에이전트가 축상·관상·시상 3면을 캡처해 보고, 정답을 쓰지 않는 품질 신호 6종을 계산해 원인을 진단합니다. 노이즈 제거 세기, 바이어스 보정, 임계 창, 형태학 반경, 조작자 시드, 경계 보정 중 맞는 레버를 골라 적용하고 재측정합니다. 개선되지 않으면 롤백합니다. 영상 원본은 어떤 패치로도 수정되지 않으며 임의 코드 실행 도구는 제공하지 않습니다.</p></div>
+            <ol class="case__gates"><li class="gate"><b class="gate__name">측정 게이트</b><span class="gate__what">현재 분할 작업의 수작업 보정 시간과 작업자 간 재현성을 실측하고, 연구 목적에 맞는 품질 신호와 허용치를 정답 마스크로 보정해 확정합니다.</span></li><li class="gate"><b class="gate__name">실증 게이트</b><span class="gate__what">비식별 연구 데이터로 폐루프를 돌려 오류 자기 복구율, 부피 측정 재현성, 전문가 수정 시간 감소를 실측합니다. 임상 성능이 아니라 도구 운용 성능을 평가합니다.</span></li><li class="gate"><b class="gate__name">이관 게이트</b><span class="gate__what">검증된 파이프라인을 연구망 내 영상 워크스테이션과 학습 기반 분할 모델에 연결하고, 비식별·읽기 전용·망분리 운영 규칙을 함께 넘깁니다.</span></li></ol>
+          </div>
+          <aside class="case__side">
+            <div class="ba"><div class="ba__head">목표 지표 <span class="ba__note">· 실제 수치는 귀사 데이터로 재측정</span></div><div class="ba__row"><span class="ba__m">품질 게이트</span><span class="ba__b">6개 중 1개 통과</span><span class="ba__arw" aria-hidden="true">→</span><span class="ba__a">6개 중 5개 통과 (합성 팬텀 실측)</span></div><div class="ba__row"><span class="ba__m">부피 측정 오차</span><span class="ba__b">35% 수준</span><span class="ba__arw" aria-hidden="true">→</span><span class="ba__a">8% 미만 (정답 미사용 조정)</span></div></div>
+            <div class="case__sowhat"><span class="case__k case__k--go">그래서 무엇이 열리나</span><p>연구자가 파라미터를 손으로 돌리는 시간이 줄고, 조정 과정이 원장에 남아 재현됩니다. 정답 없이도 품질이 오른다는 것이 실측으로 확인되므로, 정답 라벨이 없는 실제 연구 데이터에 그대로 적용할 수 있습니다.</p></div>
+            <div class="case__facts">
+              <span class="chip">약 10주 (측정 2 + 실증 4 + 이관 4)</span>
+              <span class="chip chip--v">정부 바우처 적합</span>
+            </div>
+            <div class="case__proof">
+              <a class="chip chip--code" href="https://github.com/2icorp/2i-case-13-medimg-loop-agent" target="_blank" rel="noopener">‹/› 작동하는 레퍼런스 데모 (연구용 · 합성 팬텀) · 소스코드 ↗</a><a class="chip chip--demo" href="/demos/13-medimg-loop/">▶ 라이브 데모 · 루프 리플레이</a>
+              <a class="chip chip--dl" href="brochures/2i-brochure-13-분할-오류-찾아-고치는-반복-연구자-대신-에이전트가-돈다.pdf" download>브로셔 PDF ↓</a>
+            </div>
+            <p class="case__tech"><span class="case__tech-k">사용 기술</span> 합성 CT 팬텀(노이즈·바이어스 필드·부분체적·저대비 브리지) + 전처리·임계·형태학·성분선택 파이프라인 + 정답 미사용 품질 신호 6종 + 결정론 크리틱. 실측: 품질 점수 3.62 → 0.10(6개 중 5개 통과), 정답 미사용 조정만으로 평균 Dice 0.583 → 0.927, 장기별 부피 오차 8% 미만. 미달 게이트는 완화하지 않고 미달로 보고. 테스트 18개.</p>
+          </aside>
+        </div>
+      </article>
+      <article class="case reveal" id="case-14">
+        <header class="case__top">
+          <span class="case__no">14</span>
+          <div class="case__id">
+            <span class="case__cat">운영 최적화 · 폐루프</span>
+            <span class="case__ind">병원 · 서비스 운영</span>
+          </div>
+          <div class="case__stkm" role="group" aria-label="문제의 대가">
+            <span class="case__stkm-l">운영 개선 근거</span>
+            <span class="case__stkm-v">경험과 민원에 의존</span>
+          </div>
+        </header>
+        <h3 class="case__title">복도가 왜 막히는지, 감이 아니라 시뮬레이션으로 고친다</h3>
+        <p class="case__stakes">대기가 길고 복도가 막힌다는 건 모두가 아는데, 접수 창구를 늘릴지 대기 공간을 나눌지 예약을 분산할지는 근거 없이 정해집니다. 한번 공사하면 되돌릴 수 없고, 바꿔 놓고도 실제로 나아졌는지 확인할 방법이 없습니다.</p>
+        <div class="case__grid">
+          <div class="case__main">
+            <div class="case__row"><span class="case__k">통찰</span><p>운영 개선의 진짜 문제는 아이디어 부족이 아니라 검증 부재입니다. 병원 흐름을 시뮬레이션으로 세워 두면, 바꾸기 전에 효과를 재고 효과 없는 안은 버릴 수 있습니다. 경증 분리처럼 명백해 보이는 개선이 진료 대기를 줄이는 대신 복도 혼잡을 두 배로 키운다는 것도 시뮬레이션에서만 드러납니다.</p></div>
+            <div class="case__row"><span class="case__k">2i의 방식</span><p>평면도 동선 그래프 위에서 외래와 응급 환자 흐름을 이산사건 시뮬레이션으로 돌려 대기·이동·혼잡·동선 교차를 실측합니다. 에이전트가 병목을 지목해 접수 인력, 경증 분리, CT 우선순위, 분산 대기실, 구간 확폭, 예약 평탄화 중 하나를 표적 적용하고 재시뮬레이션합니다. 개선되지 않으면 롤백하며, 물리 변경과 운영 변경을 구분해 제시합니다.</p></div>
+            <ol class="case__gates"><li class="gate"><b class="gate__name">측정 게이트</b><span class="gate__what">현재 동선과 대기 데이터를 수집해 기준선을 세우고, 개선 목표를 운영 KPI와 허용치로 확정합니다.</span></li><li class="gate"><b class="gate__name">실증 게이트</b><span class="gate__what">귀사 평면과 실제 환자 흐름으로 트윈을 세워 폐루프를 돌리고, 반복당 KPI 개선량과 기각된 안을 실측합니다.</span></li><li class="gate"><b class="gate__name">이관 게이트</b><span class="gate__what">검증된 개선안을 물리 변경과 운영 변경으로 나눠 실행 계획에 넘기고, 시행 후 재측정 체계를 함께 구축합니다.</span></li></ol>
+          </div>
+          <aside class="case__side">
+            <div class="ba"><div class="ba__head">목표 지표 <span class="ba__note">· 실제 수치는 귀사 데이터로 재측정</span></div><div class="ba__row"><span class="ba__m">운영 게이트</span><span class="ba__b">5개 전부 미달</span><span class="ba__arw" aria-hidden="true">→</span><span class="ba__a">5개 전부 통과 (합성 시나리오 실측)</span></div><div class="ba__row"><span class="ba__m">중증 도착-CT 도달</span><span class="ba__b">82.5분</span><span class="ba__arw" aria-hidden="true">→</span><span class="ba__a">33.1분 (합성 시나리오 실측)</span></div></div>
+            <div class="case__sowhat"><span class="case__k case__k--go">그래서 무엇이 열리나</span><p>공사비를 쓰기 전에 효과를 확인하고, 효과 없는 안은 시뮬레이션 단계에서 버립니다. 개선의 근거가 회의실 경험담이 아니라 재현 가능한 수치로 남습니다.</p></div>
+            <div class="case__facts">
+              <span class="chip">약 8주 (측정 3 + 실증 3 + 이관 2)</span>
+              <span class="chip chip--v">정부 바우처 적합</span>
+            </div>
+            <div class="case__proof">
+              <a class="chip chip--code" href="https://github.com/2icorp/2i-case-14-hospital-ops-twin" target="_blank" rel="noopener">‹/› 작동하는 레퍼런스 데모 (라이브 루프 리플레이) · 소스코드 ↗</a><a class="chip chip--demo" href="/demos/14-hospital-ops/">▶ 라이브 데모 · 루프 리플레이</a>
+              <a class="chip chip--dl" href="brochures/2i-brochure-14-복도가-왜-막히는지-감이-아니라-시뮬레이션으로-고친다.pdf" download>브로셔 PDF ↓</a>
+            </div>
+            <p class="case__tech"><span class="case__tech-k">사용 기술</span> 평면 동선 그래프(실·복도·통행 정책) + SimPy 이산사건 시뮬레이션(외래·응급, 고정 시드 6복제 평균) + 운영 게이트 5종(접수 대기·진료 대기·도착-CT·복도 혼잡 노출·동선 교차) + 결정론 크리틱 + 패치 원장·체크포인트 롤백. 실측: 게이트 점수 6.27 → 0.00, 15회 반복, 패치 수용 11건·롤백 4건. 테스트 13개.</p>
+          </aside>
+        </div>
+      </article>
+      <article class="case reveal" id="case-15">
+        <header class="case__top">
+          <span class="case__no">15</span>
+          <div class="case__id">
+            <span class="case__cat">인프라 · 엣지 AI</span>
+            <span class="case__ind">소매 · 현장 운영 · 온프렘</span>
+          </div>
+          <div class="case__stkm" role="group" aria-label="문제의 대가">
+            <span class="case__stkm-l">영상 이해 서버</span>
+            <span class="case__stkm-v">데이터센터 GPU 필수</span>
+          </div>
+        </header>
+        <h3 class="case__title">&quot;GPU 서버 없이 영상 이해 AI가 될까&quot; 소비자용 실리콘에서 실측했다</h3>
+        <p class="case__stakes">매장 카메라나 순찰 현장에서 &#x27;방금 화면에 뭐가 지나갔는지&#x27;를 이해하려면 최신 영상-언어모델(VLM)이 필요합니다. 문제는 이 모델을 서빙하는 표준 경로가 데이터센터급 GPU라는 점입니다. 영상을 클라우드로 내보내지 않고, 데이터센터 GPU도 없이 현장에 두는 저가 온프렘 유닛에서 이 정도 모델이 실제로 돌아가는지는 아무도 재보지 않은 질문입니다.</p>
+        <div class="case__grid">
+          <div class="case__main">
+            <div class="case__row"><span class="case__k">통찰</span><p>최신 VLM을 &#x27;쓰는&#x27; 것과 저가 하드웨어에 &#x27;배포&#x27;하는 것은 다른 일입니다. 양자화로 모델을 줄이면 저절로 빨라진다는 가정은 이번 실측에서 정면으로 깨졌습니다. 메모리를 줄이는 축과 속도를 얻는 축은 서로 다른 문제이고, 그 사실을 모른 채 도입하면 &#x27;더 작아졌는데 왜 더 느리지&#x27;라는 함정에 걸립니다.</p></div>
+            <div class="case__row"><span class="case__k">2i의 방식</span><p>공개 Apache-2.0 라이선스 VLM인 microsoft/Mage-VL(4.7B, 시각 인코더 Mage-ViT + Qwen3-4B 언어 백본)을 소비자용 Apple M4 Pro(통합 메모리 48GB)에 직접 올려 bf16·INT8·INT4 세 정밀도를 전부 실측했습니다. 메모리는 양자화로 줄었지만 같은 조건에서 디코드 속도는 오히려 느려졌고, 원인을 커널 단으로 추적해 언어 백본을 mlx-lm의 융합 커널 INT4 경로로 다시 재봤습니다. 결과는 동일 4비트에서 디코드 89.7 tok/s·2.46GB로, 나이브 양자화(0.47 tok/s·4.15GB) 대비 약 190배 더 빠르고 메모리도 더 작은 조합이었습니다. 모델을 고르는 게 아니라 이렇게 재고 검증하는 패키징 엔지니어링이 저희 일입니다.</p></div>
+            <ol class="case__gates"><li class="gate"><b class="gate__name">측정 게이트</b><span class="gate__what">대상 온프렘 하드웨어에서 bf16 기준선의 메모리 점유·디코드 처리량·응답 지연을 계측해 baseline을 고정합니다.</span></li><li class="gate"><b class="gate__name">실증 게이트</b><span class="gate__what">INT8·INT4 등 양자화 조합을 실제로 돌려 메모리 절감분과 속도 변화를 함께 재고, 답변 품질이 유지되는지 대조합니다. 속도 이득이 안 나면 커널·런타임 조합을 바꿔 재검증합니다.</span></li><li class="gate"><b class="gate__name">이관 게이트</b><span class="gate__what">검증된 양자화와 런타임 조합을 온프렘 유닛으로 패키징하고, 스트리밍과 이미지 스코프를 명확히 나눈 운영 매뉴얼과 함께 넘깁니다.</span></li></ol>
+          </div>
+          <aside class="case__side">
+            <div class="ba"><div class="ba__head">목표 지표 <span class="ba__note">· 실제 수치는 귀사 데이터로 재측정</span></div><div class="ba__row"><span class="ba__m">디바이스 메모리 (나이브 INT4)</span><span class="ba__b">bf16 9.49GB</span><span class="ba__arw" aria-hidden="true">→</span><span class="ba__a">4.15GB (56% 감소, 실측)</span></div><div class="ba__row"><span class="ba__m">디코드 처리량 (나이브 INT4)</span><span class="ba__b">bf16 13.01 tok/s</span><span class="ba__arw" aria-hidden="true">→</span><span class="ba__a">0.47 tok/s (96% 저하, 실측)</span></div><div class="ba__row"><span class="ba__m">디코드 처리량 (MLX 융합 INT4)</span><span class="ba__b">나이브 INT4 0.47 tok/s</span><span class="ba__arw" aria-hidden="true">→</span><span class="ba__a">89.67 tok/s (약 190배, 언어 백본 기준 실측)</span></div><div class="ba__row"><span class="ba__m">영상 이해 서버</span><span class="ba__b">데이터센터 GPU 필수</span><span class="ba__arw" aria-hidden="true">→</span><span class="ba__a">소비자용 Mac 1대 (이미지·프레임 기준)</span></div></div>
+            <div class="case__sowhat"><span class="case__k case__k--go">그래서 무엇이 열리나</span><p>양자화만으로는 부족합니다. 양자화와 올바른 융합커널 런타임을 함께 골라야 저가 온프렘 하드웨어에서 작고 &#x27;또&#x27; 빠르게 돈다는 것을 실측으로 닫았습니다. 언어 백본만으로 디코드 89.7 tok/s(약 190배)를 확인했고, 비전 타워까지 포함한 전체 모델의 MLX 포팅이 다음 상용화 단계입니다. 2i가 파는 것은 모델이 아니라, 이렇게 진단하고 런타임을 고르고 이관까지 마치는 측정된 패키징입니다.</p></div>
+            <div class="case__facts">
+              <span class="chip">약 12주 (측정 2 + 실증 4 + 이관 6)</span>
+              <span class="chip chip--v">정부 바우처 적합</span>
+            </div>
+            <div class="case__proof">
+              <a class="chip chip--doc" href="/papers/streaming-vlm-quantization-consumer-silicon.html">◆ 기술 논문: 실측 리포트</a>
+              <a class="chip chip--dl" href="brochures/2i-brochure-15-GPU-서버-없이-영상-이해-AI가-될까-소비자용-실리콘에서-실측했다.pdf" download>브로셔 PDF ↓</a>
+            </div>
+            <p class="case__tech"><span class="case__tech-k">사용 기술</span> microsoft/Mage-VL(Mage-ViT + Qwen3-4B) · transformers + torch + Metal(MPS) · optimum-quanto weight-only 양자화(bf16/INT8/INT4) · mlx-lm 융합 저비트 커널 런타임 · Apple Silicon 온프렘 배치. 실측 스코프: 89.7 tok/s는 디코드를 지배하는 언어 백본(Qwen3-4B) 단독 프록시이며, 비전 타워를 포함한 mage_vl 전체의 MLX 포팅은 다음 상용화 작업입니다. 스트리밍 코덱(DCVC)은 CUDA 전용이라 로컬 미지원입니다.</p>
+          </aside>
+        </div>
+      </article>
+    </div>
+  </section>
+  <section class="section section--alt">
+    <div class="wrap">
+      <div class="cta">
+        <h2>이 중 하나가 우리 회사 이야기 같다면.</h2>
+        <p>무료 자가진단으로 시작하거나, 30분 상담으로 귀사에 맞는 시작점을 함께 찾습니다.</p>
+        <div class="cta__row"><a class="btn btn--signal" href="/#diagnose">자가진단 →</a><a class="btn btn--ghost" href="/#contact">상담 신청</a></div>
+      </div>
+    </div>
+  </section>
+</main>
+<footer class="foot">
+  <div class="wrap foot__inner">
+    <div class="brand"><span class="brand__mark">2i</span><span class="brand__tag">AX 컨설팅</span></div>
+    <nav class="foot__links"><a href="/">홈</a><a href="/#method">방식</a><a href="https://github.com/2icorp" target="_blank" rel="noopener">GitHub</a></nav>
+  </div>
+</footer>
+<script src="main.js"></script>
+</body>
+</html>
