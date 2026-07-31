@@ -48,8 +48,20 @@
   </section>
   <section class="section section--alt" style="padding-top:0">
     <div class="wrap">
-    <div class="pfilters" role="tablist" aria-label="분류 필터"><button class="pfilter is-on" data-cat="all">전체 <b>39</b></button><button class="pfilter" data-cat="method">방법 <b>12</b></button><button class="pfilter" data-cat="experiment">실험 노트 <b>8</b></button><button class="pfilter" data-cat="infra">인프라 <b>3</b></button><button class="pfilter" data-cat="benchmark">벤치마크 <b>3</b></button><button class="pfilter" data-cat="signal">신호 <b>3</b></button><button class="pfilter" data-cat="research">리서치 <b>3</b></button><button class="pfilter" data-cat="industrial">산업 <b>2</b></button><button class="pfilter" data-cat="media">미디어 <b>2</b></button><button class="pfilter" data-cat="sensing">센싱 <b>2</b></button><button class="pfilter" data-cat="whitepaper">백서 <b>1</b></button></div>
+    <div class="pfilters" role="tablist" aria-label="분류 필터"><button class="pfilter is-on" data-cat="all">전체 <b>41</b></button><button class="pfilter" data-cat="method">방법 <b>13</b></button><button class="pfilter" data-cat="experiment">실험 노트 <b>9</b></button><button class="pfilter" data-cat="infra">인프라 <b>3</b></button><button class="pfilter" data-cat="benchmark">벤치마크 <b>3</b></button><button class="pfilter" data-cat="signal">신호 <b>3</b></button><button class="pfilter" data-cat="research">리서치 <b>3</b></button><button class="pfilter" data-cat="industrial">산업 <b>2</b></button><button class="pfilter" data-cat="media">미디어 <b>2</b></button><button class="pfilter" data-cat="sensing">센싱 <b>2</b></button><button class="pfilter" data-cat="whitepaper">백서 <b>1</b></button></div>
     <div class="pboard">
+      <a class="pcard reveal" href="papers/always-feasible-rostering.html" data-cat="method">
+        <div class="pcard__meta"><span class="pcard__cat">방법</span><span class="pcard__date">2026.07.31</span><span class="pcard__rt">약 8분</span></div>
+        <h3 class="pcard__title">언제나 해가 있는 편성 시스템을 만드는 법: 하드 등식에서 슬랙 재설계로</h3>
+        <p class="pcard__excerpt">교대 근무표를 짜다 &#x27;오늘은 안 풀린다&#x27;는 메시지를 받아본 적이 있다면 이 글이 그 원인과 해법을 다룹니다. 3년 전 근무 스케줄링 코드는 합성 인스턴스 18개 중 12개(66.7%)에서 해를 내지 못했고, 그중 14일짜리 9개는 수요와 무관한 구조적 결함이었습니다. 원본이 못 푼 인스턴스에서 뽑은 대표 4개를 CP-SAT 슬랙 기반 모델로 다시 풀면 4개 전부 OPTIMAL이 나오고 위반 0으로 검증됩니다. 공정성 강화는 대체로 공짜였고, 공개 간호사 로스터링 벤치마크에서는 하드 위반이 1,102건에서 0건으로 줄었습니다.</p>
+        <div class="pcard__tags"><span>#근무편성최적화</span><span>#CPSAT</span><span>#제약프로그래밍</span><span>#인력스케줄링</span><span>#실행가능성</span><span>#슬랙변수</span><span class="pcard__go">읽기 →</span></div>
+      </a>
+      <a class="pcard reveal" href="papers/optimization-what-it-buys.html" data-cat="experiment">
+        <div class="pcard__meta"><span class="pcard__cat">실험 노트</span><span class="pcard__date">2026.07.31</span><span class="pcard__rt">약 9분</span></div>
+        <h3 class="pcard__title">최적화를 켜면 무엇이 얼마나 좋아지는가: 4개 도메인 실측</h3>
+        <p class="pcard__excerpt">최적화 도입을 검토하지만 &#x27;그래서 얼마나 좋아지는데&#x27;라는 질문에 숫자로 답을 들어본 적이 없는 의사결정자를 위한 글입니다. 같은 모델·같은 제약·같은 솔버에서 목적 가중치만 0으로 끈 해와 비교했더니, 방배정은 선호 충족률이 2~12%에서 60~69%로(+53~61%p), 콜센터는 같은 인건비에서 서비스레벨이 +4.97%p, 야구 일정은 홈/원정 연속배정이 36~100% 줄었습니다. 대가로 무엇을 내주는지도 함께 실측했습니다.</p>
+        <div class="pcard__tags"><span>#최적화효과측정</span><span>#CPSAT</span><span>#인력배치</span><span>#ErlangC</span><span>#트레이드오프</span><span>#벤치마크</span><span class="pcard__go">읽기 →</span></div>
+      </a>
       <a class="pcard reveal" href="papers/coverage-before-score-storage-diagnosis.html" data-cat="infra">
         <div class="pcard__meta"><span class="pcard__cat">인프라</span><span class="pcard__date">2026.07.31</span><span class="pcard__rt">약 8분</span></div>
         <h3 class="pcard__title">진단 보고서는 점수보다 커버리지를 먼저 써야 합니다: 39항목 중 11개를 잰 기록</h3>
