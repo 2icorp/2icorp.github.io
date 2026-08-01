@@ -1,5 +1,6 @@
 /* 2i instrument style. No em/en dashes in content. */
 :root {
+  color-scheme: light;
   --bg: oklch(98% 0.004 90);
   --panel: oklch(100% 0 0);
   --ink: oklch(24% 0.01 260);
@@ -11,6 +12,21 @@
   --warn: oklch(70% 0.14 80);
   --mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
   --sans: Pretendard, "Apple SD Gothic Neo", "Noto Sans KR", system-ui, sans-serif;
+}
+
+/* 다크 테마. 페이지 <head> 부트스트랩이 <html data-theme="dark"> 를 붙이면 여기로 넘어온다.
+   (2026-08-01: 부트스트랩만 있고 이 블록이 없어 다크 사용자에게 라이트 팔레트가 나갔다.) */
+:root[data-theme="dark"] {
+  --bg: oklch(20% 0.012 260);
+  --panel: oklch(25% 0.012 260);
+  --ink: oklch(94% 0.004 90);
+  --ink-2: oklch(72% 0.014 260);
+  --line: oklch(36% 0.014 260);
+  --accent: oklch(72% 0.11 250);
+  --good: oklch(70% 0.13 150);
+  --bad: oklch(68% 0.16 25);
+  --warn: oklch(78% 0.13 80);
+  color-scheme: dark;
 }
 * { box-sizing: border-box; margin: 0; }
 body {

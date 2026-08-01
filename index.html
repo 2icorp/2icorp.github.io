@@ -1,6 +1,7 @@
 <!doctype html>
 <html lang="ko">
 <head>
+<script>(function(){try{var t=localStorage.getItem("theme");if(!t&&window.matchMedia&&matchMedia("(prefers-color-scheme: dark)").matches)t="dark";if(t)document.documentElement.setAttribute("data-theme",t);}catch(e){}})();</script>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>2i AX 컨설팅 | 중소·중견 제조·유통</title>
@@ -33,6 +34,7 @@
       <a href="finance.html">금융</a>
       <a href="papers.html">논문·실험</a>
       <a href="about.html">회사소개</a>
+      <a href="#pricing">가격</a>
       <a href="#voucher">정부 바우처</a>
       <a class="nav__lang" href="/en/">EN</a>
       <a class="nav__cta btn btn--signal" href="#contact">상담 신청</a>
@@ -535,6 +537,64 @@
     </div>
   </section>
 
+  <!-- PRICING -->
+  <section class="section" id="pricing">
+    <div class="wrap">
+      <div class="reveal" style="max-width:60ch">
+        <span class="eyebrow">가격</span>
+        <h2 style="font-size:var(--text-h2);margin-top:1rem">얼마인지 먼저 밝힙니다.</h2>
+        <p style="margin-top:1.1rem;color:var(--ink-soft)">견적을 물어봐야 알 수 있는 구조는 결정을 늦춥니다. 게이트 단위로 끊어 팔기 때문에, <b>다음 단계 비용은 앞 단계가 통과한 뒤에만 발생합니다.</b> 아래는 표준 범위이고, 데이터 상태와 범위에 따라 조정합니다.</p>
+      </div>
+      <div class="price-grid">
+        <article class="price reveal">
+          <span class="price__k">STEP 0</span>
+          <h3 class="price__t">무료 스크리닝</h3>
+          <div class="price__v">0<small>원</small></div>
+          <p class="price__d">30분 통화로 지금 AI가 맞는 문제인지부터 봅니다. 아니면 아니라고 말합니다.</p>
+          <ul class="price__l">
+            <li>자가진단 리포트</li>
+            <li>우선순위 후보 3개</li>
+            <li>바우처 적합 여부</li>
+          </ul>
+        </article>
+        <article class="price reveal">
+          <span class="price__k">STEP 1 · 측정 게이트</span>
+          <h3 class="price__t">2주 진단 스프린트</h3>
+          <div class="price__v">400<small>만원</small></div>
+          <p class="price__d">현장 KPI의 현재값과 데이터 실태를 계측해 기준선을 만듭니다. 여기서 나온 숫자가 이후 모든 판단의 기준입니다.</p>
+          <ul class="price__l">
+            <li>baseline 계측 리포트</li>
+            <li>PoC 설계와 성공 기준</li>
+            <li>중단 조건 명시</li>
+          </ul>
+        </article>
+        <article class="price reveal">
+          <span class="price__k">STEP 2 · 실증 게이트</span>
+          <h3 class="price__t">PoC 실증</h3>
+          <div class="price__v">2,000<small>~3,500만원</small></div>
+          <p class="price__d">한 지점만 골라 before→after를 실제로 측정합니다. 목표 델타에 못 미치면 확장하지 않고 여기서 멈춥니다.</p>
+          <ul class="price__l">
+            <li>작동하는 시스템</li>
+            <li>측정된 델타</li>
+            <li>확장 여부 판단 근거</li>
+          </ul>
+        </article>
+        <article class="price price--go reveal">
+          <span class="price__k">STEP 3 · 이관 이후</span>
+          <h3 class="price__t">월 운영 리테이너</h3>
+          <div class="price__v">100<small>~300만원 / 월</small></div>
+          <p class="price__d">이관은 끝이 아니라 시작입니다. 모델은 데이터가 바뀌면 낡고, 지표는 관리하지 않으면 되돌아갑니다. 성과가 유지되는지 매달 계측합니다.</p>
+          <ul class="price__l">
+            <li>지표 모니터링과 리포트</li>
+            <li>모델·룰 재학습과 튜닝</li>
+            <li>다음 게이트 후보 발굴</li>
+          </ul>
+        </article>
+      </div>
+      <p class="price__note">모든 금액은 부가세 별도입니다. 정부 바우처를 적용하면 진단·PoC 구간의 자부담이 크게 줄어듭니다(아래 참조). 교육·워크숍은 별도 견적입니다.</p>
+    </div>
+  </section>
+
   <!-- VOUCHER -->
   <section class="section" id="voucher">
     <div class="wrap voucher">
@@ -729,6 +789,7 @@
           <div class="cta__row full">
             <button class="btn btn--signal" type="submit">상담 신청 보내기 <span class="arrow">→</span></button>
           </div>
+          <p class="form__status full" id="leadStatus" role="status" aria-live="polite"></p>
         </form>
         <p class="foot__legal" style="margin-top:1rem">메일 앱이 열리지 않으면 <a href="mailto:contact@2icorp.site">contact@2icorp.site</a> 로 보내주세요.</p>
       </div>
@@ -748,6 +809,7 @@
       <a href="about.html">회사소개</a>
       <a href="#method">방식</a>
       <a href="comms.html">통신</a>
+      <a href="#pricing">가격</a>
       <a href="#ideas">아이디어 30</a>
       <a href="papers.html">논문·실험</a>
       <a href="#voucher">정부 바우처</a>

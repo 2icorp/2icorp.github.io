@@ -206,27 +206,64 @@
   });
 })();
 
-// Lead form -> clean mailto (works with no backend; footer/about also list the address)
+// ---------------------------------------------------------------- 상담 폼 전송
+// 리드가 증발하지 않게 두 경로를 둔다.
+//   1) FORMSPREE_ID 를 채우면 백엔드로 바로 전송된다(사용자 메일앱이 없어도 도착).
+//   2) 비어 있으면 mailto 로 폴백한다(예전 동작 그대로).
+//
+// ⚠️ 켜는 법: https://formspree.io 에서 폼을 만들면 엔드포인트가
+//    https://formspree.io/f/XXXXXXXX 형태로 나온다. 그 XXXXXXXX 만 아래 따옴표 안에
+//    붙여넣고 배포하면 끝이다. 다른 곳은 고칠 필요 없다.
+var FORMSPREE_ID = "";  // 예: "xayzqwer"
+
 (function () {
   "use strict";
   var form = document.getElementById("leadForm");
   if (!form) return;
+  var status = document.getElementById("leadStatus");
+  var say = function (msg, state) {
+    if (!status) return;
+    status.textContent = msg;
+    if (state) { status.setAttribute("data-state", state); }
+    else { status.removeAttribute("data-state"); }
+  };
+  var get = function (n) { var el = form.elements[n]; return el ? String(el.value).trim() : ""; };
+  var fields = ["name", "company", "industry", "contact", "stage", "message"];
+
   form.addEventListener("submit", function (e) {
     e.preventDefault();
-    var g = function (n) { var el = form.elements[n]; return el ? el.value.trim() : ""; };
-    var subject = "[2i 상담 신청] " + (g("company") || "문의");
-    var body = [
-      "이름: " + g("name"),
-      "회사: " + g("company"),
-      "업종: " + g("industry"),
-      "연락처: " + g("contact"),
-      "관심 단계: " + g("stage"),
-      "",
-      "상황:",
-      g("message")
-    ].join("\n");
-    window.location.href = "mailto:contact@2icorp.site?subject=" +
-      encodeURIComponent(subject) + "&body=" + encodeURIComponent(body);
+    var data = {};
+    fields.forEach(function (n) { data[n] = get(n); });
+    var subject = "[2i 상담 신청] " + (data.company || "문의");
+
+    if (!FORMSPREE_ID) {
+      var body = [
+        "이름: " + data.name, "회사: " + data.company, "업종: " + data.industry,
+        "연락처: " + data.contact, "관심 단계: " + data.stage, "", "상황:", data.message
+      ].join("\n");
+      say("메일 앱을 엽니다. 열리지 않으면 contact@2icorp.site 로 보내주세요.");
+      window.location.href = "mailto:contact@2icorp.site?subject=" +
+        encodeURIComponent(subject) + "&body=" + encodeURIComponent(body);
+      return;
+    }
+
+    var btn = form.querySelector("button[type=submit]");
+    if (btn) { btn.disabled = true; }
+    say("보내는 중...");
+    data._subject = subject;
+    fetch("https://formspree.io/f/" + FORMSPREE_ID, {
+      method: "POST",
+      headers: { "Content-Type": "application/json", "Accept": "application/json" },
+      body: JSON.stringify(data)
+    }).then(function (res) {
+      if (!res.ok) { throw new Error("HTTP " + res.status); }
+      form.reset();
+      say("접수됐습니다. 영업일 기준 1일 안에 회신드립니다.", "ok");
+    }).catch(function () {
+      say("전송에 실패했습니다. contact@2icorp.site 로 직접 보내주시면 확인하겠습니다.", "err");
+    }).then(function () {
+      if (btn) { btn.disabled = false; }
+    });
   });
 })();
 
