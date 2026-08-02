@@ -1,0 +1,462 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<script>(function(){try{var t=localStorage.getItem("theme");if(!t&&window.matchMedia&&matchMedia("(prefers-color-scheme: dark)").matches)t="dark";if(t)document.documentElement.setAttribute("data-theme",t);}catch(e){}})();</script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>에어갭 데이터 다이오드 데모 · 2i</title>
+<link rel="stylesheet" href="../../styles.css?v=18">
+<style>
+  .demo-top{display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:1rem clamp(1rem, 2vw, 2rem);border-bottom:1px solid var(--line-soft);flex-wrap:wrap;}
+  .demo-brand{display:flex;align-items:baseline;gap:.6rem;text-decoration:none;color:var(--ink);}
+  .demo-brand__mark{font-family:var(--mono);font-weight:800;color:var(--signal);font-size:1.1rem;}
+  .demo-brand__tag{font-family:var(--mono);font-size:var(--text-xs);letter-spacing:.08em;color:var(--ink-faint);text-transform:uppercase;}
+  .demo-top__links{display:flex;gap:1.2rem;font-size:var(--text-sm);}
+  .demo-top__links a{color:var(--ink-soft);text-decoration:none;border-bottom:1px solid transparent;transition:color var(--dur) var(--ease),border-color var(--dur) var(--ease);}
+  .demo-top__links a:hover{color:var(--ink);border-color:var(--line);}
+  .demo-top__links a:focus-visible{outline:2px solid var(--signal);outline-offset:3px;}
+  .demo-banner{font-family:var(--mono);font-size:var(--text-xs);color:var(--ink-faint);background:var(--paper-2);border-bottom:1px solid var(--line-soft);padding:.55rem clamp(1rem, 2vw, 2rem);letter-spacing:.01em;}
+  main{max-width:1100px;margin:0 auto;padding:2rem clamp(1rem, 2vw, 2rem) 1rem;}
+  h1{font-size:var(--text-h2);margin:0 0 .4rem;}
+  .lede{color:var(--ink-soft);max-width:66ch;margin:0 0 2rem;line-height:1.7;}
+  section{margin-bottom:2.6rem;}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);}
+  .scene-card{padding:1.3rem clamp(1rem, 2vw, 1.6rem);}
+  .scene-card h3{font-size:1rem;margin:0 0 .2rem;}
+  .scene-card p{margin:0 0 1rem;color:var(--ink-faint);font-size:var(--text-xs);font-family:var(--mono);}
+  .scene-wrap{position:relative;width:100%;aspect-ratio:16 / 7;min-height:180px;}
+  canvas.scene{width:100%;height:100%;display:block;}
+  .legend{display:flex;flex-wrap:wrap;gap:1.1rem;font-family:var(--mono);font-size:var(--text-xs);color:var(--ink-soft);margin-top:.9rem;}
+  .legend span{display:inline-flex;align-items:center;gap:.4rem;min-width:0;}
+  .swatch{width:14px;height:12px;display:inline-block;border-radius:2px;}
+  .sw-live{background:var(--steel);}
+  .sw-drop{background:color-mix(in srgb, var(--signal-deep) 55%, transparent);}
+  .sw-ack{background:var(--signal);}
+  .controls{display:grid;grid-template-columns:1fr 1fr;gap:1.4rem;padding:1.4rem clamp(1rem, 2vw, 1.8rem);}
+  .control{min-width:0;}
+  .control h3{font-size:1rem;margin:0 0 .3rem;}
+  .control p{margin:0 0 .8rem;color:var(--ink-faint);font-size:var(--text-xs);font-family:var(--mono);}
+  .control__row{display:flex;align-items:center;gap:.9rem;}
+  input[type="range"]{flex:1;min-width:0;accent-color:var(--signal);min-height:44px;}
+  .control__val{font-family:var(--mono);font-weight:700;min-width:4.6rem;text-align:right;}
+  .toggle-row{display:flex;align-items:center;gap:.7rem;padding:.4rem 0;}
+  .toggle-btn{font-family:var(--mono);font-size:var(--text-sm);min-height:44px;padding:.4rem 1rem;border:1px solid var(--line);border-radius:var(--radius);background:var(--paper-2);color:var(--ink);cursor:pointer;transition:border-color var(--dur) var(--ease),background var(--dur) var(--ease);}
+  .toggle-btn[aria-pressed="true"]{border-color:var(--signal);background:color-mix(in srgb, var(--signal) 12%, transparent);}
+  .toggle-btn:focus-visible{outline:2px solid var(--signal);outline-offset:3px;}
+  .metrics{display:grid;grid-template-columns:repeat(4, 1fr);gap:1px;background:var(--line);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;}
+  .metric{background:var(--panel);padding:1.2rem 1rem;min-width:0;}
+  .metric__label{font-family:var(--mono);font-size:var(--text-xs);color:var(--ink-faint);letter-spacing:.06em;text-transform:uppercase;}
+  .metric__value{font-size:1.6rem;font-weight:800;margin-top:.35rem;}
+  .metric__unit{font-size:.85rem;color:var(--ink-soft);font-weight:500;margin-left:.15rem;}
+  .metric__delta{font-family:var(--mono);font-size:var(--text-xs);margin-top:.4rem;}
+  .metric__delta.good{color:var(--steel);}
+  .metric__delta.bad{color:var(--signal-deep);}
+  .verdict{margin-top:1.2rem;font-family:var(--mono);font-size:var(--text-sm);line-height:1.6;color:var(--ink);background:var(--paper-2);border:1px solid var(--line-soft);border-radius:var(--radius);padding:1rem 1.1rem;}
+  .honest{margin-top:1.4rem;color:var(--ink-faint);font-size:var(--text-xs);line-height:1.7;max-width:70ch;}
+  .honest strong{color:var(--ink-soft);}
+  .demo-foot{margin-top:3rem;padding:1.6rem clamp(1rem, 2vw, 2rem) 2.4rem;font-family:var(--mono);font-size:var(--text-xs);color:var(--ink-faint);border-top:1px solid var(--line-soft);text-align:center;}
+  @media (max-width:820px){
+    .controls{grid-template-columns:1fr;}
+    .metrics{grid-template-columns:1fr 1fr;}
+  }
+  @media (max-width:430px){
+    .metrics{grid-template-columns:1fr;}
+  }
+</style>
+</head>
+<body>
+<header class="demo-top">
+  <a href="/" class="demo-brand"><span class="demo-brand__mark">2i</span><span class="demo-brand__tag">DEMO · 에어갭 데이터 다이오드</span></a>
+  <nav class="demo-top__links">
+    <a href="/cases.html#case-23">사례 보기</a>
+    <a href="/#contact">상담 신청</a>
+  </nav>
+</header>
+<div class="demo-banner">브라우저에서 그 자리에서 계산하는 인터랙티브 데모입니다. 합성 데이터를 씁니다.</div>
+
+<main>
+  <h1>에어갭 데이터 다이오드</h1>
+  <p class="lede">인터넷 선을 꽂을 수 없는 봉인 노드에, 화면에서 카메라로 흐르는 분수(fountain) 부호로 파일을 한 방향으로 넣습니다. 조각을 절반 넘게 흘려도 남은 조각만 모이면 원본이 복원되고, 순방향이 모자라면 사람 귀에 안 들리는 역방향 신호가 빠진 조각만 되채웁니다. 이 화면은 실제 LT 분수 부호와 peeling 복호기를 브라우저에서 직접 돌립니다.</p>
+
+  <section class="card scene-card">
+    <h3>봉인 노드로의 단방향 주입</h3>
+    <p>왼쪽 봉인 노드에서 오른쪽 수신기로 부호 조각이 흐릅니다. 회색은 도달, 흐린 조각은 블러·거리로 유실입니다.</p>
+    <div class="scene-wrap">
+      <canvas class="scene" id="scene" role="img" aria-label="봉인 노드에서 수신기로 분수 부호 조각이 흐르고 유실 조각은 흐리게 표시되며 복원 진행바가 차오르는 애니메이션"></canvas>
+    </div>
+    <div class="legend">
+      <span><span class="swatch sw-live"></span>도달한 조각</span>
+      <span><span class="swatch sw-drop"></span>유실(블러·거리)</span>
+      <span><span class="swatch sw-ack"></span>역채널 되채움</span>
+    </div>
+  </section>
+
+  <section class="card controls">
+    <div class="control">
+      <h3>화면 블러·가림</h3>
+      <p>카메라가 놓치는 프레임 비율입니다. 손떨림·초점·가림이 클수록 조각이 더 많이 유실됩니다.</p>
+      <div class="control__row">
+        <input type="range" id="blurSlider" min="0" max="70" step="1" value="30" aria-label="화면 블러 가림 비율 퍼센트">
+        <span class="control__val" id="blurVal">30%</span>
+      </div>
+    </div>
+    <div class="control">
+      <h3>거리(m)</h3>
+      <p>송수신 거리입니다. 멀수록 신호 대 잡음비가 떨어져 프레임이 깨지고 유실이 늘어납니다.</p>
+      <div class="control__row">
+        <input type="range" id="distSlider" min="1" max="220" step="1" value="20" aria-label="송수신 거리 미터">
+        <span class="control__val" id="distVal">20 m</span>
+      </div>
+    </div>
+    <div class="control" style="grid-column:1 / -1;">
+      <h3>역방향 ACK 채널</h3>
+      <p>수신기가 빠진 조각을 되묻고 송신기가 그 조각만 되채우는 대역 없는 역채널입니다. 끄면 순방향만으로 버텨야 합니다.</p>
+      <div class="toggle-row">
+        <button class="toggle-btn" id="ackToggle" aria-pressed="true">역채널 켜짐</button>
+        <span class="control__val" id="ackState" style="min-width:0;">완료 보장</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="metrics" id="metrics" aria-live="polite">
+    <div class="metric">
+      <div class="metric__label">보낸 조각</div>
+      <div class="metric__value"><span id="mSent">-</span><span class="metric__unit">개</span></div>
+      <div class="metric__delta" id="mSentDelta"></div>
+    </div>
+    <div class="metric">
+      <div class="metric__label">순방향 복원</div>
+      <div class="metric__value"><span id="mFwd">-</span><span class="metric__unit">/ 24 블록</span></div>
+      <div class="metric__delta" id="mFwdDelta"></div>
+    </div>
+    <div class="metric">
+      <div class="metric__label">역채널 되채움</div>
+      <div class="metric__value"><span id="mAck">-</span><span class="metric__unit">블록</span></div>
+      <div class="metric__delta" id="mAckDelta"></div>
+    </div>
+    <div class="metric">
+      <div class="metric__label">원본 복원</div>
+      <div class="metric__value"><span id="mDone">-</span></div>
+      <div class="metric__delta" id="mDoneDelta"></div>
+    </div>
+  </section>
+
+  <p class="verdict" id="verdict"></p>
+
+  <p class="honest"><strong>정직하게 말하면</strong>, 이 데모는 물리 링크를 흉내 낸 유실·잡음 모델 위에서 코딩과 프로토콜 계층만 실제로 계산합니다. 실제 SDR·카메라·모니터로 하는 RF·광 전송을 검증하지는 않습니다. 도입하시면 현장 장비의 프레임율·조도·거리로 유실률을 다시 재고, 대용량(수십 GB 모델 가중치)은 광 자유공간 링크나 분할 전송을 함께 씁니다. 여기 24블록·합성 페이로드는 알고리즘을 보여주기 위한 규모입니다.</p>
+</main>
+
+<footer class="demo-foot">© 2i · contact@2icorp.site</footer>
+
+<script>
+(function(){
+  "use strict";
+
+  // ---- deterministic PRNG (seeded; same input -> same result) ----
+  function mulberry32(a){
+    return function(){
+      a |= 0; a = a + 0x6D2B79F5 | 0;
+      var t = Math.imul(a ^ a >>> 15, 1 | a);
+      t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t;
+      return ((t ^ t >>> 14) >>> 0) / 4294967296;
+    };
+  }
+  function streamRng(seed, index){
+    return mulberry32((seed ^ Math.imul(index + 1, 0x9E3779B1)) >>> 0);
+  }
+
+  // ---- error models (real formulas) ----
+  function erf(x){
+    var s = x < 0 ? -1 : 1; x = Math.abs(x);
+    var a1=0.254829592,a2=-0.284496736,a3=1.421413741,a4=-1.453152027,a5=1.061405429,p=0.3275911;
+    var t = 1 / (1 + p * x);
+    var y = 1 - ((((a5*t + a4)*t + a3)*t + a2)*t + a1)*t*Math.exp(-x*x);
+    return s * y;
+  }
+  function berFromSnrDb(snrDb){
+    var lin = Math.pow(10, snrDb / 10);
+    var b = 0.5 * (1 - erf(Math.sqrt(lin)));
+    return Math.max(0, Math.min(0.5, b));
+  }
+  // Free-space path loss: far -> lower SNR -> higher BER -> frames fail CRC.
+  function emFrameLoss(distM){
+    var snr = 42 - 20 * Math.log10(Math.max(1, distM));
+    var ber = berFromSnrDb(snr);
+    return 1 - Math.pow(1 - ber, 160); // 20-byte frame
+  }
+
+  // ---- LT fountain: ideal-soliton degrees, shared-seed neighbors ----
+  var K = 24;
+  var SEED = 20260802;
+
+  function sampleDegree(rng){
+    var u = rng();
+    if(u < 1 / K) return 1;
+    var cum = 1 / K, d = 2;
+    while(d <= K){ cum += 1 / (d * (d - 1)); if(u <= cum) return d; d++; }
+    return K;
+  }
+  function neighbors(index){
+    var rng = streamRng(SEED, index);
+    var d = sampleDegree(rng);
+    if(d >= K){ var all=[]; for(var a=0;a<K;a++) all.push(a); return all; }
+    var res = [];
+    for(var j = K - d; j < K; j++){
+      var t = Math.floor(rng() * (j + 1)); // 0..=j
+      if(res.indexOf(t) >= 0) res.push(j); else res.push(t);
+    }
+    return res;
+  }
+
+  // ---- peeling decoder (belief propagation) ----
+  function newDecoder(){
+    var recovered = new Array(K).fill(false);
+    var nRec = 0;
+    var symNb = [];
+    var srcToSyms = []; for(var i=0;i<K;i++) srcToSyms.push([]);
+    function peel(start){
+      var q = [start];
+      while(q.length){
+        var id = q.pop();
+        if(symNb[id].length !== 1) continue;
+        var src = symNb[id][0];
+        if(recovered[src]){ symNb[id] = []; continue; }
+        recovered[src] = true; nRec++; symNb[id] = [];
+        var deps = srcToSyms[src]; srcToSyms[src] = [];
+        for(var m=0;m<deps.length;m++){
+          var s = deps[m]; var pos = symNb[s].indexOf(src);
+          if(pos >= 0){ symNb[s].splice(pos,1); if(symNb[s].length === 1) q.push(s); }
+        }
+      }
+    }
+    return {
+      push: function(index){
+        var nb = neighbors(index);
+        var unknown = [];
+        for(var i=0;i<nb.length;i++){ if(!recovered[nb[i]]) unknown.push(nb[i]); }
+        if(unknown.length === 0) return;
+        var id = symNb.length; symNb.push(unknown);
+        for(var j=0;j<unknown.length;j++) srcToSyms[unknown[j]].push(id);
+        if(unknown.length === 1) peel(id);
+      },
+      complete: function(){ return nRec === K; },
+      nRec: function(){ return nRec; },
+      missing: function(){ var r=[]; for(var i=0;i<K;i++) if(!recovered[i]) r.push(i); return r; },
+      repairAll: function(){ for(var i=0;i<K;i++){ if(!recovered[i]){ recovered[i]=true; nRec++; } } }
+    };
+  }
+
+  // ---- run the whole transfer for the current settings ----
+  function simulate(blurP, distM, ackOn){
+    var emLoss = emFrameLoss(distM);
+    var pLoss = 1 - (1 - blurP) * (1 - emLoss);
+    var deliv = mulberry32((SEED ^ 0x5BD1E995) >>> 0);
+    var dec = newDecoder();
+    var budget = K * 8;
+    var pattern = []; // {delivered:bool}
+    var sent = 0, delivered = 0;
+    for(var i=0;i<budget && !dec.complete();i++){
+      sent++;
+      var ok = deliv() >= pLoss;
+      pattern.push(ok);
+      if(ok){ dec.push(i); delivered++; }
+    }
+    var fwdRec = dec.nRec();
+    var ackRepairs = 0;
+    if(ackOn && !dec.complete()){
+      ackRepairs = dec.missing().length;
+      dec.repairAll();
+    }
+    var complete = dec.complete();
+    return {
+      pLoss: pLoss, emLoss: emLoss, blurP: blurP, distM: distM,
+      sent: sent, delivered: delivered, fwdRec: fwdRec,
+      ackRepairs: ackRepairs, complete: complete, ackOn: ackOn, pattern: pattern
+    };
+  }
+
+  // ---- DOM ----
+  var blurSlider = document.getElementById("blurSlider");
+  var distSlider = document.getElementById("distSlider");
+  var ackToggle = document.getElementById("ackToggle");
+  var blurVal = document.getElementById("blurVal");
+  var distVal = document.getElementById("distVal");
+  var ackState = document.getElementById("ackState");
+  var canvas = document.getElementById("scene");
+  var cx = canvas.getContext("2d");
+  var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  var state = null; // latest simulate() result
+  var ackOn = true;
+
+  function setDelta(id, cls, txt){
+    var el = document.getElementById(id);
+    el.className = "metric__delta " + cls;
+    el.textContent = txt;
+  }
+
+  function recompute(){
+    var blurP = parseInt(blurSlider.value, 10) / 100;
+    var distM = parseInt(distSlider.value, 10);
+    blurVal.textContent = Math.round(blurP * 100) + "%";
+    distVal.textContent = distM + " m";
+    ackToggle.textContent = ackOn ? "역채널 켜짐" : "역채널 꺼짐";
+    ackToggle.setAttribute("aria-pressed", ackOn ? "true" : "false");
+    ackState.textContent = ackOn ? "완료 보장" : "순방향만";
+
+    var r = simulate(blurP, distM, ackOn);
+    state = r;
+
+    document.getElementById("mSent").textContent = r.sent;
+    document.getElementById("mFwd").textContent = r.fwdRec;
+    document.getElementById("mAck").textContent = r.ackRepairs;
+    document.getElementById("mDone").textContent = r.complete ? "완료" : "미완성";
+
+    setDelta("mSentDelta", "", "유실률 " + Math.round(r.pLoss * 100) + "%");
+    var fwdPct = Math.round(r.fwdRec / K * 100);
+    setDelta("mFwdDelta", r.fwdRec === K ? "good" : "bad", "순방향 " + fwdPct + "% 복원");
+    setDelta("mAckDelta", r.ackRepairs === 0 ? "good" : "", r.ackRepairs === 0 ? "되채움 불필요" : "빠진 조각만 되채움");
+    setDelta("mDoneDelta", r.complete ? "good" : "bad", r.complete ? "원본 100% 복원" : "역채널 필요");
+
+    var verdict = document.getElementById("verdict");
+    if(r.complete && r.ackRepairs === 0){
+      verdict.textContent = "블러 " + Math.round(blurP*100) + "%, 거리 " + distM + "m에서 순방향 분수 부호만으로 " + r.sent + "개 조각을 보내 원본 24블록을 모두 복원했습니다. 역채널은 쓰이지 않았습니다.";
+    } else if(r.complete){
+      verdict.textContent = "블러 " + Math.round(blurP*100) + "%, 거리 " + distM + "m에서 순방향은 " + r.fwdRec + "/24 블록만 복원했지만, 역채널 ACK가 " + r.ackRepairs + "개를 되채워 원본을 100% 복원했습니다. 역채널이 없으면 미완성으로 남습니다.";
+    } else {
+      verdict.textContent = "블러 " + Math.round(blurP*100) + "%, 거리 " + distM + "m에서 역채널을 끄면 순방향만으로는 " + r.fwdRec + "/24 블록에서 멈춰 원본을 복원하지 못합니다. 이것이 대역 없는 역채널이 필요한 이유입니다.";
+    }
+
+    if(reduce) drawStatic();
+  }
+
+  // ---- canvas 2.5D-ish scene ----
+  var W = 0, H = 0, dpr = 1;
+  function resize(){
+    dpr = Math.min(window.devicePixelRatio || 1, 2);
+    W = canvas.clientWidth; H = canvas.clientHeight;
+    canvas.width = Math.max(1, Math.round(W * dpr));
+    canvas.height = Math.max(1, Math.round(H * dpr));
+    cx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  }
+  window.addEventListener("resize", function(){ resize(); if(reduce) drawStatic(); }, { passive:true });
+
+  function tokens(){
+    var s = getComputedStyle(document.documentElement);
+    return {
+      ink: (s.getPropertyValue("--ink") || "#1b2733").trim(),
+      faint: (s.getPropertyValue("--ink-faint") || "#8a97a3").trim(),
+      line: (s.getPropertyValue("--line") || "#d7dde3").trim(),
+      panel: (s.getPropertyValue("--panel") || "#ffffff").trim(),
+      steel: (s.getPropertyValue("--steel") || "#5b7a99").trim(),
+      signal: (s.getPropertyValue("--signal") || "#e08a2b").trim(),
+      signalDeep: (s.getPropertyValue("--signal-deep") || "#b96a12").trim()
+    };
+  }
+
+  function drawFrame(t){
+    if(!state) return;
+    var c = tokens();
+    cx.clearRect(0, 0, W, H);
+    var padX = Math.max(14, W * 0.04), midGap = Math.max(30, W * 0.10);
+    var boxW = Math.max(48, (W - padX*2 - midGap) * 0.24);
+    var trackL = padX + boxW, trackR = W - padX - boxW;
+    var cyTop = H * 0.30, cyBot = H * 0.70; // perspective track edges
+    var midY = H * 0.5;
+
+    // sealed node (left) + receiver (right)
+    cx.strokeStyle = c.line; cx.fillStyle = c.panel; cx.lineWidth = 1.5;
+    roundRect(padX, H*0.22, boxW, H*0.56); cx.fill(); cx.stroke();
+    roundRect(W - padX - boxW, H*0.22, boxW, H*0.56); cx.fill(); cx.stroke();
+    cx.fillStyle = c.faint; cx.font = "600 " + Math.max(9, Math.round(H*0.075)) + "px ui-monospace, monospace";
+    cx.textAlign = "center";
+    cx.fillText("봉인 노드", padX + boxW/2, H*0.17);
+    cx.fillText("수신기", W - padX - boxW/2, H*0.17);
+
+    // air-gap divider (dashed)
+    cx.strokeStyle = c.faint; cx.globalAlpha = 0.5; cx.setLineDash([4, 5]);
+    cx.beginPath(); cx.moveTo(W/2, H*0.12); cx.lineTo(W/2, H*0.88); cx.stroke();
+    cx.setLineDash([]); cx.globalAlpha = 1;
+
+    // flowing symbol tiles
+    var pat = state.pattern;
+    var shown = Math.min(pat.length, 40);
+    var tile = Math.max(6, Math.min(13, W * 0.016));
+    for(var i=0;i<shown;i++){
+      var phase = (t * 0.00035 + i / shown) % 1;
+      var x = trackL + (trackR - trackL) * phase;
+      var edgeY = cyTop + (cyBot - cyTop) * ((i * 0.61803) % 1);
+      var y = midY + (edgeY - midY) * (1 - Math.abs(phase - 0.5) * 0.7);
+      var delivered = pat[i];
+      if(delivered){
+        cx.globalAlpha = 0.85; cx.fillStyle = c.steel;
+      } else {
+        // dropped: fade out past the middle
+        cx.globalAlpha = phase < 0.5 ? 0.5 : Math.max(0, 0.5 - (phase - 0.5) * 1.6);
+        cx.fillStyle = c.signalDeep;
+      }
+      cx.fillRect(x - tile/2, y - tile/2, tile, tile);
+    }
+    cx.globalAlpha = 1;
+
+    // receiver progress bar (fwd fill in steel, ack fill in signal)
+    var barX = W - padX - boxW + boxW*0.22, barW = boxW*0.56;
+    var barTop = H*0.30, barH = H*0.40;
+    cx.strokeStyle = c.line; cx.strokeRect(barX, barTop, barW, barH);
+    var fwdFrac = state.fwdRec / K;
+    var totFrac = (state.fwdRec + state.ackRepairs) / K;
+    cx.fillStyle = c.steel; cx.globalAlpha = 0.85;
+    cx.fillRect(barX, barTop + barH*(1-fwdFrac), barW, barH*fwdFrac);
+    if(totFrac > fwdFrac){
+      cx.fillStyle = c.signal; cx.globalAlpha = 0.85;
+      var ackH = barH * (totFrac - fwdFrac);
+      cx.fillRect(barX, barTop + barH*(1-totFrac), barW, ackH);
+    }
+    cx.globalAlpha = 1;
+
+    // ack reverse beam (only if repairs used)
+    if(state.ackRepairs > 0 && !reduce){
+      var bp = (t * 0.0006) % 1;
+      var bx = trackR - (trackR - trackL) * bp;
+      cx.fillStyle = c.signal; cx.globalAlpha = 0.9;
+      cx.fillRect(bx - 3, midY + H*0.16, 6, 2);
+      cx.globalAlpha = 1;
+    }
+  }
+
+  function roundRect(x, y, w, h){
+    var r = Math.min(6, w/6, h/6);
+    cx.beginPath();
+    cx.moveTo(x+r, y);
+    cx.arcTo(x+w, y, x+w, y+h, r);
+    cx.arcTo(x+w, y+h, x, y+h, r);
+    cx.arcTo(x, y+h, x, y, r);
+    cx.arcTo(x, y, x+w, y, r);
+    cx.closePath();
+  }
+
+  function drawStatic(){ drawFrame(1400); }
+
+  // animation loop, paused offscreen + reduced-motion
+  var visible = true, raf = 0;
+  if("IntersectionObserver" in window){
+    new IntersectionObserver(function(es){ visible = es[0].isIntersecting; if(visible && !reduce) loop(); }, {threshold:0.05}).observe(canvas);
+  }
+  function loop(){
+    if(reduce || !visible){ return; }
+    drawFrame(performance.now());
+    raf = requestAnimationFrame(loop);
+  }
+
+  // ---- wiring ----
+  blurSlider.addEventListener("input", recompute);
+  distSlider.addEventListener("input", recompute);
+  ackToggle.addEventListener("click", function(){ ackOn = !ackOn; recompute(); });
+
+  resize();
+  recompute();
+  if(reduce) drawStatic(); else loop();
+})();
+</script>
+</body>
+</html>

@@ -464,7 +464,7 @@ section[id] { scroll-margin-top: 80px; }
 
 .case-list { display: grid; gap: clamp(1.4rem, 1rem + 1.5vw, 2.4rem); }
 
-/* ---- 분류 (사례 22건을 7개 분야로) ----
+/* ---- 분류 (사례 23건을 7개 분야로) ----
    22장을 한 줄로 늘어놓으면 어디까지 봤는지 놓친다. 분류 칩으로 건너뛰고,
    각 분야는 제목 + 한 줄 설명 + 건수로 열린다. JS 없이 앵커만 쓴다. */
 .famnav {
