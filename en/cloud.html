@@ -288,10 +288,10 @@
           <span class="chip chip--v">Measured · 12 nodes, 4 domains, 5000 chunks</span>
         </div>
         <div class="rf-cell rf-cell--lead">
-          <span class="rf-metric">41.7 → 85.7<small>pts</small></span>
+          <span class="rf-metric">15.4 → 28.2<small>% coverage</small></span>
           <span class="rf-unit">our store, self-diagnosis before and after</span>
           <span class="rf-name">We pointed our tool at ourselves first, lost, then fixed it and measured again with the same ruler</span>
-          <span class="rf-desc">We ran our own diagnostic harness against the store we built and scored 41.7 within the measured subset, with one critical failure. We published the losing sentence as a section heading first. Then we actually fixed it: TLS in flight, versioning, retention locking, observability metrics. We changed nothing in the harness and measured again, and the score is 85.7 with zero critical failures. Coverage moved only from 15.4 to 17.9 percent and is still narrower than MinIO's 28.2. A high score over a narrow range is not automatically better than a lower score over a wide one, so we do not claim we won. The pre-fix report stays in the repository, undeleted.</span>
+          <span class="rf-desc">We ran our own harness against the store we built and scored 41.7 over 15.4 percent coverage, with one critical failure. We published the losing sentence first. Then we fixed it in two stages. First we changed nothing in the harness and fixed only the store: 85.7 points, zero critical failures. Then we generalised the harness discovery defect and coverage widened to 28.2 percent, at which point the score fell to 77.3 because a previously hidden encryption-at-rest failure entered the denominator. Score alone reads as a regression; score plus coverage reads as progress. After changing the harness we re-measured MinIO with it and got 28.2 percent and 72.7, identical to before. Had we tilted the harness toward ourselves, that number would have moved. The remaining gap is lifecycle rules we never built versus a plaintext deployment we chose for MinIO, so we do not claim a win. All three reports stay in the repository.</span>
           <span class="chip chip--v">Measured · same harness, before and after</span>
         </div>
         <div class="rf-cell">
