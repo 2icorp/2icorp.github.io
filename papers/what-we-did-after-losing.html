@@ -1,0 +1,203 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<script>(function(){try{var t=localStorage.getItem("theme");if(!t&&window.matchMedia&&matchMedia("(prefers-color-scheme: dark)").matches)t="dark";if(t)document.documentElement.setAttribute("data-theme",t);}catch(e){}})();</script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>졌다고 쓴 다음에 한 일: 41.7점을 85.7점으로 만들고 하네스는 건드리지 않았습니다 · 2i</title>
+<meta name="description" content="자기진단에서 지고 그대로 공개한 뒤 넉 달이 아니라 이틀 만에 다시 쟀습니다. 전송 구간 TLS, 버전관리, 보존 잠금, 관측성 지표를 넣었고 하네스는 한 줄도 고치지 않았습니다. 커버리지는 15.4에서 17.9퍼센트로 거의 안 올랐고, 그 이유도 그대로 남아 있습니다.">
+<meta property="og:title" content="졌다고 쓴 다음에 한 일: 41.7점을 85.7점으로 만들고 하네스는 건드리지 않았습니다 · 2i">
+<meta property="og:description" content="자기진단에서 지고 그대로 공개한 뒤 넉 달이 아니라 이틀 만에 다시 쟀습니다. 전송 구간 TLS, 버전관리, 보존 잠금, 관측성 지표를 넣었고 하네스는 한 줄도 고치지 않았습니다. 커버리지는 15.4에서 17.9퍼센트로 거의 안 올랐고, 그 이유도 그대로 남아 있습니다.">
+<meta property="og:type" content="article">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23111827'/%3E%3Ctext x='16' y='22' font-family='monospace' font-size='16' font-weight='700' fill='%23e08a2b' text-anchor='middle'%3E2i%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../styles.css?v=20">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js" onload="renderMathInElement(document.body,{delimiters:[{left:'$$',right:'$$',display:true},{left:'$',right:'$',display:false},{left:'\\[',right:'\\]',display:true},{left:'\\(',right:'\\)',display:false}]})"></script>
+</head>
+<body>
+
+<header class="nav">
+  <div class="wrap nav__inner">
+    <a class="brand" href="../" aria-label="2i 홈">
+      <span class="brand__mark">2i</span>
+      <span class="brand__tag">AX 컨설팅</span>
+    </a>
+    <button class="nav__burger" type="button" aria-expanded="false" aria-controls="navLinks" aria-label="메뉴 열기"><span></span><span></span><span></span></button>
+    <nav class="nav__links" id="navLinks" aria-label="주요 메뉴">
+      <a href="../index.html#method">방식</a>
+      <a href="../cases.html">사례</a>
+      <a href="../tech.html">기술</a>
+      <a href="../comms.html">통신</a>
+      <a href="../cloud.html">클라우드</a>
+      <a href="../finance.html">금융</a>
+      <a href="../papers.html">논문·실험</a>
+      <a href="../about.html">회사소개</a>
+      <a href="../index.html#pricing">가격</a>
+      <a href="../index.html#voucher">정부 바우처</a>
+      <a class="nav__lang" href="../en/">EN</a>
+      <a class="nav__cta btn btn--signal" href="../index.html#contact">상담 신청</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <article class="article wrap">
+    <a class="article__back" href="../papers.html">← 논문·실험 게시판</a>
+    <div class="article__head">
+      <div class="pcard__meta"><span class="pcard__cat">인프라</span><span class="pcard__date">2026.08.02</span><span class="pcard__rt">약 9분</span></div>
+      <h1 class="article__title">졌다고 쓴 다음에 한 일: 41.7점을 85.7점으로 만들고 하네스는 건드리지 않았습니다</h1>
+      <p class="article__excerpt">자기진단에서 지고 그대로 공개한 뒤 넉 달이 아니라 이틀 만에 다시 쟀습니다. 전송 구간 TLS, 버전관리, 보존 잠금, 관측성 지표를 넣었고 하네스는 한 줄도 고치지 않았습니다. 커버리지는 15.4에서 17.9퍼센트로 거의 안 올랐고, 그 이유도 그대로 남아 있습니다.</p>
+      <div class="pcard__tags"><span>#스토리지</span><span>#자기진단</span><span>#WORM</span><span>#오브젝트락</span><span>#관측성</span><span>#측정방법론</span></div>
+      
+    </div>
+    <div class="article__body prose">
+<h2 id="_1">이 글이 누구를 위한 것인가</h2>
+<p>온프렘 오브젝트 스토리지를 직접 만들고 있거나, 남이 만든 것을 도입할지 판단해야 하는
+엔지니어를 위한 글입니다. 얻어 갈 것은 하나입니다. <strong>자기 물건을 자기 도구로 재서 나쁘게
+나왔을 때, 점수를 올리는 방법이 두 가지 있고 그중 하나만 정당하다는 것.</strong></p>
+<p>이틀 전 저희는 저희가 만든 진단 하네스를 저희가 만든 저장소에 겨눴고, 측정분 점수 41.7점에
+치명 등급 실패 1건이라는 결과를 받았습니다. 같은 하네스로 잰 상용 제품은 72.7점이었습니다.
+그 결과를 그대로 공개했습니다.</p>
+<p>이 글은 그다음에 한 일의 기록입니다.</p>
+<h2 id="_2">결과부터</h2>
+<p>같은 하네스, 같은 구성(N=3, W=2, 노드 4)으로 다시 쟀습니다.</p>
+<div class="tscroll" tabindex="0" role="region" aria-label="표. 좌우로 스크롤할 수 있습니다"><table>
+<thead>
+<tr>
+<th>지표</th>
+<th style="text-align: right;">개선 전</th>
+<th style="text-align: right;">개선 후</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>측정 범위 (39항목 중)</td>
+<td style="text-align: right;">6개, 15.4%</td>
+<td style="text-align: right;">7개, 17.9%</td>
+</tr>
+<tr>
+<td>측정분 점수</td>
+<td style="text-align: right;">41.7점</td>
+<td style="text-align: right;">85.7점</td>
+</tr>
+<tr>
+<td>치명 등급 실패</td>
+<td style="text-align: right;">1건</td>
+<td style="text-align: right;">0건</td>
+</tr>
+<tr>
+<td>통과 / 부분 / 실패</td>
+<td style="text-align: right;">2 / 1 / 3</td>
+<td style="text-align: right;">5 / 2 / 0</td>
+</tr>
+</tbody>
+</table></div>
+<p>점수는 두 배가 됐는데 커버리지는 2.5퍼센트포인트밖에 안 올랐습니다. 이 두 숫자가 따로
+움직였다는 사실이 이 글에서 가장 중요한 부분이고, 뒤에서 다시 다룹니다.</p>
+<h2 id="_3">무엇을 고쳤나</h2>
+<h3 id="_4">전송 구간을 평문으로 두고 있었습니다</h3>
+<p>가장 부끄러운 항목이었습니다. 저희는 SigV4 서명 검증을 꼼꼼히 구현했고, 타임스탬프 신선도
+창까지 넣어 재생 공격을 막았습니다. 그런데 그 모든 것이 평문 HTTP 위에서 흘렀습니다.</p>
+<p>서명은 요청이 위조되지 않았음을 보장합니다. 내용이 남에게 보이지 않는다는 보장은 하지
+않습니다. 둘은 다른 문제인데, 하나를 잘하면 다른 하나도 된 것 같은 착각이 생깁니다.</p>
+<p>TLS 1.2 이상을 배선했습니다. 진단을 돌릴 때는 사설 인증기관을 즉석에서 발급해 서버 인증서를
+서명하고, 그 인증기관을 클라이언트 신뢰 저장소로 넘깁니다. 자체 서명 인증서를 쓰고 클라이언트
+검증을 끄는 더 쉬운 길이 있었지만 택하지 않았습니다. 검증을 끄면 그 측정은 실제 배포와 다른
+조건에서 나온 값이 됩니다. 온프렘 배포가 실제로 하는 일은 사설 인증기관을 신뢰 목록에 넣는
+것이고, 진단도 그 조건에서 해야 합니다.</p>
+<h3 id="_5">보존 잠금을 거절하고 있었습니다</h3>
+<p>이쪽이 더 아팠습니다. 저희가 스토리지 상담을 시작할 때 쓰는 첫 문장이 이것입니다.
+"10년을 보관해야 하는데 그게 살아 있는지 아무도 재본 적이 없습니다." 상법도 의료법도 10년을
+요구하고, 공공기록물은 더 깁니다.</p>
+<p>그런데 저희 저장소는 오브젝트 락 요청을 받으면 미구현이라고 거절하고 있었습니다. 파는 논리와
+만든 물건이 어긋나 있었던 겁니다.</p>
+<p>버전관리부터 넣었습니다. 보존은 객체가 아니라 버전에 걸리기 때문에 버전 없이는 보존이
+성립하지 않습니다. 키마다 버전 목록을 두고, 버전관리를 켠 적 없는 버킷에서도 버전이 정확히
+하나 있고 그 식별자가 <code>null</code> 이 되도록 했습니다. 표준이 그렇게 정의하고 있고, 그렇게 하면
+코드 경로가 하나로 통일됩니다. 삭제는 삭제 표식을 새 최신 버전으로 만들고, 표식을 지우면
+이전 버전이 다시 보입니다.</p>
+<p>그 위에 보존을 얹었습니다. 규정 준수 모드에서는 보존 기간 안의 버전을 <strong>소유자 본인도</strong>
+지우지 못합니다. 거버넌스 모드는 우회 헤더를 가진 요청만 지울 수 있습니다. 리걸 홀드가
+켜져 있으면 보존 기간과 무관하게 삭제가 막힙니다. 보존 기간을 줄이거나 규정 준수에서
+거버넌스로 내리는 것은 거부하고, 늘리는 것만 허용합니다. 이 규칙이 없으면 WORM 이 아니라
+그냥 지우기 어려운 저장소입니다.</p>
+<p>일괄 삭제 경로를 잊지 않는 것이 중요했습니다. 개별 삭제만 막고 일괄 삭제를 열어 두면 잠금이
+아니라 장식입니다.</p>
+<h3 id="_6">아무 지표도 내놓지 않고 있었습니다</h3>
+<p>관측성 항목이 미측정으로 떨어진 이유는 단순했습니다. 지표 엔드포인트가 없었습니다. 바깥에서
+저희를 재려는 도구는 붙잡을 곳이 없어서 "나쁘다"가 아니라 "모르겠다"를 보고했습니다.</p>
+<p>관리 평면을 따로 열고 Prometheus 텍스트 형식으로 노출했습니다. 여기서 지킨 규칙이 하나
+있습니다. <strong>재지 않은 값을 지표로 내보내지 않는다.</strong> 계측하지 않은 축을 이름만 만들어 0으로
+내보내면 진단 도구는 그 축이 있다고 판정합니다. 그건 도구를 속이는 것이고, 도구를 속이면
+저희가 파는 것이 없어집니다.</p>
+<p>그래서 치유 축 지표는 백그라운드 스크러버를 실제로 켰을 때만 등록됩니다. 스크러버를 끄고
+띄우면 그 계열은 이름조차 나타나지 않습니다.</p>
+<h2 id="_7">안 고친 것과, 안 고친 이유</h2>
+<p>커버리지가 15.4에서 17.9퍼센트로 거의 안 올랐습니다. 내구성 계열 네 항목이 여전히
+미측정이기 때문입니다.</p>
+<p>원인은 저희 저장소가 아니라 <strong>저희 하네스</strong>에 있습니다. 하네스가 객체의 백킹 파일을 찾을 때
+오브젝트 키가 경로에 들어 있는 배치를 가정합니다. 저희 청크는 내용의 해시로 이름이 붙는
+콘텐츠 주소 방식이라 키가 경로 어디에도 없고, 그래서 하네스는 사본을 하나도 찾지 못합니다.</p>
+<p>점수를 올릴 방법이 두 가지 있었습니다. 하네스의 탐색 범위를 넓히거나, 저장 구조를 하네스에
+맞춰 바꾸거나. <strong>이번에도 둘 다 하지 않았습니다.</strong></p>
+<p>이유는 이렇습니다. 하네스를 고쳐서 오른 점수와 저장소를 고쳐서 오른 점수는 같은 숫자로
+보이지만 전혀 다른 것입니다. 한 번에 둘 다 바꾸면 85.7점이 무엇 때문에 나온 값인지 아무도
+알 수 없습니다. 이번 측정이 답하는 질문은 하나로 고정돼 있어야 합니다. <strong>하네스를 고정한 채
+저장소만 고치면 얼마나 오르는가.</strong> 답은 41.7에서 85.7입니다.</p>
+<p>하네스 일반화는 별도 작업으로 합니다. 그때 지킬 규칙도 이미 정해 뒀습니다. 저희 저장소를
+찾는 코드를 넣지 않고, 오브젝트 키가 경로에 없는 배치 일반을 다루도록 고칩니다. 그리고
+하네스가 바뀌었으므로 <strong>비교 대상도 같은 하네스로 다시 잽니다.</strong> 우리 것만 다시 재고 상대의
+옛 숫자를 그대로 두면 그 비교는 거짓이 됩니다.</p>
+<h2 id="_8">이 표로 말할 수 있는 것과 없는 것</h2>
+<p>같은 표를 놓고 두 문장을 쓸 수 있습니다.</p>
+<p>말할 수 있는 것. <strong>저희 하네스로 저희를 쟀더니 41.7에서 85.7로 올랐고 치명 실패가
+사라졌습니다.</strong> 하네스는 한 줄도 안 바꿨고, 개선 전 보고서는 저장소에 그대로 남아 있습니다.</p>
+<p>말할 수 없는 것. <strong>저희가 상용 제품을 이겼다.</strong> 두 가지 이유입니다. 첫째, 저희 커버리지
+17.9퍼센트는 그쪽의 28.2퍼센트보다 여전히 좁습니다. 좁은 범위의 높은 점수가 넓은 범위의
+낮은 점수보다 반드시 낫지 않습니다. 둘째, 그쪽의 치명 실패는 저희가 평문으로 띄운 도커 로컬
+구성 때문이지 제품이 전송 암호화를 못 해서가 아닙니다.</p>
+<p>진단 보고서를 읽을 때 이 구분이 습관이 되면 좋겠습니다. 점수가 먼저 눈에 들어오지만
+<strong>커버리지를 먼저 봐야 합니다.</strong> 그리고 상대의 실패가 제품 탓인지 그 실행 구성 탓인지를
+물어야 합니다. 저희 보고서는 그 두 질문에 답할 수 있는 형태로 나오게 만들었고, 그 원칙을
+저희에게 불리한 방향으로도 적용합니다.</p>
+<h2 id="_9">남은 것</h2>
+<p>수명주기 규칙은 구현하지 않았고 계획도 없습니다. 그래서 해당 항목은 앞으로도 부분 통과로
+남습니다. 배치 조회 API 를 넣었지만 하네스가 아직 그것을 읽지 않아 배치 항목도 부분입니다.
+메타데이터 평면은 여전히 게이트웨이 한 대의 로컬 디스크에 있고, 버전관리를 넣어도 이 한계는
+그대로입니다. 버전 목록도 보존 설정도 같은 디스크에 있습니다.</p>
+<p>이 목록을 짧게 만들 생각이 없습니다. 최상위 프로젝트일수록 안 되는 것을 먼저 씁니다.</p>
+<p>측정을 다시 돌리는 명령과 개선 전후 보고서는 저장소에 함께 있습니다.</p>
+    </div>
+    <div class="article__cta">
+      <p>이 방법을 당신 현장의 숫자로 다시 재보고 싶다면.</p>
+      <a class="btn btn--signal" href="../index.html#contact">30분 진단 상담 <span class="arrow">→</span></a>
+      <a class="btn btn--ghost" href="../papers.html">다른 기록 보기</a>
+    </div>
+  </article>
+</main>
+
+<footer class="foot">
+  <div class="wrap foot__inner">
+    <div>
+      <div class="brand"><span class="brand__mark">2i</span><span class="brand__tag">AX 컨설팅</span></div>
+      <div class="foot__mono" style="margin-top:0.6rem">중소·중견 제조·유통을 위한 AI 전환</div>
+    </div>
+    <nav class="foot__links" aria-label="하단 메뉴">
+      <a href="../index.html#method">방식</a>
+      <a href="../papers.html">논문·실험</a>
+      <a href="../index.html#voucher">정부 바우처</a>
+      <a href="../cases.html">사례</a>
+      <a href="../en/">EN</a>
+    </nav>
+  </div>
+</footer>
+
+<script src="../main.js"></script>
+</body>
+</html>
