@@ -1,0 +1,965 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<script>(function(){try{var t=localStorage.getItem("theme");if(!t&&window.matchMedia&&matchMedia("(prefers-color-scheme: dark)").matches)t="dark";if(t)document.documentElement.setAttribute("data-theme",t);}catch(e){}})();</script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>보유 기술 · 2i</title>
+<meta name="description" content="2i가 직접 만들어 굴리고 있는 저장소 126개를 분류별로 정리한 목록입니다. 스토리지 내구성, 통신 신호처리, LLM 최적화, 에이전트 하네스, 최적화 스케줄링 등 11개 축.">
+<meta property="og:title" content="보유 기술 · 2i">
+<meta property="og:description" content="직접 만들어 굴리는 저장소 126개, 11개 축으로 정리한 기술 목록.">
+<meta property="og:type" content="website">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23111827'/%3E%3Ctext x='16' y='22' font-family='monospace' font-size='16' font-weight='700' fill='%23e08a2b' text-anchor='middle'%3E2i%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css?v=20">
+</head>
+<body>
+
+<header class="nav">
+  <div class="wrap nav__inner">
+    <a class="brand" href="/" aria-label="2i 홈">
+      <span class="brand__mark">2i</span>
+      <span class="brand__tag">AX 컨설팅</span>
+    </a>
+    <button class="nav__burger" type="button" aria-expanded="false" aria-controls="navLinks" aria-label="메뉴 열기"><span></span><span></span><span></span></button>
+    <nav class="nav__links" id="navLinks" aria-label="주요 메뉴">
+      <a href="index.html#method">방식</a>
+      <a href="cases.html">사례</a>
+      <a href="tech.html">기술</a>
+      <a href="comms.html">통신</a>
+      <a href="cloud.html">클라우드</a>
+      <a href="finance.html">금융</a>
+      <a href="papers.html">논문·실험</a>
+      <a href="about.html">회사소개</a>
+      <a href="index.html#pricing">가격</a>
+      <a href="index.html#voucher">정부 바우처</a>
+      <a class="nav__lang" href="/en/">EN</a>
+      <a class="nav__cta btn btn--signal" href="index.html#contact">상담 신청</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <section class="section pboard-hero">
+    <div class="wrap">
+      <span class="eyebrow">보유 기술</span>
+      <h1 class="pboard-hero__h1">쓰던 것을 <span class="u accent">다시 꺼내 씁니다.</span></h1>
+      <p class="pboard-hero__lede">2i가 직접 만들어 굴리고 있는 저장소 126개입니다. 새 과제를 받으면 백지에서 시작하지 않고 이 목록에서 맞는 조각을 먼저 찾습니다. 그래서 첫 결과가 빨리 나옵니다.</p>
+      <p class="fam__d">105개는 2026년에 손댄 것이고 나머지는 휴면으로 표시했습니다. 104개는 비공개 저장소라 링크를 눌러도 코드가 보이지 않습니다. 무엇을 갖고 있는지에 대한 목록이지 코드를 공개하겠다는 뜻이 아닙니다. 증거는 사례 페이지의 데모와 논문 게시판의 실측입니다.</p>
+      <p class="fam__nos">주 사용 언어: Python 66, JavaScript 23, TypeScript 12, Rust 10, HTML 6, Go 4</p>
+    </div>
+  </section>
+  <section class="section section--alt" style="padding-top:0">
+    <div class="wrap">
+    <nav class="famnav" aria-label="분류로 바로가기"><span class="famnav__k">분류</span><a class="famnav__chip" href="#tech-storage">스토리지·데이터 내구성<span class="famnav__n">7</span></a><a class="famnav__chip" href="#tech-comms">통신·신호처리<span class="famnav__n">14</span></a><a class="famnav__chip" href="#tech-llm">LLM 최적화·학습·서빙<span class="famnav__n">12</span></a><a class="famnav__chip" href="#tech-agent">에이전트·자동화 하네스<span class="famnav__n">15</span></a><a class="famnav__chip" href="#tech-optim">최적화·스케줄링<span class="famnav__n">5</span></a><a class="famnav__chip" href="#tech-vision">비전·영상 판정<span class="famnav__n">2</span></a><a class="famnav__chip" href="#tech-data">데이터 파이프라인·분석<span class="famnav__n">7</span></a><a class="famnav__chip" href="#tech-media">미디어 생성<span class="famnav__n">18</span></a><a class="famnav__chip" href="#tech-product">도메인 서비스·제품<span class="famnav__n">20</span></a><a class="famnav__chip" href="#tech-devtool">개발 도구·템플릿<span class="famnav__n">24</span></a><a class="famnav__chip" href="#tech-misc">기타<span class="famnav__n">2</span></a></nav>
+    <div class="techsearch" hidden>
+      <label class="techsearch__l" for="techq">이름·설명·스택으로 걸러보기</label>
+      <input class="techsearch__i" id="techq" type="search" autocomplete="off"
+             placeholder="예: 스토리지, Rust, CP-SAT, 양자화">
+      <span class="techsearch__n" id="techn"></span>
+    </div>
+    <div class="techboard">
+      <section class="fam" id="tech-storage" aria-labelledby="techt-storage">
+        <header class="fam__head">
+          <h2 class="fam__t" id="techt-storage">스토리지·데이터 내구성<span class="fam__n">7개</span></h2>
+          <p class="fam__d">정족수 쓰기, 체크섬 스크럽, 소거부호, 장애도메인 배치. 결함을 실제로 주입해 세어 본 것만 남긴다.</p>
+        </header>
+        <div class="pboard">
+      <a class="pcard reveal" href="https://github.com/2icorp/2i-case-16-storage-durability" data-cat="storage" data-q="2i-case-16-storage-durability 2icorp/2i-case-16-storage-durability 스토리지 내구성 결함주입 실측 데모 정족수 쓰기, 체크섬 스크럽, 소거부호, 배치를 실제로 부수는 결함 주입 실험 여섯 가지를 코드로 재현하고 그 위에 s3 게이트웨이를 얹어 자체 진단 하네스로 자가진단한다. w=1로 쓰면 객체 20개 전부 손실되지만 w=2 이상이면 손실이 0이라는 것을 실측했다. go go" target="_blank" rel="noopener">
+        <div class="pcard__meta"><span class="pcard__cat">비공개</span><span class="pcard__rt">Go</span><span class="pcard__date">2026.07.31</span><span class="pcard__rt">사례 16</span></div>
+        <h3 class="pcard__title">스토리지 내구성 결함주입 실측 데모</h3>
+        <p class="pcard__excerpt">정족수 쓰기, 체크섬 스크럽, 소거부호, 배치를 실제로 부수는 결함 주입 실험 여섯 가지를 코드로 재현하고 그 위에 S3 게이트웨이를 얹어 자체 진단 하네스로 자가진단한다. W=1로 쓰면 객체 20개 전부 손실되지만 W=2 이상이면 손실이 0이라는 것을 실측했다.</p>
+        <div class="pcard__tags"><span>2icorp/2i-case-16-storage-durability</span><span>#Go</span><span class="pcard__go">GitHub →</span></div>
+      </a>
+      <a class="pcard reveal" href="https://github.com/2icorp/2i-case-17-storage-proofkit" data-cat="storage" data-q="2i-case-17-storage-proofkit 2icorp/2i-case-17-storage-proofkit 스토리지 주장 검증 진단 하네스 고객이 주장하는 스토리지 성질을 실제로 측정해 검증하는 하네스로 측정하지 않은 항목은 통과로 보고하지 않는 규칙을 코드로 강제한다. minio 4드라이브 소거코드 구성을 대상으로 11개 항목을 실측한 예제를 포함한다. python python" target="_blank" rel="noopener">
+        <div class="pcard__meta"><span class="pcard__cat">비공개</span><span class="pcard__rt">Python</span><span class="pcard__date">2026.07.31</span><span class="pcard__rt">사례 17</span></div>
+        <h3 class="pcard__title">스토리지 주장 검증 진단 하네스</h3>
+        <p class="pcard__excerpt">고객이 주장하는 스토리지 성질을 실제로 측정해 검증하는 하네스로 측정하지 않은 항목은 통과로 보고하지 않는 규칙을 코드로 강제한다. MinIO 4드라이브 소거코드 구성을 대상으로 11개 항목을 실측한 예제를 포함한다.</p>
+        <div class="pcard__tags"><span>2icorp/2i-case-17-storage-proofkit</span><span>#Python</span><span class="pcard__go">GitHub →</span></div>
+      </a>
+      <a class="pcard reveal" href="https://github.com/2icorp/2i-case-18-storage-cost-model" data-cat="storage" data-q="2i-case-18-storage-cost-model 2icorp/2i-case-18-storage-cost-model 스토리지 청구서 원인분해 tco 모델 스토리지 청구서를 sku가 아닌 원인별로 분해하고 워크로드별로 클라우드 잔류와 온프렘 이전 중 3년에서 5년 기준으로 무엇이 싼지 계산한다. 합성 청구서 월 37,053달러 중 20,093달러의 절감 가능 원인을 실측으로 분해했다. python python" target="_blank" rel="noopener">
+        <div class="pcard__meta"><span class="pcard__cat">비공개</span><span class="pcard__rt">Python</span><span class="pcard__date">2026.07.31</span><span class="pcard__rt">사례 18</span></div>
+        <h3 class="pcard__title">스토리지 청구서 원인분해 TCO 모델</h3>
+        <p class="pcard__excerpt">스토리지 청구서를 SKU가 아닌 원인별로 분해하고 워크로드별로 클라우드 잔류와 온프렘 이전 중 3년에서 5년 기준으로 무엇이 싼지 계산한다. 합성 청구서 월 37,053달러 중 20,093달러의 절감 가능 원인을 실측으로 분해했다.</p>
+        <div class="pcard__tags"><span>2icorp/2i-case-18-storage-cost-model</span><span>#Python</span><span class="pcard__go">GitHub →</span></div>
+      </a>
+      <a class="pcard reveal" href="https://github.com/2icorp/2i-storage-core" data-cat="storage" data-q="2i-storage-core 2icorp/2i-storage-core 온프렘 오브젝트 스토리지 코어 정족수 복제, 체크섬 스크럽, 소거부호, 실패 도메인 배치를 결함 주입 하네스로 실제 동작을 측정할 수 있는 형태로 구현한 온프렘 오브젝트 스토리지 코어다. 쓰기 성공은 fsync와 rename이 끝난 뒤에만 반환하고 가용 복제본이 w 미만이면 쓰기를 거부한다. go go crc32c 정족수 복제 소거부호" target="_blank" rel="noopener">
+        <div class="pcard__meta"><span class="pcard__cat">비공개</span><span class="pcard__rt">Go</span><span class="pcard__date">2026.07.31</span></div>
+        <h3 class="pcard__title">온프렘 오브젝트 스토리지 코어</h3>
+        <p class="pcard__excerpt">정족수 복제, 체크섬 스크럽, 소거부호, 실패 도메인 배치를 결함 주입 하네스로 실제 동작을 측정할 수 있는 형태로 구현한 온프렘 오브젝트 스토리지 코어다. 쓰기 성공은 fsync와 rename이 끝난 뒤에만 반환하고 가용 복제본이 W 미만이면 쓰기를 거부한다.</p>
+        <div class="pcard__tags"><span>2icorp/2i-storage-core</span><span>#Go</span><span>#crc32c</span><span>#정족수 복제</span><span>#소거부호</span><span class="pcard__go">GitHub →</span></div>
+      </a>
+      <a class="pcard reveal" href="https://github.com/2icorp/2i-storage-cost-engine" data-cat="storage" data-q="2i-storage-cost-engine 2icorp/2i-storage-cost-engine 실 청구서 파서 스토리지 비용 엔진 실제 클라우드 청구서를 읽어 정규화하고 공개 모델인 2i-case-18의 계산식을 적용해 고객 납품용 보고서를 만드는 비공개 저장소다. 계산 로직 자체는 담지 않고 파서와 공급자 어댑터, 식별자 마스킹만 소유한다. python python" target="_blank" rel="noopener">
+        <div class="pcard__meta"><span class="pcard__cat">비공개</span><span class="pcard__rt">Python</span><span class="pcard__date">2026.07.31</span></div>
+        <h3 class="pcard__title">실 청구서 파서 스토리지 비용 엔진</h3>
+        <p class="pcard__excerpt">실제 클라우드 청구서를 읽어 정규화하고 공개 모델인 2i-case-18의 계산식을 적용해 고객 납품용 보고서를 만드는 비공개 저장소다. 계산 로직 자체는 담지 않고 파서와 공급자 어댑터, 식별자 마스킹만 소유한다.</p>
+        <div class="pcard__tags"><span>2icorp/2i-storage-cost-engine</span><span>#Python</span><span class="pcard__go">GitHub →</span></div>
+      </a>
+      <a class="pcard reveal" href="https://github.com/2icorp/2i-storage-proofkit-pro" data-cat="storage" data-q="2i-storage-proofkit-pro 2icorp/2i-storage-proofkit-pro 스토리지 진단 하네스 납품 계층 공개 저장소인 2i-case-17의 측정과 판정 로직을 감싸 고객 환경 어댑터, 보고서 표지, 회귀 원장을 더한 비공개 납품 계층이다. 프로브와 점수 계산 로직은 소유하지 않고 공개 저장소를 그대로 참조한다. python python" target="_blank" rel="noopener">
+        <div class="pcard__meta"><span class="pcard__cat">비공개</span><span class="pcard__rt">Python</span><span class="pcard__date">2026.07.31</span></div>
+        <h3 class="pcard__title">스토리지 진단 하네스 납품 계층</h3>
+        <p class="pcard__excerpt">공개 저장소인 2i-case-17의 측정과 판정 로직을 감싸 고객 환경 어댑터, 보고서 표지, 회귀 원장을 더한 비공개 납품 계층이다. 프로브와 점수 계산 로직은 소유하지 않고 공개 저장소를 그대로 참조한다.</p>
+        <div class="pcard__tags"><span>2icorp/2i-storage-proofkit-pro</span><span>#Python</span><span class="pcard__go">GitHub →</span></div>
+      </a>
+      <a class="pcard reveal" href="https://github.com/2icorp/nas-cluster" data-cat="storage" data-q="nas-cluster 2i/nas-cluster nas 클러스터링 분산 스토리지 플랫폼 일반 nas 장비들을 클러스터링해 ceph와 유사한 분산 스토리지 기능을 제공하는 오픈소스 플랫폼이다. 최소 3노드가 필요한 ceph 대신 저비용으로 분산 스토리지를 구축하는 것을 목표로 한다. go go typescript shell" target="_blank" rel="noopener">
+        <div class="pcard__meta"><span class="pcard__cat">비공개</span><span class="pcard__rt">Go</span><span class="pcard__date">2026.07.31</span></div>
+        <h3 class="pcard__title">NAS 클러스터링 분산 스토리지 플랫폼</h3>
+        <p class="pcard__excerpt">일반 NAS 장비들을 클러스터링해 Ceph와 유사한 분산 스토리지 기능을 제공하는 오픈소스 플랫폼이다. 최소 3노드가 필요한 Ceph 대신 저비용으로 분산 스토리지를 구축하는 것을 목표로 한다.</p>
+        <div class="pcard__tags"><span>2i/nas-cluster</span><span>#Go</span><span>#TypeScript</span><span>#Shell</span><span class="pcard__go">GitHub →</span></div>
+      </a>
+        </div>
+      </section>
+      <section class="fam" id="tech-comms" aria-labelledby="techt-comms">
+        <header class="fam__head">
+          <h2 class="fam__t" id="techt-comms">통신·신호처리<span class="fam__n">14개</span></h2>
+          <p class="fam__d">RF 지문, 스펙트럼, 에어갭 데이터 다이오드, 음성 지연. 학습 없이 신호 자체를 다루는 축이다.</p>
+        </header>
+        <div class="pboard">
+      <a class="pcard reveal" href="https://github.com/2icorp/mtg-realtime-translator" data-cat="comms" data-q="mtg-realtime-translator 2i/mtg-realtime-translator 회의용 실시간 음성 번역 데스크톱 앱 openai realtime translation api를 사용해 마이크 음성을 그 자리에서 번역해 텍스트와 음성으로 출력하는 pyside6 기반 데스크톱 앱이다. silero vad를 로컬에서 구동해 수백 밀리초 수준의 지연을 낸다. python python pyside6 silero vad" target="_blank" rel="noopener">
+        <div class="pcard__meta"><span class="pcard__cat">비공개</span><span class="pcard__rt">Python</span><span class="pcard__date">2026.05.12</span></div>
+        <h3 class="pcard__title">회의용 실시간 음성 번역 데스크톱 앱</h3>
+        <p class="pcard__excerpt">OpenAI Realtime Translation API를 사용해 마이크 음성을 그 자리에서 번역해 텍스트와 음성으로 출력하는 PySide6 기반 데스크톱 앱이다. Silero VAD를 로컬에서 구동해 수백 밀리초 수준의 지연을 낸다.</p>
+        <div class="pcard__tags"><span>2i/mtg-realtime-translator</span><span>#Python</span><span>#PySide6</span><span>#Silero VAD</span><span class="pcard__go">GitHub →</span></div>
+      </a>
+      <a class="pcard reveal" href="https://github.com/2icorp/realtime-translator" data-cat="comms" data-q="realtime-translator 2i/realtime-translator 듀얼 백엔드 실시간 음성 번역 데스크톱 앱 openai realtime api와 자체 fastapi 서버(runpod gpu 또는 애플 실리콘 로컬) 두 가지 백엔드를 모두 지원하는 macos 데스크톱 실시간 음성 번역 앱이다. tauri 2 프런트엔드로 구성된다. python python tauri fastapi" target="_blank" rel="noopener">
+        <div class="pcard__meta"><span class="pcard__cat">비공개</span><span class="pcard__rt">Python</span><span class="pcard__date">2026.07.06</span></div>
+        <h3 class="pcard__title">듀얼 백엔드 실시간 음성 번역 데스크톱 앱</h3>
+        <p class="pcard__excerpt">OpenAI Realtime API와 자체 FastAPI 서버(RunPod GPU 또는 애플 실리콘 로컬) 두 가지 백엔드를 모두 지원하는 macOS 데스크톱 실시간 음성 번역 앱이다. Tauri 2 프런트엔드로 구성된다.</p>
+        <div class="pcard__tags"><span>2i/realtime-translator</span><span>#Python</span><span>#Tauri</span><span>#FastAPI</span><span class="pcard__go">GitHub →</span></div>
+      </a>
+      <a class="pcard reveal" href="https://github.com/2icorp/voice-latency-budget" data-cat="comms" data-q="voice-latency-budget 2i/voice-latency-budget 실시간 음성 에이전트 지연 예산 계산기 발화 종료부터 asr, llm, tts를 거쳐 첫 응답 소리까지 각 단계의 예상 지연을 입력하면 누적 타임라인과 병목 구간을 출시 전에 진단하는 100% 클라이언트 사이드 정적 계산기이다. 서버나 api 키 없이 url 해시로 결과를 공유할 수 있다. javascript javascript html css" target="_blank" rel="noopener">
+        <div class="pcard__meta"><span class="pcard__cat">공개</span><span class="pcard__rt">JavaScript</span><span class="pcard__date">2026.07.19</span></div>
+        <h3 class="pcard__title">실시간 음성 에이전트 지연 예산 계산기</h3>
+        <p class="pcard__excerpt">발화 종료부터 ASR, LLM, TTS를 거쳐 첫 응답 소리까지 각 단계의 예상 지연을 입력하면 누적 타임라인과 병목 구간을 출시 전에 진단하는 100% 클라이언트 사이드 정적 계산기이다. 서버나 API 키 없이 URL 해시로 결과를 공유할 수 있다.</p>
+        <div class="pcard__tags"><span>2i/voice-latency-budget</span><span>#JavaScript</span><span>#HTML</span><span>#CSS</span><span class="pcard__go">GitHub →</span></div>
+      </a>
+      <a class="pcard reveal" href="https://github.com/2icorp/sigprint" data-cat="comms" data-q="sigprint 2i/sigprint 신호 지문 인식 엔진 (통신 신호 일반화) 음악 인식기의 랜드마크, 별자리 지문 기법을 통신 신호(rf/iq) 도메인으로 일반화하고 레거시 c/c++ 코어를 rust로 포팅하는 오픈소스 신호 지문 엔진이다. o-ran du/cu 같은 cots 서버 소프트웨어 스택 옆에서 동작하는 스펙트럼 인식 엔진을 목표로 한다. standard ml rust c standard ml" target="_blank" rel="noopener">
+        <div class="pcard__meta"><span class="pcard__cat">비공개</span><span class="pcard__rt">SML</span><span class="pcard__date">2026.07.25</span></div>
+        <h3 class="pcard__title">신호 지문 인식 엔진 (통신 신호 일반화)</h3>
+        <p class="pcard__excerpt">음악 인식기의 랜드마크, 별자리 지문 기법을 통신 신호(RF/IQ) 도메인으로 일반화하고 레거시 C/C++ 코어를 Rust로 포팅하는 오픈소스 신호 지문 엔진이다. O-RAN DU/CU 같은 COTS 서버 소프트웨어 스택 옆에서 동작하는 스펙트럼 인식 엔진을 목표로 한다.</p>
+        <div class="pcard__tags"><span>2i/sigprint</span><span>#Rust</span><span>#C</span><span>#Standard ML</span><span class="pcard__go">GitHub →</span></div>
+      </a>
+      <a class="pcard reveal" href="https://github.com/2icorp/sigprint-bio" data-cat="comms" data-q="sigprint-bio 2i/sigprint-bio 생태 음향 종 시그니처 식별 엔진 필드 레코더 음원에서 조류, 고래, 박쥐 등 종별 발성 시그니처를 지문 매칭으로 식별하는 sigprint 엔진의 생태 음향 응용이다. 딥러닝 대비 저전력 오프라인 구동과 샘플 1개만으로 희귀종 등록이 가능한 점이 차별점이다. rust rust" target="_blank" rel="noopener">
+        <div class="pcard__meta"><span class="pcard__cat">비공개</span><span class="pcard__rt">Rust</span><span class="pcard__date">2026.07.25</span></div>
+        <h3 class="pcard__title">생태 음향 종 시그니처 식별 엔진</h3>
+        <p class="pcard__excerpt">필드 레코더 음원에서 조류, 고래, 박쥐 등 종별 발성 시그니처를 지문 매칭으로 식별하는 sigprint 엔진의 생태 음향 응용이다. 딥러닝 대비 저전력 오프라인 구동과 샘플 1개만으로 희귀종 등록이 가능한 점이 차별점이다.</p>
+        <div class="pcard__tags"><span>2i/sigprint-bio</span><span>#Rust</span><span class="pcard__go">GitHub →</span></div>
+      </a>
+      <a class="pcard reveal" href="https://github.com/2icorp/sigprint-broadcast" data-cat="comms" data-q="sigprint-broadcast 2i/sigprint-broadcast 방송 송출 검증 모니터링 엔진 라디오, tv, 스트림에서 음원이나 광고가 실제로 송출됐는지 자동 확인해 저작권 정산과 광고 집행 증빙 근거를 만드는 sigprint 엔진 응용이다. 상용 api 대비 셀프호스트가 차별점이다. rust rust" target="_blank" rel="noopener">
+        <div class="pcard__meta"><span class="pcard__cat">비공개</span><span class="pcard__rt">Rust</span><span class="pcard__date">2026.07.25</span></div>
+        <h3 class="pcard__title">방송 송출 검증 모니터링 엔진</h3>
+        <p class="pcard__excerpt">라디오, TV, 스트림에서 음원이나 광고가 실제로 송출됐는지 자동 확인해 저작권 정산과 광고 집행 증빙 근거를 만드는 sigprint 엔진 응용이다. 상용 API 대비 셀프호스트가 차별점이다.</p>
+        <div class="pcard__tags"><span>2i/sigprint-broadcast</span><span>#Rust</span><span class="pcard__go">GitHub →</span></div>
+      </a>
+      <a class="pcard reveal" href="https://github.com/2icorp/sigprint-enf" data-cat="comms" data-q="sigprint-enf 2i/sigprint-enf 전력망 주파수 지문 기반 녹음 검증 엔진 녹음물에 스며든 전력망 기본파(50/60hz)의 미세 변동을 추출해 그리드 기준 데이터와 매칭해 녹음 시점과 편집 여부를 검증하는 sigprint 엔진 응용이다. 무학습 시계열 매칭으로 딥페이크, 증거 조작 판별에 쓴다. rust rust" target="_blank" rel="noopener">
+        <div class="pcard__meta"><span class="pcard__cat">비공개</span><span class="pcard__rt">Rust</span><span class="pcard__date">2026.07.25</span></div>
+        <h3 class="pcard__title">전력망 주파수 지문 기반 녹음 검증 엔진</h3>
+        <p class="pcard__excerpt">녹음물에 스며든 전력망 기본파(50/60Hz)의 미세 변동을 추출해 그리드 기준 데이터와 매칭해 녹음 시점과 편집 여부를 검증하는 sigprint 엔진 응용이다. 무학습 시계열 매칭으로 딥페이크, 증거 조작 판별에 쓴다.</p>
+        <div class="pcard__tags"><span>2i/sigprint-enf</span><span>#Rust</span><span class="pcard__go">GitHub →</span></div>
+      </a>
+      <a class="pcard reveal" href="https://github.com/2icorp/sigprint-factory" data-cat="comms" data-q="sigprint-factory 2i/sigprint-factory 설비 예지보전 음향·진동 시그니처 엔진 모터, 펌프, 베어링 같은 회전체 설비의 정상, 열화 음향, 진동 패턴을 지문화해 엣지 박스에서 학습 없이 이상 시그니처를 조기 감지하는 sigprint 엔진 응용이다. 클라우드 구독형 상용 대비 오프라인 엣지 매칭이 차별점이다. rust rust" target="_blank" rel="noopener">
+        <div class="pcard__meta"><span class="pcard__cat">비공개</span><span class="pcard__rt">Rust</span><span class="pcard__date">2026.07.25</span></div>
+        <h3 class="pcard__title">설비 예지보전 음향·진동 시그니처 엔진</h3>
+        <p class="pcard__excerpt">모터, 펌프, 베어링 같은 회전체 설비의 정상, 열화 음향, 진동 패턴을 지문화해 엣지 박스에서 학습 없이 이상 시그니처를 조기 감지하는 sigprint 엔진 응용이다. 클라우드 구독형 상용 대비 오프라인 엣지 매칭이 차별점이다.</p>
+        <div class="pcard__tags"><span>2i/sigprint-factory</span><span>#Rust</span><span class="pcard__go">GitHub →</span></div>
+      </a>
+      <a class="pcard reveal" href="https://github.com/2icorp/sigprint-med" data-cat="comms" data-q="sigprint-med 2i/sigprint-med 청진음 이상 패턴 스크리닝 보조 엔진 디지털 청진기나 폰 마이크 음원에서 심잡음, 천명음 등 알려진 이상 패턴 시그니처를 매칭해 1차 스크리닝 보조 지표를 제공하는 sigprint 엔진 응용이다. 진단이 아닌 재청취 권고 플래그로 포지셔닝하며 의료기기 규제 고지가 필요하다. rust rust" target="_blank" rel="noopener">
+        <div class="pcard__meta"><span class="pcard__cat">비공개</span><span class="pcard__rt">Rust</span><span class="pcard__date">2026.07.25</span></div>
+        <h3 class="pcard__title">청진음 이상 패턴 스크리닝 보조 엔진</h3>
+        <p class="pcard__excerpt">디지털 청진기나 폰 마이크 음원에서 심잡음, 천명음 등 알려진 이상 패턴 시그니처를 매칭해 1차 스크리닝 보조 지표를 제공하는 sigprint 엔진 응용이다. 진단이 아닌 재청취 권고 플래그로 포지셔닝하며 의료기기 규제 고지가 필요하다.</p>
+        <div class="pcard__tags"><span>2i/sigprint-med</span><span>#Rust</span><span class="pcard__go">GitHub →</span></div>
+      </a>
+      <a class="pcard reveal" href="https://github.com/2icorp/2i-case-06-sigprint-rf" data-cat="comms" data-q="2i-case-06-sigprint-rf 2icorp/2i-case-06-sigprint-rf rf 간섭원 실시간 지문 매칭 cfar 검출로 무선망 이상 신호를 실시간 포착하고 후보 간섭원 파형을 시그니처 db에 등록해 robust hash 지문 매칭으로 원인을 특정하는 sigprint 엔진이다. 합성 rf 신호 레퍼런스 데모다. python python numpy scipy dsp/cfar" target="_blank" rel="noopener">
+        <div class="pcard__meta"><span class="pcard__cat">비공개</span><span class="pcard__rt">Python</span><span class="pcard__date">2026.07.26</span><span class="pcard__rt">사례 06</span></div>
+        <h3 class="pcard__title">RF 간섭원 실시간 지문 매칭</h3>
+        <p class="pcard__excerpt">CFAR 검출로 무선망 이상 신호를 실시간 포착하고 후보 간섭원 파형을 시그니처 DB에 등록해 robust hash 지문 매칭으로 원인을 특정하는 sigprint 엔진이다. 합성 RF 신호 레퍼런스 데모다.</p>
+        <div class="pcard__tags"><span>2icorp/2i-case-06-sigprint-rf</span><span>#Python</span><span>#NumPy</span><span>#SciPy</span><span>#DSP/CFAR</span><span class="pcard__go">GitHub →</span></div>
+      </a>
+      <a class="pcard reveal" href="https://github.com/2icorp/sigprint-spectrum" data-cat="comms" data-q="sigprint-spectrum 2i/sigprint-spectrum rf 스펙트럼 간섭원 식별 엔진 cfar 검출과 로버스트 해시 지문으로 iq 스트림에서 알려진 간섭원과 파형 시그니처를 저연산으로 식별하는 sigprint 엔진의 o-ran, cots 통신 스택 응용이다. commstack 시스템의 특징 계산, 분류 서브시스템으로 연동된다. python python rust shell" target="_blank" rel="noopener">
+        <div class="pcard__meta"><span class="pcard__cat">비공개</span><span class="pcard__rt">Python</span><span class="pcard__date">2026.07.29</span></div>
+        <h3 class="pcard__title">RF 스펙트럼 간섭원 식별 엔진</h3>
+        <p class="pcard__excerpt">CFAR 검출과 로버스트 해시 지문으로 IQ 스트림에서 알려진 간섭원과 파형 시그니처를 저연산으로 식별하는 sigprint 엔진의 O-RAN, COTS 통신 스택 응용이다. commstack 시스템의 특징 계산, 분류 서브시스템으로 연동된다.</p>
+        <div class="pcard__tags"><span>2i/sigprint-spectrum</span><span>#Python</span><span>#Rust</span><span>#Shell</span><span class="pcard__go">GitHub →</span></div>
+      </a>
+      <a class="pcard reveal" href="https://github.com/2icorp/commstack" data-cat="comms" data-q="commstack 2i/commstack 물리 기반 지능형 무선 수신기 시스템 송신기, 채널, 수신기 효과를 분리하고 미지 신호와 간섭을 실시간 판단해 o-ran 제어로 되돌리는 물리 기반 지능형 수신기 시스템이다. sigprint-spectrum(rf 스펙트럼 지문 엔진)을 서브시스템으로 품는다. python python rust shell" target="_blank" rel="noopener">
+        <div class="pcard__meta"><span class="pcard__cat">비공개</span><span class="pcard__rt">Python</span><span class="pcard__date">2026.08.01</span></div>
+        <h3 class="pcard__title">물리 기반 지능형 무선 수신기 시스템</h3>
+        <p class="pcard__excerpt">송신기, 채널, 수신기 효과를 분리하고 미지 신호와 간섭을 실시간 판단해 O-RAN 제어로 되돌리는 물리 기반 지능형 수신기 시스템이다. sigprint-spectrum(RF 스펙트럼 지문 엔진)을 서브시스템으로 품는다.</p>
+        <div class="pcard__tags"><span>2i/commstack</span><span>#Python</span><span>#Rust</span><span>#Shell</span><span class="pcard__go">GitHub →</span></div>
+      </a>
+      <a class="pcard reveal" href="https://github.com/2icorp/airgap-comm" data-cat="comms" data-q="airgap-comm 2icorp/airgap-comm 에어갭 통신 소프트웨어 시뮬레이션 코어 화면 카메라 파운틴 전송, aircode 듀얼 채널, 전자파 방출 모델링, 은닉채널 방어를 다루는 rust 워크스페이스로 컴파일러와 테스트를 보상 신호로 삼아 개발했다. 실제 sdr, 카메라, 마이크 하드웨어는 쓰지 않고 결정론적 시뮬레이션 채널 위에서만 검증했다고 명시한다. rust rust gf(256) lt fountain code polar codes" target="_blank" rel="noopener">
+        <div class="pcard__meta"><span class="pcard__cat">비공개</span><span class="pcard__rt">Rust</span><span class="pcard__date">2026.08.02</span></div>
+        <h3 class="pcard__title">에어갭 통신 소프트웨어 시뮬레이션 코어</h3>
+        <p class="pcard__excerpt">화면 카메라 파운틴 전송, AIRCODE 듀얼 채널, 전자파 방출 모델링, 은닉채널 방어를 다루는 Rust 워크스페이스로 컴파일러와 테스트를 보상 신호로 삼아 개발했다. 실제 SDR, 카메라, 마이크 하드웨어는 쓰지 않고 결정론적 시뮬레이션 채널 위에서만 검증했다고 명시한다.</p>
+        <div class="pcard__tags"><span>2icorp/airgap-comm</span><span>#Rust</span><span>#GF(256)</span><span>#LT fountain code</span><span>#polar codes</span><span class="pcard__go">GitHub →</span></div>
+      </a>
+      <a class="pcard reveal" href="https://github.com/2icorp/optipay" data-cat="comms" data-q="optipay 2i/optipay 광학 결제 프로토콜 스택 연구 프로토타입 서명된 거래 객체, 취소·한도 상태, 항목별 영수증, 브로드캐스트 바우처와 정산 배치를 디스플레이-카메라 채널로 전달하는 rust 광학 결제 프로토콜 스택이다. 감사받지 않은 연구용 프로토타입으로 실제 결제에 사용해서는 안 된다. rust rust" target="_blank" rel="noopener">
+        <div class="pcard__meta"><span class="pcard__cat">비공개</span><span class="pcard__rt">Rust</span><span class="pcard__date">2026.08.02</span></div>
+        <h3 class="pcard__title">광학 결제 프로토콜 스택 연구 프로토타입</h3>
+        <p class="pcard__excerpt">서명된 거래 객체, 취소·한도 상태, 항목별 영수증, 브로드캐스트 바우처와 정산 배치를 디스플레이-카메라 채널로 전달하는 Rust 광학 결제 프로토콜 스택이다. 감사받지 않은 연구용 프로토타입으로 실제 결제에 사용해서는 안 된다.</p>
+        <div class="pcard__tags"><span>2i/optipay</span><span>#Rust</span><span class="pcard__go">GitHub →</span></div>
+      </a>
+        </div>
+      </section>
+      <section class="fam" id="tech-llm" aria-labelledby="techt-llm">
+        <header class="fam__head">
+          <h2 class="fam__t" id="techt-llm">LLM 최적화·학습·서빙<span class="fam__n">12개</span></h2>
+          <p class="fam__d">양자화, MoE 오프로드, 파인튜닝 방법 선택, 셀프호스팅 비용 계산. 모델을 싸게 굴리는 쪽이다.</p>
+        </header>
+        <div class="pboard">
+      <a class="pcard reveal" href="https://github.com/2icorp/qwen3-nvfp4-quantize" data-cat="llm" data-q="qwen3-nvfp4-quantize 2i/qwen3-nvfp4-quantize qwen3-30b nvfp4 양자화 파이프라인 qwen3-30b-a3b 모델을 nvfp4(w4a4, group_size=16)로 양자화하는 파이프라인과 그 산출물 아카이브이다. 스모크 테스트와 nfs 스토리지 분리 파이프라인 등 gpu 비용 최적화 실행 산출물을 포함한다. python python" target="_blank" rel="noopener">
+        <div class="pcard__meta"><span class="pcard__cat">비공개</span><span class="pcard__rt">Python</span><span class="pcard__date">2026.05.11</span></div>
+        <h3 class="pcard__title">Qwen3-30B NVFP4 양자화 파이프라인</h3>
+        <p class="pcard__excerpt">Qwen3-30B-A3B 모델을 NVFP4(W4A4, group_size=16)로 양자화하는 파이프라인과 그 산출물 아카이브이다. 스모크 테스트와 NFS 스토리지 분리 파이프라인 등 GPU 비용 최적화 실행 산출물을 포함한다.</p>
+        <div class="pcard__tags"><span>2i/qwen3-nvfp4-quantize</span><span>#Python</span><span class="pcard__go">GitHub →</span></div>
+      </a>
+      <a class="pcard reveal" href="https://github.com/2icorp/llmops-on-k8s" data-cat="llm" data-q="llmops-on-k8s 2i/llmops-on-k8s 쿠버네티스 llm 운영 레시피 모음 vllm 서빙, kueue gpu 스케줄링, 양자화 배포, 멀티테넌트 격리 등 쿠버네티스에서 llm을 운영하는 벤더 중립 재현 가능 레시피 모음이다. 스키마 검증을 통과하는 실제 쿠버네티스 매니페스트로 구성된다. makefile kubernetes yaml makefile" target="_blank" rel="noopener">
+        <div class="pcard__meta"><span class="pcard__cat">공개</span><span class="pcard__rt">Makefile</span><span class="pcard__date">2026.07.10</span></div>
+        <h3 class="pcard__title">쿠버네티스 LLM 운영 레시피 모음</h3>
+        <p class="pcard__excerpt">vLLM 서빙, Kueue GPU 스케줄링, 양자화 배포, 멀티테넌트 격리 등 쿠버네티스에서 LLM을 운영하는 벤더 중립 재현 가능 레시피 모음이다. 스키마 검증을 통과하는 실제 쿠버네티스 매니페스트로 구성된다.</p>
+        <div class="pcard__tags"><span>2i/llmops-on-k8s</span><span>#Kubernetes YAML</span><span>#Makefile</span><span class="pcard__go">GitHub →</span></div>
+      </a>
+      <a class="pcard reveal" href="https://github.com/2icorp/finetune-method-picker" data-cat="llm" data-q="finetune-method-picker 2i/finetune-method-picker gpu 파인튜닝 기법 계산기 gpu와 모델, 기법을 입력하면 학습 vram, 최대 학습 가능 모델 크기, 데이터 포맷과 분량, 학습 시간과 비용을 공식과 함께 계산하는 100% 브라우저 정적 도구이다. 메모리 초과가 예상되면 줄이는 방법을 바로 제시한다. javascript javascript html css" target="_blank" rel="noopener">
+        <div class="pcard__meta"><span class="pcard__cat">공개</span><span class="pcard__rt">JavaScript</span><span class="pcard__date">2026.07.16</span></div>
+        <h3 class="pcard__title">GPU 파인튜닝 기법 계산기</h3>
+        <p class="pcard__excerpt">GPU와 모델, 기법을 입력하면 학습 VRAM, 최대 학습 가능 모델 크기, 데이터 포맷과 분량, 학습 시간과 비용을 공식과 함께 계산하는 100% 브라우저 정적 도구이다. 메모리 초과가 예상되면 줄이는 방법을 바로 제시한다.</p>
+        <div class="pcard__tags"><span>2i/finetune-method-picker</span><span>#JavaScript</span><span>#HTML</span><span>#CSS</span><span class="pcard__go">GitHub →</span></div>
+      </a>
+      <a class="pcard reveal" href="https://github.com/2icorp/tiny-skill-distill" data-cat="llm" data-q="tiny-skill-distill 2i/tiny-skill-distill 에이전트 스킬 워커 초소형 증류 벤치마크 에이전트 스킬에서 언어모델이 꼭 필요한 반복 워커 부분만 10억 파라미터 이하 4비트 모델로 파인튜닝 증류해 온프레미스에서 돌리고 큰 모델은 진짜 판단이 필요한 곳에만 쓰는 원칙을 재현 가능한 실측 전후 비교로 검증한다. python python shell" target="_blank" rel="noopener">
+        <div class="pcard__meta"><span class="pcard__cat">공개</span><span class="pcard__rt">Python</span><span class="pcard__date">2026.07.17</span></div>
+        <h3 class="pcard__title">에이전트 스킬 워커 초소형 증류 벤치마크</h3>
+        <p class="pcard__excerpt">에이전트 스킬에서 언어모델이 꼭 필요한 반복 워커 부분만 10억 파라미터 이하 4비트 모델로 파인튜닝 증류해 온프레미스에서 돌리고 큰 모델은 진짜 판단이 필요한 곳에만 쓰는 원칙을 재현 가능한 실측 전후 비교로 검증한다.</p>
+        <div class="pcard__tags"><span>2i/tiny-skill-distill</span><span>#Python</span><span>#Shell</span><span class="pcard__go">GitHub →</span></div>
+      </a>
+      <a class="pcard reveal" href="https://github.com/2icorp/ktransformers-moe-offload-bench" data-cat="llm" data-q="ktransformers-moe-offload-bench 2i/ktransformers-moe-offload-bench ktransformers moe 오프로드 재현 벤치마크 ktransformers의 moe 오프로드 28배 속도 주장을 runpod에서 약 5달러로 직접 재현 측정한 벤치마크이다. 헤드라인 수치를 gpu 어텐션, amx 커널, int 양자화 세 요소로 분해해 검증한다. shell shell python" target="_blank" rel="noopener">
+        <div class="pcard__meta"><span class="pcard__cat">공개</span><span class="pcard__rt">Shell</span><span class="pcard__date">2026.07.20</span></div>
+        <h3 class="pcard__title">ktransformers MoE 오프로드 재현 벤치마크</h3>
+        <p class="pcard__excerpt">ktransformers의 MoE 오프로드 28배 속도 주장을 RunPod에서 약 5달러로 직접 재현 측정한 벤치마크이다. 헤드라인 수치를 GPU 어텐션, AMX 커널, INT 양자화 세 요소로 분해해 검증한다.</p>
+        <div class="pcard__tags"><span>2i/ktransformers-moe-offload-bench</span><span>#Shell</span><span>#Python</span><span class="pcard__go">GitHub →</span></div>
+      </a>
+      <a class="pcard reveal" href="https://github.com/2icorp/legalize-rag" data-cat="llm" data-q="legalize-rag 2i/legalize-rag 한국 법령 rag 소버린 파일럿 소형 모델(8b 이하) sft와 조문 임베딩 rag로 대형 범용 api의 조문 날조 문제를 조문 단위 접지로 제거할 수 있는지 검증하는 실험 저장소이다. 법령 원문은 공공저작물이며 데이터는 재배포하지 않고 해시로만 참조한다. python python" target="_blank" rel="noopener">
+        <div class="pcard__meta"><span class="pcard__cat">비공개</span><span class="pcard__rt">Python</span><span class="pcard__date">2026.07.22</span></div>
+        <h3 class="pcard__title">한국 법령 RAG 소버린 파일럿</h3>
+        <p class="pcard__excerpt">소형 모델(8B 이하) SFT와 조문 임베딩 RAG로 대형 범용 API의 조문 날조 문제를 조문 단위 접지로 제거할 수 있는지 검증하는 실험 저장소이다. 법령 원문은 공공저작물이며 데이터는 재배포하지 않고 해시로만 참조한다.</p>
+        <div class="pcard__tags"><span>2i/legalize-rag</span><span>#Python</span><span class="pcard__go">GitHub →</span></div>
+      </a>
+      <a class="pcard reveal" href="https://github.com/2icorp/qwen-effort-lab" data-cat="llm" data-q="qwen-effort-lab 2i/qwen-effort-lab qwen 추론 강도 제어 학습 파이프라인 오픈 허깅페이스 데이터와 오픈 도구만으로 qwen 모델에 저, 중, 고 추론 강도를 제어 가능하게 학습시키는 재현 가능한 파이프라인이다. 강도 조건부 sft와 절단 트레이스 견고성, 길이 준수 grpo를 결합한다. python python shell" target="_blank" rel="noopener">
+        <div class="pcard__meta"><span class="pcard__cat">비공개</span><span class="pcard__rt">Python</span><span class="pcard__date">2026.07.27</span></div>
+        <h3 class="pcard__title">Qwen 추론 강도 제어 학습 파이프라인</h3>
+        <p class="pcard__excerpt">오픈 허깅페이스 데이터와 오픈 도구만으로 Qwen 모델에 저, 중, 고 추론 강도를 제어 가능하게 학습시키는 재현 가능한 파이프라인이다. 강도 조건부 SFT와 절단 트레이스 견고성, 길이 준수 GRPO를 결합한다.</p>
+        <div class="pcard__tags"><span>2i/qwen-effort-lab</span><span>#Python</span><span>#Shell</span><span class="pcard__go">GitHub →</span></div>
+      </a>
+      <a class="pcard reveal" href="https://github.com/2icorp/2i-case-11-realtime-voice" data-cat="llm" data-q="2i-case-11-realtime-voice 2icorp/2i-case-11-realtime-voice 온프렘 실시간 음성 대화 서버 silero vad, whisper stt, llm, qwen3 tts를 엮어 openai realtime api와 호환되는 websocket 프로토콜로 프라이빗 gpu 클러스터에서 서빙하는 음성 대화 스택이다. 한국어 1턴 왕복 1.47초를 h200급 클러스터에서 실측했다. html python docker websocket whisper qwen3-tts silero vad" target="_blank" rel="noopener">
+        <div class="pcard__meta"><span class="pcard__cat">비공개</span><span class="pcard__rt">HTML</span><span class="pcard__date">2026.07.29</span><span class="pcard__rt">사례 11</span></div>
+        <h3 class="pcard__title">온프렘 실시간 음성 대화 서버</h3>
+        <p class="pcard__excerpt">Silero VAD, Whisper STT, LLM, Qwen3 TTS를 엮어 OpenAI Realtime API와 호환되는 WebSocket 프로토콜로 프라이빗 GPU 클러스터에서 서빙하는 음성 대화 스택이다. 한국어 1턴 왕복 1.47초를 H200급 클러스터에서 실측했다.</p>
+        <div class="pcard__tags"><span>2icorp/2i-case-11-realtime-voice</span><span>#Python</span><span>#Docker</span><span>#WebSocket</span><span>#Whisper</span><span>#Qwen3-TTS</span><span class="pcard__go">GitHub →</span></div>
+      </a>
+      <a class="pcard reveal" href="https://github.com/2icorp/2i-case-12-llm-selfhost-calc" data-cat="llm" data-q="2i-case-12-llm-selfhost-calc 2icorp/2i-case-12-llm-selfhost-calc llm 셀프호스팅 비용 vram 계산기 오픈llm을 자체 gpu에 올릴 때 vram 적합성과 추론속도, api 대비 손익분기를 계산하는 브라우저 전용 정적 계산기다. 백엔드와 빌드 없이 vllm, sglang, tensorrt-llm 배포용 매니페스트까지 생성한다. javascript javascript html/css vllm sglang tensorrt-llm" target="_blank" rel="noopener">
+        <div class="pcard__meta"><span class="pcard__cat">비공개</span><span class="pcard__rt">JavaScript</span><span class="pcard__date">2026.07.29</span><span class="pcard__rt">사례 12</span></div>
+        <h3 class="pcard__title">LLM 셀프호스팅 비용 VRAM 계산기</h3>
+        <p class="pcard__excerpt">오픈LLM을 자체 GPU에 올릴 때 VRAM 적합성과 추론속도, API 대비 손익분기를 계산하는 브라우저 전용 정적 계산기다. 백엔드와 빌드 없이 vLLM, SGLang, TensorRT-LLM 배포용 매니페스트까지 생성한다.</p>
+        <div class="pcard__tags"><span>2icorp/2i-case-12-llm-selfhost-calc</span><span>#JavaScript</span><span>#HTML/CSS</span><span>#vLLM</span><span>#SGLang</span><span>#TensorRT-LLM</span><span class="pcard__go">GitHub →</span></div>
+      </a>
+      <a class="pcard reveal" href="https://github.com/2icorp/llm-selfhost-calculator" data-cat="llm" data-q="llm-selfhost-calculator 2i/llm-selfhost-calculator llm 셀프호스팅 손익분기 계산기 오픈 llm이 자신의 gpu나 맥에서 돌아가는지, api보다 자체 호스팅이 저렴한지 vram 적합성과 토큰 속도, 손익분기점을 브라우저에서 즉시 계산하는 무료 도구이다. 키나 서버, 데이터 전송이 전혀 없다. javascript javascript html css" target="_blank" rel="noopener">
+        <div class="pcard__meta"><span class="pcard__cat">공개</span><span class="pcard__rt">JavaScript</span><span class="pcard__date">2026.07.29</span></div>
+        <h3 class="pcard__title">LLM 셀프호스팅 손익분기 계산기</h3>
+        <p class="pcard__excerpt">오픈 LLM이 자신의 GPU나 맥에서 돌아가는지, API보다 자체 호스팅이 저렴한지 VRAM 적합성과 토큰 속도, 손익분기점을 브라우저에서 즉시 계산하는 무료 도구이다. 키나 서버, 데이터 전송이 전혀 없다.</p>
+        <div class="pcard__tags"><span>2i/llm-selfhost-calculator</span><span>#JavaScript</span><span>#HTML</span><span>#CSS</span><span class="pcard__go">GitHub →</span></div>
+      </a>
+      <a class="pcard reveal" href="https://github.com/2icorp/moe-ep-visualizer" data-cat="llm" data-q="moe-ep-visualizer 2i/moe-ep-visualizer moe 전문가 병렬화 시각화 플레이그라운드 결정론적으로 시드된 라우터가 토큰 배치를 여러 gpu에 샤딩된 전문가로 보내는 과정을 관찰하며 all-to-all 트래픽과 전문가 부하 불균형을 실시간으로 보여주는 100% 클라이언트 사이드 플레이그라운드이다. 서버 없이 index.html만으로 동작한다. javascript javascript html css" target="_blank" rel="noopener">
+        <div class="pcard__meta"><span class="pcard__cat">비공개</span><span class="pcard__rt">JavaScript</span><span class="pcard__date">2026.07.30</span></div>
+        <h3 class="pcard__title">MoE 전문가 병렬화 시각화 플레이그라운드</h3>
+        <p class="pcard__excerpt">결정론적으로 시드된 라우터가 토큰 배치를 여러 GPU에 샤딩된 전문가로 보내는 과정을 관찰하며 all-to-all 트래픽과 전문가 부하 불균형을 실시간으로 보여주는 100% 클라이언트 사이드 플레이그라운드이다. 서버 없이 index.html만으로 동작한다.</p>
+        <div class="pcard__tags"><span>2i/moe-ep-visualizer</span><span>#JavaScript</span><span>#HTML</span><span>#CSS</span><span class="pcard__go">GitHub →</span></div>
+      </a>
+      <a class="pcard reveal" href="https://github.com/2icorp/embedding-model-compass" data-cat="llm" data-q="embedding-model-compass 2i/embedding-model-compass rag 임베딩 모델 비교 대시보드 rag용 검색 임베딩 모델을 벤치마크 점수, 파라미터 크기, 라이선스, 언어 지원 기준으로 매일 갱신해 비교하는 벤더 중립 대시보드이다. 수집, 집계 로직이 전부 공개되어 검증 가능하다. python python javascript github actions" target="_blank" rel="noopener">
+        <div class="pcard__meta"><span class="pcard__cat">비공개</span><span class="pcard__rt">Python</span><span class="pcard__date">2026.08.01</span></div>
+        <h3 class="pcard__title">RAG 임베딩 모델 비교 대시보드</h3>
+        <p class="pcard__excerpt">RAG용 검색 임베딩 모델을 벤치마크 점수, 파라미터 크기, 라이선스, 언어 지원 기준으로 매일 갱신해 비교하는 벤더 중립 대시보드이다. 수집, 집계 로직이 전부 공개되어 검증 가능하다.</p>
+        <div class="pcard__tags"><span>2i/embedding-model-compass</span><span>#Python</span><span>#JavaScript</span><span>#GitHub Actions</span><span class="pcard__go">GitHub →</span></div>
+      </a>
+        </div>
+      </section>
+      <section class="fam" id="tech-agent" aria-labelledby="techt-agent">
+        <header class="fam__head">
+          <h2 class="fam__t" id="techt-agent">에이전트·자동화 하네스<span class="fam__n">15개</span></h2>
+          <p class="fam__d">스킬 시스템, 오케스트레이터, 리서치와 배포 자동화. 사람이 반복하던 절차를 코드로 옮긴 것들이다.</p>
+        </header>
+        <div class="pboard">
+      <a class="pcard reveal" href="https://github.com/2icorp/realtime-agent-copilot" data-cat="agent" data-q="realtime-agent-copilot 2i/realtime-agent-copilot 금융 콜센터 실시간 ai 코파일럿 실시간 통화를 듣고 음성을 전사해 3초 이내 지연으로 지식베이스 추천과 컴플라이언스 경고를 띄우는 금융 콜센터 상담사용 실시간 ai 코파일럿 플랫폼이다. 고객 상호작용 전체 생애주기를 처리한다. python python typescript go" target="_blank" rel="noopener">
+        <div class="pcard__meta"><span class="pcard__cat">비공개</span><span class="pcard__rt">Python</span><span class="pcard__date">2026.03.11</span></div>
+        <h3 class="pcard__title">금융 콜센터 실시간 AI 코파일럿</h3>
+        <p class="pcard__excerpt">실시간 통화를 듣고 음성을 전사해 3초 이내 지연으로 지식베이스 추천과 컴플라이언스 경고를 띄우는 금융 콜센터 상담사용 실시간 AI 코파일럿 플랫폼이다. 고객 상호작용 전체 생애주기를 처리한다.</p>
+        <div class="pcard__tags"><span>2i/realtime-agent-copilot</span><span>#Python</span><span>#TypeScript</span><span>#Go</span><span class="pcard__go">GitHub →</span></div>
+      </a>
+      <a class="pcard reveal" href="https://github.com/2icorp/thaki-planning-automation" data-cat="agent" data-q="thaki-planning-automation 2i/thaki-planning-automation 기획팀 업무 자동화 플레이북 기획팀의 50개 핵심 업무를 ai 에이전트로 자동화하는 플레이북으로 notion을 시스템 오브 레코드로, slack을 입출력 채널로, cursor 스킬을 재사용 빌딩블록으로 삼는다. 지식 그래프와 시뮬레이션 축도 포함한다. python python notion api slack" target="_blank" rel="noopener">
+        <div class="pcard__meta"><span class="pcard__cat">비공개</span><span class="pcard__rt">Python</span><span class="pcard__date">2026.03.25</span></div>
+        <h3 class="pcard__title">기획팀 업무 자동화 플레이북</h3>
+        <p class="pcard__excerpt">기획팀의 50개 핵심 업무를 AI 에이전트로 자동화하는 플레이북으로 Notion을 시스템 오브 레코드로, Slack을 입출력 채널로, Cursor 스킬을 재사용 빌딩블록으로 삼는다. 지식 그래프와 시뮬레이션 축도 포함한다.</p>
+        <div class="pcard__tags"><span>2i/thaki-planning-automation</span><span>#Python</span><span>#Notion API</span><span>#Slack</span><span class="pcard__go">GitHub →</span></div>
+      </a>
+      <a class="pcard reveal" href="https://github.com/2icorp/X-to-Slack" data-cat="agent" data-q="x-to-slack 2i/x-to-slack x 트윗 리서치 슬랙 자동 포스팅 x 링크를 입력하면 트윗 내용을 수집하고 웹 리서치를 더해 슬랙 채널에 3개 메시지 스레드로 자동 게시하는 cursor 스킬이다. 요약, 상세 리서치, 인사이트 순으로 메시지를 구성한다. python python slack mcp" target="_blank" rel="noopener">
+        <div class="pcard__meta"><span class="pcard__cat">비공개</span><span class="pcard__rt">Python</span><span class="pcard__date">2026.05.10</span></div>
+        <h3 class="pcard__title">X 트윗 리서치 슬랙 자동 포스팅</h3>
+        <p class="pcard__excerpt">X 링크를 입력하면 트윗 내용을 수집하고 웹 리서치를 더해 슬랙 채널에 3개 메시지 스레드로 자동 게시하는 Cursor 스킬이다. 요약, 상세 리서치, 인사이트 순으로 메시지를 구성한다.</p>
+        <div class="pcard__tags"><span>2i/X-to-Slack</span><span>#Python</span><span>#Slack MCP</span><span class="pcard__go">GitHub →</span></div>
+      </a>
+      <a class="pcard reveal" href="https://github.com/2icorp/harness-quality-checker" data-cat="agent" data-q="harness-quality-checker 2i/harness-quality-checker 에이전트 하네스 품질 진단 도구 시스템 프롬프트와 도구 스키마를 붙여넣으면 루프, 검증, 추적, 메모리, 안전 5개 축으로 점수를 매기고 다섯 축을 모두 만족하는 강화된 프롬프트를 생성하는 100% 클라이언트 사이드 정적 분석기이다. javascript javascript css" target="_blank" rel="noopener">
+        <div class="pcard__meta"><span class="pcard__cat">공개</span><span class="pcard__rt">JavaScript</span><span class="pcard__date">2026.07.12</span></div>
+        <h3 class="pcard__title">에이전트 하네스 품질 진단 도구</h3>
+        <p class="pcard__excerpt">시스템 프롬프트와 도구 스키마를 붙여넣으면 루프, 검증, 추적, 메모리, 안전 5개 축으로 점수를 매기고 다섯 축을 모두 만족하는 강화된 프롬프트를 생성하는 100% 클라이언트 사이드 정적 분석기이다.</p>
+        <div class="pcard__tags"><span>2i/harness-quality-checker</span><span>#JavaScript</span><span>#CSS</span><span class="pcard__go">GitHub →</span></div>
+      </a>
+      <a class="pcard reveal" href="https://github.com/2icorp/skill-quality-checker" data-cat="agent" data-q="skill-quality-checker 2i/skill-quality-checker skill.md 작성 품질 진단 도구 skill.md 파일을 붙여넣거나 url로 불러오면 발견성, 범위, 실행성, 가드레일, 구조 5개 축으로 작성 품질을 채점하는 100% 클라이언트 사이드 정적 분석기이다. 무엇을 추가해야 할지 구체적으로 보여준다. javascript javascript css" target="_blank" rel="noopener">
+        <div class="pcard__meta"><span class="pcard__cat">공개</span><span class="pcard__rt">JavaScript</span><span class="pcard__date">2026.07.12</span></div>
+        <h3 class="pcard__title">SKILL.md 작성 품질 진단 도구</h3>
+        <p class="pcard__excerpt">SKILL.md 파일을 붙여넣거나 URL로 불러오면 발견성, 범위, 실행성, 가드레일, 구조 5개 축으로 작성 품질을 채점하는 100% 클라이언트 사이드 정적 분석기이다. 무엇을 추가해야 할지 구체적으로 보여준다.</p>
+        <div class="pcard__tags"><span>2i/skill-quality-checker</span><span>#JavaScript</span><span>#CSS</span><span class="pcard__go">GitHub →</span></div>
+      </a>
+      <a class="pcard reveal" href="https://github.com/2icorp/dont-fool-yourself" data-cat="agent" data-q="dont-fool-yourself 2i/dont-fool-yourself 파인만식 자기기만 방지 에이전트 스킬 7종 이름을 아는 것과 실제로 이해하는 것의 간극을 벌려주는 일곱 개의 작은 에이전트 스킬 모음이다. 리처드 파인만이 스스로를 속이지 않기 위해 썼던 습관을 각각 하나씩 스킬로 옮겼다. python python" target="_blank" rel="noopener">
+        <div class="pcard__meta"><span class="pcard__cat">공개</span><span class="pcard__rt">Python</span><span class="pcard__date">2026.07.14</span></div>
+        <h3 class="pcard__title">파인만식 자기기만 방지 에이전트 스킬 7종</h3>
+        <p class="pcard__excerpt">이름을 아는 것과 실제로 이해하는 것의 간극을 벌려주는 일곱 개의 작은 에이전트 스킬 모음이다. 리처드 파인만이 스스로를 속이지 않기 위해 썼던 습관을 각각 하나씩 스킬로 옮겼다.</p>
+        <div class="pcard__tags"><span>2i/dont-fool-yourself</span><span>#Python</span><span class="pcard__go">GitHub →</span></div>
+      </a>
+      <a class="pcard reveal" href="https://github.com/2icorp/automl-train-skill" data-cat="agent" data-q="automl-train-skill 2i/automl-train-skill 결과 검증형 automl 하이퍼파라미터 탐색 스킬 어떤 학습 백엔드에도 붙일 수 있는 스키마 기반 하이퍼파라미터 탐색 에이전트 스킬로, 베이스라인을 이기지 못한 결과는 승격을 거부하는 네 가지 코드 소유 게이트를 갖는다. skill.md와 순수 표준 라이브러리 스크립트로 구성된다. python python" target="_blank" rel="noopener">
+        <div class="pcard__meta"><span class="pcard__cat">공개</span><span class="pcard__rt">Python</span><span class="pcard__date">2026.07.16</span></div>
+        <h3 class="pcard__title">결과 검증형 AutoML 하이퍼파라미터 탐색 스킬</h3>
+        <p class="pcard__excerpt">어떤 학습 백엔드에도 붙일 수 있는 스키마 기반 하이퍼파라미터 탐색 에이전트 스킬로, 베이스라인을 이기지 못한 결과는 승격을 거부하는 네 가지 코드 소유 게이트를 갖는다. SKILL.md와 순수 표준 라이브러리 스크립트로 구성된다.</p>
+        <div class="pcard__tags"><span>2i/automl-train-skill</span><span>#Python</span><span class="pcard__go">GitHub →</span></div>
+      </a>
+      <a class="pcard reveal" href="https://github.com/2icorp/autonomous-agent-skills" data-cat="agent" data-q="autonomous-agent-skills 2i/autonomous-agent-skills 결정론 게이트 기반 자율 인프라 운영 스킬팩 인프라 운영, qa, 실험을 에이전트가 사람 개입 없이 반복 수행하되 결정론적 검증 게이트 없이는 절대 실행하지 않는 스킬 팩 모음이다. claude code와 codex에서 바로 쓸 수 있다. python python shell" target="_blank" rel="noopener">
+        <div class="pcard__meta"><span class="pcard__cat">공개</span><span class="pcard__rt">Python</span><span class="pcard__date">2026.07.17</span></div>
+        <h3 class="pcard__title">결정론 게이트 기반 자율 인프라 운영 스킬팩</h3>
+        <p class="pcard__excerpt">인프라 운영, QA, 실험을 에이전트가 사람 개입 없이 반복 수행하되 결정론적 검증 게이트 없이는 절대 실행하지 않는 스킬 팩 모음이다. Claude Code와 Codex에서 바로 쓸 수 있다.</p>
+        <div class="pcard__tags"><span>2i/autonomous-agent-skills</span><span>#Python</span><span>#Shell</span><span class="pcard__go">GitHub →</span></div>
+      </a>
+      <a class="pcard reveal" href="https://github.com/2icorp/agent-cost-sim" data-cat="agent" data-q="agent-cost-sim 2i/agent-cost-sim 에이전트 파이프라인 모델 티어 비용 계산기 멀티에이전트 파이프라인에서 역할별 모델 티어 라우팅이 토큰 비용을 얼마나 줄이는지 배포 전에 계산하는 벤더 중립 정적 웹 도구이다. 베이스라인과 라우팅 시나리오를 비교해 절감률과 병목 구간을 보여준다. javascript javascript html" target="_blank" rel="noopener">
+        <div class="pcard__meta"><span class="pcard__cat">공개</span><span class="pcard__rt">JavaScript</span><span class="pcard__date">2026.07.19</span></div>
+        <h3 class="pcard__title">에이전트 파이프라인 모델 티어 비용 계산기</h3>
+        <p class="pcard__excerpt">멀티에이전트 파이프라인에서 역할별 모델 티어 라우팅이 토큰 비용을 얼마나 줄이는지 배포 전에 계산하는 벤더 중립 정적 웹 도구이다. 베이스라인과 라우팅 시나리오를 비교해 절감률과 병목 구간을 보여준다.</p>
+        <div class="pcard__tags"><span>2i/agent-cost-sim</span><span>#JavaScript</span><span>#HTML</span><span class="pcard__go">GitHub →</span></div>
+      </a>
+      <a class="pcard reveal" href="https://github.com/2icorp/agent-org-explorer" data-cat="agent" data-q="agent-org-explorer 2i/agent-org-explorer 멀티에이전트 조직도 시각화 도구 에이전트 레지스트리(json)를 읽어 멀티에이전트 시스템을 허브앤스포크 조직도로 렌더링하는 100% 클라이언트 사이드 도구이다. yaml, json, mermaid, png로 내보낼 수 있다. html javascript python" target="_blank" rel="noopener">
+        <div class="pcard__meta"><span class="pcard__cat">비공개</span><span class="pcard__rt">HTML</span><span class="pcard__date">2026.07.19</span></div>
+        <h3 class="pcard__title">멀티에이전트 조직도 시각화 도구</h3>
+        <p class="pcard__excerpt">에이전트 레지스트리(JSON)를 읽어 멀티에이전트 시스템을 허브앤스포크 조직도로 렌더링하는 100% 클라이언트 사이드 도구이다. YAML, JSON, Mermaid, PNG로 내보낼 수 있다.</p>
+        <div class="pcard__tags"><span>2i/agent-org-explorer</span><span>#JavaScript</span><span>#Python</span><span class="pcard__go">GitHub →</span></div>
+      </a>
+      <a class="pcard reveal" href="https://github.com/2icorp/2i-case-05-support-chatbot" data-cat="agent" data-q="2i-case-05-support-chatbot 2icorp/2i-case-05-support-chatbot 주문 cs 상담 핸드오프 챗봇 주문, 재고, cs 시스템과 연동된 fastapi 상담 에이전트가 정형 문의를 의도분류로 처리하고 처리 불가로 판단하면 대화 맥락과 함께 상담원에게 자동 이관한다. 합성 데이터 레퍼런스 데모다. python python fastapi 의도분류 핸드오프" target="_blank" rel="noopener">
+        <div class="pcard__meta"><span class="pcard__cat">비공개</span><span class="pcard__rt">Python</span><span class="pcard__date">2026.07.29</span><span class="pcard__rt">사례 05</span></div>
+        <h3 class="pcard__title">주문 CS 상담 핸드오프 챗봇</h3>
+        <p class="pcard__excerpt">주문, 재고, CS 시스템과 연동된 FastAPI 상담 에이전트가 정형 문의를 의도분류로 처리하고 처리 불가로 판단하면 대화 맥락과 함께 상담원에게 자동 이관한다. 합성 데이터 레퍼런스 데모다.</p>
+        <div class="pcard__tags"><span>2icorp/2i-case-05-support-chatbot</span><span>#Python</span><span>#FastAPI</span><span>#의도분류</span><span>#핸드오프</span><span class="pcard__go">GitHub →</span></div>
+      </a>
+      <a class="pcard reveal" href="https://github.com/2icorp/2i-case-07-knowledge-rag" data-cat="agent" data-q="2i-case-07-knowledge-rag 2icorp/2i-case-07-knowledge-rag 사내 문서 인용 기반 rag 검색 매뉴얼, 도면, 이력 문서를 벡터 검색 가능한 형태로 색인하고 자연어 질문에 원문 근거를 함께 제시하는 rag 파이프라인이다. 합성 데이터 레퍼런스 데모다. python python 임베딩 검색 rag" target="_blank" rel="noopener">
+        <div class="pcard__meta"><span class="pcard__cat">비공개</span><span class="pcard__rt">Python</span><span class="pcard__date">2026.07.29</span><span class="pcard__rt">사례 07</span></div>
+        <h3 class="pcard__title">사내 문서 인용 기반 RAG 검색</h3>
+        <p class="pcard__excerpt">매뉴얼, 도면, 이력 문서를 벡터 검색 가능한 형태로 색인하고 자연어 질문에 원문 근거를 함께 제시하는 RAG 파이프라인이다. 합성 데이터 레퍼런스 데모다.</p>
+        <div class="pcard__tags"><span>2icorp/2i-case-07-knowledge-rag</span><span>#Python</span><span>#임베딩 검색</span><span>#RAG</span><span class="pcard__go">GitHub →</span></div>
+      </a>
+      <a class="pcard reveal" href="https://github.com/2icorp/2i-case-11-agent-orchestrator" data-cat="agent" data-q="2i-case-11-agent-orchestrator 2icorp/2i-case-11-agent-orchestrator 한 문장 의도분해 대화형 오케스트레이터 자연어 의도를 분해해 필요한 도구를 순차, 병렬로 호출하고 결과를 하나의 답과 음성으로 병합하는 대화형 에이전트 오케스트레이터다. 합성 데이터 레퍼런스 데모다. python python 의도 분해 pytest" target="_blank" rel="noopener">
+        <div class="pcard__meta"><span class="pcard__cat">비공개</span><span class="pcard__rt">Python</span><span class="pcard__date">2026.07.29</span><span class="pcard__rt">사례 11</span></div>
+        <h3 class="pcard__title">한 문장 의도분해 대화형 오케스트레이터</h3>
+        <p class="pcard__excerpt">자연어 의도를 분해해 필요한 도구를 순차, 병렬로 호출하고 결과를 하나의 답과 음성으로 병합하는 대화형 에이전트 오케스트레이터다. 합성 데이터 레퍼런스 데모다.</p>
+        <div class="pcard__tags"><span>2icorp/2i-case-11-agent-orchestrator</span><span>#Python</span><span>#의도 분해</span><span>#pytest</span><span class="pcard__go">GitHub →</span></div>
+      </a>
+      <a class="pcard reveal" href="https://github.com/2icorp/2i-case-12-cad-blockout-agent" data-cat="agent" data-q="2i-case-12-cad-blockout-agent 2icorp/2i-case-12-cad-blockout-agent 건축 blockout 관찰 수정 폐루프 에이전트 요구 스펙으로 만든 초안을 시각과 구조로 관찰해 위반을 진단하고 표적 패치만으로 재생성 없이 설계 게이트 7종을 통과시키는 폐루프 에이전트 데모다. 반복 5회, 패치 4건 수용으로 게이트 점수 11.40에서 0.00으로 수렴했다. python python 기하 검증 observe-critic-patch loop" target="_blank" rel="noopener">
+        <div class="pcard__meta"><span class="pcard__cat">비공개</span><span class="pcard__rt">Python</span><span class="pcard__date">2026.07.29</span><span class="pcard__rt">사례 12</span></div>
+        <h3 class="pcard__title">건축 blockout 관찰 수정 폐루프 에이전트</h3>
+        <p class="pcard__excerpt">요구 스펙으로 만든 초안을 시각과 구조로 관찰해 위반을 진단하고 표적 패치만으로 재생성 없이 설계 게이트 7종을 통과시키는 폐루프 에이전트 데모다. 반복 5회, 패치 4건 수용으로 게이트 점수 11.40에서 0.00으로 수렴했다.</p>
+        <div class="pcard__tags"><span>2icorp/2i-case-12-cad-blockout-agent</span><span>#Python</span><span>#기하 검증</span><span>#observe-critic-patch loop</span><span class="pcard__go">GitHub →</span></div>
+      </a>
+      <a class="pcard reveal" href="https://github.com/2icorp/2i-case-14-hospital-ops-twin" data-cat="agent" data-q="2i-case-14-hospital-ops-twin 2icorp/2i-case-14-hospital-ops-twin 병원 동선 시뮬레이션 폐루프 에이전트 병원 디지털 트윈을 관찰, 패치, 실행, 검증, 롤백 폐루프로 반복 수정해 접수 대기시간과 복도 혼잡 같은 운영 게이트 5종을 실측으로 통과시키는 레퍼런스 데모다. 이산사건 시뮬레이션 반복 15회, 패치 11건 수용, 롤백 4건으로 수렴했다. python python 이산사건 시뮬레이션 observe-critic-patch loop" target="_blank" rel="noopener">
+        <div class="pcard__meta"><span class="pcard__cat">비공개</span><span class="pcard__rt">Python</span><span class="pcard__date">2026.07.29</span><span class="pcard__rt">사례 14</span></div>
+        <h3 class="pcard__title">병원 동선 시뮬레이션 폐루프 에이전트</h3>
+        <p class="pcard__excerpt">병원 디지털 트윈을 관찰, 패치, 실행, 검증, 롤백 폐루프로 반복 수정해 접수 대기시간과 복도 혼잡 같은 운영 게이트 5종을 실측으로 통과시키는 레퍼런스 데모다. 이산사건 시뮬레이션 반복 15회, 패치 11건 수용, 롤백 4건으로 수렴했다.</p>
+        <div class="pcard__tags"><span>2icorp/2i-case-14-hospital-ops-twin</span><span>#Python</span><span>#이산사건 시뮬레이션</span><span>#observe-critic-patch loop</span><span class="pcard__go">GitHub →</span></div>
+      </a>
+        </div>
+      </section>
+      <section class="fam" id="tech-optim" aria-labelledby="techt-optim">
+        <header class="fam__head">
+          <h2 class="fam__t" id="techt-optim">최적화·스케줄링<span class="fam__n">5개</span></h2>
+          <p class="fam__d">CP-SAT 기반 배정과 편성. 근무표, 콜센터 인력, 리그 일정, 방배정.</p>
+        </header>
+        <div class="pboard">
+      <a class="pcard reveal" href="https://github.com/2icorp/2i-case-19-nurse-roster" data-cat="optim" data-q="2i-case-19-nurse-roster 2icorp/2i-case-19-nurse-roster 간호사 3교대 cp-sat 로스터링 or-tools cp-sat로 간호사 3교대 로스터링을 풀고 자체 합성 인스턴스뿐 아니라 curtois와 qu 공개 벤치마크 8개 표준 인스턴스에도 코드 수정 없이 붙여 채점한다. 하드 위반 0건을 유지하며 공개 벤치마크 최고해 대비 gap을 18.98퍼센트에서 12.96퍼센트로 줄였다. python python or-tools cp-sat" target="_blank" rel="noopener">
+        <div class="pcard__meta"><span class="pcard__cat">비공개</span><span class="pcard__rt">Python</span><span class="pcard__date">2026.07.31</span><span class="pcard__rt">사례 19</span></div>
+        <h3 class="pcard__title">간호사 3교대 CP-SAT 로스터링</h3>
+        <p class="pcard__excerpt">OR-Tools CP-SAT로 간호사 3교대 로스터링을 풀고 자체 합성 인스턴스뿐 아니라 Curtois와 Qu 공개 벤치마크 8개 표준 인스턴스에도 코드 수정 없이 붙여 채점한다. 하드 위반 0건을 유지하며 공개 벤치마크 최고해 대비 gap을 18.98퍼센트에서 12.96퍼센트로 줄였다.</p>
+        <div class="pcard__tags"><span>2icorp/2i-case-19-nurse-roster</span><span>#Python</span><span>#OR-Tools CP-SAT</span><span class="pcard__go">GitHub →</span></div>
+      </a>
+      <a class="pcard reveal" href="https://github.com/2icorp/2i-case-20-contact-staffing" data-cat="optim" data-q="2i-case-20-contact-staffing 2icorp/2i-case-20-contact-staffing 콜센터 상담사 배치 cp-sat erlang c로 구간별 필요인원을 구하고 cp-sat 집합피복 모델로 시프트 패턴을 배정하는 2단계 파이프라인이다. 9셀 실측에서 하드 위반 0건, 최적화 gap 1.6에서 13.0퍼센트, sla 달성률 69에서 81.8퍼센트를 기록했다. python python or-tools cp-sat erlang c" target="_blank" rel="noopener">
+        <div class="pcard__meta"><span class="pcard__cat">비공개</span><span class="pcard__rt">Python</span><span class="pcard__date">2026.07.31</span><span class="pcard__rt">사례 20</span></div>
+        <h3 class="pcard__title">콜센터 상담사 배치 CP-SAT</h3>
+        <p class="pcard__excerpt">Erlang C로 구간별 필요인원을 구하고 CP-SAT 집합피복 모델로 시프트 패턴을 배정하는 2단계 파이프라인이다. 9셀 실측에서 하드 위반 0건, 최적화 gap 1.6에서 13.0퍼센트, SLA 달성률 69에서 81.8퍼센트를 기록했다.</p>
+        <div class="pcard__tags"><span>2icorp/2i-case-20-contact-staffing</span><span>#Python</span><span>#OR-Tools CP-SAT</span><span>#Erlang C</span><span class="pcard__go">GitHub →</span></div>
+      </a>
+      <a class="pcard reveal" href="https://github.com/2icorp/2i-case-21-league-fixture" data-cat="optim" data-q="2i-case-21-league-fixture 2icorp/2i-case-21-league-fixture 스포츠 리그 일정편성 cp-sat cp-sat로 합성 야구 리그 정규시즌 일정을 짜고 이동거리와 홈원정 연속배정 같은 상충하는 목표를 단일 목적함수로 다룬다. 9회 실측 전부 feasible이었고 대형 인스턴스에서만 720경기 중 최대 6건 미배정이 발생했다. python python or-tools cp-sat" target="_blank" rel="noopener">
+        <div class="pcard__meta"><span class="pcard__cat">비공개</span><span class="pcard__rt">Python</span><span class="pcard__date">2026.07.31</span><span class="pcard__rt">사례 21</span></div>
+        <h3 class="pcard__title">스포츠 리그 일정편성 CP-SAT</h3>
+        <p class="pcard__excerpt">CP-SAT로 합성 야구 리그 정규시즌 일정을 짜고 이동거리와 홈원정 연속배정 같은 상충하는 목표를 단일 목적함수로 다룬다. 9회 실측 전부 FEASIBLE이었고 대형 인스턴스에서만 720경기 중 최대 6건 미배정이 발생했다.</p>
+        <div class="pcard__tags"><span>2icorp/2i-case-21-league-fixture</span><span>#Python</span><span>#OR-Tools CP-SAT</span><span class="pcard__go">GitHub →</span></div>
+      </a>
+      <a class="pcard reveal" href="https://github.com/2icorp/2i-case-22-room-assign" data-cat="optim" data-q="2i-case-22-room-assign 2icorp/2i-case-22-room-assign 기숙사 연수원 방배정 cp-sat 정원, 성별분리, 상충쌍, 접근성을 크리티컬 벌점으로 사실상 하드 제약처럼 강제하면서 선호와 다양성 같은 소프트 목표를 cp-sat 단일 목적함수로 동시 최적화한다. 9회 실측에서 상충쌍 동거 위반은 0건이었지만 대형 인스턴스는 300초 예산 내 수렴하지 못한 경우가 있었다. python python or-tools cp-sat" target="_blank" rel="noopener">
+        <div class="pcard__meta"><span class="pcard__cat">비공개</span><span class="pcard__rt">Python</span><span class="pcard__date">2026.07.31</span><span class="pcard__rt">사례 22</span></div>
+        <h3 class="pcard__title">기숙사 연수원 방배정 CP-SAT</h3>
+        <p class="pcard__excerpt">정원, 성별분리, 상충쌍, 접근성을 크리티컬 벌점으로 사실상 하드 제약처럼 강제하면서 선호와 다양성 같은 소프트 목표를 CP-SAT 단일 목적함수로 동시 최적화한다. 9회 실측에서 상충쌍 동거 위반은 0건이었지만 대형 인스턴스는 300초 예산 내 수렴하지 못한 경우가 있었다.</p>
+        <div class="pcard__tags"><span>2icorp/2i-case-22-room-assign</span><span>#Python</span><span>#OR-Tools CP-SAT</span><span class="pcard__go">GitHub →</span></div>
+      </a>
+      <a class="pcard reveal" href="https://github.com/2icorp/work-scheduling-lab" data-cat="optim" data-q="work-scheduling-lab 2icorp/work-scheduling-lab 근무 스케줄링 엔진 재설계 랩 2023년에 풀었던 근무 스케줄링 문제를 cp-sat로 재설계하는 작업 공간으로 공개 벤치마크인 curtois, qu와 inrc-ii, 리서치 브리프를 함께 둔다. 원본 데이터셋의 실명 pii는 반입하지 않고 합성 데이터와 공개 벤치마크만 쓴다는 불변 규칙을 명시한다. python python or-tools cp-sat" target="_blank" rel="noopener">
+        <div class="pcard__meta"><span class="pcard__cat">비공개</span><span class="pcard__rt">Python</span><span class="pcard__date">2026.07.31</span></div>
+        <h3 class="pcard__title">근무 스케줄링 엔진 재설계 랩</h3>
+        <p class="pcard__excerpt">2023년에 풀었던 근무 스케줄링 문제를 CP-SAT로 재설계하는 작업 공간으로 공개 벤치마크인 Curtois, Qu와 INRC-II, 리서치 브리프를 함께 둔다. 원본 데이터셋의 실명 PII는 반입하지 않고 합성 데이터와 공개 벤치마크만 쓴다는 불변 규칙을 명시한다.</p>
+        <div class="pcard__tags"><span>2icorp/work-scheduling-lab</span><span>#Python</span><span>#OR-Tools CP-SAT</span><span class="pcard__go">GitHub →</span></div>
+      </a>
+        </div>
+      </section>
+      <section class="fam" id="tech-vision" aria-labelledby="techt-vision">
+        <header class="fam__head">
+          <h2 class="fam__t" id="techt-vision">비전·영상 판정<span class="fam__n">2개</span></h2>
+          <p class="fam__d">소량 데이터 이상탐지와 의료영상 폐루프. 정답 라벨이 귀한 환경을 전제로 한다.</p>
+        </header>
+        <div class="pboard">
+      <a class="pcard reveal" href="https://github.com/2icorp/2i-case-03-vision-defect" data-cat="vision" data-q="2i-case-03-vision-defect 2icorp/2i-case-03-vision-defect 사출성형 표면 결함 비전 탐지 정상 표본만으로 학습한 이상탐지 비전 모델로 제품 표면 이미지를 판정하고 실제 라인을 대체하지 않는 섀도 모드로 육안검사와 병행 관찰한다. 합성 데이터 레퍼런스 데모다. python python numpy pillow matplotlib" target="_blank" rel="noopener">
+        <div class="pcard__meta"><span class="pcard__cat">비공개</span><span class="pcard__rt">Python</span><span class="pcard__date">2026.07.26</span><span class="pcard__rt">사례 03</span></div>
+        <h3 class="pcard__title">사출성형 표면 결함 비전 탐지</h3>
+        <p class="pcard__excerpt">정상 표본만으로 학습한 이상탐지 비전 모델로 제품 표면 이미지를 판정하고 실제 라인을 대체하지 않는 섀도 모드로 육안검사와 병행 관찰한다. 합성 데이터 레퍼런스 데모다.</p>
+        <div class="pcard__tags"><span>2icorp/2i-case-03-vision-defect</span><span>#Python</span><span>#NumPy</span><span>#Pillow</span><span>#matplotlib</span><span class="pcard__go">GitHub →</span></div>
+      </a>
+      <a class="pcard reveal" href="https://github.com/2icorp/2i-case-13-medimg-loop-agent" data-cat="vision" data-q="2i-case-13-medimg-loop-agent 2icorp/2i-case-13-medimg-loop-agent 의료영상 분할 도구운용 폐루프 에이전트 정답 없이 계산 가능한 품질 신호만으로 분할 오류 파라미터를 반복 수정하는 연구용 폐루프 에이전트다. 정답은 검증에만 썼고 평균 dice가 0.583에서 0.927로 올랐다. python python 의료영상 분할 observe-critic-patch loop" target="_blank" rel="noopener">
+        <div class="pcard__meta"><span class="pcard__cat">비공개</span><span class="pcard__rt">Python</span><span class="pcard__date">2026.07.29</span><span class="pcard__rt">사례 13</span></div>
+        <h3 class="pcard__title">의료영상 분할 도구운용 폐루프 에이전트</h3>
+        <p class="pcard__excerpt">정답 없이 계산 가능한 품질 신호만으로 분할 오류 파라미터를 반복 수정하는 연구용 폐루프 에이전트다. 정답은 검증에만 썼고 평균 Dice가 0.583에서 0.927로 올랐다.</p>
+        <div class="pcard__tags"><span>2icorp/2i-case-13-medimg-loop-agent</span><span>#Python</span><span>#의료영상 분할</span><span>#observe-critic-patch loop</span><span class="pcard__go">GitHub →</span></div>
+      </a>
+        </div>
+      </section>
+      <section class="fam" id="tech-data" aria-labelledby="techt-data">
+        <header class="fam__head">
+          <h2 class="fam__t" id="techt-data">데이터 파이프라인·분석<span class="fam__n">7개</span></h2>
+          <p class="fam__d">흩어진 엑셀과 로그를 하나의 판단 근거로 모으는 쪽이다.</p>
+        </header>
+        <div class="pboard">
+      <a class="pcard reveal" href="https://github.com/2icorp/loot-curve-lab" data-cat="data" data-q="loot-curve-lab 2i/loot-curve-lab 루트 확률·가챠 기댓값 계산기 드롭 테이블이나 가챠 확률표를 붙여넣으면 실제 정규화 확률과 등급, 뽑기 횟수별 기댓값 통계를 계산해주는 웹 도구이다. 아이템 이름이 아닌 실제 확률 기준으로 희귀도 등급을 매긴다. javascript javascript html css" target="_blank" rel="noopener">
+        <div class="pcard__meta"><span class="pcard__cat">비공개</span><span class="pcard__rt">JavaScript</span><span class="pcard__date">2026.07.25</span></div>
+        <h3 class="pcard__title">루트 확률·가챠 기댓값 계산기</h3>
+        <p class="pcard__excerpt">드롭 테이블이나 가챠 확률표를 붙여넣으면 실제 정규화 확률과 등급, 뽑기 횟수별 기댓값 통계를 계산해주는 웹 도구이다. 아이템 이름이 아닌 실제 확률 기준으로 희귀도 등급을 매긴다.</p>
+        <div class="pcard__tags"><span>2i/loot-curve-lab</span><span>#JavaScript</span><span>#HTML</span><span>#CSS</span><span class="pcard__go">GitHub →</span></div>
+      </a>
+      <a class="pcard reveal" href="https://github.com/2icorp/2i-case-01-data-dashboard" data-cat="data" data-q="2i-case-01-data-dashboard 2icorp/2i-case-01-data-dashboard 부서 엑셀 통합 경영 대시보드 흩어진 엑셀과 사내 시스템을 표준 스키마로 정제하는 etl 파이프라인을 두고 경영진용 요약 뷰와 현장용 상세 뷰를 분리해 제공한다. pandas, sqlite, streamlit으로 만든 합성 데이터 레퍼런스 데모다. python python pandas sqlite streamlit" target="_blank" rel="noopener">
+        <div class="pcard__meta"><span class="pcard__cat">비공개</span><span class="pcard__rt">Python</span><span class="pcard__date">2026.07.26</span><span class="pcard__rt">사례 01</span></div>
+        <h3 class="pcard__title">부서 엑셀 통합 경영 대시보드</h3>
+        <p class="pcard__excerpt">흩어진 엑셀과 사내 시스템을 표준 스키마로 정제하는 ETL 파이프라인을 두고 경영진용 요약 뷰와 현장용 상세 뷰를 분리해 제공한다. pandas, SQLite, Streamlit으로 만든 합성 데이터 레퍼런스 데모다.</p>
+        <div class="pcard__tags"><span>2icorp/2i-case-01-data-dashboard</span><span>#Python</span><span>#pandas</span><span>#SQLite</span><span>#Streamlit</span><span class="pcard__go">GitHub →</span></div>
+      </a>
+      <a class="pcard reveal" href="https://github.com/2icorp/2i-case-02-doc-automation" data-cat="data" data-q="2i-case-02-doc-automation 2icorp/2i-case-02-doc-automation 견적 발주 문서 파싱 자동화 문서에서 표와 항목 구조를 규칙기반으로 추출하고 품목코드와 단가를 사전 규칙과 대조해 이상치만 검수 큐로 넘긴다. 합성 데이터로 만든 레퍼런스 데모다. python python 규칙기반 파싱 pytest" target="_blank" rel="noopener">
+        <div class="pcard__meta"><span class="pcard__cat">비공개</span><span class="pcard__rt">Python</span><span class="pcard__date">2026.07.26</span><span class="pcard__rt">사례 02</span></div>
+        <h3 class="pcard__title">견적 발주 문서 파싱 자동화</h3>
+        <p class="pcard__excerpt">문서에서 표와 항목 구조를 규칙기반으로 추출하고 품목코드와 단가를 사전 규칙과 대조해 이상치만 검수 큐로 넘긴다. 합성 데이터로 만든 레퍼런스 데모다.</p>
+        <div class="pcard__tags"><span>2icorp/2i-case-02-doc-automation</span><span>#Python</span><span>#규칙기반 파싱</span><span>#pytest</span><span class="pcard__go">GitHub →</span></div>
+      </a>
+      <a class="pcard reveal" href="https://github.com/2icorp/2i-case-04-demand-forecast" data-cat="data" data-q="2i-case-04-demand-forecast 2icorp/2i-case-04-demand-forecast sku 수요예측 발주 권고 엔진 판매이력, 시즌지수, 프로모션, 날씨 신호를 결합한 시계열 수요예측 모델을 만들고 예측치를 근거가 붙은 발주 권고 리스트로 자동 변환한다. 합성 데이터 레퍼런스 데모다. python python pandas numpy 시계열" target="_blank" rel="noopener">
+        <div class="pcard__meta"><span class="pcard__cat">비공개</span><span class="pcard__rt">Python</span><span class="pcard__date">2026.07.26</span><span class="pcard__rt">사례 04</span></div>
+        <h3 class="pcard__title">SKU 수요예측 발주 권고 엔진</h3>
+        <p class="pcard__excerpt">판매이력, 시즌지수, 프로모션, 날씨 신호를 결합한 시계열 수요예측 모델을 만들고 예측치를 근거가 붙은 발주 권고 리스트로 자동 변환한다. 합성 데이터 레퍼런스 데모다.</p>
+        <div class="pcard__tags"><span>2icorp/2i-case-04-demand-forecast</span><span>#Python</span><span>#pandas</span><span>#NumPy</span><span>#시계열</span><span class="pcard__go">GitHub →</span></div>
+      </a>
+      <a class="pcard reveal" href="https://github.com/2icorp/2i-case-08-sales-signal" data-cat="data" data-q="2i-case-08-sales-signal 2icorp/2i-case-08-sales-signal 뉴스 나라장터 영업 신호 레이더 핵심 거래처와 업종 키워드 기준으로 뉴스와 나라장터 공공데이터를 자동 수집, 필터링하고 llm으로 중요도를 분류해 슬랙 알림과 crm 메모로 연결한다. 합성 데이터 레퍼런스 데모다. python python 신호 스코어링 파이프라인" target="_blank" rel="noopener">
+        <div class="pcard__meta"><span class="pcard__cat">비공개</span><span class="pcard__rt">Python</span><span class="pcard__date">2026.07.26</span><span class="pcard__rt">사례 08</span></div>
+        <h3 class="pcard__title">뉴스 나라장터 영업 신호 레이더</h3>
+        <p class="pcard__excerpt">핵심 거래처와 업종 키워드 기준으로 뉴스와 나라장터 공공데이터를 자동 수집, 필터링하고 LLM으로 중요도를 분류해 슬랙 알림과 CRM 메모로 연결한다. 합성 데이터 레퍼런스 데모다.</p>
+        <div class="pcard__tags"><span>2icorp/2i-case-08-sales-signal</span><span>#Python</span><span>#신호 스코어링</span><span>#파이프라인</span><span class="pcard__go">GitHub →</span></div>
+      </a>
+      <a class="pcard reveal" href="https://github.com/2icorp/oss-community-pulse" data-cat="data" data-q="oss-community-pulse 2i/oss-community-pulse 오픈소스 프로젝트 커뮤니티 언급 주간 다이제스트 reddit과 hacker news에서 내 오픈소스 프로젝트를 언급한 스레드를 주간으로 정리하고 답변되지 않은 스레드를 강조해주는 정적 다이제스트 도구이다. 1인 메인테이너가 놓치기 쉬운 잠재 사용자 질문을 표면화한다. python python javascript css" target="_blank" rel="noopener">
+        <div class="pcard__meta"><span class="pcard__cat">비공개</span><span class="pcard__rt">Python</span><span class="pcard__date">2026.07.29</span></div>
+        <h3 class="pcard__title">오픈소스 프로젝트 커뮤니티 언급 주간 다이제스트</h3>
+        <p class="pcard__excerpt">Reddit과 Hacker News에서 내 오픈소스 프로젝트를 언급한 스레드를 주간으로 정리하고 답변되지 않은 스레드를 강조해주는 정적 다이제스트 도구이다. 1인 메인테이너가 놓치기 쉬운 잠재 사용자 질문을 표면화한다.</p>
+        <div class="pcard__tags"><span>2i/oss-community-pulse</span><span>#Python</span><span>#JavaScript</span><span>#CSS</span><span class="pcard__go">GitHub →</span></div>
+      </a>
+      <a class="pcard reveal" href="https://github.com/2icorp/daily-paper-digest" data-cat="data" data-q="daily-paper-digest 2i/daily-paper-digest ai 트렌드 논문 일일 다이제스트 매일 트렌딩되는 ai, ml 논문을 가져와 평이한 언어의 마크다운 다이제스트로 만들고 api 키가 있으면 llm으로 왜 중요한지 설명을 덧붙이는 도구이다. 키가 없으면 논문 초록으로 대체한다. python python" target="_blank" rel="noopener">
+        <div class="pcard__meta"><span class="pcard__cat">공개</span><span class="pcard__rt">Python</span><span class="pcard__date">2026.08.02</span></div>
+        <h3 class="pcard__title">AI 트렌드 논문 일일 다이제스트</h3>
+        <p class="pcard__excerpt">매일 트렌딩되는 AI, ML 논문을 가져와 평이한 언어의 마크다운 다이제스트로 만들고 API 키가 있으면 LLM으로 왜 중요한지 설명을 덧붙이는 도구이다. 키가 없으면 논문 초록으로 대체한다.</p>
+        <div class="pcard__tags"><span>2i/daily-paper-digest</span><span>#Python</span><span class="pcard__go">GitHub →</span></div>
+      </a>
+        </div>
+      </section>
+      <section class="fam" id="tech-media" aria-labelledby="techt-media">
+        <header class="fam__head">
+          <h2 class="fam__t" id="techt-media">미디어 생성<span class="fam__n">18개</span></h2>
+          <p class="fam__d">영상, 이미지, 덱, 음성 합성. 마케팅 산출물을 사람 손 없이 반복 생산한다.</p>
+        </header>
+        <div class="pboard">
+      <a class="pcard reveal" href="https://github.com/2icorp/ffmpegUI" data-cat="media" data-q="ffmpegui 2i/ffmpegui ffmpeg 기반 크로스플랫폼 영상 트랜스코딩 웹앱 go(gin+postgresql) 백엔드와 react(shadcn/ui) 프런트엔드로 구성된 풀스택 영상 트랜스코딩 애플리케이션으로 서버 측에서 ffmpeg를 실행한다. 인코딩 파라미터를 ui로 조작하며 생성되는 ffmpeg 명령어를 그대로 보여준다. typescript go react ffmpeg" target="_blank" rel="noopener">
+        <div class="pcard__meta"><span class="pcard__cat">비공개</span><span class="pcard__rt">TypeScript</span><span class="pcard__date">2026.01.04</span></div>
+        <h3 class="pcard__title">FFmpeg 기반 크로스플랫폼 영상 트랜스코딩 웹앱</h3>
+        <p class="pcard__excerpt">Go(Gin+PostgreSQL) 백엔드와 React(shadcn/ui) 프런트엔드로 구성된 풀스택 영상 트랜스코딩 애플리케이션으로 서버 측에서 FFmpeg를 실행한다. 인코딩 파라미터를 UI로 조작하며 생성되는 FFmpeg 명령어를 그대로 보여준다.</p>
+        <div class="pcard__tags"><span>2i/ffmpegUI</span><span>#Go</span><span>#React</span><span>#FFmpeg</span><span class="pcard__go">GitHub →</span></div>
+      </a>
+      <a class="pcard reveal" href="https://github.com/2icorp/call-center-tts" data-cat="media" data-q="call-center-tts 2i/call-center-tts 콜센터 상담사향 한국어 tts 시스템 qwen3-tts 1.7b 기반 콜센터 상담사향 음성합성 시스템으로 한국어 텍스트 정규화, 스트리밍 추론, grpo·dpo 사후학습을 포함한다. 추론 서버와 테스트 스위트가 함께 제공된다. python python qwen3-tts" target="_blank" rel="noopener">
+        <div class="pcard__meta"><span class="pcard__cat">비공개</span><span class="pcard__rt">Python</span><span class="pcard__date">2026.02.25</span></div>
+        <h3 class="pcard__title">콜센터 상담사향 한국어 TTS 시스템</h3>
+        <p class="pcard__excerpt">Qwen3-TTS 1.7B 기반 콜센터 상담사향 음성합성 시스템으로 한국어 텍스트 정규화, 스트리밍 추론, GRPO·DPO 사후학습을 포함한다. 추론 서버와 테스트 스위트가 함께 제공된다.</p>
+        <div class="pcard__tags"><span>2i/call-center-tts</span><span>#Python</span><span>#Qwen3-TTS</span><span class="pcard__go">GitHub →</span></div>
+      </a>
+      <a class="pcard reveal" href="https://github.com/2icorp/kr-brand-decks" data-cat="media" data-q="kr-brand-decks 2i/kr-brand-decks 한국 기업 브랜드 테마 pptx 데크 스킬 한국 주요 23개 기업의 공개된 브랜드 컬러를 참고해 테마를 입힌 pptx 데크를 생성하는 claude code, cursor용 스킬 모음이다. 로고 파일은 포함하지 않으며 어떤 기업과도 제휴 관계가 없는 비공식 저장소이다. python python shell" target="_blank" rel="noopener">
+        <div class="pcard__meta"><span class="pcard__cat">공개</span><span class="pcard__rt">Python</span><span class="pcard__date">2026.07.09</span></div>
+        <h3 class="pcard__title">한국 기업 브랜드 테마 PPTX 데크 스킬</h3>
+        <p class="pcard__excerpt">한국 주요 23개 기업의 공개된 브랜드 컬러를 참고해 테마를 입힌 PPTX 데크를 생성하는 Claude Code, Cursor용 스킬 모음이다. 로고 파일은 포함하지 않으며 어떤 기업과도 제휴 관계가 없는 비공식 저장소이다.</p>
+        <div class="pcard__tags"><span>2i/kr-brand-decks</span><span>#Python</span><span>#Shell</span><span class="pcard__go">GitHub →</span></div>
+      </a>
+      <a class="pcard reveal" href="https://github.com/2icorp/sticker-forge" data-cat="media" data-q="sticker-forge 2i/sticker-forge ai 애니메이션 스티커 생성 파이프라인 사진이나 텍스트 프롬프트를 이미지 생성 모델로 캐릭터 시트로 만든 뒤 모션 플래너와 알파 처리를 거쳐 주요 메신저용 움직이는 스티커로 패키징하는 파이썬 파이프라인이다. python python" target="_blank" rel="noopener">
+        <div class="pcard__meta"><span class="pcard__cat">비공개</span><span class="pcard__rt">Python</span><span class="pcard__date">2026.07.14</span></div>
+        <h3 class="pcard__title">AI 애니메이션 스티커 생성 파이프라인</h3>
+        <p class="pcard__excerpt">사진이나 텍스트 프롬프트를 이미지 생성 모델로 캐릭터 시트로 만든 뒤 모션 플래너와 알파 처리를 거쳐 주요 메신저용 움직이는 스티커로 패키징하는 파이썬 파이프라인이다.</p>
+        <div class="pcard__tags"><span>2i/sticker-forge</span><span>#Python</span><span class="pcard__go">GitHub →</span></div>
+      </a>
+      <a class="pcard reveal" href="https://github.com/2icorp/sprite-forge-studio" data-cat="media" data-q="sprite-forge-studio 2i/sprite-forge-studio 이모티콘에서 게임 스프라이트 변환 데모 블로그 캐릭터를 이모티콘으로 만든 뒤 게임 스프라이트로 확장해 캐릭터 동작을 미리보고 유니티 번들로 내려받는 인터랙티브 데모이다. 모든 스프라이트는 이미지 생성 파이프라인으로 실제 생성됐다. css css javascript html" target="_blank" rel="noopener">
+        <div class="pcard__meta"><span class="pcard__cat">공개</span><span class="pcard__rt">CSS</span><span class="pcard__date">2026.07.16</span></div>
+        <h3 class="pcard__title">이모티콘에서 게임 스프라이트 변환 데모</h3>
+        <p class="pcard__excerpt">블로그 캐릭터를 이모티콘으로 만든 뒤 게임 스프라이트로 확장해 캐릭터 동작을 미리보고 유니티 번들로 내려받는 인터랙티브 데모이다. 모든 스프라이트는 이미지 생성 파이프라인으로 실제 생성됐다.</p>
+        <div class="pcard__tags"><span>2i/sprite-forge-studio</span><span>#CSS</span><span>#JavaScript</span><span>#HTML</span><span class="pcard__go">GitHub →</span></div>
+      </a>
+      <a class="pcard reveal" href="https://github.com/2icorp/lectureclip" data-cat="media" data-q="lectureclip 2i/lectureclip 강연 자막 화자정리·하이라이트 클립 도구 이미 화자분리된 srt, vtt 자막을 붙여넣으면 화자별로 정리하고 하이라이트 클립 후보와 ffmpeg 컷 명령어를 만들어주는 100% 클라이언트 사이드 도구이다. 자체 음성인식이나 화자분리는 수행하지 않는다. javascript javascript html css" target="_blank" rel="noopener">
+        <div class="pcard__meta"><span class="pcard__cat">비공개</span><span class="pcard__rt">JavaScript</span><span class="pcard__date">2026.07.22</span></div>
+        <h3 class="pcard__title">강연 자막 화자정리·하이라이트 클립 도구</h3>
+        <p class="pcard__excerpt">이미 화자분리된 SRT, VTT 자막을 붙여넣으면 화자별로 정리하고 하이라이트 클립 후보와 ffmpeg 컷 명령어를 만들어주는 100% 클라이언트 사이드 도구이다. 자체 음성인식이나 화자분리는 수행하지 않는다.</p>
+        <div class="pcard__tags"><span>2i/lectureclip</span><span>#JavaScript</span><span>#HTML</span><span>#CSS</span><span class="pcard__go">GitHub →</span></div>
+      </a>
+      <a class="pcard reveal" href="https://github.com/2icorp/project-echo" data-cat="media" data-q="project-echo 2i/project-echo 음성 인터뷰 기반 디지털 자아 복제 앱 음성 인터뷰로 사용자의 말투와 목소리, 얼굴을 복제해 사진 한 장으로 말하는 자신을 만드는 로컬 우선 macos tauri 앱이다. 목소리 클로닝과 음성 전사를 실모델로 검증했다. python python typescript tauri voxcpm2 qwen3-asr" target="_blank" rel="noopener">
+        <div class="pcard__meta"><span class="pcard__cat">비공개</span><span class="pcard__rt">Python</span><span class="pcard__date">2026.07.22</span></div>
+        <h3 class="pcard__title">음성 인터뷰 기반 디지털 자아 복제 앱</h3>
+        <p class="pcard__excerpt">음성 인터뷰로 사용자의 말투와 목소리, 얼굴을 복제해 사진 한 장으로 말하는 자신을 만드는 로컬 우선 macOS Tauri 앱이다. 목소리 클로닝과 음성 전사를 실모델로 검증했다.</p>
+        <div class="pcard__tags"><span>2i/project-echo</span><span>#Python</span><span>#TypeScript</span><span>#Tauri</span><span>#VoxCPM2</span><span>#Qwen3-ASR</span><span class="pcard__go">GitHub →</span></div>
+      </a>
+      <a class="pcard reveal" href="https://github.com/2icorp/release-thread" data-cat="media" data-q="release-thread 2i/release-thread 체인지로그 기반 x 스레드·카드 생성기 changelog나 github 릴리스 노트를 붙여넣으면 바로 게시 가능한 x(트위터) 스레드 초안과 변경 항목별 캐러셀 카드 이미지를 만드는 100% 클라이언트 사이드 도구이다. keep a changelog 형식을 인식한다. javascript javascript html css" target="_blank" rel="noopener">
+        <div class="pcard__meta"><span class="pcard__cat">비공개</span><span class="pcard__rt">JavaScript</span><span class="pcard__date">2026.07.23</span></div>
+        <h3 class="pcard__title">체인지로그 기반 X 스레드·카드 생성기</h3>
+        <p class="pcard__excerpt">CHANGELOG나 GitHub 릴리스 노트를 붙여넣으면 바로 게시 가능한 X(트위터) 스레드 초안과 변경 항목별 캐러셀 카드 이미지를 만드는 100% 클라이언트 사이드 도구이다. Keep a Changelog 형식을 인식한다.</p>
+        <div class="pcard__tags"><span>2i/release-thread</span><span>#JavaScript</span><span>#HTML</span><span>#CSS</span><span class="pcard__go">GitHub →</span></div>
+      </a>
+      <a class="pcard reveal" href="https://github.com/2icorp/jamkit" data-cat="media" data-q="jamkit 2i/jamkit 문장 기반 픽셀 스프라이트 프로토타입 생성기 게임 캐릭터를 한 문장으로 설명하면 걷기, 공격 애니메이션이 있는 브라우저 픽셀 스프라이트 프로토타입을 즉시 만드는 도구이다. ai 이미지 생성이 아니라 문장을 해시해 결정론적으로 실루엣 템플릿을 조합한다. javascript javascript html css" target="_blank" rel="noopener">
+        <div class="pcard__meta"><span class="pcard__cat">비공개</span><span class="pcard__rt">JavaScript</span><span class="pcard__date">2026.07.26</span></div>
+        <h3 class="pcard__title">문장 기반 픽셀 스프라이트 프로토타입 생성기</h3>
+        <p class="pcard__excerpt">게임 캐릭터를 한 문장으로 설명하면 걷기, 공격 애니메이션이 있는 브라우저 픽셀 스프라이트 프로토타입을 즉시 만드는 도구이다. AI 이미지 생성이 아니라 문장을 해시해 결정론적으로 실루엣 템플릿을 조합한다.</p>
+        <div class="pcard__tags"><span>2i/jamkit</span><span>#JavaScript</span><span>#HTML</span><span>#CSS</span><span class="pcard__go">GitHub →</span></div>
+      </a>
+      <a class="pcard reveal" href="https://github.com/2icorp/shotcraft-atlas" data-cat="media" data-q="shotcraft-atlas 2i/shotcraft-atlas 카메라 무빙 프리뷰·프롬프트 아틀라스 8가지 대표 카메라 무빙을 반복 재생되는 파라미터 기반 2d 프리뷰로 보여주고 무드, 장르로 필터링해 ai 영상 생성용 프롬프트를 바로 복사할 수 있게 하는 무료 아틀라스이다. 돌리인, 트래킹샷 같은 용어를 눈으로 먼저 확인할 수 있다. javascript javascript html css" target="_blank" rel="noopener">
+        <div class="pcard__meta"><span class="pcard__cat">비공개</span><span class="pcard__rt">JavaScript</span><span class="pcard__date">2026.07.27</span></div>
+        <h3 class="pcard__title">카메라 무빙 프리뷰·프롬프트 아틀라스</h3>
+        <p class="pcard__excerpt">8가지 대표 카메라 무빙을 반복 재생되는 파라미터 기반 2D 프리뷰로 보여주고 무드, 장르로 필터링해 AI 영상 생성용 프롬프트를 바로 복사할 수 있게 하는 무료 아틀라스이다. 돌리인, 트래킹샷 같은 용어를 눈으로 먼저 확인할 수 있다.</p>
+        <div class="pcard__tags"><span>2i/shotcraft-atlas</span><span>#JavaScript</span><span>#HTML</span><span>#CSS</span><span class="pcard__go">GitHub →</span></div>
+      </a>
+      <a class="pcard reveal" href="https://github.com/2icorp/mdmotion" data-cat="media" data-q="mdmotion 2i/mdmotion 마크다운 문서를 영상으로 변환하는 도구 readme나 블로그 글을 붙여넣으면 타이밍 있는 슬라이드와 자막, 마이크 내레이션 영상으로 변환하는 100% 클라이언트 사이드 도구이다. 헤딩 단위로 장면을 나누고 나레이션 분량으로 재생 시간을 계산한다. javascript javascript html css" target="_blank" rel="noopener">
+        <div class="pcard__meta"><span class="pcard__cat">비공개</span><span class="pcard__rt">JavaScript</span><span class="pcard__date">2026.07.28</span></div>
+        <h3 class="pcard__title">마크다운 문서를 영상으로 변환하는 도구</h3>
+        <p class="pcard__excerpt">README나 블로그 글을 붙여넣으면 타이밍 있는 슬라이드와 자막, 마이크 내레이션 영상으로 변환하는 100% 클라이언트 사이드 도구이다. 헤딩 단위로 장면을 나누고 나레이션 분량으로 재생 시간을 계산한다.</p>
+        <div class="pcard__tags"><span>2i/mdmotion</span><span>#JavaScript</span><span>#HTML</span><span>#CSS</span><span class="pcard__go">GitHub →</span></div>
+      </a>
+      <a class="pcard reveal" href="https://github.com/2icorp/2i-case-09-promo-video" data-cat="media" data-q="2i-case-09-promo-video 2icorp/2i-case-09-promo-video 제품정보 기반 채널별 숏폼 생성 제품 텍스트와 이미지만으로 숏폼 영상 시안을 ffmpeg로 자동 생성하고 채널별 규격 변환과 브랜드 템플릿 적용까지 신제품 등록 프로세스에 연동한다. 합성 데이터 레퍼런스 데모다. python python ffmpeg pytest" target="_blank" rel="noopener">
+        <div class="pcard__meta"><span class="pcard__cat">비공개</span><span class="pcard__rt">Python</span><span class="pcard__date">2026.07.29</span><span class="pcard__rt">사례 09</span></div>
+        <h3 class="pcard__title">제품정보 기반 채널별 숏폼 생성</h3>
+        <p class="pcard__excerpt">제품 텍스트와 이미지만으로 숏폼 영상 시안을 ffmpeg로 자동 생성하고 채널별 규격 변환과 브랜드 템플릿 적용까지 신제품 등록 프로세스에 연동한다. 합성 데이터 레퍼런스 데모다.</p>
+        <div class="pcard__tags"><span>2icorp/2i-case-09-promo-video</span><span>#Python</span><span>#ffmpeg</span><span>#pytest</span><span class="pcard__go">GitHub →</span></div>
+      </a>
+      <a class="pcard reveal" href="https://github.com/2icorp/propforge-3d" data-cat="media" data-q="propforge-3d 2i/propforge-3d 참조 이미지 기반 로우폴리 3d 프롭 생성기 참조 이미지 한 장을 게임용 로우폴리 glb 3d 프롭으로 변환하는 100% 클라이언트 사이드 도구이다. 배경 제거, 실루엣 압출, 버텍스 컬러 베이크, 3단계 lod, gltf 2.0 바이너리 내보내기를 결정론적으로 처리한다. javascript javascript html css" target="_blank" rel="noopener">
+        <div class="pcard__meta"><span class="pcard__cat">비공개</span><span class="pcard__rt">JavaScript</span><span class="pcard__date">2026.07.31</span></div>
+        <h3 class="pcard__title">참조 이미지 기반 로우폴리 3D 프롭 생성기</h3>
+        <p class="pcard__excerpt">참조 이미지 한 장을 게임용 로우폴리 GLB 3D 프롭으로 변환하는 100% 클라이언트 사이드 도구이다. 배경 제거, 실루엣 압출, 버텍스 컬러 베이크, 3단계 LOD, glTF 2.0 바이너리 내보내기를 결정론적으로 처리한다.</p>
+        <div class="pcard__tags"><span>2i/propforge-3d</span><span>#JavaScript</span><span>#HTML</span><span>#CSS</span><span class="pcard__go">GitHub →</span></div>
+      </a>
+      <a class="pcard reveal" href="https://github.com/2icorp/mailbox-cast" data-cat="media" data-q="mailbox-cast 2i/mailbox-cast 뉴스레터 메일함 팟캐스트 변환 도구 읽지 못한 뉴스레터(eml, mbox)를 브라우저 안에서만 파싱해 발신자별 에피소드와 호별 챕터로 묶은 비공개 팟캐스트 피드를 만드는 100% 클라이언트 사이드 도구이다. 브라우저 내장 음성합성으로 바로 재생도 가능하다. javascript javascript html css" target="_blank" rel="noopener">
+        <div class="pcard__meta"><span class="pcard__cat">비공개</span><span class="pcard__rt">JavaScript</span><span class="pcard__date">2026.08.01</span></div>
+        <h3 class="pcard__title">뉴스레터 메일함 팟캐스트 변환 도구</h3>
+        <p class="pcard__excerpt">읽지 못한 뉴스레터(EML, MBOX)를 브라우저 안에서만 파싱해 발신자별 에피소드와 호별 챕터로 묶은 비공개 팟캐스트 피드를 만드는 100% 클라이언트 사이드 도구이다. 브라우저 내장 음성합성으로 바로 재생도 가능하다.</p>
+        <div class="pcard__tags"><span>2i/mailbox-cast</span><span>#JavaScript</span><span>#HTML</span><span>#CSS</span><span class="pcard__go">GitHub →</span></div>
+      </a>
+      <a class="pcard reveal" href="https://github.com/2icorp/kidsnote-sd-service" data-cat="media" data-q="kidsnote-sd-service 2icorp/kidsnote-sd-service 키즈노트용 stable diffusion webui 키즈노트 서비스를 위한 gpu 서버 stable diffusion webui 배포 스크립트다. 2024년 이후 갱신이 없는 휴면 상태다. python python stable diffusion webui" target="_blank" rel="noopener">
+        <div class="pcard__meta"><span class="pcard__cat">비공개</span><span class="pcard__rt">Python</span><span class="pcard__date">2024.07.16</span><span class="pcard__rt">휴면</span></div>
+        <h3 class="pcard__title">키즈노트용 Stable Diffusion WebUI</h3>
+        <p class="pcard__excerpt">키즈노트 서비스를 위한 GPU 서버 Stable Diffusion WebUI 배포 스크립트다. 2024년 이후 갱신이 없는 휴면 상태다.</p>
+        <div class="pcard__tags"><span>2icorp/kidsnote-sd-service</span><span>#Python</span><span>#Stable Diffusion WebUI</span><span class="pcard__go">GitHub →</span></div>
+      </a>
+      <a class="pcard reveal" href="https://github.com/2icorp/sd-admin" data-cat="media" data-q="sd-admin 2icorp/sd-admin stable diffusion webui 운영 어드민 운영용 gpu 서버에서 stable diffusion webui를 구동하는 어드민 배포 스크립트다. 2024년 이후 갱신이 없는 휴면 상태다. python python stable diffusion webui" target="_blank" rel="noopener">
+        <div class="pcard__meta"><span class="pcard__cat">비공개</span><span class="pcard__rt">Python</span><span class="pcard__date">2024.09.23</span><span class="pcard__rt">휴면</span></div>
+        <h3 class="pcard__title">Stable Diffusion WebUI 운영 어드민</h3>
+        <p class="pcard__excerpt">운영용 GPU 서버에서 Stable Diffusion WebUI를 구동하는 어드민 배포 스크립트다. 2024년 이후 갱신이 없는 휴면 상태다.</p>
+        <div class="pcard__tags"><span>2icorp/sd-admin</span><span>#Python</span><span>#Stable Diffusion WebUI</span><span class="pcard__go">GitHub →</span></div>
+      </a>
+      <a class="pcard reveal" href="https://github.com/2icorp/2i-dev-sd-service" data-cat="media" data-q="2i-dev-sd-service 2icorp/2i-dev-sd-service 개발용 stable diffusion webui 서버 gpu 서버에서 stable diffusion webui를 개발, 구동하기 위한 배포 스크립트 모음이다. 2024년 이후 갱신이 없는 휴면 상태다. python python stable diffusion webui" target="_blank" rel="noopener">
+        <div class="pcard__meta"><span class="pcard__cat">비공개</span><span class="pcard__rt">Python</span><span class="pcard__date">2024.12.05</span><span class="pcard__rt">휴면</span></div>
+        <h3 class="pcard__title">개발용 Stable Diffusion WebUI 서버</h3>
+        <p class="pcard__excerpt">GPU 서버에서 Stable Diffusion WebUI를 개발, 구동하기 위한 배포 스크립트 모음이다. 2024년 이후 갱신이 없는 휴면 상태다.</p>
+        <div class="pcard__tags"><span>2icorp/2i-dev-sd-service</span><span>#Python</span><span>#Stable Diffusion WebUI</span><span class="pcard__go">GitHub →</span></div>
+      </a>
+      <a class="pcard reveal" href="https://github.com/2icorp/sd-service" data-cat="media" data-q="sd-service 2icorp/sd-service stable diffusion webui 서비스 gpu 서버에서 stable diffusion webui를 구동하는 서비스 배포 스크립트다. 2024년 이후 갱신이 없는 휴면 상태다. python python stable diffusion webui" target="_blank" rel="noopener">
+        <div class="pcard__meta"><span class="pcard__cat">비공개</span><span class="pcard__rt">Python</span><span class="pcard__date">2025.07.09</span><span class="pcard__rt">휴면</span></div>
+        <h3 class="pcard__title">Stable Diffusion WebUI 서비스</h3>
+        <p class="pcard__excerpt">GPU 서버에서 Stable Diffusion WebUI를 구동하는 서비스 배포 스크립트다. 2024년 이후 갱신이 없는 휴면 상태다.</p>
+        <div class="pcard__tags"><span>2icorp/sd-service</span><span>#Python</span><span>#Stable Diffusion WebUI</span><span class="pcard__go">GitHub →</span></div>
+      </a>
+        </div>
+      </section>
+      <section class="fam" id="tech-product" aria-labelledby="techt-product">
+        <header class="fam__head">
+          <h2 class="fam__t" id="techt-product">도메인 서비스·제품<span class="fam__n">20개</span></h2>
+          <p class="fam__d">법률, 교육, 의료, 금융, 생활 영역에서 끝단 사용자가 쓰는 형태로 만든 것들이다.</p>
+        </header>
+        <div class="pboard">
+      <a class="pcard reveal" href="https://github.com/2icorp/teacher-admin-saas" data-cat="product" data-q="teacher-admin-saas 2i/teacher-admin-saas 전문직 상담·사례관리 로컬 saas 플랫폼 교육, 법률, 의료, 보험, 복지, 인사, 프랜차이즈 등 11개 전문 도메인의 상담 및 사례관리를 위한 11개 tauri 데스크톱 앱으로 구성된 로컬 우선 saas 모노레포이다. 민감 데이터는 외부 서버 없이 기기 내 sqlite에 암호화 저장된다. python python typescript tauri turborepo" target="_blank" rel="noopener">
+        <div class="pcard__meta"><span class="pcard__cat">비공개</span><span class="pcard__rt">Python</span><span class="pcard__date">2026.04.24</span></div>
+        <h3 class="pcard__title">전문직 상담·사례관리 로컬 SaaS 플랫폼</h3>
+        <p class="pcard__excerpt">교육, 법률, 의료, 보험, 복지, 인사, 프랜차이즈 등 11개 전문 도메인의 상담 및 사례관리를 위한 11개 Tauri 데스크톱 앱으로 구성된 로컬 우선 SaaS 모노레포이다. 민감 데이터는 외부 서버 없이 기기 내 SQLite에 암호화 저장된다.</p>
+        <div class="pcard__tags"><span>2i/teacher-admin-saas</span><span>#Python</span><span>#TypeScript</span><span>#Tauri</span><span>#Turborepo</span><span class="pcard__go">GitHub →</span></div>
+      </a>
+      <a class="pcard reveal" href="https://github.com/2icorp/ai-vocabcards" data-cat="product" data-q="ai-vocabcards 2i/ai-vocabcards ai 기반 영어 단어장 학습 웹앱 한국 어린이를 위한 영어 단어장 웹 애플리케이션으로 claude api로 단어 사전 정보를, 이미지 생성 api로 플래시카드 이미지를 만든다. 간격 반복 학습과 문장 학습 카드 기능을 포함한다. python typescript python pnpm monorepo" target="_blank" rel="noopener">
+        <div class="pcard__meta"><span class="pcard__cat">비공개</span><span class="pcard__rt">Python</span><span class="pcard__date">2026.05.29</span></div>
+        <h3 class="pcard__title">AI 기반 영어 단어장 학습 웹앱</h3>
+        <p class="pcard__excerpt">한국 어린이를 위한 영어 단어장 웹 애플리케이션으로 Claude API로 단어 사전 정보를, 이미지 생성 API로 플래시카드 이미지를 만든다. 간격 반복 학습과 문장 학습 카드 기능을 포함한다.</p>
+        <div class="pcard__tags"><span>2i/ai-vocabcards</span><span>#TypeScript</span><span>#Python</span><span>#pnpm monorepo</span><span class="pcard__go">GitHub →</span></div>
+      </a>
+      <a class="pcard reveal" href="https://github.com/2icorp/my-school-visuals" data-cat="product" data-q="my-school-visuals 2i/my-school-visuals 학교 사진 기반 특수교육 시각자료 생성기 학교 사진을 넣으면 생활규칙 포스터, 특수교육 사회적 이야기, 어휘 카드를 만들어 바로 인쇄할 수 있는 교사, 치료사용 클라이언트 전용 도구이다. 사진은 브라우저를 벗어나지 않고 exif 정보가 자동 제거된다. python python typescript react" target="_blank" rel="noopener">
+        <div class="pcard__meta"><span class="pcard__cat">비공개</span><span class="pcard__rt">Python</span><span class="pcard__date">2026.06.15</span></div>
+        <h3 class="pcard__title">학교 사진 기반 특수교육 시각자료 생성기</h3>
+        <p class="pcard__excerpt">학교 사진을 넣으면 생활규칙 포스터, 특수교육 사회적 이야기, 어휘 카드를 만들어 바로 인쇄할 수 있는 교사, 치료사용 클라이언트 전용 도구이다. 사진은 브라우저를 벗어나지 않고 EXIF 정보가 자동 제거된다.</p>
+        <div class="pcard__tags"><span>2i/my-school-visuals</span><span>#Python</span><span>#TypeScript</span><span>#React</span><span class="pcard__go">GitHub →</span></div>
+      </a>
+      <a class="pcard reveal" href="https://github.com/2icorp/gongmun-easy" data-cat="product" data-q="gongmun-easy 2i/gongmun-easy 공공기관 공문서 쉬운 설명 데스크톱 앱 어려운 한국 공공기관 공문서를 업로드하면 쉬운 한국어로 설명하고 기한별 체크리스트를 만들어 음성으로 읽어주는 접근성 우선 데스크톱 앱이다. accessible-kr-service-template에서 파생했다. rust rust tauri 2 javascript" target="_blank" rel="noopener">
+        <div class="pcard__meta"><span class="pcard__cat">비공개</span><span class="pcard__rt">Rust</span><span class="pcard__date">2026.07.10</span></div>
+        <h3 class="pcard__title">공공기관 공문서 쉬운 설명 데스크톱 앱</h3>
+        <p class="pcard__excerpt">어려운 한국 공공기관 공문서를 업로드하면 쉬운 한국어로 설명하고 기한별 체크리스트를 만들어 음성으로 읽어주는 접근성 우선 데스크톱 앱이다. accessible-kr-service-template에서 파생했다.</p>
+        <div class="pcard__tags"><span>2i/gongmun-easy</span><span>#Rust</span><span>#Tauri 2</span><span>#JavaScript</span><span class="pcard__go">GitHub →</span></div>
+      </a>
+      <a class="pcard reveal" href="https://github.com/2icorp/jeonse-safe" data-cat="product" data-q="jeonse-safe 2i/jeonse-safe 전세 보증금 위험 진단 데스크톱 앱 주택 주소와 전세 보증금을 입력하면 등기부, 시세, 경매 정보를 모아 위험 등급과 레드플래그 체크리스트를 쉬운 한국어로 보여주는 접근성 우선 데스크톱 앱이다. 법률 자문이 아닌 정보 제공용이다. javascript rust tauri 2 javascript" target="_blank" rel="noopener">
+        <div class="pcard__meta"><span class="pcard__cat">비공개</span><span class="pcard__rt">JavaScript</span><span class="pcard__date">2026.07.10</span></div>
+        <h3 class="pcard__title">전세 보증금 위험 진단 데스크톱 앱</h3>
+        <p class="pcard__excerpt">주택 주소와 전세 보증금을 입력하면 등기부, 시세, 경매 정보를 모아 위험 등급과 레드플래그 체크리스트를 쉬운 한국어로 보여주는 접근성 우선 데스크톱 앱이다. 법률 자문이 아닌 정보 제공용이다.</p>
+        <div class="pcard__tags"><span>2i/jeonse-safe</span><span>#Rust</span><span>#Tauri 2</span><span>#JavaScript</span><span class="pcard__go">GitHub →</span></div>
+      </a>
+      <a class="pcard reveal" href="https://github.com/2icorp/medi-safe" data-cat="product" data-q="medi-safe 2i/medi-safe 고령자 복약 안전 확인 데스크톱 앱 식약처 공식 의약품 데이터를 조회해 복용 중인 약의 상호작용을 신호등(안전, 주의, 위험) 표시와 음성 안내로 알려주는 고령자용 접근성 우선 데스크톱 앱이다. accessible-kr-service-template에서 파생했다. javascript rust tauri 2 javascript" target="_blank" rel="noopener">
+        <div class="pcard__meta"><span class="pcard__cat">비공개</span><span class="pcard__rt">JavaScript</span><span class="pcard__date">2026.07.10</span></div>
+        <h3 class="pcard__title">고령자 복약 안전 확인 데스크톱 앱</h3>
+        <p class="pcard__excerpt">식약처 공식 의약품 데이터를 조회해 복용 중인 약의 상호작용을 신호등(안전, 주의, 위험) 표시와 음성 안내로 알려주는 고령자용 접근성 우선 데스크톱 앱이다. accessible-kr-service-template에서 파생했다.</p>
+        <div class="pcard__tags"><span>2i/medi-safe</span><span>#Rust</span><span>#Tauri 2</span><span>#JavaScript</span><span class="pcard__go">GitHub →</span></div>
+      </a>
+      <a class="pcard reveal" href="https://github.com/2icorp/missed-benefits" data-cat="product" data-q="missed-benefits 2i/missed-benefits 정부지원금·장학금 매칭 파인더 앱 실직, 출산, 저소득 등 개인 상황을 몇 단계로 입력하면 받을 수 있는 정부지원금과 장학금, 공공주거 공고를 찾아 마감 캘린더로 정리해주는 접근성 우선 데스크톱 앱이다. accessible-kr-service-template에서 파생했다. rust rust tauri 2 javascript" target="_blank" rel="noopener">
+        <div class="pcard__meta"><span class="pcard__cat">비공개</span><span class="pcard__rt">Rust</span><span class="pcard__date">2026.07.10</span></div>
+        <h3 class="pcard__title">정부지원금·장학금 매칭 파인더 앱</h3>
+        <p class="pcard__excerpt">실직, 출산, 저소득 등 개인 상황을 몇 단계로 입력하면 받을 수 있는 정부지원금과 장학금, 공공주거 공고를 찾아 마감 캘린더로 정리해주는 접근성 우선 데스크톱 앱이다. accessible-kr-service-template에서 파생했다.</p>
+        <div class="pcard__tags"><span>2i/missed-benefits</span><span>#Rust</span><span>#Tauri 2</span><span>#JavaScript</span><span class="pcard__go">GitHub →</span></div>
+      </a>
+      <a class="pcard reveal" href="https://github.com/2icorp/nunchi-map" data-cat="product" data-q="nunchi-map 2i/nunchi-map 실시간 혼잡도 확인 로컬 앱 가게나 장소의 실시간 혼잡도와 대기줄, 현장 제보 사진을 보여주는 앱으로 혼잡도 상승 기울기와 최근 제보 가중치를 합친 hotness 지표로 지금 뜨는 곳을 정렬한다. go+fiber/postgis/redis/nats 백엔드와 expo react native 앱으로 구성된다. go go postgis redis nats expo react native" target="_blank" rel="noopener">
+        <div class="pcard__meta"><span class="pcard__cat">비공개</span><span class="pcard__rt">Go</span><span class="pcard__date">2026.07.13</span></div>
+        <h3 class="pcard__title">실시간 혼잡도 확인 로컬 앱</h3>
+        <p class="pcard__excerpt">가게나 장소의 실시간 혼잡도와 대기줄, 현장 제보 사진을 보여주는 앱으로 혼잡도 상승 기울기와 최근 제보 가중치를 합친 hotness 지표로 지금 뜨는 곳을 정렬한다. Go+Fiber/PostGIS/Redis/NATS 백엔드와 Expo React Native 앱으로 구성된다.</p>
+        <div class="pcard__tags"><span>2i/nunchi-map</span><span>#Go</span><span>#PostGIS</span><span>#Redis</span><span>#NATS</span><span>#Expo React Native</span><span class="pcard__go">GitHub →</span></div>
+      </a>
+      <a class="pcard reveal" href="https://github.com/2icorp/nunchi-map-landing" data-cat="product" data-q="nunchi-map-landing 2i/nunchi-map-landing 눈치맵 수요 검증 랜딩 페이지 실시간 혼잡, 대기 로컬 앱 눈치맵의 컨셉을 소개하는 단일 정적 랜딩 페이지로 클릭 수로 수요를 검증하는 목적이다. 정식 출시를 약속하지 않는 데모 페이지이다. html html" target="_blank" rel="noopener">
+        <div class="pcard__meta"><span class="pcard__cat">공개</span><span class="pcard__rt">HTML</span><span class="pcard__date">2026.07.13</span></div>
+        <h3 class="pcard__title">눈치맵 수요 검증 랜딩 페이지</h3>
+        <p class="pcard__excerpt">실시간 혼잡, 대기 로컬 앱 눈치맵의 컨셉을 소개하는 단일 정적 랜딩 페이지로 클릭 수로 수요를 검증하는 목적이다. 정식 출시를 약속하지 않는 데모 페이지이다.</p>
+        <div class="pcard__tags"><span>2i/nunchi-map-landing</span><span>#HTML</span><span class="pcard__go">GitHub →</span></div>
+      </a>
+      <a class="pcard reveal" href="https://github.com/2icorp/care-visit-notes" data-cat="product" data-q="care-visit-notes 2i/care-visit-notes 방문요양 대화 돌봄기록 초안 도우미 방문요양보호사의 상담 대화 텍스트를 건강상태, 특이사항, 요청사항 4개 항목으로 규칙 기반 분류해 돌봄기록 초안을 만드는 100% 브라우저 로컬 도구이다. 서버 전송이나 계정 없이 인쇄, 다운로드로 내보낸다. javascript javascript html" target="_blank" rel="noopener">
+        <div class="pcard__meta"><span class="pcard__cat">비공개</span><span class="pcard__rt">JavaScript</span><span class="pcard__date">2026.07.20</span></div>
+        <h3 class="pcard__title">방문요양 대화 돌봄기록 초안 도우미</h3>
+        <p class="pcard__excerpt">방문요양보호사의 상담 대화 텍스트를 건강상태, 특이사항, 요청사항 4개 항목으로 규칙 기반 분류해 돌봄기록 초안을 만드는 100% 브라우저 로컬 도구이다. 서버 전송이나 계정 없이 인쇄, 다운로드로 내보낸다.</p>
+        <div class="pcard__tags"><span>2i/care-visit-notes</span><span>#JavaScript</span><span>#HTML</span><span class="pcard__go">GitHub →</span></div>
+      </a>
+      <a class="pcard reveal" href="https://github.com/2icorp/daily-scrum-timer" data-cat="product" data-q="daily-scrum-timer 2i/daily-scrum-timer 팀 데일리 스크럼 타이머 데스크톱 앱 발표자를 등록하면 순서대로 시간을 재고 초과 시 알람과 초과 시간을 계속 보여주는 100% 로컬 데스크톱 스크럼 타이머이다. 서버나 로그인, 인터넷 연결이 필요 없다. javascript javascript tauri (rust) css" target="_blank" rel="noopener">
+        <div class="pcard__meta"><span class="pcard__cat">공개</span><span class="pcard__rt">JavaScript</span><span class="pcard__date">2026.07.31</span></div>
+        <h3 class="pcard__title">팀 데일리 스크럼 타이머 데스크톱 앱</h3>
+        <p class="pcard__excerpt">발표자를 등록하면 순서대로 시간을 재고 초과 시 알람과 초과 시간을 계속 보여주는 100% 로컬 데스크톱 스크럼 타이머이다. 서버나 로그인, 인터넷 연결이 필요 없다.</p>
+        <div class="pcard__tags"><span>2i/daily-scrum-timer</span><span>#JavaScript</span><span>#Tauri (Rust)</span><span>#CSS</span><span class="pcard__go">GitHub →</span></div>
+      </a>
+      <a class="pcard reveal" href="https://github.com/2icorp/kidsnote-server" data-cat="product" data-q="kidsnote-server 2icorp/kidsnote-server 키즈노트 api 서버 키즈노트용 api 서버로 pyenv와 poetry로 개발환경을 구성하고 ec2 인스턴스에 배포한다. 2024년 이후 갱신이 없는 휴면 상태다. python python poetry ec2" target="_blank" rel="noopener">
+        <div class="pcard__meta"><span class="pcard__cat">비공개</span><span class="pcard__rt">Python</span><span class="pcard__date">2024.07.11</span><span class="pcard__rt">휴면</span></div>
+        <h3 class="pcard__title">키즈노트 API 서버</h3>
+        <p class="pcard__excerpt">키즈노트용 API 서버로 pyenv와 Poetry로 개발환경을 구성하고 EC2 인스턴스에 배포한다. 2024년 이후 갱신이 없는 휴면 상태다.</p>
+        <div class="pcard__tags"><span>2icorp/kidsnote-server</span><span>#Python</span><span>#Poetry</span><span>#EC2</span><span class="pcard__go">GitHub →</span></div>
+      </a>
+      <a class="pcard reveal" href="https://github.com/2icorp/2i-store" data-cat="product" data-q="2i-store 2icorp/2i-store 2i 키즈모델 스토어 웹앱 2i 키즈모델용 도메인을 위한 next.js 스토어 프론트엔드다. create-next-app 기본 템플릿 상태에서 크게 벗어나지 않은 초기 단계로 보인다. typescript typescript next.js" target="_blank" rel="noopener">
+        <div class="pcard__meta"><span class="pcard__cat">비공개</span><span class="pcard__rt">TypeScript</span><span class="pcard__date">2024.11.08</span><span class="pcard__rt">휴면</span></div>
+        <h3 class="pcard__title">2i 키즈모델 스토어 웹앱</h3>
+        <p class="pcard__excerpt">2i 키즈모델용 도메인을 위한 Next.js 스토어 프론트엔드다. create-next-app 기본 템플릿 상태에서 크게 벗어나지 않은 초기 단계로 보인다.</p>
+        <div class="pcard__tags"><span>2icorp/2i-store</span><span>#TypeScript</span><span>#Next.js</span><span class="pcard__go">GitHub →</span></div>
+      </a>
+      <a class="pcard reveal" href="https://github.com/2icorp/2i-email-auth" data-cat="product" data-q="2i-email-auth 2icorp/2i-email-auth 이메일 인증 코드 발급 검증 서비스 flask 기반으로 6자리 인증 코드를 생성, 발송하고 일일 발송 제한과 재시도 제한, https 강제를 갖춘 이메일 인증 시스템이다. 2024년 이후 갱신이 없는 휴면 상태다. python python flask sqlite" target="_blank" rel="noopener">
+        <div class="pcard__meta"><span class="pcard__cat">비공개</span><span class="pcard__rt">Python</span><span class="pcard__date">2024.12.12</span><span class="pcard__rt">휴면</span></div>
+        <h3 class="pcard__title">이메일 인증 코드 발급 검증 서비스</h3>
+        <p class="pcard__excerpt">Flask 기반으로 6자리 인증 코드를 생성, 발송하고 일일 발송 제한과 재시도 제한, HTTPS 강제를 갖춘 이메일 인증 시스템이다. 2024년 이후 갱신이 없는 휴면 상태다.</p>
+        <div class="pcard__tags"><span>2icorp/2i-email-auth</span><span>#Python</span><span>#Flask</span><span>#SQLite</span><span class="pcard__go">GitHub →</span></div>
+      </a>
+      <a class="pcard reveal" href="https://github.com/2icorp/mobile" data-cat="product" data-q="mobile 2icorp/mobile 2i react native 모바일 앱 expo eas로 ios와 android를 빌드, 배포하는 2i react native 앱이다. 2024년 이후 갱신이 없는 휴면 상태다. typescript typescript react native expo" target="_blank" rel="noopener">
+        <div class="pcard__meta"><span class="pcard__cat">비공개</span><span class="pcard__rt">TypeScript</span><span class="pcard__date">2024.12.27</span><span class="pcard__rt">휴면</span></div>
+        <h3 class="pcard__title">2i React Native 모바일 앱</h3>
+        <p class="pcard__excerpt">Expo EAS로 iOS와 Android를 빌드, 배포하는 2i React Native 앱이다. 2024년 이후 갱신이 없는 휴면 상태다.</p>
+        <div class="pcard__tags"><span>2icorp/mobile</span><span>#TypeScript</span><span>#React Native</span><span>#Expo</span><span class="pcard__go">GitHub →</span></div>
+      </a>
+      <a class="pcard reveal" href="https://github.com/2icorp/server" data-cat="product" data-q="server 2icorp/server 2i 메인 api 서버 2i 메인 api 서버로 pyenv와 poetry로 개발환경을 구성한다. 2024년 이후 갱신이 없는 휴면 상태다. python python poetry" target="_blank" rel="noopener">
+        <div class="pcard__meta"><span class="pcard__cat">비공개</span><span class="pcard__rt">Python</span><span class="pcard__date">2024.12.30</span><span class="pcard__rt">휴면</span></div>
+        <h3 class="pcard__title">2i 메인 API 서버</h3>
+        <p class="pcard__excerpt">2i 메인 API 서버로 pyenv와 Poetry로 개발환경을 구성한다. 2024년 이후 갱신이 없는 휴면 상태다.</p>
+        <div class="pcard__tags"><span>2icorp/server</span><span>#Python</span><span>#Poetry</span><span class="pcard__go">GitHub →</span></div>
+      </a>
+      <a class="pcard reveal" href="https://github.com/2icorp/2i-dev-service" data-cat="product" data-q="2i-dev-service 2icorp/2i-dev-service 2i 개발용 api 서버 fastapi 기반 개발용 api 서버로 pyenv와 poetry로 구성한다. 2024년 이후 갱신이 없는 휴면 상태다. python python fastapi poetry" target="_blank" rel="noopener">
+        <div class="pcard__meta"><span class="pcard__cat">비공개</span><span class="pcard__rt">Python</span><span class="pcard__date">2024.12.31</span><span class="pcard__rt">휴면</span></div>
+        <h3 class="pcard__title">2i 개발용 API 서버</h3>
+        <p class="pcard__excerpt">FastAPI 기반 개발용 API 서버로 pyenv와 Poetry로 구성한다. 2024년 이후 갱신이 없는 휴면 상태다.</p>
+        <div class="pcard__tags"><span>2icorp/2i-dev-service</span><span>#Python</span><span>#FastAPI</span><span>#Poetry</span><span class="pcard__go">GitHub →</span></div>
+      </a>
+      <a class="pcard reveal" href="https://github.com/2icorp/admin-web" data-cat="product" data-q="admin-web 2icorp/admin-web 운영 백오피스 어드민 웹 nextauth와 google oauth로 로그인하는 운영용 백오피스 next.js 앱이다. 2024년 이후 갱신이 없는 휴면 상태다. typescript typescript next.js nextauth" target="_blank" rel="noopener">
+        <div class="pcard__meta"><span class="pcard__cat">비공개</span><span class="pcard__rt">TypeScript</span><span class="pcard__date">2024.12.31</span><span class="pcard__rt">휴면</span></div>
+        <h3 class="pcard__title">운영 백오피스 어드민 웹</h3>
+        <p class="pcard__excerpt">NextAuth와 Google OAuth로 로그인하는 운영용 백오피스 Next.js 앱이다. 2024년 이후 갱신이 없는 휴면 상태다.</p>
+        <div class="pcard__tags"><span>2icorp/admin-web</span><span>#TypeScript</span><span>#Next.js</span><span>#NextAuth</span><span class="pcard__go">GitHub →</span></div>
+      </a>
+      <a class="pcard reveal" href="https://github.com/2icorp/website" data-cat="product" data-q="website 2icorp/website 2i 메인 웹사이트 2i 메인 웹 사이트를 위한 next.js 프로젝트다. readme가 create-next-app 기본 안내뿐이라 실제 화면 구성은 코드에서 별도 확인이 필요하다. typescript typescript next.js" target="_blank" rel="noopener">
+        <div class="pcard__meta"><span class="pcard__cat">비공개</span><span class="pcard__rt">TypeScript</span><span class="pcard__date">2025.01.16</span><span class="pcard__rt">휴면</span></div>
+        <h3 class="pcard__title">2i 메인 웹사이트</h3>
+        <p class="pcard__excerpt">2i 메인 웹 사이트를 위한 Next.js 프로젝트다. README가 create-next-app 기본 안내뿐이라 실제 화면 구성은 코드에서 별도 확인이 필요하다.</p>
+        <div class="pcard__tags"><span>2icorp/website</span><span>#TypeScript</span><span>#Next.js</span><span class="pcard__go">GitHub →</span></div>
+      </a>
+      <a class="pcard reveal" href="https://github.com/2icorp/2i-webapp" data-cat="product" data-q="2i-webapp 2icorp/2i-webapp 2i 웹앱 홈페이지 2i 웹앱 홈페이지를 위한 next.js 프로젝트다. readme가 create-next-app 기본 안내뿐이라 실제 화면 구성은 코드에서 별도 확인이 필요하다. typescript typescript next.js" target="_blank" rel="noopener">
+        <div class="pcard__meta"><span class="pcard__cat">비공개</span><span class="pcard__rt">TypeScript</span><span class="pcard__date">2025.08.03</span><span class="pcard__rt">휴면</span></div>
+        <h3 class="pcard__title">2i 웹앱 홈페이지</h3>
+        <p class="pcard__excerpt">2i 웹앱 홈페이지를 위한 Next.js 프로젝트다. README가 create-next-app 기본 안내뿐이라 실제 화면 구성은 코드에서 별도 확인이 필요하다.</p>
+        <div class="pcard__tags"><span>2icorp/2i-webapp</span><span>#TypeScript</span><span>#Next.js</span><span class="pcard__go">GitHub →</span></div>
+      </a>
+        </div>
+      </section>
+      <section class="fam" id="tech-devtool" aria-labelledby="techt-devtool">
+        <header class="fam__head">
+          <h2 class="fam__t" id="techt-devtool">개발 도구·템플릿<span class="fam__n">24개</span></h2>
+          <p class="fam__d">레포 템플릿, 품질 검사기, 문서화, 사이트 저작 도구. 나머지 전부를 빠르게 만드는 바닥이다.</p>
+        </header>
+        <div class="pboard">
+      <a class="pcard reveal" href="https://github.com/2icorp/data-peek" data-cat="devtool" data-q="data-peek 2i/data-peek ai 지원 sql 클라이언트 데스크톱 앱 postgresql, mysql, sql server, sqlite를 지원하는 가볍고 빠른 ai 기반 질의 데스크톱 sql 클라이언트이다. 자연어를 sql로 변환하고 er 다이어그램과 차트를 생성한다. typescript typescript" target="_blank" rel="noopener">
+        <div class="pcard__meta"><span class="pcard__cat">비공개</span><span class="pcard__rt">TypeScript</span><span class="pcard__date">2026.01.02</span></div>
+        <h3 class="pcard__title">AI 지원 SQL 클라이언트 데스크톱 앱</h3>
+        <p class="pcard__excerpt">PostgreSQL, MySQL, SQL Server, SQLite를 지원하는 가볍고 빠른 AI 기반 질의 데스크톱 SQL 클라이언트이다. 자연어를 SQL로 변환하고 ER 다이어그램과 차트를 생성한다.</p>
+        <div class="pcard__tags"><span>2i/data-peek</span><span>#TypeScript</span><span class="pcard__go">GitHub →</span></div>
+      </a>
+      <a class="pcard reveal" href="https://github.com/2icorp/test-repo-from-template" data-cat="devtool" data-q="test-repo-from-template 2i/test-repo-from-template cursor 스킬 템플릿 테스트 저장소 ai-template cursor ide 설정 저장소를 템플릿으로 사용해 만든 테스트용 저장소로 실제 제품 콘텐츠 없이 템플릿 구성만 그대로 담고 있다. python python javascript html" target="_blank" rel="noopener">
+        <div class="pcard__meta"><span class="pcard__cat">비공개</span><span class="pcard__rt">Python</span><span class="pcard__date">2026.04.16</span></div>
+        <h3 class="pcard__title">Cursor 스킬 템플릿 테스트 저장소</h3>
+        <p class="pcard__excerpt">ai-template Cursor IDE 설정 저장소를 템플릿으로 사용해 만든 테스트용 저장소로 실제 제품 콘텐츠 없이 템플릿 구성만 그대로 담고 있다.</p>
+        <div class="pcard__tags"><span>2i/test-repo-from-template</span><span>#Python</span><span>#JavaScript</span><span>#HTML</span><span class="pcard__go">GitHub →</span></div>
+      </a>
+      <a class="pcard reveal" href="https://github.com/2icorp/design-skill-template" data-cat="devtool" data-q="design-skill-template 2i/design-skill-template 디자인 도메인 cursor 스킬 템플릿 360개 이상의 에이전트 스킬과 워크플로우 룰을 담은 재사용 가능한 cursor ide 설정을 디자인 도메인 작업용으로 파생한 저장소이다. design.md로 디자인 특화 산출물을 관리한다. python python javascript shell" target="_blank" rel="noopener">
+        <div class="pcard__meta"><span class="pcard__cat">비공개</span><span class="pcard__rt">Python</span><span class="pcard__date">2026.05.13</span></div>
+        <h3 class="pcard__title">디자인 도메인 Cursor 스킬 템플릿</h3>
+        <p class="pcard__excerpt">360개 이상의 에이전트 스킬과 워크플로우 룰을 담은 재사용 가능한 Cursor IDE 설정을 디자인 도메인 작업용으로 파생한 저장소이다. DESIGN.md로 디자인 특화 산출물을 관리한다.</p>
+        <div class="pcard__tags"><span>2i/design-skill-template</span><span>#Python</span><span>#JavaScript</span><span>#Shell</span><span class="pcard__go">GitHub →</span></div>
+      </a>
+      <a class="pcard reveal" href="https://github.com/2icorp/accessible-kr-service-template" data-cat="devtool" data-q="accessible-kr-service-template 2i/accessible-kr-service-template 접근성 우선 공공서비스 앱 템플릿 한국 공공서비스 데스크톱 앱 4종이 파생할 접근성 우선 tauri 템플릿으로 도메인 로직 없이 접근성 뼈대, 다국어 로더, 로컬 tts·stt 계약, pii 마스킹만 제공한다. tauri 2와 playwright·axe-core 접근성 테스트로 구성된다. rust rust tauri 2 javascript playwright" target="_blank" rel="noopener">
+        <div class="pcard__meta"><span class="pcard__cat">비공개</span><span class="pcard__rt">Rust</span><span class="pcard__date">2026.07.10</span></div>
+        <h3 class="pcard__title">접근성 우선 공공서비스 앱 템플릿</h3>
+        <p class="pcard__excerpt">한국 공공서비스 데스크톱 앱 4종이 파생할 접근성 우선 Tauri 템플릿으로 도메인 로직 없이 접근성 뼈대, 다국어 로더, 로컬 TTS·STT 계약, PII 마스킹만 제공한다. Tauri 2와 Playwright·axe-core 접근성 테스트로 구성된다.</p>
+        <div class="pcard__tags"><span>2i/accessible-kr-service-template</span><span>#Rust</span><span>#Tauri 2</span><span>#JavaScript</span><span>#Playwright</span><span class="pcard__go">GitHub →</span></div>
+      </a>
+      <a class="pcard reveal" href="https://github.com/2icorp/agent-webtool-template" data-cat="devtool" data-q="agent-webtool-template 2i/agent-webtool-template 클라이언트 사이드 웹 도구 스캐폴드 순수 로직 코어와 독립 감사, ci, github pages 배포를 갖춘 100% 클라이언트 사이드 정적 웹 도구용 재사용 가능한 템플릿 저장소이다. 서버, 키, 로그인이 필요 없다. javascript javascript css" target="_blank" rel="noopener">
+        <div class="pcard__meta"><span class="pcard__cat">공개</span><span class="pcard__rt">JavaScript</span><span class="pcard__date">2026.07.12</span></div>
+        <h3 class="pcard__title">클라이언트 사이드 웹 도구 스캐폴드</h3>
+        <p class="pcard__excerpt">순수 로직 코어와 독립 감사, CI, GitHub Pages 배포를 갖춘 100% 클라이언트 사이드 정적 웹 도구용 재사용 가능한 템플릿 저장소이다. 서버, 키, 로그인이 필요 없다.</p>
+        <div class="pcard__tags"><span>2i/agent-webtool-template</span><span>#JavaScript</span><span>#CSS</span><span class="pcard__go">GitHub →</span></div>
+      </a>
+      <a class="pcard reveal" href="https://github.com/2icorp/ai-platform-strategy" data-cat="devtool" data-q="ai-platform-strategy 2i/ai-platform-strategy 개인 ai 에이전트 하네스 모노레포 다수의 스킬, 룰, 서브모듈을 통합한 개인용 ai 플랫폼 전략 작업 모노레포이다. 여러 제품 저장소를 서브모듈로 관리하는 작업 공간이며 별도의 단일 제품은 아니다. python python javascript html" target="_blank" rel="noopener">
+        <div class="pcard__meta"><span class="pcard__cat">비공개</span><span class="pcard__rt">Python</span><span class="pcard__date">2026.07.12</span></div>
+        <h3 class="pcard__title">개인 AI 에이전트 하네스 모노레포</h3>
+        <p class="pcard__excerpt">다수의 스킬, 룰, 서브모듈을 통합한 개인용 AI 플랫폼 전략 작업 모노레포이다. 여러 제품 저장소를 서브모듈로 관리하는 작업 공간이며 별도의 단일 제품은 아니다.</p>
+        <div class="pcard__tags"><span>2i/ai-platform-strategy</span><span>#Python</span><span>#JavaScript</span><span>#HTML</span><span class="pcard__go">GitHub →</span></div>
+      </a>
+      <a class="pcard reveal" href="https://github.com/2icorp/cinematic-web-forge" data-cat="devtool" data-q="cinematic-web-forge 2i/cinematic-web-forge 시네마틱 웹사이트 제작 툴킷 프레임워크 의존 없는 typescript 모션 프리미티브, 실제 동작하는 플래그십 템플릿, 스캐폴더, 갤러리로 구성된 다크 럭셔리 모션 중심 웹사이트 제작 툴킷이다. three.js 실시간 3d 히어로를 포함한다. typescript typescript three.js css" target="_blank" rel="noopener">
+        <div class="pcard__meta"><span class="pcard__cat">공개</span><span class="pcard__rt">TypeScript</span><span class="pcard__date">2026.07.13</span></div>
+        <h3 class="pcard__title">시네마틱 웹사이트 제작 툴킷</h3>
+        <p class="pcard__excerpt">프레임워크 의존 없는 TypeScript 모션 프리미티브, 실제 동작하는 플래그십 템플릿, 스캐폴더, 갤러리로 구성된 다크 럭셔리 모션 중심 웹사이트 제작 툴킷이다. Three.js 실시간 3D 히어로를 포함한다.</p>
+        <div class="pcard__tags"><span>2i/cinematic-web-forge</span><span>#TypeScript</span><span>#Three.js</span><span>#CSS</span><span class="pcard__go">GitHub →</span></div>
+      </a>
+      <a class="pcard reveal" href="https://github.com/2icorp/pagegrid" data-cat="devtool" data-q="pagegrid 2i/pagegrid 이미지 격자 자동 배치 인쇄 도구 여러 장의 이미지를 원하는 페이지 크기와 매수에 맞춰 격자로 자동 배치해 png나 인쇄용 pdf로 내보내는 100% 클라이언트 사이드 도구이다. 이미지는 브라우저 메모리에만 존재하며 원본 비율을 유지한 채 셀에 내접시킨다. javascript javascript html css" target="_blank" rel="noopener">
+        <div class="pcard__meta"><span class="pcard__cat">비공개</span><span class="pcard__rt">JavaScript</span><span class="pcard__date">2026.07.21</span></div>
+        <h3 class="pcard__title">이미지 격자 자동 배치 인쇄 도구</h3>
+        <p class="pcard__excerpt">여러 장의 이미지를 원하는 페이지 크기와 매수에 맞춰 격자로 자동 배치해 PNG나 인쇄용 PDF로 내보내는 100% 클라이언트 사이드 도구이다. 이미지는 브라우저 메모리에만 존재하며 원본 비율을 유지한 채 셀에 내접시킨다.</p>
+        <div class="pcard__tags"><span>2i/pagegrid</span><span>#JavaScript</span><span>#HTML</span><span>#CSS</span><span class="pcard__go">GitHub →</span></div>
+      </a>
+      <a class="pcard reveal" href="https://github.com/2icorp/readme-og-forge" data-cat="devtool" data-q="readme-og-forge 2i/readme-og-forge readme 기반 소셜 미리보기 썸네일 생성기 공개 github 저장소나 readme 텍스트를 붙여넣으면 제목, 설명, 언어, 스타 수를 담은 1200x630 오픈그래프 이미지를 세 가지 레이아웃 템플릿으로 만드는 도구이다. 디자인 툴이나 키, 서버 없이 바로 png를 내려받는다. javascript javascript html css" target="_blank" rel="noopener">
+        <div class="pcard__meta"><span class="pcard__cat">비공개</span><span class="pcard__rt">JavaScript</span><span class="pcard__date">2026.07.24</span></div>
+        <h3 class="pcard__title">README 기반 소셜 미리보기 썸네일 생성기</h3>
+        <p class="pcard__excerpt">공개 GitHub 저장소나 README 텍스트를 붙여넣으면 제목, 설명, 언어, 스타 수를 담은 1200x630 오픈그래프 이미지를 세 가지 레이아웃 템플릿으로 만드는 도구이다. 디자인 툴이나 키, 서버 없이 바로 PNG를 내려받는다.</p>
+        <div class="pcard__tags"><span>2i/readme-og-forge</span><span>#JavaScript</span><span>#HTML</span><span>#CSS</span><span class="pcard__go">GitHub →</span></div>
+      </a>
+      <a class="pcard reveal" href="https://github.com/2icorp/2i-case-10-web-marketing" data-cat="devtool" data-q="2i-case-10-web-marketing 2icorp/2i-case-10-web-marketing 무료 호스팅 랜딩 seo 스타터 브랜드 톤에 맞춘 반응형 랜딩을 도메인 없이 무료 호스팅으로 정적 생성, 배포하고 기본 seo와 문의 폼 같은 전환 장치를 붙이는 원스톱 스타터다. github pages 기반 합성 데이터 레퍼런스 데모다. html python 정적 생성 seo github pages" target="_blank" rel="noopener">
+        <div class="pcard__meta"><span class="pcard__cat">비공개</span><span class="pcard__rt">HTML</span><span class="pcard__date">2026.07.26</span><span class="pcard__rt">사례 10</span></div>
+        <h3 class="pcard__title">무료 호스팅 랜딩 SEO 스타터</h3>
+        <p class="pcard__excerpt">브랜드 톤에 맞춘 반응형 랜딩을 도메인 없이 무료 호스팅으로 정적 생성, 배포하고 기본 SEO와 문의 폼 같은 전환 장치를 붙이는 원스톱 스타터다. GitHub Pages 기반 합성 데이터 레퍼런스 데모다.</p>
+        <div class="pcard__tags"><span>2icorp/2i-case-10-web-marketing</span><span>#Python</span><span>#정적 생성</span><span>#SEO</span><span>#GitHub Pages</span><span class="pcard__go">GitHub →</span></div>
+      </a>
+      <a class="pcard reveal" href="https://github.com/2icorp/research" data-cat="devtool" data-q="research 2i/research 리서치·전략 작업용 개인 저장소 speckit 템플릿 구조를 따르는 개인 리서치, 전략 작업 저장소로 readme에 실제 제품 설명 없이 스킬, 메모리, 산출물 디렉터리만 구성되어 있다. python python" target="_blank" rel="noopener">
+        <div class="pcard__meta"><span class="pcard__cat">비공개</span><span class="pcard__rt">Python</span><span class="pcard__date">2026.07.28</span></div>
+        <h3 class="pcard__title">리서치·전략 작업용 개인 저장소</h3>
+        <p class="pcard__excerpt">speckit 템플릿 구조를 따르는 개인 리서치, 전략 작업 저장소로 README에 실제 제품 설명 없이 스킬, 메모리, 산출물 디렉터리만 구성되어 있다.</p>
+        <div class="pcard__tags"><span>2i/research</span><span>#Python</span><span class="pcard__go">GitHub →</span></div>
+      </a>
+      <a class="pcard reveal" href="https://github.com/2icorp/2i-ax-workspace" data-cat="devtool" data-q="2i-ax-workspace 2icorp/2i-ax-workspace 2i ax 사례 저작 워크스페이스 2i ax 케이스 스터디의 리서치, 계획, 복구 문서와 실험 산출물을 관리하는 내부 작업 공간이다. 배포용 코드가 아니라 cases.json과 렌더 스크립트를 다루는 저작 도구다. python python" target="_blank" rel="noopener">
+        <div class="pcard__meta"><span class="pcard__cat">비공개</span><span class="pcard__rt">Python</span><span class="pcard__date">2026.07.31</span></div>
+        <h3 class="pcard__title">2i AX 사례 저작 워크스페이스</h3>
+        <p class="pcard__excerpt">2i AX 케이스 스터디의 리서치, 계획, 복구 문서와 실험 산출물을 관리하는 내부 작업 공간이다. 배포용 코드가 아니라 cases.json과 렌더 스크립트를 다루는 저작 도구다.</p>
+        <div class="pcard__tags"><span>2icorp/2i-ax-workspace</span><span>#Python</span><span class="pcard__go">GitHub →</span></div>
+      </a>
+      <a class="pcard reveal" href="https://github.com/2icorp/cursor-template" data-cat="devtool" data-q="cursor-template 2i/cursor-template cursor ide 에이전트 스킬 설정 번들 360개 이상의 에이전트 스킬과 320개 이상의 슬래시 커맨드, 28개의 워크플로우 룰을 담은 재사용 가능한 cursor ide 설정 저장소이다. 개발, 기획, 금융, 디자인 등 다양한 도메인의 워크플로를 한 번에 설치한다. python python javascript html" target="_blank" rel="noopener">
+        <div class="pcard__meta"><span class="pcard__cat">비공개</span><span class="pcard__rt">Python</span><span class="pcard__date">2026.07.31</span></div>
+        <h3 class="pcard__title">Cursor IDE 에이전트 스킬 설정 번들</h3>
+        <p class="pcard__excerpt">360개 이상의 에이전트 스킬과 320개 이상의 슬래시 커맨드, 28개의 워크플로우 룰을 담은 재사용 가능한 Cursor IDE 설정 저장소이다. 개발, 기획, 금융, 디자인 등 다양한 도메인의 워크플로를 한 번에 설치한다.</p>
+        <div class="pcard__tags"><span>2i/cursor-template</span><span>#Python</span><span>#JavaScript</span><span>#HTML</span><span class="pcard__go">GitHub →</span></div>
+      </a>
+      <a class="pcard reveal" href="https://github.com/2icorp/github-to-notion-sync" data-cat="devtool" data-q="github-to-notion-sync 2i/github-to-notion-sync github 프로젝트-notion 스프린트 동기화 github 프로젝트의 이슈와 pr을 notion 데이터베이스로 실시간 동기화해 팀 스크럼 프로세스를 지원하는 파이프라인이다. 팀별 독립 설정과 일일 스프린트 동기화 자동화를 지원한다. python python" target="_blank" rel="noopener">
+        <div class="pcard__meta"><span class="pcard__cat">공개</span><span class="pcard__rt">Python</span><span class="pcard__date">2026.07.31</span></div>
+        <h3 class="pcard__title">GitHub 프로젝트-Notion 스프린트 동기화</h3>
+        <p class="pcard__excerpt">GitHub 프로젝트의 이슈와 PR을 Notion 데이터베이스로 실시간 동기화해 팀 스크럼 프로세스를 지원하는 파이프라인이다. 팀별 독립 설정과 일일 스프린트 동기화 자동화를 지원한다.</p>
+        <div class="pcard__tags"><span>2i/github-to-notion-sync</span><span>#Python</span><span class="pcard__go">GitHub →</span></div>
+      </a>
+      <a class="pcard reveal" href="https://github.com/2icorp/2i-workspace" data-cat="devtool" data-q="2i-workspace 2icorp/2i-workspace 2i 사이트 저작 워크스페이스 cases.json과 렌더러, 배포 스크립트로 2icorp.github.io 사례 페이지를 만드는 내부 저작 작업 공간이다. 사업계획, 리드인테이크, 메시지 스파인 같은 운영 문서도 함께 관리한다. html html python" target="_blank" rel="noopener">
+        <div class="pcard__meta"><span class="pcard__cat">비공개</span><span class="pcard__rt">HTML</span><span class="pcard__date">2026.08.02</span></div>
+        <h3 class="pcard__title">2i 사이트 저작 워크스페이스</h3>
+        <p class="pcard__excerpt">cases.json과 렌더러, 배포 스크립트로 2icorp.github.io 사례 페이지를 만드는 내부 저작 작업 공간이다. 사업계획, 리드인테이크, 메시지 스파인 같은 운영 문서도 함께 관리한다.</p>
+        <div class="pcard__tags"><span>2icorp/2i-workspace</span><span>#HTML</span><span>#Python</span><span class="pcard__go">GitHub →</span></div>
+      </a>
+      <a class="pcard reveal" href="https://github.com/2icorp/2icorp.github.io" data-cat="devtool" data-q="2icorp.github.io 2icorp/2icorp.github.io 2icorp 공개 github pages 사이트 사례집, 논문, 브로셔, 데모 페이지를 담은 회사 공개 사이트다. cases.json과 papers.json을 파이썬 렌더 스크립트로 정적 html로 만들어 배포한다. html html python" target="_blank" rel="noopener">
+        <div class="pcard__meta"><span class="pcard__cat">공개</span><span class="pcard__rt">HTML</span><span class="pcard__date">2026.08.02</span></div>
+        <h3 class="pcard__title">2icorp 공개 GitHub Pages 사이트</h3>
+        <p class="pcard__excerpt">사례집, 논문, 브로셔, 데모 페이지를 담은 회사 공개 사이트다. cases.json과 papers.json을 파이썬 렌더 스크립트로 정적 HTML로 만들어 배포한다.</p>
+        <div class="pcard__tags"><span>2icorp/2icorp.github.io</span><span>#HTML</span><span>#Python</span><span class="pcard__go">GitHub →</span></div>
+      </a>
+      <a class="pcard reveal" href="https://github.com/2icorp/ai-strategy" data-cat="devtool" data-q="ai-strategy 2i/ai-strategy 개인 ai 에이전트 하네스 모노레포 (동기화본) ai-platform-strategy와 동일 계열의 개인용 ai 플랫폼 전략 작업 모노레포로 서브모듈과 스킬, 메모리 디렉터리를 함께 동기화한다. 별도의 단일 제품이 아니라 작업 공간이다. python python javascript html" target="_blank" rel="noopener">
+        <div class="pcard__meta"><span class="pcard__cat">비공개</span><span class="pcard__rt">Python</span><span class="pcard__date">2026.08.02</span></div>
+        <h3 class="pcard__title">개인 AI 에이전트 하네스 모노레포 (동기화본)</h3>
+        <p class="pcard__excerpt">ai-platform-strategy와 동일 계열의 개인용 AI 플랫폼 전략 작업 모노레포로 서브모듈과 스킬, 메모리 디렉터리를 함께 동기화한다. 별도의 단일 제품이 아니라 작업 공간이다.</p>
+        <div class="pcard__tags"><span>2i/ai-strategy</span><span>#Python</span><span>#JavaScript</span><span>#HTML</span><span class="pcard__go">GitHub →</span></div>
+      </a>
+      <a class="pcard reveal" href="https://github.com/2icorp/kidsnote-client" data-cat="devtool" data-q="kidsnote-client 2icorp/kidsnote-client 키즈노트 api 클라이언트 예제 모음 python, node.js, go, php, c++, java 6개 언어로 작성한 api 클라이언트 예제로 s3 업로드와 작업 생성을 시연한다. 2024년 이후 갱신이 없는 휴면 상태다. python python node.js go php c++ java" target="_blank" rel="noopener">
+        <div class="pcard__meta"><span class="pcard__cat">비공개</span><span class="pcard__rt">Python</span><span class="pcard__date">2024.06.04</span><span class="pcard__rt">휴면</span></div>
+        <h3 class="pcard__title">키즈노트 API 클라이언트 예제 모음</h3>
+        <p class="pcard__excerpt">Python, Node.js, Go, PHP, C++, Java 6개 언어로 작성한 API 클라이언트 예제로 S3 업로드와 작업 생성을 시연한다. 2024년 이후 갱신이 없는 휴면 상태다.</p>
+        <div class="pcard__tags"><span>2icorp/kidsnote-client</span><span>#Python</span><span>#Node.js</span><span>#Go</span><span>#PHP</span><span>#C++</span><span class="pcard__go">GitHub →</span></div>
+      </a>
+      <a class="pcard reveal" href="https://github.com/2icorp/website-draft" data-cat="devtool" data-q="website-draft 2icorp/website-draft 웹사이트 cloudfront 초안 cloudfront 홈페이지 배포용 웹사이트 초안으로 create-next-app 기본 템플릿 상태다. 2024년 이후 갱신이 없는 휴면 상태다. typescript typescript next.js" target="_blank" rel="noopener">
+        <div class="pcard__meta"><span class="pcard__cat">비공개</span><span class="pcard__rt">TypeScript</span><span class="pcard__date">2024.07.25</span><span class="pcard__rt">휴면</span></div>
+        <h3 class="pcard__title">웹사이트 CloudFront 초안</h3>
+        <p class="pcard__excerpt">CloudFront 홈페이지 배포용 웹사이트 초안으로 create-next-app 기본 템플릿 상태다. 2024년 이후 갱신이 없는 휴면 상태다.</p>
+        <div class="pcard__tags"><span>2icorp/website-draft</span><span>#TypeScript</span><span>#Next.js</span><span class="pcard__go">GitHub →</span></div>
+      </a>
+      <a class="pcard reveal" href="https://github.com/2icorp/admin-web-draft" data-cat="devtool" data-q="admin-web-draft 2icorp/admin-web-draft 어드민 웹 cloudfront 초안 cloudfront 배포용 어드민 웹의 초안 저장소로 admin-web과 같은 nextauth 세팅을 쓴다. 2024년 이후 갱신이 없는 휴면 상태다. typescript typescript next.js" target="_blank" rel="noopener">
+        <div class="pcard__meta"><span class="pcard__cat">비공개</span><span class="pcard__rt">TypeScript</span><span class="pcard__date">2024.07.28</span><span class="pcard__rt">휴면</span></div>
+        <h3 class="pcard__title">어드민 웹 CloudFront 초안</h3>
+        <p class="pcard__excerpt">CloudFront 배포용 어드민 웹의 초안 저장소로 admin-web과 같은 NextAuth 세팅을 쓴다. 2024년 이후 갱신이 없는 휴면 상태다.</p>
+        <div class="pcard__tags"><span>2icorp/admin-web-draft</span><span>#TypeScript</span><span>#Next.js</span><span class="pcard__go">GitHub →</span></div>
+      </a>
+      <a class="pcard reveal" href="https://github.com/2icorp/2i-client" data-cat="devtool" data-q="2i-client 2icorp/2i-client 2i 클라이언트 스텁 제목 한 줄만 있는 빈 저장소로 실질적인 내용이 확인되지 않는다. 2024년 이후 갱신이 없는 휴면 상태다. python python" target="_blank" rel="noopener">
+        <div class="pcard__meta"><span class="pcard__cat">비공개</span><span class="pcard__rt">Python</span><span class="pcard__date">2024.09.29</span><span class="pcard__rt">휴면</span></div>
+        <h3 class="pcard__title">2i 클라이언트 스텁</h3>
+        <p class="pcard__excerpt">제목 한 줄만 있는 빈 저장소로 실질적인 내용이 확인되지 않는다. 2024년 이후 갱신이 없는 휴면 상태다.</p>
+        <div class="pcard__tags"><span>2icorp/2i-client</span><span>#Python</span><span class="pcard__go">GitHub →</span></div>
+      </a>
+      <a class="pcard reveal" href="https://github.com/2icorp/2i-webapp-demo" data-cat="devtool" data-q="2i-webapp-demo 2icorp/2i-webapp-demo 2i 웹앱 데모 스캐폴드 create-next-app으로 만든 기본 템플릿 상태 그대로인 데모 저장소다. 2024년 이후 갱신이 없는 휴면 상태다. typescript typescript next.js" target="_blank" rel="noopener">
+        <div class="pcard__meta"><span class="pcard__cat">비공개</span><span class="pcard__rt">TypeScript</span><span class="pcard__date">2024.12.27</span><span class="pcard__rt">휴면</span></div>
+        <h3 class="pcard__title">2i 웹앱 데모 스캐폴드</h3>
+        <p class="pcard__excerpt">create-next-app으로 만든 기본 템플릿 상태 그대로인 데모 저장소다. 2024년 이후 갱신이 없는 휴면 상태다.</p>
+        <div class="pcard__tags"><span>2icorp/2i-webapp-demo</span><span>#TypeScript</span><span>#Next.js</span><span class="pcard__go">GitHub →</span></div>
+      </a>
+      <a class="pcard reveal" href="https://github.com/2icorp/claude-code-test" data-cat="devtool" data-q="claude-code-test 2i/claude-code-test 컨텍스트 엔지니어링 템플릿 실습 ai 코딩 어시스턴트를 위한 컨텍스트 엔지니어링 기법을 익히기 위해 받아온 템플릿 저장소이다. 외부 오픈소스 템플릿을 그대로 클론한 실습용 저장소이다. python python typescript" target="_blank" rel="noopener">
+        <div class="pcard__meta"><span class="pcard__cat">비공개</span><span class="pcard__rt">Python</span><span class="pcard__date">2025.10.16</span><span class="pcard__rt">휴면</span></div>
+        <h3 class="pcard__title">컨텍스트 엔지니어링 템플릿 실습</h3>
+        <p class="pcard__excerpt">AI 코딩 어시스턴트를 위한 컨텍스트 엔지니어링 기법을 익히기 위해 받아온 템플릿 저장소이다. 외부 오픈소스 템플릿을 그대로 클론한 실습용 저장소이다.</p>
+        <div class="pcard__tags"><span>2i/claude-code-test</span><span>#Python</span><span>#TypeScript</span><span class="pcard__go">GitHub →</span></div>
+      </a>
+      <a class="pcard reveal" href="https://github.com/2icorp/courses" data-cat="devtool" data-q="courses 2i/courses anthropic 공식 교육 코스 저장소 anthropic이 공개한 api, 프롬프트 엔지니어링, 도구 사용 교육 코스를 그대로 받아온 저장소이다. 자체 제작 콘텐츠가 아니라 학습용으로 보관 중인 공개 자료이다. jupyter notebook jupyter notebook python" target="_blank" rel="noopener">
+        <div class="pcard__meta"><span class="pcard__cat">공개</span><span class="pcard__rt">Notebook</span><span class="pcard__date">2025.11.13</span><span class="pcard__rt">휴면</span></div>
+        <h3 class="pcard__title">Anthropic 공식 교육 코스 저장소</h3>
+        <p class="pcard__excerpt">Anthropic이 공개한 API, 프롬프트 엔지니어링, 도구 사용 교육 코스를 그대로 받아온 저장소이다. 자체 제작 콘텐츠가 아니라 학습용으로 보관 중인 공개 자료이다.</p>
+        <div class="pcard__tags"><span>2i/courses</span><span>#Jupyter Notebook</span><span>#Python</span><span class="pcard__go">GitHub →</span></div>
+      </a>
+        </div>
+      </section>
+      <section class="fam" id="tech-misc" aria-labelledby="techt-misc">
+        <header class="fam__head">
+          <h2 class="fam__t" id="techt-misc">기타<span class="fam__n">2개</span></h2>
+          <p class="fam__d">위 축에 정확히 붙지 않는 것들이다. 억지로 분류하지 않는다.</p>
+        </header>
+        <div class="pboard">
+      <a class="pcard reveal" href="https://github.com/2icorp/macro-factor-dashboards" data-cat="misc" data-q="macro-factor-dashboards 2i/macro-factor-dashboards 매크로 팩터 대시보드 스캐폴드 next.js create-next-app 기본 템플릿 그대로인 초기 스캐폴드 단계 저장소로 매크로 경제 팩터 대시보드를 위한 실제 구현 내용은 readme에 아직 없다. 실험용 스캐폴드 단계이다. python next.js typescript" target="_blank" rel="noopener">
+        <div class="pcard__meta"><span class="pcard__cat">비공개</span><span class="pcard__rt">Python</span><span class="pcard__date">2026.07.27</span></div>
+        <h3 class="pcard__title">매크로 팩터 대시보드 스캐폴드</h3>
+        <p class="pcard__excerpt">Next.js create-next-app 기본 템플릿 그대로인 초기 스캐폴드 단계 저장소로 매크로 경제 팩터 대시보드를 위한 실제 구현 내용은 README에 아직 없다. 실험용 스캐폴드 단계이다.</p>
+        <div class="pcard__tags"><span>2i/macro-factor-dashboards</span><span>#Next.js</span><span>#TypeScript</span><span class="pcard__go">GitHub →</span></div>
+      </a>
+      <a class="pcard reveal" href="https://github.com/2icorp/dreamy-griffin-flit" data-cat="misc" data-q="dreamy-griffin-flit 2i/dreamy-griffin-flit dyad 생성 앱 스캐폴드 dyad 앱 빌더로 생성된 초기 스캐폴드 저장소로 readme에 실제 제품 설명이 없는 실험용 스캐폴드 단계이다. capacitor 기반 ios·android 빌드 구성만 존재한다. typescript typescript swift capacitor" target="_blank" rel="noopener">
+        <div class="pcard__meta"><span class="pcard__cat">비공개</span><span class="pcard__rt">TypeScript</span><span class="pcard__date">2025.08.01</span><span class="pcard__rt">휴면</span></div>
+        <h3 class="pcard__title">Dyad 생성 앱 스캐폴드</h3>
+        <p class="pcard__excerpt">Dyad 앱 빌더로 생성된 초기 스캐폴드 저장소로 README에 실제 제품 설명이 없는 실험용 스캐폴드 단계이다. Capacitor 기반 iOS·Android 빌드 구성만 존재한다.</p>
+        <div class="pcard__tags"><span>2i/dreamy-griffin-flit</span><span>#TypeScript</span><span>#Swift</span><span>#Capacitor</span><span class="pcard__go">GitHub →</span></div>
+      </a>
+        </div>
+      </section>
+    </div>
+    </div>
+  </section>
+</main>
+
+<footer class="foot">
+  <div class="wrap foot__inner">
+    <div>
+      <div class="brand"><span class="brand__mark">2i</span><span class="brand__tag">AX 컨설팅</span></div>
+      <div class="foot__mono" style="margin-top:0.6rem">중소·중견 제조·유통을 위한 AI 전환</div>
+      <div class="foot__legal">상호 <b>2i</b> · 대표 한금지 · 문의 <a href="mailto:contact@2icorp.site">contact@2icorp.site</a></div>
+    </div>
+    <nav class="foot__links" aria-label="하단 메뉴">
+      <a href="about.html">회사소개</a>
+      <a href="index.html#method">방식</a>
+      <a href="cases.html">사례</a>
+      <a href="tech.html">기술</a>
+      <a href="cloud.html">클라우드</a>
+      <a href="papers.html">논문·실험</a>
+      <a href="index.html#voucher">정부 바우처</a>
+      <a href="privacy.html">개인정보처리방침</a>
+    </nav>
+  </div>
+</footer>
+
+<script src="main.js"></script>
+<script>
+(function(){
+  // 검색은 있으면 편하고 없어도 되는 기능이다. 그래서 기본 상태는 '숨김'이고
+  // JS 가 살아 있을 때만 드러난다. 스크립트가 죽어도 126개 항목은 전부 보인다.
+  var box = document.querySelector('.techsearch');
+  var input = document.getElementById('techq');
+  var note = document.getElementById('techn');
+  if (!box || !input) return;
+  box.hidden = false;
+  var cards = Array.prototype.slice.call(document.querySelectorAll('.pcard[data-q]'));
+  var secs = Array.prototype.slice.call(document.querySelectorAll('.fam[id^="tech-"]'));
+  function apply(){
+    var q = input.value.trim().toLowerCase();
+    var shown = 0;
+    cards.forEach(function(c){
+      var hit = !q || c.getAttribute('data-q').indexOf(q) !== -1;
+      c.classList.toggle('is-hidden', !hit);
+      if (hit) shown++;
+    });
+    secs.forEach(function(s){
+      var any = s.querySelector('.pcard:not(.is-hidden)');
+      s.style.display = any ? '' : 'none';
+    });
+    note.textContent = q ? (shown + ' / ' + cards.length + '개') : '';
+  }
+  input.addEventListener('input', apply);
+})();
+</script>
+</body>
+</html>

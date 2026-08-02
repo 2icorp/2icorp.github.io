@@ -15,7 +15,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="styles.css?v=18">
+<link rel="stylesheet" href="styles.css?v=20">
 </head>
 <body>
 
@@ -29,6 +29,7 @@
     <nav class="nav__links" id="navLinks" aria-label="주요 메뉴">
       <a href="index.html#method">방식</a>
       <a href="cases.html">사례</a>
+      <a href="tech.html">기술</a>
       <a href="comms.html">통신</a>
       <a href="cloud.html">클라우드</a>
       <a href="finance.html">금융</a>
@@ -326,44 +327,34 @@
   </section>
 
   <!-- Air-gap data diode -->
-  <section class="section" id="airgap">
+  <section class="section chero chero--band" id="airgap">
+    <div class="chero__wave" aria-hidden="true">
+      <svg viewBox="0 0 1200 220" preserveAspectRatio="none" focusable="false" aria-hidden="true">
+        <g class="chero__w1">
+          <path d="M0,110 C40,60 80,60 120,110 C160,160 200,160 240,110 C280,40 320,40 360,110 C400,180 440,180 480,110 C520,70 560,70 600,110 C640,150 680,150 720,110 C760,50 800,50 840,110 C880,170 920,170 960,110 C1000,80 1040,80 1080,110 C1120,140 1160,140 1200,110" fill="none" stroke="var(--signal)" stroke-width="2" opacity="0.5"/>
+          <path d="M1200,110 C1240,60 1280,60 1320,110 C1360,160 1400,160 1440,110 C1480,40 1520,40 1560,110 C1600,180 1640,180 1680,110 C1720,70 1760,70 1800,110 C1840,150 1880,150 1920,110 C1960,50 2000,50 2040,110 C2080,170 2120,170 2160,110 C2200,80 2240,80 2280,110 C2320,140 2360,140 2400,110" fill="none" stroke="var(--signal)" stroke-width="2" opacity="0.5"/>
+        </g>
+        <g class="chero__w2">
+          <path d="M0,110 C60,95 120,95 180,110 C240,125 300,125 360,110 C420,88 480,88 540,110 C600,132 660,132 720,110 C780,98 840,98 900,110 C960,122 1020,122 1080,110 C1140,102 1170,102 1200,110" fill="none" stroke="var(--ink-faint)" stroke-width="1.4" opacity="0.55"/>
+          <path d="M1200,110 C1260,95 1320,95 1380,110 C1440,125 1500,125 1560,110 C1620,88 1680,88 1740,110 C1800,132 1860,132 1920,110 C1980,98 2040,98 2100,110 C2160,122 2220,122 2280,110 C2340,102 2370,102 2400,110" fill="none" stroke="var(--ink-faint)" stroke-width="1.4" opacity="0.55"/>
+        </g>
+      </svg>
+    </div>
     <div class="wrap">
-      <div class="section__head reveal">
-        <span class="eyebrow">폐쇄망 전송 · AIR-GAP DATA DIODE</span>
-        <h2>인터넷을 못 꽂는 설비에도, 모델을 한 방향으로 넣습니다.</h2>
-        <p>보안상 네트워크를 붙일 수 없는 폐쇄망 설비는 AI 모델을 최신으로 유지하기가 어렵습니다. USB는 침해 경로 1순위라 막아 두고, 그렇다고 못 넣으면 현장 AI가 낡습니다. 저희는 화면에서 카메라로 흐르는 분수 부호로 파일을 한 방향으로 흘려 넣고, 조각을 절반 넘게 흘려도 남은 조각만 모이면 원본을 복원합니다. 순방향이 모자라면 대역 없는 역방향 신호가 빠진 조각만 되채워 100퍼센트 복원을 보장하되, 벌크는 못 나가므로 한 방향(다이오드) 성질이 유지됩니다. 아래 값은 참조 구현 코드가 실행에서 뽑은 값이거나, 데모가 브라우저에서 그 자리에서 계산하는 값입니다.</p>
+      <span class="eyebrow">폐쇄망 전송 · AIR-GAP DATA DIODE</span>
+      <h2 class="chero__h1">인터넷을 못 꽂는 설비에도,<br><span class="u accent">모델을 한 방향으로</span> 넣습니다.</h2>
+      <p class="chero__lede">네트워크를 붙일 수 없는 폐쇄망 설비는 AI 모델을 최신으로 유지하기 어렵습니다. USB는 침해 경로 1순위라 막아 두면 현장 AI가 낡습니다. 저희는 화면에서 카메라로 흐르는 분수 부호로 파일을 한 방향으로 흘려 넣고, 조각을 절반 넘게 흘려도 남은 조각만 모이면 원본을 복원합니다. 대역 없는 역방향 신호가 빠진 조각만 되채워 100퍼센트 복원하되, 벌크는 못 나가므로 한 방향(다이오드) 성질이 유지됩니다.</p>
+      <div class="chero__stats reveal stagger">
+        <div class="cstat"><span class="cstat__n">100<small>%</small></span><span class="cstat__l">역채널이 빠진 블록만 되채워 원본 복원 (블러 45% · 거리 120m, 데모 실측)</span></div>
+        <div class="cstat"><span class="cstat__n">24<small>블록</small></span><span class="cstat__l">전체 재전송 아닌 표적 되채움 · 시드 고정 재현</span></div>
+        <div class="cstat"><span class="cstat__n">38.6<small>µs</small></span><span class="cstat__l">4KB 페이로드 인코딩+복호 왕복 (무의존 no_std Rust)</span></div>
+        <div class="cstat"><span class="cstat__n">59<small>/59</small></span><span class="cstat__l">속성·실패 테스트 포함 전부 통과 (실측)</span></div>
       </div>
-
-      <div class="rf-grid reveal stagger" style="margin-top:1.6rem">
-        <div class="rf-cell rf-cell--lead">
-          <span class="rf-metric">미완성 → 100<small>%</small></span>
-          <span class="rf-unit">역채널 유무에 따른 원본 복원</span>
-          <span class="rf-name">한 방향으로 넣되, 빠진 조각만 되채운다</span>
-          <span class="rf-desc">블러 45퍼센트, 거리 120미터 조건에서 순방향만으로는 24블록 중 일부에서 멈춰 미완성으로 남습니다. 대역 없는 역채널이 빠진 블록만 되채우면 원본이 100퍼센트 복원됩니다. 데모의 슬라이더를 움직이면 그 자리에서 다시 계산합니다.</span>
-          <span class="chip chip--v">합성 데이터 계산 · 데모가 브라우저에서 실측</span>
-        </div>
-        <div class="rf-cell">
-          <span class="rf-metric">빠진 블록만</span>
-          <span class="rf-unit">고유실 구간의 재전송량</span>
-          <span class="rf-name">전체 재전송이 아니라 표적 되채움</span>
-          <span class="rf-desc">유실이 커도 이미 도달한 조각은 버리지 않고, 수신기가 아직 못 채운 블록만 되묻습니다. 전체를 다시 보내는 방식보다 대역과 시간을 아낍니다. 시드가 고정돼 같은 입력이면 같은 결과가 나옵니다.</span>
-          <span class="chip chip--v">합성 데이터 계산 · 시드 고정 재현</span>
-        </div>
-        <div class="rf-cell">
-          <span class="rf-metric">38.6<small>µs</small></span>
-          <span class="rf-unit">4KB 페이로드 인코딩+복호 왕복</span>
-          <span class="rf-name">감이 아니라 테스트로 검증한 구현</span>
-          <span class="rf-desc">참조 구현은 무의존(no_std) Rust로 작성했고, 4킬로바이트 페이로드를 인코딩하고 복호하는 왕복이 약 38.6마이크로초입니다. 속성 테스트와 실패 테스트를 포함해 59개 테스트가 통과합니다. 시뮬레이션 채널 위에서 코딩과 프로토콜 계층을 검증한 값입니다.</span>
-          <span class="chip chip--v">실측 · 59개 테스트 통과</span>
-        </div>
-      </div>
-
       <div class="hero__cta reveal" style="margin-top:1.4rem">
         <a class="btn btn--signal" href="demos/23-airgap-diode/">데모 직접 돌려보기 <span class="arrow">→</span></a>
         <a class="btn" href="cases.html#case-23">사례 자세히 보기</a>
       </div>
-
-      <p class="auto-foot reveal">정직하게 말하면: 이 데모와 수치는 물리 링크를 흉내 낸 유실·잡음 모델 위에서 코딩과 프로토콜 계층만 실제로 계산합니다. 실제 SDR·카메라·모니터로 하는 RF·광 전송을 검증하지는 않습니다. 도입 시 현장 장비의 프레임율·조도·거리로 유실률을 다시 재고, 대용량은 광 자유공간 링크나 분할 전송을 함께 씁니다.</p>
+      <p class="auto-foot reveal" style="margin-top:1.3rem">정직하게 말하면: 이 데모와 수치는 물리 링크를 흉내 낸 유실·잡음 모델 위에서 코딩과 프로토콜 계층만 실제로 계산합니다. 실제 SDR·카메라·모니터로 하는 RF·광 전송을 검증하지는 않습니다. 도입 시 현장 장비의 프레임율·조도·거리로 유실률을 다시 재고, 대용량은 광 자유공간 링크나 분할 전송을 함께 씁니다.</p>
     </div>
   </section>
 
