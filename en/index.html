@@ -10,7 +10,7 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../styles.css?v=17">
+<link rel="stylesheet" href="../styles.css?v=18">
 </head>
 <body>
 
@@ -37,29 +37,71 @@
   <section class="hero loaded" id="top">
     <div class="wrap hero__grid">
       <div>
-        <span class="eyebrow">Manufacturing · Distribution · Logistics</span>
-        <h1>Make AI a <span class="u accent">process</span>, not a guess.</h1>
-        <p class="hero__lede">2i measures the problems on your floor, proves what actually works, and leaves behind a system your team can run.</p>
+        <span class="eyebrow">Manufacturing · Distribution · Logistics · Built in-house end to end</span>
+        <h1>Not a proposal.<br><span class="u accent">What we already built</span>.</h1>
+        <p class="hero__lede">Consultancies listen first and build later. 2i already built working implementations across 22 domains, spanning vision, signals, forecasting, language, agents, optimisation and infrastructure. We plug your data into them and re-measure with your own numbers.</p>
         <div class="hero__cta">
-          <a class="btn btn--signal" href="#contact">Talk to us <span class="arrow">→</span></a>
-          <a class="btn btn--ghost" href="#service">See the service</a>
+          <a class="btn btn--signal" href="cases.html">See what we built <span class="arrow">→</span></a>
+          <a class="btn btn--ghost" href="#contact">Talk to us</a>
         </div>
-        <p class="hero__note">// Diagnose → PoC → Build · Korea government AX voucher eligible</p>
+        <p class="hero__note">// Design, build and operations all done in-house · pick a layer to open that family of cases</p>
       </div>
-      <aside class="gauge" aria-label="AX process">
-        <div class="gauge__head"><span>AX PROCESS</span><span class="gauge__live"><span class="gauge__dot"></span>live</span></div>
-        <div class="track"><i class="track__fill" style="width:100%"></i></div>
-        <div class="ticks" aria-hidden="true">
-          <i class="tick tick--major"></i><i class="tick"></i><i class="tick"></i><i class="tick"></i>
-          <i class="tick tick--major"></i><i class="tick"></i><i class="tick"></i><i class="tick"></i>
-          <i class="tick tick--major"></i><i class="tick"></i><i class="tick"></i><i class="tick"></i><i class="tick tick--major"></i>
+
+      <!-- engine room. The canvas is decoration; the layer list below is the
+           real information and works with JS off. -->
+      <aside class="engine" aria-labelledby="engine-h">
+        <div class="engine__head">
+          <span id="engine-h">Our own stack</span>
+          <span class="engine__live"><span class="engine__dot"></span>7 families · 22 cases</span>
         </div>
-        <div class="stages">
-          <div class="stage stage--1"><div class="stage__no">01</div><div class="stage__name">Diagnose</div><div class="stage__read">MEASURE · 2-3w</div></div>
-          <div class="stage stage--2"><div class="stage__no">02</div><div class="stage__name">PoC</div><div class="stage__read">VERIFY · 4-8w</div></div>
-          <div class="stage stage--3"><div class="stage__no">03</div><div class="stage__name">Build</div><div class="stage__read">OPERATE · 8w+</div></div>
+        <div class="engine__stage">
+          <canvas class="hero3d" data-mode="stack" aria-hidden="true"
+            data-layers='[{"key":"growth","n":2},{"key":"agent","n":2},{"key":"sched","n":5},{"key":"lang","n":3},{"key":"data","n":3},{"key":"vision","n":3},{"key":"infra","n":4}]'></canvas>
         </div>
+        <ul class="engine__layers">
+          <li><a class="engine__row" data-layer-row href="cases.html#fam-growth"><span class="engine__lv">L7</span><span class="engine__nm">Marketing &amp; Brand</span><span class="engine__n">2</span></a></li>
+          <li><a class="engine__row" data-layer-row href="cases.html#fam-agent"><span class="engine__lv">L6</span><span class="engine__nm">Work Agents</span><span class="engine__n">2</span></a></li>
+          <li><a class="engine__row" data-layer-row href="cases.html#fam-sched"><span class="engine__lv">L5</span><span class="engine__nm">Scheduling &amp; Assignment</span><span class="engine__n">5</span></a></li>
+          <li><a class="engine__row" data-layer-row href="cases.html#fam-lang"><span class="engine__lv">L4</span><span class="engine__nm">Documents, Knowledge &amp; Support</span><span class="engine__n">3</span></a></li>
+          <li><a class="engine__row" data-layer-row href="cases.html#fam-data"><span class="engine__lv">L3</span><span class="engine__nm">Data &amp; Forecasting</span><span class="engine__n">3</span></a></li>
+          <li><a class="engine__row" data-layer-row href="cases.html#fam-vision"><span class="engine__lv">L2</span><span class="engine__nm">Vision &amp; Signal Inspection</span><span class="engine__n">3</span></a></li>
+          <li><a class="engine__row" data-layer-row href="cases.html#fam-infra"><span class="engine__lv">L1</span><span class="engine__nm">Infrastructure &amp; Storage</span><span class="engine__n">4</span></a></li>
+        </ul>
+        <p class="engine__note">Data rises from the bottom and becomes judgement at the top. Each number is how many cases we have actually built in that family.</p>
       </aside>
+    </div>
+  </section>
+
+  <section class="section" id="proof">
+    <div class="wrap">
+      <div class="section__head">
+        <span class="eyebrow">Already built</span>
+        <h2>Instead of claiming we have the technology, we open it.</h2>
+        <p>These numbers are not marketing copy. Every one of them is something you can click and check on this site right now. A boutique with no client logos to show earns trust by showing working software on the spot.</p>
+      </div>
+      <div class="proofbelt">
+        <a class="proof" href="cases.html">
+          <span class="proof__n">22</span>
+          <span class="proof__t">Cases, each with a working demo</span>
+          <span class="proof__d">Not screenshots. Real pages that open in your browser, and 11 of them recompute when you change a value.</span>
+        </a>
+        <a class="proof" href="papers.html">
+          <span class="proof__n">42</span>
+          <span class="proof__t">Papers and experiment notes</span>
+          <span class="proof__d">Methods and numbers published in full, including the runs where our own approach lost.</span>
+        </a>
+        <a class="proof" href="cases.html">
+          <span class="proof__n">7</span>
+          <span class="proof__t">Technology families built in-house</span>
+          <span class="proof__d">Vision, signals, forecasting, language, agents, optimisation, infrastructure. Design, build and operations are all ours.</span>
+        </a>
+        <a class="proof" href="comms.html">
+          <span class="proof__n">9</span>
+          <span class="proof__t">Receiver stages, all our code</span>
+          <span class="proof__d">From antenna to decision we implemented all nine stages ourselves, and quantified seven of them.</span>
+        </a>
+      </div>
+      <p class="proofbelt__note">// These cases and demos are reference implementations on synthetic data. We label them separately from real client deployments. Re-measuring on your data is step one.</p>
     </div>
   </section>
 
@@ -87,7 +129,7 @@
         <ul class="founder__list">
           <li>Hands-on AX design for mid-market operations</li>
           <li>Leads diagnosis, PoC and build end to end</li>
-          <li>Delivery with vetted engineering partners</li>
+          <li>Design, build, and operations all done in-house</li>
         </ul>
       </div>
       <div class="founder__body">
@@ -118,6 +160,7 @@
     <nav class="foot__links" aria-label="Footer"><a href="/">한국어</a><a href="/papers.html">Papers</a><a href="/privacy.html">Privacy</a></nav>
   </div>
 </footer>
+<script src="../hero3d.js" defer></script>
 <script src="../main.js?v=3"></script>
 </body>
 </html>

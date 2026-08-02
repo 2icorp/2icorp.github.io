@@ -15,7 +15,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="styles.css?v=17">
+<link rel="stylesheet" href="styles.css?v=18">
 </head>
 <body>
 
@@ -48,46 +48,37 @@
   <section class="hero" id="top">
     <div class="wrap hero__grid">
       <div>
-        <span class="eyebrow">중소·중견 제조 · 유통 · 물류</span>
-        <h1>AI 전환을<br>감이 아니라<br><span class="u accent">공정</span>으로.</h1>
-        <p class="hero__lede">경쟁사는 한다는데 어디서 뭘 시작할지 막막하다면. 2i는 당신 현장의 문제를 측정해, 될 것만 골라 실증하고, 되는 것을 시스템으로 남깁니다.</p>
+        <span class="eyebrow">중소·중견 제조 · 유통 · 물류 · 설계부터 운영까지 자체 수행</span>
+        <h1>제안서 대신<br><span class="u accent">만들어 둔 것</span>을<br>보여드립니다.</h1>
+        <p class="hero__lede">컨설팅사는 듣고 나서 만듭니다. 2i는 비전, 신호, 예측, 언어, 에이전트, 최적화, 인프라까지 22개 분야의 동작하는 구현을 먼저 만들어 두고, 거기에 귀사 데이터를 꽂아 귀사 숫자로 다시 측정합니다.</p>
         <div class="hero__cta">
-          <a class="btn btn--signal" href="#diagnose">2분 준비도 자가진단 <span class="arrow">→</span></a>
-          <a class="btn btn--ghost" href="#method">방식·서비스 보기</a>
+          <a class="btn btn--signal" href="cases.html">만든 것부터 보기 <span class="arrow">→</span></a>
+          <a class="btn btn--ghost" href="#diagnose">2분 준비도 자가진단</a>
         </div>
-        <p class="hero__note">// 2i 게이지 방식: 측정 → 실증 → 이관 · 정부 AX 바우처 연계 가능</p>
+        <p class="hero__note">// 설계 · 구현 · 운영 전 과정 자체 수행 · 엔진의 층을 누르면 그 계열의 사례로 갑니다</p>
       </div>
 
-      <!-- signature: process gauge -->
-      <aside class="gauge" aria-label="AX 전환 공정 개요">
-        <div class="gauge__head">
-          <span>AX PROCESS</span>
-          <span class="gauge__live"><span class="gauge__dot"></span>측정중</span>
+      <!-- signature: engine room. Canvas is decoration on top; the layer list
+           below it is the real, always-present information (works without JS). -->
+      <aside class="engine" aria-labelledby="engine-h">
+        <div class="engine__head">
+          <span id="engine-h">보유 기술 스택</span>
+          <span class="engine__live"><span class="engine__dot"></span>7개 계열 · 사례 22</span>
         </div>
-        <div class="track"><i class="track__fill"></i></div>
-        <div class="ticks" aria-hidden="true">
-          <i class="tick tick--major"></i><i class="tick"></i><i class="tick"></i><i class="tick"></i>
-          <i class="tick tick--major"></i><i class="tick"></i><i class="tick"></i><i class="tick"></i>
-          <i class="tick tick--major"></i><i class="tick"></i><i class="tick"></i><i class="tick"></i>
-          <i class="tick tick--major"></i>
+        <div class="engine__stage">
+          <canvas class="hero3d" data-mode="stack" aria-hidden="true"
+            data-layers='[{"key":"growth","n":2},{"key":"agent","n":2},{"key":"sched","n":5},{"key":"lang","n":3},{"key":"data","n":3},{"key":"vision","n":3},{"key":"infra","n":4}]'></canvas>
         </div>
-        <div class="stages">
-          <div class="stage stage--1">
-            <div class="stage__no">01</div>
-            <div class="stage__name">진단</div>
-            <div class="stage__read">MEASURE · 2~3주</div>
-          </div>
-          <div class="stage stage--2">
-            <div class="stage__no">02</div>
-            <div class="stage__name">PoC</div>
-            <div class="stage__read">VERIFY · 4~8주</div>
-          </div>
-          <div class="stage stage--3">
-            <div class="stage__no">03</div>
-            <div class="stage__name">구축</div>
-            <div class="stage__read">OPERATE · 8주+</div>
-          </div>
-        </div>
+        <ul class="engine__layers">
+          <li><a class="engine__row" data-layer-row href="cases.html#fam-growth"><span class="engine__lv">L7</span><span class="engine__nm">마케팅 · 브랜드</span><span class="engine__n">2</span></a></li>
+          <li><a class="engine__row" data-layer-row href="cases.html#fam-agent"><span class="engine__lv">L6</span><span class="engine__nm">업무 에이전트</span><span class="engine__n">2</span></a></li>
+          <li><a class="engine__row" data-layer-row href="cases.html#fam-sched"><span class="engine__lv">L5</span><span class="engine__nm">배정 · 일정 최적화</span><span class="engine__n">5</span></a></li>
+          <li><a class="engine__row" data-layer-row href="cases.html#fam-lang"><span class="engine__lv">L4</span><span class="engine__nm">문서 · 지식 · 상담</span><span class="engine__n">3</span></a></li>
+          <li><a class="engine__row" data-layer-row href="cases.html#fam-data"><span class="engine__lv">L3</span><span class="engine__nm">경영 · 수요 데이터</span><span class="engine__n">3</span></a></li>
+          <li><a class="engine__row" data-layer-row href="cases.html#fam-vision"><span class="engine__lv">L2</span><span class="engine__nm">비전 · 신호 판정</span><span class="engine__n">3</span></a></li>
+          <li><a class="engine__row" data-layer-row href="cases.html#fam-infra"><span class="engine__lv">L1</span><span class="engine__nm">인프라 · 스토리지</span><span class="engine__n">4</span></a></li>
+        </ul>
+        <p class="engine__note">데이터는 아래에서 위로 올라가 판단이 됩니다. 각 층의 숫자는 그 계열에 실제로 구현해 둔 사례 수입니다.</p>
       </aside>
     </div>
   </section>
@@ -107,6 +98,125 @@
       <span class="ticker__item">홍보영상 제작 <b>80%↓</b></span>
     </div>
   </div>
+
+  <!-- PROOF BELT: what we already built, stated with honest labels -->
+  <section class="section" id="proof">
+    <div class="wrap">
+      <div class="section__head reveal">
+        <span class="eyebrow">이미 만들어 둔 것</span>
+        <h2>기술이 있다고 말하는 대신, 열어서 보여드립니다.</h2>
+        <p>아래 숫자는 홍보 문구가 아니라 이 사이트에서 지금 클릭해 확인할 수 있는 것들입니다. 로고를 보여줄 수 없는 부티크가 신뢰를 얻는 방법은 작동하는 것을 그 자리에서 보여주는 것뿐이라고 생각합니다.</p>
+      </div>
+      <div class="proofbelt reveal stagger">
+        <a class="proof" href="cases.html">
+          <span class="proof__n">22</span>
+          <span class="proof__t">사례 전부에 동작 데모</span>
+          <span class="proof__d">스크린샷이 아니라 지금 브라우저에서 열리는 화면입니다. 그중 11개는 값을 바꾸면 그 자리에서 다시 계산합니다.</span>
+        </a>
+        <a class="proof" href="papers.html">
+          <span class="proof__n">42</span>
+          <span class="proof__t">논문 · 실험 노트</span>
+          <span class="proof__d">측정 방법과 수치를 공개합니다. 우리 방법이 진 결과도 그대로 실려 있습니다.</span>
+        </a>
+        <a class="proof" href="#stack">
+          <span class="proof__n">7</span>
+          <span class="proof__t">자체 구현 기술 계열</span>
+          <span class="proof__d">비전, 신호, 예측, 언어, 에이전트, 최적화, 인프라. 설계도 구현도 운영도 저희가 합니다.</span>
+        </a>
+        <a class="proof" href="comms.html">
+          <span class="proof__n">9</span>
+          <span class="proof__t">단계 전부가 저희 코드</span>
+          <span class="proof__d">안테나에서 판단까지 수신기 9단계를 자체 엔진으로 구현했고, 그중 7단계를 수치로 검증했습니다.</span>
+        </a>
+      </div>
+      <p class="proofbelt__note reveal">// 위 사례와 데모는 합성 데이터 기반 레퍼런스 구현입니다. 실제 고객 배포 실적과는 구분해 표기합니다. 귀사 데이터로 다시 재는 것이 첫 단계입니다.</p>
+    </div>
+  </section>
+
+  <!-- TECH PILLARS: 4 AXES (moved above the fold 2026-08-02, builder-first) -->
+  <section class="section section--alt" id="stack">
+    <div class="wrap">
+      <div class="section__head reveal">
+        <span class="eyebrow">보유 기술 · 직접 구현</span>
+        <h2>남의 솔루션을 중개하지 않습니다. 네 축 모두 저희가 만들었습니다.</h2>
+        <p>위 엔진의 7개 계열 22개 사례는 전부 아래 네 축 위에서 만들어졌습니다. 축마다 동작하는 구현과 측정치가 있고, 신호 지능은 그중 깊이를 가장 멀리 밀어붙인 축입니다.</p>
+      </div>
+      <div class="pillar-grid reveal stagger">
+        <div class="pillar">
+          <span class="pillar__no">AXIS 01</span>
+          <span class="pillar__t">비전 · 이미지 AI</span>
+          <p class="pillar__d">외관 불량 검사, 문서 OCR, 현장 안전 모니터링, 제품 사진 생성·보정까지. 카메라와 이미지가 있는 곳이면 어디든 판독을 자동화합니다.</p>
+          <span class="pillar__ref">사례 02 문서 자동화 · 03 비전 검사</span>
+        </div>
+        <div class="pillar">
+          <span class="pillar__no">AXIS 02</span>
+          <span class="pillar__t">딥러닝 · 생성 AI</span>
+          <p class="pillar__d">수요예측과 이상탐지 같은 학습형 모델부터 RAG 지식봇, 상담 에이전트, 광고 영상 생성까지. 모델을 현장 업무 단위에 맞게 조립합니다.</p>
+          <span class="pillar__ref">사례 04 수요예측 · 05 상담봇 · 07 RAG · 09 영상</span>
+        </div>
+        <div class="pillar">
+          <span class="pillar__no">AXIS 03</span>
+          <span class="pillar__t">신호 지능 (RF·음향·진동)</span>
+          <p class="pillar__d">무선 간섭 진단, 설비 음향·진동 예지보전, WiFi 재실 감지. 센서 신호에서 이상과 정체를 실시간 판정하는 자체 엔진을 보유합니다.</p>
+          <span class="pillar__ref">사례 06 신호 지문 · <a href="comms.html">통신 페이지 실측 벤치</a></span>
+        </div>
+        <div class="pillar">
+          <span class="pillar__no">AXIS 04</span>
+          <span class="pillar__t">클라우드 · 데이터 인프라</span>
+          <p class="pillar__d">흩어진 데이터 통합, 대시보드, 온프렘·폐쇄망 배치, GPU 서빙과 MLOps 운영 설계. 여기에 스토리지 비용과 내구성 진단이 붙습니다. 법이 10년을 요구하는 데이터가 지금 어느 등급에 있고 실제로 읽히는지를 표준 도구로 재드립니다.</p>
+          <span class="pillar__ref">사례 01 데이터 대시보드 · <a href="cloud.html#storage">스토리지 비용 실측</a></span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- COMMS TEASER: full detail moved to comms.html -->
+  <section class="section" id="comms">
+    <div class="wrap">
+      <div class="section__head reveal">
+        <span class="eyebrow">보유 기술 심층 · 통신·신호 지능</span>
+        <h2>안테나에서 판단까지, 아홉 단계 전부가 저희 코드입니다.</h2>
+        <p>수신기 9단계 파이프라인, 단계별 보유 기술, 그리고 간섭탐지·기기 지문·오디오·진동·WiFi 재실까지의 실측 벤치 전체를 통신 페이지 한 곳에 정리했습니다. 산업 확장 지도와 장비 제조사 임베드(OEM) 경로도 그곳에 있습니다.</p>
+      </div>
+      <div class="chero__stats reveal stagger">
+        <div class="cstat"><span class="cstat__n">9<small>단계</small></span><span class="cstat__l">수신기 파이프라인 자체 구현 (7단계 정량 실측)</span></div>
+        <div class="cstat"><span class="cstat__n">98.0<small>%</small></span><span class="cstat__l">간섭 검출률 (오탐률 고정, 합성벤치)</span></div>
+        <div class="cstat"><span class="cstat__n">1.000</span><span class="cstat__l">WiFi 재실 분리도 AUROC (실 CSI)</span></div>
+        <div class="cstat"><span class="cstat__n">10<small>+</small></span><span class="cstat__l">산업 확장 지도 (실증·확장·연구·개념 정직 구분)</span></div>
+      </div>
+      <div class="hero__cta reveal">
+        <a class="btn btn--signal" href="comms.html">통신·신호 지능 전체 보기 <span class="arrow">→</span></a>
+      </div>
+    </div>
+  </section>
+
+  <!-- SELF-CRITICAL PAPERS: the hardest signal to fake -->
+  <section class="section" id="honest">
+    <div class="wrap">
+      <div class="section__head reveal">
+        <span class="eyebrow">측정의 정직성</span>
+        <h2>우리가 진 결과도 공개합니다.</h2>
+        <p>측정을 파는 회사라면 자기 측정에도 같은 잣대를 대야 말이 됩니다. 아래는 2i가 유리하지 않은데도 그대로 공개한 결과들입니다. 잘된 사례만 모은 포트폴리오보다 이쪽이 더 많은 것을 말해준다고 생각합니다.</p>
+      </div>
+      <div class="honest-grid reveal stagger">
+        <a class="honest" href="papers.html">
+          <span class="honest__t">자사 진단 도구를 자사에 겨눴더니 졌습니다</span>
+          <p class="honest__d">우리가 만든 스토리지 진단 키트로 우리 스토리지를 검사했습니다. 커버리지 15.4%에 점수 41.7로, 비교 대상인 MinIO의 28.2%와 72.7에 뒤졌습니다. 지우지 않고 논문으로 냈습니다.</p>
+        </a>
+        <a class="honest" href="papers.html">
+          <span class="honest__t">같은 모델이 0.931에서 0.088로 떨어졌습니다</span>
+          <p class="honest__d">WiFi 센싱 모델을 데이터 분할 방식만 바꿔 다시 쟀습니다. 무작위 분할에서 0.931이던 정확도가 사람 단위 분할에서는 0.088, 즉 찍기 수준으로 내려갔습니다. 업계 수치 상당수가 이 함정 위에 있습니다.</p>
+        </a>
+        <a class="honest" href="papers.html">
+          <span class="honest__t">복제 3벌은 내구성이 아닙니다</span>
+          <p class="honest__d">체크섬을 끄면 비트 부패 검출률이 0%가 되고, 배경 스크럽을 끄면 6라운드 만에 객체의 13.3%가 사라졌습니다. 흔히 쓰는 3중 복제 구성의 실제 한계를 재현 가능한 형태로 공개했습니다.</p>
+        </a>
+      </div>
+      <div class="hero__cta reveal">
+        <a class="btn btn--ghost" href="papers.html">논문 · 실험 42편 전체 보기</a>
+      </div>
+    </div>
+  </section>
 
   <!-- PROBLEM -->
   <section class="section section--alt" id="why">
@@ -140,10 +250,43 @@
   <section class="section" id="method">
     <div class="wrap">
       <div class="section__head reveal">
-        <span class="eyebrow"><span class="nocaps">2i</span> 게이지 방식 · 서비스</span>
-        <h2>추측하지 않습니다. 측정 → 실증 → 이관.</h2>
+        <span class="eyebrow"><span class="nocaps">2i</span> 게이지 방식 · 함께 일하는 절차</span>
+        <h2>만들어 둔 것에 귀사 데이터를 꽂는 순서입니다.</h2>
         <p>세 개의 게이트를 통과할 때만 다음 단계의 예산을 씁니다. 낮은 문턱에서 시작해 되는 것만 키우는 저위험 순서입니다. '돈만 쓰고 안 되면?'이라는 가장 큰 불안을 구조로 제거합니다.</p>
       </div>
+
+      <!-- process gauge (moved out of the hero 2026-08-02: the hero now shows
+           what we built, this section shows how we work with you) -->
+      <aside class="gauge gauge--inline reveal" aria-label="AX 전환 공정 개요">
+        <div class="gauge__head">
+          <span>AX PROCESS</span>
+          <span class="gauge__live"><span class="gauge__dot"></span>측정중</span>
+        </div>
+        <div class="track"><i class="track__fill"></i></div>
+        <div class="ticks" aria-hidden="true">
+          <i class="tick tick--major"></i><i class="tick"></i><i class="tick"></i><i class="tick"></i>
+          <i class="tick tick--major"></i><i class="tick"></i><i class="tick"></i><i class="tick"></i>
+          <i class="tick tick--major"></i><i class="tick"></i><i class="tick"></i><i class="tick"></i>
+          <i class="tick tick--major"></i>
+        </div>
+        <div class="stages">
+          <div class="stage stage--1">
+            <div class="stage__no">01</div>
+            <div class="stage__name">진단</div>
+            <div class="stage__read">MEASURE · 2~3주</div>
+          </div>
+          <div class="stage stage--2">
+            <div class="stage__no">02</div>
+            <div class="stage__name">PoC</div>
+            <div class="stage__read">VERIFY · 4~8주</div>
+          </div>
+          <div class="stage stage--3">
+            <div class="stage__no">03</div>
+            <div class="stage__name">구축</div>
+            <div class="stage__read">OPERATE · 8주+</div>
+          </div>
+        </div>
+      </aside>
       <ol class="gates3" style="margin:0 0 2.6rem">
         <li class="g3"><span class="g3__no">01</span><div><b>측정 게이트</b><span class="g3__sub">MEASURE · 진단</span><p>문제를 숫자로 고정합니다. 현장 KPI의 현재값(baseline)과 데이터 실태를 계측해, 무엇을 얼마나 개선할지 기준선을 만듭니다.</p></div></li>
         <li class="g3"><span class="g3__no">02</span><div><b>실증 게이트</b><span class="g3__sub">VERIFY · PoC</span><p>한 지점만 골라 before→after를 실제로 측정합니다. 목표 델타에 못 미치면 확장하지 않습니다. 큰돈은 검증 뒤에.</p></div></li>
@@ -652,63 +795,6 @@
     </div>
   </section>
 
-  <!-- TECH PILLARS: 4 AXES -->
-  <section class="section section--alt" id="stack">
-    <div class="wrap">
-      <div class="section__head reveal">
-        <span class="eyebrow">보유 기술 · 4축</span>
-        <h2>무선 신호만 하는 회사가 아닙니다. 네 개의 축이 한 팀입니다.</h2>
-        <p>2i의 기술은 신호 지능 하나가 아니라 네 축으로 구성됩니다. 현장의 과제는 대부분 이 축들의 조합으로 풀립니다. 위의 사례 22선과 아이디어 30선이 전부 이 네 축 위에서 만들어졌고, 아래 신호 지능 실측 벤치는 그중 한 축의 깊이를 보여주는 단면입니다.</p>
-      </div>
-      <div class="pillar-grid reveal stagger">
-        <div class="pillar">
-          <span class="pillar__no">AXIS 01</span>
-          <span class="pillar__t">비전 · 이미지 AI</span>
-          <p class="pillar__d">외관 불량 검사, 문서 OCR, 현장 안전 모니터링, 제품 사진 생성·보정까지. 카메라와 이미지가 있는 곳이면 어디든 판독을 자동화합니다.</p>
-          <span class="pillar__ref">사례 02 문서 자동화 · 03 비전 검사</span>
-        </div>
-        <div class="pillar">
-          <span class="pillar__no">AXIS 02</span>
-          <span class="pillar__t">딥러닝 · 생성 AI</span>
-          <p class="pillar__d">수요예측과 이상탐지 같은 학습형 모델부터 RAG 지식봇, 상담 에이전트, 광고 영상 생성까지. 모델을 현장 업무 단위에 맞게 조립합니다.</p>
-          <span class="pillar__ref">사례 04 수요예측 · 05 상담봇 · 07 RAG · 09 영상</span>
-        </div>
-        <div class="pillar">
-          <span class="pillar__no">AXIS 03</span>
-          <span class="pillar__t">신호 지능 (RF·음향·진동)</span>
-          <p class="pillar__d">무선 간섭 진단, 설비 음향·진동 예지보전, WiFi 재실 감지. 센서 신호에서 이상과 정체를 실시간 판정하는 자체 엔진을 보유합니다.</p>
-          <span class="pillar__ref">사례 06 신호 지문 · <a href="comms.html">통신 페이지 실측 벤치</a></span>
-        </div>
-        <div class="pillar">
-          <span class="pillar__no">AXIS 04</span>
-          <span class="pillar__t">클라우드 · 데이터 인프라</span>
-          <p class="pillar__d">흩어진 데이터 통합, 대시보드, 온프렘·폐쇄망 배치, GPU 서빙과 MLOps 운영 설계. 여기에 스토리지 비용과 내구성 진단이 붙습니다. 법이 10년을 요구하는 데이터가 지금 어느 등급에 있고 실제로 읽히는지를 표준 도구로 재드립니다.</p>
-          <span class="pillar__ref">사례 01 데이터 대시보드 · <a href="cloud.html#storage">스토리지 비용 실측</a></span>
-        </div>
-      </div>
-    </div>
-  </section>
-
-
-  <!-- COMMS TEASER: full detail moved to comms.html -->
-  <section class="section" id="comms">
-    <div class="wrap">
-      <div class="section__head reveal">
-        <span class="eyebrow">보유 기술 심층 · 통신·신호 지능</span>
-        <h2>안테나에서 판단까지, 아홉 단계 전부가 저희 코드입니다.</h2>
-        <p>수신기 9단계 파이프라인, 단계별 보유 기술, 그리고 간섭탐지·기기 지문·오디오·진동·WiFi 재실까지의 실측 벤치 전체를 통신 페이지 한 곳에 정리했습니다. 산업 확장 지도와 장비 제조사 임베드(OEM) 경로도 그곳에 있습니다.</p>
-      </div>
-      <div class="chero__stats reveal stagger">
-        <div class="cstat"><span class="cstat__n">9<small>단계</small></span><span class="cstat__l">수신기 파이프라인 자체 구현 (7단계 정량 실측)</span></div>
-        <div class="cstat"><span class="cstat__n">98.0<small>%</small></span><span class="cstat__l">간섭 검출률 (오탐률 고정, 합성벤치)</span></div>
-        <div class="cstat"><span class="cstat__n">1.000</span><span class="cstat__l">WiFi 재실 분리도 AUROC (실 CSI)</span></div>
-        <div class="cstat"><span class="cstat__n">10<small>+</small></span><span class="cstat__l">산업 확장 지도 (실증·확장·연구·개념 정직 구분)</span></div>
-      </div>
-      <div class="hero__cta reveal">
-        <a class="btn btn--signal" href="comms.html">통신·신호 지능 전체 보기 <span class="arrow">→</span></a>
-      </div>
-    </div>
-  </section>
   <!-- FOUNDER -->
   <section class="section section--alt" id="founder">
     <div class="wrap founder">
@@ -719,7 +805,7 @@
         <ul class="founder__list">
           <li>중소·중견 현장에 맞춘 실전 AX 설계</li>
           <li>진단·PoC·구축 전 과정 프로젝트 리드</li>
-          <li>기술 검증 파트너와의 구현 협업</li>
+          <li>설계 · 구현 · 운영 전 과정 자체 수행</li>
           <li>2i Tech Blog에 방법론·사례 공개</li>
         </ul>
       </div>
@@ -727,7 +813,7 @@
         <span class="eyebrow">왜 <span class="nocaps">2i</span>인가</span>
         <h2>대형 SI가 안 건드리는 자리에서, 한 사람이 끝까지 봅니다.</h2>
         <p>중소·중견의 과제는 규모가 작고 비정형이라, 대형 SI에게는 수지가 안 맞아 밀립니다. 2i는 그 자리를 위해 만들어졌습니다. 화려한 제안서 대신 측정된 진단, 큰 계약 대신 검증된 PoC로 신뢰를 먼저 만듭니다.</p>
-        <p>영업 담당과 실무자가 따로 노는 대형 컨설팅과 달리, 진단부터 이관까지 한 사람이 책임지고 봅니다. 구현은 검증된 기술 파트너와 함께해, 1인의 한계 대신 부티크의 밀도를 드립니다.</p>
+        <p>영업 담당과 실무자가 따로 노는 대형 컨설팅과 달리, 진단부터 구현과 이관까지 한 사람이 책임지고 봅니다. 설계도 구현도 운영도 저희가 직접 합니다. 20년 개발 경험 위에 에이전틱 AI 운영을 얹어, 대형 SI 한 팀이 몇 년에 걸쳐 쌓는 도메인 폭을 한 사람이 이미 구현해 들고 있습니다.</p>
         <p style="margin-top:1.2rem;font-family:var(--mono);font-size:var(--text-sm);color:var(--steel)">// 사람을 대체하는 게 아니라, 사람이 중요한 일에 집중하도록 판단의 속도와 정확도를 보완합니다.</p>
       </div>
     </div>
@@ -819,6 +905,7 @@
   </div>
 </footer>
 
+<script src="hero3d.js" defer></script>
 <script src="main.js"></script>
 </body>
 </html>

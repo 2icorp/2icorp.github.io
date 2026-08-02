@@ -120,9 +120,194 @@
       ctx.globalAlpha = 1;
     }
 
+    // ---- stack mode: exploded engine-room cross-section ---------------------
+    // Slabs are drawn from cases.json-derived layer data, so the dots are
+    // information, not decoration. The canvas is aria-hidden; the real,
+    // always-present truth is the sibling HTML layer list.
+    var layers = [], polys = [], active = -1, rows = [], stackPackets = [];
+    if (mode === "stack") {
+      try { layers = JSON.parse(canvas.getAttribute("data-layers") || "[]"); }
+      catch (e) { layers = []; }
+      var host2 = canvas.parentElement;
+      rows = host2 ? [].slice.call(host2.querySelectorAll("[data-layer-row]")) : [];
+      for (var sp = 0; sp < 6; sp++) {
+        stackPackets.push({
+          x: (rnd(sp + 5) - 0.5) * 1.1,
+          y: (rnd(sp + 41) - 0.5) * 1.1,
+          pos: rnd(sp + 77),
+          speed: 0.10 + rnd(sp + 13) * 0.10
+        });
+      }
+    }
+
+    function setActive(i) {
+      if (i === active) return;
+      active = i;
+      for (var r = 0; r < rows.length; r++) {
+        if (r === i) rows[r].setAttribute("data-on", "1");
+        else rows[r].removeAttribute("data-on");
+      }
+    }
+
+    function inQuad(q, x, y) {
+      var sign = 0;
+      for (var i = 0; i < 4; i++) {
+        var a = q[i], b = q[(i + 1) % 4];
+        var cr = (b[0] - a[0]) * (y - a[1]) - (b[1] - a[1]) * (x - a[0]);
+        if (cr !== 0) {
+          var s = cr > 0 ? 1 : -1;
+          if (sign === 0) sign = s; else if (s !== sign) return false;
+        }
+      }
+      return true;
+    }
+
+    function hitTest(x, y) {
+      // index 0 is the highest slab and is drawn last, so it wins overlaps
+      for (var i = 0; i < polys.length; i++) {
+        if (polys[i] && inQuad(polys[i], x, y)) return i;
+      }
+      return -1;
+    }
+
+    if (mode === "stack") {
+      var hostEl = canvas.parentElement;
+      canvas.style.pointerEvents = "auto";
+      canvas.addEventListener("mousemove", function (e) {
+        var r = canvas.getBoundingClientRect();
+        var hit = hitTest(e.clientX - r.left, e.clientY - r.top);
+        canvas.style.cursor = hit >= 0 ? "pointer" : "default";
+        if (hit >= 0) setActive(hit);
+      }, { passive: true });
+      canvas.addEventListener("mouseleave", function () { setActive(-1); }, { passive: true });
+      canvas.addEventListener("click", function (e) {
+        var r = canvas.getBoundingClientRect();
+        var hit = hitTest(e.clientX - r.left, e.clientY - r.top);
+        if (hit >= 0 && rows[hit]) {
+          var a = rows[hit].tagName === "A" ? rows[hit] : rows[hit].querySelector("a");
+          if (a) a.click();
+        }
+      });
+      for (var rr = 0; rr < rows.length; rr++) {
+        (function (idx) {
+          rows[idx].addEventListener("mouseenter", function () { setActive(idx); }, { passive: true });
+          rows[idx].addEventListener("focus", function () { setActive(idx); }, true);
+        })(rr);
+      }
+      if (hostEl) hostEl.addEventListener("mouseleave", function () { setActive(-1); }, { passive: true });
+    }
+
+    function drawStack(t) {
+      var n = layers.length;
+      if (!n) return;
+      var S = Math.min(W * 0.30, H * 0.36);
+      var ux = S, uy = S * 0.46;
+      var thick = Math.max(5, H * 0.022);
+      var gap = Math.max(H * 0.075, (H * 0.84 - 2 * uy - thick) / Math.max(1, n - 1));
+      var cx = W * 0.5;
+      var cy = H * 0.5 + ((n - 1) * gap) / 2;
+      var top = (n - 1) * gap;
+
+      function iso(px2, py2, h, out) {
+        out[0] = cx + (px2 - py2) * ux * 0.5;
+        out[1] = cy + (px2 + py2) * uy * 0.5 - h;
+      }
+
+      // vertical spine, bottom to top
+      var a1 = [0, 0], a2 = [0, 0];
+      iso(0, 0, 0, a1); iso(0, 0, top, a2);
+      ctx.strokeStyle = col.steel; ctx.globalAlpha = 0.16; ctx.lineWidth = 1;
+      ctx.beginPath(); ctx.moveTo(a1[0], a1[1]); ctx.lineTo(a2[0], a2[1]); ctx.stroke();
+
+      // data-layers is authored top-to-bottom (same order as the HTML list),
+      // so index 0 sits highest. Draw bottom-first for correct overlap.
+      polys = new Array(n);
+      for (var i = n - 1; i >= 0; i--) {
+        var lift = reduce ? 0 : Math.sin(t * 0.55 + i * 0.9) * gap * 0.07;
+        var h = (n - 1 - i) * gap + lift;
+        var on = (i === active);
+        // higher slabs read as nearer, so they carry more weight
+        var prom = n > 1 ? 1 - i / (n - 1) : 1;
+        var q = [];
+        var corners = [[-1, -1], [1, -1], [1, 1], [-1, 1]];
+        for (var c = 0; c < 4; c++) {
+          var o = [0, 0];
+          iso(corners[c][0], corners[c][1], h, o);
+          q.push([o[0], o[1]]);
+        }
+        polys[i] = q;
+
+        // slab thickness: side faces under the two front edges
+        ctx.beginPath();
+        ctx.moveTo(q[1][0], q[1][1]);
+        ctx.lineTo(q[2][0], q[2][1]);
+        ctx.lineTo(q[3][0], q[3][1]);
+        ctx.lineTo(q[3][0], q[3][1] + thick);
+        ctx.lineTo(q[2][0], q[2][1] + thick);
+        ctx.lineTo(q[1][0], q[1][1] + thick);
+        ctx.closePath();
+        ctx.fillStyle = on ? col.signal : col.steel;
+        ctx.globalAlpha = on ? 0.24 : 0.10 + 0.09 * prom;
+        ctx.fill();
+
+        // top face
+        ctx.beginPath();
+        ctx.moveTo(q[0][0], q[0][1]);
+        for (var e2 = 1; e2 < 4; e2++) ctx.lineTo(q[e2][0], q[e2][1]);
+        ctx.closePath();
+        ctx.fillStyle = on ? col.signal : col.steel;
+        ctx.globalAlpha = on ? 0.18 : 0.05 + 0.05 * prom;
+        ctx.fill();
+        ctx.strokeStyle = on ? col.signal : col.steel;
+        ctx.globalAlpha = on ? 0.9 : 0.34 + 0.3 * prom;
+        ctx.lineWidth = on ? 2 : 1.15;
+        ctx.stroke();
+
+        // one dot per case in this family
+        var cnt = Math.max(0, layers[i].n | 0);
+        if (cnt) {
+          var cols2 = Math.ceil(Math.sqrt(cnt));
+          var rows2 = Math.ceil(cnt / cols2);
+          for (var k = 0; k < cnt; k++) {
+            var gxk = ((k % cols2) + 0.5) / cols2 * 1.2 - 0.6;
+            var gyk = (Math.floor(k / cols2) + 0.5) / rows2 * 1.2 - 0.6;
+            var dp = [0, 0];
+            iso(gxk, gyk, h, dp);
+            ctx.beginPath();
+            ctx.arc(dp[0], dp[1], on ? 3.3 : 2.6, 0, Math.PI * 2);
+            ctx.fillStyle = on ? col.signal : col.steel;
+            ctx.globalAlpha = on ? 1 : 0.55 + 0.3 * prom;
+            ctx.fill();
+          }
+        }
+      }
+
+      // packets rising from infrastructure to judgement
+      if (!reduce) {
+        for (var m = 0; m < stackPackets.length; m++) {
+          var pk2 = stackPackets[m];
+          pk2.pos += pk2.speed / 60;
+          if (pk2.pos > 1) {
+            pk2.pos = 0;
+            pk2.x = (rnd(t + m) - 0.5) * 1.1;
+            pk2.y = (rnd(t + m + 7) - 0.5) * 1.1;
+          }
+          var ph = [0, 0];
+          iso(pk2.x, pk2.y, pk2.pos * top, ph);
+          ctx.beginPath(); ctx.arc(ph[0], ph[1], 2.4, 0, Math.PI * 2);
+          ctx.fillStyle = col.signal; ctx.globalAlpha = 0.9 * (1 - Math.abs(pk2.pos - 0.5) * 0.7);
+          ctx.fill();
+        }
+      }
+      ctx.globalAlpha = 1;
+      ctx.lineWidth = 1;
+    }
+
     function draw(t) {
       ctx.clearRect(0, 0, W, H);
-      if (mode === "wave") {
+      if (mode === "stack") {
+        drawStack(t);
+      } else if (mode === "wave") {
         drawWaveLike(t, function (x, y, i, j, tt) { return zWave(x, y, tt); }, 6, false);
         var px = Math.sin(t * 0.33) * 1.5, py = Math.cos(t * 0.21) * 0.7;
         project(px, py, zWave(px, py, t) + 0.06, p);

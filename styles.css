@@ -580,6 +580,9 @@ section[id] { scroll-margin-top: 80px; }
 .chip--code:hover { transform: translateY(-1px); background: var(--steel); border-color: var(--steel); }
 .chip--demo { display: inline-flex; align-items: center; color: var(--ink); background: var(--paper); border-color: var(--ink); font-weight: 600; transition: transform var(--dur) var(--ease), background var(--dur), color var(--dur); }
 .chip--demo:hover { transform: translateY(-1px); background: var(--accent, var(--steel)); color: var(--paper); border-color: transparent; }
+/* demo nature, measured by probe_demo_live.py. never hand-set */
+.chip--live { color: var(--signal-deep); border-color: var(--tint-signal-line); background: var(--tint-signal); }
+.chip--walk { color: var(--ink-faint); }
 .chip--doc { display: inline-flex; align-items: center; color: var(--ink); background: var(--paper); border-color: var(--ink); font-weight: 600; transition: transform var(--dur) var(--ease), background var(--dur), color var(--dur); }
 .chip--doc:hover { transform: translateY(-1px); background: var(--invert-bg); color: var(--invert-fg); border-color: transparent; }
 
@@ -1157,3 +1160,48 @@ section[id] { scroll-margin-top: 80px; }
   .chero__w1, .chero__w2, .pipe__list::after { animation: none; }
   .cstat, .pstage__card { transition: none; }
 }
+
+/* ============================================================
+   ENGINE ROOM (home hero) · 2026-08-02
+   The canvas is decoration painted on top. The layer list under it
+   is the real information and stays readable with JS off, with
+   reduced motion, on mobile, and in a screen reader.
+   ============================================================ */
+.engine { border: 1px solid var(--line); border-radius: var(--radius); background: var(--panel); padding: 1.15rem 1.15rem 1.05rem; }
+.engine__head { display: flex; justify-content: space-between; align-items: center; gap: 0.8rem; font-family: var(--mono); font-size: var(--text-xs); letter-spacing: 0.12em; color: var(--ink-faint); margin-bottom: 0.9rem; }
+.engine__live { display: inline-flex; align-items: center; gap: 0.45rem; color: var(--steel); white-space: nowrap; }
+.engine__dot { width: 7px; height: 7px; border-radius: 50%; background: var(--signal); animation: pulse 2.4s var(--ease) infinite; }
+.engine__stage { position: relative; aspect-ratio: 4 / 3; margin-bottom: 0.95rem; }
+canvas.hero3d { display: block; width: 100%; height: 100%; }
+.engine__layers { list-style: none; margin: 0; padding: 0; display: grid; gap: 1px; background: var(--line); border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; }
+.engine__row { display: grid; grid-template-columns: 2.1rem 1fr auto; align-items: center; gap: 0.6rem; background: var(--panel); padding: 0.52rem 0.75rem; min-height: 44px; text-decoration: none; color: var(--ink); font-size: var(--text-sm); transition: background var(--dur) var(--ease); }
+.engine__row:hover, .engine__row:focus-visible, .engine__row[data-on] { background: var(--paper-2); }
+.engine__row[data-on] .engine__nm { color: var(--signal-deep); }
+.engine__lv { font-family: var(--mono); font-size: var(--text-xs); letter-spacing: 0.06em; color: var(--ink-faint); }
+.engine__nm { line-height: 1.35; }
+.engine__n { font-family: var(--mono); font-weight: 600; color: var(--signal); }
+.engine__note { margin: 0.75rem 0 0; font-size: var(--text-xs); color: var(--ink-faint); line-height: 1.55; }
+@media (max-width: 640px) { .engine__stage { display: none; } }
+@media (prefers-reduced-motion: reduce) { .engine__dot { animation: none; } .engine__row { transition: none; } }
+
+/* ===== proof belt: what already exists, with honest labels ===== */
+.proofbelt { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: var(--line); border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; }
+@media (max-width: 980px) { .proofbelt { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 560px) { .proofbelt { grid-template-columns: 1fr; } }
+.proof { background: var(--panel); padding: 1.6rem 1.4rem 1.45rem; display: flex; flex-direction: column; gap: 0.42rem; text-decoration: none; color: inherit; transition: background var(--dur) var(--ease); }
+.proof:hover, .proof:focus-visible { background: var(--paper); }
+.proof__n { font-family: var(--mono); font-size: clamp(2rem, 1.4rem + 1.6vw, 2.7rem); font-weight: 600; line-height: 1; letter-spacing: -0.02em; color: var(--signal); }
+.proof__t { font-weight: 700; font-size: var(--text-base); }
+.proof__d { font-size: var(--text-sm); color: var(--ink-soft); line-height: 1.55; }
+.proofbelt__note { margin: 1rem 0 0; font-family: var(--mono); font-size: var(--text-xs); color: var(--ink-faint); line-height: 1.65; }
+
+/* ===== self-critical results ===== */
+.honest-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--line); border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; margin-bottom: 2rem; }
+@media (max-width: 900px) { .honest-grid { grid-template-columns: 1fr; } }
+.honest { background: var(--panel); padding: 1.55rem 1.4rem; display: flex; flex-direction: column; gap: 0.6rem; text-decoration: none; color: inherit; border-top: 2px solid var(--steel-soft); transition: background var(--dur) var(--ease), border-color var(--dur) var(--ease); }
+.honest:hover, .honest:focus-visible { background: var(--paper); border-top-color: var(--signal); }
+.honest__t { font-weight: 700; font-size: var(--text-h3); line-height: 1.35; }
+.honest__d { margin: 0; font-size: var(--text-sm); color: var(--ink-soft); line-height: 1.6; }
+
+/* process gauge moved out of the hero into the method section */
+.gauge--inline { margin: 0 0 2.6rem; }

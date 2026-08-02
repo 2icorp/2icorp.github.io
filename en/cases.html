@@ -10,7 +10,7 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../styles.css?v=17">
+<link rel="stylesheet" href="../styles.css?v=18">
 </head>
 <body>
 <header class="nav">
@@ -87,7 +87,7 @@
               <span class="chip chip--v">Eligible for government voucher</span>
             </div>
             <div class="case__proof">
-              <a class="chip chip--demo" href="../demos/01-data-dashboard/">▶ Live demo · runs in your browser</a>
+              <a class="chip chip--demo" href="../demos/01-data-dashboard/">▶ Live demo · runs in your browser</a><span class="chip chip--live">recomputes when you change a value</span>
               <a class="chip chip--dl" href="../brochures/2i-brochure-01-오늘-재고-얼마야-반나절-3초.pdf" download>Brochure PDF (KO) ↓</a>
             </div>
             <p class="case__tech"><span class="case__tech-k">Tech used</span> pandas/SQLite-based ETL + a unified Streamlit dashboard. Automatically collects and standardizes departmental source data, then renders it as KPI cards and trend charts.</p>
@@ -122,7 +122,7 @@
               <span class="chip chip--v">Eligible for government voucher</span>
             </div>
             <div class="case__proof">
-              <a class="chip chip--demo" href="../demos/04-demand-forecast/">▶ Live demo · runs in your browser</a>
+              <a class="chip chip--demo" href="../demos/04-demand-forecast/">▶ Live demo · runs in your browser</a><span class="chip chip--live">recomputes when you change a value</span>
               <a class="chip chip--dl" href="../brochures/2i-brochure-04-감으로-잡던-재고-결품과-악성재고를-동시에-줄인다.pdf" download>Brochure PDF (KO) ↓</a>
             </div>
             <p class="case__tech"><span class="case__tech-k">Tech used</span> statsmodels-based automatic selection between seasonal moving average and SARIMA via backtesting, plus safety-stock and reorder-point (ROP) logic, with inventory simulation benchmarked against a naive baseline.</p>
@@ -157,7 +157,7 @@
               <span class="chip chip--v">Eligible for government voucher</span>
             </div>
             <div class="case__proof">
-              <a class="chip chip--demo" href="../demos/08-sales-signal/">▶ Live demo · runs in your browser</a>
+              <a class="chip chip--demo" href="../demos/08-sales-signal/">▶ Live demo · runs in your browser</a><span class="chip chip--walk">scenario walkthrough</span>
               <a class="chip chip--dl" href="../brochures/2i-brochure-08-제안-골든타임을-놓치지-않는-영업-레이더.pdf" download>Brochure PDF (KO) ↓</a>
             </div>
             <p class="case__tech"><span class="case__tech-k">Tech used</span> News and public-data (Nara Jangteo) collection + company/industry keyword-matching filter + LLM summarization and importance classification + CRM webhook integration.</p>
@@ -199,7 +199,7 @@
               <span class="chip chip--v">Eligible for government voucher</span>
             </div>
             <div class="case__proof">
-              <a class="chip chip--demo" href="../demos/02-doc-automation/">▶ Live demo · runs in your browser</a>
+              <a class="chip chip--demo" href="../demos/02-doc-automation/">▶ Live demo · runs in your browser</a><span class="chip chip--walk">scenario walkthrough</span>
               <a class="chip chip--dl" href="../brochures/2i-brochure-02-견적-발주-수기입력-담당자는-예외만-본다.pdf" download>Brochure PDF (KO) ↓</a>
             </div>
             <p class="case__tech"><span class="case__tech-k">Tech used</span> A pydantic-based parsing and rule-validation pipeline. Extracts item/quantity/unit price/supply amount from quotes, purchase orders, and tax invoices, automatically flags errors (abnormal unit price, total mismatch, VAT error), and routes them into a priority review queue.</p>
@@ -234,7 +234,7 @@
               <span class="chip chip--v">Eligible for government voucher</span>
             </div>
             <div class="case__proof">
-              <a class="chip chip--demo" href="../demos/05-support-chatbot/">▶ Live demo · runs in your browser</a>
+              <a class="chip chip--demo" href="../demos/05-support-chatbot/">▶ Live demo · runs in your browser</a><span class="chip chip--walk">scenario walkthrough</span>
               <a class="chip chip--dl" href="../brochures/2i-brochure-05-반복-문의는-AI가-사람은-진짜-상담에.pdf" download>Brochure PDF (KO) ↓</a>
             </div>
             <p class="case__tech"><span class="case__tech-k">Tech used</span> A FastAPI chatbot: intent classification → mock backend tool calls → response, with rules to hand off high-value refunds and claims to a human. Falls back to a rule-based offline mode without an LLM key. Includes a web chat UI.</p>
@@ -269,7 +269,7 @@
               <span class="chip chip--v">Eligible for government voucher</span>
             </div>
             <div class="case__proof">
-              <a class="chip chip--demo" href="../demos/07-knowledge-rag/">▶ Live demo · runs in your browser</a>
+              <a class="chip chip--demo" href="../demos/07-knowledge-rag/">▶ Live demo · runs in your browser</a><span class="chip chip--walk">scenario walkthrough</span>
               <a class="chip chip--dl" href="../brochures/2i-brochure-07-20년-베테랑의-머릿속-질문-한-번에-꺼낸다.pdf" download>Brochure PDF (KO) ↓</a>
             </div>
             <p class="case__tech"><span class="case__tech-k">Tech used</span> A FastAPI RAG chatbot: embeds and indexes internal documents, and answers with the original source cited. Falls back to TF-IDF search without an LLM key. Includes OCR and document-parsing preprocessing.</p>
@@ -311,7 +311,7 @@
               <span class="chip chip--v">Eligible for government voucher</span>
             </div>
             <div class="case__proof">
-              <a class="chip chip--demo" href="../demos/03-vision-defect/">▶ Live demo · runs in your browser</a>
+              <a class="chip chip--demo" href="../demos/03-vision-defect/">▶ Live demo · runs in your browser</a><span class="chip chip--live">recomputes when you change a value</span>
               <a class="chip chip--dl" href="../brochures/2i-brochure-03-검사원마다-다른-판정-24시간-같은-눈으로.pdf" download>Brochure PDF (KO) ↓</a>
             </div>
             <p class="case__tech"><span class="case__tech-k">Tech used</span> OpenCV/scikit-image-based anomaly detection (pixel z-score + contour + SSIM). Scores bubbles and scratches using only a small set of normal images, with SNR and threshold-sweep evaluation included.</p>
@@ -346,7 +346,7 @@
               <span class="chip chip--v">Eligible for government voucher</span>
             </div>
             <div class="case__proof">
-              <a class="chip chip--demo" href="../demos/06-sigprint-rf/">▶ Live demo · runs in your browser</a>
+              <a class="chip chip--demo" href="../demos/06-sigprint-rf/">▶ Live demo · runs in your browser</a><span class="chip chip--walk">scenario walkthrough</span>
               <a class="chip chip--dl" href="../brochures/2i-brochure-06-무선망을-멈추는-원인-불명-전파-실시간으로-지목한다.pdf" download>Brochure PDF (KO) ↓</a>
             </div>
             <p class="case__tech"><span class="case__tech-k">Tech used</span> numpy/scipy-based CFAR detection + occupancy-fingerprint Jaccard matching. Classifies radar chirp, cellular burst, and CW-tone interference sources without any training, with SNR-sweep accuracy and decision-latency benchmarks included. (The original engine is written in Rust as an O-RAN xApp.)</p>
@@ -381,7 +381,7 @@
               <span class="chip chip--v">Eligible for government voucher</span>
             </div>
             <div class="case__proof">
-              <a class="chip chip--demo" href="../demos/13-medimg-loop/">▶ Live demo · runs in your browser</a>
+              <a class="chip chip--demo" href="../demos/13-medimg-loop/">▶ Live demo · runs in your browser</a><span class="chip chip--walk">scenario walkthrough</span>
               <a class="chip chip--dl" href="../brochures/2i-brochure-13-분할-오류-찾아-고치는-반복-연구자-대신-에이전트가-돈다.pdf" download>Brochure PDF (KO) ↓</a>
             </div>
             <p class="case__tech"><span class="case__tech-k">Tech used</span> A synthetic CT phantom (noise, bias field, partial volume, low-contrast bridges), a preprocessing, thresholding, morphology, and component-selection pipeline, six ground-truth-free quality signals, and a deterministic critic. Measured: quality score 3.62 to 0.10 (5 of 6 gates passed), average Dice 0.583 to 0.927 from ground-truth-free tuning alone, and per-organ volume error under 8%. Gates that fall short are reported as failing, never softened. 18 tests.</p>
@@ -423,7 +423,7 @@
               <span class="chip chip--v">Eligible for government voucher</span>
             </div>
             <div class="case__proof">
-              <a class="chip chip--demo" href="../demos/14-hospital-ops/">▶ Live demo · runs in your browser</a>
+              <a class="chip chip--demo" href="../demos/14-hospital-ops/">▶ Live demo · runs in your browser</a><span class="chip chip--walk">scenario walkthrough</span>
               <a class="chip chip--dl" href="../brochures/2i-brochure-14-복도가-왜-막히는지-감이-아니라-시뮬레이션으로-고친다.pdf" download>Brochure PDF (KO) ↓</a>
             </div>
             <p class="case__tech"><span class="case__tech-k">Tech used</span> A floor-plan movement graph (rooms, hallways, traffic policy), SimPy discrete-event simulation (outpatient and emergency, averaged over 6 fixed-seed replications), five operational gates (reception wait, treatment wait, arrival-to-CT, hallway congestion exposure, path crossings), a deterministic critic, and a patch ledger with checkpoint rollback. Measured: gate score 6.27 to 0.00 over 15 iterations, 11 patches accepted and 4 rolled back. 13 tests.</p>
@@ -458,7 +458,7 @@
               <span class="chip chip--v">Eligible for government voucher</span>
             </div>
             <div class="case__proof">
-              <a class="chip chip--demo" href="../demos/19-nurse-roster/">▶ Live demo · runs in your browser</a>
+              <a class="chip chip--demo" href="../demos/19-nurse-roster/">▶ Live demo · runs in your browser</a><span class="chip chip--live">recomputes when you change a value</span>
               <a class="chip chip--dl" href="../brochures/2i-brochure-19-근무표가-안-풀립니다-대신-무엇을-얼마나-양보하면-되는지.pdf" download>Brochure PDF (KO) ↓</a>
             </div>
             <p class="case__tech"><span class="case__tech-k">Tech used</span> An OR-Tools CP-SAT integer-programming model with per-contract (full-time, part-time, night-only) constraints on consecutive shifts, consecutive days off, weekend caps, and total hours, a fairness-weight sweep, and an independent verifier (verify.py). Cross-validated against 8 public instances from the international standard benchmark (Curtois &amp; Qu NRP). A reference implementation built on synthetic data.</p>
@@ -493,7 +493,7 @@
               <span class="chip chip--v">Eligible for government voucher</span>
             </div>
             <div class="case__proof">
-              <a class="chip chip--demo" href="../demos/20-contact-staffing/">▶ Live demo · runs in your browser</a>
+              <a class="chip chip--demo" href="../demos/20-contact-staffing/">▶ Live demo · runs in your browser</a><span class="chip chip--live">recomputes when you change a value</span>
               <a class="chip chip--dl" href="../brochures/2i-brochure-20-인력을-더-뽑기-전에-시프트-모양부터-봅니다.pdf" download>Brochure PDF (KO) ↓</a>
             </div>
             <p class="case__tech"><span class="case__tech-k">Tech used</span> Erlang C-based interval staffing requirements (staff pool size backed out) plus CP-SAT shift assignment (fixed 8-hour vs. a mix of 6- and 4-hour part-time and split shifts), an SLA curve sweep, and an independent verifier. A reference implementation built on synthetic data.</p>
@@ -528,7 +528,7 @@
               <span class="chip chip--v">Eligible for government voucher</span>
             </div>
             <div class="case__proof">
-              <a class="chip chip--demo" href="../demos/21-league-fixture/">▶ Live demo · runs in your browser</a>
+              <a class="chip chip--demo" href="../demos/21-league-fixture/">▶ Live demo · runs in your browser</a><span class="chip chip--live">recomputes when you change a value</span>
               <a class="chip chip--dl" href="../brochures/2i-brochure-21-이동거리와-연속-원정-둘-다-가질-수는-없습니다.pdf" download>Brochure PDF (KO) ↓</a>
             </div>
             <p class="case__tech"><span class="case__tech-k">Tech used</span> A CP-SAT integer-programming model (hard constraints: assigning every match, a cap on consecutive away games, blackout dates; soft constraints: a weighted sum of travel distance, breaks, and weekend-home fairness) plus a cross-team travel-distance balance measure (Jain index), a travel distance-breaks trade-off sweep, and an independent verifier. A reference implementation built on synthetic data.</p>
@@ -563,7 +563,7 @@
               <span class="chip chip--v">Eligible for government voucher</span>
             </div>
             <div class="case__proof">
-              <a class="chip chip--demo" href="../demos/22-room-assign/">▶ Live demo · runs in your browser</a>
+              <a class="chip chip--demo" href="../demos/22-room-assign/">▶ Live demo · runs in your browser</a><span class="chip chip--live">recomputes when you change a value</span>
               <a class="chip chip--dl" href="../brochures/2i-brochure-22-선호를-다-들어줄-수-없다는-것도-숫자로-보여드립니다.pdf" download>Brochure PDF (KO) ↓</a>
             </div>
             <p class="case__tech"><span class="case__tech-k">Tech used</span> A CP-SAT integer-programming model (hard constraints: capacity, gender separation, conflict pairs, accessibility; soft constraints: a weighted sum of preference satisfaction, lifestyle compatibility, organizational diversity) plus a comparison against a hard-constraints-only baseline, a diversity-enforcement trade-off sweep, and an independent verifier. A reference implementation built on synthetic data.</p>
@@ -605,7 +605,7 @@
               <span class="chip chip--v">Eligible for government voucher</span>
             </div>
             <div class="case__proof">
-              <a class="chip chip--demo" href="../demos/11-agent-orchestrator/">▶ Live demo · runs in your browser</a>
+              <a class="chip chip--demo" href="../demos/11-agent-orchestrator/">▶ Live demo · runs in your browser</a><span class="chip chip--walk">scenario walkthrough</span>
               <a class="chip chip--dl" href="../brochures/2i-brochure-11-부산-출장-준비해줘-한마디로-앱-열-개를-대신-연다.pdf" download>Brochure PDF (KO) ↓</a>
             </div>
             <p class="case__tech"><span class="case__tech-k">Tech used</span> Silero VAD + Whisper large-v3-turbo + OpenAI-compatible LLM serving + Qwen3-TTS, an OpenAI Realtime-compatible WebSocket, deployed on a Docker/GPU cluster.</p>
@@ -640,7 +640,7 @@
               <span class="chip chip--v">Eligible for government voucher</span>
             </div>
             <div class="case__proof">
-              <a class="chip chip--demo" href="../demos/12-cad-blockout/">▶ Live demo · runs in your browser</a>
+              <a class="chip chip--demo" href="../demos/12-cad-blockout/">▶ Live demo · runs in your browser</a><span class="chip chip--walk">scenario walkthrough</span>
               <a class="chip chip--dl" href="../brochures/2i-brochure-12-백지-도면에서-이틀-비판할-수-있는-초안까지-열-분.pdf" download>Brochure PDF (KO) ↓</a>
             </div>
             <p class="case__tech"><span class="case__tech-k">Tech used</span> Pure JS client-side computation (zero backend), a model and GPU spec dataset, a vLLM/SGLang/TensorRT-LLM support matrix, and a deployment manifest generator.</p>
@@ -682,7 +682,7 @@
               <span class="chip chip--v">Eligible for government voucher</span>
             </div>
             <div class="case__proof">
-              <a class="chip chip--demo" href="../demos/09-promo-video/">▶ Live demo · runs in your browser</a>
+              <a class="chip chip--demo" href="../demos/09-promo-video/">▶ Live demo · runs in your browser</a><span class="chip chip--walk">scenario walkthrough</span>
               <a class="chip chip--dl" href="../brochures/2i-brochure-09-제품-정보만-넣으면-채널별-홍보영상이-쏟아진다.pdf" download>Brochure PDF (KO) ↓</a>
             </div>
             <p class="case__tech"><span class="case__tech-k">Tech used</span> Pillow/ffmpeg-based: automatically composites channel-spec short-form video from a product JSON (text and images), applying a brand template.</p>
@@ -717,7 +717,7 @@
               <span class="chip chip--v">Eligible for government voucher</span>
             </div>
             <div class="case__proof">
-              <a class="chip chip--demo" href="../demos/10-web-marketing/">▶ Live demo · runs in your browser</a>
+              <a class="chip chip--demo" href="../demos/10-web-marketing/">▶ Live demo · runs in your browser</a><span class="chip chip--walk">scenario walkthrough</span>
               <a class="chip chip--dl" href="../brochures/2i-brochure-10-검색하면-안-나오는-회사-신뢰받는-브랜드로.pdf" download>Brochure PDF (KO) ↓</a>
             </div>
             <p class="case__tech"><span class="case__tech-k">Tech used</span> A design-token-based responsive landing page combined with basic SEO, a lead form, and automated blog/promo-video generation. A starter kit deployed on free GitHub Pages.</p>
@@ -759,7 +759,7 @@
               <span class="chip chip--v">Eligible for government voucher</span>
             </div>
             <div class="case__proof">
-              <a class="chip chip--demo" href="../demos/15-edge-vlm-quant/">▶ Live demo · runs in your browser</a><a class="chip chip--doc" href="../papers/streaming-vlm-quantization-consumer-silicon.html">◆ 기술 논문: 실측 리포트</a>
+              <a class="chip chip--demo" href="../demos/15-edge-vlm-quant/">▶ Live demo · runs in your browser</a><span class="chip chip--live">recomputes when you change a value</span><a class="chip chip--doc" href="../papers/streaming-vlm-quantization-consumer-silicon.html">◆ 기술 논문: 실측 리포트</a>
               <a class="chip chip--dl" href="../brochures/2i-brochure-15-GPU-서버-없이-영상-이해-AI가-될까-소비자용-실리콘에서-실측했다.pdf" download>Brochure PDF (KO) ↓</a>
             </div>
             <p class="case__tech"><span class="case__tech-k">Tech used</span> microsoft/Mage-VL (Mage-ViT plus Qwen3-4B), transformers plus torch plus Metal (MPS), optimum-quanto weight-only quantization (bf16/INT8/INT4), the mlx-lm fused low-bit kernel runtime, and Apple Silicon on-premise deployment. Measurement scope: the 89.7 tok/s figure is a standalone proxy for the language backbone (Qwen3-4B) that dominates decode, and MLX porting of the full mage_vl model, vision tower included, is the next commercialization task. The streaming codec (DCVC) is CUDA-only and unsupported locally.</p>
@@ -794,7 +794,7 @@
               <span class="chip chip--v">Eligible for government voucher</span>
             </div>
             <div class="case__proof">
-              <a class="chip chip--demo" href="../demos/16-storage-durability/">▶ Live demo · runs in your browser</a>
+              <a class="chip chip--demo" href="../demos/16-storage-durability/">▶ Live demo · runs in your browser</a><span class="chip chip--live">recomputes when you change a value</span>
               <a class="chip chip--dl" href="../brochures/2i-brochure-16-복제-3벌은-내구성이-아닙니다-조용히-썩는-데이터를-실측했습니다.pdf" download>Brochure PDF (KO) ↓</a>
             </div>
             <p class="case__tech"><span class="case__tech-k">Tech used</span> Quorum writes · per-chunk checksums · background-scrub recovery · erasure coding (Reed-Solomon) · failure-domain-aware placement. A reference implementation on synthetic data, and every number reproduces with a single command. Out of scope: formal consistency verification (Jepsen-style), multi-site replication, and large-scale node operations.</p>
@@ -829,7 +829,7 @@
               <span class="chip chip--v">Eligible for government voucher</span>
             </div>
             <div class="case__proof">
-              <a class="chip chip--demo" href="../demos/17-storage-proofkit/">▶ Live demo · runs in your browser</a>
+              <a class="chip chip--demo" href="../demos/17-storage-proofkit/">▶ Live demo · runs in your browser</a><span class="chip chip--live">recomputes when you change a value</span>
               <a class="chip chip--dl" href="../brochures/2i-brochure-17-우리-도구를-우리에게-먼저-겨눴고-우리가-더-나쁘게-나왔습니다.pdf" download>Brochure PDF (KO) ↓</a>
             </div>
             <p class="case__tech"><span class="case__tech-k">Tech used</span> Diagnosis against a set of required capability items · pass/fail/unmeasured as an enforced three-state result · blocking passes without evidence · destructive testing (shard deletion, bit flips, retention lock, mis-authenticated access) · pinned-commit runs of ceph/s3-tests · a regression ledger. The example diagnostic target is a 4-drive erasure-coded MinIO configuration.</p>
@@ -864,7 +864,7 @@
               <span class="chip chip--v">Eligible for government voucher</span>
             </div>
             <div class="case__proof">
-              <a class="chip chip--demo" href="../demos/18-storage-cost-model/">▶ Live demo · runs in your browser</a>
+              <a class="chip chip--demo" href="../demos/18-storage-cost-model/">▶ Live demo · runs in your browser</a><span class="chip chip--live">recomputes when you change a value</span>
               <a class="chip chip--dl" href="../brochures/2i-brochure-18-클라우드가-비싸니-내리자-가-틀리는-지점을-계산합니다.pdf" download>Brochure PDF (KO) ↓</a>
             </div>
             <p class="case__tech"><span class="case__tech-k">Tech used</span> Bill cause decomposition (hot-class neglect · snapshot accumulation · egress · request fees · over-provisioning) · tests enforcing no double-counting · 3-to-5-year TCO per workload · reverse-derived break-even pricing · an unverified-rate flag gate on public pricing. A reference implementation built on synthetic data.</p>
