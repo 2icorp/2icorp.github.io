@@ -15,7 +15,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../styles.css?v=20">
+<link rel="stylesheet" href="../styles.css?v=21">
 </head>
 <body>
 
@@ -27,12 +27,16 @@
     </a>
     <button class="nav__burger" type="button" aria-expanded="false" aria-controls="navLinks" aria-label="Open menu"><span></span><span></span><span></span></button>
     <nav class="nav__links" id="navLinks" aria-label="Main menu">
+      <a href="index.html#method">Method</a>
       <a href="cases.html">Cases</a>
+      <a href="tech.html">Tech</a>
       <a href="comms.html">Telecom</a>
       <a href="cloud.html">Cloud</a>
       <a href="finance.html">Finance</a>
       <a href="papers.html">Papers</a>
       <a href="about.html">About</a>
+      <a href="index.html#pricing">Pricing</a>
+      <a href="index.html#voucher">Gov Voucher</a>
       <a class="nav__lang" href="/cloud.html">KO</a>
       <a class="nav__cta btn btn--signal" href="index.html#contact">Get in touch</a>
     </nav>
@@ -239,14 +243,14 @@
           <span class="chip chip--v">Measured on synthetic data · double-counting blocked by test</span>
         </div>
         <div class="rf-cell rf-cell--lead">
-          <span class="rf-metric">28.2<small>%</small></span>
+          <span class="rf-metric">30.0<small>%</small></span>
           <span class="rf-unit">diagnostic coverage</span>
           <span class="rf-name">Measure · coverage matters more than the score</span>
-          <span class="rf-desc">We diagnose a live deployment against 39 table-stakes storage capabilities. In the worked example we actually measured 11 of 39, which is 28.2 percent. The other 28 are reported as not measured, never as passing. Most diagnostic reports give you a score and stay silent about what was never tested. We put that number at the top of the table.</span>
+          <span class="rf-desc">We diagnose a live deployment against 40 table-stakes storage capabilities. In the worked example we actually measured 12 of 40, which is 28.2 percent. The other 28 are reported as not measured, never as passing. Most diagnostic reports give you a score and stay silent about what was never tested. We put that number at the top of the table.</span>
           <span class="chip chip--v">Measured · against a 4-drive erasure-coded MinIO deployment</span>
         </div>
         <div class="rf-cell">
-          <span class="rf-metric">27<small>/39</small></span>
+          <span class="rf-metric">27<small>/40</small></span>
           <span class="rf-unit">items that cannot pass at all</span>
           <span class="rf-name">Measure · code prevents unmeasured items from being reported as passing</span>
           <span class="rf-desc">Items we lack the access or tooling to test have no code path to a passing state. Constructing a pass without an evidence payload raises an exception. Turning a failure into "not measured" to raise the score is recorded as a regression. It is the safety catch the diagnostic tool applies to itself, and it is the whole product.</span>
@@ -288,11 +292,25 @@
           <span class="chip chip--v">Measured · 12 nodes, 4 domains, 5000 chunks</span>
         </div>
         <div class="rf-cell rf-cell--lead">
-          <span class="rf-metric">15.4 → 28.2<small>% coverage</small></span>
-          <span class="rf-unit">our store, self-diagnosis before and after</span>
-          <span class="rf-name">We pointed our tool at ourselves first, lost, then fixed it and measured again with the same ruler</span>
-          <span class="rf-desc">We ran our own harness against the store we built and scored 41.7 over 15.4 percent coverage, with one critical failure. We published the losing sentence first. Then we fixed it in two stages. First we changed nothing in the harness and fixed only the store: 85.7 points, zero critical failures. Then we generalised the harness discovery defect and coverage widened to 28.2 percent, at which point the score fell to 77.3 because a previously hidden encryption-at-rest failure entered the denominator. Score alone reads as a regression; score plus coverage reads as progress. After changing the harness we re-measured MinIO with it and got 28.2 percent and 72.7, identical to before. Had we tilted the harness toward ourselves, that number would have moved. The remaining gap is lifecycle rules we never built versus a plaintext deployment we chose for MinIO, so we do not claim a win. All three reports stay in the repository.</span>
-          <span class="chip chip--v">Measured · same harness, before and after</span>
+          <span class="rf-metric">15.4 &rarr; 30.0<small>% coverage</small></span>
+          <span class="rf-unit">our store, self-diagnosis, all four points kept</span>
+          <span class="rf-name">We pointed the tool at ourselves first, lost, and only then fixed it</span>
+          <span class="rf-desc">We ran our own diagnostic harness against the store we built. It came back at 15.4 percent coverage, 41.7 points, one critical failure. We put the sentence about losing at the top of the public repository before we changed anything. Then we fixed the store without touching a single line of the harness and reached 85.7 points with zero critical failures. Next we generalised a discovery defect in the harness itself, which widened coverage to 28.2 percent and pushed the score down to 77.3, because a storage-at-rest encryption failure that had been hiding came into the denominator. Read the score alone and that looks like a regression; read it with coverage and it is progress. Finally we added a conditional-write item to the checklist, taking it to 40 items, and re-measured both sides: 30.0 percent and 79.2 points for us, the same 30.0 percent and 75.0 points for MinIO. The only remaining differences are a lifecycle feature we have not built and the fact that we ran MinIO over plaintext, so we do not write that we won. All four reports are in the repository.</span>
+          <span class="chip chip--v">Measured &middot; both sides re-measured whenever an item is added</span>
+        </div>
+        <div class="rf-cell">
+          <span class="rf-metric">4 / 4<small> on both sides</small></span>
+          <span class="rf-unit">the item we added, passed by the other side too</span>
+          <span class="rf-name">Evidence that we did not bend the harness toward ourselves</span>
+          <span class="rf-desc">Our checklist had no item for conditional writes, the feature that stops two clients writing the same key from silently overwriting each other. The place to measure it was simply empty, so we added it and the list went to 40 items. But adding an item for a feature we had just implemented looks self-serving, so we held to one rule: whenever an item is added, the other side gets re-measured on the same harness. Both sides passed all four checks. Had we tilted the harness this is where it would have shown, and it did not; the score gap still comes from exactly the same two items as before.</span>
+          <span class="chip chip--v">Measured &middot; 40 items, identical conditions for us and MinIO</span>
+        </div>
+        <div class="rf-cell">
+          <span class="rf-metric">33.3 &rarr; 66.6<small>% usable</small></span>
+          <span class="rf-unit">capacity you can actually use at the same tolerance</span>
+          <span class="rf-name">Twice the data on the same disks</span>
+          <span class="rf-desc">Three-way replication means buying three disks and using one. Hold the tolerance constant at two simultaneous losses, switch to erasure coding, and the same disks hold twice as much. We put a 256KiB object through both paths on one instance and measured what actually landed on disk: 786,480 bytes against 393,324 bytes, a 50.0 percent reduction. That is measured with framing and padding included, not a theoretical ratio. The tradeoff is repair: rebuilding one shard means reading several, so recovery costs more. We measure that cost and publish it too.</span>
+          <span class="chip chip--v">Measured &middot; 256KiB object, identical loss tolerance</span>
         </div>
         <div class="rf-cell">
           <span class="rf-metric">90.7<small>%</small></span>
@@ -317,6 +335,38 @@
     </div>
   </section>
 
+  <!-- Air-gap data diode -->
+  <section class="section chero chero--band" id="airgap">
+    <div class="chero__wave" aria-hidden="true">
+      <svg viewBox="0 0 1200 220" preserveAspectRatio="none" focusable="false" aria-hidden="true">
+        <g class="chero__w1">
+          <path d="M0,110 C40,60 80,60 120,110 C160,160 200,160 240,110 C280,40 320,40 360,110 C400,180 440,180 480,110 C520,70 560,70 600,110 C640,150 680,150 720,110 C760,50 800,50 840,110 C880,170 920,170 960,110 C1000,80 1040,80 1080,110 C1120,140 1160,140 1200,110" fill="none" stroke="var(--signal)" stroke-width="2" opacity="0.5"/>
+          <path d="M1200,110 C1240,60 1280,60 1320,110 C1360,160 1400,160 1440,110 C1480,40 1520,40 1560,110 C1600,180 1640,180 1680,110 C1720,70 1760,70 1800,110 C1840,150 1880,150 1920,110 C1960,50 2000,50 2040,110 C2080,170 2120,170 2160,110 C2200,80 2240,80 2280,110 C2320,140 2360,140 2400,110" fill="none" stroke="var(--signal)" stroke-width="2" opacity="0.5"/>
+        </g>
+        <g class="chero__w2">
+          <path d="M0,110 C60,95 120,95 180,110 C240,125 300,125 360,110 C420,88 480,88 540,110 C600,132 660,132 720,110 C780,98 840,98 900,110 C960,122 1020,122 1080,110 C1140,102 1170,102 1200,110" fill="none" stroke="var(--ink-faint)" stroke-width="1.4" opacity="0.55"/>
+          <path d="M1200,110 C1260,95 1320,95 1380,110 C1440,125 1500,125 1560,110 C1620,88 1680,88 1740,110 C1800,132 1860,132 1920,110 C1980,98 2040,98 2100,110 C2160,122 2220,122 2280,110 C2340,102 2370,102 2400,110" fill="none" stroke="var(--ink-faint)" stroke-width="1.4" opacity="0.55"/>
+        </g>
+      </svg>
+    </div>
+    <div class="wrap">
+      <span class="eyebrow">Air-gapped Transfer · AIR-GAP DATA DIODE</span>
+      <h2 class="chero__h1">Even for equipment that can't be plugged into the internet,<br>we push models in <span class="u accent">one direction</span>.</h2>
+      <p class="chero__lede">Air-gapped equipment with no network connection struggles to keep its AI models current. USB is the number-one intrusion path, so blocking it leaves on-site AI stuck running stale models. We stream files in one direction only, encoded as fountain codes that flow from a screen to a camera, so that even if more than half the fragments are lost, the remaining fragments alone reconstruct the original. A bandwidth-free reverse signal refills only the missing fragments for full recovery, but since bulk data still cannot travel back out, the diode's strictly one-way property holds.</p>
+      <div class="chero__stats reveal stagger">
+        <div class="cstat"><span class="cstat__n">100<small>%</small></span><span class="cstat__l">Reverse channel refills only the missing blocks to restore the original (45% blur, 120m distance, measured demo)</span></div>
+        <div class="cstat"><span class="cstat__n">24<small>blocks</small></span><span class="cstat__l">Targeted refill, not a full retransmit, reproducible with a fixed seed</span></div>
+        <div class="cstat"><span class="cstat__n">38.6<small>&micro;s</small></span><span class="cstat__l">4KB payload encode + decode round trip (dependency-free no_std Rust)</span></div>
+        <div class="cstat"><span class="cstat__n">59<small>/59</small></span><span class="cstat__l">All tests pass, including property and failure tests (measured)</span></div>
+      </div>
+      <div class="hero__cta reveal" style="margin-top:1.4rem">
+        <a class="btn btn--signal" href="../demos/23-airgap-diode/">Try the demo yourself <span class="arrow">&rarr;</span></a>
+        <a class="btn" href="cases.html#case-23">See the full case study</a>
+      </div>
+      <p class="auto-foot reveal" style="margin-top:1.3rem">To be honest: this demo and its numbers only actually compute the coding and protocol layers, running on a loss and noise model that simulates a physical link. We have not verified real RF or optical transfer using an actual SDR, camera, and monitor. Before deployment we re-measure loss rates against the on-site equipment's frame rate, lighting, and distance, and for large volumes we pair this with a free-space optical link or split transfers.</p>
+    </div>
+  </section>
+
   <!-- CTA -->
   <section class="section" id="cta">
     <div class="wrap">
@@ -327,7 +377,7 @@
       </div>
       <div class="hero__cta reveal">
         <a class="btn btn--signal" href="index.html#contact">30-min diagnostic call <span class="arrow">&rarr;</span></a>
-        <a class="btn" href="cases.html">See 10 case studies</a>
+        <a class="btn" href="cases.html">See 23 case studies</a>
       </div>
     </div>
   </section>

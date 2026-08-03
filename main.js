@@ -58,6 +58,66 @@
     inviewEls.forEach(function (el) { io.observe(el); });
   }
 
+  // rf-grid 끝단 빈칸 메우기.
+  // .rf-grid 는 컨테이너 배경이 1px 간격으로 비쳐 칸 사이 선을 만든다. 그래서 채워지지 않은
+  // 트랙이 통짜 회색 블록으로 보인다. CSS 의 grid-auto-flow:dense 가 중간 구멍을 메우고,
+  // 여기서는 각 행의 마지막 셀을 남은 칸 수만큼 늘려 끝단 구멍을 없앤다.
+  // 좌표는 offsetLeft/offsetTop 으로 읽는다. reveal 애니메이션의 transform 에 영향받지 않는다.
+  (function () {
+    var grids = document.querySelectorAll(".rf-grid");
+    if (!grids.length) return;
+
+    function fillOnce(g) {
+      var kids = [].slice.call(g.children).filter(function (k) { return k.nodeType === 1; });
+      if (!kids.length) return;
+      var tracks = getComputedStyle(g).gridTemplateColumns.split(" ").filter(Boolean);
+      var cols = tracks.length;
+      var unit = parseFloat(tracks[0]);
+      if (cols < 2 || !(unit > 0)) return;
+
+      var base = Infinity;
+      kids.forEach(function (k) { if (k.offsetLeft < base) base = k.offsetLeft; });
+
+      var rows = {};
+      kids.forEach(function (k) {
+        var t = k.offsetTop;
+        (rows[t] = rows[t] || []).push(k);
+      });
+
+      Object.keys(rows).forEach(function (t) {
+        var row = rows[t].sort(function (a, b) { return a.offsetLeft - b.offsetLeft; });
+        var last = row[row.length - 1];
+        var start = Math.round((last.offsetLeft - base) / (unit + 1));
+        var span = Math.max(1, Math.round((last.offsetWidth + 1) / (unit + 1)));
+        var free = cols - (start + span);
+        // 단축속성으로 써야 한다. .rf-cell--lead 는 `grid-column: span 2` 로 선언돼 있고
+        // 단일값 단축속성은 grid-column-START 를 설정한다. 그래서 grid-column-end 만 손대면
+        // start 의 span 이 이겨 늘어나지 않는다 (2026-08-03 실측으로 확인).
+        if (free > 0) last.style.gridColumn = "span " + (span + free);
+      });
+    }
+
+    function fillAll() {
+      grids.forEach(function (g) {
+        [].slice.call(g.children).forEach(function (k) {
+          if (k.nodeType === 1) k.style.gridColumn = "";
+        });
+      });
+      // 늘리면 배치가 바뀌어 새 구멍이 생길 수 있다. 두 번 돌려 고정점에 도달한다.
+      grids.forEach(fillOnce);
+      grids.forEach(fillOnce);
+    }
+
+    fillAll();
+    window.addEventListener("load", fillAll);
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(fillAll);
+    var rt;
+    window.addEventListener("resize", function () {
+      clearTimeout(rt);
+      rt = setTimeout(fillAll, 150);
+    });
+  })();
+
   // Count-up numbers when they enter view ([data-count] with optional data-format="comma")
   (function () {
     var nums = document.querySelectorAll("[data-count]");

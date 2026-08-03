@@ -1,0 +1,967 @@
+<!doctype html>
+<html lang="en">
+<head>
+<script>(function(){try{var t=localStorage.getItem("theme");if(!t&&window.matchMedia&&matchMedia("(prefers-color-scheme: dark)").matches)t="dark";if(t)document.documentElement.setAttribute("data-theme",t);}catch(e){}})();</script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tech We've Built · 2i</title>
+<meta name="description" content="A categorized list of the 126 repositories 2i has built and runs itself, across 11 axes: storage durability, telecom signal processing, LLM optimization, agent harnesses, optimization scheduling, and more.">
+<meta property="og:title" content="Tech We've Built · 2i">
+<meta property="og:description" content="126 repositories we build and run ourselves, organized into 11 technology axes.">
+<meta property="og:type" content="website">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23111827'/%3E%3Ctext x='16' y='22' font-family='monospace' font-size='16' font-weight='700' fill='%23e08a2b' text-anchor='middle'%3E2i%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../styles.css?v=21">
+</head>
+<body>
+
+<header class="nav">
+  <div class="wrap nav__inner">
+    <a class="brand" href="index.html" aria-label="2i Home">
+      <span class="brand__mark">2i</span>
+      <span class="brand__tag">AX Consulting</span>
+    </a>
+    <button class="nav__burger" type="button" aria-expanded="false" aria-controls="navLinks" aria-label="Open menu"><span></span><span></span><span></span></button>
+    <nav class="nav__links" id="navLinks" aria-label="Main menu">
+      <a href="index.html#method">Method</a>
+      <a href="cases.html">Cases</a>
+      <a href="tech.html">Tech</a>
+      <a href="comms.html">Telecom</a>
+      <a href="cloud.html">Cloud</a>
+      <a href="finance.html">Finance</a>
+      <a href="papers.html">Papers</a>
+      <a href="about.html">About</a>
+      <a href="index.html#pricing">Pricing</a>
+      <a href="index.html#voucher">Gov Voucher</a>
+      <a class="nav__lang" href="/tech.html">KO</a>
+      <a class="nav__cta btn btn--signal" href="index.html#contact">Get in touch</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <section class="section pboard-hero">
+    <div class="wrap">
+      <span class="eyebrow">Tech We Own</span>
+      <h1 class="pboard-hero__h1">What we've used before, <span class="u accent">we take out and use again.</span></h1>
+      <p class="pboard-hero__lede">These are the 126 repositories 2i has built and runs ourselves. When a new task comes in, we don't start from a blank page, we look in this list first for the piece that fits. That's why the first result comes fast.</p>
+      <p class="fam__d">105 of them were touched in 2026; the rest are marked dormant. 111 are private repositories, so clicking the link won't show you the code. This is a list of what we have, not a promise to open-source it. The proof is in the live demos on the Cases page and the measured results on the Papers board.</p>
+      <p class="fam__nos">Primary languages: Python 66, JavaScript 23, TypeScript 12, Rust 10, HTML 6, Go 4</p>
+    </div>
+  </section>
+  <section class="section section--alt" style="padding-top:0">
+    <div class="wrap">
+    <nav class="famnav" aria-label="Jump to a category"><span class="famnav__k">Category</span><a class="famnav__chip" href="#tech-storage">Storage<span class="famnav__n">7</span></a><a class="famnav__chip" href="#tech-comms">Telecom &amp; Signal<span class="famnav__n">14</span></a><a class="famnav__chip" href="#tech-llm">LLM &amp; Serving<span class="famnav__n">12</span></a><a class="famnav__chip" href="#tech-agent">Agents<span class="famnav__n">15</span></a><a class="famnav__chip" href="#tech-optim">Optimisation<span class="famnav__n">5</span></a><a class="famnav__chip" href="#tech-vision">Vision<span class="famnav__n">2</span></a><a class="famnav__chip" href="#tech-data">Data<span class="famnav__n">7</span></a><a class="famnav__chip" href="#tech-media">Media<span class="famnav__n">18</span></a><a class="famnav__chip" href="#tech-product">Product<span class="famnav__n">20</span></a><a class="famnav__chip" href="#tech-devtool">Dev Tooling<span class="famnav__n">24</span></a><a class="famnav__chip" href="#tech-misc">Misc<span class="famnav__n">2</span></a></nav>
+    <div class="techsearch" hidden>
+      <label class="techsearch__l" for="techq">Filter by name, description, or stack</label>
+      <input class="techsearch__i" id="techq" type="search" autocomplete="off"
+             placeholder="e.g. storage, Rust, CP-SAT, quantization">
+      <span class="techsearch__n" id="techn"></span>
+    </div>
+    <div class="techboard">
+      <section class="fam" id="tech-storage" aria-labelledby="techt-storage">
+        <header class="fam__head">
+          <h2 class="fam__t" id="techt-storage">Storage<span class="fam__n">7</span></h2>
+          <p class="fam__d">Quorum writes, checksum scrubbing, erasure coding, failure-domain placement. We keep only what we've verified by actually injecting faults and counting the result.</p>
+        </header>
+        <div class="pboard">
+      <a class="pcard reveal" href="https://github.com/2icorp/2i-case-16-storage-durability" data-cat="storage" data-q="2i-case-16-storage-durability 2icorp/2i-case-16-storage-durability storage durability fault-injection benchmark demo reproduces in code six fault-injection experiments that actually break quorum writes, checksum scrubbing, erasure coding, and placement, then layers an s3 gateway on top and self-diagnoses with its own harness. measured result: writing with w=1 loses all 20 objects, but w=2 or higher loses zero. storage #go" target="_blank" rel="noopener">
+        <div class="pcard__meta"><span class="pcard__cat">Private</span><span class="pcard__rt">Go</span><span class="pcard__date">2026.07.31</span><span class="pcard__rt">Case 16</span></div>
+        <h3 class="pcard__title">Storage Durability Fault-Injection Benchmark Demo</h3>
+        <p class="pcard__excerpt">Reproduces in code six fault-injection experiments that actually break quorum writes, checksum scrubbing, erasure coding, and placement, then layers an S3 gateway on top and self-diagnoses with its own harness. Measured result: writing with W=1 loses all 20 objects, but W=2 or higher loses zero.</p>
+        <div class="pcard__tags"><span>2icorp/2i-case-16-storage-durability</span><span>#Go</span><span class="pcard__go">GitHub →</span></div>
+      </a>
+      <a class="pcard reveal" href="https://github.com/2icorp/2i-case-17-storage-proofkit" data-cat="storage" data-q="2i-case-17-storage-proofkit 2icorp/2i-case-17-storage-proofkit storage claim-verification diagnostic harness a harness that actually measures and verifies the storage properties a vendor claims, with a code-enforced rule that anything not measured is never reported as passing. includes an example run of 11 measured items against a minio 4-drive erasure-coded setup. storage #python" target="_blank" rel="noopener">
+        <div class="pcard__meta"><span class="pcard__cat">Private</span><span class="pcard__rt">Python</span><span class="pcard__date">2026.07.31</span><span class="pcard__rt">Case 17</span></div>
+        <h3 class="pcard__title">Storage Claim-Verification Diagnostic Harness</h3>
+        <p class="pcard__excerpt">A harness that actually measures and verifies the storage properties a vendor claims, with a code-enforced rule that anything not measured is never reported as passing. Includes an example run of 11 measured items against a MinIO 4-drive erasure-coded setup.</p>
+        <div class="pcard__tags"><span>2icorp/2i-case-17-storage-proofkit</span><span>#Python</span><span class="pcard__go">GitHub →</span></div>
+      </a>
+      <a class="pcard reveal" href="https://github.com/2icorp/2i-case-18-storage-cost-model" data-cat="storage" data-q="2i-case-18-storage-cost-model 2icorp/2i-case-18-storage-cost-model storage bill root-cause tco model breaks down a storage bill by root cause instead of by sku, and calculates per workload whether staying on the cloud or moving on-prem is cheaper over a 3-to-5-year horizon. on a synthetic $37,053/month bill, it measured out $20,093 in addressable savings. storage #python" target="_blank" rel="noopener">
+        <div class="pcard__meta"><span class="pcard__cat">Private</span><span class="pcard__rt">Python</span><span class="pcard__date">2026.07.31</span><span class="pcard__rt">Case 18</span></div>
+        <h3 class="pcard__title">Storage Bill Root-Cause TCO Model</h3>
+        <p class="pcard__excerpt">Breaks down a storage bill by root cause instead of by SKU, and calculates per workload whether staying on the cloud or moving on-prem is cheaper over a 3-to-5-year horizon. On a synthetic $37,053/month bill, it measured out $20,093 in addressable savings.</p>
+        <div class="pcard__tags"><span>2icorp/2i-case-18-storage-cost-model</span><span>#Python</span><span class="pcard__go">GitHub →</span></div>
+      </a>
+      <a class="pcard reveal" href="https://github.com/2icorp/2i-storage-core" data-cat="storage" data-q="2i-storage-core 2icorp/2i-storage-core on-prem object storage core an on-prem object-storage core implementing quorum replication, checksum scrubbing, erasure coding, and failure-domain placement in a form whose real behavior can be measured with a fault-injection harness. a write only reports success after fsync and rename complete, and is rejected outright if the available replica count falls below w. storage #go #crc32c #quorum replication #erasure coding" target="_blank" rel="noopener">
+        <div class="pcard__meta"><span class="pcard__cat">Private</span><span class="pcard__rt">Go</span><span class="pcard__date">2026.07.31</span></div>
+        <h3 class="pcard__title">On-Prem Object Storage Core</h3>
+        <p class="pcard__excerpt">An on-prem object-storage core implementing quorum replication, checksum scrubbing, erasure coding, and failure-domain placement in a form whose real behavior can be measured with a fault-injection harness. A write only reports success after fsync and rename complete, and is rejected outright if the available replica count falls below W.</p>
+        <div class="pcard__tags"><span>2icorp/2i-storage-core</span><span>#Go</span><span>#crc32c</span><span>#Quorum replication</span><span>#Erasure coding</span><span class="pcard__go">GitHub →</span></div>
+      </a>
+      <a class="pcard reveal" href="https://github.com/2icorp/2i-storage-cost-engine" data-cat="storage" data-q="2i-storage-cost-engine 2icorp/2i-storage-cost-engine real-bill-parser storage cost engine a private repository that reads and normalizes real cloud bills, applies the formulas from the public 2i-case-18 model, and produces client-ready reports. it doesn't hold the calculation logic itself, only the parser, provider adapters, and identifier masking. storage #python" target="_blank" rel="noopener">
+        <div class="pcard__meta"><span class="pcard__cat">Private</span><span class="pcard__rt">Python</span><span class="pcard__date">2026.07.31</span></div>
+        <h3 class="pcard__title">Real-Bill-Parser Storage Cost Engine</h3>
+        <p class="pcard__excerpt">A private repository that reads and normalizes real cloud bills, applies the formulas from the public 2i-case-18 model, and produces client-ready reports. It doesn't hold the calculation logic itself, only the parser, provider adapters, and identifier masking.</p>
+        <div class="pcard__tags"><span>2icorp/2i-storage-cost-engine</span><span>#Python</span><span class="pcard__go">GitHub →</span></div>
+      </a>
+      <a class="pcard reveal" href="https://github.com/2icorp/2i-storage-proofkit-pro" data-cat="storage" data-q="2i-storage-proofkit-pro 2icorp/2i-storage-proofkit-pro storage diagnostic harness delivery layer a private delivery layer that wraps the measurement and scoring logic from the public 2i-case-17 repository, adding client-environment adapters, a report cover, and a regression ledger. it doesn't own the probes or scoring logic itself, referencing the public repository directly instead. storage #python" target="_blank" rel="noopener">
+        <div class="pcard__meta"><span class="pcard__cat">Private</span><span class="pcard__rt">Python</span><span class="pcard__date">2026.07.31</span></div>
+        <h3 class="pcard__title">Storage Diagnostic Harness Delivery Layer</h3>
+        <p class="pcard__excerpt">A private delivery layer that wraps the measurement and scoring logic from the public 2i-case-17 repository, adding client-environment adapters, a report cover, and a regression ledger. It doesn't own the probes or scoring logic itself, referencing the public repository directly instead.</p>
+        <div class="pcard__tags"><span>2icorp/2i-storage-proofkit-pro</span><span>#Python</span><span class="pcard__go">GitHub →</span></div>
+      </a>
+      <a class="pcard reveal" href="https://github.com/2icorp/nas-cluster" data-cat="storage" data-q="nas-cluster 2i/nas-cluster nas-clustering distributed storage platform an open-source platform that clusters ordinary nas devices to provide ceph-like distributed storage. it aims to build distributed storage at low cost, in place of ceph's minimum 3-node requirement. storage #go #typescript #shell" target="_blank" rel="noopener">
+        <div class="pcard__meta"><span class="pcard__cat">Private</span><span class="pcard__rt">Go</span><span class="pcard__date">2026.07.31</span></div>
+        <h3 class="pcard__title">NAS-Clustering Distributed Storage Platform</h3>
+        <p class="pcard__excerpt">An open-source platform that clusters ordinary NAS devices to provide Ceph-like distributed storage. It aims to build distributed storage at low cost, in place of Ceph's minimum 3-node requirement.</p>
+        <div class="pcard__tags"><span>2i/nas-cluster</span><span>#Go</span><span>#TypeScript</span><span>#Shell</span><span class="pcard__go">GitHub →</span></div>
+      </a>
+        </div>
+      </section>
+      <section class="fam" id="tech-comms" aria-labelledby="techt-comms">
+        <header class="fam__head">
+          <h2 class="fam__t" id="techt-comms">Telecom &amp; Signal<span class="fam__n">14</span></h2>
+          <p class="fam__d">RF fingerprinting, spectrum sensing, air-gapped data diodes, voice latency. This axis works with the raw signal itself, no training required.</p>
+        </header>
+        <div class="pboard">
+      <a class="pcard reveal" href="https://github.com/2icorp/mtg-realtime-translator" data-cat="comms" data-q="mtg-realtime-translator 2i/mtg-realtime-translator real-time meeting voice translation desktop app a pyside6 desktop app that uses the openai realtime translation api to translate microphone audio on the spot, outputting both text and speech. it runs silero vad locally, keeping latency in the low hundreds of milliseconds. telecom &amp; signal #python #pyside6 #silero vad" target="_blank" rel="noopener">
+        <div class="pcard__meta"><span class="pcard__cat">Private</span><span class="pcard__rt">Python</span><span class="pcard__date">2026.05.12</span></div>
+        <h3 class="pcard__title">Real-Time Meeting Voice Translation Desktop App</h3>
+        <p class="pcard__excerpt">A PySide6 desktop app that uses the OpenAI Realtime Translation API to translate microphone audio on the spot, outputting both text and speech. It runs Silero VAD locally, keeping latency in the low hundreds of milliseconds.</p>
+        <div class="pcard__tags"><span>2i/mtg-realtime-translator</span><span>#Python</span><span>#PySide6</span><span>#Silero VAD</span><span class="pcard__go">GitHub →</span></div>
+      </a>
+      <a class="pcard reveal" href="https://github.com/2icorp/realtime-translator" data-cat="comms" data-q="realtime-translator 2i/realtime-translator dual-backend real-time voice translation desktop app a macos desktop real-time voice translation app that supports two backends, the openai realtime api and a self-hosted fastapi server (runpod gpu or local apple silicon). built with a tauri 2 frontend. telecom &amp; signal #python #tauri #fastapi" target="_blank" rel="noopener">
+        <div class="pcard__meta"><span class="pcard__cat">Private</span><span class="pcard__rt">Python</span><span class="pcard__date">2026.07.06</span></div>
+        <h3 class="pcard__title">Dual-Backend Real-Time Voice Translation Desktop App</h3>
+        <p class="pcard__excerpt">A macOS desktop real-time voice translation app that supports two backends, the OpenAI Realtime API and a self-hosted FastAPI server (RunPod GPU or local Apple Silicon). Built with a Tauri 2 frontend.</p>
+        <div class="pcard__tags"><span>2i/realtime-translator</span><span>#Python</span><span>#Tauri</span><span>#FastAPI</span><span class="pcard__go">GitHub →</span></div>
+      </a>
+      <a class="pcard reveal" href="https://github.com/2icorp/voice-latency-budget" data-cat="comms" data-q="voice-latency-budget 2i/voice-latency-budget real-time voice agent latency budget calculator a 100% client-side static calculator: enter the expected latency for each stage from end of speech through asr, llm, and tts to the first sound of a response, and it diagnoses the cumulative timeline and bottlenecks before launch. results can be shared via a url hash, with no server or api key required. telecom &amp; signal #javascript #html #css" target="_blank" rel="noopener">
+        <div class="pcard__meta"><span class="pcard__cat">Public</span><span class="pcard__rt">JavaScript</span><span class="pcard__date">2026.07.19</span></div>
+        <h3 class="pcard__title">Real-Time Voice Agent Latency Budget Calculator</h3>
+        <p class="pcard__excerpt">A 100% client-side static calculator: enter the expected latency for each stage from end of speech through ASR, LLM, and TTS to the first sound of a response, and it diagnoses the cumulative timeline and bottlenecks before launch. Results can be shared via a URL hash, with no server or API key required.</p>
+        <div class="pcard__tags"><span>2i/voice-latency-budget</span><span>#JavaScript</span><span>#HTML</span><span>#CSS</span><span class="pcard__go">GitHub →</span></div>
+      </a>
+      <a class="pcard reveal" href="https://github.com/2icorp/sigprint" data-cat="comms" data-q="sigprint 2i/sigprint signal fingerprinting engine (generalized to telecom signals) an open-source signal-fingerprinting engine that generalizes the landmark and constellation fingerprinting techniques from music recognizers to the telecom signal (rf/iq) domain, porting a legacy c/c++ core to rust. it aims to be a spectrum-sensing engine that runs alongside cots server software stacks like o-ran du/cu. telecom &amp; signal #rust #c #standard ml" target="_blank" rel="noopener">
+        <div class="pcard__meta"><span class="pcard__cat">Private</span><span class="pcard__rt">SML</span><span class="pcard__date">2026.07.25</span></div>
+        <h3 class="pcard__title">Signal Fingerprinting Engine (Generalized to Telecom Signals)</h3>
+        <p class="pcard__excerpt">An open-source signal-fingerprinting engine that generalizes the landmark and constellation fingerprinting techniques from music recognizers to the telecom signal (RF/IQ) domain, porting a legacy C/C++ core to Rust. It aims to be a spectrum-sensing engine that runs alongside COTS server software stacks like O-RAN DU/CU.</p>
+        <div class="pcard__tags"><span>2i/sigprint</span><span>#Rust</span><span>#C</span><span>#Standard ML</span><span class="pcard__go">GitHub →</span></div>
+      </a>
+      <a class="pcard reveal" href="https://github.com/2icorp/sigprint-bio" data-cat="comms" data-q="sigprint-bio 2i/sigprint-bio bioacoustic species-signature identification engine a bioacoustic application of the sigprint engine that identifies species-specific vocal signatures, birds, whales, bats and more, from field-recorder audio via fingerprint matching. its edge over deep learning: low-power offline operation, and registering a rare species from a single sample. telecom &amp; signal #rust" target="_blank" rel="noopener">
+        <div class="pcard__meta"><span class="pcard__cat">Private</span><span class="pcard__rt">Rust</span><span class="pcard__date">2026.07.25</span></div>
+        <h3 class="pcard__title">Bioacoustic Species-Signature Identification Engine</h3>
+        <p class="pcard__excerpt">A bioacoustic application of the sigprint engine that identifies species-specific vocal signatures, birds, whales, bats and more, from field-recorder audio via fingerprint matching. Its edge over deep learning: low-power offline operation, and registering a rare species from a single sample.</p>
+        <div class="pcard__tags"><span>2i/sigprint-bio</span><span>#Rust</span><span class="pcard__go">GitHub →</span></div>
+      </a>
+      <a class="pcard reveal" href="https://github.com/2icorp/sigprint-broadcast" data-cat="comms" data-q="sigprint-broadcast 2i/sigprint-broadcast broadcast airplay verification monitoring engine a sigprint engine application that automatically confirms whether a track or ad actually aired on radio, tv, or a stream, generating the evidence base for royalty settlement and ad-proof-of-play. its edge over commercial apis is that it's self-hosted. telecom &amp; signal #rust" target="_blank" rel="noopener">
+        <div class="pcard__meta"><span class="pcard__cat">Private</span><span class="pcard__rt">Rust</span><span class="pcard__date">2026.07.25</span></div>
+        <h3 class="pcard__title">Broadcast Airplay Verification Monitoring Engine</h3>
+        <p class="pcard__excerpt">A sigprint engine application that automatically confirms whether a track or ad actually aired on radio, TV, or a stream, generating the evidence base for royalty settlement and ad-proof-of-play. Its edge over commercial APIs is that it's self-hosted.</p>
+        <div class="pcard__tags"><span>2i/sigprint-broadcast</span><span>#Rust</span><span class="pcard__go">GitHub →</span></div>
+      </a>
+      <a class="pcard reveal" href="https://github.com/2icorp/sigprint-enf" data-cat="comms" data-q="sigprint-enf 2i/sigprint-enf enf fingerprint-based recording verification engine a sigprint engine application that extracts the faint fluctuations of the mains hum (50/60hz) embedded in a recording and matches them against grid reference data to verify when it was recorded and whether it was edited. used for deepfake and tampered-evidence detection via training-free time-series matching. telecom &amp; signal #rust" target="_blank" rel="noopener">
+        <div class="pcard__meta"><span class="pcard__cat">Private</span><span class="pcard__rt">Rust</span><span class="pcard__date">2026.07.25</span></div>
+        <h3 class="pcard__title">ENF Fingerprint-Based Recording Verification Engine</h3>
+        <p class="pcard__excerpt">A sigprint engine application that extracts the faint fluctuations of the mains hum (50/60Hz) embedded in a recording and matches them against grid reference data to verify when it was recorded and whether it was edited. Used for deepfake and tampered-evidence detection via training-free time-series matching.</p>
+        <div class="pcard__tags"><span>2i/sigprint-enf</span><span>#Rust</span><span class="pcard__go">GitHub →</span></div>
+      </a>
+      <a class="pcard reveal" href="https://github.com/2icorp/sigprint-factory" data-cat="comms" data-q="sigprint-factory 2i/sigprint-factory predictive-maintenance acoustic and vibration signature engine a sigprint engine application that fingerprints the normal versus degraded acoustic and vibration patterns of rotating equipment, motors, pumps, bearings and more, detecting anomaly signatures early on an edge box with no training. its edge over cloud-subscription commercial products is offline edge matching. telecom &amp; signal #rust" target="_blank" rel="noopener">
+        <div class="pcard__meta"><span class="pcard__cat">Private</span><span class="pcard__rt">Rust</span><span class="pcard__date">2026.07.25</span></div>
+        <h3 class="pcard__title">Predictive-Maintenance Acoustic and Vibration Signature Engine</h3>
+        <p class="pcard__excerpt">A sigprint engine application that fingerprints the normal versus degraded acoustic and vibration patterns of rotating equipment, motors, pumps, bearings and more, detecting anomaly signatures early on an edge box with no training. Its edge over cloud-subscription commercial products is offline edge matching.</p>
+        <div class="pcard__tags"><span>2i/sigprint-factory</span><span>#Rust</span><span class="pcard__go">GitHub →</span></div>
+      </a>
+      <a class="pcard reveal" href="https://github.com/2icorp/sigprint-med" data-cat="comms" data-q="sigprint-med 2i/sigprint-med auscultation anomaly-pattern screening assist engine a sigprint engine application that matches known anomaly-pattern signatures, heart murmurs, wheezes and more, from digital stethoscope or phone-mic audio to provide a first-pass screening-assist indicator. positioned as a re-listen recommendation flag rather than a diagnosis, and requires medical-device regulatory disclosure. telecom &amp; signal #rust" target="_blank" rel="noopener">
+        <div class="pcard__meta"><span class="pcard__cat">Private</span><span class="pcard__rt">Rust</span><span class="pcard__date">2026.07.25</span></div>
+        <h3 class="pcard__title">Auscultation Anomaly-Pattern Screening Assist Engine</h3>
+        <p class="pcard__excerpt">A sigprint engine application that matches known anomaly-pattern signatures, heart murmurs, wheezes and more, from digital stethoscope or phone-mic audio to provide a first-pass screening-assist indicator. Positioned as a re-listen recommendation flag rather than a diagnosis, and requires medical-device regulatory disclosure.</p>
+        <div class="pcard__tags"><span>2i/sigprint-med</span><span>#Rust</span><span class="pcard__go">GitHub →</span></div>
+      </a>
+      <a class="pcard reveal" href="https://github.com/2icorp/2i-case-06-sigprint-rf" data-cat="comms" data-q="2i-case-06-sigprint-rf 2icorp/2i-case-06-sigprint-rf real-time rf interference-source fingerprint matching a sigprint engine that catches anomalous wireless-network signals in real time via cfar detection, registers candidate interference-source waveforms in a signature db, and pinpoints the cause via robust-hash fingerprint matching. a reference demo built on synthetic rf signals. telecom &amp; signal #python #numpy #scipy #dsp/cfar" target="_blank" rel="noopener">
+        <div class="pcard__meta"><span class="pcard__cat">Private</span><span class="pcard__rt">Python</span><span class="pcard__date">2026.07.26</span><span class="pcard__rt">Case 06</span></div>
+        <h3 class="pcard__title">Real-Time RF Interference-Source Fingerprint Matching</h3>
+        <p class="pcard__excerpt">A sigprint engine that catches anomalous wireless-network signals in real time via CFAR detection, registers candidate interference-source waveforms in a signature DB, and pinpoints the cause via robust-hash fingerprint matching. A reference demo built on synthetic RF signals.</p>
+        <div class="pcard__tags"><span>2icorp/2i-case-06-sigprint-rf</span><span>#Python</span><span>#NumPy</span><span>#SciPy</span><span>#DSP/CFAR</span><span class="pcard__go">GitHub →</span></div>
+      </a>
+      <a class="pcard reveal" href="https://github.com/2icorp/sigprint-spectrum" data-cat="comms" data-q="sigprint-spectrum 2i/sigprint-spectrum rf spectrum interference-source identification engine an o-ran and cots telecom-stack application of the sigprint engine that identifies known interference sources and waveform signatures in an iq stream at low computational cost, using cfar detection and robust-hash fingerprinting. wired into the commstack system as its feature-extraction and classification subsystem. telecom &amp; signal #python #rust #shell" target="_blank" rel="noopener">
+        <div class="pcard__meta"><span class="pcard__cat">Private</span><span class="pcard__rt">Python</span><span class="pcard__date">2026.07.29</span></div>
+        <h3 class="pcard__title">RF Spectrum Interference-Source Identification Engine</h3>
+        <p class="pcard__excerpt">An O-RAN and COTS telecom-stack application of the sigprint engine that identifies known interference sources and waveform signatures in an IQ stream at low computational cost, using CFAR detection and robust-hash fingerprinting. Wired into the commstack system as its feature-extraction and classification subsystem.</p>
+        <div class="pcard__tags"><span>2i/sigprint-spectrum</span><span>#Python</span><span>#Rust</span><span>#Shell</span><span class="pcard__go">GitHub →</span></div>
+      </a>
+      <a class="pcard reveal" href="https://github.com/2icorp/commstack" data-cat="comms" data-q="commstack 2i/commstack physics-based intelligent radio receiver system a physics-based intelligent receiver system that separates transmitter, channel, and receiver effects, judges unknown signals and interference in real time, and feeds the result back into o-ran control. it houses sigprint-spectrum, the rf spectrum fingerprinting engine, as a subsystem. telecom &amp; signal #python #rust #shell" target="_blank" rel="noopener">
+        <div class="pcard__meta"><span class="pcard__cat">Private</span><span class="pcard__rt">Python</span><span class="pcard__date">2026.08.01</span></div>
+        <h3 class="pcard__title">Physics-Based Intelligent Radio Receiver System</h3>
+        <p class="pcard__excerpt">A physics-based intelligent receiver system that separates transmitter, channel, and receiver effects, judges unknown signals and interference in real time, and feeds the result back into O-RAN control. It houses sigprint-spectrum, the RF spectrum fingerprinting engine, as a subsystem.</p>
+        <div class="pcard__tags"><span>2i/commstack</span><span>#Python</span><span>#Rust</span><span>#Shell</span><span class="pcard__go">GitHub →</span></div>
+      </a>
+      <a class="pcard reveal" href="https://github.com/2icorp/airgap-comm" data-cat="comms" data-q="airgap-comm 2icorp/airgap-comm air-gapped communication software simulation core a rust workspace covering screen-camera fountain transfer, aircode dual-channel, electromagnetic-emission modeling, and covert-channel defense, developed using the compiler and test suite as the reward signal. it states explicitly that it was verified only over a deterministic simulated channel, not on real sdr, camera, or microphone hardware. telecom &amp; signal #rust #gf(256) #lt fountain code #polar codes" target="_blank" rel="noopener">
+        <div class="pcard__meta"><span class="pcard__cat">Private</span><span class="pcard__rt">Rust</span><span class="pcard__date">2026.08.02</span></div>
+        <h3 class="pcard__title">Air-Gapped Communication Software Simulation Core</h3>
+        <p class="pcard__excerpt">A Rust workspace covering screen-camera fountain transfer, AIRCODE dual-channel, electromagnetic-emission modeling, and covert-channel defense, developed using the compiler and test suite as the reward signal. It states explicitly that it was verified only over a deterministic simulated channel, not on real SDR, camera, or microphone hardware.</p>
+        <div class="pcard__tags"><span>2icorp/airgap-comm</span><span>#Rust</span><span>#GF(256)</span><span>#LT fountain code</span><span>#polar codes</span><span class="pcard__go">GitHub →</span></div>
+      </a>
+      <a class="pcard reveal" href="https://github.com/2icorp/optipay" data-cat="comms" data-q="optipay 2i/optipay optical payment protocol stack research prototype a rust optical payment protocol stack that carries signed transaction objects, cancellation and limit state, itemized receipts, broadcast vouchers, and settlement batches over a display-camera channel. an unaudited research prototype; must not be used for real payments. telecom &amp; signal #rust" target="_blank" rel="noopener">
+        <div class="pcard__meta"><span class="pcard__cat">Private</span><span class="pcard__rt">Rust</span><span class="pcard__date">2026.08.02</span></div>
+        <h3 class="pcard__title">Optical Payment Protocol Stack Research Prototype</h3>
+        <p class="pcard__excerpt">A Rust optical payment protocol stack that carries signed transaction objects, cancellation and limit state, itemized receipts, broadcast vouchers, and settlement batches over a display-camera channel. An unaudited research prototype; must not be used for real payments.</p>
+        <div class="pcard__tags"><span>2i/optipay</span><span>#Rust</span><span class="pcard__go">GitHub →</span></div>
+      </a>
+        </div>
+      </section>
+      <section class="fam" id="tech-llm" aria-labelledby="techt-llm">
+        <header class="fam__head">
+          <h2 class="fam__t" id="techt-llm">LLM &amp; Serving<span class="fam__n">12</span></h2>
+          <p class="fam__d">Quantization, MoE offloading, fine-tuning method selection, self-hosting cost math. This is the side that keeps models cheap to run.</p>
+        </header>
+        <div class="pboard">
+      <a class="pcard reveal" href="https://github.com/2icorp/qwen3-nvfp4-quantize" data-cat="llm" data-q="qwen3-nvfp4-quantize 2i/qwen3-nvfp4-quantize qwen3-30b nvfp4 quantization pipeline a pipeline that quantizes the qwen3-30b-a3b model to nvfp4 (w4a4, group_size=16), plus an archive of its output. includes gpu-cost-optimization run artifacts such as smoke tests and an nfs-storage-separated pipeline. llm &amp; serving #python" target="_blank" rel="noopener">
+        <div class="pcard__meta"><span class="pcard__cat">Private</span><span class="pcard__rt">Python</span><span class="pcard__date">2026.05.11</span></div>
+        <h3 class="pcard__title">Qwen3-30B NVFP4 Quantization Pipeline</h3>
+        <p class="pcard__excerpt">A pipeline that quantizes the Qwen3-30B-A3B model to NVFP4 (W4A4, group_size=16), plus an archive of its output. Includes GPU-cost-optimization run artifacts such as smoke tests and an NFS-storage-separated pipeline.</p>
+        <div class="pcard__tags"><span>2i/qwen3-nvfp4-quantize</span><span>#Python</span><span class="pcard__go">GitHub →</span></div>
+      </a>
+      <a class="pcard reveal" href="https://github.com/2icorp/llmops-on-k8s" data-cat="llm" data-q="llmops-on-k8s 2i/llmops-on-k8s kubernetes llm operations recipe collection a vendor-neutral, reproducible recipe collection for running llms on kubernetes: vllm serving, kueue gpu scheduling, quantized deployment, multi-tenant isolation and more. built from real, schema-validated kubernetes manifests. llm &amp; serving #kubernetes yaml #makefile" target="_blank" rel="noopener">
+        <div class="pcard__meta"><span class="pcard__cat">Private</span><span class="pcard__rt">Makefile</span><span class="pcard__date">2026.07.10</span></div>
+        <h3 class="pcard__title">Kubernetes LLM Operations Recipe Collection</h3>
+        <p class="pcard__excerpt">A vendor-neutral, reproducible recipe collection for running LLMs on Kubernetes: vLLM serving, Kueue GPU scheduling, quantized deployment, multi-tenant isolation and more. Built from real, schema-validated Kubernetes manifests.</p>
+        <div class="pcard__tags"><span>2i/llmops-on-k8s</span><span>#Kubernetes YAML</span><span>#Makefile</span><span class="pcard__go">GitHub →</span></div>
+      </a>
+      <a class="pcard reveal" href="https://github.com/2icorp/finetune-method-picker" data-cat="llm" data-q="finetune-method-picker 2i/finetune-method-picker gpu fine-tuning method calculator a 100% browser-based static tool: enter a gpu, model, and method, and it computes training vram, the largest trainable model size, data format and volume, and training time and cost, formulas included. if it expects a memory overrun, it immediately suggests how to cut it down. llm &amp; serving #javascript #html #css" target="_blank" rel="noopener">
+        <div class="pcard__meta"><span class="pcard__cat">Public</span><span class="pcard__rt">JavaScript</span><span class="pcard__date">2026.07.16</span></div>
+        <h3 class="pcard__title">GPU Fine-Tuning Method Calculator</h3>
+        <p class="pcard__excerpt">A 100% browser-based static tool: enter a GPU, model, and method, and it computes training VRAM, the largest trainable model size, data format and volume, and training time and cost, formulas included. If it expects a memory overrun, it immediately suggests how to cut it down.</p>
+        <div class="pcard__tags"><span>2i/finetune-method-picker</span><span>#JavaScript</span><span>#HTML</span><span>#CSS</span><span class="pcard__go">GitHub →</span></div>
+      </a>
+      <a class="pcard reveal" href="https://github.com/2icorp/tiny-skill-distill" data-cat="llm" data-q="tiny-skill-distill 2i/tiny-skill-distill agent-skill worker tiny-model distillation benchmark distills just the repetitive-worker part of an agent skill, the part that genuinely needs a language model, into a fine-tuned sub-1b-parameter 4-bit model that runs on-prem, and verifies with a reproducible, measured before/after comparison the principle of reserving large models for cases that need real judgment. llm &amp; serving #python #shell" target="_blank" rel="noopener">
+        <div class="pcard__meta"><span class="pcard__cat">Private</span><span class="pcard__rt">Python</span><span class="pcard__date">2026.07.17</span></div>
+        <h3 class="pcard__title">Agent-Skill Worker Tiny-Model Distillation Benchmark</h3>
+        <p class="pcard__excerpt">Distills just the repetitive-worker part of an agent skill, the part that genuinely needs a language model, into a fine-tuned sub-1B-parameter 4-bit model that runs on-prem, and verifies with a reproducible, measured before/after comparison the principle of reserving large models for cases that need real judgment.</p>
+        <div class="pcard__tags"><span>2i/tiny-skill-distill</span><span>#Python</span><span>#Shell</span><span class="pcard__go">GitHub →</span></div>
+      </a>
+      <a class="pcard reveal" href="https://github.com/2icorp/ktransformers-moe-offload-bench" data-cat="llm" data-q="ktransformers-moe-offload-bench 2i/ktransformers-moe-offload-bench ktransformers moe offload reproduction benchmark a benchmark that directly reproduces and measures ktransformers' claimed 28x moe-offload speedup, for about $5 on runpod. verifies the headline number by decomposing it into three factors: gpu attention, the amx kernel, and int quantization. llm &amp; serving #shell #python" target="_blank" rel="noopener">
+        <div class="pcard__meta"><span class="pcard__cat">Public</span><span class="pcard__rt">Shell</span><span class="pcard__date">2026.07.20</span></div>
+        <h3 class="pcard__title">ktransformers MoE Offload Reproduction Benchmark</h3>
+        <p class="pcard__excerpt">A benchmark that directly reproduces and measures ktransformers' claimed 28x MoE-offload speedup, for about $5 on RunPod. Verifies the headline number by decomposing it into three factors: GPU attention, the AMX kernel, and INT quantization.</p>
+        <div class="pcard__tags"><span>2i/ktransformers-moe-offload-bench</span><span>#Shell</span><span>#Python</span><span class="pcard__go">GitHub →</span></div>
+      </a>
+      <a class="pcard reveal" href="https://github.com/2icorp/legalize-rag" data-cat="llm" data-q="legalize-rag 2i/legalize-rag korean statutes rag sovereign pilot an experimental repository testing whether sft on a small model (8b or smaller) plus article-level embedding rag can eliminate the statute-fabrication problem of large general-purpose apis through article-level grounding. statute text is public-domain; data is never redistributed, only referenced by hash. llm &amp; serving #python" target="_blank" rel="noopener">
+        <div class="pcard__meta"><span class="pcard__cat">Private</span><span class="pcard__rt">Python</span><span class="pcard__date">2026.07.22</span></div>
+        <h3 class="pcard__title">Korean Statutes RAG Sovereign Pilot</h3>
+        <p class="pcard__excerpt">An experimental repository testing whether SFT on a small model (8B or smaller) plus article-level embedding RAG can eliminate the statute-fabrication problem of large general-purpose APIs through article-level grounding. Statute text is public-domain; data is never redistributed, only referenced by hash.</p>
+        <div class="pcard__tags"><span>2i/legalize-rag</span><span>#Python</span><span class="pcard__go">GitHub →</span></div>
+      </a>
+      <a class="pcard reveal" href="https://github.com/2icorp/qwen-effort-lab" data-cat="llm" data-q="qwen-effort-lab 2i/qwen-effort-lab qwen reasoning-effort control training pipeline a reproducible pipeline that trains a qwen model to have controllable low, medium, and high reasoning effort, using only open hugging face data and open tools. combines effort-conditioned sft with truncated-trace robustness and length-compliant grpo. llm &amp; serving #python #shell" target="_blank" rel="noopener">
+        <div class="pcard__meta"><span class="pcard__cat">Private</span><span class="pcard__rt">Python</span><span class="pcard__date">2026.07.27</span></div>
+        <h3 class="pcard__title">Qwen Reasoning-Effort Control Training Pipeline</h3>
+        <p class="pcard__excerpt">A reproducible pipeline that trains a Qwen model to have controllable low, medium, and high reasoning effort, using only open Hugging Face data and open tools. Combines effort-conditioned SFT with truncated-trace robustness and length-compliant GRPO.</p>
+        <div class="pcard__tags"><span>2i/qwen-effort-lab</span><span>#Python</span><span>#Shell</span><span class="pcard__go">GitHub →</span></div>
+      </a>
+      <a class="pcard reveal" href="https://github.com/2icorp/2i-case-11-realtime-voice" data-cat="llm" data-q="2i-case-11-realtime-voice 2icorp/2i-case-11-realtime-voice on-prem real-time voice conversation server a voice-conversation stack that chains silero vad, whisper stt, an llm, and qwen3 tts, and serves it over a websocket protocol compatible with the openai realtime api on a private gpu cluster. measured a 1.47-second single-turn korean round trip on an h200-class cluster. llm &amp; serving #python #docker #websocket #whisper #qwen3-tts" target="_blank" rel="noopener">
+        <div class="pcard__meta"><span class="pcard__cat">Private</span><span class="pcard__rt">HTML</span><span class="pcard__date">2026.07.29</span><span class="pcard__rt">Case 11</span></div>
+        <h3 class="pcard__title">On-Prem Real-Time Voice Conversation Server</h3>
+        <p class="pcard__excerpt">A voice-conversation stack that chains Silero VAD, Whisper STT, an LLM, and Qwen3 TTS, and serves it over a WebSocket protocol compatible with the OpenAI Realtime API on a private GPU cluster. Measured a 1.47-second single-turn Korean round trip on an H200-class cluster.</p>
+        <div class="pcard__tags"><span>2icorp/2i-case-11-realtime-voice</span><span>#Python</span><span>#Docker</span><span>#WebSocket</span><span>#Whisper</span><span>#Qwen3-TTS</span><span class="pcard__go">GitHub →</span></div>
+      </a>
+      <a class="pcard reveal" href="https://github.com/2icorp/2i-case-12-llm-selfhost-calc" data-cat="llm" data-q="2i-case-12-llm-selfhost-calc 2icorp/2i-case-12-llm-selfhost-calc llm self-hosting cost and vram calculator a browser-only static calculator for putting an open llm on your own gpu: vram fit, inference speed, and break-even versus an api. generates deployment manifests for vllm, sglang, and tensorrt-llm with no backend or build step. llm &amp; serving #javascript #html/css #vllm #sglang #tensorrt-llm" target="_blank" rel="noopener">
+        <div class="pcard__meta"><span class="pcard__cat">Private</span><span class="pcard__rt">JavaScript</span><span class="pcard__date">2026.07.29</span><span class="pcard__rt">Case 12</span></div>
+        <h3 class="pcard__title">LLM Self-Hosting Cost and VRAM Calculator</h3>
+        <p class="pcard__excerpt">A browser-only static calculator for putting an open LLM on your own GPU: VRAM fit, inference speed, and break-even versus an API. Generates deployment manifests for vLLM, SGLang, and TensorRT-LLM with no backend or build step.</p>
+        <div class="pcard__tags"><span>2icorp/2i-case-12-llm-selfhost-calc</span><span>#JavaScript</span><span>#HTML/CSS</span><span>#vLLM</span><span>#SGLang</span><span>#TensorRT-LLM</span><span class="pcard__go">GitHub →</span></div>
+      </a>
+      <a class="pcard reveal" href="https://github.com/2icorp/llm-selfhost-calculator" data-cat="llm" data-q="llm-selfhost-calculator 2i/llm-selfhost-calculator llm self-hosting break-even calculator a free tool that instantly calculates, in the browser, whether an open llm will run on your gpu or mac, and whether self-hosting beats an api: vram fit, token speed, and break-even point. no keys, no server, no data ever leaves your browser. llm &amp; serving #javascript #html #css" target="_blank" rel="noopener">
+        <div class="pcard__meta"><span class="pcard__cat">Public</span><span class="pcard__rt">JavaScript</span><span class="pcard__date">2026.07.29</span></div>
+        <h3 class="pcard__title">LLM Self-Hosting Break-Even Calculator</h3>
+        <p class="pcard__excerpt">A free tool that instantly calculates, in the browser, whether an open LLM will run on your GPU or Mac, and whether self-hosting beats an API: VRAM fit, token speed, and break-even point. No keys, no server, no data ever leaves your browser.</p>
+        <div class="pcard__tags"><span>2i/llm-selfhost-calculator</span><span>#JavaScript</span><span>#HTML</span><span>#CSS</span><span class="pcard__go">GitHub →</span></div>
+      </a>
+      <a class="pcard reveal" href="https://github.com/2icorp/moe-ep-visualizer" data-cat="llm" data-q="moe-ep-visualizer 2i/moe-ep-visualizer moe expert-parallelism visualization playground a 100% client-side playground that lets you watch a deterministically seeded router send token batches to experts sharded across multiple gpus, showing all-to-all traffic and expert load imbalance live. runs from a single index.html, no server. llm &amp; serving #javascript #html #css" target="_blank" rel="noopener">
+        <div class="pcard__meta"><span class="pcard__cat">Private</span><span class="pcard__rt">JavaScript</span><span class="pcard__date">2026.07.30</span></div>
+        <h3 class="pcard__title">MoE Expert-Parallelism Visualization Playground</h3>
+        <p class="pcard__excerpt">A 100% client-side playground that lets you watch a deterministically seeded router send token batches to experts sharded across multiple GPUs, showing all-to-all traffic and expert load imbalance live. Runs from a single index.html, no server.</p>
+        <div class="pcard__tags"><span>2i/moe-ep-visualizer</span><span>#JavaScript</span><span>#HTML</span><span>#CSS</span><span class="pcard__go">GitHub →</span></div>
+      </a>
+      <a class="pcard reveal" href="https://github.com/2icorp/embedding-model-compass" data-cat="llm" data-q="embedding-model-compass 2i/embedding-model-compass rag embedding model comparison dashboard a vendor-neutral dashboard, refreshed daily, that compares retrieval embedding models for rag by benchmark score, parameter size, license, and language support. the collection and aggregation logic is fully public and verifiable. llm &amp; serving #python #javascript #github actions" target="_blank" rel="noopener">
+        <div class="pcard__meta"><span class="pcard__cat">Private</span><span class="pcard__rt">Python</span><span class="pcard__date">2026.08.01</span></div>
+        <h3 class="pcard__title">RAG Embedding Model Comparison Dashboard</h3>
+        <p class="pcard__excerpt">A vendor-neutral dashboard, refreshed daily, that compares retrieval embedding models for RAG by benchmark score, parameter size, license, and language support. The collection and aggregation logic is fully public and verifiable.</p>
+        <div class="pcard__tags"><span>2i/embedding-model-compass</span><span>#Python</span><span>#JavaScript</span><span>#GitHub Actions</span><span class="pcard__go">GitHub →</span></div>
+      </a>
+        </div>
+      </section>
+      <section class="fam" id="tech-agent" aria-labelledby="techt-agent">
+        <header class="fam__head">
+          <h2 class="fam__t" id="techt-agent">Agents<span class="fam__n">15</span></h2>
+          <p class="fam__d">Skill systems, orchestrators, research and deployment automation. Procedures people used to repeat by hand, moved into code.</p>
+        </header>
+        <div class="pboard">
+      <a class="pcard reveal" href="https://github.com/2icorp/realtime-agent-copilot" data-cat="agent" data-q="realtime-agent-copilot 2i/realtime-agent-copilot real-time ai copilot for financial call centers a real-time ai copilot platform for financial call-center agents: it listens to the live call, transcribes it, and surfaces knowledge-base suggestions and compliance warnings within a 3-second delay. handles the full lifecycle of a customer interaction. agents #python #typescript #go" target="_blank" rel="noopener">
+        <div class="pcard__meta"><span class="pcard__cat">Private</span><span class="pcard__rt">Python</span><span class="pcard__date">2026.03.11</span></div>
+        <h3 class="pcard__title">Real-Time AI Copilot for Financial Call Centers</h3>
+        <p class="pcard__excerpt">A real-time AI copilot platform for financial call-center agents: it listens to the live call, transcribes it, and surfaces knowledge-base suggestions and compliance warnings within a 3-second delay. Handles the full lifecycle of a customer interaction.</p>
+        <div class="pcard__tags"><span>2i/realtime-agent-copilot</span><span>#Python</span><span>#TypeScript</span><span>#Go</span><span class="pcard__go">GitHub →</span></div>
+      </a>
+      <a class="pcard reveal" href="https://github.com/2icorp/thaki-planning-automation" data-cat="agent" data-q="thaki-planning-automation 2i/thaki-planning-automation planning-team work-automation playbook a playbook that automates 50 core planning-team workflows with ai agents, using notion as the system of record, slack as the i/o channel, and cursor skills as reusable building blocks. also includes a knowledge-graph and simulation axis. agents #python #notion api #slack" target="_blank" rel="noopener">
+        <div class="pcard__meta"><span class="pcard__cat">Private</span><span class="pcard__rt">Python</span><span class="pcard__date">2026.03.25</span></div>
+        <h3 class="pcard__title">Planning-Team Work-Automation Playbook</h3>
+        <p class="pcard__excerpt">A playbook that automates 50 core planning-team workflows with AI agents, using Notion as the system of record, Slack as the I/O channel, and Cursor skills as reusable building blocks. Also includes a knowledge-graph and simulation axis.</p>
+        <div class="pcard__tags"><span>2i/thaki-planning-automation</span><span>#Python</span><span>#Notion API</span><span>#Slack</span><span class="pcard__go">GitHub →</span></div>
+      </a>
+      <a class="pcard reveal" href="https://github.com/2icorp/X-to-Slack" data-cat="agent" data-q="X-to-Slack 2i/X-to-Slack x-post research auto-post to slack a cursor skill that, given an x link, gathers the post content, adds web research, and auto-posts a 3-message thread to a slack channel, in the order summary, detailed research, then insight. agents #python #slack mcp" target="_blank" rel="noopener">
+        <div class="pcard__meta"><span class="pcard__cat">Private</span><span class="pcard__rt">Python</span><span class="pcard__date">2026.05.10</span></div>
+        <h3 class="pcard__title">X-Post Research Auto-Post to Slack</h3>
+        <p class="pcard__excerpt">A Cursor skill that, given an X link, gathers the post content, adds web research, and auto-posts a 3-message thread to a Slack channel, in the order summary, detailed research, then insight.</p>
+        <div class="pcard__tags"><span>2i/X-to-Slack</span><span>#Python</span><span>#Slack MCP</span><span class="pcard__go">GitHub →</span></div>
+      </a>
+      <a class="pcard reveal" href="https://github.com/2icorp/harness-quality-checker" data-cat="agent" data-q="harness-quality-checker 2i/harness-quality-checker agent harness quality checker a 100% client-side static analyzer: paste in a system prompt and tool schema, and it scores you on 5 axes, loop, verification, tracing, memory, and safety, then generates a hardened prompt that satisfies all five. agents #javascript #css" target="_blank" rel="noopener">
+        <div class="pcard__meta"><span class="pcard__cat">Public</span><span class="pcard__rt">JavaScript</span><span class="pcard__date">2026.07.12</span></div>
+        <h3 class="pcard__title">Agent Harness Quality Checker</h3>
+        <p class="pcard__excerpt">A 100% client-side static analyzer: paste in a system prompt and tool schema, and it scores you on 5 axes, loop, verification, tracing, memory, and safety, then generates a hardened prompt that satisfies all five.</p>
+        <div class="pcard__tags"><span>2i/harness-quality-checker</span><span>#JavaScript</span><span>#CSS</span><span class="pcard__go">GitHub →</span></div>
+      </a>
+      <a class="pcard reveal" href="https://github.com/2icorp/skill-quality-checker" data-cat="agent" data-q="skill-quality-checker 2i/skill-quality-checker skill.md authoring quality checker a 100% client-side static analyzer: paste in a skill.md file, or load one by url, and it scores writing quality across 5 axes, discoverability, scope, executability, guardrails, and structure. it shows concretely what to add. agents #javascript #css" target="_blank" rel="noopener">
+        <div class="pcard__meta"><span class="pcard__cat">Public</span><span class="pcard__rt">JavaScript</span><span class="pcard__date">2026.07.12</span></div>
+        <h3 class="pcard__title">SKILL.md Authoring Quality Checker</h3>
+        <p class="pcard__excerpt">A 100% client-side static analyzer: paste in a SKILL.md file, or load one by URL, and it scores writing quality across 5 axes, discoverability, scope, executability, guardrails, and structure. It shows concretely what to add.</p>
+        <div class="pcard__tags"><span>2i/skill-quality-checker</span><span>#JavaScript</span><span>#CSS</span><span class="pcard__go">GitHub →</span></div>
+      </a>
+      <a class="pcard reveal" href="https://github.com/2icorp/dont-fool-yourself" data-cat="agent" data-q="dont-fool-yourself 2i/dont-fool-yourself 7 feynman-style self-deception-guard agent skills a collection of seven small agent skills that widen the gap between knowing a name and actually understanding something. each one turns a habit richard feynman used to avoid fooling himself into a skill. agents #python" target="_blank" rel="noopener">
+        <div class="pcard__meta"><span class="pcard__cat">Private</span><span class="pcard__rt">Python</span><span class="pcard__date">2026.07.14</span></div>
+        <h3 class="pcard__title">7 Feynman-Style Self-Deception-Guard Agent Skills</h3>
+        <p class="pcard__excerpt">A collection of seven small agent skills that widen the gap between knowing a name and actually understanding something. Each one turns a habit Richard Feynman used to avoid fooling himself into a skill.</p>
+        <div class="pcard__tags"><span>2i/dont-fool-yourself</span><span>#Python</span><span class="pcard__go">GitHub →</span></div>
+      </a>
+      <a class="pcard reveal" href="https://github.com/2icorp/automl-train-skill" data-cat="agent" data-q="automl-train-skill 2i/automl-train-skill result-verified automl hyperparameter search skill a schema-based hyperparameter-search agent skill that plugs into any training backend, with four code-owned gates that refuse to promote any result that doesn't beat the baseline. built from a skill.md and pure standard-library scripts. agents #python" target="_blank" rel="noopener">
+        <div class="pcard__meta"><span class="pcard__cat">Public</span><span class="pcard__rt">Python</span><span class="pcard__date">2026.07.16</span></div>
+        <h3 class="pcard__title">Result-Verified AutoML Hyperparameter Search Skill</h3>
+        <p class="pcard__excerpt">A schema-based hyperparameter-search agent skill that plugs into any training backend, with four code-owned gates that refuse to promote any result that doesn't beat the baseline. Built from a SKILL.md and pure standard-library scripts.</p>
+        <div class="pcard__tags"><span>2i/automl-train-skill</span><span>#Python</span><span class="pcard__go">GitHub →</span></div>
+      </a>
+      <a class="pcard reveal" href="https://github.com/2icorp/autonomous-agent-skills" data-cat="agent" data-q="autonomous-agent-skills 2i/autonomous-agent-skills deterministic-gate autonomous infra-ops skill pack a skill-pack collection that lets an agent repeat infra-ops, qa, and experiments with no human in the loop, but never executes without a deterministic verification gate. works out of the box in claude code and codex. agents #python #shell" target="_blank" rel="noopener">
+        <div class="pcard__meta"><span class="pcard__cat">Private</span><span class="pcard__rt">Python</span><span class="pcard__date">2026.07.17</span></div>
+        <h3 class="pcard__title">Deterministic-Gate Autonomous Infra-Ops Skill Pack</h3>
+        <p class="pcard__excerpt">A skill-pack collection that lets an agent repeat infra-ops, QA, and experiments with no human in the loop, but never executes without a deterministic verification gate. Works out of the box in Claude Code and Codex.</p>
+        <div class="pcard__tags"><span>2i/autonomous-agent-skills</span><span>#Python</span><span>#Shell</span><span class="pcard__go">GitHub →</span></div>
+      </a>
+      <a class="pcard reveal" href="https://github.com/2icorp/agent-cost-sim" data-cat="agent" data-q="agent-cost-sim 2i/agent-cost-sim agent pipeline model-tier cost calculator a vendor-neutral static web tool that calculates, before you deploy, how much per-role model-tier routing saves in token cost across a multi-agent pipeline. compares a baseline against a routed scenario to show savings and bottlenecks. agents #javascript #html" target="_blank" rel="noopener">
+        <div class="pcard__meta"><span class="pcard__cat">Public</span><span class="pcard__rt">JavaScript</span><span class="pcard__date">2026.07.19</span></div>
+        <h3 class="pcard__title">Agent Pipeline Model-Tier Cost Calculator</h3>
+        <p class="pcard__excerpt">A vendor-neutral static web tool that calculates, before you deploy, how much per-role model-tier routing saves in token cost across a multi-agent pipeline. Compares a baseline against a routed scenario to show savings and bottlenecks.</p>
+        <div class="pcard__tags"><span>2i/agent-cost-sim</span><span>#JavaScript</span><span>#HTML</span><span class="pcard__go">GitHub →</span></div>
+      </a>
+      <a class="pcard reveal" href="https://github.com/2icorp/agent-org-explorer" data-cat="agent" data-q="agent-org-explorer 2i/agent-org-explorer multi-agent org chart visualizer a 100% client-side tool that reads an agent registry (json) and renders a multi-agent system as a hub-and-spoke org chart. exports to yaml, json, mermaid, or png. agents #javascript #python" target="_blank" rel="noopener">
+        <div class="pcard__meta"><span class="pcard__cat">Private</span><span class="pcard__rt">HTML</span><span class="pcard__date">2026.07.19</span></div>
+        <h3 class="pcard__title">Multi-Agent Org Chart Visualizer</h3>
+        <p class="pcard__excerpt">A 100% client-side tool that reads an agent registry (JSON) and renders a multi-agent system as a hub-and-spoke org chart. Exports to YAML, JSON, Mermaid, or PNG.</p>
+        <div class="pcard__tags"><span>2i/agent-org-explorer</span><span>#JavaScript</span><span>#Python</span><span class="pcard__go">GitHub →</span></div>
+      </a>
+      <a class="pcard reveal" href="https://github.com/2icorp/2i-case-05-support-chatbot" data-cat="agent" data-q="2i-case-05-support-chatbot 2icorp/2i-case-05-support-chatbot order-support chatbot with human handoff a fastapi support agent wired into order, inventory, and cs systems handles routine inquiries by intent classification, and when it judges a query out of scope, hands it off automatically to a human agent with the full conversation context. a reference demo built on synthetic data. agents #python #fastapi #intent classification #handoff" target="_blank" rel="noopener">
+        <div class="pcard__meta"><span class="pcard__cat">Private</span><span class="pcard__rt">Python</span><span class="pcard__date">2026.07.29</span><span class="pcard__rt">Case 05</span></div>
+        <h3 class="pcard__title">Order-Support Chatbot with Human Handoff</h3>
+        <p class="pcard__excerpt">A FastAPI support agent wired into order, inventory, and CS systems handles routine inquiries by intent classification, and when it judges a query out of scope, hands it off automatically to a human agent with the full conversation context. A reference demo built on synthetic data.</p>
+        <div class="pcard__tags"><span>2icorp/2i-case-05-support-chatbot</span><span>#Python</span><span>#FastAPI</span><span>#Intent classification</span><span>#Handoff</span><span class="pcard__go">GitHub →</span></div>
+      </a>
+      <a class="pcard reveal" href="https://github.com/2icorp/2i-case-07-knowledge-rag" data-cat="agent" data-q="2i-case-07-knowledge-rag 2icorp/2i-case-07-knowledge-rag internal-document cited rag search a rag pipeline that indexes manuals, drawings, and historical documents into vector-searchable form, and answers natural-language questions alongside the original-source citation. a reference demo built on synthetic data. agents #python #embedding search #rag" target="_blank" rel="noopener">
+        <div class="pcard__meta"><span class="pcard__cat">Private</span><span class="pcard__rt">Python</span><span class="pcard__date">2026.07.29</span><span class="pcard__rt">Case 07</span></div>
+        <h3 class="pcard__title">Internal-Document Cited RAG Search</h3>
+        <p class="pcard__excerpt">A RAG pipeline that indexes manuals, drawings, and historical documents into vector-searchable form, and answers natural-language questions alongside the original-source citation. A reference demo built on synthetic data.</p>
+        <div class="pcard__tags"><span>2icorp/2i-case-07-knowledge-rag</span><span>#Python</span><span>#Embedding search</span><span>#RAG</span><span class="pcard__go">GitHub →</span></div>
+      </a>
+      <a class="pcard reveal" href="https://github.com/2icorp/2i-case-11-agent-orchestrator" data-cat="agent" data-q="2i-case-11-agent-orchestrator 2icorp/2i-case-11-agent-orchestrator one-sentence intent-decomposition conversational orchestrator a conversational agent orchestrator that decomposes a natural-language intent, calls the needed tools in sequence or in parallel, and merges the results into a single answer plus voice output. a reference demo built on synthetic data. agents #python #intent decomposition #pytest" target="_blank" rel="noopener">
+        <div class="pcard__meta"><span class="pcard__cat">Private</span><span class="pcard__rt">Python</span><span class="pcard__date">2026.07.29</span><span class="pcard__rt">Case 11</span></div>
+        <h3 class="pcard__title">One-Sentence Intent-Decomposition Conversational Orchestrator</h3>
+        <p class="pcard__excerpt">A conversational agent orchestrator that decomposes a natural-language intent, calls the needed tools in sequence or in parallel, and merges the results into a single answer plus voice output. A reference demo built on synthetic data.</p>
+        <div class="pcard__tags"><span>2icorp/2i-case-11-agent-orchestrator</span><span>#Python</span><span>#Intent decomposition</span><span>#pytest</span><span class="pcard__go">GitHub →</span></div>
+      </a>
+      <a class="pcard reveal" href="https://github.com/2icorp/2i-case-12-cad-blockout-agent" data-cat="agent" data-q="2i-case-12-cad-blockout-agent 2icorp/2i-case-12-cad-blockout-agent architectural blockout observe-fix closed-loop agent a closed-loop agent demo that observes a draft built from a spec, both visually and structurally, diagnoses violations, and clears 7 design gates with targeted patches only, no regeneration. converged from a gate score of 11.40 to 0.00 across 5 iterations and 4 accepted patches. agents #python #geometry verification #observe-critic-patch loop" target="_blank" rel="noopener">
+        <div class="pcard__meta"><span class="pcard__cat">Private</span><span class="pcard__rt">Python</span><span class="pcard__date">2026.07.29</span><span class="pcard__rt">Case 12</span></div>
+        <h3 class="pcard__title">Architectural Blockout Observe-Fix Closed-Loop Agent</h3>
+        <p class="pcard__excerpt">A closed-loop agent demo that observes a draft built from a spec, both visually and structurally, diagnoses violations, and clears 7 design gates with targeted patches only, no regeneration. Converged from a gate score of 11.40 to 0.00 across 5 iterations and 4 accepted patches.</p>
+        <div class="pcard__tags"><span>2icorp/2i-case-12-cad-blockout-agent</span><span>#Python</span><span>#Geometry verification</span><span>#observe-critic-patch loop</span><span class="pcard__go">GitHub →</span></div>
+      </a>
+      <a class="pcard reveal" href="https://github.com/2icorp/2i-case-14-hospital-ops-twin" data-cat="agent" data-q="2i-case-14-hospital-ops-twin 2icorp/2i-case-14-hospital-ops-twin hospital flow-simulation closed-loop agent a reference demo that repeatedly revises a hospital digital twin through an observe, patch, run, verify, rollback loop, clearing 5 operational gates, reception wait time, corridor congestion and more, with measured results. converged across 15 discrete-event-simulation iterations, 11 accepted patches, and 4 rollbacks. agents #python #discrete-event simulation #observe-critic-patch loop" target="_blank" rel="noopener">
+        <div class="pcard__meta"><span class="pcard__cat">Private</span><span class="pcard__rt">Python</span><span class="pcard__date">2026.07.29</span><span class="pcard__rt">Case 14</span></div>
+        <h3 class="pcard__title">Hospital Flow-Simulation Closed-Loop Agent</h3>
+        <p class="pcard__excerpt">A reference demo that repeatedly revises a hospital digital twin through an observe, patch, run, verify, rollback loop, clearing 5 operational gates, reception wait time, corridor congestion and more, with measured results. Converged across 15 discrete-event-simulation iterations, 11 accepted patches, and 4 rollbacks.</p>
+        <div class="pcard__tags"><span>2icorp/2i-case-14-hospital-ops-twin</span><span>#Python</span><span>#Discrete-event simulation</span><span>#observe-critic-patch loop</span><span class="pcard__go">GitHub →</span></div>
+      </a>
+        </div>
+      </section>
+      <section class="fam" id="tech-optim" aria-labelledby="techt-optim">
+        <header class="fam__head">
+          <h2 class="fam__t" id="techt-optim">Optimisation<span class="fam__n">5</span></h2>
+          <p class="fam__d">CP-SAT-based assignment and scheduling: shift rosters, call-center staffing, league fixtures, room allocation.</p>
+        </header>
+        <div class="pboard">
+      <a class="pcard reveal" href="https://github.com/2icorp/2i-case-19-nurse-roster" data-cat="optim" data-q="2i-case-19-nurse-roster 2icorp/2i-case-19-nurse-roster nurse 3-shift cp-sat rostering solves nurse 3-shift rostering with or-tools cp-sat, scoring not just its own synthetic instances but also all 8 standard instances from the public curtois and qu benchmark, with no code changes. held zero hard-constraint violations while cutting the gap to the best published solution from 18.98% to 12.96%. optimisation #python #or-tools cp-sat" target="_blank" rel="noopener">
+        <div class="pcard__meta"><span class="pcard__cat">Private</span><span class="pcard__rt">Python</span><span class="pcard__date">2026.07.31</span><span class="pcard__rt">Case 19</span></div>
+        <h3 class="pcard__title">Nurse 3-Shift CP-SAT Rostering</h3>
+        <p class="pcard__excerpt">Solves nurse 3-shift rostering with OR-Tools CP-SAT, scoring not just its own synthetic instances but also all 8 standard instances from the public Curtois and Qu benchmark, with no code changes. Held zero hard-constraint violations while cutting the gap to the best published solution from 18.98% to 12.96%.</p>
+        <div class="pcard__tags"><span>2icorp/2i-case-19-nurse-roster</span><span>#Python</span><span>#OR-Tools CP-SAT</span><span class="pcard__go">GitHub →</span></div>
+      </a>
+      <a class="pcard reveal" href="https://github.com/2icorp/2i-case-20-contact-staffing" data-cat="optim" data-q="2i-case-20-contact-staffing 2icorp/2i-case-20-contact-staffing call-center agent staffing cp-sat a two-stage pipeline that computes required headcount per interval with erlang c, then assigns shift patterns with a cp-sat set-cover model. across 9 measured cells: zero hard-constraint violations, an optimization gap of 1.6 to 13.0%, and sla attainment of 69 to 81.8%. optimisation #python #or-tools cp-sat #erlang c" target="_blank" rel="noopener">
+        <div class="pcard__meta"><span class="pcard__cat">Private</span><span class="pcard__rt">Python</span><span class="pcard__date">2026.07.31</span><span class="pcard__rt">Case 20</span></div>
+        <h3 class="pcard__title">Call-Center Agent Staffing CP-SAT</h3>
+        <p class="pcard__excerpt">A two-stage pipeline that computes required headcount per interval with Erlang C, then assigns shift patterns with a CP-SAT set-cover model. Across 9 measured cells: zero hard-constraint violations, an optimization gap of 1.6 to 13.0%, and SLA attainment of 69 to 81.8%.</p>
+        <div class="pcard__tags"><span>2icorp/2i-case-20-contact-staffing</span><span>#Python</span><span>#OR-Tools CP-SAT</span><span>#Erlang C</span><span class="pcard__go">GitHub →</span></div>
+      </a>
+      <a class="pcard reveal" href="https://github.com/2icorp/2i-case-21-league-fixture" data-cat="optim" data-q="2i-case-21-league-fixture 2icorp/2i-case-21-league-fixture sports league fixture scheduling cp-sat schedules a synthetic baseball league's regular season with cp-sat, handling competing goals, like travel distance and consecutive home/away runs, in a single objective function. all 9 measured runs came back feasible, with the large instance leaving at most 6 of 720 games unscheduled. optimisation #python #or-tools cp-sat" target="_blank" rel="noopener">
+        <div class="pcard__meta"><span class="pcard__cat">Private</span><span class="pcard__rt">Python</span><span class="pcard__date">2026.07.31</span><span class="pcard__rt">Case 21</span></div>
+        <h3 class="pcard__title">Sports League Fixture Scheduling CP-SAT</h3>
+        <p class="pcard__excerpt">Schedules a synthetic baseball league's regular season with CP-SAT, handling competing goals, like travel distance and consecutive home/away runs, in a single objective function. All 9 measured runs came back FEASIBLE, with the large instance leaving at most 6 of 720 games unscheduled.</p>
+        <div class="pcard__tags"><span>2icorp/2i-case-21-league-fixture</span><span>#Python</span><span>#OR-Tools CP-SAT</span><span class="pcard__go">GitHub →</span></div>
+      </a>
+      <a class="pcard reveal" href="https://github.com/2icorp/2i-case-22-room-assign" data-cat="optim" data-q="2i-case-22-room-assign 2icorp/2i-case-22-room-assign dormitory and training-center room assignment cp-sat enforces capacity, gender separation, conflict pairs, and accessibility as effectively hard constraints via critical penalties, while jointly optimizing soft goals like preference and diversity in a single cp-sat objective function. across 9 measured runs, conflict-pair co-assignment violations stayed at zero, though the large instance sometimes failed to converge within a 300-second budget. optimisation #python #or-tools cp-sat" target="_blank" rel="noopener">
+        <div class="pcard__meta"><span class="pcard__cat">Private</span><span class="pcard__rt">Python</span><span class="pcard__date">2026.07.31</span><span class="pcard__rt">Case 22</span></div>
+        <h3 class="pcard__title">Dormitory and Training-Center Room Assignment CP-SAT</h3>
+        <p class="pcard__excerpt">Enforces capacity, gender separation, conflict pairs, and accessibility as effectively hard constraints via critical penalties, while jointly optimizing soft goals like preference and diversity in a single CP-SAT objective function. Across 9 measured runs, conflict-pair co-assignment violations stayed at zero, though the large instance sometimes failed to converge within a 300-second budget.</p>
+        <div class="pcard__tags"><span>2icorp/2i-case-22-room-assign</span><span>#Python</span><span>#OR-Tools CP-SAT</span><span class="pcard__go">GitHub →</span></div>
+      </a>
+      <a class="pcard reveal" href="https://github.com/2icorp/work-scheduling-lab" data-cat="optim" data-q="work-scheduling-lab 2icorp/work-scheduling-lab work-scheduling engine redesign lab a workspace for redesigning, with cp-sat, a work-scheduling problem originally solved in 2023, alongside the public curtois, qu, and inrc-ii benchmarks and research briefs. states an invariant rule: no real-name pii from the original dataset is ever brought in, only synthetic data and public benchmarks. optimisation #python #or-tools cp-sat" target="_blank" rel="noopener">
+        <div class="pcard__meta"><span class="pcard__cat">Private</span><span class="pcard__rt">Python</span><span class="pcard__date">2026.07.31</span></div>
+        <h3 class="pcard__title">Work-Scheduling Engine Redesign Lab</h3>
+        <p class="pcard__excerpt">A workspace for redesigning, with CP-SAT, a work-scheduling problem originally solved in 2023, alongside the public Curtois, Qu, and INRC-II benchmarks and research briefs. States an invariant rule: no real-name PII from the original dataset is ever brought in, only synthetic data and public benchmarks.</p>
+        <div class="pcard__tags"><span>2icorp/work-scheduling-lab</span><span>#Python</span><span>#OR-Tools CP-SAT</span><span class="pcard__go">GitHub →</span></div>
+      </a>
+        </div>
+      </section>
+      <section class="fam" id="tech-vision" aria-labelledby="techt-vision">
+        <header class="fam__head">
+          <h2 class="fam__t" id="techt-vision">Vision<span class="fam__n">2</span></h2>
+          <p class="fam__d">Low-data anomaly detection and closed-loop medical imaging. Built for environments where ground-truth labels are scarce.</p>
+        </header>
+        <div class="pboard">
+      <a class="pcard reveal" href="https://github.com/2icorp/2i-case-03-vision-defect" data-cat="vision" data-q="2i-case-03-vision-defect 2icorp/2i-case-03-vision-defect injection-molding surface-defect vision detection an anomaly-detection vision model, trained only on normal samples, judges product surface images and runs in shadow mode alongside visual inspection, without replacing the real line. a reference demo built on synthetic data. vision #python #numpy #pillow #matplotlib" target="_blank" rel="noopener">
+        <div class="pcard__meta"><span class="pcard__cat">Private</span><span class="pcard__rt">Python</span><span class="pcard__date">2026.07.26</span><span class="pcard__rt">Case 03</span></div>
+        <h3 class="pcard__title">Injection-Molding Surface-Defect Vision Detection</h3>
+        <p class="pcard__excerpt">An anomaly-detection vision model, trained only on normal samples, judges product surface images and runs in shadow mode alongside visual inspection, without replacing the real line. A reference demo built on synthetic data.</p>
+        <div class="pcard__tags"><span>2icorp/2i-case-03-vision-defect</span><span>#Python</span><span>#NumPy</span><span>#Pillow</span><span>#matplotlib</span><span class="pcard__go">GitHub →</span></div>
+      </a>
+      <a class="pcard reveal" href="https://github.com/2icorp/2i-case-13-medimg-loop-agent" data-cat="vision" data-q="2i-case-13-medimg-loop-agent 2icorp/2i-case-13-medimg-loop-agent medical-image segmentation tool-ops closed-loop agent a research closed-loop agent that repeatedly revises segmentation-error parameters using only computable quality signals, with no ground truth. ground truth was used for verification only, and average dice rose from 0.583 to 0.927. vision #python #medical image segmentation #observe-critic-patch loop" target="_blank" rel="noopener">
+        <div class="pcard__meta"><span class="pcard__cat">Private</span><span class="pcard__rt">Python</span><span class="pcard__date">2026.07.29</span><span class="pcard__rt">Case 13</span></div>
+        <h3 class="pcard__title">Medical-Image Segmentation Tool-Ops Closed-Loop Agent</h3>
+        <p class="pcard__excerpt">A research closed-loop agent that repeatedly revises segmentation-error parameters using only computable quality signals, with no ground truth. Ground truth was used for verification only, and average Dice rose from 0.583 to 0.927.</p>
+        <div class="pcard__tags"><span>2icorp/2i-case-13-medimg-loop-agent</span><span>#Python</span><span>#Medical image segmentation</span><span>#observe-critic-patch loop</span><span class="pcard__go">GitHub →</span></div>
+      </a>
+        </div>
+      </section>
+      <section class="fam" id="tech-data" aria-labelledby="techt-data">
+        <header class="fam__head">
+          <h2 class="fam__t" id="techt-data">Data<span class="fam__n">7</span></h2>
+          <p class="fam__d">This is the side that pulls scattered spreadsheets and logs into a single basis for decisions.</p>
+        </header>
+        <div class="pboard">
+      <a class="pcard reveal" href="https://github.com/2icorp/loot-curve-lab" data-cat="data" data-q="loot-curve-lab 2i/loot-curve-lab loot-probability and gacha expected-value calculator a web tool: paste in a drop table or gacha probability chart, and it computes the actual normalized probabilities, tiers, and expected-value stats per number of pulls. ranks rarity by actual probability, not by item name. data #javascript #html #css" target="_blank" rel="noopener">
+        <div class="pcard__meta"><span class="pcard__cat">Private</span><span class="pcard__rt">JavaScript</span><span class="pcard__date">2026.07.25</span></div>
+        <h3 class="pcard__title">Loot-Probability and Gacha Expected-Value Calculator</h3>
+        <p class="pcard__excerpt">A web tool: paste in a drop table or gacha probability chart, and it computes the actual normalized probabilities, tiers, and expected-value stats per number of pulls. Ranks rarity by actual probability, not by item name.</p>
+        <div class="pcard__tags"><span>2i/loot-curve-lab</span><span>#JavaScript</span><span>#HTML</span><span>#CSS</span><span class="pcard__go">GitHub →</span></div>
+      </a>
+      <a class="pcard reveal" href="https://github.com/2icorp/2i-case-01-data-dashboard" data-cat="data" data-q="2i-case-01-data-dashboard 2icorp/2i-case-01-data-dashboard departmental spreadsheet-consolidation management dashboard runs an etl pipeline that cleans scattered spreadsheets and internal systems into a standard schema, then serves a separate summary view for management and a detail view for the field. a reference demo built with pandas, sqlite, and streamlit on synthetic data. data #python #pandas #sqlite #streamlit" target="_blank" rel="noopener">
+        <div class="pcard__meta"><span class="pcard__cat">Private</span><span class="pcard__rt">Python</span><span class="pcard__date">2026.07.26</span><span class="pcard__rt">Case 01</span></div>
+        <h3 class="pcard__title">Departmental Spreadsheet-Consolidation Management Dashboard</h3>
+        <p class="pcard__excerpt">Runs an ETL pipeline that cleans scattered spreadsheets and internal systems into a standard schema, then serves a separate summary view for management and a detail view for the field. A reference demo built with pandas, SQLite, and Streamlit on synthetic data.</p>
+        <div class="pcard__tags"><span>2icorp/2i-case-01-data-dashboard</span><span>#Python</span><span>#pandas</span><span>#SQLite</span><span>#Streamlit</span><span class="pcard__go">GitHub →</span></div>
+      </a>
+      <a class="pcard reveal" href="https://github.com/2icorp/2i-case-02-doc-automation" data-cat="data" data-q="2i-case-02-doc-automation 2icorp/2i-case-02-doc-automation quote and purchase-order document parsing automation extracts tables and line-item structure from documents with rule-based logic, cross-checks item codes and unit prices against a rule dictionary, and routes only the anomalies to a review queue. a reference demo built on synthetic data. data #python #rule-based parsing #pytest" target="_blank" rel="noopener">
+        <div class="pcard__meta"><span class="pcard__cat">Private</span><span class="pcard__rt">Python</span><span class="pcard__date">2026.07.26</span><span class="pcard__rt">Case 02</span></div>
+        <h3 class="pcard__title">Quote and Purchase-Order Document Parsing Automation</h3>
+        <p class="pcard__excerpt">Extracts tables and line-item structure from documents with rule-based logic, cross-checks item codes and unit prices against a rule dictionary, and routes only the anomalies to a review queue. A reference demo built on synthetic data.</p>
+        <div class="pcard__tags"><span>2icorp/2i-case-02-doc-automation</span><span>#Python</span><span>#Rule-based parsing</span><span>#pytest</span><span class="pcard__go">GitHub →</span></div>
+      </a>
+      <a class="pcard reveal" href="https://github.com/2icorp/2i-case-04-demand-forecast" data-cat="data" data-q="2i-case-04-demand-forecast 2icorp/2i-case-04-demand-forecast sku demand-forecast reorder-recommendation engine builds a time-series demand-forecast model combining sales history, seasonal index, promotions, and weather signals, then auto-converts the forecast into a reorder-recommendation list with the reasoning attached. a reference demo built on synthetic data. data #python #pandas #numpy #time series" target="_blank" rel="noopener">
+        <div class="pcard__meta"><span class="pcard__cat">Private</span><span class="pcard__rt">Python</span><span class="pcard__date">2026.07.26</span><span class="pcard__rt">Case 04</span></div>
+        <h3 class="pcard__title">SKU Demand-Forecast Reorder-Recommendation Engine</h3>
+        <p class="pcard__excerpt">Builds a time-series demand-forecast model combining sales history, seasonal index, promotions, and weather signals, then auto-converts the forecast into a reorder-recommendation list with the reasoning attached. A reference demo built on synthetic data.</p>
+        <div class="pcard__tags"><span>2icorp/2i-case-04-demand-forecast</span><span>#Python</span><span>#pandas</span><span>#NumPy</span><span>#Time series</span><span class="pcard__go">GitHub →</span></div>
+      </a>
+      <a class="pcard reveal" href="https://github.com/2icorp/2i-case-08-sales-signal" data-cat="data" data-q="2i-case-08-sales-signal 2icorp/2i-case-08-sales-signal news and public-procurement sales-signal radar auto-collects and filters news and korea's public-procurement (nara jangteo) open data by key-account and industry keywords, classifies importance with an llm, and routes the result into slack alerts and crm notes. a reference demo built on synthetic data. data #python #signal scoring #pipeline" target="_blank" rel="noopener">
+        <div class="pcard__meta"><span class="pcard__cat">Private</span><span class="pcard__rt">Python</span><span class="pcard__date">2026.07.26</span><span class="pcard__rt">Case 08</span></div>
+        <h3 class="pcard__title">News and Public-Procurement Sales-Signal Radar</h3>
+        <p class="pcard__excerpt">Auto-collects and filters news and Korea's public-procurement (Nara Jangteo) open data by key-account and industry keywords, classifies importance with an LLM, and routes the result into Slack alerts and CRM notes. A reference demo built on synthetic data.</p>
+        <div class="pcard__tags"><span>2icorp/2i-case-08-sales-signal</span><span>#Python</span><span>#Signal scoring</span><span>#Pipeline</span><span class="pcard__go">GitHub →</span></div>
+      </a>
+      <a class="pcard reveal" href="https://github.com/2icorp/oss-community-pulse" data-cat="data" data-q="oss-community-pulse 2i/oss-community-pulse open-source project community-mention weekly digest a static digest tool that rounds up, weekly, the reddit and hacker news threads mentioning your open-source project, and highlights the ones still unanswered. surfaces the potential-user questions a solo maintainer is most likely to miss. data #python #javascript #css" target="_blank" rel="noopener">
+        <div class="pcard__meta"><span class="pcard__cat">Private</span><span class="pcard__rt">Python</span><span class="pcard__date">2026.07.29</span></div>
+        <h3 class="pcard__title">Open-Source Project Community-Mention Weekly Digest</h3>
+        <p class="pcard__excerpt">A static digest tool that rounds up, weekly, the Reddit and Hacker News threads mentioning your open-source project, and highlights the ones still unanswered. Surfaces the potential-user questions a solo maintainer is most likely to miss.</p>
+        <div class="pcard__tags"><span>2i/oss-community-pulse</span><span>#Python</span><span>#JavaScript</span><span>#CSS</span><span class="pcard__go">GitHub →</span></div>
+      </a>
+      <a class="pcard reveal" href="https://github.com/2icorp/daily-paper-digest" data-cat="data" data-q="daily-paper-digest 2i/daily-paper-digest ai trending-paper daily digest a tool that pulls in daily trending ai and ml papers and turns them into a plain-language markdown digest, adding an llm-written why-it-matters note if an api key is available. falls back to the paper abstract if no key is set. data #python" target="_blank" rel="noopener">
+        <div class="pcard__meta"><span class="pcard__cat">Public</span><span class="pcard__rt">Python</span><span class="pcard__date">2026.08.02</span></div>
+        <h3 class="pcard__title">AI Trending-Paper Daily Digest</h3>
+        <p class="pcard__excerpt">A tool that pulls in daily trending AI and ML papers and turns them into a plain-language Markdown digest, adding an LLM-written why-it-matters note if an API key is available. Falls back to the paper abstract if no key is set.</p>
+        <div class="pcard__tags"><span>2i/daily-paper-digest</span><span>#Python</span><span class="pcard__go">GitHub →</span></div>
+      </a>
+        </div>
+      </section>
+      <section class="fam" id="tech-media" aria-labelledby="techt-media">
+        <header class="fam__head">
+          <h2 class="fam__t" id="techt-media">Media<span class="fam__n">18</span></h2>
+          <p class="fam__d">Video, image, deck, and voice synthesis. Marketing output produced repeatedly without a human hand.</p>
+        </header>
+        <div class="pboard">
+      <a class="pcard reveal" href="https://github.com/2icorp/ffmpegUI" data-cat="media" data-q="ffmpegUI 2i/ffmpegUI ffmpeg-based cross-platform video transcoding web app a full-stack video transcoding application, go (gin plus postgresql) backend and react (shadcn/ui) frontend, that runs ffmpeg server-side. encoding parameters are set through the ui, which shows you the exact ffmpeg command being generated. media #go #react #ffmpeg" target="_blank" rel="noopener">
+        <div class="pcard__meta"><span class="pcard__cat">Private</span><span class="pcard__rt">TypeScript</span><span class="pcard__date">2026.01.04</span></div>
+        <h3 class="pcard__title">FFmpeg-Based Cross-Platform Video Transcoding Web App</h3>
+        <p class="pcard__excerpt">A full-stack video transcoding application, Go (Gin plus PostgreSQL) backend and React (shadcn/ui) frontend, that runs FFmpeg server-side. Encoding parameters are set through the UI, which shows you the exact FFmpeg command being generated.</p>
+        <div class="pcard__tags"><span>2i/ffmpegUI</span><span>#Go</span><span>#React</span><span>#FFmpeg</span><span class="pcard__go">GitHub →</span></div>
+      </a>
+      <a class="pcard reveal" href="https://github.com/2icorp/call-center-tts" data-cat="media" data-q="call-center-tts 2i/call-center-tts korean tts system for call-center agents a qwen3-tts 1.7b-based speech-synthesis system for call-center agents, including korean text normalization, streaming inference, and grpo/dpo post-training. ships with an inference server and a test suite. media #python #qwen3-tts" target="_blank" rel="noopener">
+        <div class="pcard__meta"><span class="pcard__cat">Private</span><span class="pcard__rt">Python</span><span class="pcard__date">2026.02.25</span></div>
+        <h3 class="pcard__title">Korean TTS System for Call-Center Agents</h3>
+        <p class="pcard__excerpt">A Qwen3-TTS 1.7B-based speech-synthesis system for call-center agents, including Korean text normalization, streaming inference, and GRPO/DPO post-training. Ships with an inference server and a test suite.</p>
+        <div class="pcard__tags"><span>2i/call-center-tts</span><span>#Python</span><span>#Qwen3-TTS</span><span class="pcard__go">GitHub →</span></div>
+      </a>
+      <a class="pcard reveal" href="https://github.com/2icorp/kr-brand-decks" data-cat="media" data-q="kr-brand-decks 2i/kr-brand-decks korean-brand-themed pptx deck skills a skill collection for claude code and cursor that generates pptx decks themed on the public brand colors of 23 major korean companies. includes no logo files, and is an unofficial repository with no affiliation to any of the companies. media #python #shell" target="_blank" rel="noopener">
+        <div class="pcard__meta"><span class="pcard__cat">Public</span><span class="pcard__rt">Python</span><span class="pcard__date">2026.07.09</span></div>
+        <h3 class="pcard__title">Korean-Brand-Themed PPTX Deck Skills</h3>
+        <p class="pcard__excerpt">A skill collection for Claude Code and Cursor that generates PPTX decks themed on the public brand colors of 23 major Korean companies. Includes no logo files, and is an unofficial repository with no affiliation to any of the companies.</p>
+        <div class="pcard__tags"><span>2i/kr-brand-decks</span><span>#Python</span><span>#Shell</span><span class="pcard__go">GitHub →</span></div>
+      </a>
+      <a class="pcard reveal" href="https://github.com/2icorp/sticker-forge" data-cat="media" data-q="sticker-forge 2i/sticker-forge ai animated-sticker generation pipeline a python pipeline that turns a photo or text prompt into a character sheet with an image-generation model, then runs it through a motion planner and alpha processing to package it as an animated sticker for major messaging apps. media #python" target="_blank" rel="noopener">
+        <div class="pcard__meta"><span class="pcard__cat">Private</span><span class="pcard__rt">Python</span><span class="pcard__date">2026.07.14</span></div>
+        <h3 class="pcard__title">AI Animated-Sticker Generation Pipeline</h3>
+        <p class="pcard__excerpt">A Python pipeline that turns a photo or text prompt into a character sheet with an image-generation model, then runs it through a motion planner and alpha processing to package it as an animated sticker for major messaging apps.</p>
+        <div class="pcard__tags"><span>2i/sticker-forge</span><span>#Python</span><span class="pcard__go">GitHub →</span></div>
+      </a>
+      <a class="pcard reveal" href="https://github.com/2icorp/sprite-forge-studio" data-cat="media" data-q="sprite-forge-studio 2i/sprite-forge-studio emoji-to-game-sprite conversion demo an interactive demo that turns a blog character into an emoji, then expands it into game sprites, letting you preview the character's motion and download a unity bundle. every sprite was actually generated by an image-generation pipeline. media #css #javascript #html" target="_blank" rel="noopener">
+        <div class="pcard__meta"><span class="pcard__cat">Public</span><span class="pcard__rt">CSS</span><span class="pcard__date">2026.07.16</span></div>
+        <h3 class="pcard__title">Emoji-to-Game-Sprite Conversion Demo</h3>
+        <p class="pcard__excerpt">An interactive demo that turns a blog character into an emoji, then expands it into game sprites, letting you preview the character's motion and download a Unity bundle. Every sprite was actually generated by an image-generation pipeline.</p>
+        <div class="pcard__tags"><span>2i/sprite-forge-studio</span><span>#CSS</span><span>#JavaScript</span><span>#HTML</span><span class="pcard__go">GitHub →</span></div>
+      </a>
+      <a class="pcard reveal" href="https://github.com/2icorp/lectureclip" data-cat="media" data-q="lectureclip 2i/lectureclip lecture-subtitle speaker-sort and highlight-clip tool a 100% client-side tool: paste in an already speaker-diarized srt or vtt subtitle file, and it sorts it by speaker and generates highlight-clip candidates plus the ffmpeg cut commands. does not perform its own speech recognition or speaker diarization. media #javascript #html #css" target="_blank" rel="noopener">
+        <div class="pcard__meta"><span class="pcard__cat">Private</span><span class="pcard__rt">JavaScript</span><span class="pcard__date">2026.07.22</span></div>
+        <h3 class="pcard__title">Lecture-Subtitle Speaker-Sort and Highlight-Clip Tool</h3>
+        <p class="pcard__excerpt">A 100% client-side tool: paste in an already speaker-diarized SRT or VTT subtitle file, and it sorts it by speaker and generates highlight-clip candidates plus the ffmpeg cut commands. Does not perform its own speech recognition or speaker diarization.</p>
+        <div class="pcard__tags"><span>2i/lectureclip</span><span>#JavaScript</span><span>#HTML</span><span>#CSS</span><span class="pcard__go">GitHub →</span></div>
+      </a>
+      <a class="pcard reveal" href="https://github.com/2icorp/project-echo" data-cat="media" data-q="project-echo 2i/project-echo voice-interview-based digital-self cloning app a local-first macos tauri app that clones a user's speaking style, voice, and face from a voice interview, turning a single photo into a talking version of yourself. voice cloning and speech transcription were verified with real models. media #python #typescript #tauri #voxcpm2 #qwen3-asr" target="_blank" rel="noopener">
+        <div class="pcard__meta"><span class="pcard__cat">Private</span><span class="pcard__rt">Python</span><span class="pcard__date">2026.07.22</span></div>
+        <h3 class="pcard__title">Voice-Interview-Based Digital-Self Cloning App</h3>
+        <p class="pcard__excerpt">A local-first macOS Tauri app that clones a user's speaking style, voice, and face from a voice interview, turning a single photo into a talking version of yourself. Voice cloning and speech transcription were verified with real models.</p>
+        <div class="pcard__tags"><span>2i/project-echo</span><span>#Python</span><span>#TypeScript</span><span>#Tauri</span><span>#VoxCPM2</span><span>#Qwen3-ASR</span><span class="pcard__go">GitHub →</span></div>
+      </a>
+      <a class="pcard reveal" href="https://github.com/2icorp/release-thread" data-cat="media" data-q="release-thread 2i/release-thread changelog-based x-thread and card generator a 100% client-side tool: paste in a changelog or github release notes, and it produces a ready-to-post x (twitter) thread draft plus per-item carousel card images. recognizes the keep a changelog format. media #javascript #html #css" target="_blank" rel="noopener">
+        <div class="pcard__meta"><span class="pcard__cat">Private</span><span class="pcard__rt">JavaScript</span><span class="pcard__date">2026.07.23</span></div>
+        <h3 class="pcard__title">Changelog-Based X-Thread and Card Generator</h3>
+        <p class="pcard__excerpt">A 100% client-side tool: paste in a CHANGELOG or GitHub release notes, and it produces a ready-to-post X (Twitter) thread draft plus per-item carousel card images. Recognizes the Keep a Changelog format.</p>
+        <div class="pcard__tags"><span>2i/release-thread</span><span>#JavaScript</span><span>#HTML</span><span>#CSS</span><span class="pcard__go">GitHub →</span></div>
+      </a>
+      <a class="pcard reveal" href="https://github.com/2icorp/jamkit" data-cat="media" data-q="jamkit 2i/jamkit sentence-to-pixel-sprite prototype generator a tool that instantly builds a browser pixel-sprite prototype, with walk and attack animations, from a one-sentence description of a game character. rather than ai image generation, it hashes the sentence and deterministically composes silhouette templates. media #javascript #html #css" target="_blank" rel="noopener">
+        <div class="pcard__meta"><span class="pcard__cat">Private</span><span class="pcard__rt">JavaScript</span><span class="pcard__date">2026.07.26</span></div>
+        <h3 class="pcard__title">Sentence-to-Pixel-Sprite Prototype Generator</h3>
+        <p class="pcard__excerpt">A tool that instantly builds a browser pixel-sprite prototype, with walk and attack animations, from a one-sentence description of a game character. Rather than AI image generation, it hashes the sentence and deterministically composes silhouette templates.</p>
+        <div class="pcard__tags"><span>2i/jamkit</span><span>#JavaScript</span><span>#HTML</span><span>#CSS</span><span class="pcard__go">GitHub →</span></div>
+      </a>
+      <a class="pcard reveal" href="https://github.com/2icorp/shotcraft-atlas" data-cat="media" data-q="shotcraft-atlas 2i/shotcraft-atlas camera-move preview and prompt atlas a free atlas that shows 8 representative camera moves as looping, parameter-driven 2d previews, filterable by mood and genre, with a ready-to-copy prompt for ai video generation next to each. lets you see terms like dolly-in and tracking shot before you use them. media #javascript #html #css" target="_blank" rel="noopener">
+        <div class="pcard__meta"><span class="pcard__cat">Private</span><span class="pcard__rt">JavaScript</span><span class="pcard__date">2026.07.27</span></div>
+        <h3 class="pcard__title">Camera-Move Preview and Prompt Atlas</h3>
+        <p class="pcard__excerpt">A free atlas that shows 8 representative camera moves as looping, parameter-driven 2D previews, filterable by mood and genre, with a ready-to-copy prompt for AI video generation next to each. Lets you see terms like dolly-in and tracking shot before you use them.</p>
+        <div class="pcard__tags"><span>2i/shotcraft-atlas</span><span>#JavaScript</span><span>#HTML</span><span>#CSS</span><span class="pcard__go">GitHub →</span></div>
+      </a>
+      <a class="pcard reveal" href="https://github.com/2icorp/mdmotion" data-cat="media" data-q="mdmotion 2i/mdmotion markdown-to-video converter a 100% client-side tool: paste in a readme or blog post, and it converts it into a timed video with slides, subtitles, and mic narration. splits scenes by heading and computes playback duration from the narration length. media #javascript #html #css" target="_blank" rel="noopener">
+        <div class="pcard__meta"><span class="pcard__cat">Private</span><span class="pcard__rt">JavaScript</span><span class="pcard__date">2026.07.28</span></div>
+        <h3 class="pcard__title">Markdown-to-Video Converter</h3>
+        <p class="pcard__excerpt">A 100% client-side tool: paste in a README or blog post, and it converts it into a timed video with slides, subtitles, and mic narration. Splits scenes by heading and computes playback duration from the narration length.</p>
+        <div class="pcard__tags"><span>2i/mdmotion</span><span>#JavaScript</span><span>#HTML</span><span>#CSS</span><span class="pcard__go">GitHub →</span></div>
+      </a>
+      <a class="pcard reveal" href="https://github.com/2icorp/2i-case-09-promo-video" data-cat="media" data-q="2i-case-09-promo-video 2icorp/2i-case-09-promo-video product-info-based per-channel short-form video generation auto-generates short-form video drafts with ffmpeg from just product text and images, wiring per-channel format conversion and brand-template application straight into the new-product registration process. a reference demo built on synthetic data. media #python #ffmpeg #pytest" target="_blank" rel="noopener">
+        <div class="pcard__meta"><span class="pcard__cat">Private</span><span class="pcard__rt">Python</span><span class="pcard__date">2026.07.29</span><span class="pcard__rt">Case 09</span></div>
+        <h3 class="pcard__title">Product-Info-Based Per-Channel Short-Form Video Generation</h3>
+        <p class="pcard__excerpt">Auto-generates short-form video drafts with ffmpeg from just product text and images, wiring per-channel format conversion and brand-template application straight into the new-product registration process. A reference demo built on synthetic data.</p>
+        <div class="pcard__tags"><span>2icorp/2i-case-09-promo-video</span><span>#Python</span><span>#ffmpeg</span><span>#pytest</span><span class="pcard__go">GitHub →</span></div>
+      </a>
+      <a class="pcard reveal" href="https://github.com/2icorp/propforge-3d" data-cat="media" data-q="propforge-3d 2i/propforge-3d reference-image-based low-poly 3d prop generator a 100% client-side tool that turns a single reference image into a low-poly glb 3d prop for games. handles background removal, silhouette extrusion, vertex-color baking, 3-level lod, and gltf 2.0 binary export, all deterministically. media #javascript #html #css" target="_blank" rel="noopener">
+        <div class="pcard__meta"><span class="pcard__cat">Private</span><span class="pcard__rt">JavaScript</span><span class="pcard__date">2026.07.31</span></div>
+        <h3 class="pcard__title">Reference-Image-Based Low-Poly 3D Prop Generator</h3>
+        <p class="pcard__excerpt">A 100% client-side tool that turns a single reference image into a low-poly GLB 3D prop for games. Handles background removal, silhouette extrusion, vertex-color baking, 3-level LOD, and glTF 2.0 binary export, all deterministically.</p>
+        <div class="pcard__tags"><span>2i/propforge-3d</span><span>#JavaScript</span><span>#HTML</span><span>#CSS</span><span class="pcard__go">GitHub →</span></div>
+      </a>
+      <a class="pcard reveal" href="https://github.com/2icorp/mailbox-cast" data-cat="media" data-q="mailbox-cast 2i/mailbox-cast newsletter-inbox-to-podcast converter a 100% client-side tool that parses unread newsletters (eml, mbox) entirely in the browser and builds a private podcast feed grouped into per-sender episodes with per-issue chapters. also plays instantly via the browser's built-in speech synthesis. media #javascript #html #css" target="_blank" rel="noopener">
+        <div class="pcard__meta"><span class="pcard__cat">Private</span><span class="pcard__rt">JavaScript</span><span class="pcard__date">2026.08.01</span></div>
+        <h3 class="pcard__title">Newsletter-Inbox-to-Podcast Converter</h3>
+        <p class="pcard__excerpt">A 100% client-side tool that parses unread newsletters (EML, MBOX) entirely in the browser and builds a private podcast feed grouped into per-sender episodes with per-issue chapters. Also plays instantly via the browser's built-in speech synthesis.</p>
+        <div class="pcard__tags"><span>2i/mailbox-cast</span><span>#JavaScript</span><span>#HTML</span><span>#CSS</span><span class="pcard__go">GitHub →</span></div>
+      </a>
+      <a class="pcard reveal" href="https://github.com/2icorp/kidsnote-sd-service" data-cat="media" data-q="kidsnote-sd-service 2icorp/kidsnote-sd-service stable diffusion webui for kidsnote a gpu-server deployment script for stable diffusion webui, built for the kidsnote service. dormant, no updates since 2024. media #python #stable diffusion webui" target="_blank" rel="noopener">
+        <div class="pcard__meta"><span class="pcard__cat">Private</span><span class="pcard__rt">Python</span><span class="pcard__date">2024.07.16</span><span class="pcard__rt">Dormant</span></div>
+        <h3 class="pcard__title">Stable Diffusion WebUI for Kidsnote</h3>
+        <p class="pcard__excerpt">A GPU-server deployment script for Stable Diffusion WebUI, built for the Kidsnote service. Dormant, no updates since 2024.</p>
+        <div class="pcard__tags"><span>2icorp/kidsnote-sd-service</span><span>#Python</span><span>#Stable Diffusion WebUI</span><span class="pcard__go">GitHub →</span></div>
+      </a>
+      <a class="pcard reveal" href="https://github.com/2icorp/sd-admin" data-cat="media" data-q="sd-admin 2icorp/sd-admin stable diffusion webui ops admin an admin deployment script that runs stable diffusion webui on a production gpu server. dormant, no updates since 2024. media #python #stable diffusion webui" target="_blank" rel="noopener">
+        <div class="pcard__meta"><span class="pcard__cat">Private</span><span class="pcard__rt">Python</span><span class="pcard__date">2024.09.23</span><span class="pcard__rt">Dormant</span></div>
+        <h3 class="pcard__title">Stable Diffusion WebUI Ops Admin</h3>
+        <p class="pcard__excerpt">An admin deployment script that runs Stable Diffusion WebUI on a production GPU server. Dormant, no updates since 2024.</p>
+        <div class="pcard__tags"><span>2icorp/sd-admin</span><span>#Python</span><span>#Stable Diffusion WebUI</span><span class="pcard__go">GitHub →</span></div>
+      </a>
+      <a class="pcard reveal" href="https://github.com/2icorp/2i-dev-sd-service" data-cat="media" data-q="2i-dev-sd-service 2icorp/2i-dev-sd-service development stable diffusion webui server a collection of deployment scripts for developing and running stable diffusion webui on a gpu server. dormant, no updates since 2024. media #python #stable diffusion webui" target="_blank" rel="noopener">
+        <div class="pcard__meta"><span class="pcard__cat">Private</span><span class="pcard__rt">Python</span><span class="pcard__date">2024.12.05</span><span class="pcard__rt">Dormant</span></div>
+        <h3 class="pcard__title">Development Stable Diffusion WebUI Server</h3>
+        <p class="pcard__excerpt">A collection of deployment scripts for developing and running Stable Diffusion WebUI on a GPU server. Dormant, no updates since 2024.</p>
+        <div class="pcard__tags"><span>2icorp/2i-dev-sd-service</span><span>#Python</span><span>#Stable Diffusion WebUI</span><span class="pcard__go">GitHub →</span></div>
+      </a>
+      <a class="pcard reveal" href="https://github.com/2icorp/sd-service" data-cat="media" data-q="sd-service 2icorp/sd-service stable diffusion webui service a service deployment script that runs stable diffusion webui on a gpu server. dormant, no updates since 2024. media #python #stable diffusion webui" target="_blank" rel="noopener">
+        <div class="pcard__meta"><span class="pcard__cat">Private</span><span class="pcard__rt">Python</span><span class="pcard__date">2025.07.09</span><span class="pcard__rt">Dormant</span></div>
+        <h3 class="pcard__title">Stable Diffusion WebUI Service</h3>
+        <p class="pcard__excerpt">A service deployment script that runs Stable Diffusion WebUI on a GPU server. Dormant, no updates since 2024.</p>
+        <div class="pcard__tags"><span>2icorp/sd-service</span><span>#Python</span><span>#Stable Diffusion WebUI</span><span class="pcard__go">GitHub →</span></div>
+      </a>
+        </div>
+      </section>
+      <section class="fam" id="tech-product" aria-labelledby="techt-product">
+        <header class="fam__head">
+          <h2 class="fam__t" id="techt-product">Product<span class="fam__n">20</span></h2>
+          <p class="fam__d">Built end-user-ready for the legal, education, healthcare, finance, and everyday-life domains.</p>
+        </header>
+        <div class="pboard">
+      <a class="pcard reveal" href="https://github.com/2icorp/teacher-admin-saas" data-cat="product" data-q="teacher-admin-saas 2i/teacher-admin-saas local-first saas platform for professional consultation and case management a local-first saas monorepo of 11 tauri desktop apps for consultation and case management across 11 professional domains, education, law, healthcare, insurance, social welfare, hr, franchising and more. sensitive data is stored encrypted in on-device sqlite, with no external server. product #python #typescript #tauri #turborepo" target="_blank" rel="noopener">
+        <div class="pcard__meta"><span class="pcard__cat">Private</span><span class="pcard__rt">Python</span><span class="pcard__date">2026.04.24</span></div>
+        <h3 class="pcard__title">Local-First SaaS Platform for Professional Consultation and Case Management</h3>
+        <p class="pcard__excerpt">A local-first SaaS monorepo of 11 Tauri desktop apps for consultation and case management across 11 professional domains, education, law, healthcare, insurance, social welfare, HR, franchising and more. Sensitive data is stored encrypted in on-device SQLite, with no external server.</p>
+        <div class="pcard__tags"><span>2i/teacher-admin-saas</span><span>#Python</span><span>#TypeScript</span><span>#Tauri</span><span>#Turborepo</span><span class="pcard__go">GitHub →</span></div>
+      </a>
+      <a class="pcard reveal" href="https://github.com/2icorp/ai-vocabcards" data-cat="product" data-q="ai-vocabcards 2i/ai-vocabcards ai-powered english vocabulary learning web app an english vocabulary web app for korean children that generates dictionary entries with the claude api and flashcard images with an image-generation api. includes spaced-repetition learning and sentence-practice cards. product #typescript #python #pnpm monorepo" target="_blank" rel="noopener">
+        <div class="pcard__meta"><span class="pcard__cat">Private</span><span class="pcard__rt">Python</span><span class="pcard__date">2026.05.29</span></div>
+        <h3 class="pcard__title">AI-Powered English Vocabulary Learning Web App</h3>
+        <p class="pcard__excerpt">An English vocabulary web app for Korean children that generates dictionary entries with the Claude API and flashcard images with an image-generation API. Includes spaced-repetition learning and sentence-practice cards.</p>
+        <div class="pcard__tags"><span>2i/ai-vocabcards</span><span>#TypeScript</span><span>#Python</span><span>#pnpm monorepo</span><span class="pcard__go">GitHub →</span></div>
+      </a>
+      <a class="pcard reveal" href="https://github.com/2icorp/my-school-visuals" data-cat="product" data-q="my-school-visuals 2i/my-school-visuals school-photo-based special-education visual-aid generator a client-only tool for teachers and therapists: feed it a school photo, and it generates ready-to-print classroom-rule posters, special-education social stories, and vocabulary cards. the photo never leaves the browser, and exif data is stripped automatically. product #python #typescript #react" target="_blank" rel="noopener">
+        <div class="pcard__meta"><span class="pcard__cat">Private</span><span class="pcard__rt">Python</span><span class="pcard__date">2026.06.15</span></div>
+        <h3 class="pcard__title">School-Photo-Based Special-Education Visual-Aid Generator</h3>
+        <p class="pcard__excerpt">A client-only tool for teachers and therapists: feed it a school photo, and it generates ready-to-print classroom-rule posters, special-education social stories, and vocabulary cards. The photo never leaves the browser, and EXIF data is stripped automatically.</p>
+        <div class="pcard__tags"><span>2i/my-school-visuals</span><span>#Python</span><span>#TypeScript</span><span>#React</span><span class="pcard__go">GitHub →</span></div>
+      </a>
+      <a class="pcard reveal" href="https://github.com/2icorp/gongmun-easy" data-cat="product" data-q="gongmun-easy 2i/gongmun-easy plain-language government-document explainer desktop app an accessibility-first desktop app: upload a dense korean government document, and it explains it in plain korean, builds a deadline checklist, and reads it aloud. forked from accessible-kr-service-template. product #rust #tauri 2 #javascript" target="_blank" rel="noopener">
+        <div class="pcard__meta"><span class="pcard__cat">Private</span><span class="pcard__rt">Rust</span><span class="pcard__date">2026.07.10</span></div>
+        <h3 class="pcard__title">Plain-Language Government-Document Explainer Desktop App</h3>
+        <p class="pcard__excerpt">An accessibility-first desktop app: upload a dense Korean government document, and it explains it in plain Korean, builds a deadline checklist, and reads it aloud. Forked from accessible-kr-service-template.</p>
+        <div class="pcard__tags"><span>2i/gongmun-easy</span><span>#Rust</span><span>#Tauri 2</span><span>#JavaScript</span><span class="pcard__go">GitHub →</span></div>
+      </a>
+      <a class="pcard reveal" href="https://github.com/2icorp/jeonse-safe" data-cat="product" data-q="jeonse-safe 2i/jeonse-safe jeonse deposit risk-screening desktop app an accessibility-first desktop app: enter a property address and jeonse deposit, and it pulls together the title registry, market price, and auction records to show a risk grade and red-flag checklist in plain korean. informational only, not legal advice. product #rust #tauri 2 #javascript" target="_blank" rel="noopener">
+        <div class="pcard__meta"><span class="pcard__cat">Private</span><span class="pcard__rt">JavaScript</span><span class="pcard__date">2026.07.10</span></div>
+        <h3 class="pcard__title">Jeonse Deposit Risk-Screening Desktop App</h3>
+        <p class="pcard__excerpt">An accessibility-first desktop app: enter a property address and jeonse deposit, and it pulls together the title registry, market price, and auction records to show a risk grade and red-flag checklist in plain Korean. Informational only, not legal advice.</p>
+        <div class="pcard__tags"><span>2i/jeonse-safe</span><span>#Rust</span><span>#Tauri 2</span><span>#JavaScript</span><span class="pcard__go">GitHub →</span></div>
+      </a>
+      <a class="pcard reveal" href="https://github.com/2icorp/medi-safe" data-cat="product" data-q="medi-safe 2i/medi-safe elderly medication-safety check desktop app an accessibility-first desktop app for older adults that looks up official korean drug-safety data (mfds) to flag interactions between current medications with a traffic-light (safe, caution, danger) display and voice guidance. forked from accessible-kr-service-template. product #rust #tauri 2 #javascript" target="_blank" rel="noopener">
+        <div class="pcard__meta"><span class="pcard__cat">Private</span><span class="pcard__rt">JavaScript</span><span class="pcard__date">2026.07.10</span></div>
+        <h3 class="pcard__title">Elderly Medication-Safety Check Desktop App</h3>
+        <p class="pcard__excerpt">An accessibility-first desktop app for older adults that looks up official Korean drug-safety data (MFDS) to flag interactions between current medications with a traffic-light (safe, caution, danger) display and voice guidance. Forked from accessible-kr-service-template.</p>
+        <div class="pcard__tags"><span>2i/medi-safe</span><span>#Rust</span><span>#Tauri 2</span><span>#JavaScript</span><span class="pcard__go">GitHub →</span></div>
+      </a>
+      <a class="pcard reveal" href="https://github.com/2icorp/missed-benefits" data-cat="product" data-q="missed-benefits 2i/missed-benefits government-benefit and scholarship matching finder app an accessibility-first desktop app: answer a few steps about your situation, unemployment, childbirth, low income and more, and it finds the government benefits, scholarships, and public-housing notices you qualify for, organized into a deadline calendar. forked from accessible-kr-service-template. product #rust #tauri 2 #javascript" target="_blank" rel="noopener">
+        <div class="pcard__meta"><span class="pcard__cat">Private</span><span class="pcard__rt">Rust</span><span class="pcard__date">2026.07.10</span></div>
+        <h3 class="pcard__title">Government-Benefit and Scholarship Matching Finder App</h3>
+        <p class="pcard__excerpt">An accessibility-first desktop app: answer a few steps about your situation, unemployment, childbirth, low income and more, and it finds the government benefits, scholarships, and public-housing notices you qualify for, organized into a deadline calendar. Forked from accessible-kr-service-template.</p>
+        <div class="pcard__tags"><span>2i/missed-benefits</span><span>#Rust</span><span>#Tauri 2</span><span>#JavaScript</span><span class="pcard__go">GitHub →</span></div>
+      </a>
+      <a class="pcard reveal" href="https://github.com/2icorp/nunchi-map" data-cat="product" data-q="nunchi-map 2i/nunchi-map real-time crowding-check local app an app that shows a store or venue's real-time crowd level, queue length, and on-the-ground reports with photos, ranking what's hot right now with a hotness score that blends the rate of rising crowding with recency-weighted reports. built on a go+fiber/postgis/redis/nats backend and an expo react native app. product #go #postgis #redis #nats #expo react native" target="_blank" rel="noopener">
+        <div class="pcard__meta"><span class="pcard__cat">Private</span><span class="pcard__rt">Go</span><span class="pcard__date">2026.07.13</span></div>
+        <h3 class="pcard__title">Real-Time Crowding-Check Local App</h3>
+        <p class="pcard__excerpt">An app that shows a store or venue's real-time crowd level, queue length, and on-the-ground reports with photos, ranking what's hot right now with a hotness score that blends the rate of rising crowding with recency-weighted reports. Built on a Go+Fiber/PostGIS/Redis/NATS backend and an Expo React Native app.</p>
+        <div class="pcard__tags"><span>2i/nunchi-map</span><span>#Go</span><span>#PostGIS</span><span>#Redis</span><span>#NATS</span><span>#Expo React Native</span><span class="pcard__go">GitHub →</span></div>
+      </a>
+      <a class="pcard reveal" href="https://github.com/2icorp/nunchi-map-landing" data-cat="product" data-q="nunchi-map-landing 2i/nunchi-map-landing nunchi-map demand-validation landing page a single static landing page introducing the concept behind nunchi-map, the real-time crowding and wait-time app, built to validate demand via click count. a demo page that makes no promise of a formal launch. product #html" target="_blank" rel="noopener">
+        <div class="pcard__meta"><span class="pcard__cat">Public</span><span class="pcard__rt">HTML</span><span class="pcard__date">2026.07.13</span></div>
+        <h3 class="pcard__title">Nunchi-Map Demand-Validation Landing Page</h3>
+        <p class="pcard__excerpt">A single static landing page introducing the concept behind Nunchi-Map, the real-time crowding and wait-time app, built to validate demand via click count. A demo page that makes no promise of a formal launch.</p>
+        <div class="pcard__tags"><span>2i/nunchi-map-landing</span><span>#HTML</span><span class="pcard__go">GitHub →</span></div>
+      </a>
+      <a class="pcard reveal" href="https://github.com/2icorp/care-visit-notes" data-cat="product" data-q="care-visit-notes 2i/care-visit-notes home-care visit conversation-to-notes draft assistant a 100% browser-local tool that rule-based classifies a home-care worker's conversation transcript into 4 categories, health status, notable items, requests and more, drafting a care-log note. exports by print or download, no server upload, no account. product #javascript #html" target="_blank" rel="noopener">
+        <div class="pcard__meta"><span class="pcard__cat">Private</span><span class="pcard__rt">JavaScript</span><span class="pcard__date">2026.07.20</span></div>
+        <h3 class="pcard__title">Home-Care Visit Conversation-to-Notes Draft Assistant</h3>
+        <p class="pcard__excerpt">A 100% browser-local tool that rule-based classifies a home-care worker's conversation transcript into 4 categories, health status, notable items, requests and more, drafting a care-log note. Exports by print or download, no server upload, no account.</p>
+        <div class="pcard__tags"><span>2i/care-visit-notes</span><span>#JavaScript</span><span>#HTML</span><span class="pcard__go">GitHub →</span></div>
+      </a>
+      <a class="pcard reveal" href="https://github.com/2icorp/daily-scrum-timer" data-cat="product" data-q="daily-scrum-timer 2i/daily-scrum-timer team daily-scrum timer desktop app a 100% local desktop scrum timer: register your speakers, and it times them in order, alarming on overrun and continuing to display the overtime. no server, login, or internet connection required. product #javascript #tauri (rust) #css" target="_blank" rel="noopener">
+        <div class="pcard__meta"><span class="pcard__cat">Private</span><span class="pcard__rt">JavaScript</span><span class="pcard__date">2026.07.31</span></div>
+        <h3 class="pcard__title">Team Daily-Scrum Timer Desktop App</h3>
+        <p class="pcard__excerpt">A 100% local desktop scrum timer: register your speakers, and it times them in order, alarming on overrun and continuing to display the overtime. No server, login, or internet connection required.</p>
+        <div class="pcard__tags"><span>2i/daily-scrum-timer</span><span>#JavaScript</span><span>#Tauri (Rust)</span><span>#CSS</span><span class="pcard__go">GitHub →</span></div>
+      </a>
+      <a class="pcard reveal" href="https://github.com/2icorp/kidsnote-server" data-cat="product" data-q="kidsnote-server 2icorp/kidsnote-server kidsnote api server an api server for kidsnote, with a pyenv/poetry dev environment, deployed to an ec2 instance. dormant, no updates since 2024. product #python #poetry #ec2" target="_blank" rel="noopener">
+        <div class="pcard__meta"><span class="pcard__cat">Private</span><span class="pcard__rt">Python</span><span class="pcard__date">2024.07.11</span><span class="pcard__rt">Dormant</span></div>
+        <h3 class="pcard__title">Kidsnote API Server</h3>
+        <p class="pcard__excerpt">An API server for Kidsnote, with a pyenv/Poetry dev environment, deployed to an EC2 instance. Dormant, no updates since 2024.</p>
+        <div class="pcard__tags"><span>2icorp/kidsnote-server</span><span>#Python</span><span>#Poetry</span><span>#EC2</span><span class="pcard__go">GitHub →</span></div>
+      </a>
+      <a class="pcard reveal" href="https://github.com/2icorp/2i-store" data-cat="product" data-q="2i-store 2icorp/2i-store 2i kids-model store web app a next.js storefront for the 2i kids-model domain. appears to be an early-stage project, not far past the default create-next-app template. product #typescript #next.js" target="_blank" rel="noopener">
+        <div class="pcard__meta"><span class="pcard__cat">Private</span><span class="pcard__rt">TypeScript</span><span class="pcard__date">2024.11.08</span><span class="pcard__rt">Dormant</span></div>
+        <h3 class="pcard__title">2i Kids-Model Store Web App</h3>
+        <p class="pcard__excerpt">A Next.js storefront for the 2i kids-model domain. Appears to be an early-stage project, not far past the default create-next-app template.</p>
+        <div class="pcard__tags"><span>2icorp/2i-store</span><span>#TypeScript</span><span>#Next.js</span><span class="pcard__go">GitHub →</span></div>
+      </a>
+      <a class="pcard reveal" href="https://github.com/2icorp/2i-email-auth" data-cat="product" data-q="2i-email-auth 2icorp/2i-email-auth email verification-code issue and check service a flask-based email verification system that generates and sends 6-digit codes, with daily send limits, retry limits, and enforced https. dormant, no updates since 2024. product #python #flask #sqlite" target="_blank" rel="noopener">
+        <div class="pcard__meta"><span class="pcard__cat">Private</span><span class="pcard__rt">Python</span><span class="pcard__date">2024.12.12</span><span class="pcard__rt">Dormant</span></div>
+        <h3 class="pcard__title">Email Verification-Code Issue and Check Service</h3>
+        <p class="pcard__excerpt">A Flask-based email verification system that generates and sends 6-digit codes, with daily send limits, retry limits, and enforced HTTPS. Dormant, no updates since 2024.</p>
+        <div class="pcard__tags"><span>2icorp/2i-email-auth</span><span>#Python</span><span>#Flask</span><span>#SQLite</span><span class="pcard__go">GitHub →</span></div>
+      </a>
+      <a class="pcard reveal" href="https://github.com/2icorp/mobile" data-cat="product" data-q="mobile 2icorp/mobile 2i react native mobile app the 2i react native app, built and deployed to ios and android via expo eas. dormant, no updates since 2024. product #typescript #react native #expo" target="_blank" rel="noopener">
+        <div class="pcard__meta"><span class="pcard__cat">Private</span><span class="pcard__rt">TypeScript</span><span class="pcard__date">2024.12.27</span><span class="pcard__rt">Dormant</span></div>
+        <h3 class="pcard__title">2i React Native Mobile App</h3>
+        <p class="pcard__excerpt">The 2i React Native app, built and deployed to iOS and Android via Expo EAS. Dormant, no updates since 2024.</p>
+        <div class="pcard__tags"><span>2icorp/mobile</span><span>#TypeScript</span><span>#React Native</span><span>#Expo</span><span class="pcard__go">GitHub →</span></div>
+      </a>
+      <a class="pcard reveal" href="https://github.com/2icorp/server" data-cat="product" data-q="server 2icorp/server 2i main api server 2i's main api server, with a pyenv/poetry dev environment. dormant, no updates since 2024. product #python #poetry" target="_blank" rel="noopener">
+        <div class="pcard__meta"><span class="pcard__cat">Private</span><span class="pcard__rt">Python</span><span class="pcard__date">2024.12.30</span><span class="pcard__rt">Dormant</span></div>
+        <h3 class="pcard__title">2i Main API Server</h3>
+        <p class="pcard__excerpt">2i's main API server, with a pyenv/Poetry dev environment. Dormant, no updates since 2024.</p>
+        <div class="pcard__tags"><span>2icorp/server</span><span>#Python</span><span>#Poetry</span><span class="pcard__go">GitHub →</span></div>
+      </a>
+      <a class="pcard reveal" href="https://github.com/2icorp/2i-dev-service" data-cat="product" data-q="2i-dev-service 2icorp/2i-dev-service 2i development api server a fastapi-based development api server, set up with pyenv and poetry. dormant, no updates since 2024. product #python #fastapi #poetry" target="_blank" rel="noopener">
+        <div class="pcard__meta"><span class="pcard__cat">Private</span><span class="pcard__rt">Python</span><span class="pcard__date">2024.12.31</span><span class="pcard__rt">Dormant</span></div>
+        <h3 class="pcard__title">2i Development API Server</h3>
+        <p class="pcard__excerpt">A FastAPI-based development API server, set up with pyenv and Poetry. Dormant, no updates since 2024.</p>
+        <div class="pcard__tags"><span>2icorp/2i-dev-service</span><span>#Python</span><span>#FastAPI</span><span>#Poetry</span><span class="pcard__go">GitHub →</span></div>
+      </a>
+      <a class="pcard reveal" href="https://github.com/2icorp/admin-web" data-cat="product" data-q="admin-web 2icorp/admin-web ops back-office admin web app a next.js back-office app for operations, signing in via nextauth and google oauth. dormant, no updates since 2024. product #typescript #next.js #nextauth" target="_blank" rel="noopener">
+        <div class="pcard__meta"><span class="pcard__cat">Private</span><span class="pcard__rt">TypeScript</span><span class="pcard__date">2024.12.31</span><span class="pcard__rt">Dormant</span></div>
+        <h3 class="pcard__title">Ops Back-Office Admin Web App</h3>
+        <p class="pcard__excerpt">A Next.js back-office app for operations, signing in via NextAuth and Google OAuth. Dormant, no updates since 2024.</p>
+        <div class="pcard__tags"><span>2icorp/admin-web</span><span>#TypeScript</span><span>#Next.js</span><span>#NextAuth</span><span class="pcard__go">GitHub →</span></div>
+      </a>
+      <a class="pcard reveal" href="https://github.com/2icorp/website" data-cat="product" data-q="website 2icorp/website 2i main website a next.js project for 2i's main website. the readme is just the default create-next-app boilerplate, so the actual screens need to be checked directly in the code. product #typescript #next.js" target="_blank" rel="noopener">
+        <div class="pcard__meta"><span class="pcard__cat">Private</span><span class="pcard__rt">TypeScript</span><span class="pcard__date">2025.01.16</span><span class="pcard__rt">Dormant</span></div>
+        <h3 class="pcard__title">2i Main Website</h3>
+        <p class="pcard__excerpt">A Next.js project for 2i's main website. The README is just the default create-next-app boilerplate, so the actual screens need to be checked directly in the code.</p>
+        <div class="pcard__tags"><span>2icorp/website</span><span>#TypeScript</span><span>#Next.js</span><span class="pcard__go">GitHub →</span></div>
+      </a>
+      <a class="pcard reveal" href="https://github.com/2icorp/2i-webapp" data-cat="product" data-q="2i-webapp 2icorp/2i-webapp 2i web-app homepage a next.js project for the 2i web-app homepage. the readme is just the default create-next-app boilerplate, so the actual screens need to be checked directly in the code. product #typescript #next.js" target="_blank" rel="noopener">
+        <div class="pcard__meta"><span class="pcard__cat">Private</span><span class="pcard__rt">TypeScript</span><span class="pcard__date">2025.08.03</span><span class="pcard__rt">Dormant</span></div>
+        <h3 class="pcard__title">2i Web-App Homepage</h3>
+        <p class="pcard__excerpt">A Next.js project for the 2i web-app homepage. The README is just the default create-next-app boilerplate, so the actual screens need to be checked directly in the code.</p>
+        <div class="pcard__tags"><span>2icorp/2i-webapp</span><span>#TypeScript</span><span>#Next.js</span><span class="pcard__go">GitHub →</span></div>
+      </a>
+        </div>
+      </section>
+      <section class="fam" id="tech-devtool" aria-labelledby="techt-devtool">
+        <header class="fam__head">
+          <h2 class="fam__t" id="techt-devtool">Dev Tooling<span class="fam__n">24</span></h2>
+          <p class="fam__d">Repo templates, quality checkers, documentation, site-authoring tools. The base layer that lets us build everything else fast.</p>
+        </header>
+        <div class="pboard">
+      <a class="pcard reveal" href="https://github.com/2icorp/data-peek" data-cat="devtool" data-q="data-peek 2i/data-peek ai-assisted sql client desktop app a light, fast, ai-powered desktop sql client supporting postgresql, mysql, sql server, and sqlite. converts natural language into sql and generates er diagrams and charts. dev tooling #typescript" target="_blank" rel="noopener">
+        <div class="pcard__meta"><span class="pcard__cat">Private</span><span class="pcard__rt">TypeScript</span><span class="pcard__date">2026.01.02</span></div>
+        <h3 class="pcard__title">AI-Assisted SQL Client Desktop App</h3>
+        <p class="pcard__excerpt">A light, fast, AI-powered desktop SQL client supporting PostgreSQL, MySQL, SQL Server, and SQLite. Converts natural language into SQL and generates ER diagrams and charts.</p>
+        <div class="pcard__tags"><span>2i/data-peek</span><span>#TypeScript</span><span class="pcard__go">GitHub →</span></div>
+      </a>
+      <a class="pcard reveal" href="https://github.com/2icorp/test-repo-from-template" data-cat="devtool" data-q="test-repo-from-template 2i/test-repo-from-template cursor skill template test repository a test repository created from the ai-template cursor ide configuration template, holding only the template scaffolding, no actual product content. dev tooling #python #javascript #html" target="_blank" rel="noopener">
+        <div class="pcard__meta"><span class="pcard__cat">Private</span><span class="pcard__rt">Python</span><span class="pcard__date">2026.04.16</span></div>
+        <h3 class="pcard__title">Cursor Skill Template Test Repository</h3>
+        <p class="pcard__excerpt">A test repository created from the ai-template Cursor IDE configuration template, holding only the template scaffolding, no actual product content.</p>
+        <div class="pcard__tags"><span>2i/test-repo-from-template</span><span>#Python</span><span>#JavaScript</span><span>#HTML</span><span class="pcard__go">GitHub →</span></div>
+      </a>
+      <a class="pcard reveal" href="https://github.com/2icorp/design-skill-template" data-cat="devtool" data-q="design-skill-template 2i/design-skill-template design-domain cursor skill template a repository forked from a reusable cursor ide configuration holding 360+ agent skills and workflow rules, adapted for design-domain work. manages design-specific output via design.md. dev tooling #python #javascript #shell" target="_blank" rel="noopener">
+        <div class="pcard__meta"><span class="pcard__cat">Private</span><span class="pcard__rt">Python</span><span class="pcard__date">2026.05.13</span></div>
+        <h3 class="pcard__title">Design-Domain Cursor Skill Template</h3>
+        <p class="pcard__excerpt">A repository forked from a reusable Cursor IDE configuration holding 360+ agent skills and workflow rules, adapted for design-domain work. Manages design-specific output via DESIGN.md.</p>
+        <div class="pcard__tags"><span>2i/design-skill-template</span><span>#Python</span><span>#JavaScript</span><span>#Shell</span><span class="pcard__go">GitHub →</span></div>
+      </a>
+      <a class="pcard reveal" href="https://github.com/2icorp/accessible-kr-service-template" data-cat="devtool" data-q="accessible-kr-service-template 2i/accessible-kr-service-template accessibility-first public-service app template an accessibility-first tauri template that 4 korean public-service desktop apps are forked from, providing only the accessibility skeleton, multi-language loader, local tts/stt contract, and pii masking, no domain logic. built with tauri 2 and playwright/axe-core accessibility tests. dev tooling #rust #tauri 2 #javascript #playwright" target="_blank" rel="noopener">
+        <div class="pcard__meta"><span class="pcard__cat">Private</span><span class="pcard__rt">Rust</span><span class="pcard__date">2026.07.10</span></div>
+        <h3 class="pcard__title">Accessibility-First Public-Service App Template</h3>
+        <p class="pcard__excerpt">An accessibility-first Tauri template that 4 Korean public-service desktop apps are forked from, providing only the accessibility skeleton, multi-language loader, local TTS/STT contract, and PII masking, no domain logic. Built with Tauri 2 and Playwright/axe-core accessibility tests.</p>
+        <div class="pcard__tags"><span>2i/accessible-kr-service-template</span><span>#Rust</span><span>#Tauri 2</span><span>#JavaScript</span><span>#Playwright</span><span class="pcard__go">GitHub →</span></div>
+      </a>
+      <a class="pcard reveal" href="https://github.com/2icorp/agent-webtool-template" data-cat="devtool" data-q="agent-webtool-template 2i/agent-webtool-template client-side web tool scaffold a reusable template repository for 100% client-side static web tools, with a pure-logic core, an independent audit, ci, and github pages deployment. no server, keys, or login required. dev tooling #javascript #css" target="_blank" rel="noopener">
+        <div class="pcard__meta"><span class="pcard__cat">Public</span><span class="pcard__rt">JavaScript</span><span class="pcard__date">2026.07.12</span></div>
+        <h3 class="pcard__title">Client-Side Web Tool Scaffold</h3>
+        <p class="pcard__excerpt">A reusable template repository for 100% client-side static web tools, with a pure-logic core, an independent audit, CI, and GitHub Pages deployment. No server, keys, or login required.</p>
+        <div class="pcard__tags"><span>2i/agent-webtool-template</span><span>#JavaScript</span><span>#CSS</span><span class="pcard__go">GitHub →</span></div>
+      </a>
+      <a class="pcard reveal" href="https://github.com/2icorp/ai-platform-strategy" data-cat="devtool" data-q="ai-platform-strategy 2i/ai-platform-strategy personal ai agent harness monorepo a personal ai-platform-strategy work monorepo integrating many skills, rules, and submodules. a workspace that manages several product repositories as submodules, not a standalone product itself. dev tooling #python #javascript #html" target="_blank" rel="noopener">
+        <div class="pcard__meta"><span class="pcard__cat">Private</span><span class="pcard__rt">Python</span><span class="pcard__date">2026.07.12</span></div>
+        <h3 class="pcard__title">Personal AI Agent Harness Monorepo</h3>
+        <p class="pcard__excerpt">A personal AI-platform-strategy work monorepo integrating many skills, rules, and submodules. A workspace that manages several product repositories as submodules, not a standalone product itself.</p>
+        <div class="pcard__tags"><span>2i/ai-platform-strategy</span><span>#Python</span><span>#JavaScript</span><span>#HTML</span><span class="pcard__go">GitHub →</span></div>
+      </a>
+      <a class="pcard reveal" href="https://github.com/2icorp/cinematic-web-forge" data-cat="devtool" data-q="cinematic-web-forge 2i/cinematic-web-forge cinematic website-building toolkit a dark-luxury, motion-first website-building toolkit made up of framework-free typescript motion primitives, a working flagship template, a scaffolder, and a gallery. includes a real-time three.js 3d hero. dev tooling #typescript #three.js #css" target="_blank" rel="noopener">
+        <div class="pcard__meta"><span class="pcard__cat">Public</span><span class="pcard__rt">TypeScript</span><span class="pcard__date">2026.07.13</span></div>
+        <h3 class="pcard__title">Cinematic Website-Building Toolkit</h3>
+        <p class="pcard__excerpt">A dark-luxury, motion-first website-building toolkit made up of framework-free TypeScript motion primitives, a working flagship template, a scaffolder, and a gallery. Includes a real-time Three.js 3D hero.</p>
+        <div class="pcard__tags"><span>2i/cinematic-web-forge</span><span>#TypeScript</span><span>#Three.js</span><span>#CSS</span><span class="pcard__go">GitHub →</span></div>
+      </a>
+      <a class="pcard reveal" href="https://github.com/2icorp/pagegrid" data-cat="devtool" data-q="pagegrid 2i/pagegrid image-grid auto-layout print tool a 100% client-side tool that auto-arranges multiple images into a grid for a chosen page size and copy count, then exports to png or print-ready pdf. images exist only in browser memory, fitted into cells while keeping their original aspect ratio. dev tooling #javascript #html #css" target="_blank" rel="noopener">
+        <div class="pcard__meta"><span class="pcard__cat">Private</span><span class="pcard__rt">JavaScript</span><span class="pcard__date">2026.07.21</span></div>
+        <h3 class="pcard__title">Image-Grid Auto-Layout Print Tool</h3>
+        <p class="pcard__excerpt">A 100% client-side tool that auto-arranges multiple images into a grid for a chosen page size and copy count, then exports to PNG or print-ready PDF. Images exist only in browser memory, fitted into cells while keeping their original aspect ratio.</p>
+        <div class="pcard__tags"><span>2i/pagegrid</span><span>#JavaScript</span><span>#HTML</span><span>#CSS</span><span class="pcard__go">GitHub →</span></div>
+      </a>
+      <a class="pcard reveal" href="https://github.com/2icorp/readme-og-forge" data-cat="devtool" data-q="readme-og-forge 2i/readme-og-forge readme-based social-preview thumbnail generator a tool: paste in a public github repository or readme text, and it generates a 1200x630 open graph image, with title, description, language, and star count, across three layout templates. downloads a png directly, no design tool, key, or server needed. dev tooling #javascript #html #css" target="_blank" rel="noopener">
+        <div class="pcard__meta"><span class="pcard__cat">Private</span><span class="pcard__rt">JavaScript</span><span class="pcard__date">2026.07.24</span></div>
+        <h3 class="pcard__title">README-Based Social-Preview Thumbnail Generator</h3>
+        <p class="pcard__excerpt">A tool: paste in a public GitHub repository or README text, and it generates a 1200x630 Open Graph image, with title, description, language, and star count, across three layout templates. Downloads a PNG directly, no design tool, key, or server needed.</p>
+        <div class="pcard__tags"><span>2i/readme-og-forge</span><span>#JavaScript</span><span>#HTML</span><span>#CSS</span><span class="pcard__go">GitHub →</span></div>
+      </a>
+      <a class="pcard reveal" href="https://github.com/2icorp/2i-case-10-web-marketing" data-cat="devtool" data-q="2i-case-10-web-marketing 2icorp/2i-case-10-web-marketing free-hosted landing-page seo starter a one-stop starter that statically generates and deploys a responsive, on-brand landing page on free hosting with no domain needed, and wires in conversion tools like basic seo and a contact form. a github pages-based reference demo built on synthetic data. dev tooling #python #static generation #seo #github pages" target="_blank" rel="noopener">
+        <div class="pcard__meta"><span class="pcard__cat">Private</span><span class="pcard__rt">HTML</span><span class="pcard__date">2026.07.26</span><span class="pcard__rt">Case 10</span></div>
+        <h3 class="pcard__title">Free-Hosted Landing-Page SEO Starter</h3>
+        <p class="pcard__excerpt">A one-stop starter that statically generates and deploys a responsive, on-brand landing page on free hosting with no domain needed, and wires in conversion tools like basic SEO and a contact form. A GitHub Pages-based reference demo built on synthetic data.</p>
+        <div class="pcard__tags"><span>2icorp/2i-case-10-web-marketing</span><span>#Python</span><span>#Static generation</span><span>#SEO</span><span>#GitHub Pages</span><span class="pcard__go">GitHub →</span></div>
+      </a>
+      <a class="pcard reveal" href="https://github.com/2icorp/research" data-cat="devtool" data-q="research 2i/research personal research and strategy workspace a personal research-and-strategy repository following the speckit template structure, with no product description in the readme, just skill, memory, and output directories. dev tooling #python" target="_blank" rel="noopener">
+        <div class="pcard__meta"><span class="pcard__cat">Private</span><span class="pcard__rt">Python</span><span class="pcard__date">2026.07.28</span></div>
+        <h3 class="pcard__title">Personal Research and Strategy Workspace</h3>
+        <p class="pcard__excerpt">A personal research-and-strategy repository following the speckit template structure, with no product description in the README, just skill, memory, and output directories.</p>
+        <div class="pcard__tags"><span>2i/research</span><span>#Python</span><span class="pcard__go">GitHub →</span></div>
+      </a>
+      <a class="pcard reveal" href="https://github.com/2icorp/2i-ax-workspace" data-cat="devtool" data-q="2i-ax-workspace 2icorp/2i-ax-workspace 2i ax case-authoring workspace an internal workspace that manages the research, planning, and recovery documents and experiment output for 2i ax case studies. not deployment code, an authoring tool that works with cases.json and the render scripts. dev tooling #python" target="_blank" rel="noopener">
+        <div class="pcard__meta"><span class="pcard__cat">Private</span><span class="pcard__rt">Python</span><span class="pcard__date">2026.07.31</span></div>
+        <h3 class="pcard__title">2i AX Case-Authoring Workspace</h3>
+        <p class="pcard__excerpt">An internal workspace that manages the research, planning, and recovery documents and experiment output for 2i AX case studies. Not deployment code, an authoring tool that works with cases.json and the render scripts.</p>
+        <div class="pcard__tags"><span>2icorp/2i-ax-workspace</span><span>#Python</span><span class="pcard__go">GitHub →</span></div>
+      </a>
+      <a class="pcard reveal" href="https://github.com/2icorp/cursor-template" data-cat="devtool" data-q="cursor-template 2i/cursor-template cursor ide agent-skill configuration bundle a reusable cursor ide configuration repository holding 360+ agent skills, 320+ slash commands, and 28 workflow rules. installs workflows for development, planning, finance, design and more, all in one go. dev tooling #python #javascript #html" target="_blank" rel="noopener">
+        <div class="pcard__meta"><span class="pcard__cat">Private</span><span class="pcard__rt">Python</span><span class="pcard__date">2026.07.31</span></div>
+        <h3 class="pcard__title">Cursor IDE Agent-Skill Configuration Bundle</h3>
+        <p class="pcard__excerpt">A reusable Cursor IDE configuration repository holding 360+ agent skills, 320+ slash commands, and 28 workflow rules. Installs workflows for development, planning, finance, design and more, all in one go.</p>
+        <div class="pcard__tags"><span>2i/cursor-template</span><span>#Python</span><span>#JavaScript</span><span>#HTML</span><span class="pcard__go">GitHub →</span></div>
+      </a>
+      <a class="pcard reveal" href="https://github.com/2icorp/github-to-notion-sync" data-cat="devtool" data-q="github-to-notion-sync 2i/github-to-notion-sync github project-notion sprint sync a pipeline that syncs github project issues and prs into a notion database in real time to support a team's scrum process. supports independent per-team configuration and automated daily sprint sync. dev tooling #python" target="_blank" rel="noopener">
+        <div class="pcard__meta"><span class="pcard__cat">Private</span><span class="pcard__rt">Python</span><span class="pcard__date">2026.07.31</span></div>
+        <h3 class="pcard__title">GitHub Project-Notion Sprint Sync</h3>
+        <p class="pcard__excerpt">A pipeline that syncs GitHub Project issues and PRs into a Notion database in real time to support a team's scrum process. Supports independent per-team configuration and automated daily sprint sync.</p>
+        <div class="pcard__tags"><span>2i/github-to-notion-sync</span><span>#Python</span><span class="pcard__go">GitHub →</span></div>
+      </a>
+      <a class="pcard reveal" href="https://github.com/2icorp/2i-workspace" data-cat="devtool" data-q="2i-workspace 2icorp/2i-workspace 2i site-authoring workspace an internal authoring workspace that builds the 2icorp.github.io case-study pages from cases.json, a renderer, and deploy scripts. also manages operating documents like the business plan, lead intake, and messaging spine. dev tooling #html #python" target="_blank" rel="noopener">
+        <div class="pcard__meta"><span class="pcard__cat">Private</span><span class="pcard__rt">HTML</span><span class="pcard__date">2026.08.02</span></div>
+        <h3 class="pcard__title">2i Site-Authoring Workspace</h3>
+        <p class="pcard__excerpt">An internal authoring workspace that builds the 2icorp.github.io case-study pages from cases.json, a renderer, and deploy scripts. Also manages operating documents like the business plan, lead intake, and messaging spine.</p>
+        <div class="pcard__tags"><span>2icorp/2i-workspace</span><span>#HTML</span><span>#Python</span><span class="pcard__go">GitHub →</span></div>
+      </a>
+      <a class="pcard reveal" href="https://github.com/2icorp/2icorp.github.io" data-cat="devtool" data-q="2icorp.github.io 2icorp/2icorp.github.io 2icorp public github pages site the company's public site, holding the case-study collection, papers, brochures, and demo pages. renders cases.json and papers.json into static html with a python render script for deployment. dev tooling #html #python" target="_blank" rel="noopener">
+        <div class="pcard__meta"><span class="pcard__cat">Public</span><span class="pcard__rt">HTML</span><span class="pcard__date">2026.08.02</span></div>
+        <h3 class="pcard__title">2icorp Public GitHub Pages Site</h3>
+        <p class="pcard__excerpt">The company's public site, holding the case-study collection, papers, brochures, and demo pages. Renders cases.json and papers.json into static HTML with a Python render script for deployment.</p>
+        <div class="pcard__tags"><span>2icorp/2icorp.github.io</span><span>#HTML</span><span>#Python</span><span class="pcard__go">GitHub →</span></div>
+      </a>
+      <a class="pcard reveal" href="https://github.com/2icorp/ai-strategy" data-cat="devtool" data-q="ai-strategy 2i/ai-strategy personal ai agent harness monorepo (sync mirror) a personal ai-platform-strategy work monorepo from the same lineage as ai-platform-strategy, keeping submodules, skills, and memory directories in sync across the two. a workspace, not a standalone product. dev tooling #python #javascript #html" target="_blank" rel="noopener">
+        <div class="pcard__meta"><span class="pcard__cat">Private</span><span class="pcard__rt">Python</span><span class="pcard__date">2026.08.02</span></div>
+        <h3 class="pcard__title">Personal AI Agent Harness Monorepo (Sync Mirror)</h3>
+        <p class="pcard__excerpt">A personal AI-platform-strategy work monorepo from the same lineage as ai-platform-strategy, keeping submodules, skills, and memory directories in sync across the two. A workspace, not a standalone product.</p>
+        <div class="pcard__tags"><span>2i/ai-strategy</span><span>#Python</span><span>#JavaScript</span><span>#HTML</span><span class="pcard__go">GitHub →</span></div>
+      </a>
+      <a class="pcard reveal" href="https://github.com/2icorp/kidsnote-client" data-cat="devtool" data-q="kidsnote-client 2icorp/kidsnote-client kidsnote api client example collection api client examples in 6 languages, python, node.js, go, php, c++, and java, demonstrating s3 upload and job creation. dormant, no updates since 2024. dev tooling #python #node.js #go #php #c++" target="_blank" rel="noopener">
+        <div class="pcard__meta"><span class="pcard__cat">Private</span><span class="pcard__rt">Python</span><span class="pcard__date">2024.06.04</span><span class="pcard__rt">Dormant</span></div>
+        <h3 class="pcard__title">Kidsnote API Client Example Collection</h3>
+        <p class="pcard__excerpt">API client examples in 6 languages, Python, Node.js, Go, PHP, C++, and Java, demonstrating S3 upload and job creation. Dormant, no updates since 2024.</p>
+        <div class="pcard__tags"><span>2icorp/kidsnote-client</span><span>#Python</span><span>#Node.js</span><span>#Go</span><span>#PHP</span><span>#C++</span><span class="pcard__go">GitHub →</span></div>
+      </a>
+      <a class="pcard reveal" href="https://github.com/2icorp/website-draft" data-cat="devtool" data-q="website-draft 2icorp/website-draft website cloudfront draft a website draft for cloudfront homepage deployment, still at the default create-next-app template state. dormant, no updates since 2024. dev tooling #typescript #next.js" target="_blank" rel="noopener">
+        <div class="pcard__meta"><span class="pcard__cat">Private</span><span class="pcard__rt">TypeScript</span><span class="pcard__date">2024.07.25</span><span class="pcard__rt">Dormant</span></div>
+        <h3 class="pcard__title">Website CloudFront Draft</h3>
+        <p class="pcard__excerpt">A website draft for CloudFront homepage deployment, still at the default create-next-app template state. Dormant, no updates since 2024.</p>
+        <div class="pcard__tags"><span>2icorp/website-draft</span><span>#TypeScript</span><span>#Next.js</span><span class="pcard__go">GitHub →</span></div>
+      </a>
+      <a class="pcard reveal" href="https://github.com/2icorp/admin-web-draft" data-cat="devtool" data-q="admin-web-draft 2icorp/admin-web-draft admin web cloudfront draft a draft repository for a cloudfront-deployed admin web app, using the same nextauth setup as admin-web. dormant, no updates since 2024. dev tooling #typescript #next.js" target="_blank" rel="noopener">
+        <div class="pcard__meta"><span class="pcard__cat">Private</span><span class="pcard__rt">TypeScript</span><span class="pcard__date">2024.07.28</span><span class="pcard__rt">Dormant</span></div>
+        <h3 class="pcard__title">Admin Web CloudFront Draft</h3>
+        <p class="pcard__excerpt">A draft repository for a CloudFront-deployed admin web app, using the same NextAuth setup as admin-web. Dormant, no updates since 2024.</p>
+        <div class="pcard__tags"><span>2icorp/admin-web-draft</span><span>#TypeScript</span><span>#Next.js</span><span class="pcard__go">GitHub →</span></div>
+      </a>
+      <a class="pcard reveal" href="https://github.com/2icorp/2i-client" data-cat="devtool" data-q="2i-client 2icorp/2i-client 2i client stub an empty repository with just a one-line title; no substantive content confirmed. dormant, no updates since 2024. dev tooling #python" target="_blank" rel="noopener">
+        <div class="pcard__meta"><span class="pcard__cat">Private</span><span class="pcard__rt">Python</span><span class="pcard__date">2024.09.29</span><span class="pcard__rt">Dormant</span></div>
+        <h3 class="pcard__title">2i Client Stub</h3>
+        <p class="pcard__excerpt">An empty repository with just a one-line title; no substantive content confirmed. Dormant, no updates since 2024.</p>
+        <div class="pcard__tags"><span>2icorp/2i-client</span><span>#Python</span><span class="pcard__go">GitHub →</span></div>
+      </a>
+      <a class="pcard reveal" href="https://github.com/2icorp/2i-webapp-demo" data-cat="devtool" data-q="2i-webapp-demo 2icorp/2i-webapp-demo 2i web-app demo scaffold a demo repository still exactly at the default create-next-app template state. dormant, no updates since 2024. dev tooling #typescript #next.js" target="_blank" rel="noopener">
+        <div class="pcard__meta"><span class="pcard__cat">Private</span><span class="pcard__rt">TypeScript</span><span class="pcard__date">2024.12.27</span><span class="pcard__rt">Dormant</span></div>
+        <h3 class="pcard__title">2i Web-App Demo Scaffold</h3>
+        <p class="pcard__excerpt">A demo repository still exactly at the default create-next-app template state. Dormant, no updates since 2024.</p>
+        <div class="pcard__tags"><span>2icorp/2i-webapp-demo</span><span>#TypeScript</span><span>#Next.js</span><span class="pcard__go">GitHub →</span></div>
+      </a>
+      <a class="pcard reveal" href="https://github.com/2icorp/claude-code-test" data-cat="devtool" data-q="claude-code-test 2i/claude-code-test context-engineering template practice a template repository pulled in to learn context-engineering techniques for ai coding assistants. a practice repository, a direct clone of an external open-source template. dev tooling #python #typescript" target="_blank" rel="noopener">
+        <div class="pcard__meta"><span class="pcard__cat">Private</span><span class="pcard__rt">Python</span><span class="pcard__date">2025.10.16</span><span class="pcard__rt">Dormant</span></div>
+        <h3 class="pcard__title">Context-Engineering Template Practice</h3>
+        <p class="pcard__excerpt">A template repository pulled in to learn context-engineering techniques for AI coding assistants. A practice repository, a direct clone of an external open-source template.</p>
+        <div class="pcard__tags"><span>2i/claude-code-test</span><span>#Python</span><span>#TypeScript</span><span class="pcard__go">GitHub →</span></div>
+      </a>
+      <a class="pcard reveal" href="https://github.com/2icorp/courses" data-cat="devtool" data-q="courses 2i/courses anthropic official course repository a repository holding anthropic's public api, prompt-engineering, and tool-use courses as-is. not original content, public material kept around for learning. dev tooling #jupyter notebook #python" target="_blank" rel="noopener">
+        <div class="pcard__meta"><span class="pcard__cat">Private</span><span class="pcard__rt">Notebook</span><span class="pcard__date">2025.11.13</span><span class="pcard__rt">Dormant</span></div>
+        <h3 class="pcard__title">Anthropic Official Course Repository</h3>
+        <p class="pcard__excerpt">A repository holding Anthropic's public API, prompt-engineering, and tool-use courses as-is. Not original content, public material kept around for learning.</p>
+        <div class="pcard__tags"><span>2i/courses</span><span>#Jupyter Notebook</span><span>#Python</span><span class="pcard__go">GitHub →</span></div>
+      </a>
+        </div>
+      </section>
+      <section class="fam" id="tech-misc" aria-labelledby="techt-misc">
+        <header class="fam__head">
+          <h2 class="fam__t" id="techt-misc">Misc<span class="fam__n">2</span></h2>
+          <p class="fam__d">Things that don't fit neatly into the axes above. We don't force a category on them.</p>
+        </header>
+        <div class="pboard">
+      <a class="pcard reveal" href="https://github.com/2icorp/macro-factor-dashboards" data-cat="misc" data-q="macro-factor-dashboards 2i/macro-factor-dashboards macro-factor dashboard scaffold an early-stage scaffold repository, still at the default next.js create-next-app template, with no actual implementation for a macro-economic factor dashboard documented yet in the readme. an experimental scaffold stage. misc #next.js #typescript" target="_blank" rel="noopener">
+        <div class="pcard__meta"><span class="pcard__cat">Private</span><span class="pcard__rt">Python</span><span class="pcard__date">2026.07.27</span></div>
+        <h3 class="pcard__title">Macro-Factor Dashboard Scaffold</h3>
+        <p class="pcard__excerpt">An early-stage scaffold repository, still at the default Next.js create-next-app template, with no actual implementation for a macro-economic factor dashboard documented yet in the README. An experimental scaffold stage.</p>
+        <div class="pcard__tags"><span>2i/macro-factor-dashboards</span><span>#Next.js</span><span>#TypeScript</span><span class="pcard__go">GitHub →</span></div>
+      </a>
+      <a class="pcard reveal" href="https://github.com/2icorp/dreamy-griffin-flit" data-cat="misc" data-q="dreamy-griffin-flit 2i/dreamy-griffin-flit dyad-generated app scaffold an early-stage scaffold repository generated by the dyad app builder, an experimental scaffold stage with no product description in the readme. only a capacitor-based ios/android build configuration exists. misc #typescript #swift #capacitor" target="_blank" rel="noopener">
+        <div class="pcard__meta"><span class="pcard__cat">Private</span><span class="pcard__rt">TypeScript</span><span class="pcard__date">2025.08.01</span><span class="pcard__rt">Dormant</span></div>
+        <h3 class="pcard__title">Dyad-Generated App Scaffold</h3>
+        <p class="pcard__excerpt">An early-stage scaffold repository generated by the Dyad app builder, an experimental scaffold stage with no product description in the README. Only a Capacitor-based iOS/Android build configuration exists.</p>
+        <div class="pcard__tags"><span>2i/dreamy-griffin-flit</span><span>#TypeScript</span><span>#Swift</span><span>#Capacitor</span><span class="pcard__go">GitHub →</span></div>
+      </a>
+        </div>
+      </section>
+    </div>
+    </div>
+  </section>
+</main>
+
+<footer class="foot">
+  <div class="wrap foot__inner">
+    <div>
+      <div class="brand"><span class="brand__mark">2i</span><span class="brand__tag">AX Consulting</span></div>
+      <div class="foot__mono" style="margin-top:0.6rem">AI transformation for small and mid-market manufacturing and distribution</div>
+      <div class="foot__legal">Company <b>2i</b> &middot; Principal Geumji Han &middot; Contact <a href="mailto:contact@2icorp.site">contact@2icorp.site</a></div>
+    </div>
+    <nav class="foot__links" aria-label="Footer menu">
+      <a href="about.html">About</a>
+      <a href="index.html#method">Method</a>
+      <a href="cases.html">Cases</a>
+      <a href="tech.html">Tech</a>
+      <a href="cloud.html">Cloud</a>
+      <a href="finance.html">Finance</a>
+      <a href="papers.html">Papers</a>
+      <a href="index.html#voucher">Voucher</a>
+      <a href="privacy.html">Privacy Policy</a>
+      <a href="/tech.html">KO</a>
+    </nav>
+  </div>
+</footer>
+
+<script src="../main.js"></script>
+<script>
+(function(){
+  // Search is a nice-to-have, not a requirement. So it starts hidden,
+  // and only appears once JS is alive. All 126 items are visible even if the script dies.
+  var box = document.querySelector('.techsearch');
+  var input = document.getElementById('techq');
+  var note = document.getElementById('techn');
+  if (!box || !input) return;
+  box.hidden = false;
+  var cards = Array.prototype.slice.call(document.querySelectorAll('.pcard[data-q]'));
+  var secs = Array.prototype.slice.call(document.querySelectorAll('.fam[id^="tech-"]'));
+  function apply(){
+    var q = input.value.trim().toLowerCase();
+    var shown = 0;
+    cards.forEach(function(c){
+      var hit = !q || c.getAttribute('data-q').indexOf(q) !== -1;
+      c.classList.toggle('is-hidden', !hit);
+      if (hit) shown++;
+    });
+    secs.forEach(function(s){
+      var any = s.querySelector('.pcard:not(.is-hidden)');
+      s.style.display = any ? '' : 'none';
+    });
+    note.textContent = q ? (shown + ' / ' + cards.length) : '';
+  }
+  input.addEventListener('input', apply);
+})();
+</script>
+</body>
+</html>

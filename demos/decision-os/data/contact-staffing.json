@@ -1,0 +1,75 @@
+{
+"source": "ws-lab/domains/contact-staffing/out/sla_curve.json + out/shift_mix.json (실측, OR-Tools CP-SAT)",
+"sla_curve": [
+{
+"target_pct": 70,
+"labor_hours": 1078.0,
+"achieved_pct": 79.53,
+"avg_headcount": 13.59
+},
+{
+"target_pct": 80,
+"labor_hours": 1156.0,
+"achieved_pct": 77.37,
+"avg_headcount": 14.72
+},
+{
+"target_pct": 90,
+"labor_hours": 1320.5,
+"achieved_pct": 71.12,
+"avg_headcount": 16.59
+},
+{
+"target_pct": 95,
+"labor_hours": 1460.0,
+"achieved_pct": 67.46,
+"avg_headcount": 18.5
+}
+],
+"shift_mix": {
+"instance": {
+"size": "small",
+"seed": 1,
+"staffing_ratio": 1.6,
+"n_agents": 51,
+"required_person_hours": 1425.5
+},
+"protocol": "equal_input: 두 변형 모두 total_labor_hours <= max_total_labor_hours 하드 상한 동일",
+"max_total_labor_hours": 712.8,
+"time_limit_sec": 240.0,
+"num_search_workers": 4,
+"variants": [
+{
+"variant": "ft8_only",
+"status": "OPTIMAL",
+"optimality_gap_pct": 0.0,
+"solve_time_sec": 9.7,
+"n_patterns_available": 84,
+"total_labor_hours": 707.0,
+"sla_cell_achievement_pct": 62.83,
+"total_shortage_person_intervals": 619,
+"total_surplus_person_intervals": 666,
+"n_agents_scheduled": 24
+},
+{
+"variant": "mixed",
+"status": "FEASIBLE",
+"optimality_gap_pct": 4.355,
+"solve_time_sec": 240.0,
+"n_patterns_available": 371,
+"total_labor_hours": 713.0,
+"sla_cell_achievement_pct": 67.8,
+"total_shortage_person_intervals": 547,
+"total_surplus_person_intervals": 627,
+"n_agents_scheduled": 25
+}
+],
+"converged_comparably_le_5pct_gap": true,
+"headline": {
+"shortage_delta_mixed_minus_ft8only": -72,
+"surplus_delta_mixed_minus_ft8only": -39,
+"sla_pp_delta_mixed_minus_ft8only": 4.97,
+"labor_hours_delta_mixed_minus_ft8only": 6.0
+}
+}
+}

@@ -5,28 +5,38 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>2i AX Consulting | Mid-Market Manufacturing &amp; Distribution</title>
-<meta name="description" content="Make AI transformation a measurable process, not a guess. Diagnose → PoC → Build. A boutique AX consultancy for mid-market industrial companies in Korea.">
+<meta name="description" content="AI transformation as a measurable process, not a guess. Diagnose to PoC to Build across four axes: vision and image AI, deep learning and generative AI, signal intelligence, and cloud and data infrastructure, plus government AX voucher support. 2i is a boutique AX consultancy for mid-market traditional industries.">
+<meta property="og:title" content="2i AX Consulting | AI transformation as a process, not a guess">
+<meta property="og:description" content="AX consulting for mid-market manufacturing and distribution. Four axes: vision, deep learning, signal, and cloud. Diagnosis, PoC, build, plus government voucher support.">
+<meta property="og:type" content="website">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23111827'/%3E%3Ctext x='16' y='22' font-family='monospace' font-size='16' font-weight='700' fill='%23e08a2b' text-anchor='middle'%3E2i%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../styles.css?v=20">
+<link rel="stylesheet" href="../styles.css?v=21">
 </head>
 <body>
 
 <header class="nav">
   <div class="wrap nav__inner">
     <a class="brand" href="/en/" aria-label="2i home">
-      <span class="brand__mark">2i</span><span class="brand__tag">AX Consulting</span>
+      <span class="brand__mark">2i</span>
+      <span class="brand__tag">AX Consulting</span>
     </a>
     <button class="nav__burger" type="button" aria-expanded="false" aria-controls="navLinks" aria-label="Open menu"><span></span><span></span><span></span></button>
     <nav class="nav__links" id="navLinks" aria-label="Main menu">
+      <a href="#method">Method</a>
       <a href="cases.html">Cases</a>
+      <a href="tech.html">Tech</a>
       <a href="comms.html">Telecom</a>
       <a href="cloud.html">Cloud</a>
       <a href="finance.html">Finance</a>
       <a href="papers.html">Papers</a>
       <a href="about.html">About</a>
+      <a href="#pricing">Pricing</a>
+      <a href="#voucher">Gov Voucher</a>
       <a class="nav__lang" href="/">KO</a>
       <a class="nav__cta btn btn--signal" href="#contact">Get in touch</a>
     </nav>
@@ -34,25 +44,27 @@
 </header>
 
 <main>
-  <section class="hero loaded" id="top">
+
+  <!-- HERO -->
+  <section class="hero" id="top">
     <div class="wrap hero__grid">
       <div>
-        <span class="eyebrow">Manufacturing · Distribution · Logistics · Built in-house end to end</span>
-        <h1>Not a proposal.<br><span class="u accent">What we already built</span>.</h1>
-        <p class="hero__lede">Consultancies listen first and build later. 2i already built working implementations across 22 domains, spanning vision, signals, forecasting, language, agents, optimisation and infrastructure. We plug your data into them and re-measure with your own numbers.</p>
+        <span class="eyebrow">Manufacturing · Distribution · Logistics for mid-market companies · Design through operations, all in-house</span>
+        <h1>Instead of a proposal,<br>we show you<br><span class="u accent">what we've already built</span>.</h1>
+        <p class="hero__lede">Consultancies listen first, then build. 2i already built working implementations across 22 domains, spanning vision, signals, forecasting, language, agents, optimization, and infrastructure. We plug in your data and re-measure with your own numbers.</p>
         <div class="hero__cta">
-          <a class="btn btn--signal" href="cases.html">See what we built <span class="arrow">→</span></a>
-          <a class="btn btn--ghost" href="#contact">Talk to us</a>
+          <a class="btn btn--signal" href="cases.html">See what we've built <span class="arrow">→</span></a>
+          <a class="btn btn--ghost" href="#diagnose">2-min readiness self-check</a>
         </div>
-        <p class="hero__note">// Design, build and operations all done in-house · pick a layer to open that family of cases</p>
+        <p class="hero__note">// Design, build, and operations all done in-house · click a layer to jump to that family's cases</p>
       </div>
 
-      <!-- engine room. The canvas is decoration; the layer list below is the
-           real information and works with JS off. -->
+      <!-- signature: engine room. Canvas is decoration on top; the layer list
+           below it is the real, always-present information (works without JS). -->
       <aside class="engine" aria-labelledby="engine-h">
         <div class="engine__head">
-          <span id="engine-h">Our own stack</span>
-          <span class="engine__live"><span class="engine__dot"></span>7 families · 22 cases</span>
+          <span id="engine-h">Our tech stack</span>
+          <span class="engine__live"><span class="engine__dot"></span>7 families · 23 cases</span>
         </div>
         <div class="engine__stage">
           <canvas class="hero3d" data-mode="stack" aria-hidden="true"
@@ -61,106 +73,841 @@
         <ul class="engine__layers">
           <li><a class="engine__row" data-layer-row href="cases.html#fam-growth"><span class="engine__lv">L7</span><span class="engine__nm">Marketing &amp; Brand</span><span class="engine__n">2</span></a></li>
           <li><a class="engine__row" data-layer-row href="cases.html#fam-agent"><span class="engine__lv">L6</span><span class="engine__nm">Work Agents</span><span class="engine__n">2</span></a></li>
-          <li><a class="engine__row" data-layer-row href="cases.html#fam-sched"><span class="engine__lv">L5</span><span class="engine__nm">Scheduling &amp; Assignment</span><span class="engine__n">5</span></a></li>
+          <li><a class="engine__row" data-layer-row href="cases.html#fam-sched"><span class="engine__lv">L5</span><span class="engine__nm">Assignment &amp; Scheduling</span><span class="engine__n">5</span></a></li>
           <li><a class="engine__row" data-layer-row href="cases.html#fam-lang"><span class="engine__lv">L4</span><span class="engine__nm">Documents, Knowledge &amp; Support</span><span class="engine__n">3</span></a></li>
-          <li><a class="engine__row" data-layer-row href="cases.html#fam-data"><span class="engine__lv">L3</span><span class="engine__nm">Data &amp; Forecasting</span><span class="engine__n">3</span></a></li>
-          <li><a class="engine__row" data-layer-row href="cases.html#fam-vision"><span class="engine__lv">L2</span><span class="engine__nm">Vision &amp; Signal Inspection</span><span class="engine__n">3</span></a></li>
+          <li><a class="engine__row" data-layer-row href="cases.html#fam-data"><span class="engine__lv">L3</span><span class="engine__nm">Management &amp; Demand Data</span><span class="engine__n">3</span></a></li>
+          <li><a class="engine__row" data-layer-row href="cases.html#fam-vision"><span class="engine__lv">L2</span><span class="engine__nm">Vision &amp; Signal Judgment</span><span class="engine__n">3</span></a></li>
           <li><a class="engine__row" data-layer-row href="cases.html#fam-infra"><span class="engine__lv">L1</span><span class="engine__nm">Infrastructure &amp; Storage</span><span class="engine__n">4</span></a></li>
         </ul>
-        <p class="engine__note">Data rises from the bottom and becomes judgement at the top. Each number is how many cases we have actually built in that family.</p>
+        <p class="engine__note">Data rises from the bottom and becomes judgment at the top. Each layer's number is how many cases we've actually built in that family.</p>
       </aside>
     </div>
   </section>
 
+  <!-- RESULT TICKER -->
+  <div class="ticker" aria-hidden="true">
+    <div class="ticker__track">
+      <span class="ticker__item">Status check <b>half a day → instant</b></span>
+      <span class="ticker__item">Manual document entry <b>down 60-70%</b></span>
+      <span class="ticker__item">Inspection judgment <b>same standard, 24/7</b></span>
+      <span class="ticker__item">Stockouts <b>down 30-40%</b></span>
+      <span class="ticker__item">Dead stock <b>down ~20%</b></span>
+      <span class="ticker__item">Repeat inquiries <b>60-70% automated</b></span>
+      <span class="ticker__item">Wireless interference source <b>pinpointed in real time</b></span>
+      <span class="ticker__item">Equipment issue lookup <b>down 50-70%</b></span>
+      <span class="ticker__item">Signal to first contact <b>same-day response</b></span>
+      <span class="ticker__item">Promo video production <b>down 80%</b></span>
+    </div>
+  </div>
+
+  <!-- PROOF BELT: what we already built, stated with honest labels -->
   <section class="section" id="proof">
     <div class="wrap">
-      <div class="section__head">
-        <span class="eyebrow">Already built</span>
-        <h2>Instead of claiming we have the technology, we open it.</h2>
-        <p>These numbers are not marketing copy. Every one of them is something you can click and check on this site right now. A boutique with no client logos to show earns trust by showing working software on the spot.</p>
+      <div class="section__head reveal">
+        <span class="eyebrow">What we've already built</span>
+        <h2>Instead of telling you we have the technology, we open it up.</h2>
+        <p>The numbers below aren't marketing copy. Every one is something you can click and check on this site right now. We believe a boutique with no client logos to flash earns trust the only way it can: by showing something that actually works, on the spot.</p>
       </div>
-      <div class="proofbelt">
+      <div class="proofbelt reveal stagger">
         <a class="proof" href="cases.html">
           <span class="proof__n">22</span>
-          <span class="proof__t">Cases, each with a working demo</span>
-          <span class="proof__d">Not screenshots. Real pages that open in your browser, and 11 of them recompute when you change a value.</span>
+          <span class="proof__t">Working demos for every case</span>
+          <span class="proof__d">Not screenshots. Screens that open in your browser right now. 11 of them recalculate on the spot when you change a value.</span>
         </a>
         <a class="proof" href="papers.html">
           <span class="proof__n">42</span>
-          <span class="proof__t">Papers and experiment notes</span>
-          <span class="proof__d">Methods and numbers published in full, including the runs where our own approach lost.</span>
+          <span class="proof__t">Papers &amp; experiment notes</span>
+          <span class="proof__d">We publish our methods and numbers in full, including the runs where our own approach lost.</span>
         </a>
-        <a class="proof" href="cases.html">
+        <a class="proof" href="#stack">
           <span class="proof__n">7</span>
-          <span class="proof__t">Technology families built in-house</span>
-          <span class="proof__d">Vision, signals, forecasting, language, agents, optimisation, infrastructure. Design, build and operations are all ours.</span>
+          <span class="proof__t">Technology families, built in-house</span>
+          <span class="proof__d">Vision, signals, forecasting, language, agents, optimization, infrastructure. We do the design, the build, and the operations.</span>
         </a>
         <a class="proof" href="comms.html">
           <span class="proof__n">9</span>
-          <span class="proof__t">Receiver stages, all our code</span>
-          <span class="proof__d">From antenna to decision we implemented all nine stages ourselves, and quantified seven of them.</span>
+          <span class="proof__t">Receiver stages, all our own code</span>
+          <span class="proof__d">From antenna to decision we built all 9 receiver stages on our own engine, and measured 7 of them with numbers.</span>
         </a>
       </div>
-      <p class="proofbelt__note">// These cases and demos are reference implementations on synthetic data. We label them separately from real client deployments. Re-measuring on your data is step one.</p>
+      <p class="proofbelt__note reveal">// The cases and demos above are reference implementations on synthetic data. We label them separately from real client deployments. Re-measuring on your data is step one.</p>
     </div>
   </section>
 
-  <section class="section section--alt" id="service">
+  <!-- TECH PILLARS: 4 AXES (moved above the fold 2026-08-02, builder-first) -->
+  <section class="section section--alt" id="stack">
     <div class="wrap">
-      <div class="section__head">
-        <span class="eyebrow">Service</span>
-        <h2>Start small. Grow only what works.</h2>
-        <p>Each step earns the next. Diagnose lightly, verify with a PoC, then build to keep. A proven order instead of one big bet.</p>
+      <div class="section__head reveal">
+        <span class="eyebrow">Our technology · built in-house</span>
+        <h2>We don't resell someone else's solution. We built all four axes ourselves.</h2>
+        <p>The 7 families and 22 cases in the engine above are all built on the four axes below. Each axis has a working implementation and measured results, and signal intelligence is the one we've pushed the deepest.</p>
+        <p><a class="btn" href="tech.html">See all 126 technologies in our repository →</a></p>
       </div>
-      <div class="ladder">
-        <div class="rung"><div class="rung__no">01<small>Measure</small></div><div><div class="rung__name">Diagnosis Sprint<span>2-3 weeks</span></div></div><div class="rung__desc">Interviews and data review to surface use cases and estimate ROI.</div><div class="rung__meta">Fixed fee</div></div>
-        <div class="rung"><div class="rung__no">02<small>Verify</small></div><div><div class="rung__name">Proof of Concept<span>4-8 weeks</span></div></div><div class="rung__desc">Build one use case for real and measure the effect before committing.</div><div class="rung__meta">Project</div></div>
-        <div class="rung rung--build"><div class="rung__no">03<small>Operate</small></div><div><div class="rung__name">Build &amp; Handover<span>8-16 weeks</span></div></div><div class="rung__desc">Turn what worked into an operating system, then train your team to run it.</div><div class="rung__meta">Project</div></div>
+      <div class="pillar-grid reveal stagger">
+        <div class="pillar">
+          <span class="pillar__no">AXIS 01</span>
+          <span class="pillar__t">Vision &amp; Image AI</span>
+          <p class="pillar__d">Surface defect inspection, document OCR, on-site safety monitoring, product photo generation and retouching. Anywhere there's a camera or an image, we automate the reading.</p>
+          <span class="pillar__ref">Case 02 Document Automation · Case 03 Vision Inspection</span>
+        </div>
+        <div class="pillar">
+          <span class="pillar__no">AXIS 02</span>
+          <span class="pillar__t">Deep Learning &amp; Generative AI</span>
+          <p class="pillar__d">From trained models like demand forecasting and anomaly detection, to RAG knowledge bots, support agents, and ad video generation. We assemble models to fit the actual unit of work on the ground.</p>
+          <span class="pillar__ref">Case 04 Demand Forecasting · Case 05 Support Bot · Case 07 RAG · Case 09 Video</span>
+        </div>
+        <div class="pillar">
+          <span class="pillar__no">AXIS 03</span>
+          <span class="pillar__t">Signal Intelligence (RF, Acoustic, Vibration)</span>
+          <p class="pillar__d">Wireless interference diagnosis, acoustic and vibration predictive maintenance, WiFi-based occupancy detection. We built our own engine that judges anomalies and status from sensor signals in real time.</p>
+          <span class="pillar__ref">Case 06 Signal Fingerprint · <a href="comms.html">measured benchmarks on the Telecom page</a></span>
+        </div>
+        <div class="pillar">
+          <span class="pillar__no">AXIS 04</span>
+          <span class="pillar__t">Cloud &amp; Data Infrastructure</span>
+          <p class="pillar__d">Consolidating scattered data, dashboards, on-prem and air-gapped deployment, GPU serving and MLOps operations design. Storage cost and durability diagnosis come with it. We use standard tools to measure what tier your legally mandated 10-year data actually sits in today, and whether it's still readable.</p>
+          <span class="pillar__ref">Case 01 Data Dashboard · <a href="cloud.html#storage">measured storage costs</a></span>
+        </div>
       </div>
     </div>
   </section>
 
-  <section class="section" id="founder">
+  <!-- COMMS TEASER: full detail moved to comms.html -->
+  <section class="section" id="comms">
+    <div class="wrap">
+      <div class="section__head reveal">
+        <span class="eyebrow">Technology deep dive · Telecom &amp; Signal Intelligence</span>
+        <h2>From antenna to decision, all nine stages are our own code.</h2>
+        <p>The 9-stage receiver pipeline, our technology at each stage, and every measured benchmark, from interference detection and device fingerprinting to audio, vibration, and WiFi occupancy, are all laid out on one Telecom page. The industry expansion map and the OEM embed path for equipment makers are there too.</p>
+      </div>
+      <div class="chero__stats reveal stagger">
+        <div class="cstat"><span class="cstat__n">9<small>stages</small></span><span class="cstat__l">Receiver pipeline built in-house (7 stages quantitatively measured)</span></div>
+        <div class="cstat"><span class="cstat__n">98.0<small>%</small></span><span class="cstat__l">Interference detection rate (false-positive rate fixed, synthetic benchmark)</span></div>
+        <div class="cstat"><span class="cstat__n">1.000</span><span class="cstat__l">WiFi occupancy separability AUROC (real CSI)</span></div>
+        <div class="cstat"><span class="cstat__n">10<small>+</small></span><span class="cstat__l">Industry expansion map (honestly labeled: proven, extend, research, concept)</span></div>
+      </div>
+      <div class="hero__cta reveal">
+        <a class="btn btn--signal" href="comms.html">See all of Telecom &amp; Signal Intelligence <span class="arrow">→</span></a>
+      </div>
+    </div>
+  </section>
+
+  <!-- SELF-CRITICAL PAPERS: the hardest signal to fake -->
+  <section class="section" id="honest">
+    <div class="wrap">
+      <div class="section__head reveal">
+        <span class="eyebrow">Honesty in measurement</span>
+        <h2>We publish the results where we lost, too.</h2>
+        <p>A company that sells measurement has to hold its own measurements to the same standard. Below are results we published as they are, even where they don't favor 2i. We think this tells you more than a portfolio of only the wins would.</p>
+      </div>
+      <div class="honest-grid reveal stagger">
+        <a class="honest" href="papers.html">
+          <span class="honest__t">We pointed our own diagnostic tool at ourselves, and lost.</span>
+          <p class="honest__d">We ran our own storage diagnostic kit against our own storage. It scored 41.7 with 15.4% coverage, behind MinIO's 72.7 and 28.2%, our comparison target. We published it as a paper instead of deleting it.</p>
+        </a>
+        <a class="honest" href="papers.html">
+          <span class="honest__t">The same model dropped from 0.931 to 0.088.</span>
+          <p class="honest__d">We re-measured a WiFi sensing model by changing only how the data was split. Accuracy that was 0.931 under a random split fell to 0.088, essentially a coin flip, under a per-person split. A lot of industry numbers rest on exactly this trap.</p>
+        </a>
+        <a class="honest" href="papers.html">
+          <span class="honest__t">Three replicas is not the same thing as durability.</span>
+          <p class="honest__d">Turn off checksums and bit-rot detection drops to 0%. Turn off background scrubbing and 13.3% of objects vanish within 6 rounds. We published the real limits of a commonly used triple-replication setup in a reproducible form.</p>
+        </a>
+      </div>
+      <div class="hero__cta reveal">
+        <a class="btn btn--ghost" href="papers.html">See all 42 papers &amp; experiments</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROBLEM -->
+  <section class="section section--alt" id="why">
+    <div class="wrap">
+      <div class="section__head reveal">
+        <span class="eyebrow">Why now</span>
+        <h2>Between wanting to adopt AI and fearing it will fail.</h2>
+        <p>Most mid-market companies get stuck right here. 2i turns that in-between uncertainty into numbers so the next step becomes clear.</p>
+      </div>
+      <div class="problems reveal stagger">
+        <div class="problem">
+          <div class="problem__q">Q. Where do we start?</div>
+          <div class="problem__t">We can't see the use case</div>
+          <div class="problem__d">There's no one in-house to ask what AI can actually do, or what fits our company.</div>
+        </div>
+        <div class="problem">
+          <div class="problem__q">Q. What if we just spend?</div>
+          <div class="problem__t">We're unsure it will pay off</div>
+          <div class="problem__d">What if we put in tens of millions of won and it doesn't work? We can't bet that much without proof first.</div>
+        </div>
+        <div class="problem">
+          <div class="problem__q">Q. What about our data?</div>
+          <div class="problem__t">It's just spreadsheets and people's heads</div>
+          <div class="problem__d">Our data is scattered, and we don't even know if we're ready to plug in AI.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SERVICE LADDER -->
+  <section class="section" id="method">
+    <div class="wrap">
+      <div class="section__head reveal">
+        <span class="eyebrow">The <span class="nocaps">2i</span> gauge method · how we work together</span>
+        <h2>The order in which we plug your data into what we've already built.</h2>
+        <p>Budget for the next stage only gets spent once you clear a gate. It's a low-risk order: start at a low threshold and scale only what works. It removes the biggest fear, "what if we spend money and it doesn't work," by design.</p>
+      </div>
+
+      <!-- process gauge (moved out of the hero 2026-08-02: the hero now shows
+           what we built, this section shows how we work with you) -->
+      <aside class="gauge gauge--inline reveal" aria-label="AX transformation process overview">
+        <div class="gauge__head">
+          <span>AX PROCESS</span>
+          <span class="gauge__live"><span class="gauge__dot"></span>Measuring</span>
+        </div>
+        <div class="track"><i class="track__fill"></i></div>
+        <div class="ticks" aria-hidden="true">
+          <i class="tick tick--major"></i><i class="tick"></i><i class="tick"></i><i class="tick"></i>
+          <i class="tick tick--major"></i><i class="tick"></i><i class="tick"></i><i class="tick"></i>
+          <i class="tick tick--major"></i><i class="tick"></i><i class="tick"></i><i class="tick"></i>
+          <i class="tick tick--major"></i>
+        </div>
+        <div class="stages">
+          <div class="stage stage--1">
+            <div class="stage__no">01</div>
+            <div class="stage__name">Diagnose</div>
+            <div class="stage__read">MEASURE · 2-3 weeks</div>
+          </div>
+          <div class="stage stage--2">
+            <div class="stage__no">02</div>
+            <div class="stage__name">PoC</div>
+            <div class="stage__read">VERIFY · 4-8 weeks</div>
+          </div>
+          <div class="stage stage--3">
+            <div class="stage__no">03</div>
+            <div class="stage__name">Build</div>
+            <div class="stage__read">OPERATE · 8+ weeks</div>
+          </div>
+        </div>
+      </aside>
+      <ol class="gates3" style="margin:0 0 2.6rem">
+        <li class="g3"><span class="g3__no">01</span><div><b>Measurement gate</b><span class="g3__sub">MEASURE · Diagnosis</span><p>We pin the problem down to numbers. We measure the current baseline of on-site KPIs and the state of your data, and build the baseline for what to improve and by how much.</p></div></li>
+        <li class="g3"><span class="g3__no">02</span><div><b>Proof gate</b><span class="g3__sub">VERIFY · PoC</span><p>We pick one point and actually measure before versus after. If it misses the target delta, we don't scale it. Big money comes after verification.</p></div></li>
+        <li class="g3 g3--build"><span class="g3__no">03</span><div><b>Handover gate</b><span class="g3__sub">OPERATE · Build</span><p>We scale only what's proven and hand it to your operations team to run on their own. With documentation and manuals, we stay alongside until it delivers results.</p></div></li>
+      </ol>
+      <div class="ladder reveal stagger">
+        <div class="rung rung--free">
+          <div class="rung__no">00<small>Self-check</small></div>
+          <div><div class="rung__name">AX Readiness Self-Check<span>Readiness Check</span></div></div>
+          <div class="rung__desc">A few questions to instantly check your current readiness and candidate priority use cases.</div>
+          <div class="rung__meta">Free<small>Online · 2 min</small></div>
+        </div>
+        <div class="rung">
+          <div class="rung__no">01<small>Measure</small></div>
+          <div><div class="rung__name">AX Diagnosis Sprint<span>Diagnosis</span></div></div>
+          <div class="rung__desc">On-site interviews and data review surface use cases, and you get a roadmap with an estimated ROI.</div>
+          <div class="rung__meta">KRW 3M-8M<small>2-3 weeks</small></div>
+        </div>
+        <div class="rung">
+          <div class="rung__no">02<small>Verify</small></div>
+          <div><div class="rung__name">AX PoC<span>Proof of Concept</span></div></div>
+          <div class="rung__desc">We build one use case for real and measure the effect. You find out whether it works before betting big money.</div>
+          <div class="rung__meta">KRW 15M-40M<small>4-8 weeks</small></div>
+        </div>
+        <div class="rung rung--build">
+          <div class="rung__no">03<small>Operate</small></div>
+          <div><div class="rung__name">AX Build &amp; Internalization<span>Build &amp; Handover</span></div></div>
+          <div class="rung__desc">We turn what's proven into an operating system, then hand it over and train your staff to run it themselves.</div>
+          <div class="rung__meta">KRW 30M+<small>8-16 weeks</small></div>
+        </div>
+        <div class="rung">
+          <div class="rung__no">+<small>Add-on</small></div>
+          <div><div class="rung__name">AX Training &amp; Workshops<span>Training</span></div></div>
+          <div class="rung__desc">Hands-on staff training and in-house seminars, so your organization stops fearing AI.</div>
+          <div class="rung__meta">KRW 1.5M-5M<small>Half day-2 days</small></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CASE TEASER -->
+  <section class="section" id="cases">
+    <div class="wrap">
+      <div class="section__head reveal">
+        <span class="eyebrow">Cases · 15 selected · a live, in-browser demo for every case</span>
+        <h2>We show you what changed, not just what we built.</h2>
+        <p>From basic data integration to manufacturing vision inspection, factory wireless signal diagnosis, customer inquiry automation, and even websites and marketing. Every case comes with <b>source code you can actually run on GitHub</b>, not a slide deck.</p>
+      </div>
+      <div class="case-teaser reveal stagger">
+        <a class="tcase" href="cases.html#case-1">
+          <span class="tcase__no">01</span>
+          <span class="tcase__body">
+            <span class="tcase__cat">Management Visibility</span>
+            <span class="tcase__t">"How much stock do we have today?" Half a day → 3 seconds</span>
+            <span class="tcase__m">Time to check current status · <b>half a day+</b></span>
+          </span>
+          <span class="tcase__go" aria-hidden="true">→</span>
+        </a>
+        <a class="tcase" href="cases.html#case-6">
+          <span class="tcase__no">06</span>
+          <span class="tcase__body">
+            <span class="tcase__cat">Signal Fingerprint · Telecom</span>
+            <span class="tcase__t">The "unknown radio signal" that keeps stopping the wireless network, pinpointed in real time</span>
+            <span class="tcase__m">Locating the interference source · <b>always "cause unknown"</b></span>
+          </span>
+          <span class="tcase__go" aria-hidden="true">→</span>
+        </a>
+        <a class="tcase" href="cases.html#case-10">
+          <span class="tcase__no">10</span>
+          <span class="tcase__body">
+            <span class="tcase__cat">Online Presence</span>
+            <span class="tcase__t">From a company that doesn't show up in search, to a brand people trust</span>
+            <span class="tcase__m">Online presence · <b>didn't show up in search</b></span>
+          </span>
+          <span class="tcase__go" aria-hidden="true">→</span>
+        </a>
+      </div>
+      <div style="margin-top:2rem"><a class="btn btn--ghost" href="cases.html">See all 23 cases <span class="arrow">→</span></a></div>
+    </div>
+  </section>
+
+  <!-- AX IDEAS 30 -->
+  <section class="section section--alt" id="ideas">
+    <div class="wrap">
+      <div class="section__head reveal">
+        <span class="eyebrow">AX transformation ideas · 30 selected</span>
+        <h2>"What can you actually do for my company?" Here are 30 answers instead.</h2>
+        <p>30 application ideas drawn from tools and cases 2i actually has. The industry may differ, but the structure is the same. One item that catches your eye is enough to start a diagnosis conversation. The tags don't oversell: <b>Proven</b> means we've already built it, <b>Extend</b> means we can assemble it right now from what we already have, and <b>Concept</b> means it's an idea we'd verify together.</p>
+      </div>
+
+      <div class="ifilters reveal" role="tablist" aria-label="Idea category filters">
+        <button class="ifilter is-on" data-icat="all">All <b>30</b></button>
+        <button class="ifilter" data-icat="data">Management &amp; Data <b>4</b></button>
+        <button class="ifilter" data-icat="doc">Documents &amp; Ops <b>5</b></button>
+        <button class="ifilter" data-icat="vision">Vision &amp; Imaging <b>5</b></button>
+        <button class="ifilter" data-icat="predict">Forecasting &amp; Equipment <b>4</b></button>
+        <button class="ifilter" data-icat="customer">Customer &amp; Sales <b>5</b></button>
+        <button class="ifilter" data-icat="marketing">Marketing &amp; Content <b>3</b></button>
+        <button class="ifilter" data-icat="signal">Signal &amp; Sensing <b>2</b></button>
+        <button class="ifilter" data-icat="cloud">Cloud &amp; Infrastructure <b>2</b></button>
+      </div>
+
+      <div class="ideas-grid reveal">
+        <div class="idea" data-icat="data">
+          <div class="idea__top"><span class="idea__no">01</span><span class="idea__cat">Management &amp; Data</span></div>
+          <span class="idea__t">Real-time management dashboard</span>
+          <p class="idea__d">A single screen that answers "how much stock and revenue do we have today?" in 3 seconds.</p>
+          <div class="idea__meta"><span class="mtag mtag--demo">Proven</span><a class="idea__case" href="cases.html#case-1">Case 01 →</a></div>
+        </div>
+        <div class="idea" data-icat="data">
+          <div class="idea__top"><span class="idea__no">02</span><span class="idea__cat">Management &amp; Data</span></div>
+          <span class="idea__t">Consolidating scattered spreadsheet and ERP data</span>
+          <p class="idea__d">Turns every department's own spreadsheet into one single source-of-truth data pipeline.</p>
+          <div class="idea__meta"><span class="mtag mtag--extend">Extend</span></div>
+        </div>
+        <div class="idea" data-icat="data">
+          <div class="idea__top"><span class="idea__no">03</span><span class="idea__cat">Management &amp; Data</span></div>
+          <span class="idea__t">Automated weekly management reports</span>
+          <p class="idea__d">From data aggregation to a draft report, arriving every week with no manual work.</p>
+          <div class="idea__meta"><span class="mtag mtag--demo">Proven</span></div>
+        </div>
+        <div class="idea" data-icat="data">
+          <div class="idea__top"><span class="idea__no">04</span><span class="idea__cat">Management &amp; Data</span></div>
+          <span class="idea__t">Automatic alerts on sudden KPI shifts</span>
+          <p class="idea__d">The moment revenue, defect rate, or inventory jumps outside the norm, you get an instant alert on messenger.</p>
+          <div class="idea__meta"><span class="mtag mtag--extend">Extend</span></div>
+        </div>
+
+        <div class="idea" data-icat="doc">
+          <div class="idea__top"><span class="idea__no">05</span><span class="idea__cat">Documents &amp; Ops</span></div>
+          <span class="idea__t">Automatic recognition and entry of quotes and purchase orders</span>
+          <p class="idea__d">Reads paper and PDF documents and enters them into your system automatically. Targets a 60-70% cut in manual entry.</p>
+          <div class="idea__meta"><span class="mtag mtag--demo">Proven</span><a class="idea__case" href="cases.html#case-2">Case 02 →</a></div>
+        </div>
+        <div class="idea" data-icat="doc">
+          <div class="idea__top"><span class="idea__no">06</span><span class="idea__cat">Documents &amp; Ops</span></div>
+          <span class="idea__t">Automated meeting minutes</span>
+          <p class="idea__d">Transcribes the recording, pulls out only the decisions and action items, and shares them.</p>
+          <div class="idea__meta"><span class="mtag mtag--demo">Proven</span></div>
+        </div>
+        <div class="idea" data-icat="doc">
+          <div class="idea__top"><span class="idea__no">07</span><span class="idea__cat">Documents &amp; Ops</span></div>
+          <span class="idea__t">Internal policy and technical document Q&amp;A bot</span>
+          <p class="idea__d">Even a new hire gets a veteran's answer in 3 seconds. Turns internal documents into a knowledge asset (RAG).</p>
+          <div class="idea__meta"><span class="mtag mtag--demo">Proven</span><a class="idea__case" href="cases.html#case-7">Case 07 →</a></div>
+        </div>
+        <div class="idea" data-icat="doc">
+          <div class="idea__top"><span class="idea__no">08</span><span class="idea__cat">Documents &amp; Ops</span></div>
+          <span class="idea__t">Automatic classification and draft replies for emails and inquiries</span>
+          <p class="idea__d">Repeat inquiries get classified with a draft reply attached automatically. A person only has to check it.</p>
+          <div class="idea__meta"><span class="mtag mtag--extend">Extend</span></div>
+        </div>
+        <div class="idea" data-icat="doc">
+          <div class="idea__top"><span class="idea__no">09</span><span class="idea__cat">Documents &amp; Ops</span></div>
+          <span class="idea__t">Contract review assistance</span>
+          <p class="idea__d">Flags toxic clauses and missing items first, cutting down review time.</p>
+          <div class="idea__meta"><span class="mtag mtag--extend">Extend</span></div>
+        </div>
+
+        <div class="idea" data-icat="vision">
+          <div class="idea__top"><span class="idea__no">10</span><span class="idea__cat">Vision &amp; Imaging</span></div>
+          <span class="idea__t">Automated surface defect inspection</span>
+          <p class="idea__d">Vision inspection that judges by the same standard around the clock, instead of a human eye.</p>
+          <div class="idea__meta"><span class="mtag mtag--demo">Proven</span><a class="idea__case" href="cases.html#case-3">Case 03 →</a></div>
+        </div>
+        <div class="idea" data-icat="vision">
+          <div class="idea__top"><span class="idea__no">11</span><span class="idea__cat">Vision &amp; Imaging</span></div>
+          <span class="idea__t">Incoming inspection photo reading</span>
+          <p class="idea__d">Checks and logs damage and quantity mismatches from a single photo.</p>
+          <div class="idea__meta"><span class="mtag mtag--extend">Extend</span></div>
+        </div>
+        <div class="idea" data-icat="vision">
+          <div class="idea__top"><span class="idea__no">12</span><span class="idea__cat">Vision &amp; Imaging</span></div>
+          <span class="idea__t">Hard hat and PPE compliance detection</span>
+          <p class="idea__d">Detects safety violations in real time from on-site CCTV footage and sends an alert.</p>
+          <div class="idea__meta"><span class="mtag mtag--extend">Extend</span></div>
+        </div>
+        <div class="idea" data-icat="vision">
+          <div class="idea__top"><span class="idea__no">13</span><span class="idea__cat">Vision &amp; Imaging</span></div>
+          <span class="idea__t">Shelf and display stockout detection</span>
+          <p class="idea__d">Automatically checks store and warehouse photos for stockouts and display errors.</p>
+          <div class="idea__meta"><span class="mtag mtag--extend">Extend</span></div>
+        </div>
+        <div class="idea" data-icat="vision">
+          <div class="idea__top"><span class="idea__no">14</span><span class="idea__cat">Vision &amp; Imaging</span></div>
+          <span class="idea__t">Product photo to product-page image generation</span>
+          <p class="idea__d">Generates and retouches storefront-grade detail shots and banners with no studio shoot.</p>
+          <div class="idea__meta"><span class="mtag mtag--demo">Proven</span></div>
+        </div>
+
+        <div class="idea" data-icat="predict">
+          <div class="idea__top"><span class="idea__no">15</span><span class="idea__cat">Forecasting &amp; Equipment</span></div>
+          <span class="idea__t">Demand-forecast-based ordering and inventory optimization</span>
+          <p class="idea__d">Forecast-driven ordering targeting a 30-40% cut in stockouts.</p>
+          <div class="idea__meta"><span class="mtag mtag--demo">Proven</span><a class="idea__case" href="cases.html#case-4">Case 04 →</a></div>
+        </div>
+        <div class="idea" data-icat="predict">
+          <div class="idea__top"><span class="idea__no">16</span><span class="idea__cat">Forecasting &amp; Equipment</span></div>
+          <span class="idea__t">Acoustic and vibration predictive maintenance</span>
+          <p class="idea__d">Hears early anomalies in bearings and pumps before they fail.</p>
+          <div class="idea__meta"><span class="mtag mtag--demo">Proven</span></div>
+        </div>
+        <div class="idea" data-icat="predict">
+          <div class="idea__top"><span class="idea__no">17</span><span class="idea__cat">Forecasting &amp; Equipment</span></div>
+          <span class="idea__t">Root-cause analysis of defects from process data</span>
+          <p class="idea__d">Traces process variables backward to find exactly which conditions spike defects.</p>
+          <div class="idea__meta"><span class="mtag mtag--extend">Extend</span></div>
+        </div>
+        <div class="idea" data-icat="predict">
+          <div class="idea__top"><span class="idea__no">18</span><span class="idea__cat">Forecasting &amp; Equipment</span></div>
+          <span class="idea__t">Energy usage forecasting and peak reduction</span>
+          <p class="idea__d">Forecasts power peaks and restructures operations to structurally lower the bill.</p>
+          <div class="idea__meta"><span class="mtag mtag--concept">Concept</span></div>
+        </div>
+
+        <div class="idea" data-icat="customer">
+          <div class="idea__top"><span class="idea__no">19</span><span class="idea__cat">Customer &amp; Sales</span></div>
+          <span class="idea__t">Automated customer inquiry response agent</span>
+          <p class="idea__d">Targets handling 60-70% of repeat product and service inquiries with no human involved.</p>
+          <div class="idea__meta"><span class="mtag mtag--demo">Proven</span><a class="idea__case" href="cases.html#case-5">Case 05 →</a></div>
+        </div>
+        <div class="idea" data-icat="customer">
+          <div class="idea__top"><span class="idea__no">20</span><span class="idea__cat">Customer &amp; Sales</span></div>
+          <span class="idea__t">Sales signal radar</span>
+          <p class="idea__d">Catches sales opportunities in news, bids, and job postings the same day, and alerts you.</p>
+          <div class="idea__meta"><span class="mtag mtag--demo">Proven</span><a class="idea__case" href="cases.html#case-8">Case 08 →</a></div>
+        </div>
+        <div class="idea" data-icat="customer">
+          <div class="idea__top"><span class="idea__no">21</span><span class="idea__cat">Customer &amp; Sales</span></div>
+          <span class="idea__t">Automated pre-meeting client briefing</span>
+          <p class="idea__d">Turns 30 minutes of pre-visit prep into a 3-minute briefing document.</p>
+          <div class="idea__meta"><span class="mtag mtag--demo">Proven</span></div>
+        </div>
+        <div class="idea" data-icat="customer">
+          <div class="idea__top"><span class="idea__no">22</span><span class="idea__cat">Customer &amp; Sales</span></div>
+          <span class="idea__t">Automated review and VOC analysis</span>
+          <p class="idea__d">Pulls product improvement points out of scattered customer feedback.</p>
+          <div class="idea__meta"><span class="mtag mtag--extend">Extend</span></div>
+        </div>
+        <div class="idea" data-icat="customer">
+          <div class="idea__top"><span class="idea__no">23</span><span class="idea__cat">Customer &amp; Sales</span></div>
+          <span class="idea__t">Quote request to automated quote generation</span>
+          <p class="idea__d">Enter the conditions, and a draft quote is generated automatically.</p>
+          <div class="idea__meta"><span class="mtag mtag--extend">Extend</span></div>
+        </div>
+
+        <div class="idea" data-icat="marketing">
+          <div class="idea__top"><span class="idea__no">24</span><span class="idea__cat">Marketing &amp; Content</span></div>
+          <span class="idea__t">Same-day ad video tied to trending issues</span>
+          <p class="idea__d">Turns this week's trend into a Reels or Shorts ad, produced within the day.</p>
+          <div class="idea__meta"><span class="mtag mtag--demo">Proven</span><a class="idea__case" href="#studio">See the demo →</a></div>
+        </div>
+        <div class="idea" data-icat="marketing">
+          <div class="idea__top"><span class="idea__no">25</span><span class="idea__cat">Marketing &amp; Content</span></div>
+          <span class="idea__t">Automated tech blog and SEO content publishing</span>
+          <p class="idea__d">A content pipeline that makes your company show up when people search.</p>
+          <div class="idea__meta"><span class="mtag mtag--demo">Proven</span><a class="idea__case" href="cases.html#case-10">Case 10 →</a></div>
+        </div>
+        <div class="idea" data-icat="marketing">
+          <div class="idea__top"><span class="idea__no">26</span><span class="idea__cat">Marketing &amp; Content</span></div>
+          <span class="idea__t">Automated product brochure and profile generation</span>
+          <p class="idea__d">Give it product data, and it finishes an on-brand profile document.</p>
+          <div class="idea__meta"><span class="mtag mtag--demo">Proven</span></div>
+        </div>
+
+        <div class="idea" data-icat="signal">
+          <div class="idea__top"><span class="idea__no">27</span><span class="idea__cat">Signal &amp; Sensing</span></div>
+          <span class="idea__t">Factory wireless interference and anomaly diagnosis</span>
+          <p class="idea__d">Pinpoints the culprit behind unexplained wireless faults in real time.</p>
+          <div class="idea__meta"><span class="mtag mtag--demo">Proven</span><a class="idea__case" href="cases.html#case-6">Case 06 →</a></div>
+        </div>
+        <div class="idea" data-icat="signal">
+          <div class="idea__top"><span class="idea__no">28</span><span class="idea__cat">Signal &amp; Sensing</span></div>
+          <span class="idea__t">WiFi-based occupancy and fall detection</span>
+          <p class="idea__d">Monitors safety using your existing router's signal, with no camera at all.</p>
+          <div class="idea__meta"><span class="mtag mtag--extend">Extend</span></div>
+        </div>
+
+        <div class="idea" data-icat="cloud">
+          <div class="idea__top"><span class="idea__no">29</span><span class="idea__cat">Cloud &amp; Infrastructure</span></div>
+          <span class="idea__t">On-prem and air-gapped AI deployment</span>
+          <p class="idea__d">A design that brings GPU serving and MLOps into a site where data can never leave.</p>
+          <div class="idea__meta"><span class="mtag mtag--demo">Proven</span></div>
+        </div>
+        <div class="idea" data-icat="cloud">
+          <div class="idea__top"><span class="idea__no">30</span><span class="idea__cat">Cloud &amp; Infrastructure</span></div>
+          <span class="idea__t">Cloud migration and cost optimization</span>
+          <p class="idea__d">Cleans up sprawling servers into infrastructure that's ready to carry AI.</p>
+          <div class="idea__meta"><span class="mtag mtag--extend">Extend</span></div>
+        </div>
+      </div>
+
+      <p class="auto-foot reveal">If you can't tell which of these 30 fits your company, that's normal. Setting that priority with numbers is exactly what the <a href="#method" style="text-decoration:underline">Diagnosis Sprint</a> does.</p>
+      <div style="margin-top:1.6rem"><a class="btn btn--signal" href="#contact">Start a conversation with one of these <span class="arrow">→</span></a></div>
+    </div>
+  </section>
+
+  <!-- AI VIDEO STUDIO -->
+  <section class="section section--alt" id="studio">
+    <div class="wrap">
+      <div class="section__head reveal">
+        <span class="eyebrow">A new axis · AI Video Studio</span>
+        <h2>Comics, animation, ad videos, from this week's trending issue, within the day.</h2>
+        <p>An ad video that agencies quote tens of millions of won for and take 2-3 weeks to deliver, 2i produces <b>within the day, from this week's trending issue</b>. Sized for Instagram Reels (9:16) and YouTube (16:9, Shorts): ads, cinematic brand films, and flat 2D animation, all in one place. The top one is 2i's own <b>cinematic brand film</b> introducing us. The three that follow are demos we <b>actually generated this week</b>, built on the July 2026 heat-wave issue.</p>
+      </div>
+
+      <div class="studio-grid reveal stagger">
+        <!-- 2i own brand film (cinematic camera move: following the subject) -->
+        <article class="vcard vcard--wide vcard--h brandfilm">
+          <div class="vcard__frame">
+            <span class="vcard__flag"><i></i>Made by 2i</span>
+            <video src="../videos/2i-brand-film.mp4" poster="../videos/2i-brand-film-poster.jpg" muted loop autoplay playsinline preload="metadata" controls></video>
+          </div>
+          <div class="vcard__meta">
+            <div class="vcard__tags"><span class="vcard__tag">Brand film</span><span class="vcard__tag">YouTube · 16:9</span><span class="vcard__tag">~30 sec</span></div>
+            <div class="vcard__t">Not a guess. A process.</div>
+            <div class="vcard__d">This is 2i's own cinematic brand film. Instead of holding the camera in one place, we shoot it following the subject (dolly, orbit, arc reveal), which turns a static frame into something that moves like film. Measure, prove, hand over: 2i's way of working, in 30 seconds.</div>
+          </div>
+        </article>
+        <!-- film: cinematic brand film (16:9) -->
+        <article class="vcard vcard--wide vcard--h">
+          <div class="vcard__frame">
+            <span class="vcard__flag"><i></i>Made this week</span>
+            <video src="../videos/demo2-film-pado.mp4" poster="../videos/demo2-poster.jpg" muted loop autoplay playsinline preload="metadata" controls></video>
+          </div>
+          <div class="vcard__meta">
+            <div class="vcard__tags"><span class="vcard__tag">Cinematic film</span><span class="vcard__tag">YouTube · 16:9</span><span class="vcard__tag">~40 sec</span></div>
+            <div class="vcard__t">Drink up the summer</div>
+            <div class="vcard__d">A youth brand film that releases the suffocation of a heat-wave city into a water festival. A demo for a fictional sports drink brand.</div>
+          </div>
+        </article>
+
+        <!-- ad: reels meme ad (9:16) -->
+        <article class="vcard vcard--v">
+          <div class="vcard__frame">
+            <span class="vcard__flag"><i></i>Made this week</span>
+            <video src="../videos/demo1-ad-sseoneul.mp4" poster="../videos/demo1-poster.jpg" muted loop autoplay playsinline preload="metadata" controls></video>
+          </div>
+          <div class="vcard__meta">
+            <div class="vcard__tags"><span class="vcard__tag">Reels ad</span><span class="vcard__tag">Instagram · 9:16</span><span class="vcard__tag">~15 sec</span></div>
+            <div class="vcard__t">Wear the heat wave around your neck</div>
+            <div class="vcard__d">A heat-wave twist ad riding this season's self-intro meme rhythm. A demo for a fictional neck fan brand.</div>
+          </div>
+        </article>
+
+        <!-- animation: flat 2D mascot (9:16) -->
+        <article class="vcard vcard--v">
+          <div class="vcard__frame">
+            <span class="vcard__flag"><i></i>Made this week</span>
+            <video src="../videos/demo3-anime-dongdong.mp4" poster="../videos/demo3-poster.jpg" muted loop autoplay playsinline preload="metadata" controls></video>
+          </div>
+          <div class="vcard__meta">
+            <div class="vcard__tags"><span class="vcard__tag">Flat 2D animation</span><span class="vcard__tag">Reels &amp; Shorts · 9:16</span><span class="vcard__tag">~20 sec</span></div>
+            <div class="vcard__t">Freezing the summer</div>
+            <div class="vcard__d">A flat animation where a penguin mascot melting in the heat is reborn as shaved ice. A demo for a fictional ice dessert brand.</div>
+          </div>
+        </article>
+      </div>
+
+      <p class="studio-note">// The brands in the demos above are fictional, for demonstration only. In practice, we produce ads, animation, and brand films within the day, using your product and this week's issue.</p>
+      <div style="margin-top:1.8rem"><a class="btn btn--signal" href="#contact">Make a video with our product <span class="arrow">→</span></a></div>
+    </div>
+  </section>
+
+  <!-- SELF DIAGNOSIS -->
+  <section class="section section--alt" id="diagnose">
+    <div class="wrap">
+      <div class="section__head reveal">
+        <span class="eyebrow">Self-check · 2 min</span>
+        <h2>Is our company ready to plug in AI?</h2>
+        <p>Toggle on what applies, and your readiness score updates in real time. We'll point you to the next step based on the result.</p>
+      </div>
+      <div class="diag reveal">
+        <form class="diag__q" id="diagForm" aria-label="AX readiness self-check">
+          <div class="qrow"><span class="qrow__t">We have clear, repetitive manual work</span><label class="toggle"><input type="checkbox" data-w="18"><span></span></label></div>
+          <div class="qrow"><span class="qrow__t">We have data piled up in spreadsheets or systems</span><label class="toggle"><input type="checkbox" data-w="20"><span></span></label></div>
+          <div class="qrow"><span class="qrow__t">We have a specific problem we want to fix</span><label class="toggle"><input type="checkbox" data-w="18"><span></span></label></div>
+          <div class="qrow"><span class="qrow__t">Leadership is interested in adopting AI</span><label class="toggle"><input type="checkbox" data-w="16"><span></span></label></div>
+          <div class="qrow"><span class="qrow__t">We're willing to start within this year</span><label class="toggle"><input type="checkbox" data-w="14"><span></span></label></div>
+          <div class="qrow"><span class="qrow__t">We're open to using government support programs</span><label class="toggle"><input type="checkbox" data-w="14"><span></span></label></div>
+        </form>
+        <div class="meter" role="status" aria-live="polite">
+          <div class="meter__label">Readiness</div>
+          <div class="meter__score"><span id="score">0</span><small>/100</small></div>
+          <div class="meter__bar"><i id="meterBar"></i></div>
+          <div class="meter__band" id="band">Toggle an item to begin</div>
+          <p class="meter__hint" id="hint">The more items that apply, the better a time now is to start.</p>
+          <a class="btn btn--signal" href="#contact">Request a consultation with this result <span class="arrow">→</span></a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PRICING -->
+  <section class="section" id="pricing">
+    <div class="wrap">
+      <div class="reveal" style="max-width:60ch">
+        <span class="eyebrow">Pricing</span>
+        <h2 style="font-size:var(--text-h2);margin-top:1rem">We tell you the price first.</h2>
+        <p style="margin-top:1.1rem;color:var(--ink-soft)">A pricing model you can only learn by asking for a quote slows down your decision. We sell by the gate, so <b>the cost of the next stage only kicks in after the previous one clears.</b> The ranges below are standard, and we adjust based on your data's condition and scope.</p>
+      </div>
+      <div class="price-grid">
+        <article class="price reveal">
+          <span class="price__k">STEP 0</span>
+          <h3 class="price__t">Free Screening</h3>
+          <div class="price__v">0<small>KRW</small></div>
+          <p class="price__d">A 30-minute call to check whether AI is even the right fit for your problem right now. If it isn't, we'll say so.</p>
+          <ul class="price__l">
+            <li>Self-check report</li>
+            <li>3 candidate priorities</li>
+            <li>Voucher eligibility</li>
+          </ul>
+        </article>
+        <article class="price reveal">
+          <span class="price__k">STEP 1 · Measurement Gate</span>
+          <h3 class="price__t">2-Week Diagnosis Sprint</h3>
+          <div class="price__v">4<small>M KRW</small></div>
+          <p class="price__d">We measure the current baseline of on-site KPIs and the state of your data. The numbers this produces become the standard for every decision after.</p>
+          <ul class="price__l">
+            <li>Baseline measurement report</li>
+            <li>PoC design and success criteria</li>
+            <li>Explicit stop conditions</li>
+          </ul>
+        </article>
+        <article class="price reveal">
+          <span class="price__k">STEP 2 · Proof Gate</span>
+          <h3 class="price__t">PoC</h3>
+          <div class="price__v">20<small>-35M KRW</small></div>
+          <p class="price__d">We pick one point and actually measure before versus after. If it misses the target delta, we don't scale it, and we stop here.</p>
+          <ul class="price__l">
+            <li>A working system</li>
+            <li>A measured delta</li>
+            <li>Evidence to decide on scaling</li>
+          </ul>
+        </article>
+        <article class="price price--go reveal">
+          <span class="price__k">STEP 3 · After Handover</span>
+          <h3 class="price__t">Monthly Operations Retainer</h3>
+          <div class="price__v">1<small>-3M KRW / mo</small></div>
+          <p class="price__d">Handover is a start, not an end. A model goes stale as your data changes, and a metric drifts back if nobody manages it. We measure every month whether the results are holding.</p>
+          <ul class="price__l">
+            <li>Metric monitoring and reports</li>
+            <li>Model and rule retraining and tuning</li>
+            <li>Sourcing the next gate candidate</li>
+          </ul>
+        </article>
+      </div>
+      <p class="price__note">All prices exclude VAT. Applying a government voucher substantially cuts your out-of-pocket cost for the diagnosis and PoC stages (see below). Training and workshops are quoted separately.</p>
+    </div>
+  </section>
+
+  <!-- VOUCHER -->
+  <section class="section" id="voucher">
+    <div class="wrap voucher">
+      <div class="reveal">
+        <span class="eyebrow">Lowering the cost</span>
+        <h2 style="font-size:var(--text-h2);margin-top:1rem">The government AX voucher: 2i applies with you.</h2>
+        <p style="margin-top:1.1rem;color:var(--ink-soft)">Korea's 2026 AI transformation support program funds up to KRW 50M per beneficiary company. In practice, that means expert consulting and PoC verification can start on government budget. As a registered supplier (hub) company, 2i works with you from application through execution.</p>
+        <div class="vprocess" aria-label="Voucher process flow">
+          <span>Voucher application</span><i>→</i><span>Beneficiary matching</span><i>→</i><span>Diagnosis</span><i>→</i><span>PoC</span><i>→</i><span>Build</span>
+        </div>
+        <p style="margin-top:1.1rem;font-family:var(--mono);font-size:var(--text-sm);color:var(--ink-faint)">// 2i handles the complex application and paperwork for you. Funding scale and requirements follow each year's official announcement.</p>
+      </div>
+      <div class="voucher__figure reveal">
+        <div class="vnum"><span data-count="5000" data-format="comma">0</span><small>(x 10,000 KRW)</small></div>
+        <div style="color:var(--ink-soft);margin-top:0.4rem;font-size:0.95rem">Maximum support per beneficiary company (per the 2026 announcement)</div>
+        <div class="vsplit">
+          <div><b>KRW 10M</b><small>Expert consulting = diagnosis &amp; design</small></div>
+          <div><b>KRW 40M</b><small>PoC verification = validation stage</small></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ROBOT / AUTOMATION ERA -->
+  <section class="section" id="automation">
+    <div class="wrap">
+      <div class="section__head reveal">
+        <span class="eyebrow">The age of robotics &amp; automation</span>
+        <h2>Money flows to automated factories. The problem is readiness.</h2>
+        <p>AI is moving past chatbots into <b>Physical AI</b>, where it connects to sensors, equipment, and robots, and capital and government budgets are flowing there. But bring in a robot arm without the data, eyes, signals, and judgment to drive it, and it becomes an expensive decoration. Most mid-market manufacturers aren't ready for this yet, which is exactly why now is the time to get in. 2i owns the <b>software brain</b> layer that makes automation actually pay off.</p>
+      </div>
+      <div class="auto-grid reveal stagger">
+        <div class="auto-cell">
+          <span class="auto-need">What automation needs</span>
+          <span class="auto-h">Eyes · see and judge</span>
+          <span class="auto-2i">2i · vision inspection and defect detection AI give robots and inspection processes the judgment to act.</span>
+        </div>
+        <div class="auto-cell">
+          <span class="auto-need">What automation needs</span>
+          <span class="auto-h">Senses · read state from signals</span>
+          <span class="auto-2i">2i · our signal fingerprint (sigprint) engine detects wireless interference and equipment anomalies in real time, keeping the line running.</span>
+        </div>
+        <div class="auto-cell">
+          <span class="auto-need">What automation needs</span>
+          <span class="auto-h">Data · information that flows</span>
+          <span class="auto-2i">2i · we consolidate scattered data and make it predictable, fueling automated decisions.</span>
+        </div>
+        <div class="auto-cell">
+          <span class="auto-need">What automation needs</span>
+          <span class="auto-h">Brain · handles it on its own</span>
+          <span class="auto-2i">2i · custom AI agents process order, inquiry, and document flows with no manual hands.</span>
+        </div>
+      </div>
+      <p class="auto-foot reveal">And a substantial share of that transition cost can be covered by government AX vouchers and automation support programs. 2i designs the technology and the funding application together, so your company becomes one that's ready.</p>
+    </div>
+  </section>
+
+  <!-- FOUNDER -->
+  <section class="section section--alt" id="founder">
     <div class="wrap founder">
-      <div class="founder__card">
+      <div class="founder__card reveal">
         <div class="founder__mono">Principal</div>
         <div class="founder__name">Han Geumji</div>
-        <div class="founder__role">Founder · AX Consultant, 2i</div>
+        <div class="founder__role">Founder &amp; CEO · AX Consultant, 2i</div>
         <ul class="founder__list">
-          <li>Hands-on AX design for mid-market operations</li>
-          <li>Leads diagnosis, PoC and build end to end</li>
+          <li>Hands-on AX design fit for mid-market operations</li>
+          <li>Leads diagnosis, PoC, and build end to end</li>
           <li>Design, build, and operations all done in-house</li>
+          <li>Publishes methodology and case studies on the 2i Tech Blog</li>
         </ul>
       </div>
-      <div class="founder__body">
+      <div class="founder__body reveal">
         <span class="eyebrow">Why <span class="nocaps">2i</span></span>
-        <h2>The work large SIs skip, owned end to end by one person.</h2>
-        <p>Mid-market problems are small and non-standard, so large integrators pass on them. 2i exists for exactly that gap: measured diagnosis over glossy decks, a verified PoC over a big contract, trust built before scale.</p>
+        <h2>In the space large SIs won't touch, one person sees it through to the end.</h2>
+        <p>Mid-market problems are small and non-standard, so large system integrators pass on them because the math doesn't work. 2i was built for exactly that gap. We earn trust first, with a measured diagnosis instead of a glossy proposal, and a verified PoC instead of a big contract.</p>
+        <p>Unlike large consultancies where sales and delivery are different people, one person owns everything from diagnosis through build and handover. We do the design, the build, and the operations ourselves. On top of 20 years of development experience, running agentic AI operations means one person already holds the domain breadth it takes a large SI team years to build.</p>
+        <p style="margin-top:1.2rem;font-family:var(--mono);font-size:var(--text-sm);color:var(--steel)">// Not replacing people. We add speed and accuracy to judgment so people can focus on what matters.</p>
       </div>
     </div>
   </section>
 
-  <section class="section section--alt" id="contact">
+  <!-- INSIGHT -->
+  <section class="section" id="insight">
     <div class="wrap">
-      <div class="cta">
-        <h2>Let's decide the next step together.</h2>
-        <p>Not a sales call. We start by checking whether AI is even the right move for your company right now.</p>
-        <div class="cta__row"><a class="btn btn--signal" href="mailto:contact@2icorp.site">Email us <span class="arrow">→</span></a><a class="btn btn--ghost" href="/">한국어</a></div>
+      <div class="section__head reveal">
+        <span class="eyebrow">Insight</span>
+        <h2>Instead of a sales pitch, we write about how we actually do it.</h2>
+        <p>The 2i Tech Blog publishes case retrospectives and methodology. Before you pick a consultant, check how they think first.</p>
+      </div>
+      <div class="posts reveal stagger">
+        <a class="post" href="https://www.2icorp.site" target="_blank" rel="noopener">
+          <span class="post__cat">Case Study</span>
+          <span class="post__t">The order a spreadsheet-only company should adopt AI in</span>
+          <span class="post__d">A realistic path from unorganized data to a first PoC.</span>
+          <span class="post__more">READ →</span>
+        </a>
+        <a class="post" href="https://www.2icorp.site" target="_blank" rel="noopener">
+          <span class="post__cat">Methodology</span>
+          <span class="post__t">AX diagnosis: what we look at in two weeks</span>
+          <span class="post__d">The diagnosis checklist we use to judge priority and ROI, published in full.</span>
+          <span class="post__more">READ →</span>
+        </a>
+        <a class="post" href="https://www.2icorp.site" target="_blank" rel="noopener">
+          <span class="post__cat">For Decision-Makers</span>
+          <span class="post__t">30 minutes of AI every business owner should know</span>
+          <span class="post__d">Terms, misconceptions, cost, and government support. Only what you need before deciding.</span>
+          <span class="post__more">READ →</span>
+        </a>
       </div>
     </div>
   </section>
+
+  <!-- CONTACT / CTA -->
+  <section class="section" id="contact">
+    <div class="wrap">
+      <div class="cta reveal">
+        <h2>Let's decide the next step together.</h2>
+        <p>This isn't a sales pitch. We start by checking together whether AI is right for your company right now. 30 minutes is enough to find direction.</p>
+        <!-- Consultation form: sends via the email client (no backend needed). Swap the action if wiring in Formspree etc. -->
+        <form class="form" id="leadForm" action="mailto:contact@2icorp.site" method="POST" enctype="text/plain">
+          <label>Name<input name="name" required placeholder="Han Geumji"></label>
+          <label>Company<input name="company" required placeholder="e.g. ABC Manufacturing"></label>
+          <label>Industry<select name="industry"><option>Manufacturing</option><option>Distribution</option><option>Logistics</option><option>Other</option></select></label>
+          <label>Contact<input name="contact" required placeholder="Email or phone"></label>
+          <label class="full">Stage of interest
+            <select name="stage">
+              <option>Free self-check first</option>
+              <option>Diagnosis Sprint consultation</option>
+              <option>PoC consultation</option>
+              <option>Government voucher inquiry</option>
+              <option>Training &amp; workshop inquiry</option>
+            </select>
+          </label>
+          <label class="full">Tell us briefly (optional)<textarea name="message" rows="3" placeholder="What problem would you like to solve?"></textarea></label>
+          <div class="cta__row full">
+            <button class="btn btn--signal" type="submit">Send consultation request <span class="arrow">→</span></button>
+          </div>
+          <p class="form__status full" id="leadStatus" role="status" aria-live="polite"></p>
+        </form>
+        <p class="foot__legal" style="margin-top:1rem">If your mail app doesn't open, please email us at <a href="mailto:contact@2icorp.site">contact@2icorp.site</a>.</p>
+      </div>
+    </div>
+  </section>
+
 </main>
 
 <footer class="foot">
   <div class="wrap foot__inner">
     <div>
       <div class="brand"><span class="brand__mark">2i</span><span class="brand__tag">AX Consulting</span></div>
-      <div class="foot__legal">2i · Principal: Han Geumji · <a href="mailto:contact@2icorp.site">contact@2icorp.site</a></div>
+      <div class="foot__mono" style="margin-top:0.6rem">AI transformation for mid-market manufacturing and distribution</div>
+      <div class="foot__legal">2i · Founder: Han Geumji · Contact <a href="mailto:contact@2icorp.site">contact@2icorp.site</a></div>
     </div>
-    <nav class="foot__links" aria-label="Footer"><a href="/">한국어</a><a href="/papers.html">Papers</a><a href="/privacy.html">Privacy</a></nav>
+    <nav class="foot__links" aria-label="Footer menu">
+      <a href="about.html">About</a>
+      <a href="#method">Method</a>
+      <a href="comms.html">Telecom</a>
+      <a href="#pricing">Pricing</a>
+      <a href="#ideas">30 Ideas</a>
+      <a href="papers.html">Papers &amp; Experiments</a>
+      <a href="#voucher">Gov. Voucher</a>
+      <a href="privacy.html">Privacy Policy</a>
+      <a href="/">KO</a>
+    </nav>
   </div>
 </footer>
+
 <script src="../hero3d.js" defer></script>
-<script src="../main.js?v=3"></script>
+<script src="../main.js"></script>
 </body>
 </html>

@@ -10,7 +10,7 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../styles.css?v=20">
+<link rel="stylesheet" href="../styles.css?v=21">
 </head>
 <body>
 <header class="nav">
@@ -18,12 +18,16 @@
     <a class="brand" href="../"><span class="brand__mark">2i</span><span class="brand__tag">AX Consulting</span></a>
     <button class="nav__burger" type="button" aria-expanded="false" aria-controls="navLinks" aria-label="Open menu"><span></span><span></span><span></span></button>
     <nav class="nav__links" id="navLinks" aria-label="Main menu">
+      <a href="index.html#method">Method</a>
       <a href="cases.html">Cases</a>
+      <a href="tech.html">Tech</a>
       <a href="comms.html">Telecom</a>
       <a href="cloud.html">Cloud</a>
       <a href="finance.html">Finance</a>
       <a href="papers.html">Papers</a>
       <a href="about.html">About</a>
+      <a href="index.html#pricing">Pricing</a>
+      <a href="index.html#voucher">Gov Voucher</a>
       <a class="nav__lang" href="/cases.html">KO</a>
       <a class="nav__cta btn btn--signal" href="index.html#contact">Get in touch</a>
     </nav>
@@ -759,7 +763,7 @@
               <span class="chip chip--v">Eligible for government voucher</span>
             </div>
             <div class="case__proof">
-              <a class="chip chip--demo" href="../demos/15-edge-vlm-quant/">▶ Live demo · runs in your browser</a><span class="chip chip--live">recomputes when you change a value</span><a class="chip chip--doc" href="../papers/streaming-vlm-quantization-consumer-silicon.html">◆ 기술 논문: 실측 리포트</a>
+              <a class="chip chip--demo" href="../demos/15-edge-vlm-quant/">▶ Live demo · runs in your browser</a><span class="chip chip--live">recomputes when you change a value</span><a class="chip chip--doc" href="../papers/streaming-vlm-quantization-consumer-silicon.html">◆ Technical paper: measured report</a>
               <a class="chip chip--dl" href="../brochures/2i-brochure-15-GPU-서버-없이-영상-이해-AI가-될까-소비자용-실리콘에서-실측했다.pdf" download>Brochure PDF (KO) ↓</a>
             </div>
             <p class="case__tech"><span class="case__tech-k">Tech used</span> microsoft/Mage-VL (Mage-ViT plus Qwen3-4B), transformers plus torch plus Metal (MPS), optimum-quanto weight-only quantization (bf16/INT8/INT4), the mlx-lm fused low-bit kernel runtime, and Apple Silicon on-premise deployment. Measurement scope: the 89.7 tok/s figure is a standalone proxy for the language backbone (Qwen3-4B) that dominates decode, and MLX porting of the full mage_vl model, vision tower included, is the next commercialization task. The streaming codec (DCVC) is CUDA-only and unsupported locally.</p>
@@ -895,7 +899,7 @@
             <div class="ba"><div class="ba__head">Target metrics <span class="ba__note">· actual figures re-measured on your data</span></div><div class="ba__row"><span class="ba__m">Original recovery with vs. without the reverse channel (45% blur · 120 m)</span><span class="ba__b"><span class="ba__tag">Now</span><span class="ba__v">Without reverse channel: stalls on the forward link, incomplete (computed on synthetic data)</span></span><span class="ba__a"><span class="ba__tag ba__tag--a" aria-hidden="true">→</span><span class="sr-only">After</span><span class="ba__v">With reverse channel: refills only missing blocks, 100% recovery (computed on synthetic data)</span></span></div><div class="ba__row"><span class="ba__m">Retransmission in the high-loss regime</span><span class="ba__b"><span class="ba__tag">Now</span><span class="ba__v">Full retransmission wastes bandwidth and time (computed on synthetic data)</span></span><span class="ba__a"><span class="ba__tag ba__tag--a" aria-hidden="true">→</span><span class="sr-only">After</span><span class="ba__v">Targeted refill of only missing blocks, minimal retransmission (computed on synthetic data)</span></span></div><div class="ba__row"><span class="ba__m">Reference implementation (4KB payload encode+decode roundtrip)</span><span class="ba__b"><span class="ba__tag">Now</span><span class="ba__v">Gut-feel manual sneakernet, no reproducible basis</span></span><span class="ba__a"><span class="ba__tag ba__tag--a" aria-hidden="true">→</span><span class="sr-only">After</span><span class="ba__v">Deterministic pipeline about 38.6 microseconds, 59 tests passing (measured)</span></span></div></div>
             <div class="case__sowhat"><span class="case__k case__k--go">So what does this unlock</span><p>You can push models one direction into facilities that cannot be networked, and the operator can confirm in the browser that recovery hits 100% even after dropping many pieces. It also shows the path is a diode, so nothing leaks back out.</p></div>
             <div class="case__facts">
-              <span class="chip">2-4 weeks (진단 후 확정)</span>
+              <span class="chip">2-4 weeks (confirmed after the diagnostic)</span>
               <span class="chip chip--v">Eligible for government voucher</span>
             </div>
             <div class="case__proof">
