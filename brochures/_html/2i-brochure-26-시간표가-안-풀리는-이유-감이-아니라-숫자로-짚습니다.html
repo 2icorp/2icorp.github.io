@@ -1,0 +1,109 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+@page { size: A4; margin: 15mm 14mm 16mm; }
+* { box-sizing: border-box; }
+:root{
+  --ink:#1b2230; --soft:#4a5568; --faint:#78849a; --line:#e3e7ee; --panel:#f7f8fb;
+  --signal:#d9821f; --signal-deep:#b5661a; --steel:#3f5c88;
+  --sans:"Pretendard Variable",Pretendard,-apple-system,system-ui,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+}
+html,body{margin:0;font-family:var(--sans);color:var(--ink);line-height:1.6;font-size:10.5pt;}
+h1,h2,h3{margin:0;letter-spacing:-0.02em;line-height:1.15;}
+.mono{font-family:var(--mono);}
+.eyebrow{font-family:var(--mono);font-size:7.5pt;letter-spacing:0.16em;text-transform:uppercase;color:var(--steel);}
+.cover{border-bottom:2px solid var(--ink);padding-bottom:14px;margin-bottom:16px;}
+.cover__top{display:flex;justify-content:space-between;align-items:baseline;}
+.brand{font-weight:800;font-size:16pt;letter-spacing:-0.03em;}
+.brand b{font-family:var(--mono);color:var(--signal);}
+.brand small{font-family:var(--mono);font-size:7pt;letter-spacing:0.14em;color:var(--faint);text-transform:uppercase;margin-left:6px;}
+.doclabel{font-family:var(--mono);font-size:7.5pt;letter-spacing:0.12em;color:var(--faint);text-transform:uppercase;}
+.cover h1{font-size:22pt;font-weight:850;margin:15px 0 8px;}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px;}
+.chip{font-family:var(--mono);font-size:7.5pt;border:1px solid var(--line);border-radius:20px;padding:3px 9px;color:var(--soft);}
+.chip--c{color:var(--signal-deep);border-color:#efc999;background:#fdf5ea;}
+.chip--v{color:var(--steel);}
+.stakes-box{margin-top:12px;border:1px solid var(--line);border-left:3px solid var(--signal);border-radius:3px;padding:8px 12px;background:#fdf7ef;display:flex;justify-content:space-between;align-items:baseline;gap:12px;}
+.stakes-box .l{font-family:var(--mono);font-size:8pt;color:var(--faint);text-transform:uppercase;letter-spacing:0.04em;}
+.stakes-box .v{font-family:var(--mono);font-weight:600;font-size:13pt;color:var(--signal-deep);white-space:nowrap;}
+.sec{margin-top:15px;break-inside:avoid;}
+.sec h2{font-size:11.5pt;font-weight:800;display:flex;align-items:center;gap:8px;margin-bottom:7px;}
+.sec h2::before{content:"";width:14px;height:2px;background:var(--signal);display:inline-block;}
+.lead{color:var(--soft);}
+.steps{display:grid;gap:8px;margin-top:4px;}
+.step{border:1px solid var(--line);border-left:3px solid var(--steel);border-radius:3px;padding:9px 12px;background:var(--panel);break-inside:avoid;}
+.step b{font-family:var(--mono);font-size:8pt;letter-spacing:0.06em;color:var(--steel);text-transform:uppercase;}
+.step p{margin:3px 0 0;font-size:9.7pt;}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+.card{border:1px solid var(--line);border-radius:3px;padding:10px 12px;background:#fff;}
+.card h3{font-size:9.5pt;color:var(--signal-deep);font-family:var(--mono);letter-spacing:0.04em;text-transform:uppercase;margin-bottom:5px;}
+.card p, .card li{font-size:9.6pt;}
+.deliv{list-style:none;margin:0;padding:0;display:grid;gap:4px;}
+.deliv li{padding-left:15px;position:relative;}
+.deliv li::before{content:"■";position:absolute;left:0;color:var(--steel);font-size:7pt;top:3px;}
+.ba{width:100%;border-collapse:collapse;margin-top:4px;font-size:9.4pt;}
+.ba caption{font-family:var(--mono);font-size:7.5pt;color:var(--faint);text-align:left;padding:0 0 5px;letter-spacing:0.03em;}
+.ba th{font-family:var(--mono);font-size:7.5pt;letter-spacing:0.04em;text-transform:uppercase;color:var(--faint);text-align:left;padding:5px 8px;border-bottom:1px solid var(--line);font-weight:500;}
+.ba td{padding:6px 8px;border-bottom:1px solid var(--line);vertical-align:baseline;}
+.ba .m{color:var(--soft);}
+.ba .b{font-family:var(--mono);font-size:8.6pt;color:var(--faint);text-decoration:line-through;}
+.ba .arw{color:var(--signal);text-align:center;}
+.ba .a{font-family:var(--mono);font-size:8.6pt;font-weight:600;color:var(--signal-deep);}
+.sowhat{border:1px solid var(--line);border-radius:3px;padding:10px 12px;background:var(--panel);font-size:9.8pt;margin-top:4px;}
+.proof-line{margin-top:7px;font-family:var(--mono);font-size:8.6pt;color:var(--steel);}
+.proof-line b{color:var(--ink);}
+.faq{display:grid;gap:8px;}
+.faq div{break-inside:avoid;}
+.faq q{display:block;font-weight:700;font-size:9.8pt;}
+.faq p{margin:2px 0 0;font-size:9.5pt;color:var(--soft);}
+.foot{margin-top:18px;border-top:1px solid var(--line);padding-top:12px;display:flex;justify-content:space-between;align-items:flex-end;gap:14px;}
+.cta{background:var(--ink);color:#fff;border-radius:4px;padding:11px 14px;font-size:9.5pt;flex:1;}
+.cta b{color:var(--signal);}
+.disc{font-family:var(--mono);font-size:6.8pt;color:var(--faint);line-height:1.5;max-width:50%;}
+</style></head><body>
+<div class="cover">
+  <div class="cover__top">
+    <div class="brand"><b>2i</b><small>AX 컨설팅</small></div>
+    <div class="doclabel">Case Brief · No.26 · 2i 게이지 방식</div>
+  </div>
+  <div class="eyebrow" style="margin-top:14px">배정 최적화</div>
+  <h1>시간표가 안 풀리는 이유, 감이 아니라 숫자로 짚습니다</h1>
+  <div class="chips">
+    <span class="chip">학교 · 학원 · 교육기관</span>
+    <span class="chip chip--v">약 6주 (측정 2 + 실증 2 + 이관 2)</span>
+    <span class="chip chip--c">정부 바우처 적합</span>
+  </div>
+  <div class="stakes-box"><span class="l">문제의 대가 · 학급 40 규모 최적성 gap(3개 시드)</span><span class="v">0%, 2.4%, 95.5%로 시드마다 격차 (실측)</span></div>
+</div>
+
+<div class="sec"><h2>문제의 대가</h2><p class="lead">학교, 학원 시간표는 학급, 교사, 특별실 중복 금지와 교사 최대 시수, 같은 과목 하루 상한 같은 하드 제약을 반드시 지켜야 합니다. 담당자가 손으로 짜면 매 학기 같은 충돌을 다시 찾아 고치느라, 교사 기피 시간대나 과목 요일 분산 같은 소프트 조정까지는 손이 안 갑니다.</p></div>
+
+<div class="sec"><h2>통찰</h2><p class="lead">하드 제약은 협상 대상이 아니라서 얼마나 잘 지켰는지보다 못 채운 시수와 소프트 위반이 어디서 왜 생기는지가 더 중요한 질문입니다. 학급 8, 20 규모는 전 시드에서 최적성이 증명되지만 학급 40으로 커지면 3개 시드 중 하나는 gap이 95.5%까지 벌어져 시간 안에 증명이 끝나지 않습니다. 이건 모델이 나빠서가 아니라 규모가 탐색 예산을 넘어섰다는 뜻이고, 그 경계를 감추지 않고 숫자로 공개하는 것 자체가 설계입니다.</p></div>
+
+<div class="sec"><h2>2i의 방식</h2><p class="lead">학급, 교사, 특별실 중복 금지와 교사 최대 시수, 같은 과목 하루 2시간 상한을 하드 제약으로 두고, 주당 시수 충족은 매우 큰 벌점의 탄력 제약으로 둬 어떤 인스턴스에서도 INFEASIBLE로 죽지 않게 설계합니다. 그 위에서 교사 기피 시간대 회피와 과목 요일 분산을 소프트 가중치로 최적화하고, 소프트 가중치를 전부 0으로 끈 기준선과 비교해 실제 개선폭을 실측하며, 독립 검증기가 배정 결과만 받아 모든 제약을 처음부터 재계산합니다.</p></div>
+
+<div class="sec"><h2>게이지 방식으로 진행합니다 · 측정 → 실증 → 이관</h2><div class="steps"><div class="step"><b>측정 게이트</b><p>학급별 교과 시수, 교사 자격과 최대 시수, 특별실 용량을 정리하고, 현재 시간표 편성 방식에서 반복되는 충돌 유형과 기피시간대 반영률을 진단합니다.</p></div><div class="step"><b>실증 게이트</b><p>학급 8, 20, 40 규모에 3개 시드씩 CP-SAT로 풀어 소프트 가중치 0 기준선과 비교해 기피시간대, 요일분산 개선폭을 실측하고, 규모가 커질 때 최적성 gap이 어떻게 벌어지는지 함께 기록합니다.</p></div><div class="step"><b>이관 게이트</b><p>검증된 모델을 실제 학기 시간표 규모로 확장하고, 하드와 소프트 가중치, 시간 예산을 담당자가 조절할 수 있는 화면과 함께 넘깁니다.</p></div></div></div>
+
+<div class="sec two">
+  <div class="card"><h3>사용 기술</h3><p>CP-SAT 정수계획 모델(하드: 학급, 교사, 특별실 중복 금지, 교사 최대 시수, 같은 과목 하루 상한 / 탄력: 주당 시수 충족 / 소프트: 기피 시간대 회피, 요일 분산) + 가중치 0 기준선 대비 비교 + 독립 검증기. 합성 데이터 기반 레퍼런스 구현입니다.</p></div>
+  <div class="card"><h3>표준 산출물</h3><ul class="deliv"><li>AX 진단 보고서</li><li>현장 KPI baseline 계측</li><li>과제 우선순위 로드맵</li><li>작동하는 PoC</li><li>before/after 측정 리포트</li><li>본도입 판단 근거</li><li>운영 시스템</li><li>사내 이관 교육</li><li>운영 매뉴얼·문서</li></ul></div>
+</div>
+
+<div class="sec"><h2>목표 델타</h2><table class="ba"><caption>목표 지표 · 실제 수치는 귀사 데이터로 재측정</caption><tr><th>지표</th><th>현재</th><th></th><th>목표</th></tr><tr><td class="m">9개 인스턴스(학급 8/20/40 x 시드 3) 최적성</td><td class="b">손편성: 최적 여부 확인 불가</td><td class="arw">→</td><td class="a">학급 8, 20은 6개 시드 전부 OPTIMAL, 학급 40은 시드별 gap 0%, 2.4%, 95.5%로 정직 공개 (합성 데이터 실측)</td></tr><tr><td class="m">전 인스턴스 독립 검증 위반(학급, 교사, 특별실 중복 및 시수 상한 등)</td><td class="b">손편성: 확인 도구 없음</td><td class="arw">→</td><td class="a">9개 인스턴스 전부 위반 0건 (합성 데이터 실측)</td></tr><tr><td class="m">small 규모 기피 시간대 위반(가중치 0 대비)</td><td class="b">가중치 0(소프트 미반영): 22건</td><td class="arw">→</td><td class="a">기본 가중치: 0건, -100% (합성 데이터 실측)</td></tr><tr><td class="m">small 규모 같은 과목 하루 몰림 위반(가중치 0 대비)</td><td class="b">가중치 0(소프트 미반영): 15건</td><td class="arw">→</td><td class="a">기본 가중치: 0건, -100% (합성 데이터 실측)</td></tr></table></div>
+
+<div class="sec"><h2>그래서 무엇이 열리나</h2><div class="sowhat">하드 제약은 예외 없이 지키고, 소프트 선호는 실측으로 개선하되, 규모가 커져 증명이 흔들리는 지점은 숨기지 않고 gap 수치로 그대로 보여드립니다. 같은 로직이 학원 시간표, 연수원 강의실 배정, 사내 교육 스케줄에도 그대로 적용됩니다.</div></div>
+
+<div class="sec two">
+  <div class="card"><h3>정부 바우처 활용</h3><p>정부 바우처 적합 지원 규모·요건은 연도별 공고에 따르며, 복잡한 신청·행정은 2i가 함께 처리합니다.</p></div>
+  <div class="card"><h3>왜 2i인가</h3><p>대형 SI가 안 건드리는 중소·중견의 소규모·비정형 과제를, 진단부터 이관까지 한 사람이 책임지고 봅니다. 화려한 제안서 대신 측정된 진단과 검증된 PoC로 신뢰를 먼저 만듭니다.</p></div>
+</div>
+
+<div class="sec"><h2>자주 묻는 질문</h2><div class="faq"><div><q>Q. 데이터가 정리돼 있지 않아도 되나요?</q><p>네. 측정 게이트가 바로 흩어진 데이터와 현장을 정리해 무엇부터 할지 정하는 단계입니다. 준비가 안 됐다는 것 자체가 출발점입니다.</p></div><div><q>Q. 기간과 비용은 어느 정도인가요?</q><p>이 사례 기준 약 6주 (측정 2 + 실증 2 + 이관 2) 정도이며, 범위와 데이터 상태에 따라 조정됩니다. 상당 부분을 정부 AX 바우처로 충당해 실부담을 크게 낮출 수 있습니다.</p></div><div><q>Q. 하다가 안 되면 어떻게 되나요?</q><p>그래서 실증 게이트가 있습니다. 큰돈을 걸기 전에 될지 안 될지를 작은 실증으로 먼저 확인하고, 목표 델타에 못 미치면 확장하지 않습니다.</p></div><div><q>Q. 사람 일자리를 없애는 건가요?</q><p>아닙니다. 사람을 대체하는 게 아니라, 반복 업무를 걷어내 사람이 판단과 관계에 집중하도록 속도와 정확도를 보완하는 방식입니다.</p></div></div></div>
+
+<div class="foot">
+  <div class="cta">먼저 <b>무료 자가진단</b> 또는 30분 상담으로 시작하세요. 귀사에 맞는 시작점을 함께 찾습니다. &nbsp;·&nbsp; <b>2i</b> AX 컨설팅</div>
+  <div class="disc">본 브로셔는 2i의 역량을 보여주는 시나리오형 예시입니다. 특정 실존 고객의 완료 실적이 아니며, 목표 수치는 업계 통상 기대치입니다. 실제 진행 시 귀사 데이터로 다시 측정합니다.</div>
+</div>
+</body></html>
