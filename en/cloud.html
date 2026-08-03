@@ -280,8 +280,22 @@
           <span class="rf-metric">2<small>x</small></span>
           <span class="rf-unit">usable capacity on the same disks</span>
           <span class="rf-name">Build · cheap hardware does not help if you lose it back in efficiency</span>
-          <span class="rf-desc">Tolerating the same two simultaneous losses, erasure coding stores 682 GiB per raw TiB where 3x replication stores 341 GiB. Exactly double. Money saved on cheaper hardware disappears if half the capacity goes with it. At this scale reconstruct timings reorder between runs, so we refuse to claim either is faster and publish the deterministic byte counts instead.</span>
-          <span class="chip chip--v">Measured · compared at equal fault tolerance</span>
+          <span class="rf-desc">Tolerating the same two simultaneous losses, we put 1.45 GB of real model weights through both. Three-way replication writes 4.58 GB to disk; erasure coding writes 2.29 GB. Exactly double. These are not synthetic bytes: the store ran as six pods on Kubernetes and we measured what actually landed on disk. The 0.3 percentage-point gap from theory is the checksum header. Money saved on cheaper hardware disappears if half the capacity goes with it.</span>
+          <span class="chip chip--v">Measured · real model weights, equal fault tolerance</span>
+        </div>
+        <div class="rf-cell">
+          <span class="rf-metric">4<small> defects</small></span>
+          <span class="rf-unit">found while every suite was green</span>
+          <span class="rf-name">Verify · a pass rate does not mean it works</span>
+          <span class="rf-desc">With our own 40-item harness, 205 cases of the S3 conformance suite and our unit tests all passing, we deployed the store as pods on Kubernetes and attached production clients. The gateway died within a minute, and three more defects surfaced over the next few hours. All four came from two axes we had never tested along: feature combinations, and clients we did not write. A hundred more cases on the same axis would have found none of them. We published every defect and the reason our tests could not see it.</span>
+          <span class="chip chip--v">Measured · four defects, each with the reason it went unseen</span>
+        </div>
+        <div class="rf-cell">
+          <span class="rf-metric">311<small> shards, 6s</small></span>
+          <span class="rf-unit">vLLM streaming a model straight out of this store</span>
+          <span class="rf-name">Verify · a real serving stack actually uses it</span>
+          <span class="rf-desc">On a GPU node, vLLM used our store as its backing store, streamed the model and served inference. 311 safetensors shards in 6 seconds; model loading took 7.96 seconds. We also fed it training checkpoints: 20 of them, 4.03 GB total, at 117 MB/s, while force-deleting a storage node mid-run. Zero write failures, all 20 checksums matched, and training resumed from the last checkpoint.</span>
+          <span class="chip chip--v">Measured · GPU serving and training checkpoints, node killed under load</span>
         </div>
         <div class="rf-cell">
           <span class="rf-metric">50.2 &rarr; 0<small>%</small></span>

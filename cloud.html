@@ -285,8 +285,22 @@
           <span class="rf-metric">2<small>배</small></span>
           <span class="rf-unit">같은 디스크에 담기는 양</span>
           <span class="rf-name">만든다 · 싸게 사도 저장 효율에서 잃으면 남는 게 없다</span>
-          <span class="rf-desc">동시 손실 2개를 똑같이 견디는 조건에서, 소거 부호는 원시 1TiB에 682GiB를 담고 3중 복제는 341GiB를 담습니다. 정확히 두 배입니다. 하드웨어를 싸게 사서 아낀 돈을 저장 효율에서 절반 잃으면 비용 논리가 성립하지 않습니다. 복원 속도는 이 규모에서 순위가 뒤바뀌어 어느 쪽이 빠르다고 말하지 않고, 읽고 쓴 바이트 수만 싣습니다.</span>
-          <span class="chip chip--v">실측 · 내고장성 동일 조건에서 비교</span>
+          <span class="rf-desc">동시 손실 2개를 똑같이 견디는 조건에서 실제 모델 가중치 1.45GB를 넣어 봤습니다. 3중 복제는 디스크에 4.58GB를 쓰고 소거 부호는 2.29GB를 씁니다. 정확히 두 배입니다. 합성 데이터가 아니라 쿠버네티스에 파드로 띄운 노드 여섯 대에 실제로 넣고 잰 값이고, 이론값과의 차이 0.3퍼센트포인트는 체크섬 헤더입니다. 하드웨어를 싸게 사서 아낀 돈을 저장 효율에서 절반 잃으면 비용 논리가 성립하지 않습니다.</span>
+          <span class="chip chip--v">실측 · 실제 모델 가중치, 내고장성 동일 조건</span>
+        </div>
+        <div class="rf-cell">
+          <span class="rf-metric">4<small>건</small></span>
+          <span class="rf-unit">표준 스위트가 전부 통과한 상태에서 나온 결함</span>
+          <span class="rf-name">확인한다 · 통과율은 쓸 수 있다를 뜻하지 않는다</span>
+          <span class="rf-desc">저희 하네스 40항목, S3 표준 스위트 205건, 자체 테스트가 전부 통과하는 상태에서 저희 저장소를 쿠버네티스에 파드로 띄우고 프로덕션 클라이언트를 붙였습니다. 게이트웨이가 1분 만에 죽었고 몇 시간 안에 결함이 세 건 더 나왔습니다. 네 건 모두 기능 조합과 다른 클라이언트라는 두 축에서 나왔고, 케이스를 백 개 더 짜도 같은 축이면 결과는 같았을 것입니다. 무엇이 왜 안 잡혔는지 전부 공개했습니다.</span>
+          <span class="chip chip--v">실측 · 결함 4건과 각각이 안 잡힌 이유 공개</span>
+        </div>
+        <div class="rf-cell">
+          <span class="rf-metric">311<small>조각 6초</small></span>
+          <span class="rf-unit">vLLM이 이 저장소에서 직접 모델을 스트리밍</span>
+          <span class="rf-name">확인한다 · 서빙 스택이 실제로 이 저장소를 쓴다</span>
+          <span class="rf-desc">GPU 노드에서 vLLM이 저희 저장소를 백킹 스토어로 삼아 모델을 스트리밍하고 추론을 서빙합니다. safetensors 311조각을 6초에 받고 모델 로딩은 7.96초입니다. 학습 체크포인트도 받아 봤습니다. 20개 4.03GB를 초당 117MB로 받는 도중 저장 노드를 강제 삭제했는데 저장 실패 0건, 체크섬 20개 전부 일치, 마지막 체크포인트에서 학습이 재개됐습니다.</span>
+          <span class="chip chip--v">실측 · GPU 서빙과 학습 체크포인트, 부하 중 노드 삭제</span>
         </div>
         <div class="rf-cell">
           <span class="rf-metric">50.2 → 0<small>%</small></span>
