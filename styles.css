@@ -239,7 +239,7 @@ svg { max-width: 100%; }
 @media (max-width: 900px) { .hero__grid { grid-template-columns: 1fr; } }
 
 .hero h1 { font-size: var(--text-hero); font-weight: 850; }
-.hero h1 .accent { color: var(--signal); }
+.hero h1 .accent { color: var(--signal-deep); }
 .hero h1 .u { display: inline-block; position: relative; }
 .hero h1 .u::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0.06em; height: 0.14em; background: var(--signal); opacity: 0.35; }
 .hero__lede { margin-top: 1.5rem; max-width: 30ch; color: var(--ink-soft); font-size: 1.14rem; }
@@ -517,7 +517,7 @@ section[id] { scroll-margin-top: 80px; }
 .method { padding-block: clamp(2rem, 1rem + 3vw, 4rem); }
 .method__head { max-width: 60ch; }
 .method__head h2 { font-size: var(--text-h2); margin-top: 0.9rem; }
-.method__head h2 .accent { color: var(--signal); }
+.method__head h2 .accent { color: var(--signal-deep); }
 .method__head p { margin-top: 1rem; color: var(--ink-soft); }
 .gates3 { list-style: none; margin: 2rem 0 0; padding: 0; display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--line); border: 1px solid var(--line); border-radius: 5px; overflow: hidden; }
 @media (max-width: 780px) { .gates3 { grid-template-columns: 1fr; } }
@@ -1011,10 +1011,10 @@ section[id] { scroll-margin-top: 80px; }
   position: absolute; top: 0.7rem; left: 0.7rem; z-index: 2;
   font-family: var(--mono); font-size: var(--text-xs); letter-spacing: 0.08em;
   padding: 0.28rem 0.6rem; border-radius: 999px;
-  background: var(--signal); color: var(--paper); font-weight: 600;
+  background: var(--signal); color: oklch(22% 0.03 60); font-weight: 600;
   display: inline-flex; align-items: center; gap: 0.4rem;
 }
-.vcard__flag i { width: 0.4rem; height: 0.4rem; border-radius: 50%; background: var(--paper); }
+.vcard__flag i { width: 0.4rem; height: 0.4rem; border-radius: 50%; background: currentColor; }
 .vcard__meta { padding: 1.1rem 1.2rem 1.3rem; }
 .vcard__tags { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 0.6rem; }
 .vcard__tag {
@@ -1109,7 +1109,7 @@ section[id] { scroll-margin-top: 80px; }
 @media (max-width: 900px) { .chero__stats { grid-template-columns: repeat(2, 1fr); } }
 .cstat { border: 1px solid var(--line); border-radius: var(--radius); background: var(--panel); padding: 1rem 1.1rem; transition: transform var(--dur) var(--ease), box-shadow var(--dur) var(--ease); }
 .cstat:hover { transform: translateY(-3px); box-shadow: 0 18px 34px -24px oklch(24% 0.02 255 / 0.5); }
-.cstat__n { display: block; font-family: var(--mono); font-size: 1.7rem; font-weight: 600; color: var(--signal); letter-spacing: -0.01em; }
+.cstat__n { display: block; font-family: var(--mono); font-size: 1.7rem; font-weight: 600; color: var(--signal-deep); letter-spacing: -0.01em; }
 .cstat__n small { font-size: 0.9rem; color: var(--ink-faint); }
 .cstat__l { display: block; margin-top: 0.3rem; font-size: 0.8rem; color: var(--ink-soft); line-height: 1.45; }
 
@@ -1147,7 +1147,7 @@ section[id] { scroll-margin-top: 80px; }
 .pstage__chips { margin-top: 0.85rem; display: flex; flex-wrap: wrap; gap: 0.45rem; }
 .pchip { font-family: var(--mono); font-size: 0.7rem; letter-spacing: 0.04em; border: 1px solid var(--line); border-radius: 999px; padding: 0.28rem 0.66rem; color: var(--ink-soft); background: var(--panel); }
 .pstage__card--hero .pchip { background: transparent; border-color: oklch(50% 0.02 255); color: oklch(88% 0.01 85); }
-.pchip.badge-v { border-color: oklch(72% 0.16 65 / 0.7); color: var(--signal); font-weight: 600; }
+.pchip.badge-v { border-color: oklch(72% 0.16 65 / 0.7); color: var(--signal-deep); font-weight: 600; }
 .pstage__kpis { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.8rem; margin-top: 1rem; }
 @media (max-width: 720px) { .pstage__kpis { grid-template-columns: 1fr; } }
 .pkpi { border: 1px solid oklch(50% 0.02 255); border-radius: var(--radius); padding: 0.75rem 0.85rem; }
@@ -1251,3 +1251,12 @@ canvas.hero3d { display: block; width: 100%; height: 100%; }
   font-family: var(--mono);
   color: var(--ink-soft);
 }
+
+/* ---------- 대비 교정 (2026-08-03, check_uiux.py 실측) ----------
+   1) 상단 CTA: `.nav__links a` 가 `--ink-soft` 로 색을 덮어써 주황 버튼 위 글자가
+      회색(2.56:1)으로 나갔다. .btn--signal 이 의도한 짙은 글자(--fg)로 되돌린다.
+   2) 반전 패널(.cta) 안의 ghost 버튼: --fg 가 var(--ink) 인데 패널 배경도 var(--ink) 라
+      글자가 배경과 같은 색이 됐다(1:1 = 사실상 안 보임). 반전색으로 뒤집는다. */
+.nav__links a.nav__cta { color: var(--fg); }
+.cta .btn--ghost { --fg: var(--invert-fg); border-color: oklch(100% 0 0 / 0.4); }
+.cta .btn--ghost:hover { border-color: var(--invert-fg); }
