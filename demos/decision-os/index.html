@@ -263,28 +263,42 @@
   <!-- ============ TAB 5: 배달 디스패치 ============ -->
   <div class="tabpanel" id="panel-delivery" role="tabpanel" aria-labelledby="tab-btn-delivery" data-panel="delivery" hidden>
     <section>
-      <h2 class="sec-title">라이더 한 명이 빠지면 나머지가 어떻게 재배정되나</h2>
-      <p class="sec-desc">식당 4곳, 배달지 12곳, 라이더 4명의 합성 도시 지도입니다. 라이더가 픽업지에서 배달지로 이동하는 경로를 애니메이션으로 봅니다.</p>
+      <h2 class="sec-title">그리디로 짠 경로보다 CP-SAT로 짠 경로가 얼마나 나은가</h2>
+      <p class="sec-desc">합성 도시 실측(주문 120·라이더 15), CP-SAT two-phase(1차 커버리지+지각, 2차 이동거리), 독립 검증기 위반 0. 같은 인스턴스를 부하균형 그리디 휴리스틱과 CP-SAT solver 양쪽으로 풀어 실제로 나온 값을 대조합니다.</p>
     </section>
+
+    <section class="stat-row" id="deliveryHeadline" aria-live="polite"></section>
 
     <section class="card controls-row" aria-label="시나리오 전환">
       <button type="button" class="btn btn--go" id="deliveryPlayBtn">경로 재생</button>
-      <button type="button" class="btn" id="deliveryDropoutBtn">라이더 1명 이탈 → 동적 재배정</button>
+      <button type="button" class="btn" id="deliveryDropoutBtn">라이더 3명 이탈 → 재편성(warm)</button>
       <button type="button" class="btn" id="deliveryResetBtn">초기화</button>
-      <span class="control__val" id="deliveryScenarioLabel">전원 가동</span>
+      <span class="control__val" id="deliveryScenarioLabel">CP-SAT 정식 해</span>
     </section>
 
     <section class="stat-row" id="deliveryStats" aria-live="polite"></section>
 
     <section class="card" style="padding:1.2rem clamp(1rem, 2vw, 1.6rem);">
       <h3>도시 지도</h3>
-      <p class="sec-desc">원은 식당, 사각형은 배달지, 점은 라이더입니다. 이 지도와 경로는 합성 데이터입니다(아래 정직 고지 참고).</p>
+      <p class="sec-desc">원은 식당, 사각형은 배달지(빈 사각형은 미배정 주문), 점은 라이더입니다. 좌표는 이 인스턴스의 실제 생성기 출력값을 그대로 축척만 바꿔 그립니다.</p>
+      <div class="legend">
+        <span><span class="swatch" style="background:var(--signal);border-radius:50%;"></span>식당</span>
+        <span><span class="swatch" style="background:var(--ink-faint);"></span>배달지</span>
+        <span><span class="swatch" style="background:transparent;border:1.5px dashed var(--signal-deep);"></span>미배정 주문</span>
+        <span><span class="swatch" style="background:var(--paper-2);border:1.5px dashed var(--ink-faint);border-radius:50%;"></span>이탈 라이더</span>
+      </div>
       <canvas id="deliveryCanvas" width="900" height="500" role="img" aria-label="배달 디스패치 도시 지도와 라이더 경로 애니메이션" style="width:100%;height:auto;border:1px solid var(--line);border-radius:var(--radius);background:var(--paper-2);"></canvas>
+    </section>
+
+    <section class="card" style="padding:1.2rem clamp(1rem, 2vw, 1.6rem);">
+      <h3>라이더 이탈 + 주문 서지 재편성(cold vs warm)</h3>
+      <p class="sec-desc">라이더 15명 중 3명(20%)이 이탈하고 신규 주문 10건이 몰린 뒤, 기존 배정 정보 없이 처음부터 다시 푼 해(cold)와 기존 배정을 웜스타트 힌트로 준 해(warm)를 대조합니다.</p>
+      <div class="stat-row" id="deliveryReoptHeadline" aria-live="polite"></div>
     </section>
 
     <section class="honest">
       <h2>정직하게 말하면</h2>
-      <p>이 탭은 랩(<code>ws-lab</code>)에 배달 디스패치 도메인이 아직 없어서 이 데모만을 위해 새로 만든 <b>합성 데이터</b>입니다. 도시 지도, 식당·배달지 위치, 라이더 이동은 전부 고정 시드 난수로 생성했고, 경로 배정은 정식 VRP(차량경로문제) solver가 아니라 부하균형 그리디 최근접-라이더 삽입 휴리스틱입니다. 실제 배차 시스템은 도로망·교통 상황·다건 동시배차 제약을 추가로 풀어야 합니다.</p>
+      <p>도시·식당·주문·라이더는 실명·실제 배달 플랫폼 없이 만든 <b>합성 도시</b>입니다(실제 도로망이 아니라 유클리드 평면 좌표). 다만 이 탭에 나오는 배정·경로·지표는 그 합성 인스턴스를 실제 OR-Tools CP-SAT solver(two-phase, 독립 검증기 위반 0건 확인)로 직접 풀어 나온 <b>실측값</b>이며, 지어낸 수치가 아닙니다. 두 solve 모두 시간제한 안의 FEASIBLE 해이지 증명된 최적해가 아니고(대역폭 갭이 남아 있습니다), 실제 배차 시스템이라면 실제 도로망·교통 상황·다건 동시배차 제약을 추가로 풀어야 합니다.</p>
     </section>
   </div>
 

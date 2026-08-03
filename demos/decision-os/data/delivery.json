@@ -1,646 +1,3291 @@
 {
-"source": "합성 데모 데이터(ws-lab에 delivery-dispatch 도메인이 없어 이 탭 전용으로 새로 생성). 랜덤 시드 고정, 부하균형 그리디 최근접-라이더 삽입 휴리스틱(정식 VRP solver 아님).",
+"source": "합성 도시 실측(주문 120·라이더 15), CP-SAT two-phase, 독립 검증기 위반 0. delivery-dispatch 도메인 generate.generate_instance(size=medium, seed=1) + out/solutions/medium_seed1.json(CP-SAT) + out/results.json(그리디 대조) + out/reoptimize.json + out/reopt-180s/(라이더 20% 이탈 + 서지 10건 cold/warm 재편성 비교).",
 "map": {
 "width": 900,
 "height": 500
 },
 "restaurants": [
 {
-"id": "R1",
-"label": "식당 A",
-"x": 692.1,
-"y": 167.2
-},
-{
-"id": "R2",
-"label": "식당 B",
-"x": 536.4,
-"y": 110.4
-},
-{
-"id": "R3",
-"label": "식당 C",
-"x": 319.1,
-"y": 299.9
-},
-{
-"id": "R4",
-"label": "식당 D",
-"x": 567.9,
-"y": 317.0
-}
-],
-"orders": [
-{
-"id": "O1",
-"restaurant_id": "R3",
-"dropoff": {
-"x": 190.8,
-"y": 100.3
-}
-},
-{
-"id": "O2",
-"restaurant_id": "R3",
-"dropoff": {
-"x": 518.5,
-"y": 411.7
-}
-},
-{
-"id": "O3",
-"restaurant_id": "R1",
-"dropoff": {
-"x": 581.4,
-"y": 236.1
-}
-},
-{
-"id": "O4",
-"restaurant_id": "R1",
-"dropoff": {
-"x": 663.3,
-"y": 303.6
-}
-},
-{
-"id": "O5",
-"restaurant_id": "R1",
-"dropoff": {
-"x": 395.0,
-"y": 266.0
-}
-},
-{
-"id": "O6",
-"restaurant_id": "R2",
-"dropoff": {
-"x": 470.9,
-"y": 407.7
-}
-},
-{
-"id": "O7",
-"restaurant_id": "R2",
-"dropoff": {
-"x": 779.2,
-"y": 145.1
-}
-},
-{
-"id": "O8",
-"restaurant_id": "R2",
-"dropoff": {
-"x": 630.9,
-"y": 73.0
-}
-},
-{
-"id": "O9",
-"restaurant_id": "R4",
-"dropoff": {
-"x": 389.2,
-"y": 355.4
-}
-},
-{
-"id": "O10",
-"restaurant_id": "R1",
-"dropoff": {
-"x": 458.3,
-"y": 240.8
-}
-},
-{
-"id": "O11",
-"restaurant_id": "R2",
-"dropoff": {
+"id": "R01",
+"label": "R01",
 "x": 98.4,
-"y": 241.6
-}
+"y": 398.6
 },
 {
-"id": "O12",
-"restaurant_id": "R1",
-"dropoff": {
-"x": 247.2,
-"y": 315.0
-}
+"id": "R02",
+"label": "R02",
+"x": 372.2,
+"y": 140.9
+},
+{
+"id": "R03",
+"label": "R03",
+"x": 255.5,
+"y": 225.5
+},
+{
+"id": "R04",
+"label": "R04",
+"x": 323.5,
+"y": 373.1
+},
+{
+"id": "R05",
+"label": "R05",
+"x": 80.9,
+"y": 42.3
+},
+{
+"id": "R06",
+"label": "R06",
+"x": 403.5,
+"y": 218.2
+},
+{
+"id": "R07",
+"label": "R07",
+"x": 371.6,
+"y": 30.9
+},
+{
+"id": "R08",
+"label": "R08",
+"x": 233.7,
+"y": 343.9
+},
+{
+"id": "R09",
+"label": "R09",
+"x": 139.5,
+"y": 441.2
+},
+{
+"id": "R10",
+"label": "R10",
+"x": 432.1,
+"y": 43.3
+},
+{
+"id": "R11",
+"label": "R11",
+"x": 51.0,
+"y": 265.5
+},
+{
+"id": "R12",
+"label": "R12",
+"x": 448.5,
+"y": 195.9
+},
+{
+"id": "R13",
+"label": "R13",
+"x": 134.2,
+"y": 213.6
+},
+{
+"id": "R14",
+"label": "R14",
+"x": 52.6,
+"y": 126.4
+},
+{
+"id": "R15",
+"label": "R15",
+"x": 230.5,
+"y": 245.6
+},
+{
+"id": "R16",
+"label": "R16",
+"x": 141.4,
+"y": 130.5
+},
+{
+"id": "R17",
+"label": "R17",
+"x": 135.1,
+"y": 230.0
+},
+{
+"id": "R18",
+"label": "R18",
+"x": 166.0,
+"y": 39.3
+},
+{
+"id": "R19",
+"label": "R19",
+"x": 404.4,
+"y": 272.0
+},
+{
+"id": "R20",
+"label": "R20",
+"x": 319.4,
+"y": 110.9
 }
 ],
+"headline_cp_vs_greedy": {
+"cp": {
+"n_unassigned": 46,
+"total_distance": 410.77,
+"assignment_rate_pct": 61.67,
+"on_time_rate_pct": 47.3
+},
+"greedy": {
+"n_unassigned": 60,
+"total_distance": 626.05
+},
+"delta_pct": {
+"unassigned": -23.3,
+"distance": -34.4
+}
+},
+"reoptimize_headline": {
+"scenario_tag": "medium_seed1_dep20pct_surge10",
+"departed_rider_ids": [
+"C001",
+"C002",
+"C003"
+],
+"n_surge_orders": 10,
+"cold": {
+"n_unassigned": 67,
+"total_late_minutes": 1762.0,
+"total_distance": 319.63,
+"changed_orders_vs_confirmed": 54
+},
+"warm": {
+"n_unassigned": 64,
+"total_late_minutes": 1735.0,
+"total_distance": 306.38,
+"changed_orders_vs_confirmed": 43
+},
+"delta_warm_minus_cold": {
+"changed_orders": -11,
+"total_late_minutes": -27.0,
+"n_unassigned": -3
+}
+},
 "scenarios": {
-"normal": {
-"label": "전원 가동 (라이더 4명)",
+"assigned": {
+"label": "CP-SAT 정식 해 (라이더 15명)",
+"n_unassigned": 46,
+"total_distance": 410.77,
 "routes": {
-"D1": {
+"C001": {
 "rider_label": "라이더 1",
 "waypoints": [
 {
-"x": 401.9,
-"y": 386.2,
+"x": 115.3,
+"y": 268.7,
 "type": "start",
-"label": "라이더 1"
+"label": "출발"
 },
 {
-"x": 536.4,
-"y": 110.4,
+"x": 134.2,
+"y": 213.6,
 "type": "pickup",
-"label": "식당 B",
-"order_id": "O7"
+"label": "R13",
+"order_id": "O0022"
 },
 {
-"x": 779.2,
-"y": 145.1,
-"type": "dropoff",
-"label": "O7",
-"order_id": "O7"
-},
-{
-"x": 692.1,
-"y": 167.2,
+"x": 134.2,
+"y": 213.6,
 "type": "pickup",
-"label": "식당 A",
-"order_id": "O12"
+"label": "R13",
+"order_id": "O0001"
 },
 {
-"x": 247.2,
-"y": 315.0,
-"type": "dropoff",
-"label": "O12",
-"order_id": "O12"
-},
-{
-"x": 319.1,
-"y": 299.9,
+"x": 134.2,
+"y": 213.6,
 "type": "pickup",
-"label": "식당 C",
-"order_id": "O1"
+"label": "R13",
+"order_id": "O0039"
 },
 {
-"x": 190.8,
-"y": 100.3,
+"x": 122.9,
+"y": 157.9,
 "type": "dropoff",
-"label": "O1",
-"order_id": "O1"
+"label": "O0039",
+"order_id": "O0039"
+},
+{
+"x": 106.7,
+"y": 145.4,
+"type": "dropoff",
+"label": "O0022",
+"order_id": "O0022"
+},
+{
+"x": 85.4,
+"y": 148.5,
+"type": "dropoff",
+"label": "O0001",
+"order_id": "O0001"
+},
+{
+"x": 52.6,
+"y": 126.4,
+"type": "pickup",
+"label": "R14",
+"order_id": "O0015"
+},
+{
+"x": 52.6,
+"y": 126.4,
+"type": "pickup",
+"label": "R14",
+"order_id": "O0078"
+},
+{
+"x": 52.6,
+"y": 126.4,
+"type": "pickup",
+"label": "R14",
+"order_id": "O0034"
+},
+{
+"x": 85.8,
+"y": 133.7,
+"type": "dropoff",
+"label": "O0078",
+"order_id": "O0078"
+},
+{
+"x": 52.6,
+"y": 126.4,
+"type": "pickup",
+"label": "R14",
+"order_id": "O0004"
+},
+{
+"x": 135.3,
+"y": 119.6,
+"type": "dropoff",
+"label": "O0004",
+"order_id": "O0004"
+},
+{
+"x": 141.4,
+"y": 130.5,
+"type": "pickup",
+"label": "R16",
+"order_id": "O0118"
+},
+{
+"x": 52.2,
+"y": 78.0,
+"type": "dropoff",
+"label": "O0118",
+"order_id": "O0118"
+},
+{
+"x": 40.0,
+"y": 90.5,
+"type": "dropoff",
+"label": "O0034",
+"order_id": "O0034"
+},
+{
+"x": 40.0,
+"y": 62.0,
+"type": "dropoff",
+"label": "O0015",
+"order_id": "O0015"
 }
 ],
 "orders": [
-"O7",
-"O12",
-"O1"
+"O0001",
+"O0004",
+"O0015",
+"O0022",
+"O0034",
+"O0039",
+"O0078",
+"O0118"
 ],
 "offline_after": false,
-"route_length": 1421.5
+"route_length": 509.5
 },
-"D2": {
+"C002": {
 "rider_label": "라이더 2",
 "waypoints": [
 {
-"x": 812.8,
-"y": 247.0,
+"x": 231.0,
+"y": 251.1,
 "type": "start",
-"label": "라이더 2"
+"label": "출발"
 },
 {
-"x": 692.1,
-"y": 167.2,
+"x": 233.7,
+"y": 343.9,
 "type": "pickup",
-"label": "식당 A",
-"order_id": "O3"
+"label": "R08",
+"order_id": "O0026"
 },
 {
-"x": 581.4,
-"y": 236.1,
+"x": 282.4,
+"y": 430.8,
 "type": "dropoff",
-"label": "O3",
-"order_id": "O3"
+"label": "O0026",
+"order_id": "O0026"
 },
 {
-"x": 567.9,
-"y": 317.0,
+"x": 323.5,
+"y": 373.1,
 "type": "pickup",
-"label": "식당 D",
-"order_id": "O9"
+"label": "R04",
+"order_id": "O0003"
 },
 {
-"x": 389.2,
-"y": 355.4,
+"x": 389.5,
+"y": 312.3,
 "type": "dropoff",
-"label": "O9",
-"order_id": "O9"
+"label": "O0003",
+"order_id": "O0003"
 },
 {
-"x": 536.4,
-"y": 110.4,
+"x": 404.4,
+"y": 272.0,
 "type": "pickup",
-"label": "식당 B",
-"order_id": "O8"
+"label": "R19",
+"order_id": "O0114"
 },
 {
-"x": 630.9,
-"y": 73.0,
+"x": 388.7,
+"y": 169.6,
 "type": "dropoff",
-"label": "O8",
-"order_id": "O8"
+"label": "O0114",
+"order_id": "O0114"
 },
 {
-"x": 692.1,
-"y": 167.2,
+"x": 372.2,
+"y": 140.9,
 "type": "pickup",
-"label": "식당 A",
-"order_id": "O10"
+"label": "R02",
+"order_id": "O0116"
 },
 {
-"x": 458.3,
-"y": 240.8,
+"x": 385.0,
+"y": 41.5,
 "type": "dropoff",
-"label": "O10",
-"order_id": "O10"
+"label": "O0116",
+"order_id": "O0116"
 }
 ],
 "orders": [
-"O3",
-"O9",
-"O8",
-"O10"
+"O0003",
+"O0026",
+"O0114",
+"O0116"
 ],
 "offline_after": false,
-"route_length": 1284.8
+"route_length": 632.9
 },
-"D3": {
+"C003": {
 "rider_label": "라이더 3",
 "waypoints": [
 {
-"x": 178.1,
-"y": 87.1,
+"x": 253.0,
+"y": 42.9,
 "type": "start",
-"label": "라이더 3"
+"label": "출발"
 },
 {
-"x": 536.4,
-"y": 110.4,
+"x": 371.6,
+"y": 30.9,
 "type": "pickup",
-"label": "식당 B",
-"order_id": "O11"
+"label": "R07",
+"order_id": "O0020"
 },
 {
-"x": 98.4,
-"y": 241.6,
-"type": "dropoff",
-"label": "O11",
-"order_id": "O11"
-},
-{
-"x": 319.1,
-"y": 299.9,
+"x": 371.6,
+"y": 30.9,
 "type": "pickup",
-"label": "식당 C",
-"order_id": "O2"
+"label": "R07",
+"order_id": "O0013"
 },
 {
-"x": 518.5,
-"y": 411.7,
+"x": 310.3,
+"y": 30.0,
 "type": "dropoff",
-"label": "O2",
-"order_id": "O2"
+"label": "O0013",
+"order_id": "O0013"
+},
+{
+"x": 333.5,
+"y": 30.0,
+"type": "dropoff",
+"label": "O0020",
+"order_id": "O0020"
+},
+{
+"x": 371.6,
+"y": 30.9,
+"type": "pickup",
+"label": "R07",
+"order_id": "O0041"
+},
+{
+"x": 371.6,
+"y": 30.9,
+"type": "pickup",
+"label": "R07",
+"order_id": "O0054"
+},
+{
+"x": 377.4,
+"y": 30.0,
+"type": "dropoff",
+"label": "O0054",
+"order_id": "O0054"
+},
+{
+"x": 371.6,
+"y": 30.9,
+"type": "pickup",
+"label": "R07",
+"order_id": "O0063"
+},
+{
+"x": 371.6,
+"y": 30.9,
+"type": "pickup",
+"label": "R07",
+"order_id": "O0009"
+},
+{
+"x": 419.2,
+"y": 30.0,
+"type": "dropoff",
+"label": "O0009",
+"order_id": "O0009"
+},
+{
+"x": 432.1,
+"y": 43.3,
+"type": "pickup",
+"label": "R10",
+"order_id": "O0023"
+},
+{
+"x": 446.0,
+"y": 94.5,
+"type": "dropoff",
+"label": "O0023",
+"order_id": "O0023"
+},
+{
+"x": 437.4,
+"y": 78.7,
+"type": "dropoff",
+"label": "O0041",
+"order_id": "O0041"
+},
+{
+"x": 432.1,
+"y": 43.3,
+"type": "pickup",
+"label": "R10",
+"order_id": "O0084"
+},
+{
+"x": 462.1,
+"y": 30.0,
+"type": "dropoff",
+"label": "O0063",
+"order_id": "O0063"
+},
+{
+"x": 432.1,
+"y": 43.3,
+"type": "pickup",
+"label": "R10",
+"order_id": "O0010"
+},
+{
+"x": 432.1,
+"y": 43.3,
+"type": "pickup",
+"label": "R10",
+"order_id": "O0112"
+},
+{
+"x": 410.5,
+"y": 30.0,
+"type": "dropoff",
+"label": "O0084",
+"order_id": "O0084"
+},
+{
+"x": 432.1,
+"y": 43.3,
+"type": "pickup",
+"label": "R10",
+"order_id": "O0045"
+},
+{
+"x": 467.8,
+"y": 30.0,
+"type": "dropoff",
+"label": "O0045",
+"order_id": "O0045"
+},
+{
+"x": 475.0,
+"y": 30.0,
+"type": "dropoff",
+"label": "O0112",
+"order_id": "O0112"
+},
+{
+"x": 475.0,
+"y": 30.0,
+"type": "dropoff",
+"label": "O0010",
+"order_id": "O0010"
 }
 ],
 "orders": [
-"O11",
-"O2"
+"O0009",
+"O0010",
+"O0013",
+"O0020",
+"O0023",
+"O0041",
+"O0045",
+"O0054",
+"O0063",
+"O0084",
+"O0112"
 ],
 "offline_after": false,
-"route_length": 1273.2
+"route_length": 588.2
 },
-"D4": {
+"C004": {
 "rider_label": "라이더 4",
 "waypoints": [
 {
-"x": 685.1,
-"y": 265.3,
+"x": 298.1,
+"y": 201.2,
 "type": "start",
-"label": "라이더 4"
+"label": "출발"
 },
 {
-"x": 692.1,
-"y": 167.2,
+"x": 372.2,
+"y": 140.9,
 "type": "pickup",
-"label": "식당 A",
-"order_id": "O4"
+"label": "R02",
+"order_id": "O0068"
 },
 {
-"x": 663.3,
-"y": 303.6,
-"type": "dropoff",
-"label": "O4",
-"order_id": "O4"
-},
-{
-"x": 692.1,
-"y": 167.2,
+"x": 372.2,
+"y": 140.9,
 "type": "pickup",
-"label": "식당 A",
-"order_id": "O5"
+"label": "R02",
+"order_id": "O0082"
 },
 {
-"x": 395.0,
-"y": 266.0,
+"x": 330.4,
+"y": 216.8,
 "type": "dropoff",
-"label": "O5",
-"order_id": "O5"
+"label": "O0082",
+"order_id": "O0082"
 },
 {
-"x": 536.4,
-"y": 110.4,
+"x": 275.5,
+"y": 190.8,
+"type": "dropoff",
+"label": "O0068",
+"order_id": "O0068"
+},
+{
+"x": 255.5,
+"y": 225.5,
 "type": "pickup",
-"label": "식당 B",
-"order_id": "O6"
+"label": "R03",
+"order_id": "O0107"
 },
 {
-"x": 470.9,
-"y": 407.7,
+"x": 164.6,
+"y": 210.2,
 "type": "dropoff",
-"label": "O6",
-"order_id": "O6"
+"label": "O0107",
+"order_id": "O0107"
 }
 ],
 "orders": [
-"O4",
-"O5",
-"O6"
+"O0068",
+"O0082",
+"O0107"
 ],
 "offline_after": false,
-"route_length": 1204.9
+"route_length": 375.2
+},
+"C005": {
+"rider_label": "라이더 5",
+"waypoints": [
+{
+"x": 375.2,
+"y": 264.8,
+"type": "start",
+"label": "출발"
+},
+{
+"x": 404.4,
+"y": 272.0,
+"type": "pickup",
+"label": "R19",
+"order_id": "O0031"
+},
+{
+"x": 404.4,
+"y": 272.0,
+"type": "pickup",
+"label": "R19",
+"order_id": "O0014"
+},
+{
+"x": 462.7,
+"y": 187.6,
+"type": "dropoff",
+"label": "O0014",
+"order_id": "O0014"
+},
+{
+"x": 458.6,
+"y": 190.9,
+"type": "dropoff",
+"label": "O0031",
+"order_id": "O0031"
+},
+{
+"x": 448.5,
+"y": 195.9,
+"type": "pickup",
+"label": "R12",
+"order_id": "O0069"
+},
+{
+"x": 448.5,
+"y": 195.9,
+"type": "pickup",
+"label": "R12",
+"order_id": "O0027"
+},
+{
+"x": 475.0,
+"y": 106.0,
+"type": "dropoff",
+"label": "O0027",
+"order_id": "O0027"
+},
+{
+"x": 444.3,
+"y": 98.0,
+"type": "dropoff",
+"label": "O0069",
+"order_id": "O0069"
+}
+],
+"orders": [
+"O0014",
+"O0027",
+"O0031",
+"O0069"
+],
+"offline_after": false,
+"route_length": 274.6
+},
+"C006": {
+"rider_label": "라이더 6",
+"waypoints": [
+{
+"x": 454.3,
+"y": 281.3,
+"type": "start",
+"label": "출발"
+},
+{
+"x": 403.5,
+"y": 218.2,
+"type": "pickup",
+"label": "R06",
+"order_id": "O0008"
+},
+{
+"x": 403.5,
+"y": 218.2,
+"type": "pickup",
+"label": "R06",
+"order_id": "O0002"
+},
+{
+"x": 403.5,
+"y": 218.2,
+"type": "pickup",
+"label": "R06",
+"order_id": "O0057"
+},
+{
+"x": 362.8,
+"y": 227.9,
+"type": "dropoff",
+"label": "O0057",
+"order_id": "O0057"
+},
+{
+"x": 398.3,
+"y": 222.6,
+"type": "dropoff",
+"label": "O0008",
+"order_id": "O0008"
+},
+{
+"x": 403.5,
+"y": 218.2,
+"type": "pickup",
+"label": "R06",
+"order_id": "O0053"
+},
+{
+"x": 403.5,
+"y": 218.2,
+"type": "pickup",
+"label": "R06",
+"order_id": "O0074"
+},
+{
+"x": 475.0,
+"y": 246.9,
+"type": "dropoff",
+"label": "O0074",
+"order_id": "O0074"
+},
+{
+"x": 455.9,
+"y": 219.5,
+"type": "dropoff",
+"label": "O0002",
+"order_id": "O0002"
+},
+{
+"x": 448.5,
+"y": 195.9,
+"type": "pickup",
+"label": "R12",
+"order_id": "O0109"
+},
+{
+"x": 475.0,
+"y": 159.1,
+"type": "dropoff",
+"label": "O0109",
+"order_id": "O0109"
+},
+{
+"x": 475.0,
+"y": 175.1,
+"type": "dropoff",
+"label": "O0053",
+"order_id": "O0053"
+}
+],
+"orders": [
+"O0002",
+"O0008",
+"O0053",
+"O0057",
+"O0074",
+"O0109"
+],
+"offline_after": false,
+"route_length": 362.1
+},
+"C007": {
+"rider_label": "라이더 7",
+"waypoints": [
+{
+"x": 456.3,
+"y": 32.5,
+"type": "start",
+"label": "출발"
+},
+{
+"x": 432.1,
+"y": 43.3,
+"type": "pickup",
+"label": "R10",
+"order_id": "O0066"
+},
+{
+"x": 346.1,
+"y": 31.3,
+"type": "dropoff",
+"label": "O0066",
+"order_id": "O0066"
+},
+{
+"x": 371.6,
+"y": 30.9,
+"type": "pickup",
+"label": "R07",
+"order_id": "O0047"
+},
+{
+"x": 371.6,
+"y": 30.9,
+"type": "pickup",
+"label": "R07",
+"order_id": "O0005"
+},
+{
+"x": 371.6,
+"y": 30.9,
+"type": "pickup",
+"label": "R07",
+"order_id": "O0049"
+},
+{
+"x": 392.5,
+"y": 116.7,
+"type": "dropoff",
+"label": "O0049",
+"order_id": "O0049"
+},
+{
+"x": 372.2,
+"y": 140.9,
+"type": "pickup",
+"label": "R02",
+"order_id": "O0120"
+},
+{
+"x": 349.3,
+"y": 81.8,
+"type": "dropoff",
+"label": "O0120",
+"order_id": "O0120"
+},
+{
+"x": 319.4,
+"y": 110.9,
+"type": "pickup",
+"label": "R20",
+"order_id": "O0099"
+},
+{
+"x": 312.9,
+"y": 87.6,
+"type": "dropoff",
+"label": "O0047",
+"order_id": "O0047"
+},
+{
+"x": 282.4,
+"y": 88.3,
+"type": "dropoff",
+"label": "O0005",
+"order_id": "O0005"
+},
+{
+"x": 289.4,
+"y": 30.0,
+"type": "dropoff",
+"label": "O0099",
+"order_id": "O0099"
+}
+],
+"orders": [
+"O0005",
+"O0047",
+"O0049",
+"O0066",
+"O0099",
+"O0120"
+],
+"offline_after": false,
+"route_length": 477.3
+},
+"C008": {
+"rider_label": "라이더 8",
+"waypoints": [
+{
+"x": 362.2,
+"y": 381.9,
+"type": "start",
+"label": "출발"
+},
+{
+"x": 404.4,
+"y": 272.0,
+"type": "pickup",
+"label": "R19",
+"order_id": "O0071"
+},
+{
+"x": 443.7,
+"y": 250.0,
+"type": "dropoff",
+"label": "O0071",
+"order_id": "O0071"
+},
+{
+"x": 404.4,
+"y": 272.0,
+"type": "pickup",
+"label": "R19",
+"order_id": "O0096"
+},
+{
+"x": 404.4,
+"y": 272.0,
+"type": "pickup",
+"label": "R19",
+"order_id": "O0097"
+},
+{
+"x": 439.8,
+"y": 166.3,
+"type": "dropoff",
+"label": "O0097",
+"order_id": "O0097"
+},
+{
+"x": 450.2,
+"y": 167.3,
+"type": "dropoff",
+"label": "O0096",
+"order_id": "O0096"
+},
+{
+"x": 448.5,
+"y": 195.9,
+"type": "pickup",
+"label": "R12",
+"order_id": "O0064"
+},
+{
+"x": 475.0,
+"y": 217.1,
+"type": "dropoff",
+"label": "O0064",
+"order_id": "O0064"
+}
+],
+"orders": [
+"O0064",
+"O0071",
+"O0096",
+"O0097"
+],
+"offline_after": false,
+"route_length": 392.3
+},
+"C009": {
+"rider_label": "라이더 9",
+"waypoints": [
+{
+"x": 64.4,
+"y": 408.5,
+"type": "start",
+"label": "출발"
+},
+{
+"x": 98.4,
+"y": 398.6,
+"type": "pickup",
+"label": "R01",
+"order_id": "O0061"
+},
+{
+"x": 98.4,
+"y": 398.6,
+"type": "pickup",
+"label": "R01",
+"order_id": "O0019"
+},
+{
+"x": 98.4,
+"y": 398.6,
+"type": "pickup",
+"label": "R01",
+"order_id": "O0048"
+},
+{
+"x": 122.2,
+"y": 348.1,
+"type": "dropoff",
+"label": "O0048",
+"order_id": "O0048"
+},
+{
+"x": 95.7,
+"y": 315.8,
+"type": "dropoff",
+"label": "O0019",
+"order_id": "O0019"
+},
+{
+"x": 95.2,
+"y": 306.1,
+"type": "dropoff",
+"label": "O0061",
+"order_id": "O0061"
+}
+],
+"orders": [
+"O0019",
+"O0048",
+"O0061"
+],
+"offline_after": false,
+"route_length": 142.7
+},
+"C010": {
+"rider_label": "라이더 10",
+"waypoints": [
+{
+"x": 251.0,
+"y": 185.1,
+"type": "start",
+"label": "출발"
+},
+{
+"x": 134.2,
+"y": 213.6,
+"type": "pickup",
+"label": "R13",
+"order_id": "O0006"
+},
+{
+"x": 134.2,
+"y": 213.6,
+"type": "pickup",
+"label": "R13",
+"order_id": "O0011"
+},
+{
+"x": 132.1,
+"y": 132.2,
+"type": "dropoff",
+"label": "O0011",
+"order_id": "O0011"
+},
+{
+"x": 141.4,
+"y": 130.5,
+"type": "pickup",
+"label": "R16",
+"order_id": "O0030"
+},
+{
+"x": 152.8,
+"y": 196.0,
+"type": "dropoff",
+"label": "O0030",
+"order_id": "O0030"
+},
+{
+"x": 134.2,
+"y": 213.6,
+"type": "pickup",
+"label": "R13",
+"order_id": "O0040"
+},
+{
+"x": 184.6,
+"y": 253.3,
+"type": "dropoff",
+"label": "O0040",
+"order_id": "O0040"
+},
+{
+"x": 230.5,
+"y": 245.6,
+"type": "pickup",
+"label": "R15",
+"order_id": "O0018"
+},
+{
+"x": 230.5,
+"y": 245.6,
+"type": "pickup",
+"label": "R15",
+"order_id": "O0081"
+},
+{
+"x": 173.5,
+"y": 274.8,
+"type": "dropoff",
+"label": "O0081",
+"order_id": "O0081"
+},
+{
+"x": 151.5,
+"y": 262.1,
+"type": "dropoff",
+"label": "O0018",
+"order_id": "O0018"
+},
+{
+"x": 135.1,
+"y": 230.0,
+"type": "pickup",
+"label": "R17",
+"order_id": "O0087"
+},
+{
+"x": 108.0,
+"y": 332.2,
+"type": "dropoff",
+"label": "O0087",
+"order_id": "O0087"
+},
+{
+"x": 95.0,
+"y": 321.9,
+"type": "dropoff",
+"label": "O0006",
+"order_id": "O0006"
+}
+],
+"orders": [
+"O0006",
+"O0011",
+"O0018",
+"O0030",
+"O0040",
+"O0081",
+"O0087"
+],
+"offline_after": false,
+"route_length": 661.7
+},
+"C011": {
+"rider_label": "라이더 11",
+"waypoints": [
+{
+"x": 306.4,
+"y": 229.2,
+"type": "start",
+"label": "출발"
+},
+{
+"x": 403.5,
+"y": 218.2,
+"type": "pickup",
+"label": "R06",
+"order_id": "O0016"
+},
+{
+"x": 388.0,
+"y": 160.6,
+"type": "dropoff",
+"label": "O0016",
+"order_id": "O0016"
+},
+{
+"x": 372.2,
+"y": 140.9,
+"type": "pickup",
+"label": "R02",
+"order_id": "O0042"
+},
+{
+"x": 349.9,
+"y": 125.3,
+"type": "dropoff",
+"label": "O0042",
+"order_id": "O0042"
+}
+],
+"orders": [
+"O0016",
+"O0042"
+],
+"offline_after": false,
+"route_length": 209.8
+},
+"C012": {
+"rider_label": "라이더 12",
+"waypoints": [
+{
+"x": 294.2,
+"y": 404.5,
+"type": "start",
+"label": "출발"
+},
+{
+"x": 230.5,
+"y": 245.6,
+"type": "pickup",
+"label": "R15",
+"order_id": "O0058"
+},
+{
+"x": 230.5,
+"y": 245.6,
+"type": "pickup",
+"label": "R15",
+"order_id": "O0072"
+},
+{
+"x": 255.5,
+"y": 225.5,
+"type": "pickup",
+"label": "R03",
+"order_id": "O0037"
+},
+{
+"x": 309.7,
+"y": 289.8,
+"type": "dropoff",
+"label": "O0037",
+"order_id": "O0037"
+},
+{
+"x": 331.7,
+"y": 280.6,
+"type": "dropoff",
+"label": "O0072",
+"order_id": "O0072"
+},
+{
+"x": 338.3,
+"y": 270.0,
+"type": "dropoff",
+"label": "O0058",
+"order_id": "O0058"
+},
+{
+"x": 404.4,
+"y": 272.0,
+"type": "pickup",
+"label": "R19",
+"order_id": "O0065"
+},
+{
+"x": 352.2,
+"y": 344.2,
+"type": "dropoff",
+"label": "O0065",
+"order_id": "O0065"
+},
+{
+"x": 323.5,
+"y": 373.1,
+"type": "pickup",
+"label": "R04",
+"order_id": "O0028"
+},
+{
+"x": 323.5,
+"y": 373.1,
+"type": "pickup",
+"label": "R04",
+"order_id": "O0060"
+},
+{
+"x": 357.0,
+"y": 394.5,
+"type": "dropoff",
+"label": "O0060",
+"order_id": "O0060"
+},
+{
+"x": 333.6,
+"y": 463.1,
+"type": "dropoff",
+"label": "O0028",
+"order_id": "O0028"
+}
+],
+"orders": [
+"O0028",
+"O0037",
+"O0058",
+"O0060",
+"O0065",
+"O0072"
+],
+"offline_after": false,
+"route_length": 631.9
+},
+"C013": {
+"rider_label": "라이더 13",
+"waypoints": [
+{
+"x": 151.1,
+"y": 396.1,
+"type": "start",
+"label": "출발"
+},
+{
+"x": 139.5,
+"y": 441.2,
+"type": "pickup",
+"label": "R09",
+"order_id": "O0029"
+},
+{
+"x": 151.4,
+"y": 394.5,
+"type": "dropoff",
+"label": "O0029",
+"order_id": "O0029"
+},
+{
+"x": 139.5,
+"y": 441.2,
+"type": "pickup",
+"label": "R09",
+"order_id": "O0075"
+},
+{
+"x": 139.5,
+"y": 441.2,
+"type": "pickup",
+"label": "R09",
+"order_id": "O0106"
+},
+{
+"x": 186.3,
+"y": 465.0,
+"type": "dropoff",
+"label": "O0106",
+"order_id": "O0106"
+},
+{
+"x": 193.0,
+"y": 465.0,
+"type": "dropoff",
+"label": "O0075",
+"order_id": "O0075"
+}
+],
+"orders": [
+"O0029",
+"O0075",
+"O0106"
+],
+"offline_after": false,
+"route_length": 202.2
+},
+"C014": {
+"rider_label": "라이더 14",
+"waypoints": [
+{
+"x": 46.4,
+"y": 358.7,
+"type": "start",
+"label": "출발"
+},
+{
+"x": 98.4,
+"y": 398.6,
+"type": "pickup",
+"label": "R01",
+"order_id": "O0035"
+},
+{
+"x": 98.4,
+"y": 398.6,
+"type": "pickup",
+"label": "R01",
+"order_id": "O0038"
+},
+{
+"x": 98.4,
+"y": 398.6,
+"type": "pickup",
+"label": "R01",
+"order_id": "O0007"
+},
+{
+"x": 40.0,
+"y": 380.9,
+"type": "dropoff",
+"label": "O0007",
+"order_id": "O0007"
+},
+{
+"x": 40.0,
+"y": 438.3,
+"type": "dropoff",
+"label": "O0035",
+"order_id": "O0035"
+},
+{
+"x": 40.0,
+"y": 465.0,
+"type": "dropoff",
+"label": "O0038",
+"order_id": "O0038"
+}
+],
+"orders": [
+"O0007",
+"O0035",
+"O0038"
+],
+"offline_after": false,
+"route_length": 210.7
+},
+"C015": {
+"rider_label": "라이더 15",
+"waypoints": [
+{
+"x": 189.8,
+"y": 60.3,
+"type": "start",
+"label": "출발"
+},
+{
+"x": 166.0,
+"y": 39.3,
+"type": "pickup",
+"label": "R18",
+"order_id": "O0036"
+},
+{
+"x": 80.9,
+"y": 42.3,
+"type": "pickup",
+"label": "R05",
+"order_id": "O0033"
+},
+{
+"x": 80.9,
+"y": 42.3,
+"type": "pickup",
+"label": "R05",
+"order_id": "O0092"
+},
+{
+"x": 40.0,
+"y": 41.6,
+"type": "dropoff",
+"label": "O0092",
+"order_id": "O0092"
+},
+{
+"x": 86.4,
+"y": 30.0,
+"type": "dropoff",
+"label": "O0033",
+"order_id": "O0033"
+},
+{
+"x": 88.3,
+"y": 30.0,
+"type": "dropoff",
+"label": "O0036",
+"order_id": "O0036"
+},
+{
+"x": 80.9,
+"y": 42.3,
+"type": "pickup",
+"label": "R05",
+"order_id": "O0091"
+},
+{
+"x": 42.8,
+"y": 92.9,
+"type": "dropoff",
+"label": "O0091",
+"order_id": "O0091"
+}
+],
+"orders": [
+"O0033",
+"O0036",
+"O0091",
+"O0092"
+],
+"offline_after": false,
+"route_length": 285.2
 }
 },
-"total_route_length": 5184.4
+"unassigned_markers": [
+{
+"order_id": "O0012",
+"x": 40.0,
+"y": 197.5
 },
-"dropout": {
-"label": "라이더 1명 이탈 후 동적 재배정",
-"dropout_rider_id": "D3",
+{
+"order_id": "O0017",
+"x": 190.8,
+"y": 200.4
+},
+{
+"order_id": "O0021",
+"x": 176.3,
+"y": 371.2
+},
+{
+"order_id": "O0024",
+"x": 195.0,
+"y": 157.7
+},
+{
+"order_id": "O0025",
+"x": 40.0,
+"y": 188.2
+},
+{
+"order_id": "O0032",
+"x": 40.0,
+"y": 322.0
+},
+{
+"order_id": "O0043",
+"x": 194.0,
+"y": 142.2
+},
+{
+"order_id": "O0044",
+"x": 236.3,
+"y": 190.2
+},
+{
+"order_id": "O0046",
+"x": 178.2,
+"y": 453.0
+},
+{
+"order_id": "O0050",
+"x": 78.9,
+"y": 176.6
+},
+{
+"order_id": "O0051",
+"x": 276.8,
+"y": 72.3
+},
+{
+"order_id": "O0052",
+"x": 40.0,
+"y": 223.7
+},
+{
+"order_id": "O0055",
+"x": 208.8,
+"y": 409.2
+},
+{
+"order_id": "O0056",
+"x": 187.0,
+"y": 431.8
+},
+{
+"order_id": "O0059",
+"x": 200.9,
+"y": 426.9
+},
+{
+"order_id": "O0062",
+"x": 78.9,
+"y": 122.5
+},
+{
+"order_id": "O0067",
+"x": 40.0,
+"y": 434.5
+},
+{
+"order_id": "O0070",
+"x": 133.2,
+"y": 314.2
+},
+{
+"order_id": "O0073",
+"x": 40.0,
+"y": 418.7
+},
+{
+"order_id": "O0076",
+"x": 443.7,
+"y": 30.0
+},
+{
+"order_id": "O0077",
+"x": 169.2,
+"y": 443.8
+},
+{
+"order_id": "O0079",
+"x": 333.2,
+"y": 122.4
+},
+{
+"order_id": "O0080",
+"x": 134.7,
+"y": 301.7
+},
+{
+"order_id": "O0083",
+"x": 475.0,
+"y": 190.4
+},
+{
+"order_id": "O0085",
+"x": 349.6,
+"y": 30.0
+},
+{
+"order_id": "O0086",
+"x": 135.8,
+"y": 224.0
+},
+{
+"order_id": "O0088",
+"x": 40.0,
+"y": 389.3
+},
+{
+"order_id": "O0089",
+"x": 40.0,
+"y": 367.7
+},
+{
+"order_id": "O0090",
+"x": 40.0,
+"y": 313.5
+},
+{
+"order_id": "O0093",
+"x": 177.9,
+"y": 418.3
+},
+{
+"order_id": "O0094",
+"x": 141.2,
+"y": 70.2
+},
+{
+"order_id": "O0095",
+"x": 388.0,
+"y": 69.2
+},
+{
+"order_id": "O0098",
+"x": 40.0,
+"y": 360.2
+},
+{
+"order_id": "O0100",
+"x": 199.5,
+"y": 188.8
+},
+{
+"order_id": "O0101",
+"x": 376.7,
+"y": 212.1
+},
+{
+"order_id": "O0102",
+"x": 361.2,
+"y": 184.4
+},
+{
+"order_id": "O0103",
+"x": 40.0,
+"y": 361.6
+},
+{
+"order_id": "O0104",
+"x": 123.8,
+"y": 65.7
+},
+{
+"order_id": "O0105",
+"x": 155.3,
+"y": 228.8
+},
+{
+"order_id": "O0108",
+"x": 117.0,
+"y": 373.4
+},
+{
+"order_id": "O0110",
+"x": 138.9,
+"y": 341.0
+},
+{
+"order_id": "O0111",
+"x": 182.2,
+"y": 174.6
+},
+{
+"order_id": "O0113",
+"x": 280.0,
+"y": 30.0
+},
+{
+"order_id": "O0115",
+"x": 47.8,
+"y": 242.3
+},
+{
+"order_id": "O0117",
+"x": 72.9,
+"y": 465.0
+},
+{
+"order_id": "O0119",
+"x": 40.0,
+"y": 426.1
+}
+],
+"total_route_length": 5956.3
+},
+"reoptimize": {
+"label": "라이더 3명(20%) 이탈 + 서지 주문 10건 -> 재편성(warm 웜스타트)",
+"n_unassigned": 64,
+"total_distance": 306.38,
 "routes": {
-"D1": {
-"rider_label": "라이더 1",
-"waypoints": [
-{
-"x": 401.9,
-"y": 386.2,
-"type": "start",
-"label": "라이더 1"
-},
-{
-"x": 536.4,
-"y": 110.4,
-"type": "pickup",
-"label": "식당 B",
-"order_id": "O7"
-},
-{
-"x": 779.2,
-"y": 145.1,
-"type": "dropoff",
-"label": "O7",
-"order_id": "O7"
-},
-{
-"x": 692.1,
-"y": 167.2,
-"type": "pickup",
-"label": "식당 A",
-"order_id": "O12"
-},
-{
-"x": 247.2,
-"y": 315.0,
-"type": "dropoff",
-"label": "O12",
-"order_id": "O12"
-},
-{
-"x": 536.4,
-"y": 110.4,
-"type": "pickup",
-"label": "식당 B",
-"order_id": "O8"
-},
-{
-"x": 630.9,
-"y": 73.0,
-"type": "dropoff",
-"label": "O8",
-"order_id": "O8"
-},
-{
-"x": 692.1,
-"y": 167.2,
-"type": "pickup",
-"label": "식당 A",
-"order_id": "O10"
-},
-{
-"x": 458.3,
-"y": 240.8,
-"type": "dropoff",
-"label": "O10",
-"order_id": "O10"
-}
-],
-"orders": [
-"O7",
-"O12",
-"O8",
-"O10"
-],
-"offline_after": false,
-"route_length": 1924.1
-},
-"D2": {
-"rider_label": "라이더 2",
-"waypoints": [
-{
-"x": 812.8,
-"y": 247.0,
-"type": "start",
-"label": "라이더 2"
-},
-{
-"x": 692.1,
-"y": 167.2,
-"type": "pickup",
-"label": "식당 A",
-"order_id": "O3"
-},
-{
-"x": 581.4,
-"y": 236.1,
-"type": "dropoff",
-"label": "O3",
-"order_id": "O3"
-},
-{
-"x": 567.9,
-"y": 317.0,
-"type": "pickup",
-"label": "식당 D",
-"order_id": "O9"
-},
-{
-"x": 389.2,
-"y": 355.4,
-"type": "dropoff",
-"label": "O9",
-"order_id": "O9"
-},
-{
-"x": 536.4,
-"y": 110.4,
-"type": "pickup",
-"label": "식당 B",
-"order_id": "O6"
-},
-{
-"x": 470.9,
-"y": 407.7,
-"type": "dropoff",
-"label": "O6",
-"order_id": "O6"
-},
-{
-"x": 319.1,
-"y": 299.9,
-"type": "pickup",
-"label": "식당 C",
-"order_id": "O1"
-},
-{
-"x": 190.8,
-"y": 100.3,
-"type": "dropoff",
-"label": "O1",
-"order_id": "O1"
-}
-],
-"orders": [
-"O3",
-"O9",
-"O6",
-"O1"
-],
-"offline_after": false,
-"route_length": 1553.6
-},
-"D4": {
+"C004": {
 "rider_label": "라이더 4",
 "waypoints": [
 {
-"x": 685.1,
-"y": 265.3,
+"x": 298.1,
+"y": 201.2,
 "type": "start",
-"label": "라이더 4"
+"label": "출발"
 },
 {
-"x": 692.1,
-"y": 167.2,
+"x": 255.5,
+"y": 225.5,
 "type": "pickup",
-"label": "식당 A",
-"order_id": "O4"
+"label": "R03",
+"order_id": "O0037"
 },
 {
-"x": 663.3,
-"y": 303.6,
-"type": "dropoff",
-"label": "O4",
-"order_id": "O4"
-},
-{
-"x": 692.1,
-"y": 167.2,
+"x": 230.5,
+"y": 245.6,
 "type": "pickup",
-"label": "식당 A",
-"order_id": "O5"
+"label": "R15",
+"order_id": "O0072"
 },
 {
-"x": 395.0,
-"y": 266.0,
-"type": "dropoff",
-"label": "O5",
-"order_id": "O5"
-},
-{
-"x": 536.4,
-"y": 110.4,
+"x": 230.5,
+"y": 245.6,
 "type": "pickup",
-"label": "식당 B",
-"order_id": "O11"
+"label": "R15",
+"order_id": "O0058"
 },
 {
-"x": 98.4,
-"y": 241.6,
+"x": 338.3,
+"y": 270.0,
 "type": "dropoff",
-"label": "O11",
-"order_id": "O11"
+"label": "O0058",
+"order_id": "O0058"
 },
 {
-"x": 319.1,
-"y": 299.9,
-"type": "pickup",
-"label": "식당 C",
-"order_id": "O2",
-"reassigned": true
-},
-{
-"x": 518.5,
-"y": 411.7,
+"x": 331.7,
+"y": 280.6,
 "type": "dropoff",
-"label": "O2",
-"order_id": "O2",
-"reassigned": true
+"label": "O0072",
+"order_id": "O0072"
+},
+{
+"x": 309.7,
+"y": 289.8,
+"type": "dropoff",
+"label": "O0037",
+"order_id": "O0037"
 }
 ],
 "orders": [
-"O4",
-"O5",
-"O11",
-"O2"
+"O0037",
+"O0058",
+"O0072"
 ],
 "offline_after": false,
-"route_length": 1814.6
+"route_length": 228.0
 },
-"D3": {
-"rider_label": "라이더 3",
+"C005": {
+"rider_label": "라이더 5",
 "waypoints": [
 {
-"x": 178.1,
-"y": 87.1,
+"x": 375.2,
+"y": 264.8,
 "type": "start",
-"label": "라이더 3"
+"label": "출발"
 },
 {
-"x": 536.4,
-"y": 110.4,
+"x": 403.5,
+"y": 218.2,
 "type": "pickup",
-"label": "식당 B",
-"order_id": "O11"
+"label": "R06",
+"order_id": "O0016"
 },
 {
-"x": 98.4,
-"y": 241.6,
+"x": 388.0,
+"y": 160.6,
 "type": "dropoff",
-"label": "O11",
-"order_id": "O11"
+"label": "O0016",
+"order_id": "O0016"
+},
+{
+"x": 372.2,
+"y": 140.9,
+"type": "pickup",
+"label": "R02",
+"order_id": "O0068"
+},
+{
+"x": 372.2,
+"y": 140.9,
+"type": "pickup",
+"label": "R02",
+"order_id": "O0042"
+},
+{
+"x": 372.2,
+"y": 140.9,
+"type": "pickup",
+"label": "R02",
+"order_id": "O0082"
+},
+{
+"x": 349.9,
+"y": 125.3,
+"type": "dropoff",
+"label": "O0042",
+"order_id": "O0042"
+},
+{
+"x": 319.4,
+"y": 110.9,
+"type": "pickup",
+"label": "R20",
+"order_id": "O0102"
+},
+{
+"x": 361.2,
+"y": 184.4,
+"type": "dropoff",
+"label": "O0102",
+"order_id": "O0102"
+},
+{
+"x": 330.4,
+"y": 216.8,
+"type": "dropoff",
+"label": "O0082",
+"order_id": "O0082"
+},
+{
+"x": 275.5,
+"y": 190.8,
+"type": "dropoff",
+"label": "O0068",
+"order_id": "O0068"
 }
 ],
 "orders": [
-"O11"
+"O0016",
+"O0042",
+"O0068",
+"O0082",
+"O0102"
 ],
+"offline_after": false,
+"route_length": 390.4
+},
+"C006": {
+"rider_label": "라이더 6",
+"waypoints": [
+{
+"x": 454.3,
+"y": 281.3,
+"type": "start",
+"label": "출발"
+},
+{
+"x": 403.5,
+"y": 218.2,
+"type": "pickup",
+"label": "R06",
+"order_id": "O0008"
+},
+{
+"x": 403.5,
+"y": 218.2,
+"type": "pickup",
+"label": "R06",
+"order_id": "O0053"
+},
+{
+"x": 403.5,
+"y": 218.2,
+"type": "pickup",
+"label": "R06",
+"order_id": "O0057"
+},
+{
+"x": 362.8,
+"y": 227.9,
+"type": "dropoff",
+"label": "O0057",
+"order_id": "O0057"
+},
+{
+"x": 398.3,
+"y": 222.6,
+"type": "dropoff",
+"label": "O0008",
+"order_id": "O0008"
+},
+{
+"x": 403.5,
+"y": 218.2,
+"type": "pickup",
+"label": "R06",
+"order_id": "O0074"
+},
+{
+"x": 403.5,
+"y": 218.2,
+"type": "pickup",
+"label": "R06",
+"order_id": "O0083"
+},
+{
+"x": 475.0,
+"y": 190.4,
+"type": "dropoff",
+"label": "O0083",
+"order_id": "O0083"
+},
+{
+"x": 475.0,
+"y": 175.1,
+"type": "dropoff",
+"label": "O0053",
+"order_id": "O0053"
+},
+{
+"x": 448.5,
+"y": 195.9,
+"type": "pickup",
+"label": "R12",
+"order_id": "O0064"
+},
+{
+"x": 475.0,
+"y": 217.1,
+"type": "dropoff",
+"label": "O0064",
+"order_id": "O0064"
+},
+{
+"x": 475.0,
+"y": 246.9,
+"type": "dropoff",
+"label": "O0074",
+"order_id": "O0074"
+}
+],
+"orders": [
+"O0008",
+"O0053",
+"O0057",
+"O0064",
+"O0074",
+"O0083"
+],
+"offline_after": false,
+"route_length": 355.0
+},
+"C007": {
+"rider_label": "라이더 7",
+"waypoints": [
+{
+"x": 456.3,
+"y": 32.5,
+"type": "start",
+"label": "출발"
+},
+{
+"x": 371.6,
+"y": 30.9,
+"type": "pickup",
+"label": "R07",
+"order_id": "O0020"
+},
+{
+"x": 371.6,
+"y": 30.9,
+"type": "pickup",
+"label": "R07",
+"order_id": "O0013"
+},
+{
+"x": 310.3,
+"y": 30.0,
+"type": "dropoff",
+"label": "O0013",
+"order_id": "O0013"
+},
+{
+"x": 333.5,
+"y": 30.0,
+"type": "dropoff",
+"label": "O0020",
+"order_id": "O0020"
+},
+{
+"x": 371.6,
+"y": 30.9,
+"type": "pickup",
+"label": "R07",
+"order_id": "O0009"
+},
+{
+"x": 371.6,
+"y": 30.9,
+"type": "pickup",
+"label": "R07",
+"order_id": "O0054"
+},
+{
+"x": 377.4,
+"y": 30.0,
+"type": "dropoff",
+"label": "O0054",
+"order_id": "O0054"
+},
+{
+"x": 371.6,
+"y": 30.9,
+"type": "pickup",
+"label": "R07",
+"order_id": "O0041"
+},
+{
+"x": 437.4,
+"y": 78.7,
+"type": "dropoff",
+"label": "O0041",
+"order_id": "O0041"
+},
+{
+"x": 432.1,
+"y": 43.3,
+"type": "pickup",
+"label": "R10",
+"order_id": "O0045"
+},
+{
+"x": 432.1,
+"y": 43.3,
+"type": "pickup",
+"label": "R10",
+"order_id": "O0084"
+},
+{
+"x": 419.2,
+"y": 30.0,
+"type": "dropoff",
+"label": "O0009",
+"order_id": "O0009"
+},
+{
+"x": 410.5,
+"y": 30.0,
+"type": "dropoff",
+"label": "O0084",
+"order_id": "O0084"
+},
+{
+"x": 432.1,
+"y": 43.3,
+"type": "pickup",
+"label": "R10",
+"order_id": "O0112"
+},
+{
+"x": 432.1,
+"y": 43.3,
+"type": "pickup",
+"label": "R10",
+"order_id": "O0010"
+},
+{
+"x": 475.0,
+"y": 30.0,
+"type": "dropoff",
+"label": "O0010",
+"order_id": "O0010"
+},
+{
+"x": 475.0,
+"y": 30.0,
+"type": "dropoff",
+"label": "O0112",
+"order_id": "O0112"
+},
+{
+"x": 467.8,
+"y": 30.0,
+"type": "dropoff",
+"label": "O0045",
+"order_id": "O0045"
+},
+{
+"x": 432.1,
+"y": 43.3,
+"type": "pickup",
+"label": "R10",
+"order_id": "O0066"
+},
+{
+"x": 346.1,
+"y": 31.3,
+"type": "dropoff",
+"label": "O0066",
+"order_id": "O0066"
+},
+{
+"x": 371.6,
+"y": 30.9,
+"type": "pickup",
+"label": "R07",
+"order_id": "O0005"
+},
+{
+"x": 371.6,
+"y": 30.9,
+"type": "pickup",
+"label": "R07",
+"order_id": "O0047"
+},
+{
+"x": 312.9,
+"y": 87.6,
+"type": "dropoff",
+"label": "O0047",
+"order_id": "O0047"
+},
+{
+"x": 282.4,
+"y": 88.3,
+"type": "dropoff",
+"label": "O0005",
+"order_id": "O0005"
+}
+],
+"orders": [
+"O0005",
+"O0009",
+"O0010",
+"O0013",
+"O0020",
+"O0041",
+"O0045",
+"O0047",
+"O0054",
+"O0066",
+"O0084",
+"O0112"
+],
+"offline_after": false,
+"route_length": 703.5
+},
+"C008": {
+"rider_label": "라이더 8",
+"waypoints": [
+{
+"x": 362.2,
+"y": 381.9,
+"type": "start",
+"label": "출발"
+},
+{
+"x": 404.4,
+"y": 272.0,
+"type": "pickup",
+"label": "R19",
+"order_id": "O0031"
+},
+{
+"x": 404.4,
+"y": 272.0,
+"type": "pickup",
+"label": "R19",
+"order_id": "O0096"
+},
+{
+"x": 404.4,
+"y": 272.0,
+"type": "pickup",
+"label": "R19",
+"order_id": "O0097"
+},
+{
+"x": 439.8,
+"y": 166.3,
+"type": "dropoff",
+"label": "O0097",
+"order_id": "O0097"
+},
+{
+"x": 450.2,
+"y": 167.3,
+"type": "dropoff",
+"label": "O0096",
+"order_id": "O0096"
+},
+{
+"x": 458.6,
+"y": 190.9,
+"type": "dropoff",
+"label": "O0031",
+"order_id": "O0031"
+},
+{
+"x": 448.5,
+"y": 195.9,
+"type": "pickup",
+"label": "R12",
+"order_id": "O0109"
+},
+{
+"x": 448.5,
+"y": 195.9,
+"type": "pickup",
+"label": "R12",
+"order_id": "O0128S"
+},
+{
+"x": 475.0,
+"y": 176.2,
+"type": "dropoff",
+"label": "O0128S",
+"order_id": "O0128S"
+},
+{
+"x": 475.0,
+"y": 159.1,
+"type": "dropoff",
+"label": "O0109",
+"order_id": "O0109"
+}
+],
+"orders": [
+"O0031",
+"O0096",
+"O0097",
+"O0109",
+"O0128S"
+],
+"offline_after": false,
+"route_length": 326.1
+},
+"C009": {
+"rider_label": "라이더 9",
+"waypoints": [
+{
+"x": 64.4,
+"y": 408.5,
+"type": "start",
+"label": "출발"
+},
+{
+"x": 98.4,
+"y": 398.6,
+"type": "pickup",
+"label": "R01",
+"order_id": "O0056"
+},
+{
+"x": 98.4,
+"y": 398.6,
+"type": "pickup",
+"label": "R01",
+"order_id": "O0021"
+},
+{
+"x": 98.4,
+"y": 398.6,
+"type": "pickup",
+"label": "R01",
+"order_id": "O0046"
+},
+{
+"x": 178.2,
+"y": 453.0,
+"type": "dropoff",
+"label": "O0046",
+"order_id": "O0046"
+},
+{
+"x": 187.0,
+"y": 431.8,
+"type": "dropoff",
+"label": "O0056",
+"order_id": "O0056"
+},
+{
+"x": 139.5,
+"y": 441.2,
+"type": "pickup",
+"label": "R09",
+"order_id": "O0029"
+},
+{
+"x": 139.5,
+"y": 441.2,
+"type": "pickup",
+"label": "R09",
+"order_id": "O0093"
+},
+{
+"x": 177.9,
+"y": 418.3,
+"type": "dropoff",
+"label": "O0093",
+"order_id": "O0093"
+},
+{
+"x": 151.4,
+"y": 394.5,
+"type": "dropoff",
+"label": "O0029",
+"order_id": "O0029"
+},
+{
+"x": 176.3,
+"y": 371.2,
+"type": "dropoff",
+"label": "O0021",
+"order_id": "O0021"
+}
+],
+"orders": [
+"O0021",
+"O0029",
+"O0046",
+"O0056",
+"O0093"
+],
+"offline_after": false,
+"route_length": 317.8
+},
+"C010": {
+"rider_label": "라이더 10",
+"waypoints": [
+{
+"x": 251.0,
+"y": 185.1,
+"type": "start",
+"label": "출발"
+},
+{
+"x": 230.5,
+"y": 245.6,
+"type": "pickup",
+"label": "R15",
+"order_id": "O0018"
+},
+{
+"x": 151.5,
+"y": 262.1,
+"type": "dropoff",
+"label": "O0018",
+"order_id": "O0018"
+},
+{
+"x": 134.2,
+"y": 213.6,
+"type": "pickup",
+"label": "R13",
+"order_id": "O0001"
+},
+{
+"x": 134.2,
+"y": 213.6,
+"type": "pickup",
+"label": "R13",
+"order_id": "O0062"
+},
+{
+"x": 134.2,
+"y": 213.6,
+"type": "pickup",
+"label": "R13",
+"order_id": "O0050"
+},
+{
+"x": 78.9,
+"y": 176.6,
+"type": "dropoff",
+"label": "O0050",
+"order_id": "O0050"
+},
+{
+"x": 85.4,
+"y": 148.5,
+"type": "dropoff",
+"label": "O0001",
+"order_id": "O0001"
+},
+{
+"x": 78.9,
+"y": 122.5,
+"type": "dropoff",
+"label": "O0062",
+"order_id": "O0062"
+},
+{
+"x": 52.6,
+"y": 126.4,
+"type": "pickup",
+"label": "R14",
+"order_id": "O0078"
+},
+{
+"x": 85.8,
+"y": 133.7,
+"type": "dropoff",
+"label": "O0078",
+"order_id": "O0078"
+},
+{
+"x": 52.6,
+"y": 126.4,
+"type": "pickup",
+"label": "R14",
+"order_id": "O0052"
+},
+{
+"x": 52.6,
+"y": 126.4,
+"type": "pickup",
+"label": "R14",
+"order_id": "O0115"
+},
+{
+"x": 52.6,
+"y": 126.4,
+"type": "pickup",
+"label": "R14",
+"order_id": "O0025"
+},
+{
+"x": 40.0,
+"y": 188.2,
+"type": "dropoff",
+"label": "O0025",
+"order_id": "O0025"
+},
+{
+"x": 40.0,
+"y": 223.7,
+"type": "dropoff",
+"label": "O0052",
+"order_id": "O0052"
+},
+{
+"x": 47.8,
+"y": 242.3,
+"type": "dropoff",
+"label": "O0115",
+"order_id": "O0115"
+}
+],
+"orders": [
+"O0001",
+"O0018",
+"O0025",
+"O0050",
+"O0052",
+"O0062",
+"O0078",
+"O0115"
+],
+"offline_after": false,
+"route_length": 531.6
+},
+"C011": {
+"rider_label": "라이더 11",
+"waypoints": [
+{
+"x": 306.4,
+"y": 229.2,
+"type": "start",
+"label": "출발"
+},
+{
+"x": 403.5,
+"y": 218.2,
+"type": "pickup",
+"label": "R06",
+"order_id": "O0002"
+},
+{
+"x": 455.9,
+"y": 219.5,
+"type": "dropoff",
+"label": "O0002",
+"order_id": "O0002"
+},
+{
+"x": 448.5,
+"y": 195.9,
+"type": "pickup",
+"label": "R12",
+"order_id": "O0069"
+},
+{
+"x": 448.5,
+"y": 195.9,
+"type": "pickup",
+"label": "R12",
+"order_id": "O0124S"
+},
+{
+"x": 445.1,
+"y": 99.2,
+"type": "dropoff",
+"label": "O0124S",
+"order_id": "O0124S"
+},
+{
+"x": 444.3,
+"y": 98.0,
+"type": "dropoff",
+"label": "O0069",
+"order_id": "O0069"
+}
+],
+"orders": [
+"O0002",
+"O0069",
+"O0124S"
+],
+"offline_after": false,
+"route_length": 273.1
+},
+"C012": {
+"rider_label": "라이더 12",
+"waypoints": [
+{
+"x": 294.2,
+"y": 404.5,
+"type": "start",
+"label": "출발"
+},
+{
+"x": 323.5,
+"y": 373.1,
+"type": "pickup",
+"label": "R04",
+"order_id": "O0003"
+},
+{
+"x": 323.5,
+"y": 373.1,
+"type": "pickup",
+"label": "R04",
+"order_id": "O0060"
+},
+{
+"x": 323.5,
+"y": 373.1,
+"type": "pickup",
+"label": "R04",
+"order_id": "O0129S"
+},
+{
+"x": 357.0,
+"y": 394.5,
+"type": "dropoff",
+"label": "O0060",
+"order_id": "O0060"
+},
+{
+"x": 339.1,
+"y": 320.0,
+"type": "dropoff",
+"label": "O0129S",
+"order_id": "O0129S"
+},
+{
+"x": 389.5,
+"y": 312.3,
+"type": "dropoff",
+"label": "O0003",
+"order_id": "O0003"
+},
+{
+"x": 404.4,
+"y": 272.0,
+"type": "pickup",
+"label": "R19",
+"order_id": "O0114"
+},
+{
+"x": 388.7,
+"y": 169.6,
+"type": "dropoff",
+"label": "O0114",
+"order_id": "O0114"
+},
+{
+"x": 372.2,
+"y": 140.9,
+"type": "pickup",
+"label": "R02",
+"order_id": "O0116"
+},
+{
+"x": 372.2,
+"y": 140.9,
+"type": "pickup",
+"label": "R02",
+"order_id": "O0120"
+},
+{
+"x": 349.3,
+"y": 81.8,
+"type": "dropoff",
+"label": "O0120",
+"order_id": "O0120"
+},
+{
+"x": 319.4,
+"y": 110.9,
+"type": "pickup",
+"label": "R20",
+"order_id": "O0095"
+},
+{
+"x": 388.0,
+"y": 69.2,
+"type": "dropoff",
+"label": "O0095",
+"order_id": "O0095"
+},
+{
+"x": 385.0,
+"y": 41.5,
+"type": "dropoff",
+"label": "O0116",
+"order_id": "O0116"
+}
+],
+"orders": [
+"O0003",
+"O0060",
+"O0095",
+"O0114",
+"O0116",
+"O0120",
+"O0129S"
+],
+"offline_after": false,
+"route_length": 603.2
+},
+"C013": {
+"rider_label": "라이더 13",
+"waypoints": [
+{
+"x": 151.1,
+"y": 396.1,
+"type": "start",
+"label": "출발"
+},
+{
+"x": 98.4,
+"y": 398.6,
+"type": "pickup",
+"label": "R01",
+"order_id": "O0035"
+},
+{
+"x": 98.4,
+"y": 398.6,
+"type": "pickup",
+"label": "R01",
+"order_id": "O0038"
+},
+{
+"x": 98.4,
+"y": 398.6,
+"type": "pickup",
+"label": "R01",
+"order_id": "O0007"
+},
+{
+"x": 40.0,
+"y": 380.9,
+"type": "dropoff",
+"label": "O0007",
+"order_id": "O0007"
+},
+{
+"x": 40.0,
+"y": 438.3,
+"type": "dropoff",
+"label": "O0035",
+"order_id": "O0035"
+},
+{
+"x": 40.0,
+"y": 465.0,
+"type": "dropoff",
+"label": "O0038",
+"order_id": "O0038"
+}
+],
+"orders": [
+"O0007",
+"O0035",
+"O0038"
+],
+"offline_after": false,
+"route_length": 197.9
+},
+"C014": {
+"rider_label": "라이더 14",
+"waypoints": [
+{
+"x": 46.4,
+"y": 358.7,
+"type": "start",
+"label": "출발"
+},
+{
+"x": 98.4,
+"y": 398.6,
+"type": "pickup",
+"label": "R01",
+"order_id": "O0061"
+},
+{
+"x": 98.4,
+"y": 398.6,
+"type": "pickup",
+"label": "R01",
+"order_id": "O0019"
+},
+{
+"x": 98.4,
+"y": 398.6,
+"type": "pickup",
+"label": "R01",
+"order_id": "O0048"
+},
+{
+"x": 122.2,
+"y": 348.1,
+"type": "dropoff",
+"label": "O0048",
+"order_id": "O0048"
+},
+{
+"x": 95.7,
+"y": 315.8,
+"type": "dropoff",
+"label": "O0019",
+"order_id": "O0019"
+},
+{
+"x": 95.2,
+"y": 306.1,
+"type": "dropoff",
+"label": "O0061",
+"order_id": "O0061"
+}
+],
+"orders": [
+"O0019",
+"O0048",
+"O0061"
+],
+"offline_after": false,
+"route_length": 172.9
+},
+"C015": {
+"rider_label": "라이더 15",
+"waypoints": [
+{
+"x": 189.8,
+"y": 60.3,
+"type": "start",
+"label": "출발"
+},
+{
+"x": 141.4,
+"y": 130.5,
+"type": "pickup",
+"label": "R16",
+"order_id": "O0030"
+},
+{
+"x": 141.4,
+"y": 130.5,
+"type": "pickup",
+"label": "R16",
+"order_id": "O0024"
+},
+{
+"x": 141.4,
+"y": 130.5,
+"type": "pickup",
+"label": "R16",
+"order_id": "O0043"
+},
+{
+"x": 194.0,
+"y": 142.2,
+"type": "dropoff",
+"label": "O0043",
+"order_id": "O0043"
+},
+{
+"x": 195.0,
+"y": 157.7,
+"type": "dropoff",
+"label": "O0024",
+"order_id": "O0024"
+},
+{
+"x": 152.8,
+"y": 196.0,
+"type": "dropoff",
+"label": "O0030",
+"order_id": "O0030"
+},
+{
+"x": 134.2,
+"y": 213.6,
+"type": "pickup",
+"label": "R13",
+"order_id": "O0022"
+},
+{
+"x": 134.2,
+"y": 213.6,
+"type": "pickup",
+"label": "R13",
+"order_id": "O0011"
+},
+{
+"x": 134.2,
+"y": 213.6,
+"type": "pickup",
+"label": "R13",
+"order_id": "O0039"
+},
+{
+"x": 122.9,
+"y": 157.9,
+"type": "dropoff",
+"label": "O0039",
+"order_id": "O0039"
+},
+{
+"x": 106.7,
+"y": 145.4,
+"type": "dropoff",
+"label": "O0022",
+"order_id": "O0022"
+},
+{
+"x": 132.1,
+"y": 132.2,
+"type": "dropoff",
+"label": "O0011",
+"order_id": "O0011"
+}
+],
+"orders": [
+"O0011",
+"O0022",
+"O0024",
+"O0030",
+"O0039",
+"O0043"
+],
+"offline_after": false,
+"route_length": 343.2
+},
+"C001": {
+"rider_label": "라이더 1 (이탈)",
+"waypoints": [
+{
+"x": 115.3,
+"y": 268.7,
+"type": "start",
+"label": "이탈 지점"
+}
+],
+"orders": [],
 "offline_after": true,
-"route_length": 816.3
+"route_length": 0.0
+},
+"C002": {
+"rider_label": "라이더 2 (이탈)",
+"waypoints": [
+{
+"x": 231.0,
+"y": 251.1,
+"type": "start",
+"label": "이탈 지점"
+}
+],
+"orders": [],
+"offline_after": true,
+"route_length": 0.0
+},
+"C003": {
+"rider_label": "라이더 3 (이탈)",
+"waypoints": [
+{
+"x": 253.0,
+"y": 42.9,
+"type": "start",
+"label": "이탈 지점"
+}
+],
+"orders": [],
+"offline_after": true,
+"route_length": 0.0
 }
 },
-"total_route_length": 6108.6,
-"reassigned_order_ids": [
-"O2"
-]
+"unassigned_markers": [
+{
+"order_id": "O0004",
+"x": 135.3,
+"y": 119.6
+},
+{
+"order_id": "O0006",
+"x": 95.0,
+"y": 321.9
+},
+{
+"order_id": "O0012",
+"x": 40.0,
+"y": 197.5
+},
+{
+"order_id": "O0014",
+"x": 462.7,
+"y": 187.6
+},
+{
+"order_id": "O0015",
+"x": 40.0,
+"y": 62.0
+},
+{
+"order_id": "O0017",
+"x": 190.8,
+"y": 200.4
+},
+{
+"order_id": "O0023",
+"x": 446.0,
+"y": 94.5
+},
+{
+"order_id": "O0026",
+"x": 282.4,
+"y": 430.8
+},
+{
+"order_id": "O0027",
+"x": 475.0,
+"y": 106.0
+},
+{
+"order_id": "O0028",
+"x": 333.6,
+"y": 463.1
+},
+{
+"order_id": "O0032",
+"x": 40.0,
+"y": 322.0
+},
+{
+"order_id": "O0033",
+"x": 86.4,
+"y": 30.0
+},
+{
+"order_id": "O0034",
+"x": 40.0,
+"y": 90.5
+},
+{
+"order_id": "O0036",
+"x": 88.3,
+"y": 30.0
+},
+{
+"order_id": "O0040",
+"x": 184.6,
+"y": 253.3
+},
+{
+"order_id": "O0044",
+"x": 236.3,
+"y": 190.2
+},
+{
+"order_id": "O0049",
+"x": 392.5,
+"y": 116.7
+},
+{
+"order_id": "O0051",
+"x": 276.8,
+"y": 72.3
+},
+{
+"order_id": "O0055",
+"x": 208.8,
+"y": 409.2
+},
+{
+"order_id": "O0059",
+"x": 200.9,
+"y": 426.9
+},
+{
+"order_id": "O0063",
+"x": 462.1,
+"y": 30.0
+},
+{
+"order_id": "O0065",
+"x": 352.2,
+"y": 344.2
+},
+{
+"order_id": "O0067",
+"x": 40.0,
+"y": 434.5
+},
+{
+"order_id": "O0070",
+"x": 133.2,
+"y": 314.2
+},
+{
+"order_id": "O0071",
+"x": 443.7,
+"y": 250.0
+},
+{
+"order_id": "O0073",
+"x": 40.0,
+"y": 418.7
+},
+{
+"order_id": "O0075",
+"x": 193.0,
+"y": 465.0
+},
+{
+"order_id": "O0076",
+"x": 443.7,
+"y": 30.0
+},
+{
+"order_id": "O0077",
+"x": 169.2,
+"y": 443.8
+},
+{
+"order_id": "O0079",
+"x": 333.2,
+"y": 122.4
+},
+{
+"order_id": "O0080",
+"x": 134.7,
+"y": 301.7
+},
+{
+"order_id": "O0081",
+"x": 173.5,
+"y": 274.8
+},
+{
+"order_id": "O0085",
+"x": 349.6,
+"y": 30.0
+},
+{
+"order_id": "O0086",
+"x": 135.8,
+"y": 224.0
+},
+{
+"order_id": "O0087",
+"x": 108.0,
+"y": 332.2
+},
+{
+"order_id": "O0088",
+"x": 40.0,
+"y": 389.3
+},
+{
+"order_id": "O0089",
+"x": 40.0,
+"y": 367.7
+},
+{
+"order_id": "O0090",
+"x": 40.0,
+"y": 313.5
+},
+{
+"order_id": "O0091",
+"x": 42.8,
+"y": 92.9
+},
+{
+"order_id": "O0092",
+"x": 40.0,
+"y": 41.6
+},
+{
+"order_id": "O0094",
+"x": 141.2,
+"y": 70.2
+},
+{
+"order_id": "O0098",
+"x": 40.0,
+"y": 360.2
+},
+{
+"order_id": "O0099",
+"x": 289.4,
+"y": 30.0
+},
+{
+"order_id": "O0100",
+"x": 199.5,
+"y": 188.8
+},
+{
+"order_id": "O0101",
+"x": 376.7,
+"y": 212.1
+},
+{
+"order_id": "O0103",
+"x": 40.0,
+"y": 361.6
+},
+{
+"order_id": "O0104",
+"x": 123.8,
+"y": 65.7
+},
+{
+"order_id": "O0105",
+"x": 155.3,
+"y": 228.8
+},
+{
+"order_id": "O0106",
+"x": 186.3,
+"y": 465.0
+},
+{
+"order_id": "O0107",
+"x": 164.6,
+"y": 210.2
+},
+{
+"order_id": "O0108",
+"x": 117.0,
+"y": 373.4
+},
+{
+"order_id": "O0110",
+"x": 138.9,
+"y": 341.0
+},
+{
+"order_id": "O0111",
+"x": 182.2,
+"y": 174.6
+},
+{
+"order_id": "O0113",
+"x": 280.0,
+"y": 30.0
+},
+{
+"order_id": "O0117",
+"x": 72.9,
+"y": 465.0
+},
+{
+"order_id": "O0118",
+"x": 52.2,
+"y": 78.0
+},
+{
+"order_id": "O0119",
+"x": 40.0,
+"y": 426.1
+},
+{
+"order_id": "O0121S",
+"x": 165.7,
+"y": 218.2
+},
+{
+"order_id": "O0122S",
+"x": 436.3,
+"y": 347.5
+},
+{
+"order_id": "O0123S",
+"x": 220.1,
+"y": 338.1
+},
+{
+"order_id": "O0125S",
+"x": 229.9,
+"y": 166.6
+},
+{
+"order_id": "O0126S",
+"x": 268.1,
+"y": 331.2
+},
+{
+"order_id": "O0127S",
+"x": 450.9,
+"y": 52.5
+},
+{
+"order_id": "O0130S",
+"x": 450.1,
+"y": 257.5
+}
+],
+"total_route_length": 4442.7,
+"reassigned_order_ids": []
 }
 }
 }

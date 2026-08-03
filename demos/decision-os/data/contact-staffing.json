@@ -1,5 +1,5 @@
 {
-"source": "ws-lab/domains/contact-staffing/out/sla_curve.json + out/shift_mix.json (실측, OR-Tools CP-SAT)",
+"source": "합성 데이터 실측(CP-SAT): domains/contact-staffing/out/sla_curve.json + out/shift_mix.json",
 "sla_curve": [
 {
 "target_pct": 70,

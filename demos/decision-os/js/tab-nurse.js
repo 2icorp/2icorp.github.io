@@ -89,7 +89,7 @@
 
     var ref = d.reference;
     document.getElementById("nurseSourceNote").innerHTML =
-      "출처: ws-lab/domains/nurse-roster (generate.build_instance seed=1 size=medium staffing=loose, " +
+      "출처: 합성 데이터 실측(CP-SAT), domains/nurse-roster (generate.build_instance seed=1 size=medium staffing=loose, " +
       d.meta.num_employees +
       "명 x " +
       d.meta.num_days +

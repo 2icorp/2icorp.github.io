@@ -1,8 +1,15 @@
 (function () {
   "use strict";
 
-  var STATE = { data: null, scenario: "normal", rafId: null };
-  var RIDER_COLORS = ["var(--signal)", "var(--steel)", "var(--signal-deep)", "var(--ok)"];
+  var STATE = { data: null, scenario: "assigned", rafId: null };
+  var RIDER_COLORS = [
+    "var(--signal)",
+    "var(--steel)",
+    "var(--signal-deep)",
+    "var(--ok)",
+    "var(--steel-soft)",
+    "var(--ink-soft)",
+  ];
 
   function reducedMotion() {
     return window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -24,6 +31,7 @@
   }
 
   function pointAt(waypoints, frac) {
+    if (waypoints.length === 1) return waypoints[0];
     var total = pathLength(waypoints);
     if (total <= 0) return waypoints[0];
     var target = total * frac;
@@ -42,85 +50,165 @@
     return waypoints[waypoints.length - 1];
   }
 
-  function drawStatic(ctx, W, H, data, scenarioKey, riderFrac) {
-    ctx.clearRect(0, 0, W, H);
-
-    // restaurants (circles)
-    data.restaurants.forEach(function (r) {
-      ctx.beginPath();
-      ctx.arc(r.x, r.y, 9, 0, Math.PI * 2);
-      ctx.fillStyle = getCss("--signal");
-      ctx.fill();
-      ctx.lineWidth = 1.5;
-      ctx.strokeStyle = getCss("--ink");
-      ctx.stroke();
-      ctx.font = "10px " + getCss("--mono");
-      ctx.fillStyle = getCss("--ink-soft");
-      ctx.fillText(r.label, r.x + 12, r.y + 4);
-    });
-
-    // delivery points (squares)
-    data.orders.forEach(function (o) {
-      var s = 7;
-      ctx.fillStyle = getCss("--ink-faint");
-      ctx.fillRect(o.dropoff.x - s / 2, o.dropoff.y - s / 2, s, s);
-    });
-
-    var scenario = data.scenarios[scenarioKey];
-    var rids = Object.keys(scenario.routes);
-    rids.forEach(function (rid, i) {
-      var route = scenario.routes[rid];
-      var color = RIDER_COLORS[i % RIDER_COLORS.length];
-      var wps = route.waypoints;
-
-      // path line
-      ctx.beginPath();
-      wps.forEach(function (p, idx) {
-        if (idx === 0) ctx.moveTo(p.x, p.y);
-        else ctx.lineTo(p.x, p.y);
-      });
-      ctx.strokeStyle = color;
-      ctx.globalAlpha = 0.55;
-      ctx.lineWidth = 2;
-      ctx.setLineDash(route.offline_after ? [5, 4] : []);
-      ctx.stroke();
-      ctx.setLineDash([]);
-      ctx.globalAlpha = 1;
-
-      // reassigned-order markers
-      wps.forEach(function (p) {
-        if (p.reassigned && p.type === "dropoff") {
-          ctx.beginPath();
-          ctx.arc(p.x, p.y, 10, 0, Math.PI * 2);
-          ctx.strokeStyle = getCss("--signal-deep");
-          ctx.lineWidth = 2;
-          ctx.stroke();
-        }
-      });
-
-      // rider marker position
-      var frac = riderFrac != null ? riderFrac : 1;
-      var pos = route.offline_after ? wps[wps.length - 1] : pointAt(wps, frac);
-      ctx.beginPath();
-      ctx.arc(pos.x, pos.y, 8, 0, Math.PI * 2);
-      ctx.fillStyle = color;
-      ctx.fill();
-      ctx.lineWidth = 1.5;
-      ctx.strokeStyle = getCss("--panel");
-      ctx.stroke();
-      ctx.font = "bold 9px " + getCss("--mono");
-      ctx.fillStyle = getCss("--ink");
-      var displayLabel = route.rider_label + (route.offline_after ? " (오프라인)" : "");
-      ctx.fillText(displayLabel, pos.x + 10, pos.y - 8);
-    });
-  }
-
   var cssCache = {};
   function getCss(varName) {
     if (!cssCache[varName]) {
       cssCache[varName] = getComputedStyle(document.documentElement).getPropertyValue(varName).trim();
     }
     return cssCache[varName];
+  }
+
+  function drawStatic(ctx, W, H, data, scenarioKey, riderFrac) {
+    ctx.clearRect(0, 0, W, H);
+
+    // restaurants (circles) -- shared across scenarios, real generator coords
+    data.restaurants.forEach(function (r) {
+      ctx.beginPath();
+      ctx.arc(r.x, r.y, 8, 0, Math.PI * 2);
+      ctx.fillStyle = getCss("--signal");
+      ctx.fill();
+      ctx.lineWidth = 1.5;
+      ctx.strokeStyle = getCss("--ink");
+      ctx.stroke();
+      ctx.font = "9px " + getCss("--mono");
+      ctx.fillStyle = getCss("--ink-soft");
+      ctx.fillText(r.label, r.x + 10, r.y + 3);
+    });
+
+    var scenario = data.scenarios[scenarioKey];
+
+    // delivered dropoff points (squares), read straight out of each rider's
+    // waypoints so the map only shows the destinations this scenario's
+    // solve actually covers.
+    Object.keys(scenario.routes).forEach(function (rid) {
+      scenario.routes[rid].waypoints.forEach(function (p) {
+        if (p.type === "dropoff") {
+          var s = 6;
+          ctx.fillStyle = getCss("--ink-faint");
+          ctx.fillRect(p.x - s / 2, p.y - s / 2, s, s);
+        }
+      });
+    });
+
+    // unassigned orders (hollow dashed squares)
+    (scenario.unassigned_markers || []).forEach(function (m) {
+      var s = 7;
+      ctx.save();
+      ctx.setLineDash([2, 2]);
+      ctx.lineWidth = 1.4;
+      ctx.strokeStyle = getCss("--signal-deep");
+      ctx.strokeRect(m.x - s / 2, m.y - s / 2, s, s);
+      ctx.restore();
+    });
+
+    var rids = Object.keys(scenario.routes);
+    rids.forEach(function (rid, i) {
+      var route = scenario.routes[rid];
+      var color = RIDER_COLORS[i % RIDER_COLORS.length];
+      var wps = route.waypoints;
+
+      if (wps.length > 1) {
+        ctx.beginPath();
+        wps.forEach(function (p, idx) {
+          if (idx === 0) ctx.moveTo(p.x, p.y);
+          else ctx.lineTo(p.x, p.y);
+        });
+        ctx.strokeStyle = color;
+        ctx.globalAlpha = 0.5;
+        ctx.lineWidth = 1.6;
+        ctx.setLineDash(route.offline_after ? [5, 4] : []);
+        ctx.stroke();
+        ctx.setLineDash([]);
+        ctx.globalAlpha = 1;
+      }
+
+      var frac = riderFrac != null ? riderFrac : 1;
+      var pos = route.offline_after ? wps[wps.length - 1] : pointAt(wps, frac);
+      ctx.beginPath();
+      ctx.arc(pos.x, pos.y, route.offline_after ? 6 : 7, 0, Math.PI * 2);
+      if (route.offline_after) {
+        ctx.setLineDash([2, 2]);
+        ctx.fillStyle = getCss("--paper-2");
+        ctx.fill();
+        ctx.lineWidth = 1.5;
+        ctx.strokeStyle = getCss("--ink-faint");
+        ctx.stroke();
+        ctx.setLineDash([]);
+      } else {
+        ctx.fillStyle = color;
+        ctx.fill();
+        ctx.lineWidth = 1.2;
+        ctx.strokeStyle = getCss("--panel");
+        ctx.stroke();
+      }
+    });
+  }
+
+  function fmtDelta(pct) {
+    return (pct >= 0 ? "+" : "") + pct.toFixed(1) + "%";
+  }
+
+  function renderHeadline() {
+    var h = STATE.data.headline_cp_vs_greedy;
+    var el = document.getElementById("deliveryHeadline");
+    el.innerHTML =
+      '<div class="stat"><div class="stat__label">미배정 주문 (그리디 대비)</div>' +
+      '<div class="stat__value good">' +
+      fmtDelta(h.delta_pct.unassigned) +
+      "</div><div class=\"stat__sub\">그리디 " +
+      h.greedy.n_unassigned +
+      "건 → CP-SAT " +
+      h.cp.n_unassigned +
+      "건</div></div>" +
+      '<div class="stat"><div class="stat__label">총 이동거리 (그리디 대비)</div>' +
+      '<div class="stat__value good">' +
+      fmtDelta(h.delta_pct.distance) +
+      "</div><div class=\"stat__sub\">그리디 " +
+      h.greedy.total_distance.toFixed(1) +
+      " → CP-SAT " +
+      h.cp.total_distance.toFixed(1) +
+      "</div></div>" +
+      '<div class="stat"><div class="stat__label">배정률</div><div class="stat__value">' +
+      h.cp.assignment_rate_pct.toFixed(1) +
+      "%</div><div class=\"stat__sub\">CP-SAT 정식 해 기준</div></div>" +
+      '<div class="stat"><div class="stat__label">정시 배달률</div><div class="stat__value">' +
+      h.cp.on_time_rate_pct.toFixed(1) +
+      "%</div><div class=\"stat__sub\">배정된 주문 중</div></div>";
+  }
+
+  function renderReoptHeadline() {
+    var r = STATE.data.reoptimize_headline;
+    var el = document.getElementById("deliveryReoptHeadline");
+    el.innerHTML =
+      '<div class="stat"><div class="stat__label">변경된 주문(웜스타트 효과)</div>' +
+      '<div class="stat__value good">' +
+      r.delta_warm_minus_cold.changed_orders +
+      "</div><div class=\"stat__sub\">cold " +
+      r.cold.changed_orders_vs_confirmed +
+      "건 → warm " +
+      r.warm.changed_orders_vs_confirmed +
+      "건</div></div>" +
+      '<div class="stat"><div class="stat__label">미배정 주문</div><div class="stat__value good">' +
+      r.delta_warm_minus_cold.n_unassigned +
+      "</div><div class=\"stat__sub\">cold " +
+      r.cold.n_unassigned +
+      "건 → warm " +
+      r.warm.n_unassigned +
+      "건</div></div>" +
+      '<div class="stat"><div class="stat__label">총 지각(분)</div><div class="stat__value good">' +
+      r.delta_warm_minus_cold.total_late_minutes +
+      "</div><div class=\"stat__sub\">cold " +
+      r.cold.total_late_minutes +
+      "분 → warm " +
+      r.warm.total_late_minutes +
+      "분</div></div>" +
+      '<div class="stat"><div class="stat__label">총 이동거리</div><div class="stat__value">' +
+      r.warm.total_distance.toFixed(1) +
+      "</div><div class=\"stat__sub\">cold " +
+      r.cold.total_distance.toFixed(1) +
+      " → warm " +
+      r.warm.total_distance.toFixed(1) +
+      "</div></div>";
   }
 
   function renderStats() {
@@ -130,7 +218,6 @@
     var activeRiders = Object.keys(scenario.routes).filter(function (rid) {
       return !scenario.routes[rid].offline_after;
     }).length;
-    var reassignedCount = scenario.reassigned_order_ids ? scenario.reassigned_order_ids.length : 0;
     el.innerHTML =
       '<div class="stat"><div class="stat__label">시나리오</div><div class="stat__value">' +
       scenario.label +
@@ -138,14 +225,14 @@
       '<div class="stat"><div class="stat__label">가동 라이더</div><div class="stat__value">' +
       activeRiders +
       "명</div></div>" +
-      '<div class="stat"><div class="stat__label">총 이동 경로 길이</div><div class="stat__value">' +
-      Math.round(scenario.total_route_length) +
-      "</div><div class=\"stat__sub\">합성 좌표 단위</div></div>" +
-      '<div class="stat"><div class="stat__label">재배정된 주문</div><div class="stat__value ' +
-      (reassignedCount > 0 ? "bad" : "") +
+      '<div class="stat"><div class="stat__label">미배정 주문</div><div class="stat__value ' +
+      (scenario.n_unassigned > 0 ? "bad" : "good") +
       '">' +
-      reassignedCount +
-      "건</div></div>";
+      scenario.n_unassigned +
+      "건</div></div>" +
+      '<div class="stat"><div class="stat__label">총 이동거리</div><div class="stat__value">' +
+      scenario.total_distance.toFixed(1) +
+      "</div></div>";
     document.getElementById("deliveryScenarioLabel").textContent = scenario.label;
   }
 
@@ -163,7 +250,7 @@
       renderStaticNow();
       return;
     }
-    var durationMs = 3200;
+    var durationMs = 3600;
     var start = null;
     function step(ts) {
       if (start === null) start = ts;
@@ -187,6 +274,8 @@
       })
       .then(function (data) {
         STATE.data = data;
+        renderHeadline();
+        renderReoptHeadline();
         renderStats();
         renderStaticNow();
 
@@ -194,13 +283,13 @@
           playAnimation();
         });
         document.getElementById("deliveryDropoutBtn").addEventListener("click", function () {
-          STATE.scenario = "dropout";
+          STATE.scenario = "reoptimize";
           renderStats();
           playAnimation();
         });
         document.getElementById("deliveryResetBtn").addEventListener("click", function () {
           cancelAnim();
-          STATE.scenario = "normal";
+          STATE.scenario = "assigned";
           renderStats();
           renderStaticNow();
         });

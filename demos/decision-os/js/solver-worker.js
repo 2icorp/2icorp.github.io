@@ -2,11 +2,10 @@
  * Small simulated-annealing scheduler that runs inside a Web Worker so the
  * main thread never blocks. Ported from (and structurally identical to)
  * the seeded local-search engine already used by this site's own
- * demos/19-nurse-roster page -- there is no ws-lab/metaheuristic/sa.py or
- * objective.py in this repo to port from (checked: that path does not
- * exist), so this reuses the closest real analogue: the SA loop this site
- * already ships for nurse rostering, generalized into a standalone worker
- * for a smaller 10-employee / 14-day instance.
+ * demos/19-nurse-roster page -- no dedicated metaheuristic module exists
+ * to port from, so this reuses the closest real analogue: the SA loop this
+ * site already ships for nurse rostering, generalized into a standalone
+ * worker for a smaller 10-employee / 14-day instance.
  */
 "use strict";
 

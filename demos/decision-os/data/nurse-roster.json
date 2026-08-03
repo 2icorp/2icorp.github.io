@@ -1,5 +1,5 @@
 {
-"source": "ws-lab/domains/nurse-roster (generate.build_instance seed=1 size=medium staffing=loose) + model.solve, re-executed for this demo",
+"source": "합성 데이터 실측(CP-SAT): domains/nurse-roster의 generate.build_instance(seed=1 size=medium staffing=loose) + model.solve를 이 데모용으로 재실행",
 "meta": {
 "num_employees": 40,
 "num_days": 28

@@ -1,5 +1,5 @@
 {
-"source": "ws-lab/domains/league-fixture/out/tradeoff_medium_1_t1_b50 (약한 breaks 페널티) vs tradeoff_medium_1_t1_b1000 (강한 breaks 페널티), tradeoff.json 스윕의 실제 CP-SAT 해 (w_travel=1 고정)",
+"source": "합성 데이터 실측(CP-SAT): domains/league-fixture/out/tradeoff_medium_1_t1_b50(약한 breaks 페널티) vs tradeoff_medium_1_t1_b1000(강한 breaks 페널티), tradeoff.json 스윕의 실제 CP-SAT 해 (w_travel=1 고정)",
 "meta": {
 "seed": 1,
 "size": "medium",
