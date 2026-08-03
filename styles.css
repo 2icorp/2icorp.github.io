@@ -1260,3 +1260,23 @@ canvas.hero3d { display: block; width: 100%; height: 100%; }
 .nav__links a.nav__cta { color: var(--fg); }
 .cta .btn--ghost { --fg: var(--invert-fg); border-color: oklch(100% 0 0 / 0.4); }
 .cta .btn--ghost:hover { border-color: var(--invert-fg); }
+
+/* ---------- 모바일 터치 타깃 (2026-08-03, check_uiux.py 실측) ----------
+   푸터 링크 25x23, 데모 칩, 분류 칩, 필터 버튼이 전부 손가락 하한 아래였다.
+   특히 .case__proof 의 데모 칩은 소스 비공개 이후 이 사이트의 유일한 증거로 가는
+   입구라, 모바일에서 안 눌리면 증명 경로가 막힌다. 데스크톱 모양은 건드리지 않는다. */
+@media (max-width: 768px) {
+  .foot__links a,
+  .foot__legal a,
+  .case__proof .chip,
+  .famnav__chip,
+  .idea__case,
+  .pfilter,
+  .ifilter,
+  .brand {
+    min-height: 44px;
+    display: inline-flex;
+    align-items: center;
+  }
+  .foot__links a { min-width: 44px; justify-content: center; }
+}
