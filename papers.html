@@ -53,13 +53,19 @@
   </section>
   <section class="section section--alt" style="padding-top:0">
     <div class="wrap">
-    <div class="pfilters" role="tablist" aria-label="분류 필터"><button class="pfilter is-on" data-cat="all">전체 <b>43</b></button><button class="pfilter" data-cat="method">방법 <b>13</b></button><button class="pfilter" data-cat="experiment">실험 노트 <b>9</b></button><button class="pfilter" data-cat="research">리서치 <b>4</b></button><button class="pfilter" data-cat="infra">인프라 <b>4</b></button><button class="pfilter" data-cat="benchmark">벤치마크 <b>3</b></button><button class="pfilter" data-cat="signal">신호 <b>3</b></button><button class="pfilter" data-cat="industrial">산업 <b>2</b></button><button class="pfilter" data-cat="media">미디어 <b>2</b></button><button class="pfilter" data-cat="sensing">센싱 <b>2</b></button><button class="pfilter" data-cat="whitepaper">백서 <b>1</b></button></div>
+    <div class="pfilters" role="tablist" aria-label="분류 필터"><button class="pfilter is-on" data-cat="all">전체 <b>44</b></button><button class="pfilter" data-cat="method">방법 <b>13</b></button><button class="pfilter" data-cat="experiment">실험 노트 <b>10</b></button><button class="pfilter" data-cat="research">리서치 <b>4</b></button><button class="pfilter" data-cat="infra">인프라 <b>4</b></button><button class="pfilter" data-cat="benchmark">벤치마크 <b>3</b></button><button class="pfilter" data-cat="signal">신호 <b>3</b></button><button class="pfilter" data-cat="industrial">산업 <b>2</b></button><button class="pfilter" data-cat="media">미디어 <b>2</b></button><button class="pfilter" data-cat="sensing">센싱 <b>2</b></button><button class="pfilter" data-cat="whitepaper">백서 <b>1</b></button></div>
     <div class="pboard">
       <a class="pcard reveal" href="papers/decision-os-verification.html" data-cat="research">
         <div class="pcard__meta"><span class="pcard__cat">리서치</span><span class="pcard__date">2026.08.03</span><span class="pcard__rt">약 6분</span></div>
         <h3 class="pcard__title">의사결정 OS에서 가장 비어 있는 칸: 검증과 설명 - 5개 도메인 실측</h3>
         <p class="pcard__excerpt">최적화 도입을 검토하는 기술 리더를 위한 글입니다. solve 자체는 이미 상품화됐지만 &#x27;이 답을 믿어도 되는가&#x27;와 &#x27;왜 안 풀리는가&#x27;는 시장 전체에서 여전히 비어 있고, 그 공백이 도입 실패의 큰 몫을 차지합니다. 방배정 1,200명 규모에서 단일 solve는 위반 건수가 시드별로 99/130/0으로 요동쳤지만 블록 분해로 0/8/0까지 안정화됐고, 배달 디스패치 권역 규모에서는 exact가 그리디 대비 미배정 22%, 이동거리 37% 감소를 냈습니다. 반대로 배달 과부하 규모에서는 exact 4개 변형 전부가 그리디의 처리량을 못 이겼다는 사실도 그대로 공개합니다.</p>
         <div class="pcard__tags"><span>#의사결정OS</span><span>#최적화검증</span><span>#인피저빌리티설명</span><span>#CPSAT</span><span>#배달디스패치</span><span>#도구지형</span><span class="pcard__go">읽기 →</span></div>
+      </a>
+      <a class="pcard reveal" href="papers/four-defects-single-axis-testing-missed.html" data-cat="experiment">
+        <div class="pcard__meta"><span class="pcard__cat">실험 노트</span><span class="pcard__date">2026.08.03</span><span class="pcard__rt">약 10분</span></div>
+        <h3 class="pcard__title">테스트가 전부 초록인데 1분 만에 죽었다: 단일 축 검증이 원리적으로 못 보는 결함 4종</h3>
+        <p class="pcard__excerpt">저장 시스템이나 API 서버를 검증하는 사람을 위한 글입니다. 저희는 40항목 체크리스트, S3 표준 스위트 205건, 자체 테스트 전부가 통과하는 상태에서 프로덕션 클라이언트를 붙였고 게이트웨이가 1분 만에 죽었습니다. 이어서 사흘이 아니라 몇 시간 안에 결함 4건이 더 나왔습니다. 네 건 모두 통과율을 아무리 올려도 나오지 않는 종류였고, 공통점은 &#x27;기능 조합&#x27;과 &#x27;다른 클라이언트&#x27;라는 두 축이었습니다. 어떤 검증이 어떤 결함을 원리적으로 못 보는지, 그리고 저희가 검증 방식을 어떻게 바꿨는지 실측과 함께 정리합니다.</p>
+        <div class="pcard__tags"><span>#검증방법론</span><span>#상호운용성</span><span>#동시성결함</span><span>#S3</span><span>#SigV4</span><span>#소거부호</span><span class="pcard__go">읽기 →</span></div>
       </a>
       <a class="pcard reveal" href="papers/what-we-did-after-losing.html" data-cat="infra">
         <div class="pcard__meta"><span class="pcard__cat">인프라</span><span class="pcard__date">2026.08.02</span><span class="pcard__rt">약 12분</span></div>
