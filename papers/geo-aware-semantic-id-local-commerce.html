@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<script>(function(){try{var t=localStorage.getItem("theme");if(!t&&window.matchMedia&&matchMedia("(prefers-color-scheme: dark)").matches)t="dark";if(t)document.documentElement.setAttribute("data-theme",t);}catch(e){}})();</script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>의미는 맞는데 갈 수 없는 가게: 시맨틱 ID에 위치를 넣지 않으면 생기는 일 · 2i</title>
+<meta name="description" content="요즘 추천 모델은 상품을 짧은 코드로 압축합니다. 그 코드를 내용만으로 만들면 서울 치킨집과 부산 치킨집이 같은 코드로 묶입니다. 합성 POI로 같은 조건에서 재보니 같은 코드를 공유한 쌍의 81.7퍼센트가 40킬로미터 넘게 떨어져 있었고, 마지막 코드 층만 위치 기반으로 바꾸자 30.1퍼센트로 내려갔습니다. 두 방식의 코드 개수는 같게 고정했습니다.">
+<meta property="og:title" content="의미는 맞는데 갈 수 없는 가게: 시맨틱 ID에 위치를 넣지 않으면 생기는 일 · 2i">
+<meta property="og:description" content="요즘 추천 모델은 상품을 짧은 코드로 압축합니다. 그 코드를 내용만으로 만들면 서울 치킨집과 부산 치킨집이 같은 코드로 묶입니다. 합성 POI로 같은 조건에서 재보니 같은 코드를 공유한 쌍의 81.7퍼센트가 40킬로미터 넘게 떨어져 있었고, 마지막 코드 층만 위치 기반으로 바꾸자 30.1퍼센트로 내려갔습니다. 두 방식의 코드 개수는 같게 고정했습니다.">
+<meta property="og:type" content="article">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23111827'/%3E%3Ctext x='16' y='22' font-family='monospace' font-size='16' font-weight='700' fill='%23e08a2b' text-anchor='middle'%3E2i%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../styles.css?v=23">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js" onload="renderMathInElement(document.body,{delimiters:[{left:'$$',right:'$$',display:true},{left:'$',right:'$',display:false},{left:'\\[',right:'\\]',display:true},{left:'\\(',right:'\\)',display:false}]})"></script>
+</head>
+<body>
+
+<header class="nav">
+  <div class="wrap nav__inner">
+    <a class="brand" href="../" aria-label="2i 홈">
+      <span class="brand__mark">2i</span>
+      <span class="brand__tag">AX 컨설팅</span>
+    </a>
+    <button class="nav__burger" type="button" aria-expanded="false" aria-controls="navLinks" aria-label="메뉴 열기"><span></span><span></span><span></span></button>
+    <nav class="nav__links" id="navLinks" aria-label="주요 메뉴">
+      <a href="../index.html#method">방식</a>
+      <a href="../cases.html">사례</a>
+      <a href="../tech.html">기술</a>
+      <a href="../comms.html">통신</a>
+      <a href="../cloud.html">클라우드</a>
+      <a href="../finance.html">금융</a>
+      <a href="../papers.html">논문·실험</a>
+      <a href="../about.html">회사소개</a>
+      <a href="../index.html#pricing">가격</a>
+      <a href="../index.html#voucher">정부 바우처</a>
+      <a class="nav__lang" href="../en/">EN</a>
+      <a class="nav__cta btn btn--signal" href="../index.html#contact">상담 신청</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <article class="article wrap">
+    <a class="article__back" href="../papers.html">← 논문·실험 게시판</a>
+    <div class="article__head">
+      <div class="pcard__meta"><span class="pcard__cat">방법</span><span class="pcard__date">2026.08.04</span><span class="pcard__rt">약 9분</span></div>
+      <h1 class="article__title">의미는 맞는데 갈 수 없는 가게: 시맨틱 ID에 위치를 넣지 않으면 생기는 일</h1>
+      <p class="article__excerpt">요즘 추천 모델은 상품을 짧은 코드로 압축합니다. 그 코드를 내용만으로 만들면 서울 치킨집과 부산 치킨집이 같은 코드로 묶입니다. 합성 POI로 같은 조건에서 재보니 같은 코드를 공유한 쌍의 81.7퍼센트가 40킬로미터 넘게 떨어져 있었고, 마지막 코드 층만 위치 기반으로 바꾸자 30.1퍼센트로 내려갔습니다. 두 방식의 코드 개수는 같게 고정했습니다.</p>
+      <div class="pcard__tags"><span>#추천시스템</span><span>#시맨틱ID</span><span>#로컬커머스</span><span>#배달</span><span>#벡터양자화</span><span>#측정방법론</span></div>
+      
+    </div>
+    <div class="article__body prose">
+<h2 id="_1">답부터</h2>
+<p>로컬 커머스에 추천 모델을 붙일 때 <strong>시맨틱 ID 설계에 위치를 넣지 않으면, 의미상 맞지만 도달할 수 없는 지점이 후보에 섞입니다.</strong> 이것은 튜닝으로 없앨 수 있는 잡음이 아니라 코드 설계에서 비롯된 구조적 문제입니다.</p>
+<h2 id>시맨틱 ID가 하는 일</h2>
+<p>최근 추천 모델은 아이템을 정수 하나로 다루지 않고 <strong>짧은 코드 열</strong>로 압축합니다. 아이템 내용을 벡터로 만든 뒤 잔차 양자화를 층층이 걸어 코드 서너 개를 뽑고, 모델은 그 코드를 생성하는 방식으로 추천합니다. 아이템이 수천만 개여도 코드 사전만 들고 있으면 되니 파라미터가 크게 줄고, 새 아이템도 코드만 계산하면 즉시 다룰 수 있습니다.</p>
+<p>문제는 이 압축이 <strong>내용만 본다는 것</strong>입니다.</p>
+<h2 id="_2">로컬 커머스에서 무엇이 깨지나</h2>
+<p>서울의 치킨집과 부산의 치킨집을 생각해 봅니다. 메뉴가 같고, 카테고리가 같고, 리뷰에 쓰이는 단어가 같습니다. 내용 벡터로는 거의 같은 가게입니다. 그래서 같은 코드로 묶입니다. 실제 거리는 325킬로미터입니다.</p>
+<p>일반 이커머스에서는 이것이 문제가 아닙니다. 배송이 전국이면 어느 창고에 있든 상관없기 때문입니다. 그러나 배달, 방문 정비, 지역 서비스처럼 <strong>도달 가능성이 상품의 일부인 업종</strong>에서는 같은 코드가 곧 같은 후보군을 뜻하므로, 추천 후보에 갈 수 없는 지점이 그대로 섞여 들어갑니다.</p>
+<h2 id="_3">어떻게 쟀나</h2>
+<p>합성 POI를 만들었습니다. 여러 도시 군집을 지도 위에 뿌리고, 각 POI에 공통 카테고리 사전에서 뽑은 업종과 그 업종 원형에 잡음을 더한 내용 벡터, 그리고 자기 도시 안의 위경도를 줬습니다. 같은 업종이 모든 도시에 존재한다는 점이 핵심입니다. 이것은 저희가 만든 인위적 조건이 아니라 실제 로컬 카탈로그의 성질입니다.</p>
+<p>그리고 코드를 두 방식으로 만들었습니다.</p>
+<ul>
+<li><strong>내용 전용</strong>: 모든 층을 내용 벡터의 잔차 양자화로 만듭니다.</li>
+<li><strong>위치 인지</strong>: 앞 층들은 동일하게 내용으로 만들고, <strong>마지막 층만</strong> 위치로 만듭니다. 위경도를 그대로 넣지 않고, 앞 층이 만든 묶음의 중심으로부터의 <strong>거리와 방위</strong>로 바꿔 넣습니다.</li>
+</ul>
+<p>극좌표로 바꾸는 이유가 있습니다. 위경도를 그대로 양자화하면 격자가 지도에 고정되어 묶음 경계와 어긋납니다. 중심 기준 거리와 방위로 넣으면 "같은 음식인데 반대편 도시"는 갈라지고 "같은 음식에 같은 동네"는 붙습니다.</p>
+<p><strong>공정성 조건이 하나 있습니다.</strong> 두 방식이 만드는 코드 개수를 같게 고정해야 합니다. 위치 층을 그냥 덧붙이면 코드 공간이 커져서 버킷이 잘게 쪼개지고, 그러면 거리가 줄어드는 것이 위치 정보 덕분인지 단순히 버킷이 작아진 덕분인지 구분할 수 없습니다. 저희는 층수와 층당 코드 수를 양쪽에 동일하게 두었습니다.</p>
+<h2 id="_4">결과</h2>
+<p>같은 코드를 공유하는 POI 쌍의 실제 거리를 하버사인으로 계산했습니다.</p>
+<div class="tscroll" tabindex="0" role="region" aria-label="표. 좌우로 스크롤할 수 있습니다"><table>
+<thead>
+<tr>
+<th>지표</th>
+<th>내용 전용</th>
+<th>위치 인지</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>같은 코드 쌍의 평균 거리</td>
+<td>130.3km</td>
+<td>21.4km</td>
+</tr>
+<tr>
+<td>40킬로미터 초과 비율</td>
+<td>81.7%</td>
+<td>30.1%</td>
+</tr>
+</tbody>
+</table></div>
+<p>전부 합성 데이터 계산값입니다.</p>
+<p>내용만으로 만든 코드는 같은 코드를 공유한 쌍의 <strong>열에 여덟이 40킬로미터 넘게</strong> 떨어져 있었습니다. 마지막 한 층만 바꿨을 뿐인데 그 비율이 셋에 하나 아래로 내려갑니다.</p>
+<h2 id="_5">무엇을 증명하지 않았나</h2>
+<p><strong>이것은 합성 데이터입니다.</strong> 실제 가맹점 카탈로그가 아닙니다. 저희가 보인 것은 <strong>메커니즘과 개선의 방향</strong>이지 개선의 크기가 아닙니다. 실제 카탈로그는 도시별 밀도, 업종 분포, 배달 반경 정책이 전부 다르므로 반드시 다시 재야 합니다.</p>
+<p><strong>저희 수치를 문헌 수치와 섞어 읽지 마십시오.</strong> 로컬 서비스 추천을 다룬 선행 연구도 내용 전용 시맨틱 ID에서 같은 코드를 공유하는 지점의 절반 이상이 40킬로미터 넘게 떨어진다고 보고합니다. 방향이 일치한다는 점은 의미가 있지만, 위 표의 숫자는 저희 합성 실험의 것이고 문헌의 것이 아닙니다.</p>
+<p><strong>빔서치와 추천 품질은 재지 않았습니다.</strong> 이 글이 잰 것은 코드가 지리적으로 뭉치는가 하나뿐입니다. 그것이 최종 추천 지표를 얼마나 움직이는지는 별도 실험입니다.</p>
+<h2 id="_6">그래서 무엇을 할 것인가</h2>
+<p>로컬 커머스에서 시맨틱 ID 기반 추천을 검토 중이라면 순서는 이렇습니다.</p>
+<p>먼저 <strong>현재 후보군에 도달 불가능한 지점이 얼마나 섞이는지 재십시오.</strong> 같은 코드를 공유하는 지점들의 거리 분포와 배달 반경 안에 실제로 들어오는 비율, 이 두 숫자면 충분합니다. 대부분의 팀이 이 숫자를 갖고 있지 않습니다.</p>
+<p>섞인다면 <strong>코드 설계에 위치를 1급으로 넣으십시오.</strong> 후처리 필터로 걷어내는 방법도 있지만, 그러면 모델이 애초에 도달 불가능한 후보를 만드는 데 표현력을 쓰고 필터가 그것을 버리는 낭비가 생깁니다.</p>
+<p>그리고 <strong>도달 가능성을 상시 점검 항목으로 심으십시오.</strong> 코드북은 카탈로그가 바뀌면 다시 만들어야 하고, 다시 만들 때마다 이 성질은 다시 깨질 수 있습니다.</p>
+    </div>
+    <div class="article__cta">
+      <p>이 방법을 당신 현장의 숫자로 다시 재보고 싶다면.</p>
+      <a class="btn btn--signal" href="../index.html#contact">30분 진단 상담 <span class="arrow">→</span></a>
+      <a class="btn btn--ghost" href="../papers.html">다른 기록 보기</a>
+    </div>
+  </article>
+</main>
+
+<footer class="foot">
+  <div class="wrap foot__inner">
+    <div>
+      <div class="brand"><span class="brand__mark">2i</span><span class="brand__tag">AX 컨설팅</span></div>
+      <div class="foot__mono" style="margin-top:0.6rem">중소·중견 제조·유통을 위한 AI 전환</div>
+    </div>
+    <nav class="foot__links" aria-label="하단 메뉴">
+      <a href="../index.html#method">방식</a>
+      <a href="../papers.html">논문·실험</a>
+      <a href="../index.html#voucher">정부 바우처</a>
+      <a href="../cases.html">사례</a>
+      <a href="../en/">EN</a>
+    </nav>
+  </div>
+</footer>
+
+<script src="../main.js"></script>
+</body>
+</html>

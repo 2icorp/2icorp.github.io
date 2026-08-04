@@ -1,0 +1,1038 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<script>(function(){try{var t=localStorage.getItem("theme");if(!t&&window.matchMedia&&matchMedia("(prefers-color-scheme: dark)").matches)t="dark";if(t)document.documentElement.setAttribute("data-theme",t);}catch(e){}})();</script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>크루 페어링 최적화 데모 · 2i</title>
+<link rel="stylesheet" href="../../styles.css?v=23">
+<style>
+  .demo-top{display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:1rem clamp(1rem,2vw,2rem);border-bottom:1px solid var(--line-soft);flex-wrap:wrap;}
+  .demo-brand{display:flex;align-items:baseline;gap:.6rem;text-decoration:none;color:var(--ink);}
+  .demo-brand__mark{font-family:var(--mono);font-weight:800;color:var(--signal);font-size:1.1rem;}
+  .demo-brand__tag{font-family:var(--mono);font-size:var(--text-xs);letter-spacing:.08em;color:var(--ink-faint);text-transform:uppercase;}
+  .demo-top__links{display:flex;gap:1.2rem;font-size:var(--text-sm);}
+  .demo-top__links a{color:var(--ink-soft);text-decoration:none;border-bottom:1px solid transparent;transition:color var(--dur) var(--ease),border-color var(--dur) var(--ease);}
+  .demo-top__links a:hover{color:var(--ink);border-color:var(--line);}
+  .demo-top__links a:focus-visible{outline:2px solid var(--signal);outline-offset:3px;}
+  .demo-banner{font-family:var(--mono);font-size:var(--text-xs);color:var(--ink-faint);background:var(--paper-2);border-bottom:1px solid var(--line-soft);padding:.55rem clamp(1rem,2vw,2rem);letter-spacing:.01em;}
+  main{max-width:1180px;margin:0 auto;padding:2rem clamp(1rem,2vw,2rem) 1rem;}
+  h1{font-size:var(--text-h2);margin:0 0 .4rem;}
+  h2{font-size:var(--text-h3);margin:0 0 .3rem;}
+  h3{font-size:1rem;margin:0 0 .2rem;}
+  .lede{color:var(--ink-soft);max-width:72ch;margin:0 0 1.6rem;line-height:1.7;}
+  .refstat{background:var(--paper-2);border:1px solid var(--line-soft);border-radius:var(--radius);padding:.9rem 1.1rem;margin:0 0 2.2rem;font-family:var(--mono);font-size:var(--text-xs);color:var(--ink-soft);line-height:1.8;}
+  .refstat b{color:var(--ink);font-family:var(--sans);font-weight:700;}
+  section{margin-bottom:2.6rem;}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);}
+  .section-note{margin:0 0 1rem;color:var(--ink-faint);font-size:var(--text-xs);font-family:var(--mono);}
+
+  /* ---- controls ---- */
+  .controls{padding:1.4rem clamp(1rem,2vw,1.8rem);}
+  .controls__grid{display:grid;grid-template-columns:1.3fr 1fr;gap:1.4rem 1.8rem;}
+  .control h3{margin:0 0 .25rem;}
+  .control p{margin:0 0 .7rem;color:var(--ink-faint);font-size:var(--text-xs);font-family:var(--mono);line-height:1.55;}
+  .control__row{display:flex;align-items:center;gap:.9rem;}
+  input[type="range"]{flex:1;accent-color:var(--signal);min-height:44px;}
+  .control__val{font-family:var(--mono);font-weight:700;min-width:4.6rem;text-align:right;}
+
+  .wtoggle{display:flex;align-items:center;gap:.8rem;cursor:pointer;min-height:44px;padding:.3rem 0;}
+  .wtoggle input{position:absolute;opacity:0;width:1px;height:1px;}
+  .wtoggle__track{position:relative;flex:none;width:52px;height:30px;background:var(--line);border-radius:999px;transition:background var(--dur) var(--ease);}
+  .wtoggle__track::after{content:"";position:absolute;top:3px;left:3px;width:24px;height:24px;background:var(--paper);border-radius:50%;transition:transform var(--dur) var(--ease);box-shadow:0 1px 3px oklch(24% 0.02 255 / 0.35);}
+  .wtoggle input:checked + .wtoggle__track{background:var(--signal);}
+  .wtoggle input:checked + .wtoggle__track::after{transform:translateX(22px);}
+  .wtoggle input:focus-visible + .wtoggle__track{outline:2px solid var(--ink);outline-offset:2px;}
+  .wtoggle__text{font-family:var(--mono);font-size:var(--text-xs);color:var(--ink-soft);}
+
+  .presets{display:flex;flex-wrap:wrap;gap:.6rem;margin-top:1.4rem;padding-top:1.2rem;border-top:1px solid var(--line-soft);}
+  .btn{font-family:var(--sans);font-size:var(--text-sm);font-weight:600;padding:.65rem 1.1rem;min-height:44px;border-radius:var(--radius);border:1px solid var(--line);background:var(--panel);color:var(--ink);cursor:pointer;transition:background var(--dur) var(--ease),border-color var(--dur) var(--ease),transform var(--dur) var(--ease);}
+  .btn:hover{background:var(--paper-2);border-color:var(--ink-faint);}
+  .btn:active{transform:translateY(1px);}
+  .btn:focus-visible{outline:2px solid var(--signal);outline-offset:2px;}
+  .btn[aria-pressed="true"]{background:var(--signal);border-color:var(--signal);color:oklch(22% 0.03 60);}
+  .btn--go{background:var(--steel);border-color:var(--steel);color:var(--panel);}
+  .btn--go:hover{background:var(--steel-soft);border-color:var(--steel-soft);}
+
+  .gen-info{margin-top:1rem;font-family:var(--mono);font-size:var(--text-xs);color:var(--ink-soft);line-height:1.7;background:var(--paper-2);border:1px solid var(--line-soft);border-radius:var(--radius);padding:.8rem 1rem;}
+
+  /* ---- metrics ---- */
+  .metrics{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;}
+  .metric{background:var(--panel);padding:1.2rem 1.05rem;min-width:0;}
+  .metric__label{font-family:var(--mono);font-size:var(--text-xs);color:var(--ink-faint);letter-spacing:.06em;text-transform:uppercase;}
+  .metric__value{font-size:1.5rem;font-weight:800;margin-top:.35rem;word-break:keep-all;}
+  .metric__unit{font-size:.85rem;color:var(--ink-soft);font-weight:500;margin-left:.15rem;}
+  .metric__sub{font-family:var(--mono);font-size:var(--text-xs);margin-top:.4rem;color:var(--ink-faint);}
+  .metric__value.status-ok{color:var(--ok);}
+  .metric__value.status-bad{color:var(--signal-deep);}
+  .metric__value.status-warn{color:var(--signal);}
+
+  /* ---- verify grid ---- */
+  .verify-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:1px;background:var(--line);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;}
+  .vitem{background:var(--panel);padding:1rem .9rem;min-width:0;text-align:center;}
+  .vitem__label{font-family:var(--mono);font-size:var(--text-xs);color:var(--ink-faint);line-height:1.5;min-height:2.6em;}
+  .vitem__value{font-size:1.3rem;font-weight:800;margin-top:.5rem;}
+  .vitem__value.status-ok{color:var(--ok);}
+  .vitem__value.status-bad{color:var(--signal-deep);}
+
+  /* ---- gantt ---- */
+  .chart-card{padding:1.2rem clamp(1rem,2vw,1.6rem);}
+  .chart-card p{margin:0 0 1rem;color:var(--ink-faint);font-size:var(--text-xs);font-family:var(--mono);}
+  .legend{display:flex;flex-wrap:wrap;gap:1rem;font-family:var(--mono);font-size:var(--text-xs);color:var(--ink-soft);margin-bottom:.9rem;align-items:center;}
+  .legend span{display:inline-flex;align-items:center;gap:.4rem;}
+  .swatch{width:16px;height:12px;border-radius:2px;display:inline-block;}
+  .swatch--d1{background:var(--steel);}
+  .swatch--d2{background:var(--steel-soft);}
+  .swatch--dh{background:color-mix(in srgb, var(--signal) 45%, transparent);border:1px dashed var(--signal);}
+  .swatch--em{background:var(--signal-deep);}
+  svg{width:100%;height:auto;display:block;}
+  .axis-label{font-family:var(--mono);font-size:8px;fill:var(--ink-faint);}
+
+  /* ---- conclusion / honesty ---- */
+  .conclusion{background:var(--paper-2);border:1px solid var(--line-soft);border-radius:var(--radius);padding:1.2rem 1.4rem;font-size:1rem;line-height:1.75;}
+  .conclusion b{color:var(--signal-deep);}
+  .honesty{color:var(--ink-faint);font-size:var(--text-sm);line-height:1.75;border-top:1px solid var(--line-soft);padding-top:1.4rem;}
+  .honesty h3{font-size:1rem;margin:0 0 .6rem;color:var(--ink-soft);}
+  .honesty p{margin:0 0 .8rem;}
+  .honesty p:last-child{margin-bottom:0;}
+  .honesty b{color:var(--ink-soft);}
+
+  .demo-foot{margin-top:3rem;padding:1.6rem clamp(1rem,2vw,2rem) 2.4rem;font-family:var(--mono);font-size:var(--text-xs);color:var(--ink-faint);border-top:1px solid var(--line-soft);text-align:center;}
+
+  @media (max-width:900px){
+    .controls__grid{grid-template-columns:1fr;}
+    .metrics{grid-template-columns:1fr 1fr;}
+    .verify-grid{grid-template-columns:repeat(3,1fr);}
+  }
+  @media (max-width:560px){
+    .metrics{grid-template-columns:1fr;}
+    .verify-grid{grid-template-columns:1fr 1fr;}
+  }
+  @media (prefers-reduced-motion: reduce){
+    .btn, .wtoggle__track, .wtoggle__track::after{transition:none;}
+  }
+</style>
+</head>
+<body>
+<header class="demo-top">
+  <a href="/" class="demo-brand"><span class="demo-brand__mark">2i</span><span class="demo-brand__tag">DEMO · 크루 페어링 최적화</span></a>
+  <nav class="demo-top__links">
+    <a href="/cases.html#case-25">사례 보기</a>
+    <a href="/#contact">상담 신청</a>
+  </nav>
+</header>
+<div class="demo-banner">브라우저에서 그 자리에서 계산하는 인터랙티브 데모입니다. 합성 데이터를 씁니다.</div>
+
+<main>
+  <h1>크루 페어링 최적화 데모</h1>
+  <p class="lede">항공 승무원 페어링이 근무규칙을 지켰는지는 눈으로 훑어서 확인할 수 없습니다. 이 데모는 데모 자신과는 완전히 분리해 구현한 검증기가 시각표에서 처음부터 다시 계산해 증명합니다. 항로 수 슬라이더를 움직이면 브라우저가 그 자리에서 페어링 후보를 열거하고, 집합분할 문제를 그리디와 지역탐색으로 풀고, 검증기가 duty 상한·최소 휴식·베이스 복귀·커버리지를 재확인해 위반 건수를 그대로 보여줍니다.</p>
+
+  <div class="refstat">
+    <b>원 실증 결과(실측, 참고용)</b> · leg 40~300 규모에 3개 시드씩 CP-SAT 집합분할로 9개 인스턴스 전량 OPTIMAL 증명, 검증 위반 0건 · leg 300, 페어링 후보 9,125개 규모에서도 1.2초에서 31.9초 사이에 증명 완료 · leg 120 비용은 비용을 아예 안 보는 가중치 0 기준선 대비 시드별 21.5%에서 37.4%, 업계식 그리디 기준선 대비 1.4%에서 5.6% 낮음. 아래 데모는 이 결과를 재현하려는 것이 아니라, 브라우저에서 직접 계산한 자체 값(합성 데이터 계산)으로 같은 구조의 증명을 보여줍니다. 완전 열거는 leg 규모가 커지면 캡에 걸리는데, 그 캡도 아래 지표에 그대로 노출합니다.
+  </div>
+
+  <section class="card controls">
+    <h2>조작부</h2>
+    <p class="section-note">항로 수를 바꾸면 브라우저가 새 시각표를 생성하고 처음부터 다시 풉니다. 시드를 바꾸면 같은 항로 수라도 다른 시각표가 나오되, 같은 시드는 항상 같은 결과를 냅니다.</p>
+    <div class="controls__grid">
+      <div class="control">
+        <h3>항로 수</h3>
+        <p>오늘 하루 스케줄에 올라온 비행 leg 수입니다. 늘어날수록 페어링 후보도 늘고, 캡에 걸릴 가능성도 커집니다.</p>
+        <div class="control__row">
+          <input type="range" id="legSlider" min="20" max="120" step="5" value="60" aria-label="항로 수">
+          <span class="control__val" id="legVal">60편</span>
+        </div>
+      </div>
+      <div class="control">
+        <h3>비용 가중치</h3>
+        <p>켜면 급여·체류비·데드헤드를 최소화한 배정을 간트에 표시합니다. 끄면 비용을 아예 안 보고 커버리지만 채운 가중치 0 기준선을 대신 표시해, 비용을 무시하면 무슨 일이 생기는지 바로 비교할 수 있습니다.</p>
+        <label class="wtoggle">
+          <input type="checkbox" id="costToggle" checked aria-label="비용 가중치 켜기/끄기">
+          <span class="wtoggle__track" aria-hidden="true"></span>
+          <span class="wtoggle__text" id="toggleText">비용 최적화 표시 중</span>
+        </label>
+      </div>
+    </div>
+
+    <div class="presets">
+      <button type="button" class="btn seedbtn" id="seedA" data-seed="A" aria-pressed="true">시드 A</button>
+      <button type="button" class="btn seedbtn" id="seedB" data-seed="B" aria-pressed="false">시드 B</button>
+      <button type="button" class="btn seedbtn" id="seedC" data-seed="C" aria-pressed="false">시드 C</button>
+      <button type="button" class="btn btn--go" id="recomputeBtn">지금 다시 계산</button>
+    </div>
+
+    <p class="gen-info" id="genInfo" aria-live="polite"></p>
+  </section>
+
+  <section>
+    <h2>결과 지표</h2>
+    <p class="section-note">비용 최적화 배정(지역탐색 결과) 기준입니다. 두 기준선과의 격차, 검증 위반, 열거 캡 도달 여부, 계산 시간을 전부 그 자리에서 다시 잽니다.</p>
+    <div class="metrics" id="metrics" aria-live="polite">
+      <div class="metric">
+        <div class="metric__label">총 비용(최적화)</div>
+        <div class="metric__value"><span id="mCost">-</span><span class="metric__unit">만원</span></div>
+        <div class="metric__sub">급여+체류비+데드헤드(계산값)</div>
+      </div>
+      <div class="metric">
+        <div class="metric__label">가중치 0 기준선 대비</div>
+        <div class="metric__value status-ok"><span id="mVsA">-</span><span class="metric__unit">%</span></div>
+        <div class="metric__sub">비용 안 보는 배정보다 절감폭</div>
+      </div>
+      <div class="metric">
+        <div class="metric__label">업계식 그리디 대비</div>
+        <div class="metric__value status-ok"><span id="mVsB">-</span><span class="metric__unit">%</span></div>
+        <div class="metric__sub">그리디+지역탐색 결합 대비 순차(시간순) 그리디</div>
+      </div>
+      <div class="metric">
+        <div class="metric__label">검증 위반</div>
+        <div class="metric__value" id="mViol">-</div>
+        <div class="metric__sub">독립 검증기 재계산, 목표 0건</div>
+      </div>
+      <div class="metric">
+        <div class="metric__label">페어링 후보 열거</div>
+        <div class="metric__value" id="mCap">-</div>
+        <div class="metric__sub" id="mCapSub"></div>
+      </div>
+      <div class="metric">
+        <div class="metric__label">계산 시간</div>
+        <div class="metric__value"><span id="mTime">-</span><span class="metric__unit">ms</span></div>
+        <div class="metric__sub">열거+그리디+지역탐색 합산</div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>독립 검증: 처음부터 다시 계산</h2>
+    <p class="section-note">이 표가 이 데모의 핵심입니다. 솔버가 만든 배정을 솔버 코드와 무관한 별도 함수가 시각표에서 duty 규칙과 커버리지를 다시 계산해 위반 건수를 보고합니다. 감이 아니라 재계산입니다.</p>
+    <div class="verify-grid" id="verifyGrid" aria-live="polite">
+      <div class="vitem">
+        <div class="vitem__label">duty 1회 근무<br>10시간 상한</div>
+        <div class="vitem__value" id="vDutyTime">-</div>
+      </div>
+      <div class="vitem">
+        <div class="vitem__label">duty 규칙<br>(leg 4개·연결·환승시간)</div>
+        <div class="vitem__value" id="vDutyRule">-</div>
+      </div>
+      <div class="vitem">
+        <div class="vitem__label">duty 사이<br>최소 휴식 10시간</div>
+        <div class="vitem__value" id="vRest">-</div>
+      </div>
+      <div class="vitem">
+        <div class="vitem__label">베이스<br>출발과 복귀</div>
+        <div class="vitem__value" id="vBase">-</div>
+      </div>
+      <div class="vitem">
+        <div class="vitem__label">커버리지<br>(전량 정확히 1회)</div>
+        <div class="vitem__value" id="vCoverage">-</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="card chart-card">
+    <h3>duty 간트</h3>
+    <p>한 행이 페어링 하나입니다. 진한 칸과 옅은 칸은 같은 페어링 안의 서로 다른 duty, 점선 테두리 칸은 데드헤드 구간, 점선은 duty 사이 휴식입니다.</p>
+    <div class="legend">
+      <span><span class="swatch swatch--d1"></span>duty 1</span>
+      <span><span class="swatch swatch--d2"></span>duty 2 이상</span>
+      <span><span class="swatch swatch--dh"></span>데드헤드(재배치)</span>
+      <span><span class="swatch swatch--em"></span>비상 배정</span>
+    </div>
+    <svg id="ganttChart" viewBox="0 0 900 200" preserveAspectRatio="xMidYMid meet" role="img" aria-label="페어링별 duty 간트 차트"></svg>
+  </section>
+
+  <section>
+    <h2>무엇을 봤나</h2>
+    <p class="conclusion" id="conclusion" aria-live="polite"></p>
+  </section>
+
+  <section class="honesty">
+    <h3>정직하게 말하면</h3>
+    <p>이 데모의 페어링 후보는 무한정 다 따지지 않고 스텝·건수 상한을 둔 열거입니다. 위 &quot;페어링 후보 열거&quot; 지표가 캡에 도달했다고 뜨면, 이 방식이 그 항로 수에서 이미 감당 못 하기 시작했다는 뜻입니다. 실제 항공사 스케줄처럼 leg가 수천 단위로 늘어나는 규모에서는 완전 열거가 아니라 컬럼 생성(column generation)이 표준이고, 이 데모는 그걸 구현하지 않았습니다.</p>
+    <p>항공망도 공항 7개짜리 순수 허브앤스포크로 단순화했고, 실제 스케줄에는 공항간 직항, 기종별 크루 자격, 시차·야간비행에 따라 달라지는 근무시간 한도(FDP 표), 증편 승무원 규정, 월간·연간 누적 근무시간 상한이 얽혀 있는데 이 데모는 반영하지 않습니다. 데드헤드도 베이스를 경유하는 재배치 한 가지 형태로만 모델링했고, 실제로는 타 항공편 좌석 예약과 지상 이동까지 들어갑니다. 급여율·체류비율·데드헤드율은 상대적 크기 비교를 보여주려고 임의로 정한 합성 스케일이며 실제 항공사 임금 체계와 무관합니다.</p>
+    <p>지역탐색은 매 회차 페어링 몇 개를 무작위로 풀어 그 leg 집합 안에서만 최소비용 재조합을 노드 예산 안에서 찾는 국소 개선(ruin-and-recreate)이라, CP-SAT 같은 정수계획 solver가 증명하는 전역 최적과 같다는 보장은 없습니다. 실제로 이 데모의 전역 정렬 그리디는 이미 상당히 강한 초기해를 내서, 지역탐색이 그 위에서 추가로 찾는 개선폭은 실행마다 0에 가까울 수 있습니다(위 &quot;그리디+지역탐색 결합&quot; 안내문에 그대로 표시됩니다). 이것도 감추지 않고 그대로 보여줍니다. 이 데모의 슬라이더는 반응성을 위해 20편에서 120편으로 제한했고, 위 실측 참고값에 있는 leg 300 규모 증명은 원 실증에서 CP-SAT로 별도로 확인한 결과입니다. 실제 도입 시에는 이 항공사의 실제 근무협약, 기종별 규정, 실제 급여 체계로 제약과 비용 함수를 다시 정의해야 합니다.</p>
+  </section>
+</main>
+
+<footer class="demo-foot">© 2i · contact@2icorp.site</footer>
+
+<script>
+(function(){
+  "use strict";
+
+  // ---------------------------------------------------------------------
+  // 시드 고정 PRNG (mulberry32). 같은 입력이면 항상 같은 결과가 나온다.
+  // ---------------------------------------------------------------------
+  function mulberry32(seed){
+    return function(){
+      seed |= 0; seed = (seed + 0x6D2B79F5) | 0;
+      var t = Math.imul(seed ^ (seed >>> 15), 1 | seed);
+      t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+      return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+    };
+  }
+  function randInt(rng, lo, hi){ return lo + Math.floor(rng() * (hi - lo + 1)); }
+  function randChoice(rng, arr){ return arr[Math.floor(rng() * arr.length)]; }
+
+  // ---------------------------------------------------------------------
+  // 항공망: 허브앤스포크 7개 공항. 베이스(ICN)와 스포크만 직항이 있다.
+  // duty는 항상 베이스와 스포크 사이를 오간다 -- 실제 편성 캡의 크루 페어링
+  // 문제 구조를 그대로 살리되(duty 상한/최소 휴식/베이스 복귀) 항공망은
+  // 단순화한 것이다(정직 고지 참고).
+  // ---------------------------------------------------------------------
+  var AIRPORTS = ["ICN", "GMP", "CJU", "PUS", "HND", "KIX", "NRT"];
+  var BASE = "ICN";
+  var DIST = { GMP: 55, CJU: 75, PUS: 65, HND: 135, KIX: 110, NRT: 145 }; // 분 단위
+
+  var MIN_TURN = 35, TURN_JITTER = 20;      // duty 내 환승 35~55분
+  var DUTY_MAX_MIN = 600;                    // duty 1회 최대 10시간
+  var REST_MIN = 600;                        // duty 사이 최소 휴식 10시간
+  var REST_JITTER = 180;                     // 생성 시 11~14시간으로 여유 있게
+  var ROTATION_GAP_MIN = 900, ROTATION_GAP_JITTER = 600; // 로테이션 사이 15~25시간
+
+  var PAY_RATE = 0.9;        // 만원 / 운항 1분
+  var HOTEL_RATE = 18;       // 만원 / 체류 1박
+  var DEADHEAD_RATE = 0.5;   // 만원 / 데드헤드 1분
+  var EMERGENCY_PENALTY = 80; // 만원, 비상 배정 할증(캡을 넘어선 항로에만 적용)
+
+  var MAX_STEPS = 60000, MAX_CANDIDATES = 4000;
+  var SAME_STATION_OPENER_CAP = 5;
+  var LOCAL_SEARCH_PASSES = 300;
+
+  var SEEDS = { A: 20260804, B: 71402617, C: 55291903 };
+
+  function legDuration(a, b){
+    if(a === BASE) return DIST[b];
+    if(b === BASE) return DIST[a];
+    return 120;
+  }
+
+  // ---------------------------------------------------------------------
+  // 시각표 생성. K개의 병렬 스레드(동시에 도는 로테이션 흐름)를 돌려가며
+  // 매번 베이스에서 출발해 베이스로 복귀하는 로테이션 하나(=duty 1~3개)를
+  // 만든다. 로테이션 자체는 항상 규칙을 만족하도록 만들어지므로, 항로 전량이
+  // 최소 한 가지 방식으로는 반드시 커버 가능한 시각표가 된다. 다만 이 로테이션
+  // 경계를 솔버에게 알려주지 않는다 -- 솔버는 평평한 leg 목록만 받아 스스로
+  // 페어링을 다시 찾아야 한다.
+  // ---------------------------------------------------------------------
+  function generateLegs(targetN, seed){
+    var rng = mulberry32(seed);
+    var K = Math.max(2, Math.min(6, Math.round(targetN / 18)));
+    var threadT = [];
+    var k;
+    for(k = 0; k < K; k++){ threadT.push(randInt(rng, 300, 900)); }
+
+    var legs = [];
+    var guard = 0;
+    var maxGuard = targetN * 12 + 60;
+
+    while(legs.length < targetN && guard < maxGuard){
+      var ti = guard % K;
+      guard++;
+      var t = threadT[ti];
+      var pos = BASE;
+      var duties = randInt(rng, 1, 3);
+      var rotationLegs = [];
+      var d;
+      for(d = 0; d < duties; d++){
+        var legsInDuty = randInt(rng, 1, 4);
+        var dutyStart = t;
+        var cur = pos;
+        var dutyLegs = [];
+        var l;
+        for(l = 0; l < legsInDuty; l++){
+          var next = (cur === BASE) ? randChoice(rng, AIRPORTS.slice(1)) : BASE;
+          var dur = legDuration(cur, next);
+          var dep = t, arr = dep + dur;
+          if((arr - dutyStart) > DUTY_MAX_MIN) break;
+          dutyLegs.push({ from: cur, to: next, dep: dep, arr: arr });
+          cur = next;
+          t = arr + randInt(rng, MIN_TURN, MIN_TURN + TURN_JITTER);
+        }
+        if(dutyLegs.length === 0){
+          var next2 = (cur === BASE) ? randChoice(rng, AIRPORTS.slice(1)) : BASE;
+          var dur2 = legDuration(cur, next2);
+          dutyLegs.push({ from: cur, to: next2, dep: t, arr: t + dur2 });
+          cur = next2;
+          t = t + dur2 + randInt(rng, MIN_TURN, MIN_TURN + TURN_JITTER);
+        }
+        rotationLegs = rotationLegs.concat(dutyLegs);
+        pos = cur;
+        if(d < duties - 1){
+          t = dutyLegs[dutyLegs.length - 1].arr + randInt(rng, REST_MIN + 30, REST_MIN + REST_JITTER);
+        }
+      }
+      if(pos !== BASE){
+        var closeDur = legDuration(pos, BASE);
+        rotationLegs.push({ from: pos, to: BASE, dep: t, arr: t + closeDur });
+        t = t + closeDur;
+      }
+      t = t + randInt(rng, ROTATION_GAP_MIN, ROTATION_GAP_MIN + ROTATION_GAP_JITTER);
+      threadT[ti] = t;
+      legs = legs.concat(rotationLegs);
+    }
+
+    legs.sort(function(a, b){ return a.dep - b.dep; });
+    legs.forEach(function(lg, i){ lg.id = i; });
+    return { legs: legs, threads: K };
+  }
+
+  function buildAirportIndex(legs){
+    var idx = {};
+    AIRPORTS.forEach(function(a){ idx[a] = []; });
+    legs.forEach(function(lg){ idx[lg.from].push(lg); });
+    AIRPORTS.forEach(function(a){ idx[a].sort(function(x, y){ return x.dep - y.dep; }); });
+    return idx;
+  }
+
+  // ---------------------------------------------------------------------
+  // 비용: 운항 leg 급여 + 체류(밤) 호텔비 + 데드헤드(재배치) 비용.
+  // duties.length-1 = 페어링 안에서 베이스 밖에서 보내는 밤 수.
+  // ---------------------------------------------------------------------
+  function computeCost(duties){
+    var payMin = 0, deadheadMin = 0;
+    duties.forEach(function(du){
+      du.legs.forEach(function(lg){
+        if(lg.synthetic) deadheadMin += (lg.arr - lg.dep);
+        else payMin += (lg.arr - lg.dep);
+      });
+    });
+    var nights = duties.length - 1;
+    if(nights < 0) nights = 0;
+    return payMin * PAY_RATE + nights * HOTEL_RATE + deadheadMin * DEADHEAD_RATE;
+  }
+
+  // ---------------------------------------------------------------------
+  // 페어링 후보 열거. 캡을 둔 DFS -- steps 또는 candidates 상한에 닿으면
+  // 즉시 멈추고 capped=true 를 보고한다. duty는 최대 4 leg·10시간, duty
+  // 사이 휴식은 최소 10시간, 최대 3개 duty까지만 이어붙여 베이스로 복귀하는
+  // 페어링만 후보로 기록한다. duty2/duty3 시작점은 같은 공항에서 바로
+  // 이어지는 경우 외에, 베이스를 경유하는 데드헤드로 재배치하는 경우도
+  // 후보로 넣는다(재배치 leg는 synthetic:true 로 표시, 커버리지 대상이
+  // 아니다).
+  // ---------------------------------------------------------------------
+  function enumeratePairings(legs, maxSteps, maxCandidates){
+    var byAirport = buildAirportIndex(legs);
+    var steps = 0, capped = false;
+    var candidates = [];
+
+    function budgetOK(){
+      steps++;
+      if(steps > maxSteps){ capped = true; return false; }
+      if(candidates.length >= maxCandidates){ capped = true; return false; }
+      return true;
+    }
+
+    function exploreDutyFrom(openingLeg){
+      var out = [];
+      var dutyStart = openingLeg.dep;
+      function dfs(chain, cur, curTime){
+        if(!budgetOK()) return;
+        out.push({ legs: chain.slice(), endAirport: cur, endTime: curTime });
+        if(chain.length >= 4) return;
+        var pool = byAirport[cur] || [];
+        for(var i = 0; i < pool.length; i++){
+          var lg = pool[i];
+          if(lg.dep < curTime + MIN_TURN) continue;
+          if(lg.dep > curTime + MIN_TURN + TURN_JITTER + 5) break;
+          if((lg.arr - dutyStart) > DUTY_MAX_MIN) continue;
+          if(!budgetOK()) return;
+          chain.push(lg);
+          dfs(chain, lg.to, lg.arr);
+          chain.pop();
+        }
+      }
+      dfs([openingLeg], openingLeg.to, openingLeg.arr);
+      return out;
+    }
+
+    function nextOpeners(prevAirport, prevEndTime){
+      var out = [];
+      var pool = byAirport[prevAirport] || [];
+      for(var i = 0; i < pool.length && out.length < SAME_STATION_OPENER_CAP; i++){
+        var lg = pool[i];
+        if(lg.dep >= prevEndTime + REST_MIN) out.push(lg);
+      }
+      if(prevAirport !== BASE){
+        var dh = DIST[prevAirport];
+        var synDep = prevEndTime + REST_MIN;
+        var synArr = synDep + dh;
+        var poolB = byAirport[BASE] || [];
+        var hasFollow = false;
+        for(var j = 0; j < poolB.length; j++){
+          if(poolB[j].dep >= synArr + MIN_TURN && poolB[j].dep <= synArr + MIN_TURN + TURN_JITTER + 5){ hasFollow = true; break; }
+        }
+        if(hasFollow){
+          out.push({ id: -1, from: prevAirport, to: BASE, dep: synDep, arr: synArr, synthetic: true });
+        }
+      }
+      return out;
+    }
+
+    function recordCandidate(duties){
+      var legIds = [];
+      duties.forEach(function(du){ du.legs.forEach(function(lg){ if(!lg.synthetic) legIds.push(lg.id); }); });
+      candidates.push({ id: candidates.length, duties: duties, legIds: legIds, cost: computeCost(duties) });
+    }
+
+    var openingLegs = (byAirport[BASE] || []).slice();
+    outer:
+    for(var oi = 0; oi < openingLegs.length; oi++){
+      if(!budgetOK()) break outer;
+      var opener = openingLegs[oi];
+      var duty1Stops = exploreDutyFrom(opener);
+      for(var s1 = 0; s1 < duty1Stops.length; s1++){
+        if(!budgetOK()) break outer;
+        var stop1 = duty1Stops[s1];
+        var duty1 = { legs: stop1.legs };
+        if(stop1.endAirport === BASE){
+          recordCandidate([duty1]);
+          continue;
+        }
+        var openers2 = nextOpeners(stop1.endAirport, stop1.endTime);
+        for(var o2 = 0; o2 < openers2.length; o2++){
+          if(!budgetOK()) break outer;
+          var op2 = openers2[o2];
+          var duty2Stops = exploreDutyFrom(op2);
+          for(var s2 = 0; s2 < duty2Stops.length; s2++){
+            if(!budgetOK()) break outer;
+            var stop2 = duty2Stops[s2];
+            var duty2 = { legs: stop2.legs };
+            if(stop2.endAirport === BASE){
+              recordCandidate([duty1, duty2]);
+              continue;
+            }
+            var openers3 = nextOpeners(stop2.endAirport, stop2.endTime);
+            for(var o3 = 0; o3 < openers3.length; o3++){
+              if(!budgetOK()) break outer;
+              var op3 = openers3[o3];
+              var duty3Stops = exploreDutyFrom(op3);
+              for(var s3 = 0; s3 < duty3Stops.length; s3++){
+                if(!budgetOK()) break outer;
+                var stop3 = duty3Stops[s3];
+                if(stop3.endAirport === BASE){
+                  recordCandidate([duty1, duty2, { legs: stop3.legs }]);
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+
+    return { candidates: candidates, capped: capped, steps: steps };
+  }
+
+  // ---------------------------------------------------------------------
+  // 비상 배정: 캡 또는 우연히 어떤 leg를 덮는 정상 후보가 남지 않았을 때만
+  // 쓰는 안전망. 베이스를 오가는 데드헤드로 감싸 항상 구조적으로 유효한
+  // (duty 규칙·베이스 복귀를 항상 만족하는) 1개짜리 페어링을 만든다.
+  // ---------------------------------------------------------------------
+  function makeEmergencyPairing(lg){
+    var chain = [];
+    if(lg.from !== BASE){
+      var dh1 = DIST[lg.from];
+      var dep1 = lg.dep - MIN_TURN - dh1;
+      chain.push({ id: -1, from: BASE, to: lg.from, dep: dep1, arr: dep1 + dh1, synthetic: true });
+    }
+    chain.push(lg);
+    if(lg.to !== BASE){
+      var dh2 = DIST[lg.to];
+      var dep2 = lg.arr + MIN_TURN;
+      chain.push({ id: -1, from: lg.to, to: BASE, dep: dep2, arr: dep2 + dh2, synthetic: true });
+    }
+    var duties = [{ legs: chain }];
+    var cost = computeCost(duties) + EMERGENCY_PENALTY;
+    return { id: -1, duties: duties, legIds: [lg.id], cost: cost, emergency: true };
+  }
+
+  // ---------------------------------------------------------------------
+  // 배정: 두 기준선 + 그리디/지역탐색 solver.
+  //   (a) 가중치 0: 비용을 아예 안 보고 leg를 최대한 많이 묶는 페어링부터
+  //       채운다.
+  //   (b) 업계식 그리디(비용/커버 비율): 시각표를 시간순으로 훑으면서, 그
+  //       leg를 아직 못 채웠으면 지금 시점에 고를 수 있는 후보 중 비용/leg
+  //       비율이 가장 싼 것을 즉시 확정한다. 담당자가 스케줄을 위에서
+  //       아래로 손으로 짜는 방식과 같다 -- 뒤에 더 싼 조합이 있어도 이미
+  //       확정한 앞부분은 되돌리지 않는다.
+  //   solver: 전체 후보를 한 번에 비용/leg 비율로 정렬해 앞에서부터 채우는
+  //       전역 그리디로 초기해를 만들고, 그 위에 지역탐색(ruin-and-recreate)
+  //       을 돌려 더 싼 재조합이 있는지 찾는다.
+  // ---------------------------------------------------------------------
+  function weightZeroOrder(a, b){
+    if(b.legIds.length !== a.legIds.length) return b.legIds.length - a.legIds.length;
+    return a.duties[0].legs[0].dep - b.duties[0].legs[0].dep;
+  }
+  function industryOrder(a, b){
+    var ea = a.cost / Math.max(1, a.legIds.length);
+    var eb = b.cost / Math.max(1, b.legIds.length);
+    if(ea !== eb) return ea - eb;
+    return a.duties[0].legs[0].dep - b.duties[0].legs[0].dep;
+  }
+
+  function greedyAssign(candidates, allLegIds, legById, orderFn){
+    var uncovered = {};
+    allLegIds.forEach(function(id){ uncovered[id] = true; });
+    var remaining = allLegIds.length;
+    var sorted = candidates.slice().sort(orderFn);
+    var chosen = [];
+    for(var i = 0; i < sorted.length && remaining > 0; i++){
+      var c = sorted[i];
+      var fits = true;
+      for(var k = 0; k < c.legIds.length; k++){ if(!uncovered[c.legIds[k]]){ fits = false; break; } }
+      if(!fits) continue;
+      chosen.push(c);
+      for(var k2 = 0; k2 < c.legIds.length; k2++){ uncovered[c.legIds[k2]] = false; remaining--; }
+    }
+    var emergencyCount = 0;
+    if(remaining > 0){
+      allLegIds.forEach(function(id){
+        if(uncovered[id]){
+          chosen.push(makeEmergencyPairing(legById[id]));
+          emergencyCount++;
+        }
+      });
+    }
+    return { chosen: chosen, emergencyCount: emergencyCount };
+  }
+
+  // 업계식 그리디: leg를 시간순으로 한 번씩만 훑으며, 그 자리에서 고를 수
+  // 있는(자기 leg가 전부 아직 안 덮인) 후보 중 비용/leg 비율이 최선인 것을
+  // 즉시 확정한다. 뒤를 내다보지 않는 순차 커밋이라, 앞에서 정한 선택이
+  // 뒤쪽 leg의 더 싼 조합을 막아버릴 수 있다 -- 이게 이 데모가 잡아내려는
+  // 바로 그 비효율이다.
+  function chronoRatioAssign(candidates, allLegIds, legById){
+    var uncovered = {};
+    allLegIds.forEach(function(id){ uncovered[id] = true; });
+    var byLeg = {};
+    allLegIds.forEach(function(id){ byLeg[id] = []; });
+    candidates.forEach(function(c){ c.legIds.forEach(function(id){ if(byLeg[id]) byLeg[id].push(c); }); });
+
+    var sortedLegIds = allLegIds.slice().sort(function(a, b){ return a - b; });
+    var chosen = [];
+    var remaining = allLegIds.length;
+
+    sortedLegIds.forEach(function(legId){
+      if(!uncovered[legId]) return;
+      var opts = byLeg[legId].filter(function(c){
+        for(var k = 0; k < c.legIds.length; k++){ if(!uncovered[c.legIds[k]]) return false; }
+        return true;
+      });
+      if(opts.length === 0) return;
+      var best = opts[0];
+      var bestRatio = best.cost / best.legIds.length;
+      for(var i = 1; i < opts.length; i++){
+        var r = opts[i].cost / opts[i].legIds.length;
+        if(r < bestRatio){ best = opts[i]; bestRatio = r; }
+      }
+      chosen.push(best);
+      best.legIds.forEach(function(id){ uncovered[id] = false; remaining--; });
+    });
+
+    var emergencyCount = 0;
+    if(remaining > 0){
+      allLegIds.forEach(function(id){
+        if(uncovered[id]){ chosen.push(makeEmergencyPairing(legById[id])); emergencyCount++; }
+      });
+    }
+    return { chosen: chosen, emergencyCount: emergencyCount };
+  }
+
+  // 풀린(freed) leg 집합 안에서, 그 안에 완전히 들어가는 후보들만 가지고
+  // 최소비용 완전 커버를 가지치기 탐색(branch and bound)으로 찾는다.
+  // 노드 예산을 넘기면 그 지점까지 찾은 최선(없으면 null)을 반환한다 --
+  // 풀어낸 원래 페어링 자체가 항상 유효한 해이므로, 예산 안에서 최소 한
+  // 가지 해는 대개 금방 발견된다.
+  function bestCoverExact(fitting, freedIds, nodeBudget){
+    var freedList = Object.keys(freedIds).map(Number).sort(function(a, b){ return a - b; });
+    var byLeg = {};
+    freedList.forEach(function(id){ byLeg[id] = []; });
+    fitting.forEach(function(c){ c.legIds.forEach(function(id){ if(byLeg[id]) byLeg[id].push(c); }); });
+    freedList.forEach(function(id){ byLeg[id].sort(function(a, b){ return a.cost - b.cost; }); });
+
+    var covered = {};
+    var nodes = 0;
+    var best = null;
+    var currentPicks = [];
+    var currentCost = 0;
+    var timedOut = false;
+
+    function nextUncovered(){
+      for(var i = 0; i < freedList.length; i++){ if(!covered[freedList[i]]) return freedList[i]; }
+      return -1;
+    }
+    function dfs(){
+      nodes++;
+      if(nodes > nodeBudget){ timedOut = true; return; }
+      if(best && currentCost >= best.cost) return;
+      var leg = nextUncovered();
+      if(leg === -1){
+        if(!best || currentCost < best.cost){ best = { picks: currentPicks.slice(), cost: currentCost }; }
+        return;
+      }
+      var options = byLeg[leg];
+      for(var i = 0; i < options.length; i++){
+        var cand = options[i];
+        var ok = true;
+        for(var k = 0; k < cand.legIds.length; k++){ if(covered[cand.legIds[k]]){ ok = false; break; } }
+        if(!ok) continue;
+        cand.legIds.forEach(function(id){ covered[id] = true; });
+        currentPicks.push(cand);
+        currentCost += cand.cost;
+        dfs();
+        currentCost -= cand.cost;
+        currentPicks.pop();
+        cand.legIds.forEach(function(id){ covered[id] = false; });
+        if(timedOut) return;
+      }
+    }
+    dfs();
+    return best;
+  }
+
+  // 지역탐색(ruin-and-recreate): 매 회차마다 현재 배정에서 페어링 2~7개를
+  // 무작위로 뽑아 그 leg 집합만 "풀어놓고", 그 안에서 최소비용 완전 커버를
+  // (예산 안에서) 다시 찾는다. 재구성 결과가 원래보다 싸면 채택하고, 아니면
+  // 그대로 되돌린다. 뽑았던 원래 페어링 자체가 항상 재구성 후보 안에
+  // 포함돼 있으므로 재구성은 항상 최소 한 가지 방법으로 성공하고, 커버리지는
+  // 절대 깨지지 않는다.
+  function localSearchImprove(chosenIn, candidates, passes, rng){
+    var chosen = chosenIn.slice();
+    var NODE_BUDGET = 6000;
+    for(var pass = 0; pass < passes; pass++){
+      var nonEmergencyIdx = [];
+      for(var ci = 0; ci < chosen.length; ci++){ if(!chosen[ci].emergency) nonEmergencyIdx.push(ci); }
+      if(nonEmergencyIdx.length < 2) break;
+
+      var K = Math.min(nonEmergencyIdx.length, 2 + Math.floor(rng() * 6));
+      var pickSet = {};
+      var guard = 0;
+      while(Object.keys(pickSet).length < K && guard < 40){
+        guard++;
+        var idx = nonEmergencyIdx[Math.floor(rng() * nonEmergencyIdx.length)];
+        pickSet[idx] = true;
+      }
+      var pickIdx = Object.keys(pickSet).map(Number).sort(function(a, b){ return b - a; });
+
+      var removed = pickIdx.map(function(i){ return chosen[i]; });
+      var freedIds = {};
+      removed.forEach(function(c){
+        c.legIds.forEach(function(id){ freedIds[id] = true; });
+      });
+      var oldCost = removed.reduce(function(s, c){ return s + c.cost; }, 0);
+
+      var fitting = candidates.filter(function(c){
+        if(c.legIds.length === 0) return false;
+        for(var k = 0; k < c.legIds.length; k++){ if(!freedIds[c.legIds[k]]) return false; }
+        return true;
+      });
+
+      var exact = bestCoverExact(fitting, freedIds, NODE_BUDGET);
+      if(exact && exact.cost < oldCost - 1e-9){
+        pickIdx.forEach(function(i){ chosen.splice(i, 1); });
+        exact.picks.forEach(function(c){ chosen.push(c); });
+      }
+    }
+    return chosen;
+  }
+
+  function sumCost(arr){ return arr.reduce(function(s, c){ return s + c.cost; }, 0); }
+
+  // ---------------------------------------------------------------------
+  // 독립 검증기. 솔버 코드를 재사용하지 않고 시각표에서 처음부터 다시
+  // 계산한다.
+  // ---------------------------------------------------------------------
+  function verifyAssignment(chosen, allLegIds){
+    var counts = { dutyTime: 0, dutyRule: 0, rest: 0, baseEdge: 0, coverage: 0 };
+    var coverageCount = {};
+    allLegIds.forEach(function(id){ coverageCount[id] = 0; });
+
+    chosen.forEach(function(pairing){
+      var duties = pairing.duties;
+      var firstLeg = duties[0].legs[0];
+      var lastDuty = duties[duties.length - 1];
+      var lastLeg = lastDuty.legs[lastDuty.legs.length - 1];
+      if(!firstLeg || firstLeg.from !== BASE) counts.baseEdge++;
+      if(!lastLeg || lastLeg.to !== BASE) counts.baseEdge++;
+
+      duties.forEach(function(duty, dIdx){
+        if(duty.legs.length > 4) counts.dutyRule++;
+        for(var k = 0; k < duty.legs.length; k++){
+          var lg = duty.legs[k];
+          if(!lg.synthetic) coverageCount[lg.id] = (coverageCount[lg.id] || 0) + 1;
+          if(k > 0){
+            var prev = duty.legs[k - 1];
+            if(prev.to !== lg.from) counts.dutyRule++;
+            if(lg.dep < prev.arr + MIN_TURN) counts.dutyRule++;
+          }
+        }
+        if(duty.legs.length > 0){
+          var block = duty.legs[duty.legs.length - 1].arr - duty.legs[0].dep;
+          if(block > DUTY_MAX_MIN) counts.dutyTime++;
+        }
+        if(dIdx > 0){
+          var prevDuty = duties[dIdx - 1];
+          var prevEnd = prevDuty.legs[prevDuty.legs.length - 1].arr;
+          var thisStart = duty.legs[0].dep;
+          if((thisStart - prevEnd) < REST_MIN) counts.rest++;
+        }
+      });
+    });
+
+    allLegIds.forEach(function(id){ if(coverageCount[id] !== 1) counts.coverage++; });
+
+    var total = counts.dutyTime + counts.dutyRule + counts.rest + counts.baseEdge + counts.coverage;
+    return { counts: counts, total: total };
+  }
+
+  // ---------------------------------------------------------------------
+  // DOM / 렌더링
+  // ---------------------------------------------------------------------
+  var legSlider = document.getElementById("legSlider");
+  var legVal = document.getElementById("legVal");
+  var costToggle = document.getElementById("costToggle");
+  var toggleText = document.getElementById("toggleText");
+
+  var currentSeed = SEEDS.A;
+  var currentSeedLabel = "A";
+  var lastState = null;
+
+  function fmtInt(n){ return Math.round(n).toLocaleString("ko-KR"); }
+  function fmt1(n){ return n.toFixed(1); }
+  function pctCheaper(current, baseline){
+    if(baseline <= 0) return 0;
+    return ((baseline - current) / baseline) * 100;
+  }
+
+  function renderMetrics(s){
+    document.getElementById("mCost").textContent = fmtInt(s.costC);
+    var vsA = pctCheaper(s.costC, s.costA);
+    var vsB = pctCheaper(s.costC, s.costB);
+    document.getElementById("mVsA").textContent = fmt1(vsA);
+    document.getElementById("mVsB").textContent = fmt1(vsB);
+
+    var mViol = document.getElementById("mViol");
+    mViol.textContent = String(s.verify.total) + "건";
+    mViol.className = "metric__value " + (s.verify.total === 0 ? "status-ok" : "status-bad");
+
+    var mCap = document.getElementById("mCap");
+    mCap.textContent = s.capped ? "캡 도달" : "완전 열거";
+    mCap.className = "metric__value " + (s.capped ? "status-warn" : "status-ok");
+    document.getElementById("mCapSub").textContent = "후보 " + s.candidateCount.toLocaleString("ko-KR") + "건 · 스텝 " + s.steps.toLocaleString("ko-KR") + "/" + MAX_STEPS.toLocaleString("ko-KR");
+
+    document.getElementById("mTime").textContent = fmt1(s.solveMs);
+  }
+
+  function renderVerify(s){
+    var c = s.verify.counts;
+    function set(id, n){
+      var el = document.getElementById(id);
+      el.textContent = n + "건";
+      el.className = "vitem__value " + (n === 0 ? "status-ok" : "status-bad");
+    }
+    set("vDutyTime", c.dutyTime);
+    set("vDutyRule", c.dutyRule);
+    set("vRest", c.rest);
+    set("vBase", c.baseEdge);
+    set("vCoverage", c.coverage);
+  }
+
+  function renderGenInfo(s){
+    var el = document.getElementById("genInfo");
+    var lsNote = s.lsGain > 0.5
+      ? "지역탐색이 전역 그리디 위에서 추가로 " + fmtInt(s.lsGain) + "만원을 더 줄였습니다."
+      : "이번 실행에서는 전역 그리디가 이미 지역탐색 근방에서 못 넘는 해를 냈습니다(지역탐색 추가 개선 0).";
+    el.textContent = "요청 항로 수 " + s.requestedN + "편 → 로테이션 단위로 반올림해 실제 " + s.legCount + "편 생성(동시 로테이션 흐름 " + s.threads + "개). 비용 최적화 배정은 페어링 " + s.mainCount + "개(비상 배정 " + s.emergencyCount + "건 포함)로 항로 전량을 커버합니다. " + lsNote;
+  }
+
+  function drawGantt(s, useMain){
+    var pairings = useMain ? s.mainChosen : s.baselineAChosen;
+    var svg = document.getElementById("ganttChart");
+    while(svg.firstChild) svg.removeChild(svg.firstChild);
+
+    var svgNS = "http://www.w3.org/2000/svg";
+    var ROW_CAP = 90;
+    var rows = pairings.slice(0, ROW_CAP);
+    var rowH = 15;
+    var padL = 46, padR = 10, padT = 10, padB = 24;
+    var W = 900;
+    var innerW = W - padL - padR;
+    var H = padT + Math.max(1, rows.length) * rowH + padB;
+    svg.setAttribute("viewBox", "0 0 " + W + " " + H);
+    svg.setAttribute("aria-label", (useMain ? "비용 최적화" : "가중치 0") + " 배정 기준 페어링 " + pairings.length + "건의 duty 간트 차트, 가로축은 시간, 세로축은 각 페어링입니다.");
+
+    if(rows.length === 0) return;
+
+    var minT = Infinity, maxT = -Infinity;
+    rows.forEach(function(p){
+      p.duties.forEach(function(du){
+        du.legs.forEach(function(lg){
+          if(lg.dep < minT) minT = lg.dep;
+          if(lg.arr > maxT) maxT = lg.arr;
+        });
+      });
+    });
+    if(!isFinite(minT)){ minT = 0; maxT = 1; }
+    var span = (maxT - minT) || 1;
+    function x(t){ return padL + (t - minT) / span * innerW; }
+
+    var dayStart = Math.floor(minT / 1440), dayEnd = Math.ceil(maxT / 1440);
+    for(var day = dayStart; day <= dayEnd; day++){
+      var tx = x(day * 1440);
+      if(tx < padL - 1 || tx > W - padR + 1) continue;
+      var gl = document.createElementNS(svgNS, "line");
+      gl.setAttribute("x1", tx.toFixed(1)); gl.setAttribute("x2", tx.toFixed(1));
+      gl.setAttribute("y1", padT); gl.setAttribute("y2", H - padB);
+      gl.setAttribute("stroke", "var(--line-soft)"); gl.setAttribute("stroke-width", "1");
+      svg.appendChild(gl);
+      var lbl = document.createElementNS(svgNS, "text");
+      lbl.setAttribute("x", tx.toFixed(1)); lbl.setAttribute("y", H - 8);
+      lbl.setAttribute("text-anchor", "middle"); lbl.setAttribute("class", "axis-label");
+      lbl.textContent = (day + 1) + "일";
+      svg.appendChild(lbl);
+    }
+
+    rows.forEach(function(p, ri){
+      var y = padT + ri * rowH;
+      var cy = y + rowH / 2;
+      var rowLabel = document.createElementNS(svgNS, "text");
+      rowLabel.setAttribute("x", 4); rowLabel.setAttribute("y", (cy + 3).toFixed(1));
+      rowLabel.setAttribute("class", "axis-label");
+      rowLabel.textContent = "P" + (ri + 1) + (p.emergency ? "!" : "");
+      svg.appendChild(rowLabel);
+
+      for(var di = 0; di < p.duties.length; di++){
+        var du = p.duties[di];
+        if(di > 0){
+          var prevArr = p.duties[di - 1].legs[p.duties[di - 1].legs.length - 1].arr;
+          var thisDep = du.legs[0].dep;
+          var restLine = document.createElementNS(svgNS, "line");
+          restLine.setAttribute("x1", x(prevArr).toFixed(1)); restLine.setAttribute("x2", x(thisDep).toFixed(1));
+          restLine.setAttribute("y1", cy.toFixed(1)); restLine.setAttribute("y2", cy.toFixed(1));
+          restLine.setAttribute("stroke", "var(--ink-faint)");
+          restLine.setAttribute("stroke-width", "1");
+          restLine.setAttribute("stroke-dasharray", "2 3");
+          svg.appendChild(restLine);
+        }
+        for(var li = 0; li < du.legs.length; li++){
+          var lg = du.legs[li];
+          var rx = x(lg.dep), rw = Math.max(1, x(lg.arr) - x(lg.dep));
+          var rect = document.createElementNS(svgNS, "rect");
+          rect.setAttribute("x", rx.toFixed(1)); rect.setAttribute("y", (y + 2).toFixed(1));
+          rect.setAttribute("width", rw.toFixed(1)); rect.setAttribute("height", (rowH - 4).toFixed(1));
+          rect.setAttribute("rx", "1.5");
+          var fill;
+          if(p.emergency) fill = "var(--signal-deep)";
+          else if(lg.synthetic) fill = "color-mix(in srgb, var(--signal) 45%, transparent)";
+          else fill = (di % 2 === 0) ? "var(--steel)" : "var(--steel-soft)";
+          rect.setAttribute("fill", fill);
+          if(lg.synthetic && !p.emergency){
+            rect.setAttribute("stroke", "var(--signal)");
+            rect.setAttribute("stroke-width", "1");
+            rect.setAttribute("stroke-dasharray", "2 2");
+          }
+          var titleEl = document.createElementNS(svgNS, "title");
+          titleEl.textContent = (lg.synthetic ? "데드헤드 " : "운항 ") + lg.from + "→" + lg.to;
+          rect.appendChild(titleEl);
+          svg.appendChild(rect);
+        }
+      }
+    });
+  }
+
+  function renderConclusion(s){
+    var vsA = pctCheaper(s.costC, s.costA);
+    var vsB = pctCheaper(s.costC, s.costB);
+    var el = document.getElementById("conclusion");
+    var capText = s.capped ? "캡에 도달해 완전 열거는 못 했지만 그 안에서" : "캡 안에서 완전히 열거하고 그 후보 중에서";
+    el.innerHTML = "이번 설정(항로 " + s.legCount.toLocaleString("ko-KR") + "편, 시드 " + currentSeedLabel + ")에서 " + capText + " <b>" + s.mainChosen.length + "개 페어링</b>으로 항로 전량을 커버했습니다. 비용 최적화 배정은 비용을 아예 안 보는 가중치 0 기준선보다 <b>" + fmt1(vsA) + "%</b> 낮고, 업계식 그리디 기준선보다 <b>" + fmt1(vsB) + "%</b> 낮습니다. 별도로 구현한 검증기가 duty 규칙과 커버리지를 처음부터 다시 계산한 결과 위반은 <b>" + s.verify.total + "건</b>입니다.";
+  }
+
+  function recompute(){
+    var t0 = performance.now();
+    var requestedN = parseInt(legSlider.value, 10);
+    var gen = generateLegs(requestedN, currentSeed);
+    var legs = gen.legs;
+    var allLegIds = legs.map(function(l){ return l.id; });
+    var legById = {};
+    legs.forEach(function(l){ legById[l.id] = l; });
+
+    var enumRes = enumeratePairings(legs, MAX_STEPS, MAX_CANDIDATES);
+    var candidates = enumRes.candidates;
+
+    var resA = greedyAssign(candidates, allLegIds, legById, weightZeroOrder);
+    var resB = chronoRatioAssign(candidates, allLegIds, legById);
+    var resGlobal = greedyAssign(candidates, allLegIds, legById, industryOrder);
+    var lsRng = mulberry32(currentSeed + 91721);
+    var mainChosen = localSearchImprove(resGlobal.chosen.slice(), candidates, LOCAL_SEARCH_PASSES, lsRng);
+
+    var t1 = performance.now();
+
+    var verify = verifyAssignment(mainChosen, allLegIds);
+    var emergencyCount = mainChosen.filter(function(c){ return c.emergency; }).length;
+    var costGlobal = sumCost(resGlobal.chosen);
+    var costC = sumCost(mainChosen);
+
+    lastState = {
+      requestedN: requestedN,
+      legCount: legs.length,
+      threads: gen.threads,
+      candidateCount: candidates.length,
+      capped: enumRes.capped,
+      steps: enumRes.steps,
+      baselineAChosen: resA.chosen,
+      mainChosen: mainChosen,
+      costA: sumCost(resA.chosen),
+      costB: sumCost(resB.chosen),
+      costC: costC,
+      lsGain: Math.max(0, costGlobal - costC),
+      verify: verify,
+      emergencyCount: emergencyCount,
+      mainCount: mainChosen.length,
+      solveMs: t1 - t0
+    };
+
+    renderMetrics(lastState);
+    renderVerify(lastState);
+    renderGenInfo(lastState);
+    drawGantt(lastState, costToggle.checked);
+    renderConclusion(lastState);
+  }
+
+  // ---------------------------------------------------------------------
+  // 조작부 배선
+  // ---------------------------------------------------------------------
+  var debounceTimer = null;
+  function scheduleRecompute(){
+    if(debounceTimer) clearTimeout(debounceTimer);
+    debounceTimer = setTimeout(recompute, 150);
+  }
+
+  legSlider.addEventListener("input", function(){
+    legVal.textContent = legSlider.value + "편";
+    scheduleRecompute();
+  });
+
+  costToggle.addEventListener("change", function(){
+    toggleText.textContent = costToggle.checked ? "비용 최적화 표시 중" : "가중치 0(커버리지만) 표시 중";
+    if(lastState) drawGantt(lastState, costToggle.checked);
+  });
+
+  function setSeed(label){
+    currentSeed = SEEDS[label];
+    currentSeedLabel = label;
+    ["A", "B", "C"].forEach(function(l){
+      document.getElementById("seed" + l).setAttribute("aria-pressed", l === label ? "true" : "false");
+    });
+    recompute();
+  }
+  document.getElementById("seedA").addEventListener("click", function(){ setSeed("A"); });
+  document.getElementById("seedB").addEventListener("click", function(){ setSeed("B"); });
+  document.getElementById("seedC").addEventListener("click", function(){ setSeed("C"); });
+  document.getElementById("recomputeBtn").addEventListener("click", recompute);
+
+  legVal.textContent = legSlider.value + "편";
+  recompute();
+})();
+</script>
+</body>
+</html>

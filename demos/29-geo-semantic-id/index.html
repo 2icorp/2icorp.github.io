@@ -1,0 +1,904 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<script>(function(){try{var t=localStorage.getItem("theme");if(!t&&window.matchMedia&&matchMedia("(prefers-color-scheme: dark)").matches)t="dark";if(t)document.documentElement.setAttribute("data-theme",t);}catch(e){}})();</script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>지리 인식 시맨틱 ID 데모 · 2i</title>
+<link rel="stylesheet" href="../../styles.css?v=23">
+<style>
+  .demo-top{display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:1rem clamp(1rem,2vw,2rem);border-bottom:1px solid var(--line-soft);flex-wrap:wrap;}
+  .demo-brand{display:flex;align-items:baseline;gap:.6rem;text-decoration:none;color:var(--ink);}
+  .demo-brand__mark{font-family:var(--mono);font-weight:800;color:var(--signal);font-size:1.1rem;}
+  .demo-brand__tag{font-family:var(--mono);font-size:var(--text-xs);letter-spacing:.08em;color:var(--ink-faint);text-transform:uppercase;}
+  .demo-top__links{display:flex;gap:1.2rem;font-size:var(--text-sm);}
+  .demo-top__links a{color:var(--ink-soft);text-decoration:none;border-bottom:1px solid transparent;transition:color var(--dur) var(--ease),border-color var(--dur) var(--ease);}
+  .demo-top__links a:hover{color:var(--ink);border-color:var(--line);}
+  .demo-top__links a:focus-visible{outline:2px solid var(--signal);outline-offset:3px;}
+  .demo-banner{font-family:var(--mono);font-size:var(--text-xs);color:var(--ink-faint);background:var(--paper-2);border-bottom:1px solid var(--line-soft);padding:.55rem clamp(1rem,2vw,2rem);letter-spacing:.01em;}
+  main{max-width:1180px;margin:0 auto;padding:2rem clamp(1rem,2vw,2rem) 1rem;}
+  h1{font-size:var(--text-h2);margin:0 0 .4rem;}
+  .lede{color:var(--ink-soft);max-width:70ch;margin:0 0 1.4rem;line-height:1.75;}
+  section{margin-bottom:2.4rem;min-width:0;}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);min-width:0;}
+  .sid-method{padding:1.1rem clamp(1rem,2vw,1.6rem);color:var(--ink-soft);font-size:var(--text-sm);line-height:1.75;margin-bottom:2rem;}
+  .sid-method strong{color:var(--ink);}
+  .sid-method code{font-family:var(--mono);font-size:.92em;background:var(--paper-2);padding:.1rem .35rem;border-radius:2px;}
+
+  /* controls */
+  .sid-controls{padding:1.4rem clamp(1rem,2vw,1.8rem);}
+  .sid-controls__grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.4rem 1.6rem;}
+  .sid-control{min-width:0;}
+  .sid-control__title{display:block;font-size:1rem;font-weight:700;margin:0 0 .3rem;color:var(--ink);}
+  .sid-control p{margin:0 0 .7rem;color:var(--ink-faint);font-size:var(--text-xs);font-family:var(--mono);line-height:1.6;}
+  .sid-control__row{display:flex;align-items:center;gap:.9rem;}
+  input[type="range"]{flex:1;accent-color:var(--signal);min-height:44px;}
+  .sid-control__val{font-family:var(--mono);font-weight:700;min-width:3.6rem;text-align:right;}
+  select.sid-select{min-height:44px;width:100%;font:inherit;font-size:var(--text-sm);color:var(--ink);background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:.4rem .6rem;}
+  .sid-seed-row{display:flex;flex-wrap:wrap;gap:.6rem;align-items:center;margin-top:.2rem;}
+  .sid-seed-btn{min-height:44px;padding:0 1rem;border:1px solid var(--line);border-radius:var(--radius);background:var(--panel);color:var(--ink-soft);font-family:var(--mono);font-size:var(--text-xs);cursor:pointer;transition:border-color var(--dur) var(--ease),color var(--dur) var(--ease),background var(--dur) var(--ease);}
+  .sid-seed-btn:hover{color:var(--ink);border-color:var(--ink-faint);}
+  .sid-seed-btn:focus-visible{outline:2px solid var(--signal);outline-offset:2px;}
+  .sid-seed-btn[aria-pressed="true"]{border-color:var(--signal);color:var(--ink);background:color-mix(in oklch, var(--signal) 12%, var(--panel));}
+  .sid-seed-current{font-family:var(--mono);font-size:var(--text-xs);color:var(--ink-faint);}
+
+  /* fairness note */
+  .sid-fair-note{margin:0 0 2rem;padding:.9rem 1.1rem;border:1px solid var(--line);border-left:3px solid var(--steel);background:var(--panel);border-radius:var(--radius);font-size:var(--text-sm);color:var(--ink-soft);line-height:1.7;}
+  .sid-fair-note strong{color:var(--ink);}
+
+  /* maps */
+  .sid-maps{display:grid;grid-template-columns:1fr 1fr;gap:1.4rem;}
+  .sid-maps.sid-maps--single{grid-template-columns:1fr;}
+  .sid-map-card{padding:1.1rem clamp(1rem,2vw,1.4rem);min-width:0;}
+  .sid-map-card h3{font-size:1rem;margin:0 0 .2rem;}
+  .sid-map-card p{margin:0 0 .8rem;color:var(--ink-faint);font-size:var(--text-xs);font-family:var(--mono);line-height:1.6;}
+  .sid-map-card svg{width:100%;height:auto;display:block;background:var(--paper-2);border-radius:var(--radius);}
+  .sid-poi{cursor:pointer;transition:opacity var(--dur) var(--ease);}
+  .sid-poi:focus-visible{outline:2px solid var(--signal);outline-offset:1px;}
+  .sid-map-caption{margin-top:.6rem;color:var(--ink-faint);font-size:var(--text-xs);font-family:var(--mono);line-height:1.6;}
+  @media (max-width:900px){ .sid-maps{grid-template-columns:1fr;} }
+
+  /* bucket picker + info */
+  .sid-picker-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-top:1rem;}
+  .sid-picker-row.sid-picker-row--single{grid-template-columns:1fr;}
+  .sid-picker label{display:block;font-family:var(--mono);font-size:var(--text-xs);color:var(--ink-faint);letter-spacing:.04em;margin-bottom:.35rem;}
+  .sid-reset-row{margin-top:.9rem;display:flex;justify-content:flex-end;}
+  .sid-reset-btn{min-height:44px;padding:0 1rem;border:1px solid var(--line);border-radius:var(--radius);background:var(--panel);color:var(--ink-soft);font-family:var(--mono);font-size:var(--text-xs);cursor:pointer;}
+  .sid-reset-btn:hover{color:var(--ink);border-color:var(--ink-faint);}
+  .sid-reset-btn:focus-visible{outline:2px solid var(--signal);outline-offset:2px;}
+  .sid-bucket-info{margin-top:1rem;padding:.9rem 1.1rem;border:1px solid var(--line-soft);border-radius:var(--radius);background:var(--paper-2);font-size:var(--text-sm);color:var(--ink-soft);line-height:1.75;min-height:1.6em;}
+
+  /* metrics */
+  .sid-metrics{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;}
+  .sid-metric{background:var(--panel);padding:1.2rem 1.1rem;min-width:0;}
+  .sid-metric__label{font-family:var(--mono);font-size:var(--text-xs);color:var(--ink-faint);letter-spacing:.05em;margin-bottom:.6rem;line-height:1.4;min-height:2.4em;}
+  .sid-metric__row{display:flex;gap:.8rem;}
+  .sid-metric__col{flex:1;min-width:0;}
+  .sid-metric__col-label{font-family:var(--mono);font-size:.66rem;color:var(--ink-faint);text-transform:uppercase;letter-spacing:.04em;}
+  .sid-metric__col-value{font-size:1.35rem;font-weight:800;margin-top:.15rem;}
+  .sid-metric__col-value.geo{color:var(--steel);}
+  .sid-metric__unit{font-size:.72rem;font-weight:500;color:var(--ink-soft);margin-left:.1rem;}
+  .sid-metric__delta{font-family:var(--mono);font-size:var(--text-xs);margin-top:.7rem;padding-top:.6rem;border-top:1px solid var(--line-soft);}
+  .sid-metric__delta.good{color:var(--steel);}
+  .sid-metric__delta.bad{color:var(--signal-deep);}
+  @media (max-width:900px){ .sid-metrics{grid-template-columns:repeat(2,1fr);} }
+  @media (max-width:480px){ .sid-metrics{grid-template-columns:1fr;} }
+
+  .sid-summary{margin:1.4rem 0 0;padding:1rem 1.2rem;border:1px solid var(--line);border-radius:var(--radius);background:var(--panel);font-size:var(--text-base);line-height:1.75;color:var(--ink);}
+  .sid-lit-note{margin-top:1.2rem;padding:1rem 1.2rem;border:1px solid var(--line);border-left:3px solid var(--signal);border-radius:var(--radius);background:color-mix(in oklch, var(--signal) 6%, var(--panel));font-size:var(--text-sm);line-height:1.75;color:var(--ink-soft);}
+  .sid-lit-note strong{color:var(--ink);}
+  .sid-lit-note .sid-tag{display:inline-block;font-family:var(--mono);font-size:var(--text-xs);letter-spacing:.05em;color:var(--signal-deep);text-transform:uppercase;margin-bottom:.4rem;}
+
+  .sid-honest{margin-top:2rem;padding:1.2rem 1.3rem;border:1px solid var(--line);border-radius:var(--radius);background:var(--paper-2);}
+  .sid-honest h3{font-size:1rem;margin:0 0 .5rem;}
+  .sid-honest p{margin:0 0 .6rem;color:var(--ink-soft);font-size:var(--text-sm);line-height:1.75;}
+  .sid-honest p:last-child{margin-bottom:0;}
+
+  .demo-foot{margin-top:3rem;padding:1.6rem clamp(1rem,2vw,2rem) 2.4rem;font-family:var(--mono);font-size:var(--text-xs);color:var(--ink-faint);border-top:1px solid var(--line-soft);text-align:center;}
+
+  @media (max-width:820px){
+    .sid-controls__grid{grid-template-columns:1fr 1fr;}
+  }
+  @media (max-width:560px){
+    .sid-controls__grid{grid-template-columns:1fr;}
+    .sid-picker-row{grid-template-columns:1fr;}
+  }
+</style>
+</head>
+<body>
+<header class="demo-top">
+  <a href="/" class="demo-brand"><span class="demo-brand__mark">2i</span><span class="demo-brand__tag">DEMO · 지리 인식 시맨틱 ID</span></a>
+  <nav class="demo-top__links">
+    <a href="/cases.html#case-29">사례 보기</a>
+    <a href="/#contact">상담 신청</a>
+  </nav>
+</header>
+<div class="demo-banner">브라우저에서 그 자리에서 계산하는 인터랙티브 데모입니다. 합성 데이터를 씁니다.</div>
+
+<main>
+  <h1>의미는 맞는데 갈 수 없는 가게를 추천합니다</h1>
+  <p class="lede">최신 추천 시스템은 상품이나 매장을 콘텐츠 임베딩에서 뽑아낸 "시맨틱 ID"로 압축해 처리합니다. 배달·매장 방문처럼 위치가 중요한 로컬 커머스에서는 이 압축이 조용히 무너집니다. 서울의 치킨집과 부산의 치킨집은 콘텐츠상 거의 동일하지만 실제로는 300km 넘게 떨어져 있습니다. 위치 정보가 ID에 들어가지 않으면 시스템은 이 둘을 같은 묶음으로 보고, 갈 수 없는 가게를 추천합니다. 아래에서 같은 알고리즘을 콘텐츠만으로 돌린 경우와 위치를 더한 경우를 직접 계산해 비교합니다.</p>
+
+  <div class="sid-method card sid-method">
+    <strong>계산 방식.</strong> 매장마다 카테고리 원형벡터에 잡음을 더한 콘텐츠벡터를 만들고, 잔차 양자화(residual k-means, RQ) 방식으로 <code>L</code>개 층의 코드를 순서대로 뽑아 시맨틱 ID(<code>K</code>진법 <code>L</code>자리 코드)를 만듭니다. <strong>콘텐츠 전용</strong> 방식은 모든 층을 콘텐츠벡터 잔차에서만 뽑습니다. <strong>지리 인식</strong> 방식은 앞의 <code>L-1</code>개 층은 똑같이 콘텐츠에서 뽑되, 마지막 한 층만 다르게 뽑습니다. 같은 앞자리 코드를 공유하는 매장 그룹의 지리적 중심을 구하고, 각 매장이 그 중심으로부터 얼마나 멀리(거리) 어느 방향으로(방위각, 극좌표) 떨어져 있는지를 특징으로 다시 k-means를 돌립니다. 두 방식 모두 코드북 크기와 층 수가 같으므로 전체 ID 슬롯 수(<code>K</code>의 <code>L</code>제곱)가 동일합니다. 그래야 비교가 공정합니다.
+  </div>
+
+  <section class="card sid-controls">
+    <div class="sid-controls__grid">
+      <div class="sid-control">
+        <label class="sid-control__title" for="sidCitiesSlider">도시 수</label>
+        <p>매장이 모여 있는 도시 군집의 개수입니다. 도시가 늘수록 콘텐츠는 같아도 거리가 먼 매장 쌍이 늘어납니다.</p>
+        <div class="sid-control__row">
+          <input type="range" id="sidCitiesSlider" min="3" max="8" step="1" value="5" aria-label="도시 수">
+          <span class="sid-control__val" id="sidCitiesVal">5</span>
+        </div>
+      </div>
+      <div class="sid-control">
+        <label class="sid-control__title" for="sidPoisSlider">도시당 매장 수</label>
+        <p>도시 하나에 배치되는 매장 개수입니다.</p>
+        <div class="sid-control__row">
+          <input type="range" id="sidPoisSlider" min="10" max="50" step="5" value="25" aria-label="도시당 매장 수">
+          <span class="sid-control__val" id="sidPoisVal">25</span>
+        </div>
+      </div>
+      <div class="sid-control">
+        <label class="sid-control__title" for="sidCatsSlider">카테고리 수</label>
+        <p>치킨집, 카페처럼 콘텐츠벡터의 기준이 되는 업종 원형의 개수입니다.</p>
+        <div class="sid-control__row">
+          <input type="range" id="sidCatsSlider" min="3" max="8" step="1" value="5" aria-label="카테고리 수">
+          <span class="sid-control__val" id="sidCatsVal">5</span>
+        </div>
+      </div>
+      <div class="sid-control">
+        <label class="sid-control__title" for="sidKSlider">코드북 크기 K</label>
+        <p>각 층에서 몇 갈래로 나눌지 정합니다. 값이 클수록 ID 공간이 넓어집니다.</p>
+        <div class="sid-control__row">
+          <input type="range" id="sidKSlider" min="2" max="8" step="1" value="4" aria-label="코드북 크기 K">
+          <span class="sid-control__val" id="sidKVal">4</span>
+        </div>
+      </div>
+      <div class="sid-control">
+        <label class="sid-control__title" for="sidLSlider">층 수 L</label>
+        <p>시맨틱 ID를 이루는 코드 자리 수입니다. 지리 인식 방식은 마지막 한 자리만 위치 기반입니다.</p>
+        <div class="sid-control__row">
+          <input type="range" id="sidLSlider" min="1" max="3" step="1" value="2" aria-label="층 수 L">
+          <span class="sid-control__val" id="sidLVal">2</span>
+        </div>
+      </div>
+      <div class="sid-control">
+        <label class="sid-control__title" for="sidModeSelect">지도 표시</label>
+        <p>두 방식을 나란히 볼지 하나만 볼지 정합니다.</p>
+        <select id="sidModeSelect" class="sid-select" aria-label="지도 표시 모드">
+          <option value="both" selected>둘 다 보기</option>
+          <option value="content">콘텐츠 전용만</option>
+          <option value="geo">지리 인식만</option>
+        </select>
+      </div>
+    </div>
+    <div class="sid-control" style="margin-top:1.2rem;">
+      <span class="sid-control__title">시드 프리셋</span>
+      <p>같은 시드는 같은 도시·매장 배치를 다시 만듭니다. 재현 가능성을 확인하려면 같은 프리셋을 다시 눌러보세요.</p>
+      <div class="sid-seed-row" id="sidSeedRow" role="group" aria-label="시드 프리셋 선택">
+        <button type="button" class="sid-seed-btn" data-seed="7" aria-pressed="false">시드 1</button>
+        <button type="button" class="sid-seed-btn" data-seed="42" aria-pressed="true">시드 2</button>
+        <button type="button" class="sid-seed-btn" data-seed="123" aria-pressed="false">시드 3</button>
+        <button type="button" class="sid-seed-btn" data-seed="2024" aria-pressed="false">시드 4</button>
+        <span class="sid-seed-current" id="sidSeedCurrent">현재 시드: 42</span>
+      </div>
+    </div>
+  </section>
+
+  <p class="sid-fair-note"><strong>공정성 메모.</strong> 두 방식은 같은 코드북 크기 <span id="sidFairK">4</span>와 같은 층 수 <span id="sidFairL">2</span>를 씁니다. 그래서 ID 슬롯 수는 두 방식 모두 <span id="sidFairSlots">16</span>개로 동일합니다(합성 데이터 계산). ID 슬롯 수가 다르면 평균 거리 비교 자체가 조작이 되므로, 이 값을 항상 맞춥니다.</p>
+
+  <section>
+    <h2 style="font-size:1.15rem;margin:0 0 .8rem;">지도로 보는 시맨틱 ID 버킷</h2>
+    <div class="sid-picker-row" id="sidPickerRow">
+      <div class="sid-picker">
+        <label for="sidPickerContent">콘텐츠 전용 버킷 선택</label>
+        <select id="sidPickerContent" class="sid-select" aria-label="콘텐츠 전용 버킷 선택"></select>
+      </div>
+      <div class="sid-picker">
+        <label for="sidPickerGeo">지리 인식 버킷 선택</label>
+        <select id="sidPickerGeo" class="sid-select" aria-label="지리 인식 버킷 선택"></select>
+      </div>
+    </div>
+    <div class="sid-reset-row">
+      <button type="button" class="sid-reset-btn" id="sidResetBtn">선택 해제</button>
+    </div>
+
+    <div class="sid-maps" id="sidMaps" style="margin-top:1rem;">
+      <div class="card sid-map-card" id="sidMapCardContent">
+        <h3>콘텐츠 전용 ID</h3>
+        <p>모든 층을 콘텐츠벡터에서만 뽑은 경우입니다. 같은 색은 같은 ID 버킷의 근사치입니다(버킷이 많아지면 색이 재사용됩니다. 정확한 버킷은 아래에서 선택하세요).</p>
+        <svg id="sidMapContent" viewBox="0 0 420 420" preserveAspectRatio="xMidYMid meet" role="img" aria-label="콘텐츠 전용 시맨틱 ID로 색칠한 매장 위치 지도"></svg>
+        <p class="sid-map-caption" id="sidCaptionContent"></p>
+      </div>
+      <div class="card sid-map-card" id="sidMapCardGeo">
+        <h3>지리 인식 ID</h3>
+        <p>마지막 층을 매장 위치(거리·방위각)로 뽑은 경우입니다. 같은 색이 지리적으로 모여 있으면 성공입니다.</p>
+        <svg id="sidMapGeo" viewBox="0 0 420 420" preserveAspectRatio="xMidYMid meet" role="img" aria-label="지리 인식 시맨틱 ID로 색칠한 매장 위치 지도"></svg>
+        <p class="sid-map-caption" id="sidCaptionGeo"></p>
+      </div>
+    </div>
+    <div class="sid-bucket-info" id="sidBucketInfo" aria-live="polite">버킷을 선택하면 매장 수, 카테고리 구성, 버킷 내 최대 거리가 여기 나타납니다.</div>
+  </section>
+
+  <section>
+    <h2 style="font-size:1.15rem;margin:0 0 1rem;">같은 ID 안에서 실제로 얼마나 떨어져 있나</h2>
+    <div class="sid-metrics" id="sidMetrics" aria-live="polite">
+      <div class="sid-metric">
+        <div class="sid-metric__label">같은 ID 쌍 평균 거리</div>
+        <div class="sid-metric__row">
+          <div class="sid-metric__col"><div class="sid-metric__col-label">콘텐츠</div><div class="sid-metric__col-value"><span id="sidMeanContent">-</span><span class="sid-metric__unit">km</span></div></div>
+          <div class="sid-metric__col"><div class="sid-metric__col-label">지리</div><div class="sid-metric__col-value geo"><span id="sidMeanGeo">-</span><span class="sid-metric__unit">km</span></div></div>
+        </div>
+        <div class="sid-metric__delta" id="sidMeanDelta"></div>
+      </div>
+      <div class="sid-metric">
+        <div class="sid-metric__label">같은 ID 쌍 거리 p95</div>
+        <div class="sid-metric__row">
+          <div class="sid-metric__col"><div class="sid-metric__col-label">콘텐츠</div><div class="sid-metric__col-value"><span id="sidP95Content">-</span><span class="sid-metric__unit">km</span></div></div>
+          <div class="sid-metric__col"><div class="sid-metric__col-label">지리</div><div class="sid-metric__col-value geo"><span id="sidP95Geo">-</span><span class="sid-metric__unit">km</span></div></div>
+        </div>
+        <div class="sid-metric__delta" id="sidP95Delta"></div>
+      </div>
+      <div class="sid-metric">
+        <div class="sid-metric__label">40km 초과 쌍 비율</div>
+        <div class="sid-metric__row">
+          <div class="sid-metric__col"><div class="sid-metric__col-label">콘텐츠</div><div class="sid-metric__col-value"><span id="sidFarContent">-</span><span class="sid-metric__unit">%</span></div></div>
+          <div class="sid-metric__col"><div class="sid-metric__col-label">지리</div><div class="sid-metric__col-value geo"><span id="sidFarGeo">-</span><span class="sid-metric__unit">%</span></div></div>
+        </div>
+        <div class="sid-metric__delta" id="sidFarDelta"></div>
+      </div>
+      <div class="sid-metric">
+        <div class="sid-metric__label">5km 배달 반경 이내 쌍 비율</div>
+        <div class="sid-metric__row">
+          <div class="sid-metric__col"><div class="sid-metric__col-label">콘텐츠</div><div class="sid-metric__col-value"><span id="sidNearContent">-</span><span class="sid-metric__unit">%</span></div></div>
+          <div class="sid-metric__col"><div class="sid-metric__col-label">지리</div><div class="sid-metric__col-value geo"><span id="sidNearGeo">-</span><span class="sid-metric__unit">%</span></div></div>
+        </div>
+        <div class="sid-metric__delta" id="sidNearDelta"></div>
+      </div>
+    </div>
+    <p class="baseline-note" id="sidSampledNote" style="margin-top:.8rem;color:var(--ink-faint);font-size:var(--text-xs);font-family:var(--mono);"></p>
+  </section>
+
+  <p class="sid-summary" id="sidSummary" aria-live="polite"></p>
+
+  <aside class="sid-lit-note">
+    <span class="sid-tag">참고 문헌(외부 보고, 우리 측정 아님)</span>
+    <p style="margin:0;">로컬 서비스 추천을 다루는 연구에서는, 콘텐츠만으로 만든 시맨틱 ID를 그대로 쓰면 같은 ID를 공유하는 매장 쌍의 절반 넘게가 40km 넘게 떨어져 있다고 보고합니다. 이 수치는 이 데모가 계산한 값이 아니라 외부에서 보고된 문제의 방향성입니다. 위 지표 카드의 숫자는 전부 이 브라우저가 지금 계산한 합성 데이터 값이며, 방향은 같을 수 있어도 크기는 서로 다른 값입니다.</p>
+  </aside>
+
+  <div class="card sid-honest">
+    <h3>정직하게 말하면</h3>
+    <p>이 데모는 실제 매장 데이터가 아니라 이 브라우저가 시드로 만들어낸 합성 매장으로 돌아갑니다. 실제 카테고리 임베딩, 실제 매장 좌표, 실제 사용자의 배달 반경을 쓰는 것이 아닙니다.</p>
+    <p>보여주는 것은 메커니즘과 개선 방향입니다. 콘텐츠만으로 시맨틱 ID를 만들면 지리 정보가 사라지고, 마지막 층에 위치 정보를 더하면 같은 ID 안의 매장들이 지리적으로 모인다는 구조 자체를 확인할 수 있습니다. 개선 폭이 정확히 몇 퍼센트라고 보장하는 것이 아닙니다.</p>
+    <p>실제 도입하려면 진짜 매장 카탈로그와 진짜 사용자 위치 분포로 다시 측정해야 합니다. 카테고리 분포, 도시 밀집도, 콘텐츠 임베딩의 실제 노이즈 수준이 이 데모의 가정과 다르면 개선 폭도 달라집니다.</p>
+  </div>
+</main>
+
+<footer class="demo-foot">© 2i · contact@2icorp.site</footer>
+
+<script>
+(function(){
+  "use strict";
+
+  // ---- seeded PRNG (mulberry32) ----
+  function mulberry32(seed){
+    var a = seed >>> 0;
+    return function(){
+      a |= 0; a = (a + 0x6D2B79F5) | 0;
+      var t = Math.imul(a ^ (a >>> 15), 1 | a);
+      t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+      return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+    };
+  }
+
+  function gaussian(rng){
+    var u = 0, v = 0;
+    while(u === 0) u = rng();
+    while(v === 0) v = rng();
+    return Math.sqrt(-2 * Math.log(u)) * Math.cos(2 * Math.PI * v);
+  }
+
+  function haversineKm(lat1, lon1, lat2, lon2){
+    var R = 6371;
+    var dLat = (lat2 - lat1) * Math.PI / 180;
+    var dLon = (lon2 - lon1) * Math.PI / 180;
+    var la1 = lat1 * Math.PI / 180, la2 = lat2 * Math.PI / 180;
+    var a = Math.sin(dLat/2)*Math.sin(dLat/2) + Math.cos(la1)*Math.cos(la2)*Math.sin(dLon/2)*Math.sin(dLon/2);
+    var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+    return R * c;
+  }
+
+  // local flat-earth bearing, good enough at city-to-country scale for a synthetic demo
+  function bearingDeg(lat1, lon1, lat2, lon2){
+    var avgLatRad = (lat1 + lat2) / 2 * Math.PI / 180;
+    var dx = (lon2 - lon1) * Math.cos(avgLatRad);
+    var dy = (lat2 - lat1);
+    return Math.atan2(dx, dy); // radians, used directly for cos/sin features
+  }
+
+  function sqDist(a, b){
+    var s = 0;
+    for(var i=0;i<a.length;i++){ var d = a[i]-b[i]; s += d*d; }
+    return s;
+  }
+
+  // ---- generic k-means with k-means++ seeding ----
+  function kmeans(vectors, K, rng, iters){
+    iters = iters || 12;
+    var n = vectors.length;
+    var effK = Math.max(1, Math.min(K, n));
+    var dim = vectors[0].length;
+
+    // k-means++ init
+    var centroids = [];
+    var firstIdx = Math.floor(rng() * n);
+    centroids.push(vectors[firstIdx].slice());
+    while(centroids.length < effK){
+      var dists = new Array(n);
+      var sum = 0;
+      for(var i=0;i<n;i++){
+        var best = Infinity;
+        for(var c=0;c<centroids.length;c++){
+          var d = sqDist(vectors[i], centroids[c]);
+          if(d < best) best = d;
+        }
+        dists[i] = best;
+        sum += best;
+      }
+      var r = rng() * (sum || 1);
+      var cum = 0, chosen = 0;
+      for(var j=0;j<n;j++){
+        cum += dists[j];
+        if(cum >= r){ chosen = j; break; }
+      }
+      centroids.push(vectors[chosen].slice());
+    }
+
+    var assign = new Array(n).fill(0);
+    for(var it=0; it<iters; it++){
+      // assign
+      for(var p=0;p<n;p++){
+        var bestC = 0, bestD = Infinity;
+        for(var c2=0;c2<centroids.length;c2++){
+          var dd = sqDist(vectors[p], centroids[c2]);
+          if(dd < bestD){ bestD = dd; bestC = c2; }
+        }
+        assign[p] = bestC;
+      }
+      // update
+      var sums = [];
+      var counts = [];
+      for(var c3=0;c3<centroids.length;c3++){ sums.push(new Array(dim).fill(0)); counts.push(0); }
+      for(var p2=0;p2<n;p2++){
+        var cc = assign[p2];
+        counts[cc]++;
+        for(var d2=0; d2<dim; d2++){ sums[cc][d2] += vectors[p2][d2]; }
+      }
+      for(var c4=0;c4<centroids.length;c4++){
+        if(counts[c4] === 0){
+          centroids[c4] = vectors[Math.floor(rng()*n)].slice();
+        } else {
+          for(var d3=0; d3<dim; d3++){ centroids[c4][d3] = sums[c4][d3] / counts[c4]; }
+        }
+      }
+    }
+    return { assign: assign, centroids: centroids, K: effK };
+  }
+
+  function percentile(sortedArr, p){
+    if(sortedArr.length === 0) return 0;
+    var idx = Math.round(p * (sortedArr.length - 1));
+    return sortedArr[Math.max(0, Math.min(sortedArr.length-1, idx))];
+  }
+
+  var CATEGORY_POOL = ["치킨집","카페","편의점","분식집","미용실","약국","네일샵","세탁소"];
+  var CONTENT_DIM = 6;
+  var PAIR_SAMPLE_CAP = 45; // buckets larger than this get sampled, not fully enumerated
+  var PAIR_SAMPLE_COUNT = 700;
+
+  var COLOR_PALETTE = [
+    "var(--signal)",
+    "var(--steel)",
+    "var(--ok)",
+    "color-mix(in oklch, var(--signal) 55%, var(--steel))",
+    "color-mix(in oklch, var(--steel) 55%, var(--ok))",
+    "color-mix(in oklch, var(--ok) 55%, var(--signal))",
+    "var(--signal-deep)",
+    "var(--steel-soft)",
+    "color-mix(in oklch, var(--signal-deep) 60%, var(--ok))",
+    "color-mix(in oklch, var(--steel-soft) 60%, var(--signal))",
+    "color-mix(in oklch, var(--ink-soft) 45%, var(--signal))",
+    "color-mix(in oklch, var(--ink-soft) 45%, var(--steel))"
+  ];
+  function colorForBucket(id){
+    return COLOR_PALETTE[id % COLOR_PALETTE.length];
+  }
+
+  var state = {
+    seed: 42,
+    cities: 5,
+    poisPerCity: 25,
+    categories: 5,
+    K: 4,
+    L: 2,
+    mode: "both"
+  };
+
+  var pois = []; // {lat,lon,cat,content:[...],city}
+  var contentBucket = []; // per-poi bucket id (integer)
+  var geoBucket = [];
+  var contentGroups = {}; // bucketId -> [poi indices]
+  var geoGroups = {};
+  var contentStats, geoStats;
+  var selected = { content: null, geo: null };
+
+  function regenerateData(){
+    var rng = mulberry32(state.seed);
+    pois = [];
+
+    // ---- cities ----
+    var latMin = 33.2, latMax = 38.4, lonMin = 126.0, lonMax = 129.3;
+    var cities = [];
+    var attempts = 0;
+    var minSepKm = 55;
+    while(cities.length < state.cities && attempts < 400){
+      attempts++;
+      var clat = latMin + rng() * (latMax - latMin);
+      var clon = lonMin + rng() * (lonMax - lonMin);
+      var ok = true;
+      for(var ci=0; ci<cities.length; ci++){
+        if(haversineKm(clat, clon, cities[ci].lat, cities[ci].lon) < minSepKm){ ok = false; break; }
+      }
+      if(ok || attempts > 380){
+        cities.push({ lat: clat, lon: clon, sigma: 0.015 + rng() * 0.02 });
+      }
+    }
+
+    // ---- category prototypes ----
+    var cats = CATEGORY_POOL.slice(0, state.categories);
+    var prototypes = cats.map(function(){
+      var v = [];
+      for(var d=0; d<CONTENT_DIM; d++) v.push(rng() * 2 - 1);
+      return v;
+    });
+
+    // ---- POIs ----
+    for(var cIdx=0; cIdx<cities.length; cIdx++){
+      var city = cities[cIdx];
+      for(var m=0; m<state.poisPerCity; m++){
+        var latOff = gaussian(rng) * city.sigma;
+        var lonOff = gaussian(rng) * city.sigma / Math.max(0.3, Math.cos(city.lat * Math.PI / 180));
+        var catIdx = Math.floor(rng() * cats.length);
+        var content = prototypes[catIdx].map(function(v){ return v + gaussian(rng) * 0.18; });
+        pois.push({
+          lat: city.lat + latOff,
+          lon: city.lon + lonOff,
+          cat: cats[catIdx],
+          catIdx: catIdx,
+          city: cIdx,
+          content: content
+        });
+      }
+    }
+
+    // ---- residual quantization: content-only, all L layers ----
+    var K = state.K, L = state.L;
+    var residual = pois.map(function(p){ return p.content.slice(); });
+    var layerAssigns = []; // layerAssigns[l] = array of codes per poi, for layers 0..L-1 (content)
+    for(var l=0; l<L; l++){
+      var km = kmeans(residual, K, mulberry32(state.seed + 1000 + l), 12);
+      layerAssigns.push(km.assign.slice());
+      var newResidual = [];
+      for(var i=0;i<residual.length;i++){
+        var cen = km.centroids[km.assign[i]];
+        var r = residual[i].map(function(v, d){ return v - cen[d]; });
+        newResidual.push(r);
+      }
+      residual = newResidual;
+    }
+
+    // content-only bucket id = base-K digits of layerAssigns[0..L-1]
+    contentBucket = new Array(pois.length).fill(0);
+    for(var i2=0;i2<pois.length;i2++){
+      var id = 0;
+      for(var l2=0; l2<L; l2++){ id = id * K + layerAssigns[l2][i2]; }
+      contentBucket[i2] = id;
+    }
+
+    // ---- geo-aware: reuse layers 0..L-2, replace last layer with geo-polar clustering ----
+    var geoAssigns = layerAssigns.slice(0, L-1); // shared prefix codes
+    // group by prefix tuple
+    var prefixKey = function(i){
+      var key = "";
+      for(var l3=0; l3<geoAssigns.length; l3++){ key += geoAssigns[l3][i] + "."; }
+      return key || "ALL";
+    };
+    var groupsByPrefix = {};
+    for(var i3=0;i3<pois.length;i3++){
+      var k = prefixKey(i3);
+      if(!groupsByPrefix[k]) groupsByPrefix[k] = [];
+      groupsByPrefix[k].push(i3);
+    }
+    // geo centroid per prefix group
+    var groupCentroid = {};
+    Object.keys(groupsByPrefix).forEach(function(k){
+      var idxs = groupsByPrefix[k];
+      var sLat = 0, sLon = 0;
+      idxs.forEach(function(i){ sLat += pois[i].lat; sLon += pois[i].lon; });
+      groupCentroid[k] = { lat: sLat/idxs.length, lon: sLon/idxs.length };
+    });
+    // polar features per poi, normalized within its group's max distance
+    var groupMaxDist = {};
+    var rawDist = new Array(pois.length);
+    var rawBearing = new Array(pois.length);
+    for(var i4=0;i4<pois.length;i4++){
+      var k2 = prefixKey(i4);
+      var cen2 = groupCentroid[k2];
+      var dist = haversineKm(pois[i4].lat, pois[i4].lon, cen2.lat, cen2.lon);
+      rawDist[i4] = dist;
+      rawBearing[i4] = bearingDeg(cen2.lat, cen2.lon, pois[i4].lat, pois[i4].lon);
+      if(!(k2 in groupMaxDist) || dist > groupMaxDist[k2]) groupMaxDist[k2] = dist;
+    }
+    var polarFeatures = [];
+    for(var i5=0;i5<pois.length;i5++){
+      var k3 = prefixKey(i5);
+      var maxD = groupMaxDist[k3] || 1;
+      var normD = maxD > 0 ? rawDist[i5] / maxD : 0;
+      polarFeatures.push([normD, Math.cos(rawBearing[i5]), Math.sin(rawBearing[i5])]);
+    }
+    var geoKm = kmeans(polarFeatures, K, mulberry32(state.seed + 5000 + L), 12);
+    geoAssigns.push(geoKm.assign.slice());
+
+    geoBucket = new Array(pois.length).fill(0);
+    for(var i6=0;i6<pois.length;i6++){
+      var gid = 0;
+      for(var l4=0; l4<geoAssigns.length; l4++){ gid = gid * K + geoAssigns[l4][i6]; }
+      geoBucket[i6] = gid;
+    }
+
+    // ---- group indices ----
+    contentGroups = {};
+    geoGroups = {};
+    for(var i7=0;i7<pois.length;i7++){
+      var cb = contentBucket[i7], gb = geoBucket[i7];
+      if(!contentGroups[cb]) contentGroups[cb] = [];
+      contentGroups[cb].push(i7);
+      if(!geoGroups[gb]) geoGroups[gb] = [];
+      geoGroups[gb].push(i7);
+    }
+
+    // ---- pooled pairwise stats ----
+    var pairRng = mulberry32(state.seed + 9000);
+    contentStats = computeStats(contentGroups, pairRng);
+    geoStats = computeStats(geoGroups, mulberry32(state.seed + 9001));
+
+    selected = { content: null, geo: null };
+  }
+
+  function computeStats(groups, rng){
+    var distances = [];
+    var sampled = false;
+    Object.keys(groups).forEach(function(key){
+      var idxs = groups[key];
+      var s = idxs.length;
+      if(s < 2) return;
+      var totalPairs = s * (s - 1) / 2;
+      if(totalPairs <= PAIR_SAMPLE_CAP * (PAIR_SAMPLE_CAP - 1) / 2){
+        for(var a=0; a<s; a++){
+          for(var b=a+1; b<s; b++){
+            distances.push(haversineKm(pois[idxs[a]].lat, pois[idxs[a]].lon, pois[idxs[b]].lat, pois[idxs[b]].lon));
+          }
+        }
+      } else {
+        sampled = true;
+        for(var t=0; t<PAIR_SAMPLE_COUNT; t++){
+          var ia = idxs[Math.floor(rng() * s)];
+          var ib = idxs[Math.floor(rng() * s)];
+          if(ia === ib) continue;
+          distances.push(haversineKm(pois[ia].lat, pois[ia].lon, pois[ib].lat, pois[ib].lon));
+        }
+      }
+    });
+    distances.sort(function(a,b){ return a-b; });
+    var mean = distances.length ? distances.reduce(function(a,b){return a+b;},0) / distances.length : 0;
+    var p95 = percentile(distances, 0.95);
+    var farShare = distances.length ? distances.filter(function(d){ return d > 40; }).length / distances.length * 100 : 0;
+    var nearShare = distances.length ? distances.filter(function(d){ return d <= 5; }).length / distances.length * 100 : 0;
+    return { mean: mean, p95: p95, farShare: farShare, nearShare: nearShare, pairCount: distances.length, sampled: sampled };
+  }
+
+  // ---- projection: equirectangular, uniform scale, centered ----
+  function project(list, W, H, pad){
+    var avgLat = list.reduce(function(a,p){ return a+p.lat; },0) / list.length;
+    var avgLatRad = avgLat * Math.PI / 180;
+    var xs = list.map(function(p){ return p.lon * Math.cos(avgLatRad); });
+    var ys = list.map(function(p){ return p.lat; });
+    var xMin = Math.min.apply(null, xs), xMax = Math.max.apply(null, xs);
+    var yMin = Math.min.apply(null, ys), yMax = Math.max.apply(null, ys);
+    var spanX = (xMax - xMin) || 1;
+    var spanY = (yMax - yMin) || 1;
+    var innerW = W - pad*2, innerH = H - pad*2;
+    var scale = Math.min(innerW / spanX, innerH / spanY);
+    var usedW = spanX * scale, usedH = spanY * scale;
+    var offX = pad + (innerW - usedW) / 2;
+    var offY = pad + (innerH - usedH) / 2;
+    return function(p){
+      var xr = p.lon * Math.cos(avgLatRad);
+      var yr = p.lat;
+      var x = offX + (xr - xMin) * scale;
+      var y = offY + (innerH - ((yr - yMin) * scale)) - (innerH - usedH) / 2 + (innerH - usedH)/2;
+      // simplify: flip y so north is up
+      y = offY + (usedH - (yr - yMin) * scale);
+      return [x, y];
+    };
+  }
+
+  function renderMap(svgId, bucketArr, scheme){
+    var svg = document.getElementById(svgId);
+    while(svg.firstChild) svg.removeChild(svg.firstChild);
+    var svgNS = "http://www.w3.org/2000/svg";
+    var W = 420, H = 420, pad = 24;
+    var proj = project(pois, W, H, pad);
+    var sel = selected[scheme];
+
+    for(var i=0; i<pois.length; i++){
+      var xy = proj(pois[i]);
+      var bid = bucketArr[i];
+      var circle = document.createElementNS(svgNS, "circle");
+      circle.setAttribute("cx", xy[0].toFixed(1));
+      circle.setAttribute("cy", xy[1].toFixed(1));
+      circle.setAttribute("r", 4.2);
+      circle.setAttribute("fill", colorForBucket(bid));
+      circle.setAttribute("class", "sid-poi");
+      circle.setAttribute("data-idx", i);
+      circle.setAttribute("data-bucket", bid);
+      if(sel !== null){
+        circle.setAttribute("opacity", bid === sel ? 0.95 : 0.12);
+        if(bid === sel){ circle.setAttribute("stroke", "var(--ink)"); circle.setAttribute("stroke-width", "1.1"); }
+      } else {
+        circle.setAttribute("opacity", 0.82);
+      }
+      circle.addEventListener("click", function(sc, id){
+        return function(){ selectBucket(sc, id); };
+      }(scheme, bid));
+      svg.appendChild(circle);
+    }
+  }
+
+  function selectBucket(scheme, bucketId){
+    var groups = scheme === "content" ? contentGroups : geoGroups;
+    if(!groups[bucketId] || groups[bucketId].length < 1){
+      selected[scheme] = null;
+    } else {
+      selected[scheme] = (selected[scheme] === bucketId) ? null : bucketId;
+    }
+    syncPickers();
+    renderAll(true);
+    updateBucketInfo(scheme);
+  }
+
+  function updateBucketInfo(scheme){
+    var info = document.getElementById("sidBucketInfo");
+    var sel = selected[scheme];
+    if(sel === null){
+      var otherSel = scheme === "content" ? selected.geo : selected.content;
+      if(otherSel === null){
+        info.textContent = "버킷을 선택하면 매장 수, 카테고리 구성, 버킷 내 최대 거리가 여기 나타납니다.";
+        return;
+      }
+      return;
+    }
+    var groups = scheme === "content" ? contentGroups : geoGroups;
+    var idxs = groups[sel] || [];
+    var catCount = {};
+    idxs.forEach(function(i){ catCount[pois[i].cat] = (catCount[pois[i].cat] || 0) + 1; });
+    var catText = Object.keys(catCount).map(function(k){ return k + " " + catCount[k] + "곳"; }).join(", ");
+    var maxD = 0;
+    for(var a=0; a<idxs.length; a++){
+      for(var b=a+1; b<idxs.length; b++){
+        var d = haversineKm(pois[idxs[a]].lat, pois[idxs[a]].lon, pois[idxs[b]].lat, pois[idxs[b]].lon);
+        if(d > maxD) maxD = d;
+      }
+    }
+    var schemeLabel = scheme === "content" ? "콘텐츠 전용" : "지리 인식";
+    info.textContent = schemeLabel + " 버킷 #" + sel + " 선택됨. 매장 " + idxs.length + "곳(" + catText + "). 버킷 내 최대 거리 " + maxD.toFixed(1) + "km (합성 데이터 계산).";
+  }
+
+  function syncPickers(){
+    fillPicker("sidPickerContent", contentGroups, "content");
+    fillPicker("sidPickerGeo", geoGroups, "geo");
+  }
+
+  function fillPicker(selectId, groups, scheme){
+    var sel = document.getElementById(selectId);
+    var keys = Object.keys(groups).filter(function(k){ return groups[k].length >= 2; });
+    keys.sort(function(a,b){ return groups[b].length - groups[a].length; });
+    keys = keys.slice(0, 40);
+    sel.innerHTML = "";
+    var optAll = document.createElement("option");
+    optAll.value = "";
+    optAll.textContent = "전체 보기(선택 없음)";
+    sel.appendChild(optAll);
+    keys.forEach(function(k){
+      var opt = document.createElement("option");
+      opt.value = k;
+      opt.textContent = "버킷 #" + k + " (매장 " + groups[k].length + "곳)";
+      sel.appendChild(opt);
+    });
+    var current = selected[scheme];
+    sel.value = (current !== null && groups[current]) ? String(current) : "";
+    sel.onchange = function(){
+      var v = sel.value;
+      selected[scheme] = v === "" ? null : parseInt(v, 10);
+      renderAll(true);
+      updateBucketInfo(scheme);
+    };
+  }
+
+  function fmt1(n){ return n.toFixed(1); }
+
+  function setDelta(id, contentVal, geoVal, unit, lowerIsBetterForGeo){
+    var el = document.getElementById(id);
+    var diff = geoVal - contentVal;
+    var better = lowerIsBetterForGeo ? diff < 0 : diff > 0;
+    el.className = "sid-metric__delta " + (better ? "good" : "bad");
+    var sign = diff >= 0 ? "+" : "";
+    el.textContent = "지리 인식이 콘텐츠 전용 대비 " + sign + fmt1(diff) + unit + " (" + (better ? "개선" : "악화") + ")";
+  }
+
+  function renderMetrics(){
+    document.getElementById("sidMeanContent").textContent = fmt1(contentStats.mean);
+    document.getElementById("sidMeanGeo").textContent = fmt1(geoStats.mean);
+    setDelta("sidMeanDelta", contentStats.mean, geoStats.mean, "km", true);
+
+    document.getElementById("sidP95Content").textContent = fmt1(contentStats.p95);
+    document.getElementById("sidP95Geo").textContent = fmt1(geoStats.p95);
+    setDelta("sidP95Delta", contentStats.p95, geoStats.p95, "km", true);
+
+    document.getElementById("sidFarContent").textContent = fmt1(contentStats.farShare);
+    document.getElementById("sidFarGeo").textContent = fmt1(geoStats.farShare);
+    setDelta("sidFarDelta", contentStats.farShare, geoStats.farShare, "%p", true);
+
+    document.getElementById("sidNearContent").textContent = fmt1(contentStats.nearShare);
+    document.getElementById("sidNearGeo").textContent = fmt1(geoStats.nearShare);
+    setDelta("sidNearDelta", contentStats.nearShare, geoStats.nearShare, "%p", false);
+
+    var sampledNote = document.getElementById("sidSampledNote");
+    var parts = [];
+    parts.push("콘텐츠 전용 표본 쌍 " + contentStats.pairCount.toLocaleString("ko-KR") + "개, 지리 인식 표본 쌍 " + geoStats.pairCount.toLocaleString("ko-KR") + "개(합성 데이터 계산).");
+    if(contentStats.sampled || geoStats.sampled){
+      parts.push("일부 버킷은 매장이 많아 쌍을 전수 계산하지 않고 무작위로 표본을 뽑아 계산했습니다.");
+    }
+    sampledNote.textContent = parts.join(" ");
+  }
+
+  function renderSummary(){
+    var meanDiff = contentStats.mean - geoStats.mean;
+    var farDiff = contentStats.farShare - geoStats.farShare;
+    var el = document.getElementById("sidSummary");
+    var direction = meanDiff > 0 ? "줄었습니다" : "오히려 늘었습니다";
+    el.textContent = "현재 설정에서 콘텐츠 전용 ID는 같은 ID 매장 쌍이 평균 " + fmt1(contentStats.mean) + "km, 40km 초과 비율 " + fmt1(contentStats.farShare) + "% 였습니다. 위치를 마지막 층에 더한 지리 인식 ID는 평균 " + fmt1(geoStats.mean) + "km, 40km 초과 비율 " + fmt1(geoStats.farShare) + "% 로, 평균 거리가 " + fmt1(Math.abs(meanDiff)) + "km " + direction + " (합성 데이터 계산).";
+  }
+
+  function renderCaptions(){
+    document.getElementById("sidCaptionContent").textContent = "버킷(색) 수: " + Object.keys(contentGroups).length + "개 사용 중, 최대 슬롯 " + Math.pow(state.K, state.L) + "개.";
+    document.getElementById("sidCaptionGeo").textContent = "버킷(색) 수: " + Object.keys(geoGroups).length + "개 사용 중, 최대 슬롯 " + Math.pow(state.K, state.L) + "개.";
+  }
+
+  function applyMode(){
+    var mapsEl = document.getElementById("sidMaps");
+    var cardContent = document.getElementById("sidMapCardContent");
+    var cardGeo = document.getElementById("sidMapCardGeo");
+    var pickerRow = document.getElementById("sidPickerRow");
+    var pickerContent = document.getElementById("sidPickerContent").parentElement;
+    var pickerGeo = document.getElementById("sidPickerGeo").parentElement;
+    if(state.mode === "content"){
+      mapsEl.classList.add("sid-maps--single");
+      pickerRow.classList.add("sid-picker-row--single");
+      cardGeo.style.display = "none";
+      pickerGeo.style.display = "none";
+      cardContent.style.display = "";
+      pickerContent.style.display = "";
+    } else if(state.mode === "geo"){
+      mapsEl.classList.add("sid-maps--single");
+      pickerRow.classList.add("sid-picker-row--single");
+      cardContent.style.display = "none";
+      pickerContent.style.display = "none";
+      cardGeo.style.display = "";
+      pickerGeo.style.display = "";
+    } else {
+      mapsEl.classList.remove("sid-maps--single");
+      pickerRow.classList.remove("sid-picker-row--single");
+      cardContent.style.display = "";
+      cardGeo.style.display = "";
+      pickerContent.style.display = "";
+      pickerGeo.style.display = "";
+    }
+  }
+
+  function renderAll(skipRecompute){
+    if(!skipRecompute){
+      regenerateData();
+    }
+    applyMode();
+    renderMap("sidMapContent", contentBucket, "content");
+    renderMap("sidMapGeo", geoBucket, "geo");
+    renderCaptions();
+    renderMetrics();
+    renderSummary();
+    document.getElementById("sidFairK").textContent = state.K;
+    document.getElementById("sidFairL").textContent = state.L;
+    document.getElementById("sidFairSlots").textContent = Math.pow(state.K, state.L).toLocaleString("ko-KR");
+  }
+
+  function fullRefresh(){
+    regenerateData();
+    syncPickers();
+    renderAll(true);
+    updateBucketInfo("content");
+  }
+
+  // ---- wire controls ----
+  var citiesSlider = document.getElementById("sidCitiesSlider");
+  var poisSlider = document.getElementById("sidPoisSlider");
+  var catsSlider = document.getElementById("sidCatsSlider");
+  var kSlider = document.getElementById("sidKSlider");
+  var lSlider = document.getElementById("sidLSlider");
+  var modeSelect = document.getElementById("sidModeSelect");
+
+  citiesSlider.addEventListener("input", function(){
+    state.cities = parseInt(citiesSlider.value, 10);
+    document.getElementById("sidCitiesVal").textContent = state.cities;
+    fullRefresh();
+  });
+  poisSlider.addEventListener("input", function(){
+    state.poisPerCity = parseInt(poisSlider.value, 10);
+    document.getElementById("sidPoisVal").textContent = state.poisPerCity;
+    fullRefresh();
+  });
+  catsSlider.addEventListener("input", function(){
+    state.categories = parseInt(catsSlider.value, 10);
+    document.getElementById("sidCatsVal").textContent = state.categories;
+    fullRefresh();
+  });
+  kSlider.addEventListener("input", function(){
+    state.K = parseInt(kSlider.value, 10);
+    document.getElementById("sidKVal").textContent = state.K;
+    fullRefresh();
+  });
+  lSlider.addEventListener("input", function(){
+    state.L = parseInt(lSlider.value, 10);
+    document.getElementById("sidLVal").textContent = state.L;
+    fullRefresh();
+  });
+  modeSelect.addEventListener("change", function(){
+    state.mode = modeSelect.value;
+    renderAll(true);
+  });
+
+  var seedButtons = document.querySelectorAll(".sid-seed-btn");
+  seedButtons.forEach(function(btn){
+    btn.addEventListener("click", function(){
+      seedButtons.forEach(function(b){ b.setAttribute("aria-pressed", "false"); });
+      btn.setAttribute("aria-pressed", "true");
+      state.seed = parseInt(btn.getAttribute("data-seed"), 10);
+      document.getElementById("sidSeedCurrent").textContent = "현재 시드: " + state.seed;
+      fullRefresh();
+    });
+  });
+
+  document.getElementById("sidResetBtn").addEventListener("click", function(){
+    selected = { content: null, geo: null };
+    syncPickers();
+    renderAll(true);
+    document.getElementById("sidBucketInfo").textContent = "버킷을 선택하면 매장 수, 카테고리 구성, 버킷 내 최대 거리가 여기 나타납니다.";
+  });
+
+  fullRefresh();
+})();
+</script>
+</body>
+</html>

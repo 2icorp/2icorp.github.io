@@ -1,0 +1,381 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<script>(function(){try{var t=localStorage.getItem("theme");if(!t&&window.matchMedia&&matchMedia("(prefers-color-scheme: dark)").matches)t="dark";if(t)document.documentElement.setAttribute("data-theme",t);}catch(e){}})();</script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>축 커버리지 시뮬레이터 데모 · 2i</title>
+<link rel="stylesheet" href="../../styles.css?v=23">
+<style>
+  .demo-top{display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:1rem clamp(1rem,2vw,2rem);border-bottom:1px solid var(--line-soft);flex-wrap:wrap;}
+  .demo-brand{display:flex;align-items:baseline;gap:.6rem;text-decoration:none;color:var(--ink);}
+  .demo-brand__mark{font-family:var(--mono);font-weight:800;color:var(--signal);font-size:1.1rem;}
+  .demo-brand__tag{font-family:var(--mono);font-size:var(--text-xs);letter-spacing:.08em;color:var(--ink-faint);text-transform:uppercase;}
+  .demo-top__links{display:flex;gap:1.2rem;font-size:var(--text-sm);}
+  .demo-top__links a{color:var(--ink-soft);text-decoration:none;border-bottom:1px solid transparent;transition:color var(--dur) var(--ease),border-color var(--dur) var(--ease);}
+  .demo-top__links a:hover{color:var(--ink);border-color:var(--line);}
+  .demo-top__links a:focus-visible{outline:2px solid var(--signal);outline-offset:3px;}
+  .demo-banner{font-family:var(--mono);font-size:var(--text-xs);color:var(--ink-faint);background:var(--paper-2);border-bottom:1px solid var(--line-soft);padding:.55rem clamp(1rem,2vw,2rem);letter-spacing:.01em;}
+  main{max-width:1100px;margin:0 auto;padding:2rem clamp(1rem,2vw,2rem) 1rem;min-width:0;}
+  h1{font-size:var(--text-h2);margin:0 0 .4rem;}
+  h2{font-size:var(--text-h3);margin:0 0 .3rem;}
+  .lede{color:var(--ink-soft);max-width:66ch;margin:0 0 2rem;line-height:1.7;}
+  section{margin-bottom:2.2rem;min-width:0;}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);min-width:0;}
+
+  /* 조작부 */
+  .axc-controls{padding:1.4rem clamp(1rem,2vw,1.8rem);}
+  .axc-controls h3{font-size:1rem;margin:0 0 .3rem;}
+  .axc-controls > p{margin:0 0 1.1rem;color:var(--ink-faint);font-size:var(--text-xs);font-family:var(--mono);}
+  .axc-axes{display:grid;grid-template-columns:repeat(2,1fr);gap:.9rem 1.4rem;margin-bottom:1.4rem;}
+  .axc-axis{display:flex;align-items:flex-start;gap:.8rem;min-width:0;}
+  .axc-toggle{position:relative;flex:none;width:52px;height:30px;min-height:30px;}
+  .axc-toggle input{position:absolute;opacity:0;width:100%;height:100%;margin:0;cursor:pointer;}
+  .axc-toggle span{position:absolute;inset:0;background:var(--line);border-radius:999px;transition:background var(--dur) var(--ease);}
+  .axc-toggle span::after{content:"";position:absolute;top:3px;left:3px;width:24px;height:24px;background:var(--paper);border-radius:50%;transition:transform var(--dur) var(--ease);box-shadow:0 1px 3px oklch(24% 0.02 255 / 0.35);}
+  .axc-toggle input:checked + span{background:var(--signal);}
+  .axc-toggle input:checked + span::after{transform:translateX(22px);}
+  .axc-toggle input:focus-visible + span{outline:2px solid var(--ink);outline-offset:2px;}
+  .axc-axis-body{min-width:0;flex:1;}
+  .axc-axis-body b{display:block;font-size:.94rem;margin-bottom:.15rem;}
+  .axc-axis-body p{margin:0;color:var(--ink-faint);font-size:var(--text-xs);font-family:var(--mono);line-height:1.55;}
+  .axc-range-row{display:flex;align-items:center;gap:.9rem;min-height:44px;}
+  input[type="range"]{flex:1;accent-color:var(--signal);min-height:44px;min-width:0;}
+  input[type="range"]:focus-visible{outline:2px solid var(--signal);outline-offset:3px;}
+  .axc-range-val{font-family:var(--mono);font-weight:700;min-width:4.4rem;text-align:right;}
+  .axc-presets{display:flex;flex-wrap:wrap;gap:.7rem;margin-top:1.1rem;}
+  .axc-preset{min-height:44px;padding:.5rem 1.1rem;border:1px solid var(--line);background:var(--paper-2);color:var(--ink-soft);border-radius:var(--radius);font-family:var(--mono);font-size:var(--text-xs);cursor:pointer;transition:border-color var(--dur) var(--ease),color var(--dur) var(--ease),background var(--dur) var(--ease);}
+  .axc-preset:hover{border-color:var(--signal);color:var(--ink);}
+  .axc-preset:focus-visible{outline:2px solid var(--signal);outline-offset:2px;}
+
+  /* 차트 */
+  .chart-card{padding:1.3rem clamp(1rem,2vw,1.6rem);}
+  .chart-card h3{font-size:1rem;margin:0 0 .2rem;}
+  .chart-card p{margin:0 0 1rem;color:var(--ink-faint);font-size:var(--text-xs);font-family:var(--mono);}
+  svg{width:100%;height:auto;display:block;}
+  .axc-svg-label{font-family:var(--mono);font-size:9px;fill:var(--ink-faint);}
+  .axc-svg-val{font-family:var(--mono);font-size:11px;font-weight:700;fill:var(--ink);}
+  .axc-charts{display:grid;grid-template-columns:1fr 1fr;gap:1.4rem;}
+
+  /* 지표 카드 */
+  .metrics{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;}
+  .metric{background:var(--panel);padding:1.2rem 1rem;min-width:0;}
+  .metric__label{font-family:var(--mono);font-size:var(--text-xs);color:var(--ink-faint);letter-spacing:.06em;text-transform:uppercase;}
+  .metric__value{font-size:1.7rem;font-weight:800;margin-top:.35rem;word-break:keep-all;}
+  .metric__unit{font-size:.85rem;color:var(--ink-soft);font-weight:500;margin-left:.1rem;}
+
+  /* 못 찾는 결함 카운터 */
+  .axc-counter{display:flex;align-items:center;gap:1.1rem;padding:1.1rem clamp(1rem,2vw,1.6rem);flex-wrap:wrap;}
+  .axc-counter__n{font-family:var(--mono);font-size:2rem;font-weight:800;color:var(--signal-deep);line-height:1;}
+  .axc-counter__body{min-width:0;flex:1;}
+  .axc-counter__body b{display:block;font-size:.94rem;margin-bottom:.15rem;}
+  .axc-counter__body p{margin:0;color:var(--ink-faint);font-size:var(--text-xs);font-family:var(--mono);line-height:1.55;}
+
+  .axc-summary{margin-top:1rem;padding:1.1rem clamp(1rem,2vw,1.6rem);color:var(--ink);font-size:var(--text-sm);line-height:1.7;}
+  .axc-summary b{color:var(--signal-deep);}
+
+  .axc-honest{padding:1.3rem clamp(1rem,2vw,1.8rem);}
+  .axc-honest h3{font-size:1rem;margin:0 0 .6rem;}
+  .axc-honest p{margin:0 0 .8rem;color:var(--ink-soft);line-height:1.7;font-size:var(--text-sm);}
+  .axc-honest p:last-child{margin-bottom:0;}
+  .axc-honest b{color:var(--ink);}
+
+  .demo-foot{margin-top:3rem;padding:1.6rem clamp(1rem,2vw,2rem) 2.4rem;font-family:var(--mono);font-size:var(--text-xs);color:var(--ink-faint);border-top:1px solid var(--line-soft);text-align:center;}
+
+  @media (prefers-reduced-motion: reduce){
+    .axc-toggle span,.axc-toggle span::after,.axc-preset,input[type="range"]{transition:none;}
+  }
+  @media (max-width:820px){
+    .axc-axes{grid-template-columns:1fr;}
+    .axc-charts{grid-template-columns:1fr;}
+    .metrics{grid-template-columns:1fr 1fr;}
+  }
+  @media (max-width:420px){
+    .metrics{grid-template-columns:1fr;}
+  }
+</style>
+</head>
+<body>
+<header class="demo-top">
+  <a href="/" class="demo-brand"><span class="demo-brand__mark">2i</span><span class="demo-brand__tag">DEMO · 축 커버리지 시뮬레이터</span></a>
+  <nav class="demo-top__links">
+    <a href="/cases.html#case-27">사례 보기</a>
+    <a href="/#contact">상담 신청</a>
+  </nav>
+</header>
+<div class="demo-banner">브라우저에서 그 자리에서 계산하는 인터랙티브 데모입니다. 합성 데이터를 씁니다.</div>
+
+<main>
+  <h1>축 커버리지 시뮬레이터</h1>
+  <p class="lede">통과율은 케이스가 한 축 위에서 얼마나 촘촘한지를 재는 숫자일 뿐입니다. 축 자체가 비어 있으면 그 축에 케이스를 아무리 쌓아도 결함은 안 보입니다. 저희가 저희 저장소에서 실제로 찾은 결함 4건을 축 공간 위의 점으로 놓고, 아래 토글로 축을 켜고 끄면서 축당 케이스 수를 1에서 500까지 올려보세요. 통과율과 총 케이스 수는 계속 좋아 보이는데 결함은 하나도 안 잡히는 순간을 직접 만들 수 있습니다.</p>
+
+  <section class="card axc-controls">
+    <h3>테스트 축 구성</h3>
+    <p>네 축을 각각 켜고 끕니다. 결함마다 반드시 켜져 있어야 하는 축이 정해져 있고, 그 축이 하나라도 꺼져 있으면 케이스를 아무리 늘려도 탐지 확률은 0입니다.</p>
+    <div class="axc-axes" id="axesGrid">
+      <label class="axc-axis">
+        <span class="axc-toggle"><input type="checkbox" id="axC-concurrency" checked><span></span></span>
+        <span class="axc-axis-body"><b>동시성</b><p>동시 다중 요청·병렬 멀티파트 업로드 등 부하 조건을 테스트 케이스에 포함합니다.</p></span>
+      </label>
+      <label class="axc-axis">
+        <span class="axc-toggle"><input type="checkbox" id="axC-combo"><span></span></span>
+        <span class="axc-axis-body"><b>기능 조합</b><p>기능을 하나씩만이 아니라 두 개 이상 동시에 켠 상태로 테스트합니다.</p></span>
+      </label>
+      <label class="axc-axis">
+        <span class="axc-toggle"><input type="checkbox" id="axC-clients"><span></span></span>
+        <span class="axc-axis-body"><b>클라이언트 다양성</b><p>자체 테스트 클라이언트가 아니라 실제 운영에서 쓰는 여러 클라이언트(aws-cli · boto3 · vLLM 등)로 테스트합니다.</p></span>
+      </label>
+      <label class="axc-axis">
+        <span class="axc-toggle"><input type="checkbox" id="axC-fault" checked><span></span></span>
+        <span class="axc-axis-body"><b>장애 주입</b><p>쓰기·전송 도중 노드를 강제로 죽이는 등 실패 상황을 인위적으로 만듭니다.</p></span>
+      </label>
+    </div>
+    <div class="axc-range-row">
+      <label for="nSlider" style="font-size:var(--text-sm);color:var(--ink-soft);white-space:nowrap;">축당 테스트 케이스 수</label>
+      <input type="range" id="nSlider" min="1" max="500" step="1" value="10" aria-label="축당 테스트 케이스 수, 1부터 500까지">
+      <span class="axc-range-val" id="nVal">10건</span>
+    </div>
+    <div class="axc-presets">
+      <button type="button" class="axc-preset" id="presetStandard">표준 스위트만(결함 3건 못 잡음)</button>
+      <button type="button" class="axc-preset" id="presetOurs">우리가 실제로 한 것</button>
+    </div>
+  </section>
+
+  <section class="axc-charts">
+    <div class="card chart-card">
+      <h3>축 커버리지</h3>
+      <p>4개 축 중 몇 개가 켜져 있는지, 신호 색은 켜짐입니다.</p>
+      <svg id="axisChart" viewBox="0 0 420 170" preserveAspectRatio="xMidYMid meet" role="img" aria-label="동시성, 기능 조합, 클라이언트 다양성, 장애 주입 네 축의 켜짐과 꺼짐 상태를 보여주는 막대그래프"></svg>
+    </div>
+    <div class="card chart-card">
+      <h3>결함별 탐지율(모델 계산)</h3>
+      <p>시뮬레이션 2,000회 기준 결함별 실제 탐지 비율입니다. 회색 바는 필요 축이 꺼져 있어 구조적으로 0%입니다.</p>
+      <svg id="defectChart" viewBox="0 0 420 190" preserveAspectRatio="xMidYMid meet" role="img" aria-label="결함 4건의 시뮬레이션 탐지율 막대그래프"></svg>
+    </div>
+  </section>
+
+  <section>
+    <h2>결과 지표</h2>
+    <div class="metrics" id="metrics" aria-live="polite">
+      <div class="metric">
+        <div class="metric__label">통과율(겉보기)</div>
+        <div class="metric__value"><span id="mPass">-</span><span class="metric__unit">%</span></div>
+      </div>
+      <div class="metric">
+        <div class="metric__label">실제 발견 결함 수</div>
+        <div class="metric__value"><span id="mFound">-</span><span class="metric__unit">/4</span></div>
+      </div>
+      <div class="metric">
+        <div class="metric__label">총 케이스 수</div>
+        <div class="metric__value"><span id="mCases">-</span><span class="metric__unit">건</span></div>
+      </div>
+      <div class="metric">
+        <div class="metric__label">축 커버리지</div>
+        <div class="metric__value"><span id="mAxes">-</span><span class="metric__unit">/4</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="card axc-counter" aria-live="polite">
+    <div class="axc-counter__n" id="cBlind">-</div>
+    <div class="axc-counter__body">
+      <b>케이스는 늘었는데 못 찾는 결함</b>
+      <p id="cBlindNote">현재 축 구성에서 구조적으로 절대 안 잡히는 결함 수입니다. 축당 케이스 수를 1에서 500까지 올려도 이 숫자는 그대로입니다.</p>
+    </div>
+  </section>
+
+  <section>
+    <h2>무엇을 봤나</h2>
+    <p class="card axc-summary" id="summary" aria-live="polite"></p>
+  </section>
+
+  <section class="card axc-honest">
+    <h3>정직하게 말하면</h3>
+    <p>결함별 탐지 확률 <b>1-(1-p)^n</b>과 그 안의 <b>p</b> 값은 이 데모가 설명을 위해 만든 모델입니다. 실제로 축마다 몇 건의 케이스가 있어야 특정 결함이 잡히는지를 정확히 측정한 값이 아닙니다.</p>
+    <p>실측인 것은 딱 하나입니다. 저희가 표준 적합성 스위트 205건과 자체 하네스 40항목이 전부 통과한 상태에서, 실제 프로덕션 클라이언트를 저희 저장소에 붙였더니 4건의 결함이 나왔다는 사실과, 그 결함들이 각각 동시성·기능 조합·클라이언트 다양성·장애 주입 중 어느 축에서 나왔는지입니다. 확률 곡선의 구체적인 기울기가 아니라 <b>축이 없으면 그 방향은 안 보인다는 구조</b>가 이 사례의 핵심입니다.</p>
+    <p>귀사 시스템에 적용하려면 귀사 저장소·클라이언트·장애 시나리오로 다시 재야 합니다. 이 데모의 숫자를 귀사 도입 판단의 근거로 그대로 쓰지 마세요.</p>
+  </section>
+</main>
+
+<footer class="demo-foot">© 2i · contact@2icorp.site</footer>
+
+<script>
+(function(){
+  "use strict";
+
+  var TRIALS = 2000;
+  var SEED = 20260804;
+
+  function mulberry32(seed){
+    return function(){
+      seed |= 0; seed = (seed + 0x6D2B79F5) | 0;
+      var t = Math.imul(seed ^ (seed >>> 15), 1 | seed);
+      t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+      return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+    };
+  }
+
+  var AXES = [
+    {key:"concurrency", label:"동시성"},
+    {key:"combo", label:"기능 조합"},
+    {key:"clients", label:"클라이언트 다양성"},
+    {key:"fault", label:"장애 주입"}
+  ];
+
+  var DEFECTS = [
+    {id:"d1", label:"병렬 멀티파트 업로드 게이트웨이 프로세스 사망", axes:["concurrency","clients"], p:0.03},
+    {id:"d2", label:"기능 조합 시 메타데이터 평면 마비", axes:["combo"], p:0.05},
+    {id:"d3", label:"쓰기 내성 비대칭", axes:["fault"], p:0.06},
+    {id:"d4", label:"요청줄 형식 차이로 서명 전체 실패", axes:["clients"], p:0.05}
+  ];
+
+  var toggleEls = {};
+  AXES.forEach(function(a){ toggleEls[a.key] = document.getElementById("axC-"+a.key); });
+  var nSlider = document.getElementById("nSlider");
+  var nVal = document.getElementById("nVal");
+
+  function axesState(){
+    var s = {};
+    AXES.forEach(function(a){ s[a.key] = toggleEls[a.key].checked; });
+    return s;
+  }
+
+  function detectProb(defect, state, n){
+    for(var i=0;i<defect.axes.length;i++){
+      if(!state[defect.axes[i]]) return 0;
+    }
+    return 1 - Math.pow(1 - defect.p, n);
+  }
+
+  function runSimulation(state, n){
+    var rng = mulberry32(SEED);
+    var out = {};
+    DEFECTS.forEach(function(d){
+      var prob = detectProb(d, state, n);
+      var hits = 0;
+      for(var t=0;t<TRIALS;t++){
+        if(rng() < prob) hits++;
+      }
+      out[d.id] = { prob: prob, empirical: hits/TRIALS, requiredMet: prob > 0 || d.axes.every(function(k){return state[k];}) };
+    });
+    return out;
+  }
+
+  var svgNS = "http://www.w3.org/2000/svg";
+  function el(tag, attrs){
+    var e = document.createElementNS(svgNS, tag);
+    for(var k in attrs){ e.setAttribute(k, attrs[k]); }
+    return e;
+  }
+
+  function drawAxisChart(state){
+    var svg = document.getElementById("axisChart");
+    while(svg.firstChild) svg.removeChild(svg.firstChild);
+    var W=420,H=170,padB=30,padT=14,barW=56,gap=(W-AXES.length*barW)/(AXES.length+1);
+    var innerH = H-padT-padB;
+    AXES.forEach(function(a,i){
+      var on = state[a.key];
+      var bx = gap + i*(barW+gap);
+      var bh = on ? innerH : 10;
+      var by = padT + (innerH - bh);
+      svg.appendChild(el("rect",{x:bx,y:by,width:barW,height:bh,fill:on?"var(--signal)":"var(--line)",rx:2}));
+      var lbl = el("text",{x:bx+barW/2,y:H-16,"text-anchor":"middle","class":"axc-svg-label"});
+      lbl.textContent = a.label;
+      svg.appendChild(lbl);
+      var state2 = el("text",{x:bx+barW/2,y:H-4,"text-anchor":"middle","class":"axc-svg-label"});
+      state2.textContent = on ? "켜짐" : "꺼짐";
+      svg.appendChild(state2);
+    });
+  }
+
+  function drawDefectChart(results, state){
+    var svg = document.getElementById("defectChart");
+    while(svg.firstChild) svg.removeChild(svg.firstChild);
+    var W=420,H=190,padL=14,padR=54,rowH=190/DEFECTS.length;
+    var innerW = W-padL-padR;
+    DEFECTS.forEach(function(d,i){
+      var res = results[d.id];
+      var barMaxH = 20;
+      var cy = i*rowH + rowH/2;
+      var barY = cy - barMaxH/2;
+      var met = d.axes.every(function(k){return state[k];});
+      var w = Math.max(2, innerW * res.empirical);
+      svg.appendChild(el("rect",{x:padL,y:barY,width:innerW,height:barMaxH,fill:"var(--line-soft)",rx:2}));
+      svg.appendChild(el("rect",{x:padL,y:barY,width:w,height:barMaxH,fill:met?"var(--signal)":"var(--ink-faint)",rx:2}));
+      var lbl = el("text",{x:padL,y:barY-6,"class":"axc-svg-label"});
+      lbl.textContent = d.label + (met ? "" : " (필요 축 미충족)");
+      svg.appendChild(lbl);
+      var val = el("text",{x:W-padR+6,y:cy+4,"class":"axc-svg-val"});
+      val.textContent = (res.empirical*100).toFixed(1)+"%";
+      svg.appendChild(val);
+    });
+  }
+
+  function fmtInt(n){ return Math.round(n).toLocaleString("ko-KR"); }
+
+  function render(){
+    var state = axesState();
+    var n = parseInt(nSlider.value, 10);
+    nVal.textContent = n + "건";
+
+    var results = runSimulation(state, n);
+
+    var enabledCount = AXES.filter(function(a){ return state[a.key]; }).length;
+    var totalCases = n * enabledCount;
+    var foundCount = DEFECTS.filter(function(d){ return results[d.id].empirical >= 0.5; }).length;
+    var blindCount = DEFECTS.filter(function(d){ return !d.axes.every(function(k){return state[k];}); }).length;
+    var passRate = totalCases === 0 ? 100 : Math.max(0, Math.min(100, ((totalCases - foundCount) / totalCases) * 100));
+
+    document.getElementById("mPass").textContent = passRate.toFixed(1);
+    document.getElementById("mFound").textContent = foundCount;
+    document.getElementById("mCases").textContent = fmtInt(totalCases);
+    document.getElementById("mAxes").textContent = enabledCount;
+    document.getElementById("cBlind").textContent = blindCount;
+
+    drawAxisChart(state);
+    drawDefectChart(results, state);
+
+    var missingAxes = [];
+    DEFECTS.forEach(function(d){
+      if(!d.axes.every(function(k){return state[k];})){
+        d.axes.forEach(function(k){
+          if(!state[k]){
+            var lab = AXES.filter(function(a){return a.key===k;})[0].label;
+            if(missingAxes.indexOf(lab) === -1) missingAxes.push(lab);
+          }
+        });
+      }
+    });
+
+    var summaryText = "현재 설정은 축 " + enabledCount + "/4가 켜져 있고, 축당 케이스 " + n + "건씩 총 " + fmtInt(totalCases) + "건을 돌린 것과 같습니다. 시뮬레이션 2,000회 기준 실제로 잡히는 결함은 " + foundCount + "/4건이고, 통과율은 " + passRate.toFixed(1) + "%로 보입니다.";
+    if(blindCount > 0){
+      summaryText += " 그런데 " + missingAxes.join("·") + " 축이 꺼져 있어서 결함 " + blindCount + "건은 케이스 수를 500까지 올려도 <b>구조적으로 절대 안 잡힙니다</b>.";
+    } else {
+      summaryText += " 네 축이 모두 켜져 있어 케이스 수를 올릴수록 남은 결함도 마저 잡힙니다.";
+    }
+    document.getElementById("summary").innerHTML = summaryText;
+  }
+
+  function setAxes(vals){
+    AXES.forEach(function(a){ toggleEls[a.key].checked = !!vals[a.key]; });
+  }
+
+  document.getElementById("presetStandard").addEventListener("click", function(){
+    setAxes({concurrency:true, combo:false, clients:false, fault:true});
+    nSlider.value = 200;
+    render();
+  });
+  document.getElementById("presetOurs").addEventListener("click", function(){
+    setAxes({concurrency:true, combo:true, clients:true, fault:true});
+    nSlider.value = 100;
+    render();
+  });
+
+  AXES.forEach(function(a){ toggleEls[a.key].addEventListener("change", render); });
+  nSlider.addEventListener("input", render);
+
+  render();
+})();
+</script>
+</body>
+</html>

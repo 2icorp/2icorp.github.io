@@ -1,0 +1,935 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<script>(function(){try{var t=localStorage.getItem("theme");if(!t&&window.matchMedia&&matchMedia("(prefers-color-scheme: dark)").matches)t="dark";if(t)document.documentElement.setAttribute("data-theme",t);}catch(e){}})();</script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>시간표 자동 편성 시뮬레이터 데모 · 2i</title>
+<link rel="stylesheet" href="../../styles.css?v=23">
+<style>
+  .demo-top{display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:1rem clamp(1rem,2vw,2rem);border-bottom:1px solid var(--line-soft);flex-wrap:wrap;}
+  .demo-brand{display:flex;align-items:baseline;gap:.6rem;text-decoration:none;color:var(--ink);}
+  .demo-brand__mark{font-family:var(--mono);font-weight:800;color:var(--signal);font-size:1.1rem;}
+  .demo-brand__tag{font-family:var(--mono);font-size:var(--text-xs);letter-spacing:.08em;color:var(--ink-faint);text-transform:uppercase;}
+  .demo-top__links{display:flex;gap:1.2rem;font-size:var(--text-sm);}
+  .demo-top__links a{color:var(--ink-soft);text-decoration:none;border-bottom:1px solid transparent;transition:color var(--dur) var(--ease),border-color var(--dur) var(--ease);}
+  .demo-top__links a:hover{color:var(--ink);border-color:var(--line);}
+  .demo-top__links a:focus-visible{outline:2px solid var(--signal);outline-offset:3px;}
+  .demo-banner{font-family:var(--mono);font-size:var(--text-xs);color:var(--ink-faint);background:var(--paper-2);border-bottom:1px solid var(--line-soft);padding:.55rem clamp(1rem,2vw,2rem);letter-spacing:.01em;}
+  main{max-width:1180px;margin:0 auto;padding:2rem clamp(1rem,2vw,2rem) 1rem;min-width:0;}
+  h1{font-size:var(--text-h2);margin:0 0 .4rem;}
+  .lede{color:var(--ink-soft);max-width:70ch;margin:0 0 1.6rem;line-height:1.7;}
+  .refstat{background:var(--paper-2);border:1px solid var(--line-soft);border-radius:var(--radius);padding:.9rem 1.1rem;margin:0 0 2.2rem;font-family:var(--mono);font-size:var(--text-xs);color:var(--ink-soft);line-height:1.8;}
+  .refstat b{color:var(--ink);font-family:var(--sans);font-weight:700;}
+  section{margin-bottom:2.6rem;min-width:0;}
+  h2{font-size:var(--text-h3);margin:0 0 .3rem;}
+  h3{font-size:1rem;margin:0 0 .2rem;}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);min-width:0;}
+  .section-note{margin:0 0 1rem;color:var(--ink-faint);font-size:var(--text-xs);font-family:var(--mono);}
+
+  /* ---- controls ---- */
+  .controls{padding:1.4rem clamp(1rem,2vw,1.8rem);}
+  .controls__grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.3rem 1.6rem;}
+  .control h3{margin:0 0 .25rem;}
+  .control p{margin:0 0 .7rem;color:var(--ink-faint);font-size:var(--text-xs);font-family:var(--mono);line-height:1.55;}
+  .control__row{display:flex;align-items:center;gap:.8rem;}
+  input[type="range"]{flex:1;accent-color:var(--signal);min-height:44px;}
+  .control__val{font-family:var(--mono);font-weight:700;min-width:4.6rem;text-align:right;}
+  .tt-toggle-row{display:flex;align-items:center;gap:.9rem;min-height:44px;}
+  .presets{display:flex;flex-wrap:wrap;gap:.6rem;margin-top:1.4rem;padding-top:1.2rem;border-top:1px solid var(--line-soft);}
+  .btn{font-family:var(--sans);font-size:var(--text-sm);font-weight:600;padding:.65rem 1.1rem;min-height:44px;border-radius:var(--radius);border:1px solid var(--line);background:var(--panel);color:var(--ink);cursor:pointer;transition:background var(--dur) var(--ease),border-color var(--dur) var(--ease),transform var(--dur) var(--ease);}
+  .btn:hover{background:var(--paper-2);border-color:var(--ink-faint);}
+  .btn:active{transform:translateY(1px);}
+  .btn:focus-visible{outline:2px solid var(--signal);outline-offset:2px;}
+
+  /* ---- progress ---- */
+  .progress-wrap{margin-top:1.2rem;height:auto;min-height:1.2rem;}
+  .progress-label{font-family:var(--mono);font-size:var(--text-xs);color:var(--ink-faint);margin-bottom:.35rem;}
+  .progress-track{height:6px;background:var(--line-soft);border-radius:99px;overflow:hidden;}
+  .progress-bar{height:100%;width:0%;background:var(--signal);transition:width 120ms linear;}
+  .progress-wrap[hidden]{display:none;}
+
+  /* ---- metrics ---- */
+  .metrics{display:grid;grid-template-columns:repeat(5,1fr);gap:1px;background:var(--line);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;}
+  .metric{background:var(--panel);padding:1.1rem 1rem;min-width:0;}
+  .metric__label{font-family:var(--mono);font-size:var(--text-xs);color:var(--ink-faint);letter-spacing:.05em;text-transform:uppercase;}
+  .metric__value{font-size:1.35rem;font-weight:800;margin-top:.35rem;word-break:keep-all;}
+  .metric__unit{font-size:.8rem;color:var(--ink-soft);font-weight:500;margin-left:.15rem;}
+  .metric__sub{font-family:var(--mono);font-size:var(--text-xs);margin-top:.4rem;color:var(--ink-faint);}
+  .metric__value.status-ok{color:var(--ok);}
+  .metric__value.status-bad{color:var(--signal-deep);}
+  .metric__sub.good{color:var(--ok);}
+  .metric__sub.bad{color:var(--signal-deep);}
+
+  /* ---- grid view ---- */
+  .grid-head{display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap;margin-bottom:.8rem;}
+  .tt-picker{display:flex;align-items:center;gap:.6rem;font-family:var(--mono);font-size:var(--text-xs);color:var(--ink-soft);}
+  .tt-picker select{min-height:44px;padding:.4rem .6rem;border-radius:var(--radius);border:1px solid var(--line);background:var(--panel);color:var(--ink);font-family:var(--sans);font-size:var(--text-sm);}
+  .legend{display:flex;flex-wrap:wrap;gap:.9rem;font-family:var(--mono);font-size:var(--text-xs);color:var(--ink-soft);margin-bottom:.9rem;}
+  .legend span{display:inline-flex;align-items:center;gap:.4rem;}
+  .swatch{width:14px;height:14px;border-radius:3px;display:inline-block;border:1px solid var(--line);}
+  .chart-card{padding:1.2rem clamp(1rem,2vw,1.5rem);}
+  .tt-scroll{overflow-x:auto;}
+  svg{width:100%;height:auto;display:block;}
+  .axis-label{font-family:var(--mono);font-size:8px;fill:var(--ink-faint);}
+  .tt-cell-label{font-family:var(--sans);font-size:10px;fill:var(--panel);font-weight:700;}
+  .tt-cell-sub{font-family:var(--mono);font-size:7px;fill:var(--panel);opacity:.85;}
+  .tt-empty-label{font-family:var(--mono);font-size:9px;fill:var(--ink-faint);}
+
+  /* ---- violation list ---- */
+  .violist{list-style:none;margin:0;padding:0;font-family:var(--mono);font-size:var(--text-xs);color:var(--ink-soft);max-height:260px;overflow-y:auto;border:1px solid var(--line-soft);border-radius:var(--radius);}
+  .violist li{padding:.5rem .9rem;border-bottom:1px solid var(--line-soft);display:flex;justify-content:space-between;gap:1rem;}
+  .violist li:last-child{border-bottom:none;}
+  .violist li span.amt{color:var(--signal-deep);font-weight:700;white-space:nowrap;}
+  .violist--empty{padding:1rem;text-align:center;color:var(--ink-faint);}
+
+  /* ---- conclusion / honesty ---- */
+  .conclusion{background:var(--paper-2);border:1px solid var(--line-soft);border-radius:var(--radius);padding:1.2rem 1.4rem;font-size:1rem;line-height:1.75;}
+  .conclusion b{color:var(--signal-deep);}
+  .gap-badge{display:inline-block;margin-top:.5rem;padding:.3rem .7rem;border-radius:999px;font-family:var(--mono);font-size:var(--text-xs);border:1px solid var(--line);}
+  .gap-badge--low{color:var(--ok);border-color:color-mix(in srgb, var(--ok) 35%, transparent);background:color-mix(in srgb, var(--ok) 10%, transparent);}
+  .gap-badge--high{color:var(--signal-deep);border-color:color-mix(in srgb, var(--signal-deep) 35%, transparent);background:color-mix(in srgb, var(--signal-deep) 10%, transparent);}
+  .honesty{color:var(--ink-faint);font-size:var(--text-sm);line-height:1.75;border-top:1px solid var(--line-soft);padding-top:1.4rem;}
+  .honesty h3{font-size:1rem;margin:0 0 .6rem;color:var(--ink-soft);}
+  .honesty p{margin:0 0 .8rem;}
+  .honesty p:last-child{margin-bottom:0;}
+  .honesty b{color:var(--ink-soft);}
+
+  .demo-foot{margin-top:3rem;padding:1.6rem clamp(1rem,2vw,2rem) 2.4rem;font-family:var(--mono);font-size:var(--text-xs);color:var(--ink-faint);border-top:1px solid var(--line-soft);text-align:center;}
+
+  @media (max-width:900px){
+    .controls__grid{grid-template-columns:1fr 1fr;}
+    .metrics{grid-template-columns:1fr 1fr 1fr;}
+  }
+  @media (max-width:560px){
+    .controls__grid{grid-template-columns:1fr;}
+    .metrics{grid-template-columns:1fr 1fr;}
+  }
+  @media (prefers-reduced-motion: reduce){
+    .progress-bar, .btn{transition:none;}
+  }
+</style>
+</head>
+<body>
+<header class="demo-top">
+  <a href="/" class="demo-brand"><span class="demo-brand__mark">2i</span><span class="demo-brand__tag">DEMO · 시간표 자동 편성</span></a>
+  <nav class="demo-top__links">
+    <a href="/cases.html#case-26">사례 보기</a>
+    <a href="/#contact">상담 신청</a>
+  </nav>
+</header>
+<div class="demo-banner">브라우저에서 그 자리에서 계산하는 인터랙티브 데모입니다. 합성 데이터를 씁니다.</div>
+
+<main>
+  <h1>시간표 자동 편성 시뮬레이터</h1>
+  <p class="lede">학급이 늘수록 같은 계산 예산으로는 최적에 얼마나 가까운지 점점 불투명해집니다. 학급, 교사, 특별실 중복 금지와 교사 최대 시수, 같은 과목 하루 2시간 상한 같은 하드 제약은 브라우저의 지역탐색 알고리즘이 단 한 건도 어기지 않는다는 것, 그리고 학급 수가 늘어날수록 같은 시간 안에 얼마나 최적에 가까이 다가가는지가 점점 불투명해진다는 것입니다. 슬라이더를 움직이면 자바스크립트가 그 자리에서 학교를 새로 만들고 다시 풉니다.</p>
+
+  <div class="refstat">
+    <b>원 실증 결과(실측, 참고용)</b> · 학급 8·20 규모는 3개 시드 전부 CP-SAT로 최적성이 증명됨 · 학급 40 규모는 3개 시드의 최적성 gap이 각각 0%, 2.4%, 95.5%로 흩어짐 · 소프트 가중치를 켜면 small 규모 기준 기피시간대 위반이 22건에서 0건, 같은 과목 하루 몰림 위반이 15건에서 0건으로 개선됨(-100%). 아래 데모는 이 결과를 재현하려는 것이 아니라, 브라우저에서 직접 계산한 자체 값(합성 데이터 계산)으로 같은 현상, 특히 규모가 커질수록 증명이 흔들리는 지점을 보여줍니다.
+  </div>
+
+  <section class="card controls">
+    <h2>조작부</h2>
+    <p class="section-note">값을 바꾸면 학교를 새로 만들고 지역탐색을 처음부터 다시 돌립니다. 프리셋은 사례에서 실측한 세 가지 규모(8·20·40학급)로 바로 이동합니다.</p>
+    <div class="controls__grid">
+      <div class="control">
+        <h3>학급 수</h3>
+        <p>이 학교의 학급 수입니다. 늘어날수록 교사 시간표와 특별실을 두고 학급 간 경쟁이 커집니다.</p>
+        <div class="control__row">
+          <input type="range" id="classSlider" min="4" max="40" step="1" value="20" aria-label="학급 수">
+          <span class="control__val" id="classVal">20학급</span>
+        </div>
+      </div>
+      <div class="control">
+        <h3>소프트 가중치</h3>
+        <p>켜면 교사 기피 시간대 회피와 과목 요일 분산을 목표에 포함해 탐색합니다. 끄면 하드 제약과 시수 충족만 봅니다(가중치 0 기준선).</p>
+        <div class="tt-toggle-row">
+          <label class="toggle"><input type="checkbox" id="weightToggle" checked aria-label="소프트 가중치 켜기"><span></span></label>
+          <span id="weightToggleLabel">켜짐(기피시간대·요일분산 최적화)</span>
+        </div>
+      </div>
+      <div class="control">
+        <h3>탐색 예산(반복 횟수)</h3>
+        <p>지역탐색이 개선을 시도하는 반복 횟수입니다. 학급 수가 많을수록 같은 예산으로 커버해야 할 칸이 늘어나 상대적으로 예산이 얇아집니다.</p>
+        <div class="control__row">
+          <input type="range" id="budgetSlider" min="300" max="6000" step="100" value="2200" aria-label="탐색 예산(반복 횟수)">
+          <span class="control__val" id="budgetVal">2200회</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="presets">
+      <button type="button" class="btn" id="presetSmall">프리셋 · 소규모(8학급)</button>
+      <button type="button" class="btn" id="presetMid">프리셋 · 중규모(20학급)</button>
+      <button type="button" class="btn" id="presetLarge">프리셋 · 대규모(40학급, gap 커짐)</button>
+      <button type="button" class="btn" id="recomputeBtn">지금 다시 계산</button>
+    </div>
+
+    <div class="progress-wrap" id="progressWrap" hidden>
+      <div class="progress-label" id="progressLabel">계산 중...</div>
+      <div class="progress-track"><div class="progress-bar" id="progressBar"></div></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>결과 지표</h2>
+    <p class="section-note">현재 설정으로 메인 탐색(소프트 가중치 반영)과 가중치 0 기준선을 같은 학교, 같은 초기 배치에서 각각 끝까지 돌린 결과입니다.</p>
+    <div class="metrics" id="metrics" aria-live="polite">
+      <div class="metric">
+        <div class="metric__label">미충족 시수</div>
+        <div class="metric__value"><span id="mUnmet">-</span><span class="metric__unit">시간</span></div>
+        <div class="metric__sub" id="mUnmetSub"></div>
+      </div>
+      <div class="metric">
+        <div class="metric__label">하드 제약 위반</div>
+        <div class="metric__value" id="mViol">-</div>
+        <div class="metric__sub" id="mViolSub">독립 검증기가 최종 격자만 받아 재계산</div>
+      </div>
+      <div class="metric">
+        <div class="metric__label">기피시간대 위반</div>
+        <div class="metric__value"><span id="mDislike">-</span><span class="metric__unit">건</span></div>
+        <div class="metric__sub" id="mDislikeSub"></div>
+      </div>
+      <div class="metric">
+        <div class="metric__label">요일 분산(몰림) 위반</div>
+        <div class="metric__value"><span id="mSpread">-</span><span class="metric__unit">건</span></div>
+        <div class="metric__sub" id="mSpreadSub"></div>
+      </div>
+      <div class="metric">
+        <div class="metric__label">탐색 예산 소진 gap 추정치</div>
+        <div class="metric__value"><span id="mGap">-</span><span class="metric__unit">%</span></div>
+        <div class="metric__sub" id="mGapSub"></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="card chart-card">
+    <div class="grid-head">
+      <h3>학급별 시간표</h3>
+      <div class="tt-picker">
+        <label for="classPicker">보기</label>
+        <select id="classPicker" aria-label="시간표를 볼 학급 선택"></select>
+      </div>
+    </div>
+    <p class="section-note">요일 x 교시 격자입니다. 과목별로 색이 다르고, 빈 칸은 이 학급에서 아직 배정되지 않은 자습·여유 시간입니다.</p>
+    <div class="legend" id="subjectLegend"></div>
+    <div class="tt-scroll">
+      <svg id="ttGrid" viewBox="0 0 620 340" preserveAspectRatio="xMidYMid meet" role="img" aria-label="선택한 학급의 요일별 교시 시간표"></svg>
+    </div>
+  </section>
+
+  <section class="card chart-card">
+    <h3>학급별 미충족 시수</h3>
+    <p class="section-note">메인 탐색 결과 기준, 학급별로 채우지 못한 주당 시수 합계입니다, 단위 시간.</p>
+    <div class="tt-scroll">
+      <svg id="unmetChart" viewBox="0 0 900 200" preserveAspectRatio="xMidYMid meet" role="img" aria-label="학급별 미충족 시수 막대 차트"></svg>
+    </div>
+  </section>
+
+  <section class="card chart-card">
+    <h3>미충족 시수 상세</h3>
+    <p class="section-note">메인 탐색이 끝내 채우지 못한 학급·과목별 시수를 정확히 보고합니다.</p>
+    <ul class="violist" id="violist"></ul>
+  </section>
+
+  <section>
+    <h2>무엇을 봤나</h2>
+    <p class="conclusion" id="conclusion" aria-live="polite"></p>
+  </section>
+
+  <section class="honesty">
+    <h3>정직하게 말하면</h3>
+    <p>이 데모의 solver는 브라우저에서 도는 시드 고정 지역탐색(모의 담금질) 휴리스틱이지, 실제 프로젝트에서 쓰는 CP-SAT 정수계획 solver가 아닙니다. 하드 제약(중복 금지·교사 최대 시수·같은 과목 하루 상한)은 매 이동마다 검증해 위반이 절대 생기지 않게 설계했지만, &quot;탐색 예산 소진 gap 추정치&quot;는 CP-SAT의 진짜 최적성 gap(하한과 상한의 차이)이 아니라 이 지역탐색이 남은 예산 안에서 얼마나 더 개선될 여지가 있어 보이는지를 어림한 값입니다.</p>
+    <p>실제로는 그보다 나을 수도, 더 나쁠 수도 있습니다. 실제 프로젝트에서는 CP-SAT과 시드별 복수 실행, 독립 검증기를 함께 써서 이 경계를 숫자로 공개합니다.</p>
+    <p>이 데모의 과목·교사·특별실 구성은 합성 데이터로 단순화한 예시이고, 실제 학교의 교육과정·교사 배치·특별실 현황은 다르므로 도입 시 제약 목록을 다시 정의해야 합니다.</p>
+  </section>
+</main>
+
+<footer class="demo-foot">© 2i · contact@2icorp.site</footer>
+
+<script>
+(function(){
+  "use strict";
+
+  // ---------------------------------------------------------------------
+  // 시드 고정 PRNG (mulberry32). 같은 입력이면 항상 같은 결과가 나온다.
+  // ---------------------------------------------------------------------
+  function mulberry32(seed){
+    return function(){
+      seed |= 0; seed = (seed + 0x6D2B79F5) | 0;
+      var t = Math.imul(seed ^ (seed >>> 15), 1 | seed);
+      t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+      return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+    };
+  }
+  var SEED_BASE = 20260826;
+
+  var DAYS = 5, PERIODS = 6, SLOTS = DAYS*PERIODS; // 주당 30교시
+  var DAY_NAMES = ["월","화","수","목","금"];
+  var SUBJECTS = [
+    {key:"kor", name:"국어", base:5, room:null},
+    {key:"math", name:"수학", base:5, room:null},
+    {key:"eng", name:"영어", base:5, room:null},
+    {key:"sci", name:"과학", base:4, room:"sci"},
+    {key:"soc", name:"사회", base:4, room:null},
+    {key:"pe", name:"체육", base:3, room:"gym"},
+    {key:"mus", name:"음악", base:2, room:"mus"},
+    {key:"art", name:"미술", base:2, room:"art"}
+  ];
+  var ROOM_NAMES = {sci:"과학실", gym:"체육관", mus:"음악실", art:"미술실"};
+  var SUBJECT_COLORS = [
+    "var(--steel)", "var(--signal)", "var(--ok)", "var(--signal-deep)",
+    "var(--steel-soft)",
+    "color-mix(in srgb, var(--signal) 55%, var(--steel))",
+    "color-mix(in srgb, var(--ok) 55%, var(--steel-soft))",
+    "color-mix(in srgb, var(--signal-deep) 55%, var(--ok))"
+  ];
+  var MAX_HOURS = 22;                 // 교사 주당 최대 시수, 하드 제약
+  var UNMET_W = 1000;                 // 탄력 제약: 미충족 시수에 매우 큰 벌점
+  var DISLIKE_W = 5;                  // 소프트: 기피 시간대
+  var SPREAD_W = 4;                   // 소프트: 요일 몰림(회피 가능한 2교시)
+  var CONV_K = 7.25;                  // gap 추정치 보정 상수: 학급4, 예산2000에서 여유 있게 수렴하도록 맞춤
+
+  // ---------------------------------------------------------------------
+  // 학교 생성: 학급, 과목별 시수, 특별실 용량, 교사 풀과 기피시간대
+  // ---------------------------------------------------------------------
+  function buildSchool(classCount, seed){
+    var rng = mulberry32(seed);
+    var roomCap = {
+      sci: Math.max(1, Math.ceil(classCount/6)),
+      gym: Math.max(2, Math.ceil(classCount/5)),
+      mus: Math.max(1, Math.ceil(classCount/9)),
+      art: Math.max(1, Math.ceil(classCount/9))
+    };
+    var classHours = [];
+    for(var c=0;c<classCount;c++){
+      var hrs = SUBJECTS.map(function(s){ return s.base; });
+      for(var k=0;k<2;k++){
+        var up = Math.floor(rng()*SUBJECTS.length);
+        var down = Math.floor(rng()*SUBJECTS.length);
+        if(up===down) continue;
+        hrs[up]+=1; hrs[down]=Math.max(1,hrs[down]-1);
+      }
+      var sum = hrs.reduce(function(a,b){return a+b;},0);
+      var diff = SLOTS - sum;
+      if(diff!==0){ hrs[0]+=diff; if(hrs[0]<1) hrs[0]=1; }
+      classHours.push(hrs);
+    }
+    var teachers = [];
+    var teacherOf = [];
+    for(var c2=0;c2<classCount;c2++) teacherOf.push(new Array(SUBJECTS.length).fill(-1));
+
+    SUBJECTS.forEach(function(subj, subjIdx){
+      var totalDemand = 0;
+      for(var c3=0;c3<classCount;c3++) totalDemand += classHours[c3][subjIdx];
+      var poolSize = Math.max(1, Math.ceil(totalDemand / (MAX_HOURS*0.8)));
+      var poolIds = [];
+      for(var i=0;i<poolSize;i++){
+        var dislikes = {};
+        var nd = 2 + Math.floor(rng()*3);
+        for(var j=0;j<nd;j++){
+          var d = Math.floor(rng()*DAYS), p = Math.floor(rng()*PERIODS);
+          dislikes[d+"-"+p] = true;
+        }
+        var tid = teachers.length;
+        teachers.push({id:tid, subjIdx:subjIdx, maxHours:MAX_HOURS, dislikes:dislikes, load:0});
+        poolIds.push(tid);
+      }
+      var order = [];
+      for(var c4=0;c4<classCount;c4++) order.push(c4);
+      for(var i2=order.length-1;i2>0;i2--){ var j2=Math.floor(rng()*(i2+1)); var tmp=order[i2]; order[i2]=order[j2]; order[j2]=tmp; }
+      order.forEach(function(c5){
+        var best = poolIds[0];
+        poolIds.forEach(function(tid2){ if(teachers[tid2].load < teachers[best].load) best = tid2; });
+        teacherOf[c5][subjIdx] = best;
+        teachers[best].load += classHours[c5][subjIdx];
+      });
+    });
+
+    return {classCount:classCount, classHours:classHours, teachers:teachers, teacherOf:teacherOf, roomCap:roomCap};
+  }
+
+  function makeState(school){
+    var N = school.classCount;
+    var schedule = [], remaining = [], dayCount = [];
+    for(var c=0;c<N;c++){
+      schedule.push(Array.from({length:DAYS},function(){return new Array(PERIODS).fill(-1);}));
+      remaining.push(school.classHours[c].slice());
+      dayCount.push(SUBJECTS.map(function(){ return new Array(DAYS).fill(0); }));
+    }
+    var teacherBusy = school.teachers.map(function(){ return Array.from({length:DAYS},function(){return new Array(PERIODS).fill(false);}); });
+    var roomUsage = Array.from({length:DAYS},function(){
+      return Array.from({length:PERIODS},function(){
+        var o={}; Object.keys(ROOM_NAMES).forEach(function(k){o[k]=0;}); return o;
+      });
+    });
+    return {school:school, schedule:schedule, remaining:remaining, dayCount:dayCount, teacherBusy:teacherBusy, roomUsage:roomUsage};
+  }
+
+  // ---------------------------------------------------------------------
+  // 하드 제약 검사·적용·해제. 이 네 함수가 "중복 금지·최대 시수·하루 상한"을 소유한다.
+  // ---------------------------------------------------------------------
+  function canPlace(state, c, d, p, subjIdx){
+    if(state.dayCount[c][subjIdx][d] >= 2) return false;
+    var teacherId = state.school.teacherOf[c][subjIdx];
+    if(state.teacherBusy[teacherId][d][p]) return false;
+    var roomKey = SUBJECTS[subjIdx].room;
+    if(roomKey && state.roomUsage[d][p][roomKey] >= state.school.roomCap[roomKey]) return false;
+    return true;
+  }
+  function placeAt(state, c, d, p, subjIdx){
+    state.schedule[c][d][p] = subjIdx;
+    state.dayCount[c][subjIdx][d]++;
+    var teacherId = state.school.teacherOf[c][subjIdx];
+    state.teacherBusy[teacherId][d][p] = true;
+    var roomKey = SUBJECTS[subjIdx].room;
+    if(roomKey) state.roomUsage[d][p][roomKey]++;
+    state.remaining[c][subjIdx]--;
+  }
+  function removeAt(state, c, d, p){
+    var subjIdx = state.schedule[c][d][p];
+    if(subjIdx === -1) return -1;
+    state.schedule[c][d][p] = -1;
+    state.dayCount[c][subjIdx][d]--;
+    var teacherId = state.school.teacherOf[c][subjIdx];
+    state.teacherBusy[teacherId][d][p] = false;
+    var roomKey = SUBJECTS[subjIdx].room;
+    if(roomKey) state.roomUsage[d][p][roomKey]--;
+    state.remaining[c][subjIdx]++;
+    return subjIdx;
+  }
+  function forcePlace(state, c, d, p, subjIdx){ placeAt(state, c, d, p, subjIdx); }
+
+  function constructGreedy(state, rng){
+    var N = state.school.classCount;
+    var order = []; for(var c=0;c<N;c++) order.push(c);
+    for(var i=order.length-1;i>0;i--){ var j=Math.floor(rng()*(i+1)); var t=order[i]; order[i]=order[j]; order[j]=t; }
+    order.forEach(function(c2){
+      var subjOrder = SUBJECTS.map(function(_,idx){return idx;});
+      subjOrder.sort(function(a,b){ return state.remaining[c2][b]-state.remaining[c2][a]; });
+      subjOrder.forEach(function(subjIdx){
+        var need = state.remaining[c2][subjIdx];
+        for(var u=0; u<need; u++){
+          var slots = [];
+          for(var d=0; d<DAYS; d++) for(var p=0;p<PERIODS;p++) if(state.schedule[c2][d][p]===-1) slots.push([d,p]);
+          for(var si=slots.length-1; si>0; si--){ var sj=Math.floor(rng()*(si+1)); var stmp=slots[si]; slots[si]=slots[sj]; slots[sj]=stmp; }
+          var placed = false;
+          for(var si2=0; si2<slots.length; si2++){
+            var d2=slots[si2][0], p2=slots[si2][1];
+            if(canPlace(state,c2,d2,p2,subjIdx)){ placeAt(state,c2,d2,p2,subjIdx); placed=true; break; }
+          }
+          if(!placed) break; // 이 이상은 이번 학급에서 배정 불가 -> 미충족으로 남는다
+        }
+      });
+    });
+  }
+
+  // ---------------------------------------------------------------------
+  // 비용 함수. unmet은 항상 계산, dislike/spread는 소프트 가중치 켜짐일 때만.
+  // ---------------------------------------------------------------------
+  function fullCost(state, weightsOn){
+    var N = state.school.classCount;
+    var unmet = 0;
+    for(var c=0;c<N;c++) for(var s=0;s<SUBJECTS.length;s++) unmet += state.remaining[c][s];
+    var dislike = 0, spread = 0;
+    if(weightsOn){
+      for(var c2=0;c2<N;c2++){
+        for(var d=0; d<DAYS; d++){
+          for(var p=0;p<PERIODS;p++){
+            var subjIdx = state.schedule[c2][d][p];
+            if(subjIdx===-1) continue;
+            var teacherId = state.school.teacherOf[c2][subjIdx];
+            if(state.school.teachers[teacherId].dislikes[d+"-"+p]) dislike++;
+          }
+        }
+        for(var s2=0;s2<SUBJECTS.length;s2++){
+          var assigned = state.school.classHours[c2][s2] - state.remaining[c2][s2];
+          var necessary2 = Math.max(0, assigned - DAYS);
+          var cnt2 = 0;
+          for(var d2=0; d2<DAYS; d2++) if(state.dayCount[c2][s2][d2]===2) cnt2++;
+          spread += Math.max(0, cnt2 - necessary2);
+        }
+      }
+    }
+    var cost = unmet*UNMET_W + dislike*DISLIKE_W + spread*SPREAD_W;
+    return {cost:cost, unmet:unmet, dislike:dislike, spread:spread};
+  }
+
+  // ---------------------------------------------------------------------
+  // 지역탐색 이동: 단일 칸 재배정(set) 또는 같은 학급 두 칸 교환(swap).
+  // ---------------------------------------------------------------------
+  function attemptSetMove(state, rng){
+    var N = state.school.classCount;
+    var c = Math.floor(rng()*N), d = Math.floor(rng()*DAYS), p = Math.floor(rng()*PERIODS);
+    var old = state.schedule[c][d][p];
+    var candidates = [];
+    if(old !== -1) candidates.push(-1);
+    for(var s=0;s<SUBJECTS.length;s++){ if(s!==old && state.remaining[c][s]>0) candidates.push(s); }
+    if(candidates.length===0) return null;
+    var newVal = candidates[Math.floor(rng()*candidates.length)];
+    removeAt(state,c,d,p);
+    if(newVal !== -1){
+      if(!canPlace(state,c,d,p,newVal)){
+        if(old !== -1) forcePlace(state,c,d,p,old);
+        return null;
+      }
+      placeAt(state,c,d,p,newVal);
+    }
+    return {type:"set", c:c,d:d,p:p, old:old, newVal:newVal};
+  }
+  function undoSetMove(state, move){
+    removeAt(state, move.c, move.d, move.p);
+    if(move.old !== -1) forcePlace(state, move.c, move.d, move.p, move.old);
+  }
+
+  function attemptSwapMove(state, rng){
+    var N = state.school.classCount;
+    var c = Math.floor(rng()*N);
+    var d1 = Math.floor(rng()*DAYS), p1 = Math.floor(rng()*PERIODS);
+    var d2 = Math.floor(rng()*DAYS), p2 = Math.floor(rng()*PERIODS);
+    if(d1===d2 && p1===p2) return null;
+    var A = state.schedule[c][d1][p1], B = state.schedule[c][d2][p2];
+    if(A===B) return null;
+    removeAt(state,c,d1,p1); removeAt(state,c,d2,p2);
+    var okA = (A===-1) || canPlace(state,c,d2,p2,A);
+    var okB = (B===-1) || canPlace(state,c,d1,p1,B);
+    if(!okA || !okB){
+      if(B!==-1) forcePlace(state,c,d2,p2,B);
+      if(A!==-1) forcePlace(state,c,d1,p1,A);
+      return null;
+    }
+    if(A!==-1) placeAt(state,c,d2,p2,A);
+    if(B!==-1) placeAt(state,c,d1,p1,B);
+    return {type:"swap", c:c,d1:d1,p1:p1,d2:d2,p2:p2,A:A,B:B};
+  }
+  function undoSwapMove(state, move){
+    removeAt(state, move.c, move.d2, move.p2);
+    removeAt(state, move.c, move.d1, move.p1);
+    if(move.B!==-1) forcePlace(state, move.c, move.d1, move.p1, move.B);
+    if(move.A!==-1) forcePlace(state, move.c, move.d2, move.p2, move.A);
+  }
+
+  // ---------------------------------------------------------------------
+  // 독립 검증기. 최종 격자와 학교 정적 데이터만 받아 모든 제약을 처음부터
+  // 재계산한다. solver 내부 상태(remaining, teacherBusy 등)에 접근하지 않는다.
+  // ---------------------------------------------------------------------
+  function verifyIndependent(school, schedule){
+    var N = school.classCount;
+    var violations = 0;
+    var teacherSlot = school.teachers.map(function(){ return Array.from({length:DAYS},function(){return new Array(PERIODS).fill(0);}); });
+    var teacherTotal = school.teachers.map(function(){return 0;});
+    var roomSlot = Array.from({length:DAYS},function(){return Array.from({length:PERIODS},function(){var o={};Object.keys(ROOM_NAMES).forEach(function(k){o[k]=0;});return o;});});
+    var unmet = 0;
+    var unmetDetail = [];
+    for(var c=0;c<N;c++){
+      var assignedCount = new Array(SUBJECTS.length).fill(0);
+      for(var d=0; d<DAYS; d++){
+        var daySubjCount = new Array(SUBJECTS.length).fill(0);
+        for(var p=0;p<PERIODS;p++){
+          var subjIdx = schedule[c][d][p];
+          if(subjIdx===-1) continue;
+          assignedCount[subjIdx]++;
+          daySubjCount[subjIdx]++;
+          var teacherId = school.teacherOf[c][subjIdx];
+          teacherSlot[teacherId][d][p]++;
+          teacherTotal[teacherId]++;
+          var roomKey = SUBJECTS[subjIdx].room;
+          if(roomKey) roomSlot[d][p][roomKey]++;
+        }
+        for(var s=0;s<SUBJECTS.length;s++){
+          if(daySubjCount[s] > 2) violations++;
+        }
+      }
+      for(var s2=0;s2<SUBJECTS.length;s2++){
+        var miss = Math.max(0, school.classHours[c][s2] - assignedCount[s2]);
+        if(miss>0){ unmet += miss; unmetDetail.push({c:c, subj:s2, missing:miss}); }
+      }
+    }
+    for(var t=0;t<school.teachers.length;t++){
+      for(var d2=0; d2<DAYS; d2++) for(var p2=0;p2<PERIODS;p2++) if(teacherSlot[t][d2][p2] > 1) violations++;
+      if(teacherTotal[t] > school.teachers[t].maxHours) violations++;
+    }
+    for(var d3=0; d3<DAYS; d3++) for(var p3=0;p3<PERIODS;p3++){
+      Object.keys(ROOM_NAMES).forEach(function(k){
+        if(roomSlot[d3][p3][k] > school.roomCap[k]) violations++;
+      });
+    }
+    return {violations:violations, unmet:unmet, unmetDetail:unmetDetail};
+  }
+
+  // ---------------------------------------------------------------------
+  // 청크 구동 지역탐색. requestAnimationFrame 대신 setTimeout 청크로 UI를 얼리지 않는다.
+  // ---------------------------------------------------------------------
+  var CHUNK_SIZE = 300;
+
+  function makeSearchJob(state, iterations, weightsOn, rng, label){
+    // T0(초기 온도)는 소프트 가중치(기피 3, 분산 2)와 같은 자릿수로 맞춘다. 미충족
+    // 시수 벌점(1000)은 어떤 온도에서도 사실상 거부되므로 하드/탄력 제약에는 영향이
+    // 없고, 온도가 너무 높으면(예: 40) 소프트 항목 차이가 accept 확률에 거의 반영되지
+    // 않아 지역탐색이 사실상 랜덤워크가 되어 소프트 가중치를 켜도 기준선과 다를 바
+    // 없어 보인다. 6으로 낮춰야 소프트 목표가 실제로 탐색 방향에 반영된다.
+    return {
+      state:state, iterations:iterations, weightsOn:weightsOn, rng:rng, label:label,
+      iter:0, cur:fullCost(state, weightsOn), bestCost:0, lastImprovedIter:0,
+      bestHistory:[], checkpointEvery: Math.max(1, Math.floor(iterations/24)),
+      T0: 4
+    };
+  }
+
+  function stepJobChunk(job){
+    var state = job.state;
+    var limit = Math.min(job.iter + CHUNK_SIZE, job.iterations);
+    if(job.iter===0) job.bestCost = job.cur.cost;
+    while(job.iter < limit){
+      var move = (job.rng()<0.5) ? attemptSetMove(state, job.rng) : attemptSwapMove(state, job.rng);
+      if(move){
+        var next = fullCost(state, job.weightsOn);
+        var delta = next.cost - job.cur.cost;
+        // 개선(delta<0)만 무조건 accept한다. delta===0(곁으로만 도는 이동)까지
+        // 받아주면 미충족 시수가 이미 안정된 뒤에는 사실상 무한 랜덤워크가 되어,
+        // 소프트 가중치를 꺼도(=기준선) 켜도 결과가 우연에 좌우돼 버린다. 악화
+        // 이동만 온도 기반으로 가끔 받아 국소최적에서 빠져나온다.
+        var accept = delta < 0;
+        if(!accept && delta > 0){
+          var T = job.T0 * Math.max(0, 1 - job.iter/job.iterations);
+          if(T>0.01){
+            var prob = Math.exp(-delta/Math.max(T,0.01));
+            if(job.rng() < prob) accept = true;
+          }
+        }
+        if(accept){
+          job.cur = next;
+          if(job.cur.cost < job.bestCost){ job.bestCost = job.cur.cost; job.lastImprovedIter = job.iter; }
+        } else {
+          if(move.type==="set") undoSetMove(state, move); else undoSwapMove(state, move);
+        }
+      }
+      if(job.iter % job.checkpointEvery === 0) job.bestHistory.push(job.bestCost);
+      job.iter++;
+    }
+  }
+
+  // ---------------------------------------------------------------------
+  // DOM 참조
+  // ---------------------------------------------------------------------
+  var classSlider = document.getElementById("classSlider");
+  var classVal = document.getElementById("classVal");
+  var weightToggle = document.getElementById("weightToggle");
+  var weightToggleLabel = document.getElementById("weightToggleLabel");
+  var budgetSlider = document.getElementById("budgetSlider");
+  var budgetVal = document.getElementById("budgetVal");
+  var classPicker = document.getElementById("classPicker");
+  var progressWrap = document.getElementById("progressWrap");
+  var progressLabel = document.getElementById("progressLabel");
+  var progressBar = document.getElementById("progressBar");
+
+  function fmt1(n){ return n.toFixed(1); }
+
+  function refreshLabels(){
+    classVal.textContent = classSlider.value + "학급";
+    budgetVal.textContent = budgetSlider.value + "회";
+    weightToggleLabel.textContent = weightToggle.checked ? "켜짐(기피시간대·요일분산 최적화)" : "꺼짐(가중치 0 기준선과 동일)";
+  }
+
+  function buildSubjectLegend(){
+    var el = document.getElementById("subjectLegend");
+    el.innerHTML = SUBJECTS.map(function(s, idx){
+      return '<span><span class="swatch" style="background:' + SUBJECT_COLORS[idx] + '"></span>' + s.name + (s.room ? '('+ROOM_NAMES[s.room]+')' : '') + '</span>';
+    }).join("");
+  }
+
+  function drawTimetableGrid(schedule, school, classIdx){
+    var svg = document.getElementById("ttGrid");
+    while(svg.firstChild) svg.removeChild(svg.firstChild);
+    var svgNS = "http://www.w3.org/2000/svg";
+    var W=620, H=340, padL=44, padT=30, padR=8, padB=8;
+    var innerW = W-padL-padR, innerH = H-padT-padB;
+    var colW = innerW/DAYS, rowH = innerH/PERIODS;
+
+    for(var d=0; d<DAYS; d++){
+      var dayLabel = document.createElementNS(svgNS,"text");
+      dayLabel.setAttribute("x", (padL + colW*d + colW/2).toFixed(1));
+      dayLabel.setAttribute("y", (padT-10).toFixed(1));
+      dayLabel.setAttribute("text-anchor","middle");
+      dayLabel.setAttribute("class","axis-label");
+      dayLabel.setAttribute("font-size","11");
+      dayLabel.textContent = DAY_NAMES[d] + "요일";
+      svg.appendChild(dayLabel);
+    }
+    for(var p=0;p<PERIODS;p++){
+      var periodLabel = document.createElementNS(svgNS,"text");
+      periodLabel.setAttribute("x", (padL-8).toFixed(1));
+      periodLabel.setAttribute("y", (padT + rowH*p + rowH/2 + 3).toFixed(1));
+      periodLabel.setAttribute("text-anchor","end");
+      periodLabel.setAttribute("class","axis-label");
+      periodLabel.textContent = (p+1)+"교시";
+      svg.appendChild(periodLabel);
+    }
+
+    for(var d2=0; d2<DAYS; d2++){
+      for(var p2=0;p2<PERIODS;p2++){
+        var x = padL + colW*d2, y = padT + rowH*p2;
+        var subjIdx = schedule[classIdx][d2][p2];
+        var rect = document.createElementNS(svgNS,"rect");
+        rect.setAttribute("x", (x+1.5).toFixed(1));
+        rect.setAttribute("y", (y+1.5).toFixed(1));
+        rect.setAttribute("width", Math.max(0,colW-3).toFixed(1));
+        rect.setAttribute("height", Math.max(0,rowH-3).toFixed(1));
+        rect.setAttribute("rx", "3");
+        if(subjIdx===-1){
+          rect.setAttribute("fill", "var(--paper-2)");
+          rect.setAttribute("stroke", "var(--line-soft)");
+        } else {
+          rect.setAttribute("fill", SUBJECT_COLORS[subjIdx]);
+        }
+        var titleEl = document.createElementNS(svgNS,"title");
+        titleEl.textContent = DAY_NAMES[d2]+"요일 "+(p2+1)+"교시: "+(subjIdx===-1?"빈 시간":SUBJECTS[subjIdx].name+" (교사 "+school.teacherOf[classIdx][subjIdx]+"번)");
+        rect.appendChild(titleEl);
+        svg.appendChild(rect);
+        if(subjIdx!==-1){
+          var label = document.createElementNS(svgNS,"text");
+          label.setAttribute("x", (x+colW/2).toFixed(1));
+          label.setAttribute("y", (y+rowH/2+3).toFixed(1));
+          label.setAttribute("text-anchor","middle");
+          label.setAttribute("class","tt-cell-label");
+          label.textContent = SUBJECTS[subjIdx].name;
+          svg.appendChild(label);
+        }
+      }
+    }
+  }
+
+  function drawUnmetChart(unmetByClass){
+    var svg = document.getElementById("unmetChart");
+    while(svg.firstChild) svg.removeChild(svg.firstChild);
+    var svgNS = "http://www.w3.org/2000/svg";
+    var n = unmetByClass.length;
+    var W = Math.max(900, n*20), H = 200, padL = 34, padR = 12, padT = 12, padB = 26;
+    svg.setAttribute("viewBox", "0 0 " + W + " " + H);
+    var innerW = W - padL - padR, innerH = H - padT - padB;
+    if(n===0) return;
+    var hasPositive = unmetByClass.some(function(v){ return v>0; });
+    if(!hasPositive){
+      var msg = document.createElementNS(svgNS,"text");
+      msg.setAttribute("x", (W/2).toFixed(1)); msg.setAttribute("y", (H/2).toFixed(1));
+      msg.setAttribute("text-anchor","middle"); msg.setAttribute("dominant-baseline","middle");
+      msg.setAttribute("fill","var(--ink-faint)"); msg.setAttribute("font-family","var(--mono)"); msg.setAttribute("font-size","14");
+      msg.textContent = "이 설정에서는 모든 학급이 필요 시수를 전부 채웠습니다.";
+      svg.appendChild(msg);
+      return;
+    }
+    var maxV = Math.max.apply(null, unmetByClass.concat([1]));
+    var barGap = 2;
+    var barW = Math.max(1, innerW/n - barGap);
+    for(var i=0;i<n;i++){
+      var v = unmetByClass[i];
+      var x = padL + (innerW/n)*i;
+      var barH = maxV>0 ? (v/maxV)*innerH : 0;
+      var y = padT + innerH - barH;
+      var rect = document.createElementNS(svgNS,"rect");
+      rect.setAttribute("x", x.toFixed(1)); rect.setAttribute("y", y.toFixed(1));
+      rect.setAttribute("width", barW.toFixed(1)); rect.setAttribute("height", Math.max(0,barH).toFixed(1));
+      rect.setAttribute("fill", v>0 ? "var(--signal-deep)" : "var(--steel-soft)");
+      var titleEl = document.createElementNS(svgNS,"title");
+      titleEl.textContent = "학급 " + (i+1) + ": " + v + "시간 미충족";
+      rect.appendChild(titleEl);
+      svg.appendChild(rect);
+    }
+    var step = Math.max(1, Math.ceil(n/24));
+    for(var k=0;k<n;k+=step){
+      var tx = padL + (innerW/n)*(k+0.5);
+      var t = document.createElementNS(svgNS,"text");
+      t.setAttribute("x", tx.toFixed(1)); t.setAttribute("y", H-8);
+      t.setAttribute("text-anchor","middle"); t.setAttribute("class","axis-label");
+      t.textContent = String(k+1);
+      svg.appendChild(t);
+    }
+  }
+
+  function renderViolationList(unmetDetail){
+    var el = document.getElementById("violist");
+    if(unmetDetail.length===0){
+      el.innerHTML = '<li class="violist--empty">메인 탐색이 모든 학급·과목의 필요 시수를 전부 채웠습니다.</li>';
+      return;
+    }
+    var sorted = unmetDetail.slice().sort(function(a,b){ return b.missing-a.missing; });
+    var cap = 60;
+    var html = "";
+    for(var i=0;i<Math.min(cap, sorted.length); i++){
+      var e = sorted[i];
+      html += "<li><span>학급 " + (e.c+1) + " · " + SUBJECTS[e.subj].name + "</span><span class=\"amt\">" + e.missing + "시간 미충족</span></li>";
+    }
+    if(sorted.length>cap) html += '<li class="violist--empty">외 ' + (sorted.length-cap) + '건 더</li>';
+    el.innerHTML = html;
+  }
+
+  function pctChangeText(main, baseline){
+    if(baseline===0){
+      return main===0 ? "기준선과 동일(0건)" : ("기준선 0건에서 " + main + "건으로 증가");
+    }
+    var pct = ((main-baseline)/baseline)*100;
+    var sign = pct>=0 ? "+" : "";
+    return "기준선 " + baseline + "건 대비 " + sign + pct.toFixed(1) + "%";
+  }
+
+  var lastResult = null;
+
+  function recomputeAll(){
+    var classCount = parseInt(classSlider.value, 10);
+    var weightsOn = weightToggle.checked;
+    var iterations = parseInt(budgetSlider.value, 10);
+    refreshLabels();
+
+    progressWrap.hidden = false;
+    progressBar.style.width = "0%";
+
+    var school = buildSchool(classCount, SEED_BASE + classCount*97);
+    var constructSeed = SEED_BASE + 300;
+    var lsSeed = SEED_BASE + 500;
+
+    var mainState = makeState(school);
+    constructGreedy(mainState, mulberry32(constructSeed));
+    var baselineState = makeState(school);
+    constructGreedy(baselineState, mulberry32(constructSeed));
+
+    var mainJob = makeSearchJob(mainState, iterations, weightsOn, mulberry32(lsSeed), "메인 탐색");
+    var baselineJob = makeSearchJob(baselineState, iterations, false, mulberry32(lsSeed), "기준선(가중치 0) 탐색");
+
+    var totalTicks = iterations*2;
+
+    function runJob(job, onDone){
+      function tick(){
+        stepJobChunk(job);
+        var doneTicks = (job===mainJob ? job.iter : iterations + job.iter);
+        var pct = totalTicks>0 ? Math.round((doneTicks/totalTicks)*100) : 100;
+        progressBar.style.width = pct + "%";
+        progressLabel.textContent = job.label + " 중 (" + job.iter + " / " + job.iterations + ")";
+        if(job.iter < job.iterations){
+          setTimeout(tick, 0);
+        } else {
+          onDone();
+        }
+      }
+      tick();
+    }
+
+    runJob(mainJob, function(){
+      runJob(baselineJob, function(){
+        finalizeResults(school, mainState, mainJob, baselineState, baselineJob, classCount, weightsOn, iterations);
+        progressWrap.hidden = true;
+      });
+    });
+  }
+
+  function finalizeResults(school, mainState, mainJob, baselineState, baselineJob, classCount, weightsOn, iterations){
+    var mainCost = fullCost(mainState, true); // 항상 두 항목 모두 계산해 표시(가중치와 무관하게 실제 위반 수는 보고)
+    var baselineCost = fullCost(baselineState, true);
+    var verified = verifyIndependent(school, mainState.schedule);
+
+    var unmetByClass = [];
+    for(var c=0;c<classCount;c++){
+      var u = 0;
+      for(var s=0;s<SUBJECTS.length;s++) u += mainState.remaining[c][s];
+      unmetByClass.push(u);
+    }
+
+    // ---- gap 추정치: 학급 x 요일 x 교시 결정변수 대비 탐색 예산 밀도로 산출 ----
+    var decisionVars = classCount*DAYS*PERIODS;
+    var touchesPerVar = iterations / decisionVars;
+    var gapPct = Math.min(100, Math.max(0, 100*Math.exp(-touchesPerVar/CONV_K)));
+    var hist = mainJob.bestHistory;
+    var tailStart = Math.max(0, hist.length - Math.max(2, Math.round(hist.length*0.1)));
+    var stillImproving = hist.length>1 && hist[hist.length-1] < hist[tailStart];
+
+    // ---- metric cards ----
+    document.getElementById("mUnmet").textContent = String(verified.unmet);
+    document.getElementById("mUnmetSub").textContent = "학급 " + classCount + "개, 총 " + (classCount*SLOTS) + "시간 요구 중(계산값)";
+
+    document.getElementById("mViol").textContent = verified.violations === 0 ? "0건" : (verified.violations + "건");
+    document.getElementById("mViol").className = "metric__value " + (verified.violations===0 ? "status-ok" : "status-bad");
+
+    var dislikeMain = mainCost.dislike, dislikeBase = baselineCost.dislike;
+    document.getElementById("mDislike").textContent = String(dislikeMain);
+    var dislikeSub = document.getElementById("mDislikeSub");
+    dislikeSub.textContent = pctChangeText(dislikeMain, dislikeBase);
+    dislikeSub.className = "metric__sub " + (dislikeMain<=dislikeBase ? "good" : "bad");
+
+    var spreadMain = mainCost.spread, spreadBase = baselineCost.spread;
+    document.getElementById("mSpread").textContent = String(spreadMain);
+    var spreadSub = document.getElementById("mSpreadSub");
+    spreadSub.textContent = pctChangeText(spreadMain, spreadBase);
+    spreadSub.className = "metric__sub " + (spreadMain<=spreadBase ? "good" : "bad");
+
+    document.getElementById("mGap").textContent = gapPct.toFixed(1);
+    var gapSub = document.getElementById("mGapSub");
+    gapSub.textContent = "예산/결정변수 비율 " + touchesPerVar.toFixed(2) + "회" + (stillImproving ? " · 탐색 막바지에도 개선 발생" : " · 탐색 막바지에는 개선 정체");
+    gapSub.className = "metric__sub " + (gapPct<=15 ? "good" : "bad");
+
+    // ---- grid ----
+    buildSubjectLegend();
+    populateClassPicker(classCount);
+    drawTimetableGrid(mainState.schedule, school, parseInt(classPicker.value,10) || 0);
+    drawUnmetChart(unmetByClass);
+    renderViolationList(verified.unmetDetail);
+
+    // ---- conclusion ----
+    var conclusionEl = document.getElementById("conclusion");
+    var gapBadgeClass = gapPct<=15 ? "gap-badge--low" : "gap-badge--high";
+    var gapBadgeText = gapPct<=15 ? "이 조건에서는 탐색이 사실상 수렴했습니다" : "이 조건에서는 탐색 예산이 부족해 gap이 남아 있습니다";
+    var improveText;
+    if(!weightsOn){
+      improveText = "소프트 가중치가 꺼져 있어 이 실행은 가중치 0 기준선과 사실상 같은 조건입니다. 켜서 기피시간대·요일분산이 실제로 얼마나 개선되는지 비교해보세요.";
+    } else if(dislikeBase===0 && spreadBase===0){
+      improveText = "이 규모에서는 기준선도 이미 기피시간대·몰림 위반이 0건이라 소프트 최적화의 효과를 비교할 여지가 크지 않습니다.";
+    } else {
+      var dislikeDelta = dislikeBase>0 ? Math.round(((dislikeMain-dislikeBase)/dislikeBase)*100) : 0;
+      improveText = "소프트 가중치를 켠 메인 탐색은 같은 초기 배치에서 시작해 기피시간대 위반을 기준선 대비 " + dislikeDelta + "%, 요일 몰림 위반을 " + spreadMain + "건(기준선 " + spreadBase + "건)으로 바꿨습니다.";
+    }
+    conclusionEl.innerHTML = "학급 <b>" + classCount + "개</b>, 결정변수 <b>" + decisionVars.toLocaleString("ko-KR") + "개</b> 규모에서 하드 제약 위반은 독립 검증 기준 <b>" + verified.violations + "건</b>이고, 미충족 시수는 <b>" + verified.unmet + "시간</b>입니다. " + improveText + " 탐색 예산 소진 gap 추정치는 <b>" + gapPct.toFixed(1) + "%</b>입니다." +
+      "<br><span class=\"gap-badge " + gapBadgeClass + "\">" + gapBadgeText + "</span>";
+
+    lastResult = {school:school, mainState:mainState};
+  }
+
+  function populateClassPicker(classCount){
+    var cur = parseInt(classPicker.value, 10);
+    var html = "";
+    for(var i=0;i<classCount;i++) html += '<option value="' + i + '">학급 ' + (i+1) + '</option>';
+    classPicker.innerHTML = html;
+    if(!isNaN(cur) && cur < classCount){ classPicker.value = String(cur); }
+    else { classPicker.value = "0"; }
+  }
+
+  classPicker.addEventListener("change", function(){
+    if(!lastResult) return;
+    drawTimetableGrid(lastResult.mainState.schedule, lastResult.school, parseInt(classPicker.value,10) || 0);
+  });
+
+  var debounceTimer = null;
+  function scheduleRecompute(){
+    if(debounceTimer) clearTimeout(debounceTimer);
+    debounceTimer = setTimeout(recomputeAll, 160);
+  }
+
+  classSlider.addEventListener("input", refreshLabels);
+  classSlider.addEventListener("change", scheduleRecompute);
+  budgetSlider.addEventListener("input", refreshLabels);
+  budgetSlider.addEventListener("change", scheduleRecompute);
+  weightToggle.addEventListener("change", function(){ refreshLabels(); scheduleRecompute(); });
+
+  function applyPreset(n){
+    classSlider.value = String(n);
+    refreshLabels();
+    scheduleRecompute();
+  }
+  document.getElementById("presetSmall").addEventListener("click", function(){ applyPreset(8); });
+  document.getElementById("presetMid").addEventListener("click", function(){ applyPreset(20); });
+  document.getElementById("presetLarge").addEventListener("click", function(){ applyPreset(40); });
+  document.getElementById("recomputeBtn").addEventListener("click", scheduleRecompute);
+
+  refreshLabels();
+  recomputeAll();
+})();
+</script>
+</body>
+</html>
