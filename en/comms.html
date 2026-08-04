@@ -401,6 +401,38 @@
     </div>
   </section>
 
+  <!-- medium ladder -->
+  <section class="section chero chero--band" id="acoustic">
+    <div class="chero__wave" aria-hidden="true">
+      <svg viewBox="0 0 1200 220" preserveAspectRatio="none" focusable="false" aria-hidden="true">
+        <g class="chero__w1">
+          <path d="M0,110 C40,60 80,60 120,110 C160,160 200,160 240,110 C280,40 320,40 360,110 C400,180 440,180 480,110 C520,70 560,70 600,110 C640,150 680,150 720,110 C760,50 800,50 840,110 C880,170 920,170 960,110 C1000,80 1040,80 1080,110 C1120,140 1160,140 1200,110" fill="none" stroke="var(--signal)" stroke-width="2" opacity="0.5"/>
+          <path d="M1200,110 C1240,60 1280,60 1320,110 C1360,160 1400,160 1440,110 C1480,40 1520,40 1560,110 C1600,180 1640,180 1680,110 C1720,70 1760,70 1800,110 C1840,150 1880,150 1920,110 C1960,50 2000,50 2040,110 C2080,170 2120,170 2160,110 C2200,80 2240,80 2280,110 C2320,140 2360,140 2400,110" fill="none" stroke="var(--signal)" stroke-width="2" opacity="0.5"/>
+        </g>
+        <g class="chero__w2">
+          <path d="M0,110 C60,95 120,95 180,110 C240,125 300,125 360,110 C420,88 480,88 540,110 C600,132 660,132 720,110 C780,98 840,98 900,110 C960,122 1020,122 1080,110 C1140,102 1170,102 1200,110" fill="none" stroke="var(--ink-faint)" stroke-width="1.4" opacity="0.55"/>
+          <path d="M1200,110 C1260,95 1320,95 1380,110 C1440,125 1500,125 1560,110 C1620,88 1680,88 1740,110 C1800,132 1860,132 1920,110 C1980,98 2040,98 2100,110 C2160,122 2220,122 2280,110 C2340,102 2370,102 2400,110" fill="none" stroke="var(--ink-faint)" stroke-width="1.4" opacity="0.55"/>
+        </g>
+      </svg>
+    </div>
+    <div class="wrap">
+      <span class="eyebrow">Medium ladder · where radio is blocked</span>
+      <h2 class="chero__h1">When neither radio nor light works,<br><span class="u accent">sound carries it</span>.</h2>
+      <p class="chero__lede">We work with four media. Radio has the greatest reach and bandwidth, light is fast once you have line of sight, sound costs nothing to procure because the room already has a speaker and a microphone, and vibration is what remains when even air is unavailable. Sound is usually dismissed because of indoor reverberation. We reached that conclusion once ourselves, then found that our reverberation model was imitating a cathedral rather than a room, and reversed it. What decides the link is not the room's reverberation time but how much louder the microphone receives the direct sound than the reflections, and that is placement, so it can be changed.</p>
+      <div class="chero__stats reveal stagger">
+        <div class="cstat"><span class="cstat__n">+6<small>dB</small></span><span class="cstat__l">Above this direct-to-reverberant ratio the link holds even at 0.8 s reverberation (measured)</span></div>
+        <div class="cstat"><span class="cstat__n">0<small>/3</small></span><span class="cstat__l">Background noise at 0 dB, speaker roll-off, and codec cut-off all failed to break the link (measured)</span></div>
+        <div class="cstat"><span class="cstat__n">166.7<small>bps</small></span><span class="cstat__l">Throughput with 16 near-ultrasonic tones; guard intervals cut it to 55.6 with no benefit (measured)</span></div>
+        <div class="cstat"><span class="cstat__n">96.9<small>%</small></span><span class="cstat__l">Recovered at 25% loss with 2.0x overhead and no back channel (measured)</span></div>
+      </div>
+      <div class="hero__cta reveal" style="margin-top:1.4rem">
+        <a class="btn btn--signal" href="../demos/31-acoustic-link/">Run the demo <span class="arrow">→</span></a>
+        <a class="btn" href="cases.html#case-31">Read the case</a>
+      </div>
+      <p class="auto-foot reveal" style="margin-top:1.3rem">To be straight about it: these are simulation results, not measurements of sound crossing air between a real speaker and microphone. Published near-ultrasonic data links run between 10 and 230 bits per second, and much of that literature studies covert channels. This is neither a fast communication method nor a security product. It is for moving small amounts of data one way where radio and light are blocked. Before adopting it, measure the direct-to-reverberant ratio at the candidate mounting points in that room.</p>
+    </div>
+  </section>
+
   <!-- CTA -->
   <section class="section section--alt" id="cta">
     <div class="wrap">

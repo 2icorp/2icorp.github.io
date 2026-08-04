@@ -401,6 +401,38 @@
     </div>
   </section>
 
+  <!-- 매질 사다리 -->
+  <section class="section chero chero--band" id="acoustic">
+    <div class="chero__wave" aria-hidden="true">
+      <svg viewBox="0 0 1200 220" preserveAspectRatio="none" focusable="false" aria-hidden="true">
+        <g class="chero__w1">
+          <path d="M0,110 C40,60 80,60 120,110 C160,160 200,160 240,110 C280,40 320,40 360,110 C400,180 440,180 480,110 C520,70 560,70 600,110 C640,150 680,150 720,110 C760,50 800,50 840,110 C880,170 920,170 960,110 C1000,80 1040,80 1080,110 C1120,140 1160,140 1200,110" fill="none" stroke="var(--signal)" stroke-width="2" opacity="0.5"/>
+          <path d="M1200,110 C1240,60 1280,60 1320,110 C1360,160 1400,160 1440,110 C1480,40 1520,40 1560,110 C1600,180 1640,180 1680,110 C1720,70 1760,70 1800,110 C1840,150 1880,150 1920,110 C1960,50 2000,50 2040,110 C2080,170 2120,170 2160,110 C2200,80 2240,80 2280,110 C2320,140 2360,140 2400,110" fill="none" stroke="var(--signal)" stroke-width="2" opacity="0.5"/>
+        </g>
+        <g class="chero__w2">
+          <path d="M0,110 C60,95 120,95 180,110 C240,125 300,125 360,110 C420,88 480,88 540,110 C600,132 660,132 720,110 C780,98 840,98 900,110 C960,122 1020,122 1080,110 C1140,102 1170,102 1200,110" fill="none" stroke="var(--ink-faint)" stroke-width="1.4" opacity="0.55"/>
+          <path d="M1200,110 C1260,95 1320,95 1380,110 C1440,125 1500,125 1560,110 C1620,88 1680,88 1740,110 C1800,132 1860,132 1920,110 C1980,98 2040,98 2100,110 C2160,122 2220,122 2280,110 C2340,102 2370,102 2400,110" fill="none" stroke="var(--ink-faint)" stroke-width="1.4" opacity="0.55"/>
+        </g>
+      </svg>
+    </div>
+    <div class="wrap">
+      <span class="eyebrow">매질 사다리 · 전파가 막힌 자리</span>
+      <h2 class="chero__h1">전파도 빛도 못 쓰는 방이면,<br><span class="u accent">소리로 넘깁니다</span>.</h2>
+      <p class="chero__lede">저희가 다루는 매질은 넷입니다. 전파는 거리와 대역이 가장 넓고, 빛은 시야가 확보되면 빠르며, 소리는 이미 그 방에 스피커와 마이크가 있다는 이유로 조달비가 0이고, 진동은 공기조차 쓸 수 없을 때 남는 마지막 경로입니다. 소리를 두고 흔히 실내 잔향 때문에 안 된다고 말합니다. 저희도 그 결론을 한 번 냈다가, 저희 잔향 모델이 방이 아니라 대성당을 흉내내고 있었다는 것을 발견하고 뒤집었습니다. 링크를 결정하는 것은 방의 잔향 시간이 아니라 마이크가 직접 오는 소리를 울림보다 얼마나 크게 받느냐이고, 그것은 배치라서 바꿀 수 있습니다.</p>
+      <div class="chero__stats reveal stagger">
+        <div class="cstat"><span class="cstat__n">+6<small>dB</small></span><span class="cstat__l">직접음 대 잔향비가 이 선을 넘으면 잔향 0.8초에서도 링크 성립 (실측)</span></div>
+        <div class="cstat"><span class="cstat__n">0<small>/3</small></span><span class="cstat__l">배경 소음 0dB · 스피커 롤오프 · 코덱 컷오프는 링크를 끊지 못함 (실측)</span></div>
+        <div class="cstat"><span class="cstat__n">166.7<small>bps</small></span><span class="cstat__l">근초음파 16톤 기준 처리량 · 가드 인터벌은 효과 없이 55.6까지 떨어뜨림 (실측)</span></div>
+        <div class="cstat"><span class="cstat__n">96.9<small>%</small></span><span class="cstat__l">25% 손실 구간을 역채널 없이 2.0배 오버헤드로 복원 (실측)</span></div>
+      </div>
+      <div class="hero__cta reveal" style="margin-top:1.4rem">
+        <a class="btn btn--signal" href="demos/31-acoustic-link/">데모 직접 돌려보기 <span class="arrow">→</span></a>
+        <a class="btn" href="cases.html#case-31">사례 자세히 보기</a>
+      </div>
+      <p class="auto-foot reveal" style="margin-top:1.3rem">정직하게 말하면: 위 수치는 시뮬레이션 실측이고 실제 스피커와 마이크로 공기 중을 건넌 측정이 아닙니다. 근초음파 데이터 링크는 문헌 기준 초당 10비트에서 230비트 수준이며 그 문헌의 상당수가 은닉 채널 연구입니다. 빠른 통신 수단도, 보안 제품도 아닙니다. 전파와 빛이 막힌 자리에서 적은 양을 단방향으로 넘기는 용도입니다. 도입 시에는 그 방의 설치 후보 자리에서 직접음 대 잔향비를 직접 재야 합니다.</p>
+    </div>
+  </section>
+
   <!-- CTA -->
   <section class="section section--alt" id="cta">
     <div class="wrap">

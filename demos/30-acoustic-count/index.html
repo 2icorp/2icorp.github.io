@@ -1,0 +1,677 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<script>(function(){try{var t=localStorage.getItem("theme");if(!t&&window.matchMedia&&matchMedia("(prefers-color-scheme: dark)").matches)t="dark";if(t)document.documentElement.setAttribute("data-theme",t);}catch(e){}})();</script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>여분의 폰으로 차량 세기 데모 · 2i</title>
+<link rel="stylesheet" href="../../styles.css?v=23">
+<style>
+  .demo-top{display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:1rem clamp(1rem, 2vw, 2rem);border-bottom:1px solid var(--line-soft);flex-wrap:wrap;}
+  .demo-brand{display:flex;align-items:baseline;gap:.6rem;text-decoration:none;color:var(--ink);}
+  .demo-brand__mark{font-family:var(--mono);font-weight:800;color:var(--signal);font-size:1.1rem;}
+  .demo-brand__tag{font-family:var(--mono);font-size:var(--text-xs);letter-spacing:.08em;color:var(--ink-faint);text-transform:uppercase;}
+  .demo-top__links{display:flex;gap:1.2rem;font-size:var(--text-sm);}
+  .demo-top__links a{color:var(--ink-soft);text-decoration:none;border-bottom:1px solid transparent;transition:color var(--dur) var(--ease), border-color var(--dur) var(--ease);}
+  .demo-top__links a:hover{color:var(--ink);border-color:var(--line);}
+  .demo-top__links a:focus-visible{outline:2px solid var(--signal);outline-offset:3px;}
+  .demo-banner{font-family:var(--mono);font-size:var(--text-xs);color:var(--ink-faint);background:var(--paper-2);border-bottom:1px solid var(--line-soft);padding:.55rem clamp(1rem, 2vw, 2rem);letter-spacing:.01em;}
+  main{max-width:1100px;margin:0 auto;padding:2rem clamp(1rem, 2vw, 2rem) 1rem;}
+  h1{font-size:var(--text-h2);margin:0 0 .4rem;}
+  h2{font-size:var(--text-h3);margin:0 0 .3rem;}
+  h3{margin:0 0 .3rem;}
+  .lede{color:var(--ink-soft);max-width:68ch;margin:0 0 1.6rem;line-height:1.75;}
+  section{margin-bottom:2.4rem;min-width:0;}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);min-width:0;}
+
+  .controls{padding:1.4rem clamp(1rem, 2vw, 1.8rem);}
+  .control{min-width:0;}
+  .control h3{font-size:1rem;}
+  .control p{margin:0 0 .8rem;color:var(--ink-faint);font-size:var(--text-xs);font-family:var(--mono);line-height:1.6;}
+  .control__row{display:flex;align-items:center;gap:.9rem;}
+  input[type="range"]{flex:1;accent-color:var(--signal);min-height:44px;}
+  .control__val{font-family:var(--mono);font-weight:700;min-width:6.4rem;text-align:right;}
+  .ac-overlap-readout{margin:.6rem 0 0;font-family:var(--mono);font-size:var(--text-xs);color:var(--ink-soft);}
+  .ac-overlap-readout strong{color:var(--signal-deep);font-size:var(--text-sm);}
+
+  .ac-toggle-row{display:grid;grid-template-columns:repeat(2, 1fr);gap:1.4rem;margin-top:1.2rem;padding-top:1.2rem;border-top:1px solid var(--line-soft);}
+  fieldset{border:none;padding:0;margin:0;min-width:0;}
+  fieldset legend{font-size:1rem;font-weight:700;padding:0;margin:0 0 .3rem;color:var(--ink);}
+  .ac-toggle{display:flex;flex-wrap:wrap;gap:.5rem;}
+  .ac-toggle label{position:relative;display:inline-flex;align-items:center;gap:.4rem;padding:.6rem .9rem;min-height:44px;border:1px solid var(--line);border-radius:var(--radius);background:var(--panel);color:var(--ink-soft);cursor:pointer;font-family:var(--mono);font-size:var(--text-sm);transition:background var(--dur) var(--ease), border-color var(--dur) var(--ease), color var(--dur) var(--ease);}
+  .ac-toggle label:hover{border-color:var(--ink-faint);}
+  .ac-toggle label.is-checked{border-color:var(--signal);color:var(--ink);background:color-mix(in srgb, var(--signal) 12%, var(--panel));}
+  .ac-toggle input{position:absolute;opacity:0;width:1px;height:1px;pointer-events:none;}
+  .ac-toggle input:focus-visible ~ span{outline:2px solid var(--signal);outline-offset:3px;border-radius:2px;}
+
+  .ac-presets{display:flex;flex-wrap:wrap;gap:.6rem;margin-top:1.4rem;padding-top:1.2rem;border-top:1px solid var(--line-soft);}
+  .btn{font-family:var(--sans);font-size:var(--text-sm);font-weight:600;padding:.65rem 1.1rem;min-height:44px;border-radius:var(--radius);border:1px solid var(--line);background:var(--panel);color:var(--ink);cursor:pointer;transition:background var(--dur) var(--ease), border-color var(--dur) var(--ease), transform var(--dur) var(--ease);}
+  .btn:hover{background:var(--paper-2);border-color:var(--ink-faint);}
+  .btn:active{transform:translateY(1px);}
+  .btn:focus-visible{outline:2px solid var(--signal);outline-offset:2px;}
+  .btn.is-active{border-color:var(--signal);color:var(--signal-deep);}
+
+  .chart-card{padding:1.3rem clamp(1rem, 2vw, 1.6rem);}
+  .chart-card h3{font-size:1rem;}
+  .chart-card p{margin:0 0 1rem;color:var(--ink-soft);font-size:var(--text-sm);line-height:1.7;}
+  .chart-card p.note{color:var(--ink-faint);font-size:var(--text-xs);font-family:var(--mono);line-height:1.7;}
+  .legend{display:flex;flex-wrap:wrap;gap:1.1rem;font-family:var(--mono);font-size:var(--text-xs);color:var(--ink-soft);margin:0 0 .9rem;}
+  .legend span{display:inline-flex;align-items:center;gap:.4rem;}
+  .swatch{width:16px;height:3px;display:inline-block;background:var(--ink-faint);}
+  .swatch--energy{background:var(--signal);height:16px;width:16px;border-radius:50%;}
+  .swatch--seg{background:var(--steel);height:0;width:0;border-left:8px solid transparent;border-right:8px solid transparent;border-top:12px solid var(--steel);}
+  svg{width:100%;height:auto;display:block;}
+  .axis-label{font-family:var(--mono);font-size:8px;fill:var(--ink-faint);}
+  .row-label{font-family:var(--mono);font-size:8.5px;fill:var(--ink-soft);font-weight:700;}
+
+  .metrics{display:grid;grid-template-columns:repeat(4, 1fr);gap:1px;background:var(--line);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;}
+  .metric{background:var(--panel);padding:1.2rem 1rem;min-width:0;}
+  .metric__label{font-family:var(--mono);font-size:var(--text-xs);color:var(--ink-faint);letter-spacing:.05em;text-transform:uppercase;}
+  .metric__value{font-size:1.5rem;font-weight:800;margin-top:.35rem;font-family:var(--mono);}
+  .metric__sub{font-family:var(--mono);font-size:var(--text-xs);color:var(--ink-faint);margin-top:.35rem;line-height:1.5;}
+  .metric__delta{font-family:var(--mono);font-size:var(--text-xs);margin-top:.4rem;font-weight:700;}
+  .metric__delta.good{color:var(--ok);}
+  .metric__delta.bad{color:var(--signal-deep);}
+
+  .ac-verdict{margin:0;background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:1.2rem 1.3rem;font-size:1.02rem;line-height:1.75;}
+  .ac-verdict strong{color:var(--signal-deep);}
+
+  .ac-table-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:var(--radius);}
+  table.ac-table{width:100%;border-collapse:collapse;min-width:520px;font-size:var(--text-sm);}
+  table.ac-table caption{text-align:left;padding:1rem 1.1rem .3rem;font-weight:700;color:var(--ink);caption-side:top;}
+  table.ac-table th, table.ac-table td{padding:.7rem .9rem;text-align:right;border-top:1px solid var(--line-soft);white-space:nowrap;}
+  table.ac-table th:first-child, table.ac-table td:first-child{text-align:left;}
+  table.ac-table thead th{font-family:var(--mono);font-size:var(--text-xs);color:var(--ink-faint);background:var(--paper-2);border-top:none;letter-spacing:.03em;}
+  table.ac-table tbody td{font-family:var(--mono);}
+  .ac-highlight-row td{background:color-mix(in srgb, var(--signal) 8%, transparent);}
+  .ac-facts{list-style:none;margin:1rem 0 0;padding:0;display:grid;gap:.7rem;}
+  .ac-facts li{padding:.9rem 1rem;border:1px solid var(--line-soft);border-radius:var(--radius);background:var(--paper-2);color:var(--ink-soft);font-size:var(--text-sm);line-height:1.7;}
+  .ac-facts li strong{color:var(--ink);}
+
+  .ac-honest{background:var(--paper-2);border:1px dashed var(--line);border-radius:var(--radius);padding:1.3rem clamp(1rem, 2vw, 1.6rem);}
+  .ac-honest h3{font-size:1rem;}
+  .ac-honest p{margin:0 0 .8rem;color:var(--ink-soft);font-size:var(--text-sm);line-height:1.75;}
+  .ac-honest p:last-child{margin-bottom:0;}
+
+  .demo-foot{margin-top:3rem;padding:1.6rem clamp(1rem, 2vw, 2rem) 2.4rem;font-family:var(--mono);font-size:var(--text-xs);color:var(--ink-faint);border-top:1px solid var(--line-soft);text-align:center;}
+
+  @media (max-width:820px){
+    .ac-toggle-row{grid-template-columns:1fr;}
+    .metrics{grid-template-columns:repeat(2, 1fr);}
+  }
+  @media (max-width:480px){
+    .metrics{grid-template-columns:1fr;}
+    .metric__value{font-size:1.3rem;}
+  }
+</style>
+</head>
+<body>
+<header class="demo-top">
+  <a href="/" class="demo-brand"><span class="demo-brand__mark">2i</span><span class="demo-brand__tag">DEMO · 통행 차량 계수</span></a>
+  <nav class="demo-top__links">
+    <a href="/cases.html#case-30">사례 보기</a>
+    <a href="/#contact">상담 신청</a>
+  </nav>
+</header>
+<div class="demo-banner">브라우저에서 그 자리에서 계산하는 인터랙티브 데모입니다. 합성 데이터를 씁니다.</div>
+
+<main>
+  <h1>여분의 폰 한 대로 차량을 셉니다. 다만 세는 데에는 최신 AI 인코더가 필요 없었습니다.</h1>
+  <p class="lede">
+    도로 옆에 세워둔 여분의 폰 한 대로 통행 차량을 세는 것은 실제로 됩니다. 그런데 그게 되는
+    구간이 따로 있고, 그 구간에서는 최신 AI 인코더가 아니라 20년 된 방식인 에너지 검출기
+    (신호를 짧은 구간으로 잘라 에너지를 재고, 배경 소음을 빼고, 임계값을 넘는 국소 최댓값을
+    피크로 뽑는 방식)가 더 정확합니다. 아래에서 통행량을 직접 움직여 합성 음향 스트림을 만들고,
+    같은 스트림 위에서 두 검출기가 실시간으로 몇 대를 세는지 브라우저가 그 자리에서 계산한
+    값으로 확인해보세요.
+  </p>
+
+  <section class="card controls">
+    <div class="control">
+      <h3>통행량</h3>
+      <p>1분당 지나가는 차량 수입니다. 값을 올릴수록 차량 간 통과 소리가 서로 겹치기 시작합니다.</p>
+      <div class="control__row">
+        <input type="range" id="rateSlider" min="0" max="5" step="1" value="0" aria-label="통행량(대/분)">
+        <span class="control__val" id="rateVal">2대/분</span>
+      </div>
+      <p class="ac-overlap-readout">→ 계산된 중첩 비율(연속 통과가 서로 겹치는 비율): <strong id="overlapVal">-</strong> <span id="overlapNote"></span></p>
+    </div>
+
+    <div class="ac-toggle-row">
+      <fieldset>
+        <legend>배경 소음(SNR)</legend>
+        <div class="ac-toggle" id="snrGroup">
+          <label><input type="radio" name="snrOpt" value="20"><span>20dB · 조용함</span></label>
+          <label><input type="radio" name="snrOpt" value="10" checked><span>10dB · 보통</span></label>
+          <label><input type="radio" name="snrOpt" value="0"><span>0dB · 시끄러움</span></label>
+        </div>
+      </fieldset>
+      <fieldset>
+        <legend>임계값</legend>
+        <div class="ac-toggle" id="thrGroup">
+          <label><input type="radio" name="thrOpt" value="0.5"><span>0.5 · 낮음</span></label>
+          <label><input type="radio" name="thrOpt" value="0.7" checked><span>0.7 · 중간</span></label>
+          <label><input type="radio" name="thrOpt" value="0.9"><span>0.9 · 높음</span></label>
+        </div>
+      </fieldset>
+    </div>
+
+    <div class="ac-presets">
+      <button type="button" class="btn" id="presetQuiet">한산한 지방도(2대/분 · 에너지 검출기 승)</button>
+      <button type="button" class="btn" id="presetArterial">간선도로(16대/분 · 오차 확대)</button>
+      <button type="button" class="btn" id="presetJam">정체 구간(64대/분 · 둘 다 무너짐)</button>
+    </div>
+  </section>
+
+  <section class="card chart-card">
+    <h3>합성 스트림: 음향 포락선 · 실제 통과 · 검출된 피크</h3>
+    <p>
+      가로축은 시간(초)입니다. 가운데 곡선이 합성 음향 스트림의 에너지 포락선이고, 아래 눈금이
+      실제 차량 통과 시각, 위 두 줄이 각 검출기가 찾아낸 피크입니다. 눈으로 직접 개수를 세어
+      비교할 수 있습니다.
+    </p>
+    <p class="note">
+      과분할 거동 줄은 인코더의 과분할 거동을 같은 스트림에서 재현한 것이며, 신경망을 브라우저에서
+      돌리는 것이 아닙니다. 스무딩 구간을 짧게, 피크 간 최소 간격을 좁게 잡은 같은 종류의
+      검출기입니다. 실제 2026년 인코더의 수치는 아래 실측표에 있습니다.
+    </p>
+    <div class="legend">
+      <span><span class="swatch"></span>실제 통과(눈금)</span>
+      <span><span class="swatch swatch--energy"></span>에너지 검출기 피크(원)</span>
+      <span><span class="swatch swatch--seg"></span>과분할 거동 피크(세모)</span>
+    </div>
+    <svg id="streamChart" viewBox="0 0 960 320" preserveAspectRatio="xMidYMid meet" role="img" aria-label="합성 통행 스트림의 음향 포락선과 실제 통과 시각, 에너지 검출기 및 과분할 거동 검출기가 찾아낸 피크 시각을 함께 표시한 그래프"></svg>
+  </section>
+
+  <section aria-live="polite">
+    <h2>결과 지표</h2>
+    <div class="metrics" id="metrics">
+      <div class="metric">
+        <div class="metric__label">실제 통과 대수</div>
+        <div class="metric__value" id="mTruth">-</div>
+        <div class="metric__sub">기준값(합성 데이터 계산)</div>
+      </div>
+      <div class="metric">
+        <div class="metric__label">에너지 검출기 계수</div>
+        <div class="metric__value" id="mEnergy">-</div>
+        <div class="metric__delta" id="mEnergyDelta"></div>
+      </div>
+      <div class="metric">
+        <div class="metric__label">과분할 거동 계수</div>
+        <div class="metric__value" id="mSeg">-</div>
+        <div class="metric__delta" id="mSegDelta"></div>
+      </div>
+      <div class="metric">
+        <div class="metric__label">중첩 비율</div>
+        <div class="metric__value" id="mOverlap">-</div>
+        <div class="metric__sub">연속 통과가 서로 겹치는 비율(계산값)</div>
+      </div>
+    </div>
+  </section>
+
+  <section aria-live="polite">
+    <h2>무엇을 봤나</h2>
+    <p class="ac-verdict" id="verdict">계산 중입니다.</p>
+  </section>
+
+  <section class="card" style="padding:1.3rem clamp(1rem, 2vw, 1.6rem);">
+    <h3>실측 결과: 같은 합성 스트림에서 세 방식을 겨룬 계수 오차</h3>
+    <p style="margin:0 0 1rem;color:var(--ink-soft);font-size:var(--text-sm);line-height:1.7;">
+      아래 표는 이 페이지의 슬라이더가 아니라 저희가 별도로 돌린 실험에서 나온 실측값입니다.
+      셀마다 계수 오차가 최소가 되도록 임계값을 골랐고(모든 방식에 유리한 조건), 오차는
+      (검출 대수 − 실제 대수) / 실제 대수입니다.
+    </p>
+    <div class="ac-table-wrap">
+      <table class="ac-table">
+        <caption>중첩 비율별 계수 오차(실측)</caption>
+        <thead>
+          <tr><th>중첩 비율</th><th>에너지 검출기</th><th>로그멜+선형프로브</th><th>2026 인코더</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>0.04</td><td>+5%</td><td>+9%</td><td>+78% ~ +525%</td></tr>
+          <tr><td>0.14</td><td>-14%</td><td>+13%</td><td>+31%</td></tr>
+          <tr class="ac-highlight-row"><td>0.24</td><td>-6%</td><td>+2%</td><td>-18%</td></tr>
+          <tr><td>0.45</td><td>-0.1%</td><td>-24%</td><td>+7%</td></tr>
+          <tr><td>0.66</td><td>-40%</td><td>-48%</td><td>-4%</td></tr>
+          <tr><td>0.88</td><td>-71%</td><td>-67%</td><td>-47%</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <ul class="ac-facts">
+      <li><strong>폰급 열화 오디오</strong>에서는 에너지 검출기가 오히려 더 좋았습니다. 중첩 0.11에서 계수 오차 -2.3%, 이벤트 F1 0.79로 이번 실험 전체 최고치였습니다(실측).</li>
+      <li><strong>분류는 반대입니다.</strong> ESC-50 50클래스 macro F1이 2026 인코더 0.868 대 고전 로그멜 통계 0.486, 차량 판정 2진 분류는 0.871 대 0.567이었습니다(실측). 세는 것과 분류하는 것은 다른 문제입니다.</li>
+      <li><strong>인코더를 폰에서 상시 돌릴 수는 있습니다.</strong> CPU 1스레드 기준 duty cycle 0.064, 메모리 843MB였습니다(실측, 서버 코어 기준이라 실제 폰에서는 이보다 느립니다).</li>
+    </ul>
+  </section>
+
+  <section class="ac-honest">
+    <h3>정직하게 말하면</h3>
+    <p>
+      위 계수 검증은 <strong>합성 스트림</strong>에서만 했습니다. 실제 마이크로 녹음한 공개
+      데이터(IDMT-Traffic)와 동시 통과 라벨이 있는 데이터(MELAUDIS)를 이 실험 환경에서
+      내려받지 못해 재지 못했습니다. 위 표의 임계값도 셀마다 계수 오차가 최소가 되도록 고른
+      값이라 세 방식 모두에 유리하게 편향돼 있다는 점을 감안해 주세요.
+    </p>
+    <p>
+      중첩 0.45에서 에너지 검출기 오차는 -0.1%인데 이벤트 단위 F1은 0.55였습니다. 대수의 합은
+      거의 맞았지만 개별 통과를 하나하나 맞힌 것이 아니라, 놓친 것과 잘못 잡은 것이 서로
+      상쇄되어 합계만 맞아떨어진 결과입니다. 위 데모에서 과분할 거동 계수가 우연히 실제와
+      가까운 값을 낼 때도 같은 상쇄가 일어나고 있을 수 있습니다.
+    </p>
+    <p>
+      마지막으로, 이 페이지의 "과분할 거동" 검출기는 2026년 인코더가 실제로 돌아가는 것이
+      아닙니다. 신경망을 브라우저에서 실행할 수 없어서, 같은 합성 스트림 위에서 스무딩 구간과
+      최소 간격만 짧게 잡은 같은 계열의 검출기로 그 과분할 거동을 재현한 것입니다. 실제
+      인코더의 계수 오차는 위 실측표에 있는 수치가 정본입니다.
+    </p>
+  </section>
+</main>
+
+<footer class="demo-foot">© 2i · contact@2icorp.site</footer>
+
+<script>
+(function(){
+  "use strict";
+
+  var SEED = 190426;
+  var DT = 0.05;
+  var DURATION = 180;
+  var NSAMP = Math.round(DURATION / DT);
+
+  var PULSE_SIGMA = 0.22;
+  var PULSE_DELTA = 0.55;
+  var PULSE_W2 = 0.75;
+  var EVENT_SPAN = 1.9;
+
+  var ENERGY_PARAMS = { winSmooth: 1.0, winMedian: 3.0, minGap: 1.0 };
+  var SEG_PARAMS = { winSmooth: 0.12, winMedian: 3.0, minGap: 0.2 };
+
+  var RATE_STEPS = [2, 4, 8, 16, 32, 64];
+  var svgNS = "http://www.w3.org/2000/svg";
+
+  function mulberry32(seed){
+    var a = seed >>> 0;
+    return function(){
+      a |= 0; a = (a + 0x6D2B79F5) | 0;
+      var t = Math.imul(a ^ (a >>> 15), 1 | a);
+      t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+      return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+    };
+  }
+
+  // ---- synthetic continuous acoustic stream ----
+  function synthesizeStream(rate, snrDb, rng){
+    var lambdaPerSec = rate / 60;
+    var t = 0;
+    var trueTimes = [];
+    while (true){
+      var gap = -Math.log(1 - rng()) / lambdaPerSec;
+      t += gap;
+      if (t >= DURATION) break;
+      trueTimes.push(t);
+    }
+
+    var env = new Float64Array(NSAMP);
+    var bedVal = 0;
+    var bedTau = 2.5;
+    var bedAlpha = Math.exp(-DT / bedTau);
+    var bedAmp = 0.05;
+    var i;
+    for (i = 0; i < NSAMP; i++){
+      bedVal = bedAlpha * bedVal + Math.sqrt(1 - bedAlpha * bedAlpha) * (rng() * 2 - 1) * bedAmp;
+      env[i] = 0.15 + bedVal;
+    }
+
+    var signalAmp = 1.0;
+    var noiseStd = signalAmp / Math.pow(10, snrDb / 20);
+    for (i = 0; i < NSAMP; i++){
+      var g = (rng() + rng() - 1) * noiseStd;
+      env[i] += g;
+    }
+
+    trueTimes.forEach(function(t0){
+      var amp = 0.9 + rng() * 0.4;
+      var i0 = Math.max(0, Math.floor((t0 - 3) / DT));
+      var i1 = Math.min(NSAMP - 1, Math.ceil((t0 + PULSE_DELTA + 3) / DT));
+      for (var k = i0; k <= i1; k++){
+        var tt = k * DT;
+        var g1 = Math.exp(-Math.pow((tt - t0) / PULSE_SIGMA, 2));
+        var g2 = PULSE_W2 * Math.exp(-Math.pow((tt - (t0 + PULSE_DELTA)) / PULSE_SIGMA, 2));
+        env[k] += amp * (g1 + g2);
+      }
+    });
+
+    for (i = 0; i < NSAMP; i++) if (env[i] < 0) env[i] = 0;
+    return { env: env, trueTimes: trueTimes };
+  }
+
+  function movingAverage(x, win){
+    var n = x.length;
+    var half = Math.max(0, Math.floor(win / 2));
+    var prefix = new Float64Array(n + 1);
+    var i;
+    for (i = 0; i < n; i++) prefix[i + 1] = prefix[i] + x[i];
+    var out = new Float64Array(n);
+    for (i = 0; i < n; i++){
+      var lo = Math.max(0, i - half), hi = Math.min(n - 1, i + half);
+      out[i] = (prefix[hi + 1] - prefix[lo]) / (hi - lo + 1);
+    }
+    return out;
+  }
+
+  function rollingMedian(x, win){
+    var n = x.length;
+    var half = Math.max(0, Math.floor(win / 2));
+    var out = new Float64Array(n);
+    for (var i = 0; i < n; i++){
+      var lo = Math.max(0, i - half), hi = Math.min(n - 1, i + half);
+      var slice = Array.prototype.slice.call(x, lo, hi + 1).sort(function(a, b){ return a - b; });
+      out[i] = slice[Math.floor(slice.length / 2)];
+    }
+    return out;
+  }
+
+  function medianOf(arr){
+    var s = Array.prototype.slice.call(arr).sort(function(a, b){ return a - b; });
+    var m = s.length;
+    return m % 2 ? s[(m - 1) / 2] : (s[m / 2 - 1] + s[m / 2]) / 2;
+  }
+
+  function normalize(residual){
+    var med = medianOf(residual);
+    var absDev = new Float64Array(residual.length);
+    var i;
+    for (i = 0; i < residual.length; i++) absDev[i] = Math.abs(residual[i] - med);
+    var mad = medianOf(absDev);
+    var sigma = 1.4826 * mad + 1e-6;
+    var scale = sigma * 9;
+    var out = new Float64Array(residual.length);
+    for (i = 0; i < residual.length; i++) out[i] = Math.max(0, (residual[i] - med) / scale);
+    return out;
+  }
+
+  function detectPeaks(norm, thresholdVal, minGapSamples){
+    var candidates = [];
+    for (var i = 1; i < norm.length - 1; i++){
+      if (norm[i] >= thresholdVal && norm[i] >= norm[i - 1] && norm[i] >= norm[i + 1]){
+        candidates.push({ i: i, v: norm[i] });
+      }
+    }
+    candidates.sort(function(a, b){ return b.v - a.v; });
+    var selectedIdx = [];
+    candidates.forEach(function(c){
+      for (var k = 0; k < selectedIdx.length; k++){
+        if (Math.abs(selectedIdx[k] - c.i) < minGapSamples) return;
+      }
+      selectedIdx.push(c.i);
+    });
+    selectedIdx.sort(function(a, b){ return a - b; });
+    return selectedIdx.map(function(idx){ return idx * DT; });
+  }
+
+  // ---- real detector: band-limited short-time energy -> rolling-median baseline
+  //      removal -> threshold -> local-max peak picking. Runs on every recompute. ----
+  function runDetector(env, params, thresholdVal){
+    var smoothed = movingAverage(env, Math.max(1, Math.round(params.winSmooth / DT)));
+    var baseline = rollingMedian(smoothed, Math.max(1, Math.round(params.winMedian / DT)));
+    var residual = new Float64Array(smoothed.length);
+    for (var i = 0; i < smoothed.length; i++) residual[i] = smoothed[i] - baseline[i];
+    var norm = normalize(residual);
+    var peaks = detectPeaks(norm, thresholdVal, Math.round(params.minGap / DT));
+    return { peaks: peaks, norm: norm };
+  }
+
+  function overlapFraction(trueTimes){
+    if (trueTimes.length < 2) return 0;
+    var overlapCount = 0;
+    for (var i = 1; i < trueTimes.length; i++){
+      if (trueTimes[i] - trueTimes[i - 1] < EVENT_SPAN) overlapCount++;
+    }
+    return overlapCount / (trueTimes.length - 1);
+  }
+
+  function computeAll(rate, snrDb, threshold){
+    var rng = mulberry32(SEED);
+    var s = synthesizeStream(rate, snrDb, rng);
+    var energy = runDetector(s.env, ENERGY_PARAMS, threshold);
+    var seg = runDetector(s.env, SEG_PARAMS, threshold);
+    var truth = s.trueTimes.length;
+    var overlap = overlapFraction(s.trueTimes);
+    return {
+      env: s.env, trueTimes: s.trueTimes,
+      truth: truth, overlap: overlap,
+      energyPeaks: energy.peaks, segPeaks: seg.peaks,
+      energyCount: energy.peaks.length, segCount: seg.peaks.length
+    };
+  }
+
+  // ---- chart ----
+  function decimateMax(x, outLen){
+    var n = x.length;
+    var out = new Float64Array(outLen);
+    for (var k = 0; k < outLen; k++){
+      var lo = Math.floor(k * n / outLen), hi = Math.floor((k + 1) * n / outLen);
+      if (hi <= lo) hi = lo + 1;
+      var m = -Infinity;
+      for (var i = lo; i < hi && i < n; i++) if (x[i] > m) m = x[i];
+      out[k] = (m === -Infinity) ? 0 : m;
+    }
+    return out;
+  }
+
+  function drawStreamChart(r){
+    var svg = document.getElementById("streamChart");
+    while (svg.firstChild) svg.removeChild(svg.firstChild);
+
+    var W = 960, H = 320;
+    var padL = 48, padR = 14;
+    var innerW = W - padL - padR;
+    var rowSegY = 14, rowEnergyY = 40;
+    var envTop = 62, envBottom = 262;
+    var truthY = 280, xAxisY = 312;
+    var envHeight = envBottom - envTop;
+
+    function x(t){ return padL + (t / DURATION) * innerW; }
+
+    var decim = decimateMax(r.env, 480);
+    var maxVal = 0.05;
+    for (var i = 0; i < decim.length; i++) if (decim[i] > maxVal) maxVal = decim[i];
+    maxVal *= 1.12;
+
+    function y(v){ return envBottom - (v / maxVal) * envHeight; }
+
+    var pts = [];
+    for (i = 0; i < decim.length; i++){
+      var tt = ((i + 0.5) / decim.length) * DURATION;
+      pts.push(x(tt).toFixed(1) + "," + y(decim[i]).toFixed(1));
+    }
+    var d = "M " + pts.join(" L ");
+    var area = document.createElementNS(svgNS, "path");
+    area.setAttribute("d", d + " L " + x(DURATION).toFixed(1) + "," + envBottom + " L " + x(0).toFixed(1) + "," + envBottom + " Z");
+    area.setAttribute("fill", "color-mix(in srgb, var(--steel) 14%, transparent)");
+    area.setAttribute("stroke", "none");
+    svg.appendChild(area);
+    var path = document.createElementNS(svgNS, "path");
+    path.setAttribute("d", d);
+    path.setAttribute("fill", "none");
+    path.setAttribute("stroke", "var(--steel)");
+    path.setAttribute("stroke-width", "1.6");
+    svg.appendChild(path);
+
+    var baseLine = document.createElementNS(svgNS, "line");
+    baseLine.setAttribute("x1", padL); baseLine.setAttribute("x2", W - padR);
+    baseLine.setAttribute("y1", envBottom); baseLine.setAttribute("y2", envBottom);
+    baseLine.setAttribute("stroke", "var(--line-soft)"); baseLine.setAttribute("stroke-width", "1");
+    svg.appendChild(baseLine);
+
+    function rowLabel(text, ly){
+      var t = document.createElementNS(svgNS, "text");
+      t.setAttribute("x", padL - 6); t.setAttribute("y", ly + 3);
+      t.setAttribute("text-anchor", "end"); t.setAttribute("class", "row-label");
+      t.textContent = text;
+      svg.appendChild(t);
+    }
+    rowLabel("과분할", rowSegY);
+    rowLabel("에너지", rowEnergyY);
+    rowLabel("실제", truthY + 7);
+
+    r.trueTimes.forEach(function(t0){
+      var line = document.createElementNS(svgNS, "line");
+      var xx = x(t0);
+      line.setAttribute("x1", xx); line.setAttribute("x2", xx);
+      line.setAttribute("y1", truthY); line.setAttribute("y2", truthY + 14);
+      line.setAttribute("stroke", "var(--ink-faint)"); line.setAttribute("stroke-width", "1.4");
+      svg.appendChild(line);
+    });
+
+    r.energyPeaks.forEach(function(t0){
+      var c = document.createElementNS(svgNS, "circle");
+      c.setAttribute("cx", x(t0)); c.setAttribute("cy", rowEnergyY);
+      c.setAttribute("r", "3.4"); c.setAttribute("fill", "var(--signal)");
+      svg.appendChild(c);
+    });
+
+    r.segPeaks.forEach(function(t0){
+      var xx = x(t0);
+      var tri = document.createElementNS(svgNS, "path");
+      tri.setAttribute("d", "M " + (xx - 4) + "," + (rowSegY - 4) + " L " + (xx + 4) + "," + (rowSegY - 4) + " L " + xx + "," + (rowSegY + 5) + " Z");
+      tri.setAttribute("fill", "var(--steel-soft)");
+      svg.appendChild(tri);
+    });
+
+    var tickStep = 30;
+    for (var tt2 = 0; tt2 <= DURATION + 0.001; tt2 += tickStep){
+      var xx2 = x(tt2);
+      var tick = document.createElementNS(svgNS, "line");
+      tick.setAttribute("x1", xx2); tick.setAttribute("x2", xx2);
+      tick.setAttribute("y1", xAxisY - 10); tick.setAttribute("y2", xAxisY - 6);
+      tick.setAttribute("stroke", "var(--line)"); tick.setAttribute("stroke-width", "1");
+      svg.appendChild(tick);
+      var lbl = document.createElementNS(svgNS, "text");
+      lbl.setAttribute("x", xx2); lbl.setAttribute("y", xAxisY);
+      lbl.setAttribute("text-anchor", "middle"); lbl.setAttribute("class", "axis-label");
+      lbl.textContent = tt2 + "초";
+      svg.appendChild(lbl);
+    }
+  }
+
+  // ---- UI wiring ----
+  var rateSlider = document.getElementById("rateSlider");
+  var rateVal = document.getElementById("rateVal");
+  var overlapVal = document.getElementById("overlapVal");
+  var overlapNote = document.getElementById("overlapNote");
+
+  function currentRate(){ return RATE_STEPS[parseInt(rateSlider.value, 10)]; }
+  function currentSnr(){
+    var el = document.querySelector('input[name="snrOpt"]:checked');
+    return el ? parseFloat(el.value) : 10;
+  }
+  function currentThreshold(){
+    var el = document.querySelector('input[name="thrOpt"]:checked');
+    return el ? parseFloat(el.value) : 0.7;
+  }
+
+  function syncToggleClasses(groupId){
+    var group = document.getElementById(groupId);
+    var labels = group.querySelectorAll("label");
+    for (var i = 0; i < labels.length; i++){
+      var input = labels[i].querySelector("input");
+      labels[i].classList.toggle("is-checked", !!input.checked);
+    }
+  }
+
+  function fmtInt(n){ return Math.round(n).toLocaleString("ko-KR"); }
+  function fmtPct(n){ return (n >= 0 ? "+" : "") + n.toFixed(1) + "%"; }
+
+  function overlapBand(ov){
+    if (ov < 0.1) return "low";
+    if (ov < 0.5) return "mid";
+    return "high";
+  }
+
+  function verdictText(r){
+    var truth = r.truth;
+    var eErr = truth > 0 ? (100 * (r.energyCount - truth) / truth) : 0;
+    var sErr = truth > 0 ? (100 * (r.segCount - truth) / truth) : 0;
+    var base = "지금 설정에서 에너지 검출기는 " + fmtInt(r.energyCount) + "대를 세어 실제와 " +
+      fmtPct(eErr) + " 차이이고, 과분할 거동은 " + fmtInt(r.segCount) + "대로 " + fmtPct(sErr) +
+      " 차이입니다.";
+    var band = overlapBand(r.overlap);
+    var tail;
+    if (band === "low"){
+      tail = Math.abs(eErr) < Math.abs(sErr)
+        ? " 통행량이 낮고 차량 소리가 서로 겹치지 않는 구간에서는 <strong>20년 된 에너지 검출기가 최신 과분할 거동보다 뚜렷하게 정확합니다</strong>."
+        : " 이 구간에서는 두 방식의 오차가 비슷합니다. 슬라이더를 더 낮춰 보세요.";
+    } else if (band === "mid"){
+      tail = " 통행이 겹치기 시작하면서 <strong>두 방식 모두 오차가 커지고 있습니다</strong>. 합계가 맞아도 개별 통과를 다 맞혔다는 뜻은 아닙니다.";
+    } else {
+      tail = " 통행이 심하게 겹치는 구간에서는 <strong>두 방식 모두 크게 무너집니다</strong>. 이런 정체 구간에서는 폰 한 대짜리 음향 계수 자체를 신뢰하기 어렵습니다.";
+    }
+    return base + tail;
+  }
+
+  var debounceTimer = null;
+  function scheduleRecompute(){
+    if (debounceTimer) clearTimeout(debounceTimer);
+    debounceTimer = setTimeout(recomputeAll, 120);
+  }
+
+  function recomputeAll(){
+    var rate = currentRate();
+    var snr = currentSnr();
+    var thr = currentThreshold();
+
+    rateVal.textContent = fmtInt(rate) + "대/분";
+    syncToggleClasses("snrGroup");
+    syncToggleClasses("thrGroup");
+
+    var r = computeAll(rate, snr, thr);
+
+    drawStreamChart(r);
+
+    overlapVal.textContent = r.overlap.toFixed(2);
+    var band = overlapBand(r.overlap);
+    overlapNote.textContent = band === "low" ? "(거의 안 겹침)" : band === "mid" ? "(가끔 겹침)" : "(자주 겹침)";
+
+    document.getElementById("mTruth").textContent = fmtInt(r.truth) + "대";
+    document.getElementById("mEnergy").textContent = fmtInt(r.energyCount) + "대";
+    document.getElementById("mSeg").textContent = fmtInt(r.segCount) + "대";
+    document.getElementById("mOverlap").textContent = r.overlap.toFixed(2);
+
+    var eErr = r.truth > 0 ? (100 * (r.energyCount - r.truth) / r.truth) : 0;
+    var sErr = r.truth > 0 ? (100 * (r.segCount - r.truth) / r.truth) : 0;
+
+    var eDelta = document.getElementById("mEnergyDelta");
+    eDelta.textContent = "상대오차 " + fmtPct(eErr);
+    eDelta.className = "metric__delta " + (Math.abs(eErr) <= 15 ? "good" : "bad");
+
+    var sDelta = document.getElementById("mSegDelta");
+    sDelta.textContent = "상대오차 " + fmtPct(sErr) + " (재현값, 신경망 아님)";
+    sDelta.className = "metric__delta " + (Math.abs(sErr) <= 15 ? "good" : "bad");
+
+    document.getElementById("verdict").innerHTML = verdictText(r);
+  }
+
+  function applyPreset(rateIdx){
+    rateSlider.value = rateIdx;
+    if (debounceTimer) clearTimeout(debounceTimer);
+    recomputeAll();
+  }
+
+  rateSlider.addEventListener("input", scheduleRecompute);
+  Array.prototype.forEach.call(document.querySelectorAll('input[name="snrOpt"]'), function(el){
+    el.addEventListener("change", scheduleRecompute);
+  });
+  Array.prototype.forEach.call(document.querySelectorAll('input[name="thrOpt"]'), function(el){
+    el.addEventListener("change", scheduleRecompute);
+  });
+
+  document.getElementById("presetQuiet").addEventListener("click", function(){ applyPreset(0); });
+  document.getElementById("presetArterial").addEventListener("click", function(){ applyPreset(3); });
+  document.getElementById("presetJam").addEventListener("click", function(){ applyPreset(5); });
+
+  recomputeAll();
+})();
+</script>
+</body>
+</html>
