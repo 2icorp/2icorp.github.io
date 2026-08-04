@@ -770,26 +770,50 @@ section[id] { scroll-margin-top: 80px; }
 }
 .pfilter.is-on b { color: var(--signal); }
 
-/* board list */
-.pboard { border-top: 1px solid var(--line); }
-.pcard {
-  display: block;
-  position: relative;
-  padding: 1.5rem 1.4rem 1.5rem 1.6rem;
-  border-bottom: 1px solid var(--line);
-  background: transparent;
-  transition: background var(--dur) var(--ease), transform var(--dur) var(--ease);
+/* board grid — 논문 1편 = 카드 1장(썸네일 위, 텍스트 아래) */
+.pboard {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(19rem, 1fr));
+  gap: 1.5rem 1.25rem;
+  margin-top: 1.6rem;
 }
-.pcard::before {
-  content: "";
-  position: absolute; left: 0; top: 0; bottom: 0;
-  width: 2px; background: var(--signal);
-  transform: scaleY(0); transform-origin: top;
+@media (max-width: 640px) { .pboard { grid-template-columns: 1fr; gap: 1.15rem; } }
+.pcard {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--panel);
+  overflow: hidden;
+  transition: border-color var(--dur) var(--ease), box-shadow var(--dur) var(--ease),
+              transform var(--dur) var(--ease);
+}
+.pcard__thumb {
+  border-bottom: 1px solid var(--line);
+  background: var(--paper);
+  line-height: 0;
+}
+.pcard__thumb img {
+  width: 100%; height: auto; display: block;
   transition: transform var(--dur) var(--ease);
 }
-.pcard:hover { background: var(--panel); }
-.pcard:hover::before { transform: scaleY(1); }
-.pcard:focus-visible { outline: 2px solid var(--signal); outline-offset: -2px; }
+.pcard__body {
+  display: flex; flex-direction: column; flex: 1 1 auto;
+  padding: 1.1rem 1.15rem 1.15rem;
+}
+.pcard:hover {
+  border-color: color-mix(in oklab, var(--signal) 45%, var(--line));
+  box-shadow: 0 6px 22px -12px color-mix(in oklab, var(--ink) 40%, transparent);
+  transform: translateY(-2px);
+}
+.pcard:hover .pcard__thumb img { transform: scale(1.03); }
+.pcard:focus-visible { outline: 2px solid var(--signal); outline-offset: 2px; }
+@media (prefers-reduced-motion: reduce) {
+  .pcard, .pcard__thumb img { transition: none; }
+  .pcard:hover { transform: none; }
+  .pcard:hover .pcard__thumb img { transform: none; }
+}
 .pcard__meta {
   display: flex; flex-wrap: wrap; align-items: center; gap: 0.55rem;
   font-family: var(--mono); font-size: var(--text-xs);
@@ -809,16 +833,20 @@ section[id] { scroll-margin-top: 80px; }
   padding: 0.1rem 0.42rem; border-radius: 2px; font-weight: 500;
 }
 .pcard__title {
-  font-size: var(--text-h3); font-weight: 800; letter-spacing: -0.02em;
-  color: var(--ink); margin-bottom: 0.5rem; line-height: 1.24;
+  font-size: 1.06rem; font-weight: 800; letter-spacing: -0.02em;
+  color: var(--ink); margin-bottom: 0.45rem; line-height: 1.32;
   transition: color var(--dur) var(--ease);
 }
 .pcard:hover .pcard__title { color: var(--signal-deep); }
-.pcard__excerpt { color: var(--ink-soft); max-width: 68ch; font-size: 0.98rem; }
+.pcard__excerpt {
+  color: var(--ink-soft); font-size: 0.92rem; line-height: 1.55;
+  display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical;
+  overflow: hidden;
+}
 .pcard__tags {
-  display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem;
+  display: flex; flex-wrap: wrap; align-items: center; gap: 0.45rem;
   font-family: var(--mono); font-size: var(--text-xs); color: var(--ink-faint);
-  margin-top: 0.85rem;
+  margin-top: auto; padding-top: 0.9rem;
 }
 .pcard__go { margin-left: auto; color: var(--signal-deep); font-weight: 500; }
 .pcard.is-hidden { display: none; }

@@ -57,256 +57,382 @@
     <div class="pfilters" role="tablist" aria-label="Category filter"><button class="pfilter is-on" data-cat="all">All <b>42</b></button><button class="pfilter" data-cat="method">Method <b>13</b></button><button class="pfilter" data-cat="experiment">Experiment Notes <b>9</b></button><button class="pfilter" data-cat="infra">Infra <b>4</b></button><button class="pfilter" data-cat="benchmark">Benchmark <b>3</b></button><button class="pfilter" data-cat="signal">Signal <b>3</b></button><button class="pfilter" data-cat="research">Research <b>3</b></button><button class="pfilter" data-cat="industrial">Industrial <b>2</b></button><button class="pfilter" data-cat="media">Media <b>2</b></button><button class="pfilter" data-cat="sensing">Sensing <b>2</b></button><button class="pfilter" data-cat="whitepaper">Whitepaper <b>1</b></button></div>
     <div class="pboard">
       <a class="pcard reveal" href="../papers/what-we-did-after-losing.html" data-cat="infra">
+        <div class="pcard__thumb"><img src="../papers/thumb/what-we-did-after-losing.png" alt="" loading="lazy" width="880" height="495"></div>
+        <div class="pcard__body">
         <div class="pcard__meta"><span class="pcard__cat">Infra</span><span class="pcard__date">2026.08.02</span><span class="pcard__rt">~12 min</span><span class="pcard__cat">KO</span></div>
         <h3 class="pcard__title">What We Did After Writing That We Lost: We Doubled the Score, Then Widened Coverage and Brought It Back Down</h3>
         <p class="pcard__excerpt">After losing our self-audit and publishing it as-is, we fixed it in two stages over two days. First we held the harness fixed and fixed only the storage, turning a score of 41.7 into 85.7. Then we generalized a discovery flaw in the harness itself, which widened coverage to 28.2 percent and brought the score down to 77.3. That drop is correct, not a regression. After fixing the harness, we re-measured the competitor and got the same 72.7 again.</p>
         <div class="pcard__tags"><span>#Storage</span><span>#SelfAudit</span><span>#WORM</span><span>#ObjectLock</span><span>#Observability</span><span>#MeasurementMethodology</span><span class="pcard__go">Read (KO) &rarr;</span></div>
+        </div>
       </a>
       <a class="pcard reveal" href="../papers/always-feasible-rostering.html" data-cat="method">
+        <div class="pcard__thumb"><img src="../papers/thumb/always-feasible-rostering.png" alt="" loading="lazy" width="880" height="495"></div>
+        <div class="pcard__body">
         <div class="pcard__meta"><span class="pcard__cat">Method</span><span class="pcard__date">2026.07.31</span><span class="pcard__rt">~8 min</span><span class="pcard__cat">KO</span></div>
         <h3 class="pcard__title">How to Build a Rostering System That Always Has a Solution: From Hard Equalities to Slack Redesign</h3>
         <p class="pcard__excerpt">If you have ever hit a no-solution-today message while building a shift roster, this piece covers why and how to fix it. Three years ago our shift-scheduling code failed to find a solution in 12 of 18 synthetic instances (66.7%), and 9 of the 14-day cases were structural failures unrelated to demand. Re-solving four representative unsolved instances with a CP-SAT slack-based model gets all four to OPTIMAL with zero violations. Fairness enforcement came almost for free, and on a public nurse-rostering benchmark, hard violations dropped from 1,102 to 0.</p>
         <div class="pcard__tags"><span>#ShiftScheduling</span><span>#CPSAT</span><span>#ConstraintProgramming</span><span>#WorkforceScheduling</span><span>#Feasibility</span><span>#SlackVariables</span><span class="pcard__go">Read (KO) &rarr;</span></div>
+        </div>
       </a>
       <a class="pcard reveal" href="../papers/optimization-what-it-buys.html" data-cat="experiment">
+        <div class="pcard__thumb"><img src="../papers/thumb/optimization-what-it-buys.png" alt="" loading="lazy" width="880" height="495"></div>
+        <div class="pcard__body">
         <div class="pcard__meta"><span class="pcard__cat">Experiment Notes</span><span class="pcard__date">2026.07.31</span><span class="pcard__rt">~9 min</span><span class="pcard__cat">KO</span></div>
         <h3 class="pcard__title">What Turning On Optimization Actually Buys You: Measured Across 4 Domains</h3>
         <p class="pcard__excerpt">For decision-makers considering optimization who have never gotten a numeric answer to so how much better does it get. Comparing the same model, constraints, and solver against a version with the objective weight zeroed out: room-assignment preference satisfaction rose from 2 to 12 percent up to 60 to 69 percent (+53 to +61pp), call-center service level rose 4.97pp at the same headcount cost, and baseball scheduling cut back-to-back home or away stretches by 36 to 100 percent. We also measured what you give up in return.</p>
         <div class="pcard__tags"><span>#OptimizationImpact</span><span>#CPSAT</span><span>#WorkforceAllocation</span><span>#ErlangC</span><span>#Tradeoffs</span><span>#Benchmark</span><span class="pcard__go">Read (KO) &rarr;</span></div>
+        </div>
       </a>
       <a class="pcard reveal" href="../papers/coverage-before-score-storage-diagnosis.html" data-cat="infra">
+        <div class="pcard__thumb"><img src="../papers/thumb/coverage-before-score-storage-diagnosis.png" alt="" loading="lazy" width="880" height="495"></div>
+        <div class="pcard__body">
         <div class="pcard__meta"><span class="pcard__cat">Infra</span><span class="pcard__date">2026.07.31</span><span class="pcard__rt">~8 min</span><span class="pcard__cat">KO</span></div>
         <h3 class="pcard__title">Diagnostic Reports Should Lead With Coverage, Not the Score: A Record of Measuring 11 of 39 Items</h3>
         <p class="pcard__excerpt">We diagnosed a real deployment against 39 items and actually measured 11 of them. Coverage: 28.2 percent. That number needs to come before the score of 72.7. The remaining 27 items had the code path to a pass removed entirely.</p>
         <div class="pcard__tags"><span>#Storage</span><span>#Diagnostics</span><span>#Verification</span><span>#S3</span><span>#MeasurementMethodology</span><span class="pcard__go">Read (KO) &rarr;</span></div>
+        </div>
       </a>
       <a class="pcard reveal" href="../papers/replication-is-not-durability.html" data-cat="method">
+        <div class="pcard__thumb"><img src="../papers/thumb/replication-is-not-durability.png" alt="" loading="lazy" width="880" height="495"></div>
+        <div class="pcard__body">
         <div class="pcard__meta"><span class="pcard__cat">Method</span><span class="pcard__date">2026.07.31</span><span class="pcard__rt">~9 min</span><span class="pcard__cat">KO</span></div>
         <h3 class="pcard__title">Three Replicas Are Not Durability: Measuring Quorum, Checksums, and Scrubbing</h3>
         <p class="pcard__excerpt">Turn off checksums and bitrot detection drops to zero percent, leaving 100 percent of silent corruption in place. Turn off background scrubbing and you lose 13.3 percent of objects within six rounds. Having three copies and knowing those three copies are intact are two different problems.</p>
         <div class="pcard__tags"><span>#Storage</span><span>#Durability</span><span>#Bitrot</span><span>#ErasureCoding</span><span>#FailureDomains</span><span class="pcard__go">Read (KO) &rarr;</span></div>
+        </div>
       </a>
       <a class="pcard reveal" href="../papers/we-diagnosed-ourselves-and-lost.html" data-cat="infra">
+        <div class="pcard__thumb"><img src="../papers/thumb/we-diagnosed-ourselves-and-lost.png" alt="" loading="lazy" width="880" height="495"></div>
+        <div class="pcard__body">
         <div class="pcard__meta"><span class="pcard__cat">Infra</span><span class="pcard__date">2026.07.31</span><span class="pcard__rt">~8 min</span><span class="pcard__cat">KO</span></div>
         <h3 class="pcard__title">We Pointed Our Own Diagnostic Tool at Our Own Storage, and It Scored Worse Than MinIO</h3>
         <p class="pcard__excerpt">Coverage 15.4 percent, score 41.7. MinIO scored 72.7 at 28.2 percent coverage. What hurt more was that the main cause of our low coverage was a flaw in our own harness. We fixed neither.</p>
         <div class="pcard__tags"><span>#Storage</span><span>#Verification</span><span>#SelfAudit</span><span>#s3-tests</span><span>#MeasurementMethodology</span><span class="pcard__go">Read (KO) &rarr;</span></div>
+        </div>
       </a>
       <a class="pcard reveal" href="../papers/when-lifecycle-and-onprem-lose-money.html" data-cat="infra">
+        <div class="pcard__thumb"><img src="../papers/thumb/when-lifecycle-and-onprem-lose-money.png" alt="" loading="lazy" width="880" height="495"></div>
+        <div class="pcard__body">
         <div class="pcard__meta"><span class="pcard__cat">Infra</span><span class="pcard__date">2026.07.31</span><span class="pcard__rt">~8 min</span><span class="pcard__cat">KO</span></div>
         <h3 class="pcard__title">When Moving to an Archive Tier Doesn't Save Money, and the Unit Price Where On-Prem Flips</h3>
         <p class="pcard__excerpt">Applying an aggressive archive-tier transition to a workload of small, short-lived files made it 4x more expensive than doing nothing. The recommendation to move on-prem flipped to cloud at $83.7 per raw TB. This is about why you need to calculate the break-even point instead of repeating a conclusion.</p>
         <div class="pcard__tags"><span>#StorageCost</span><span>#TCO</span><span>#Lifecycle</span><span>#OnPrem</span><span>#Cloud</span><span class="pcard__go">Read (KO) &rarr;</span></div>
+        </div>
       </a>
       <a class="pcard reveal" href="../papers/measurable-signal-intelligence-whitepaper.html" data-cat="whitepaper">
+        <div class="pcard__thumb"><img src="../papers/thumb/measurable-signal-intelligence-whitepaper.png" alt="" loading="lazy" width="880" height="495"></div>
+        <div class="pcard__body">
         <div class="pcard__meta"><span class="pcard__cat">Whitepaper</span><span class="pcard__date">2026.07.30</span><span class="pcard__rt">~20 min</span><span class="pcard__cat">KO</span></div>
         <h3 class="pcard__title">Measurable Signal & AI Intelligence (Whitepaper v5)</h3>
         <p class="pcard__excerpt">2i's flagship whitepaper v5, tying together 34 experiment notes spanning audio content ID, WiFi-CSI sensing, RF fingerprint authentication, predictive maintenance, edge deployment and quantization, large-scale agent retrieval, and financial backtest discipline, all under one measurement discipline. Three of the papers independently reached the same conclusion in unrelated fields: with the same model and the same data, changing only the evaluation protocol swings accuracy from 0.931 to 0.088.</p>
         <div class="pcard__tags"><span>#Whitepaper</span><span>#SignalIntelligence</span><span>#MeasurementDiscipline</span><span>#AXStrategy</span><span>#GaugeMethod</span><span>#EvaluationProtocol</span><span class="pcard__go">Read (KO) &rarr;</span></div>
+        </div>
       </a>
       <a class="pcard reveal" href="../papers/classical-dsp-gbm-vs-deep-learning-signal-tasks.html" data-cat="benchmark">
+        <div class="pcard__thumb"><img src="../papers/thumb/classical-dsp-gbm-vs-deep-learning-signal-tasks.png" alt="" loading="lazy" width="880" height="495"></div>
+        <div class="pcard__body">
         <div class="pcard__meta"><span class="pcard__cat">Benchmark</span><span class="pcard__date">2026.07.29</span><span class="pcard__rt">~10 min</span><span class="pcard__cat">KO</span></div>
         <h3 class="pcard__title">Classical DSP+GBM vs. Deep Learning: A Decision Map for Signal Tasks</h3>
         <p class="pcard__excerpt">We ran a fair comparison across six tasks, modulation classification, interference detection, drone open-set rejection, channel estimation, RF fingerprinting, and signal separation, on the same data and the same metrics. Deep learning did not win everywhere, and classical methods did not win everywhere either. We publish exactly where each one wins, with the numbers and the limits.</p>
         <div class="pcard__tags"><span>#SignalProcessing</span><span>#GBM</span><span>#DeepLearning</span><span>#ModulationClassification</span><span>#InterferenceDetection</span><span>#Benchmark</span><span class="pcard__go">Read (KO) &rarr;</span></div>
+        </div>
       </a>
       <a class="pcard reveal" href="../papers/fixed-false-alarm-rate-industrial-detection.html" data-cat="industrial">
+        <div class="pcard__thumb"><img src="../papers/thumb/fixed-false-alarm-rate-industrial-detection.png" alt="" loading="lazy" width="880" height="495"></div>
+        <div class="pcard__body">
         <div class="pcard__meta"><span class="pcard__cat">Industrial</span><span class="pcard__date">2026.07.29</span><span class="pcard__rt">~8 min</span><span class="pcard__cat">KO</span></div>
         <h3 class="pcard__title">Fixed False-Alarm-Rate Industrial Anomaly and Interference Detection</h3>
         <p class="pcard__excerpt">The real contract in industrial wireless monitoring is not detection rate, it is the false-alarm budget. We measured on synthetic data whether a CFAR detector actually holds its target false-alarm rate, how far interference-type classification and localization can go, and published the limits along with it.</p>
         <div class="pcard__tags"><span>#CFAR</span><span>#FixedFalseAlarmRate</span><span>#InterferenceDetection</span><span>#AnomalyDetection</span><span>#IndustrialMonitoring</span><span class="pcard__go">Read (KO) &rarr;</span></div>
+        </div>
       </a>
       <a class="pcard reveal" href="../papers/openset-rf-fingerprint-verification.html" data-cat="signal">
+        <div class="pcard__thumb"><img src="../papers/thumb/openset-rf-fingerprint-verification.png" alt="" loading="lazy" width="880" height="495"></div>
+        <div class="pcard__body">
         <div class="pcard__meta"><span class="pcard__cat">Signal</span><span class="pcard__date">2026.07.29</span><span class="pcard__rt">~9 min</span><span class="pcard__cat">KO</span></div>
         <h3 class="pcard__title">Open-Set RF Fingerprint Verification: Separability Is Real, but a Hard Authentication Operating Point Is Still Far Off</h3>
         <p class="pcard__excerpt">Open-set RF fingerprint verification measured on three public datasets: WiSig, INRIA, and WIDEFT. Separation holds up to AUROC 0.87, but collapses to 2 to 3 percent at the low false-alarm operating point (TAR@FAR) that access control actually requires. The same gap reproduces across two differently-licensed datasets, an honest boundary study.</p>
         <div class="pcard__tags"><span>#RFFingerprint</span><span>#RFFI</span><span>#OpenSet</span><span>#DeviceAuthentication</span><span>#Verification</span><span class="pcard__go">Read (KO) &rarr;</span></div>
+        </div>
       </a>
       <a class="pcard reveal" href="../papers/split-protocol-inflation.html" data-cat="method">
+        <div class="pcard__thumb"><img src="../papers/thumb/split-protocol-inflation.png" alt="" loading="lazy" width="880" height="495"></div>
+        <div class="pcard__body">
         <div class="pcard__meta"><span class="pcard__cat">Method</span><span class="pcard__date">2026.07.29</span><span class="pcard__rt">~9 min</span><span class="pcard__cat">KO</span></div>
         <h3 class="pcard__title">The Performance Illusion Created by Split Protocols: The Same Model Is 93% and 9%</h3>
         <p class="pcard__excerpt">Using public WiFi sensing data, we held the data and the model fixed and changed only the split method. Accuracy swung from 0.931 down to 0.088, where chance level is 0.0625. The commonly cited adjacent-frame leakage accounted for only 2 to 6pp; domain shift accounted for 78 to 82pp. This is why camera-free sensing adoption should be judged on domain-transfer performance rather than accuracy, and we publish how few labels it takes to recover.</p>
         <div class="pcard__tags"><span>#CameraFreeSensing</span><span>#WiFiSensing</span><span>#DomainTransfer</span><span>#EvaluationDesign</span><span>#DataLeakage</span><span>#PoCValidation</span><span class="pcard__go">Read (KO) &rarr;</span></div>
+        </div>
       </a>
       <a class="pcard reveal" href="../papers/tabular-boosting-vs-deep-learning-signal-features.html" data-cat="benchmark">
+        <div class="pcard__thumb"><img src="../papers/thumb/tabular-boosting-vs-deep-learning-signal-features.png" alt="" loading="lazy" width="880" height="495"></div>
+        <div class="pcard__body">
         <div class="pcard__meta"><span class="pcard__cat">Benchmark</span><span class="pcard__date">2026.07.29</span><span class="pcard__rt">~8 min</span><span class="pcard__cat">KO</span></div>
         <h3 class="pcard__title">When Tabular Boosting Beats Deep Learning on Signal Features</h3>
         <p class="pcard__excerpt">We put GBM, TabPFN, and deep learning head to head on the same physical features and the same splits. At 539 training samples, LightGBM scores 0.855 versus 0.681 for raw-IQ deep learning. Scaling to 2,000 samples narrows the gap from 36.0pp to 21.3pp, but whether a true crossover point exists was not confirmed within this experiment's range.</p>
         <div class="pcard__tags"><span>#Tabular</span><span>#GBM</span><span>#LightGBM</span><span>#DeepLearning</span><span>#ModulationClassification</span><span class="pcard__go">Read (KO) &rarr;</span></div>
+        </div>
       </a>
       <a class="pcard reveal" href="../papers/audio-content-fingerprinting-at-scale.html" data-cat="media">
+        <div class="pcard__thumb"><img src="../papers/thumb/audio-content-fingerprinting-at-scale.png" alt="" loading="lazy" width="880" height="495"></div>
+        <div class="pcard__body">
         <div class="pcard__meta"><span class="pcard__cat">Media</span><span class="pcard__date">2026.07.29</span><span class="pcard__rt">~8 min</span><span class="pcard__cat">KO</span></div>
         <h3 class="pcard__title">Audio Content ID Held Up at Roughly 8,000-Track Scale, Instead We Found Where Memory Breaks</h3>
         <p class="pcard__excerpt">We scaled peak-pair-hashing audio identification, the kind used in broadcast copyright monitoring, from 999 to 7,996 tracks under real measurement. Accuracy stayed in the 99 percent range, but extrapolating the in-memory index to a million tracks needs about 868GB. The real bottleneck was not the algorithm, it was the index structure.</p>
         <div class="pcard__tags"><span>#AudioFingerprinting</span><span>#CopyrightMonitoring</span><span>#ContentID</span><span>#Broadcast</span><span class="pcard__go">Read (KO) &rarr;</span></div>
+        </div>
       </a>
       <a class="pcard reveal" href="../papers/backtest-discipline-overfit.html" data-cat="method">
+        <div class="pcard__thumb"><img src="../papers/thumb/backtest-discipline-overfit.png" alt="" loading="lazy" width="880" height="495"></div>
+        <div class="pcard__body">
         <div class="pcard__meta"><span class="pcard__cat">Method</span><span class="pcard__date">2026.07.29</span><span class="pcard__rt">~9 min</span><span class="pcard__cat">KO</span></div>
         <h3 class="pcard__title">Backtest Discipline: Three Traps That Inflate Performance</h3>
         <p class="pcard__excerpt">We isolated look-ahead bias, survivorship bias, and multiple testing as separate controlled experiments on synthetic time series and measured each one. From illusions that inflate performance by up to 21x, to significance tests that misjudge results because they never counted the number of attempts, we show with numbers exactly how backtest performance gets inflated.</p>
         <div class="pcard__tags"><span>#Backtesting</span><span>#Overfitting</span><span>#Quant</span><span>#Methodology</span><span>#DataDiscipline</span><span class="pcard__go">Read (KO) &rarr;</span></div>
+        </div>
       </a>
       <a class="pcard reveal" href="../papers/calibrated-confidence-signal-risk-score.html" data-cat="method">
+        <div class="pcard__thumb"><img src="../papers/thumb/calibrated-confidence-signal-risk-score.png" alt="" loading="lazy" width="880" height="495"></div>
+        <div class="pcard__body">
         <div class="pcard__meta"><span class="pcard__cat">Method</span><span class="pcard__date">2026.07.29</span><span class="pcard__rt">~8 min</span><span class="pcard__cat">KO</span></div>
         <h3 class="pcard__title">Calibrated Confidence for Signal Decisions: Trustworthy Probabilities Instead of a Hard Threshold</h3>
         <p class="pcard__excerpt">After open-set RF authentication came back NO-GO as a hard gate, the honest form is risk-score fusion. Measuring on DroneRF (CC BY 4.0), we confirmed the expected calibration error (ECE) of raw probabilities sat around 0.045, and that Platt, temperature, and isotonic calibration cut that nearly in half while preserving discriminative power (AUROC).</p>
         <div class="pcard__tags"><span>#Calibration</span><span>#ECE</span><span>#RiskScore</span><span>#Confidence</span><span>#SignalDecisions</span><span class="pcard__go">Read (KO) &rarr;</span></div>
+        </div>
       </a>
       <a class="pcard reveal" href="../papers/classical-predictive-maintenance-acoustic-vibration.html" data-cat="industrial">
+        <div class="pcard__thumb"><img src="../papers/thumb/classical-predictive-maintenance-acoustic-vibration.png" alt="" loading="lazy" width="880" height="495"></div>
+        <div class="pcard__body">
         <div class="pcard__meta"><span class="pcard__cat">Industrial</span><span class="pcard__date">2026.07.29</span><span class="pcard__rt">~8 min</span><span class="pcard__cat">KO</span></div>
         <h3 class="pcard__title">Classical-Feature Predictive Maintenance: Vibration Verified on Real Data, Acoustic on Synthetic</h3>
         <p class="pcard__excerpt">We measured rotating-equipment fault diagnosis without deep learning, using physics-based classical features plus GBM. Vibration on public CWRU data hit 63.6 percent accuracy at low SNR versus an 18.6 percent baseline; acoustic reproduces the same pattern on synthetic data, but we state plainly that real-data verification against MIMII is still outstanding.</p>
         <div class="pcard__tags"><span>#PredictiveMaintenance</span><span>#Bearings</span><span>#AcousticDiagnostics</span><span>#VibrationAnalysis</span><span>#FixedFalseAlarmRate</span><span class="pcard__go">Read (KO) &rarr;</span></div>
+        </div>
       </a>
       <a class="pcard reveal" href="../papers/device-free-wifi-csi-sensing.html" data-cat="sensing">
+        <div class="pcard__thumb"><img src="../papers/thumb/device-free-wifi-csi-sensing.png" alt="" loading="lazy" width="880" height="495"></div>
+        <div class="pcard__body">
         <div class="pcard__meta"><span class="pcard__cat">Sensing</span><span class="pcard__date">2026.07.29</span><span class="pcard__rt">~8 min</span><span class="pcard__cat">KO</span></div>
         <h3 class="pcard__title">Device-Free WiFi-CSI Occupancy and Fall Detection: Verified on Real Public Data</h3>
         <p class="pcard__excerpt">We verified on two public datasets whether occupancy and falls can be distinguished using only existing WiFi link channel information, with no camera and no wearable. Seven-activity classification hit 95.2 percent, fall detection reached AUROC 0.990, and occupancy detection reached AUROC 1.000 with a 52x signal difference between walking and an empty room. We also state the limitation plainly: moving rooms requires recalibration.</p>
         <div class="pcard__tags"><span>#WiFiCSI</span><span>#OccupancyDetection</span><span>#FallDetection</span><span>#ContactlessSensing</span><span class="pcard__go">Read (KO) &rarr;</span></div>
+        </div>
       </a>
       <a class="pcard reveal" href="../papers/drone-rf-detection-open-set-reality.html" data-cat="signal">
+        <div class="pcard__thumb"><img src="../papers/thumb/drone-rf-detection-open-set-reality.png" alt="" loading="lazy" width="880" height="495"></div>
+        <div class="pcard__body">
         <div class="pcard__meta"><span class="pcard__cat">Signal</span><span class="pcard__date">2026.07.29</span><span class="pcard__rt">~8 min</span><span class="pcard__cat">KO</span></div>
         <h3 class="pcard__title">The Open-Set Reality of Drone RF Detection: Classical Wins at Low Fusion Counts</h3>
         <p class="pcard__excerpt">Measured open-set drone rejection on the public DroneRF dataset (CC BY 4.0). At a single observation (K=1), classical DSP+GBM's unknown-drone rejection rate was 5.7x higher than deep learning's. The two methods only converge once you accumulate dozens of observations, at K=20 and above.</p>
         <div class="pcard__tags"><span>#DroneDetection</span><span>#CounterDrone</span><span>#OpenSet</span><span>#RF</span><span>#Security</span><span class="pcard__go">Read (KO) &rarr;</span></div>
+        </div>
       </a>
       <a class="pcard reveal" href="../papers/edge-signal-processing-budget-attribution.html" data-cat="method">
+        <div class="pcard__thumb"><img src="../papers/thumb/edge-signal-processing-budget-attribution.png" alt="" loading="lazy" width="880" height="495"></div>
+        <div class="pcard__body">
         <div class="pcard__meta"><span class="pcard__cat">Method</span><span class="pcard__date">2026.07.29</span><span class="pcard__rt">~7 min</span><span class="pcard__cat">KO</span></div>
         <h3 class="pcard__title">Edge Signal-Processing Budget Attribution</h3>
         <p class="pcard__excerpt">What nanosecond budget is a promise to process 40 MSPS on a single cheap edge core actually standing on? We measured a 12-stage classical RF receiver front end stage by stage, attributed the bottlenecks, and show with numbers that optimization alone will not reach the target.</p>
         <div class="pcard__tags"><span>#EdgeComputing</span><span>#RealTimeProcessing</span><span>#SignalProcessing</span><span>#Profiling</span><span>#Optimization</span><span class="pcard__go">Read (KO) &rarr;</span></div>
+        </div>
       </a>
       <a class="pcard reveal" href="../papers/gbm-vs-dl-factor-returns.html" data-cat="research">
+        <div class="pcard__thumb"><img src="../papers/thumb/gbm-vs-dl-factor-returns.png" alt="" loading="lazy" width="880" height="495"></div>
+        <div class="pcard__body">
         <div class="pcard__meta"><span class="pcard__cat">Research</span><span class="pcard__date">2026.07.29</span><span class="pcard__rt">~8 min</span><span class="pcard__cat">KO</span></div>
         <h3 class="pcard__title">Predicting Factor Returns: Boosting vs. Deep Learning</h3>
         <p class="pcard__excerpt">We pitted gradient boosting against a shallow neural network on Fama-French daily factor data using a chronological split. At 60 training days, the neural net's R2 collapses to -2.6 while boosting stays a much gentler -0.07, but that advantage reverses once training data grows to 4,000 to 8,000 days.</p>
         <div class="pcard__tags"><span>#Finance</span><span>#Factors</span><span>#GBM</span><span>#Tabular</span><span class="pcard__go">Read (KO) &rarr;</span></div>
+        </div>
       </a>
       <a class="pcard reveal" href="../papers/int8-quantization-signal-models-qat-vs-ptq.html" data-cat="method">
+        <div class="pcard__thumb"><img src="../papers/thumb/int8-quantization-signal-models-qat-vs-ptq.png" alt="" loading="lazy" width="880" height="495"></div>
+        <div class="pcard__body">
         <div class="pcard__meta"><span class="pcard__cat">Method</span><span class="pcard__date">2026.07.29</span><span class="pcard__rt">~7 min</span><span class="pcard__cat">KO</span></div>
         <h3 class="pcard__title">Edge Deployment of Signal Models: INT8 QAT vs. PTQ</h3>
         <p class="pcard__excerpt">We measured two paths to INT8 quantization on a small modulation-classification CNN. Post-training quantization (PTQ) knocked 31pp off accuracy, while quantization-aware training (QAT) recovered 94.5 percent of that loss. The size and latency gains were identical on both paths.</p>
         <div class="pcard__tags"><span>#Quantization</span><span>#INT8</span><span>#EdgeDeployment</span><span>#QAT</span><span>#OnPrem</span><span class="pcard__go">Read (KO) &rarr;</span></div>
+        </div>
       </a>
       <a class="pcard reveal" href="../papers/probe-point-fingerprint-ablation.html" data-cat="signal">
+        <div class="pcard__thumb"><img src="../papers/thumb/probe-point-fingerprint-ablation.png" alt="" loading="lazy" width="880" height="495"></div>
+        <div class="pcard__body">
         <div class="pcard__meta"><span class="pcard__cat">Signal</span><span class="pcard__date">2026.07.29</span><span class="pcard__rt">~8 min</span><span class="pcard__cat">KO</span></div>
         <h3 class="pcard__title">Where in the Receive Chain Does RF Fingerprinting Live and Die</h3>
         <p class="pcard__excerpt">We trained a separate fingerprint identification model at each of seven points in the receive chain, from P0 raw IQ to P7 demodulated symbols, and measured them independently. Contrary to conventional wisdom, the fingerprint was strongest early in the chain and was erased across synchronization, dropping to near-chance verification performance (EER 0.499) at the last point.</p>
         <div class="pcard__tags"><span>#RFFingerprint</span><span>#ReceiveChain</span><span>#AblationStudy</span><span>#ProbePoint</span><span class="pcard__go">Read (KO) &rarr;</span></div>
+        </div>
       </a>
       <a class="pcard reveal" href="../papers/regime-detection-fixed-false-alarm.html" data-cat="research">
+        <div class="pcard__thumb"><img src="../papers/thumb/regime-detection-fixed-false-alarm.png" alt="" loading="lazy" width="880" height="495"></div>
+        <div class="pcard__body">
         <div class="pcard__meta"><span class="pcard__cat">Research</span><span class="pcard__date">2026.07.29</span><span class="pcard__rt">~8 min</span><span class="pcard__cat">KO</span></div>
         <h3 class="pcard__title">Fixed False-Alarm-Rate Regime Detection: Market-Regime Alerts Under CFAR Discipline</h3>
         <p class="pcard__excerpt">We brought the CFAR (constant false-alarm rate) discipline from radar signal detection over to market-regime alerting and measured it on a synthetic Markov-switching experiment. A naive threshold missed its 10 percent target, landing at 4.53 percent, while the CFAR method calibrated precisely to within about 0.02 percentage points across all three target levels.</p>
         <div class="pcard__tags"><span>#RegimeDetection</span><span>#CFAR</span><span>#FalseAlarmRate</span><span>#Calibration</span><span>#SignalDetection</span><span class="pcard__go">Read (KO) &rarr;</span></div>
+        </div>
       </a>
       <a class="pcard reveal" href="../papers/reproducible-openset-evaluation-protocol.html" data-cat="method">
+        <div class="pcard__thumb"><img src="../papers/thumb/reproducible-openset-evaluation-protocol.png" alt="" loading="lazy" width="880" height="495"></div>
+        <div class="pcard__body">
         <div class="pcard__meta"><span class="pcard__cat">Method</span><span class="pcard__date">2026.07.29</span><span class="pcard__rt">~8 min</span><span class="pcard__cat">KO</span></div>
         <h3 class="pcard__title">A Reproducible Open-Set Evaluation Protocol: Why You Can't Claim Authentication From Closed-Set Accuracy</h3>
         <p class="pcard__excerpt">The same RF fingerprint model scores AUROC 0.9994 under an optimistic protocol, and TAR@FAR=1e-3 of 0.2235 under a worst-case, device-held-out protocol where unregistered devices attempt arbitrary impersonation. This methodology paper measures how it is the evaluation protocol, not the model, that decides whether the numbers can be trusted.</p>
         <div class="pcard__tags"><span>#EvaluationProtocol</span><span>#OpenSet</span><span>#Verification</span><span>#Reproducibility</span><span class="pcard__go">Read (KO) &rarr;</span></div>
+        </div>
       </a>
       <a class="pcard reveal" href="../papers/sharded-index-million-song-content-id.html" data-cat="media">
+        <div class="pcard__thumb"><img src="../papers/thumb/sharded-index-million-song-content-id.png" alt="" loading="lazy" width="880" height="495"></div>
+        <div class="pcard__body">
         <div class="pcard__meta"><span class="pcard__cat">Media</span><span class="pcard__date">2026.07.29</span><span class="pcard__rt">~8 min</span><span class="pcard__cat">KO</span></div>
         <h3 class="pcard__title">A Sharded Index for Audio Content ID at Million-Track Scale</h3>
         <p class="pcard__excerpt">Scaling an audio content ID index to a million tracks needs about 868GB in a single in-memory dictionary. We split the same hash table by hash key and measured the per-node memory footprint while holding accuracy steady.</p>
         <div class="pcard__tags"><span>#AudioFingerprinting</span><span>#ShardedIndex</span><span>#Scaling</span><span>#ContentID</span><span>#LSH</span><span class="pcard__go">Read (KO) &rarr;</span></div>
+        </div>
       </a>
       <a class="pcard reveal" href="../papers/skill-retrieval-at-scale.html" data-cat="research">
+        <div class="pcard__thumb"><img src="../papers/thumb/skill-retrieval-at-scale.png" alt="" loading="lazy" width="880" height="495"></div>
+        <div class="pcard__body">
         <div class="pcard__meta"><span class="pcard__cat">Research</span><span class="pcard__date">2026.07.29</span><span class="pcard__rt">~9 min</span><span class="pcard__cat">KO</span></div>
         <h3 class="pcard__title">Routing a Large Skill Corpus: BM25 vs. Hybrid Retrieval</h3>
         <p class="pcard__excerpt">In an agent with over 1,000 tools, the retrieval stage is the ceiling on accuracy. Using a fully public synthetic corpus, we measured BM25, quasi-semantic search, and hybrid RRF against the same queries, and we publish the result as-is: hybrid does not always win.</p>
         <div class="pcard__tags"><span>#Retrieval</span><span>#Routing</span><span>#BM25</span><span>#RRF</span><span class="pcard__go">Read (KO) &rarr;</span></div>
+        </div>
       </a>
       <a class="pcard reveal" href="../papers/streaming-vlm-quantization-consumer-silicon.html" data-cat="benchmark">
+        <div class="pcard__thumb"><img src="../papers/thumb/streaming-vlm-quantization-consumer-silicon.png" alt="" loading="lazy" width="880" height="495"></div>
+        <div class="pcard__body">
         <div class="pcard__meta"><span class="pcard__cat">Benchmark</span><span class="pcard__date">2026.07.29</span><span class="pcard__rt">~10 min</span><span class="pcard__cat">KO</span></div>
         <h3 class="pcard__title">Streaming VLM Quantization on Edge Silicon</h3>
         <p class="pcard__excerpt">Same 4-bit precision, but changing only the runtime made decode speed 190x faster. We measured a roughly 4B streaming VLM (microsoft/Mage-VL) on a consumer Apple Silicon Mac and closed the case with data: quantization alone is not enough, you need a fused-kernel runtime to get both small and fast.</p>
         <div class="pcard__tags"><span>#VLM</span><span>#Quantization</span><span>#Edge</span><span>#AppleSilicon</span><span>#MLX</span><span class="pcard__go">Read (KO) &rarr;</span></div>
+        </div>
       </a>
       <a class="pcard reveal" href="../papers/wifi-csi-cross-environment-calibration.html" data-cat="sensing">
+        <div class="pcard__thumb"><img src="../papers/thumb/wifi-csi-cross-environment-calibration.png" alt="" loading="lazy" width="880" height="495"></div>
+        <div class="pcard__body">
         <div class="pcard__meta"><span class="pcard__cat">Sensing</span><span class="pcard__date">2026.07.29</span><span class="pcard__rt">~8 min</span><span class="pcard__cat">KO</span></div>
         <h3 class="pcard__title">WiFi-CSI Cross-Environment Shift and Few-Shot Calibration</h3>
         <p class="pcard__excerpt">When the environment changes, WiFi-CSI sensing accuracy collapsed to as low as 55 percent in our measurements. Adding just 50 target-domain labels per class, about 350 total, recovered 80 percent of that gap.</p>
         <div class="pcard__tags"><span>#WiFiCSI</span><span>#DomainAdaptation</span><span>#FewShotLearning</span><span>#Calibration</span><span>#OccupancyDetection</span><span class="pcard__go">Read (KO) &rarr;</span></div>
+        </div>
       </a>
       <a class="pcard reveal" href="../papers/audio-content-id-robustness.html" data-cat="experiment">
+        <div class="pcard__thumb"><img src="../papers/thumb/audio-content-id-robustness.png" alt="" loading="lazy" width="880" height="495"></div>
+        <div class="pcard__body">
         <div class="pcard__meta"><span class="pcard__cat">Experiment Notes</span><span class="pcard__date">2026.07.28</span><span class="pcard__rt">~5 min</span><span class="pcard__cat">KO</span></div>
         <h3 class="pcard__title">How Well an Audio Identification API Holds Up Under Noise, Compression, and Speed Changes, Measured</h3>
         <p class="pcard__excerpt">We measured peak-pair-hashing audio identification on a 999-track catalog with our own benchmark: 95 percent clean, and 72.5 percent top-1 even at heavy noise (SNR -5dB). We measured the conditions broadcast monitoring and copyright surveillance actually ask about first.</p>
         <div class="pcard__tags"><span>#Audio</span><span>#ContentID</span><span>#CopyrightMonitoring</span><span>#InHouseBenchmark</span><span class="pcard__go">Read (KO) &rarr;</span></div>
+        </div>
       </a>
       <a class="pcard reveal" href="../papers/bearing-pdm-noise-robustness.html" data-cat="experiment">
+        <div class="pcard__thumb"><img src="../papers/thumb/bearing-pdm-noise-robustness.png" alt="" loading="lazy" width="880" height="495"></div>
+        <div class="pcard__body">
         <div class="pcard__meta"><span class="pcard__cat">Experiment Notes</span><span class="pcard__date">2026.07.28</span><span class="pcard__rt">~5 min</span><span class="pcard__cat">KO</span></div>
         <h3 class="pcard__title">Catching Bearing Faults in Noise: Physics-Based Features Beat a Naive Approach by 33pp</h3>
         <p class="pcard__excerpt">We measured a predictive-maintenance pipeline on public bearing vibration data (CWRU). At factory noise levels (SNR 0dB), envelope-spectrum physics-based features hit 85.1 percent versus 52.0 percent for a naive spectrum. The noisier it gets, the more physics wins.</p>
         <div class="pcard__tags"><span>#PredictiveMaintenance</span><span>#VibrationAnalysis</span><span>#ManufacturingAX</span><span>#InHouseBenchmark</span><span class="pcard__go">Read (KO) &rarr;</span></div>
+        </div>
       </a>
       <a class="pcard reveal" href="../papers/edge-budget-attribution.html" data-cat="method">
+        <div class="pcard__thumb"><img src="../papers/thumb/edge-budget-attribution.png" alt="" loading="lazy" width="880" height="495"></div>
+        <div class="pcard__body">
         <div class="pcard__meta"><span class="pcard__cat">Method</span><span class="pcard__date">2026.07.28</span><span class="pcard__rt">~5 min</span><span class="pcard__cat">KO</span></div>
         <h3 class="pcard__title">Does It Actually Run on the Edge: Attributing a Throughput Budget by Measurement</h3>
         <p class="pcard__excerpt">We measured a signal-processing pipeline's throughput stage by stage on a cheap edge board and publish the uncomfortable number, 7.6M samples per second, 0.19x of the target, along with where the bottlenecks are. If you are selling deployment and not a demo, this is the number you have to measure first.</p>
         <div class="pcard__tags"><span>#EdgeComputing</span><span>#PerformanceMeasurement</span><span>#DeploymentDesign</span><span>#InHouseBenchmark</span><span class="pcard__go">Read (KO) &rarr;</span></div>
+        </div>
       </a>
       <a class="pcard reveal" href="../papers/honest-measurement-playbook.html" data-cat="method">
+        <div class="pcard__thumb"><img src="../papers/thumb/honest-measurement-playbook.png" alt="" loading="lazy" width="880" height="495"></div>
+        <div class="pcard__body">
         <div class="pcard__meta"><span class="pcard__cat">Method</span><span class="pcard__date">2026.07.28</span><span class="pcard__rt">~6 min</span><span class="pcard__cat">KO</span></div>
         <h3 class="pcard__title">Five Mistakes That Make Numbers Untrustworthy, and the Defenses We Use</h3>
         <p class="pcard__excerpt">Pre-registered gates, shuffle controls, fixed false-alarm rates, leakage blocking, and publishing negative results. We laid out, on one page, the five measurement disciplines common to every experiment note on this board. Feel free to reuse it as-is for validating your own AI adoption.</p>
         <div class="pcard__tags"><span>#MeasurementMethodology</span><span>#GaugeMethod</span><span>#PoCValidation</span><span>#ExperimentDesign</span><span class="pcard__go">Read (KO) &rarr;</span></div>
+        </div>
       </a>
       <a class="pcard reveal" href="../papers/interference-detection-fixed-far.html" data-cat="experiment">
+        <div class="pcard__thumb"><img src="../papers/thumb/interference-detection-fixed-far.png" alt="" loading="lazy" width="880" height="495"></div>
+        <div class="pcard__body">
         <div class="pcard__meta"><span class="pcard__cat">Experiment Notes</span><span class="pcard__date">2026.07.28</span><span class="pcard__rt">~5 min</span><span class="pcard__cat">KO</span></div>
         <h3 class="pcard__title">Interference Detection Should Be Reported as Caught at X Percent False Alarms, Not Caught X Percent of the Time</h3>
         <p class="pcard__excerpt">An in-house benchmark for wireless interference detection in factories and hospitals: we fixed the false-alarm rate first and measured a 98.0 percent detection rate under that condition. We state plainly that this is a synthetic benchmark, and lay out why fixing the false-alarm rate is the only honest way to talk about commercial interference detection.</p>
         <div class="pcard__tags"><span>#InterferenceDetection</span><span>#SpectrumMonitoring</span><span>#WirelessQuality</span><span>#InHouseBenchmark</span><span class="pcard__go">Read (KO) &rarr;</span></div>
+        </div>
       </a>
       <a class="pcard reveal" href="../papers/interference-localization-sim.html" data-cat="method">
+        <div class="pcard__thumb"><img src="../papers/thumb/interference-localization-sim.png" alt="" loading="lazy" width="880" height="495"></div>
+        <div class="pcard__body">
         <div class="pcard__meta"><span class="pcard__cat">Method</span><span class="pcard__date">2026.07.28</span><span class="pcard__rt">~6 min</span><span class="pcard__cat">KO</span></div>
         <h3 class="pcard__title">Interference Source Localization: How Many Sensors Get You How Many Meters of Accuracy (Simulation Notes)</h3>
         <p class="pcard__excerpt">We measured RSS and TDoA localization with a 500-run Monte Carlo simulation of a 60x40m factory hall model. Six anchors plus 30ns-synchronized TDoA gets a median error of about 7m. We also confirmed poor sensor placement makes it 3x worse, and that narrowband jammers cause TDoA to fail in principle.</p>
         <div class="pcard__tags"><span>#InterferenceDetection</span><span>#Localization</span><span>#FactoryWireless</span><span>#Simulation</span><span class="pcard__go">Read (KO) &rarr;</span></div>
+        </div>
       </a>
       <a class="pcard reveal" href="../papers/one-shot-device-enrollment.html" data-cat="experiment">
+        <div class="pcard__thumb"><img src="../papers/thumb/one-shot-device-enrollment.png" alt="" loading="lazy" width="880" height="495"></div>
+        <div class="pcard__body">
         <div class="pcard__meta"><span class="pcard__cat">Experiment Notes</span><span class="pcard__date">2026.07.28</span><span class="pcard__rt">~5 min</span><span class="pcard__cat">KO</span></div>
         <h3 class="pcard__title">Device Identification From a Single Enrollment: Where Deep Learning Actually Beats Classical in One-Shot</h3>
         <p class="pcard__excerpt">An in-house benchmark for wireless device identification under the extreme condition of just one enrollment sample (K=1). Embedding-learning approaches score 0.696 to 0.739 versus 0.549 for classical features. This is a case that clears our one bar for selling deep learning: beating classical methods by actual measurement.</p>
         <div class="pcard__tags"><span>#RFFingerprint</span><span>#OneShotLearning</span><span>#DeviceAuthentication</span><span>#InHouseBenchmark</span><span class="pcard__go">Read (KO) &rarr;</span></div>
+        </div>
       </a>
       <a class="pcard reveal" href="../papers/openset-unknown-rejection.html" data-cat="experiment">
+        <div class="pcard__thumb"><img src="../papers/thumb/openset-unknown-rejection.png" alt="" loading="lazy" width="880" height="495"></div>
+        <div class="pcard__body">
         <div class="pcard__meta"><span class="pcard__cat">Experiment Notes</span><span class="pcard__date">2026.07.28</span><span class="pcard__rt">~5 min</span><span class="pcard__cat">KO</span></div>
         <h3 class="pcard__title">A Machine That Says I Don't Know to Unknown Signals: The Fancier Method Didn't Always Win</h3>
         <p class="pcard__excerpt">An A/B measurement of open-set rejection of unknown signal sources. Advanced calibration based on extreme value theory failed to beat simple distance-based rejection on real wireless data. We publish both the conclusion, that the bottleneck is the feature space and not the scoring, and the experiment design that uncovered it.</p>
         <div class="pcard__tags"><span>#OpenSet</span><span>#SpectrumMonitoring</span><span>#AnomalyDetection</span><span>#InHouseBenchmark</span><span class="pcard__go">Read (KO) &rarr;</span></div>
+        </div>
       </a>
       <a class="pcard reveal" href="../papers/radar-detection-traffic-robustness.html" data-cat="method">
+        <div class="pcard__thumb"><img src="../papers/thumb/radar-detection-traffic-robustness.png" alt="" loading="lazy" width="880" height="495"></div>
+        <div class="pcard__body">
         <div class="pcard__meta"><span class="pcard__cat">Method</span><span class="pcard__date">2026.07.28</span><span class="pcard__rt">~6 min</span><span class="pcard__cat">KO</span></div>
         <h3 class="pcard__title">Does Radar Signal Detection Break When Traffic Is Mixed In: A Fixed-False-Alarm-Rate Judgment Method</h3>
         <p class="pcard__excerpt">On a 36-waveform standard-radar test matrix, we measured 36 of 36 passing with no traffic, dropping to 27 of 36 with WiFi traffic mixed in, all under a fixed false-alarm-rate condition. We publish root-cause attribution for the 9 failures and the verification design for the fix, along with a methodology for pinning down the pass criterion in advance.</p>
         <div class="pcard__tags"><span>#SpectrumMonitoring</span><span>#DFS</span><span>#DetectionMethodology</span><span>#InHouseBenchmark</span><span class="pcard__go">Read (KO) &rarr;</span></div>
+        </div>
       </a>
       <a class="pcard reveal" href="../papers/rf-fingerprint-asset-inventory.html" data-cat="experiment">
+        <div class="pcard__thumb"><img src="../papers/thumb/rf-fingerprint-asset-inventory.png" alt="" loading="lazy" width="880" height="495"></div>
+        <div class="pcard__body">
         <div class="pcard__meta"><span class="pcard__cat">Experiment Notes</span><span class="pcard__date">2026.07.28</span><span class="pcard__rt">~6 min</span><span class="pcard__cat">KO</span></div>
         <h3 class="pcard__title">How Well RF Fingerprinting Catches Unregistered Devices on a Factory Wireless Network: An Honest Gap Report</h3>
         <p class="pcard__excerpt">Using real data from 150 transmitters (WiSig), we measured an N-registered-devices-plus-an-unregistered-intruder scenario. AUROC 0.80 under matched receiver conditions is a real signal, but a 22 percent detection rate at 1 percent false alarms falls short of a sellable bar. We publish exactly where it works and where it stops.</p>
         <div class="pcard__tags"><span>#RFFingerprint</span><span>#OTSecurity</span><span>#AssetInventory</span><span>#InHouseBenchmark</span><span class="pcard__go">Read (KO) &rarr;</span></div>
+        </div>
       </a>
       <a class="pcard reveal" href="../papers/wifi-csi-presence-real-data.html" data-cat="experiment">
+        <div class="pcard__thumb"><img src="../papers/thumb/wifi-csi-presence-real-data.png" alt="" loading="lazy" width="880" height="495"></div>
+        <div class="pcard__body">
         <div class="pcard__meta"><span class="pcard__cat">Experiment Notes</span><span class="pcard__date">2026.07.28</span><span class="pcard__rt">~6 min</span><span class="pcard__cat">KO</span></div>
         <h3 class="pcard__title">Occupancy and Motion Detection Over Existing WiFi, No Added Cameras or Sensors: Measurement Notes</h3>
         <p class="pcard__excerpt">We verified an occupancy and motion detection chain on real, publicly measured WiFi channel data (OPERAnet, public domain). Motion signal was 52x for walking and 13x for sitting or standing versus an empty room, and a 10-second window separated with AUROC 1.000. We state plainly that this is a single-room result.</p>
         <div class="pcard__tags"><span>#WiFiCSI</span><span>#OccupancyDetection</span><span>#SmartBuilding</span><span>#InHouseBenchmark</span><span class="pcard__go">Read (KO) &rarr;</span></div>
+        </div>
       </a>
       <a class="pcard reveal" href="../papers/anomaly-detection-rules-first.html" data-cat="experiment">
+        <div class="pcard__thumb"><img src="../papers/thumb/anomaly-detection-rules-first.png" alt="" loading="lazy" width="880" height="495"></div>
+        <div class="pcard__body">
         <div class="pcard__meta"><span class="pcard__cat">Experiment Notes</span><span class="pcard__date">2026.07.26</span><span class="pcard__rt">~6 min</span><span class="pcard__cat">KO</span></div>
         <h3 class="pcard__title">For Anomaly Detection, We Go Rule-Based First</h3>
         <p class="pcard__excerpt">Why we do not reach for deep learning first when catching defects and equipment anomalies on a factory floor. We lay out, as an experiment note, the case for why rule-based methods have to clear the measurement gate first.</p>
         <div class="pcard__tags"><span>#AnomalyDetection</span><span>#ManufacturingAX</span><span>#GaugeMethod</span><span>#PoC</span><span class="pcard__go">Read (KO) &rarr;</span></div>
+        </div>
       </a>
       <a class="pcard reveal" href="../papers/gauge-method-ax-as-process.html" data-cat="method">
+        <div class="pcard__thumb"><img src="../papers/thumb/gauge-method-ax-as-process.png" alt="" loading="lazy" width="880" height="495"></div>
+        <div class="pcard__body">
         <div class="pcard__meta"><span class="pcard__cat">Method</span><span class="pcard__date">2026.07.25</span><span class="pcard__rt">~7 min</span><span class="pcard__cat">KO</span></div>
         <h3 class="pcard__title">AX as a Process, Not a Gut Call: The 2i Gauge Method</h3>
         <p class="pcard__excerpt">The most common reason AI transformation fails is not technology, it is sequencing. We lay out 2i's way of working: cutting off risk at every stage with a measurement gate, a proof-of-concept gate, and a handover gate.</p>
         <div class="pcard__tags"><span>#AXStrategy</span><span>#GaugeMethod</span><span>#Diagnostics</span><span>#PoC</span><span>#GovernmentVoucher</span><span class="pcard__go">Read (KO) &rarr;</span></div>
+        </div>
       </a>
     </div>
     </div>
