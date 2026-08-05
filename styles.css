@@ -771,7 +771,7 @@ section[id] { scroll-margin-top: 80px; }
 }
 .pfilter.is-on b { color: var(--signal); }
 
-/* board grid — 논문 1편 = 카드 1장(썸네일 위, 텍스트 아래) */
+/* board grid - 논문 1편 = 카드 1장(썸네일 위, 텍스트 아래) */
 .pboard {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(19rem, 1fr));
