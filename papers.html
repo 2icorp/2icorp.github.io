@@ -53,7 +53,7 @@
   </section>
   <section class="section section--alt" style="padding-top:0">
     <div class="wrap">
-    <div class="pfilters" role="tablist" aria-label="분류 필터"><button class="pfilter is-on" data-cat="all">전체 <b>49</b></button><button class="pfilter" data-cat="method">방법 <b>15</b></button><button class="pfilter" data-cat="experiment">실험 노트 <b>10</b></button><button class="pfilter" data-cat="benchmark">벤치마크 <b>6</b></button><button class="pfilter" data-cat="research">리서치 <b>4</b></button><button class="pfilter" data-cat="infra">인프라 <b>4</b></button><button class="pfilter" data-cat="signal">신호 <b>3</b></button><button class="pfilter" data-cat="industrial">산업 <b>2</b></button><button class="pfilter" data-cat="media">미디어 <b>2</b></button><button class="pfilter" data-cat="sensing">센싱 <b>2</b></button><button class="pfilter" data-cat="whitepaper">백서 <b>1</b></button></div>
+    <div class="pfilters" role="tablist" aria-label="분류 필터"><button class="pfilter is-on" data-cat="all">전체 <b>50</b></button><button class="pfilter" data-cat="method">방법 <b>15</b></button><button class="pfilter" data-cat="experiment">실험 노트 <b>10</b></button><button class="pfilter" data-cat="benchmark">벤치마크 <b>7</b></button><button class="pfilter" data-cat="research">리서치 <b>4</b></button><button class="pfilter" data-cat="infra">인프라 <b>4</b></button><button class="pfilter" data-cat="signal">신호 <b>3</b></button><button class="pfilter" data-cat="industrial">산업 <b>2</b></button><button class="pfilter" data-cat="media">미디어 <b>2</b></button><button class="pfilter" data-cat="sensing">센싱 <b>2</b></button><button class="pfilter" data-cat="whitepaper">백서 <b>1</b></button></div>
     <div class="pboard">
       <a class="pcard reveal" href="papers/generate-improve-loop-three-domains.html" data-cat="benchmark">
         <div class="pcard__thumb"><img src="papers/thumb/generate-improve-loop-three-domains.png" alt="" loading="lazy" width="880" height="495"></div>
@@ -62,6 +62,15 @@
           <h3 class="pcard__title">생성하고 고치는 최적화 루프를 3개 문제에 붙여봤습니다: 두 번 이기고 한 번 졌습니다</h3>
           <p class="pcard__excerpt">최적화 도입을 검토하는 기술 리더를 위한 글입니다. 요즘 제안되는 &#x27;다양한 후보를 생성하고 각각을 지역탐색으로 고친 뒤 그 결과로 생성기를 재학습한다&#x27;는 루프를 배달 배차, 실시간 배차, 간호사 근무표 세 문제에 그대로 이식해 재봤습니다. 오프라인 배차에서는 미배정을 41퍼센트 줄여 기존 정확해법까지 앞섰고, 실시간 배차에서는 20개 비교 중 13개를 이기면서 지연은 자릿수로 낮았습니다. 반면 근무표에서는 졌고, 그 사실을 그대로 싣습니다. 다만 이득의 출처는 흔히 홍보되는 &#x27;다양한 생성&#x27;이 아니라 &#x27;개선탐색&#x27;이었고, 개선 연산자를 바꾸자 소규모 근무표는 증명된 최적해와 동률이 됐습니다. 검증 과정에서 우리 코드의 결함 3건과 우리 측정의 오류 1건도 드러나 함께 공개합니다.</p>
           <div class="pcard__tags"><span>#조합최적화</span><span>#배달디스패치</span><span>#근무편성</span><span>#지역탐색</span><span class="pcard__go">읽기 →</span></div>
+        </div>
+      </a>
+      <a class="pcard reveal" href="papers/verifier-matched-the-model-not-the-spec.html" data-cat="benchmark">
+        <div class="pcard__thumb"><img src="papers/thumb/verifier-matched-the-model-not-the-spec.png" alt="" loading="lazy" width="880" height="495"></div>
+        <div class="pcard__body">
+          <div class="pcard__meta"><span class="pcard__cat">벤치마크</span><span class="pcard__date">2026.08.05</span><span class="pcard__rt">약 7분</span></div>
+          <h3 class="pcard__title">검증기를 모델에 맞췄더니 둘이 사이좋게 틀렸습니다: 공개 벤치마크 격차 12.96%에서 1.68%로</h3>
+          <p class="pcard__excerpt">최적화를 도입하는 기술 리더를 위한 글입니다. 우리 솔버는 공개 간호사 근무표 벤치마크에서 오래 격차를 못 좁혔습니다. 원인은 탐색 성능이 아니라 제약 하나의 경계 해석이었고, 그것을 못 본 이유는 더 뼈아팠습니다. 이전에 검증기와 모델이 어긋났을 때 검증기를 모델에 맞춰 고쳤기 때문입니다. 그 순간부터 둘은 서로 일치할 뿐 명세와는 무관해졌고, 어떤 내부 정합성 검사로도 잡히지 않았습니다. 오류를 드러낸 것은 외부 기준값 하나였습니다. 고친 뒤 8개 인스턴스 격차 중앙값이 12.96%에서 1.68%로 내려갔고 3개는 공개된 최적값과 같은 값에, 그중 2개는 최적성 증명까지 도달했습니다.</p>
+          <div class="pcard__tags"><span>#근무편성</span><span>#검증</span><span>#측정방법론</span><span>#벤치마크</span><span class="pcard__go">읽기 →</span></div>
         </div>
       </a>
       <a class="pcard reveal" href="papers/counting-does-not-need-a-foundation-model.html" data-cat="benchmark">
