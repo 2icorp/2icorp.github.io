@@ -1,0 +1,191 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<script>(function(){try{var t=localStorage.getItem("theme");if(!t&&window.matchMedia&&matchMedia("(prefers-color-scheme: dark)").matches)t="dark";if(t)document.documentElement.setAttribute("data-theme",t);}catch(e){}})();</script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>근무표를 딥러닝으로 풀 수 있을까: 문헌을 뒤졌더니 아직 아무도 못 이겼습니다 · 2i</title>
+<meta name="description" content="인력 배치 자동화를 검토하는 기술 리더를 위한 글입니다. 최적화에 학습을 도입하자는 제안을 받으면 판단이 어렵습니다. 그래서 인력 근무표에 신경망과 강화학습을 적용한 연구를 찾아 원문을 읽었습니다. 정확해법을 이겼다고 보고한 사례를 찾지 못했습니다. 비교 대상이 대부분 메타휴리스틱이거나 무작위 기준선이었고, 정확해법과 겨룬 논문 자체가 없었습니다. 이유도 문헌에 있습니다. 배송 경로에는 이동거리라는 자연스러운 학습 신호가 있지만 근무표에는 그런 것이 없어서, 한 연구는 보상값을 임의로 정했다고 논문에 직접 밝힙니다. 우리 측정치와 함께 정리하고, 그럼에도 학습을 붙일 자리가 어디인지 적었습니다.">
+<meta property="og:title" content="근무표를 딥러닝으로 풀 수 있을까: 문헌을 뒤졌더니 아직 아무도 못 이겼습니다 · 2i">
+<meta property="og:description" content="인력 배치 자동화를 검토하는 기술 리더를 위한 글입니다. 최적화에 학습을 도입하자는 제안을 받으면 판단이 어렵습니다. 그래서 인력 근무표에 신경망과 강화학습을 적용한 연구를 찾아 원문을 읽었습니다. 정확해법을 이겼다고 보고한 사례를 찾지 못했습니다. 비교 대상이 대부분 메타휴리스틱이거나 무작위 기준선이었고, 정확해법과 겨룬 논문 자체가 없었습니다. 이유도 문헌에 있습니다. 배송 경로에는 이동거리라는 자연스러운 학습 신호가 있지만 근무표에는 그런 것이 없어서, 한 연구는 보상값을 임의로 정했다고 논문에 직접 밝힙니다. 우리 측정치와 함께 정리하고, 그럼에도 학습을 붙일 자리가 어디인지 적었습니다.">
+<meta property="og:type" content="article">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23111827'/%3E%3Ctext x='16' y='22' font-family='monospace' font-size='16' font-weight='700' fill='%23e08a2b' text-anchor='middle'%3E2i%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../styles.css?v=23">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js" onload="renderMathInElement(document.body,{delimiters:[{left:'$$',right:'$$',display:true},{left:'$',right:'$',display:false},{left:'\\[',right:'\\]',display:true},{left:'\\(',right:'\\)',display:false}]})"></script>
+</head>
+<body>
+
+<header class="nav">
+  <div class="wrap nav__inner">
+    <a class="brand" href="../" aria-label="2i 홈">
+      <span class="brand__mark">2i</span>
+      <span class="brand__tag">AX 컨설팅</span>
+    </a>
+    <button class="nav__burger" type="button" aria-expanded="false" aria-controls="navLinks" aria-label="메뉴 열기"><span></span><span></span><span></span></button>
+    <nav class="nav__links" id="navLinks" aria-label="주요 메뉴">
+      <a href="../index.html#method">방식</a>
+      <a href="../cases.html">사례</a>
+      <a href="../tech.html">기술</a>
+      <a href="../comms.html">통신</a>
+      <a href="../cloud.html">클라우드</a>
+      <a href="../finance.html">금융</a>
+      <a href="../papers.html">논문·실험</a>
+      <a href="../about.html">회사소개</a>
+      <a href="../index.html#pricing">가격</a>
+      <a href="../index.html#voucher">정부 바우처</a>
+      <a class="nav__lang" href="../en/">EN</a>
+      <a class="nav__cta btn btn--signal" href="../index.html#contact">상담 신청</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <article class="article wrap">
+    <a class="article__back" href="../papers.html">← 논문·실험 게시판</a>
+    <div class="article__head">
+      <div class="pcard__meta"><span class="pcard__cat">리서치</span><span class="pcard__date">2026.08.06</span><span class="pcard__rt">약 8분</span></div>
+      <h1 class="article__title">근무표를 딥러닝으로 풀 수 있을까: 문헌을 뒤졌더니 아직 아무도 못 이겼습니다</h1>
+      <p class="article__excerpt">인력 배치 자동화를 검토하는 기술 리더를 위한 글입니다. 최적화에 학습을 도입하자는 제안을 받으면 판단이 어렵습니다. 그래서 인력 근무표에 신경망과 강화학습을 적용한 연구를 찾아 원문을 읽었습니다. 정확해법을 이겼다고 보고한 사례를 찾지 못했습니다. 비교 대상이 대부분 메타휴리스틱이거나 무작위 기준선이었고, 정확해법과 겨룬 논문 자체가 없었습니다. 이유도 문헌에 있습니다. 배송 경로에는 이동거리라는 자연스러운 학습 신호가 있지만 근무표에는 그런 것이 없어서, 한 연구는 보상값을 임의로 정했다고 논문에 직접 밝힙니다. 우리 측정치와 함께 정리하고, 그럼에도 학습을 붙일 자리가 어디인지 적었습니다.</p>
+      <div class="pcard__tags"><span>#근무편성</span><span>#조합최적화</span><span>#강화학습</span><span>#문헌조사</span><span>#측정방법론</span><span>#음성결과</span></div>
+      
+    </div>
+    <div class="article__body prose">
+<h2 id="_1">누구를 위한 글인가</h2>
+<p>간호사 근무표, 콜센터 시프트, 교대 인력 배치를 자동화하려는 기술 리더를 위해 씁니다. 요즘
+최적화 제품 제안서에 학습 기반이라는 표현이 자주 등장하는데, 그게 실제로 무엇을 사는 것인지
+판단하기 어렵습니다.</p>
+<p>결론부터 말하면, 인력 근무표에서 신경망이 정확해법을 이겼다고 보고한 연구를 우리는 찾지
+못했습니다. 그리고 못 찾은 이유가 우연이 아니라 문제 구조에 있습니다.</p>
+<h2 id="_2">무엇을 찾았나</h2>
+<p>인력 근무표에 강화학습이나 신경망을 적용한 연구를 모아 원문을 열었습니다. 실제로 본문까지 연
+것이 세 편이고, 유료 장벽에 막혀 요약만 본 것이 네 편입니다.</p>
+<p>일곱 편 모두 비교 대상이 정확해법이 아니었습니다. 한 편은 무작위 에이전트와만 겨뤘고, 한
+편은 휴리스틱과 제약 없는 강화학습을 상대로 삼았으며, 나머지는 메타휴리스틱이나 다른 딥러닝
+기법과 비교했습니다. 상용 정확해법과 붙은 논문이 한 편도 없었습니다.</p>
+<p>이것이 부재의 증명은 아닙니다. 유료 장벽 뒤에 우리가 못 본 결과가 있을 수 있습니다. 다만
+있었다면 검색에 걸렸을 것입니다.</p>
+<h2 id="_3">왜 안 되는지가 논문에 적혀 있습니다</h2>
+<p>한 연구가 결정적인 문장을 남겼습니다. 스케줄링 문제에는 내재적 보상이나 비용이 없어서 저자들이
+전체 보상을 임의로 1로 설정했다고 밝힙니다.</p>
+<p>이 한 줄이 많은 것을 설명합니다. 배송 경로 문제는 이동거리라는 자연스러운 신호가 있습니다.
+한 지점을 더 방문할 때마다 거리가 얼마나 늘었는지 즉시 알 수 있으니, 신경망이 매 단계 학습
+신호를 받습니다. 근무표는 다릅니다. 스케줄이 완성되기 전까지는 실행 가능한지조차 알 수 없고,
+중간 상태에 점수를 매길 자연스러운 방법이 없습니다. 그래서 보상 함수를 사람이 발명해야 하고,
+발명한 보상이 실제 목적과 어긋나면 학습은 엉뚱한 것을 잘하게 됩니다.</p>
+<p>여기에 하나가 더 겹칩니다. 근무표는 하드 제약이 촘촘합니다. 연속 근무 상한, 최소 휴식,
+휴가, 필요 인원이 서로 얽혀 있어서 무작위에 가까운 초기 정책이 만드는 스케줄은 거의 전부
+실행 불가입니다. 전부 실패인 상태에서는 무엇이 덜 나쁜지도 배울 수 없습니다.</p>
+<h2 id="_4">널리 쓰이는 라이브러리로도 표현이 안 됩니다</h2>
+<p>학습 기반 조합최적화에서 가장 널리 쓰이는 오픈소스 라이브러리의 경로 문제 환경 열일곱 종을
+코드까지 열어 확인했습니다. 모든 환경이 모든 지점을 정확히 한 번씩 방문한다는 것을 검증
+단계에서 강제하고 있었습니다. 건너뛰기를 허용하는 선택지가 없습니다.</p>
+<p>우리 배차 문제는 목적함수의 첫 항이 미배정 최소화입니다. 주문을 전부 소화할 수 없는 상황에서
+무엇을 포기할지가 문제의 핵심인데, 그 개념이 아예 표현되지 않습니다. 라이더별 근무 종료
+시각도 마찬가지로 없습니다. 기성 환경을 가져다 쓰는 경로는 여기서 막힙니다.</p>
+<h2 id="_5">우리는 지금 어디에 있나</h2>
+<p>공개 간호사 근무표 벤치마크 여덟 개에서 우리 성적입니다.</p>
+<div class="tscroll" tabindex="0" role="region" aria-label="표. 좌우로 스크롤할 수 있습니다"><table>
+<thead>
+<tr>
+<th>지표</th>
+<th>값</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>알려진 최적값 대비 격차 중앙값</td>
+<td>1.68%</td>
+</tr>
+<tr>
+<td>최적값에 도달한 인스턴스</td>
+<td>3개</td>
+</tr>
+<tr>
+<td>최적성을 증명한 인스턴스</td>
+<td>2개</td>
+</tr>
+<tr>
+<td>하드 제약 위반</td>
+<td>8개 전부 0</td>
+</tr>
+</tbody>
+</table></div>
+<p>최적성 증명이 중요한 이유가 있습니다. 이보다 나은 답이 존재하지 않는다는 것을 수학적으로
+보였다는 뜻입니다. 학습 기반 방법은 좋은 답을 빠르게 낼 수 있지만 이 말을 할 수 없습니다.</p>
+<p>하드 제약 위반이 0이라는 것도 마찬가지입니다. 근무표에서 준수율 98퍼센트는 스케줄의 2퍼센트가
+근로 규칙을 어긴다는 뜻입니다. 수간호사에게 이것은 반올림 오차가 아니라 결재를 못 하는
+사유입니다. 대체로 지킨다는 것은 배포 가능한 기준이 아닙니다.</p>
+<p>정직하게 덧붙이면 4주 대형 인스턴스 두 개에는 아직 격차가 남아 있고, 비교 기준값이 2차
+출처라는 한계도 그대로입니다.</p>
+<h2 id="_6">그럼 학습은 쓸 데가 없나</h2>
+<p>그렇지 않습니다. 자리를 잘못 고르고 있었을 뿐입니다.</p>
+<p>지금까지의 시도는 전부 신경망이 스케줄을 직접 짓게 하는 방향이었습니다. 그 방향은 위에서 본
+이유로 막힙니다. 반대로 신경망이 답을 짓지 않고 솔버가 어디를 다시 풀지만 고르게 하면 사정이
+달라집니다.</p>
+<p>우리 개선 탐색은 스케줄의 한 구간을 헐고 정확해법으로 다시 채웁니다. 문제는 한 번 채우는 데
+수십 초가 걸린다는 것입니다. 대형 인스턴스에서는 주어진 시간에 열 번 남짓밖에 시도하지
+못합니다. 그러면 어느 구간을 고르느냐가 결과를 좌우하는데, 지금은 그걸 무작위로 정하고
+있습니다.</p>
+<p>여기에 학습이 들어갈 자리가 있습니다. 어느 구간을 헐면 얼마나 좋아질지를 예측하는 모델을
+학습시키면, 후보 천 개를 밀리초 안에 걸러 비싼 열 번을 가장 유망한 곳에 쓸 수 있습니다.</p>
+<p>이 방식은 앞서 나열한 장애물을 우회합니다. 보상 함수를 발명할 필요가 없습니다. 과거에 실제로
+헐어본 구간과 그때 얻은 개선량이 그대로 정답 라벨이라 평범한 지도학습입니다. 학습 데이터도
+따로 만들 필요가 없습니다. 우리가 이미 돌리고 있는 탐색이 매 반복마다 라벨을 하나씩
+남깁니다. 무엇보다 최종 스케줄은 여전히 정확해법이 만들기 때문에 하드 제약 위반 0과 최적성
+증명이 그대로 유지됩니다.</p>
+<h2 id="_7">어떻게 검증할 계획인가</h2>
+<p>가장 싼 것부터 태우고, 중간에 반증되면 멈춥니다.</p>
+<p>먼저 라벨이 배울 만한 것인지부터 봅니다. 같은 구간을 여러 번 다시 풀어 결과가 얼마나
+흔들리는지 재고, 그 흔들림이 신호보다 크면 거기서 중단합니다. 예측 자체가 불가능하다는 뜻이기
+때문입니다.</p>
+<p>다음은 손으로 만든 특징 몇 개에 얹은 단순 회귀입니다. 여기서 반드시 확인할 대조군이 하나
+있습니다. 그냥 가장 큰 구간을 고르는 방법입니다. 개선량이 구간 크기에 비례할 뿐이라면 예측
+모델은 크기를 복잡하게 재발명한 것이고 가치가 없습니다. 이 대조군을 이기지 못하면 신경망
+단계로 넘어가지 않습니다.</p>
+<p>신경망은 단순 회귀가 한계에 부딪혔을 때만 만듭니다. 그리고 그때도 기준은 무작위가 아니라 단순
+회귀입니다. 무작위를 이기는 것은 단순 회귀도 하는 일이라 신경망을 정당화하지 못합니다.</p>
+<p>모든 비교는 같은 벽시계 시간에 최소 세 개의 시드로 잽니다. 예측에 드는 시간도 예산에
+포함합니다. 공짜가 아니기 때문입니다. 학습에 쓴 인스턴스와 평가할 인스턴스도 분리합니다.</p>
+<h2 id="_8">검토하시는 분께</h2>
+<p>학습 기반 최적화 제안을 받으신다면 물어볼 것은 두 가지입니다.</p>
+<p>첫째, 무엇과 비교한 수치인지입니다. 우리가 읽은 논문 대부분이 정확해법이 아니라 휴리스틱이나
+무작위 기준선과 비교했습니다. 비교 대상이 약하면 개선폭은 커 보입니다.</p>
+<p>둘째, 하드 제약을 어떻게 보장하는지입니다. 벌점으로 흡수하는 방식이면 위반이 남을 수 있습니다.
+근로 규칙이 걸린 문제에서 이 차이는 성능이 아니라 책임의 문제입니다.</p>
+<p>수치는 전부 공개 벤치마크와 그 공식 채점 규칙 기준이며, 재현 절차는 저장소에 함께 둡니다.
+문헌 조사는 우리가 접근할 수 있었던 범위에 한합니다.</p>
+    </div>
+    <div class="article__cta">
+      <p>이 방법을 당신 현장의 숫자로 다시 재보고 싶다면.</p>
+      <a class="btn btn--signal" href="../index.html#contact">30분 진단 상담 <span class="arrow">→</span></a>
+      <a class="btn btn--ghost" href="../papers.html">다른 기록 보기</a>
+    </div>
+  </article>
+</main>
+
+<footer class="foot">
+  <div class="wrap foot__inner">
+    <div>
+      <div class="brand"><span class="brand__mark">2i</span><span class="brand__tag">AX 컨설팅</span></div>
+      <div class="foot__mono" style="margin-top:0.6rem">중소·중견 제조·유통을 위한 AI 전환</div>
+    </div>
+    <nav class="foot__links" aria-label="하단 메뉴">
+      <a href="../index.html#method">방식</a>
+      <a href="../papers.html">논문·실험</a>
+      <a href="../index.html#voucher">정부 바우처</a>
+      <a href="../cases.html">사례</a>
+      <a href="../en/">EN</a>
+    </nav>
+  </div>
+</footer>
+
+<script src="../main.js"></script>
+</body>
+</html>
